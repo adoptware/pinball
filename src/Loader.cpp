@@ -1,4 +1,4 @@
-//#ident "$Id: Loader.cpp,v 1.27 2003/05/19 13:49:01 rzr Exp $"
+//#ident "$Id: Loader.cpp,v 1.28 2003/05/20 21:15:23 pedro_nf Exp $"
 /***************************************************************************
                             Loader.cpp -  description
                              -------------------
@@ -45,9 +45,11 @@
 #include "FakeModuleBehavior.h"
 #include "PlungerBehavior.h"
 #include "LoaderModule.h" //!+rzr :  I put it appart
+
 #ifdef RZR_PATCHES_3DS
 #include "Obj3dsUtil.h" //!+rzr :  I put it appart
 #endif
+
 #define EmReadCmp(file_, ist_, str_, cmp_) \
   this->readNextToken(file_, ist_, str_);               \
   if (str_ != cmp_) throw string("Parse error, unexpected token \'") + str_ +  \
@@ -70,7 +72,9 @@ Loader::Loader() {
 
 Loader::~Loader() {
   delete m_LoaderModule;
+#ifdef RZR_PATCHES_RZR
   delete m_Obj3dsUtil;
+#endif
 };
 
 Loader * Loader::getInstance() {
@@ -1038,6 +1042,6 @@ void Loader::loadShape3dsAscii(ifstream & file, istringstream & ist,
   //EM_COUT("-Loader::loadShape3dsAscii", 0);
 }
 #endif //--------------------------------------------------------------------
-//EOF $Id: Loader.cpp,v 1.27 2003/05/19 13:49:01 rzr Exp $
+//EOF $Id: Loader.cpp,v 1.28 2003/05/20 21:15:23 pedro_nf Exp $
 
 

@@ -1,4 +1,4 @@
-// #ident "$Id: Loader.h,v 1.10 2003/05/19 13:49:01 rzr Exp $"
+// #ident "$Id: Loader.h,v 1.11 2003/05/20 21:15:23 pedro_nf Exp $"
 /***************************************************************************
                             Loader.h -  description
                              -------------------
@@ -23,8 +23,11 @@ class Behavior;
 class LoaderModule;
 
 #undef  RZR_PATCHES_3DS
-#define RZR_PATCHES_3DS
+//#define RZR_PATCHES_3DS
+
+#ifdef RZR_PATCHES_3DS
 class Obj3dsUtil;
+#endif
 
 #define LOADER_FIRSTSIGNAL 10000
 #define LOADER_FIRSTVARIABLE 20000
@@ -120,4 +123,4 @@ class Loader {
 
 #endif // LOADER_H
 
-//EOF $Id: Loader.h,v 1.10 2003/05/19 13:49:01 rzr Exp $
+//EOF $Id: Loader.h,v 1.11 2003/05/20 21:15:23 pedro_nf Exp $
