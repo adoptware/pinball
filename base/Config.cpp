@@ -19,6 +19,17 @@
 
 #include <cstdio>
 
+#if ( HAVE_UNISTD_H ) // !+rzr: not in msvc
+#include <unistd.h>
+#endif
+
+#ifdef WIN32
+//#include <io.h> 
+#include <direct.h>  // mkdir @ msvc+mingw32
+#define mkdir(name, modes) mkdir(name)
+#endif //!-rzr
+
+
 Config * Config::p_Instance = NULL;
 
 Config::Config() {
@@ -35,7 +46,6 @@ Config * Config::getInstance() {
     p_Instance = new Config();
     p_Instance->setDefault();
   }
-  
   return p_Instance;
 }
 
@@ -55,13 +65,13 @@ void Config::setDefault() {
   this->setShowFPS(false);
   this->setFire(false);
 
-  string leftflip("leftflip");
-  string rightflip("rightflip");
-  string bottomnudge("bottomnudge");
-  string leftnudge("leftnudge");
-  string rightnudge("rightnudge");
-  string launch("launch");
-  string reset("reset");
+  string const leftflip("leftflip");
+  string const rightflip("rightflip");
+  string const bottomnudge("bottomnudge");
+  string const leftnudge("leftnudge");
+  string const rightnudge("rightnudge");
+  string const launch("launch");
+  string const reset("reset");
   this->setKey(leftflip, SDLK_LSHIFT);
   this->setKey(rightflip, SDLK_RSHIFT);
   this->setKey(bottomnudge, SDLK_SPACE);
@@ -81,8 +91,7 @@ void Config::setSubDir(const char* ch) {
   m_sDataSubDir = m_sDataDir + "/" + m_sSubDir;
 }
 
-
-EMKey Config::getKey(string & str) {
+EMKey Config::getKey(string const & str) {
   if (m_hKey.find(str) != m_hKey.end()) {
     map<string, EMKey>::iterator element = m_hKey.find(str);
     return (*element).second;
@@ -91,14 +100,14 @@ EMKey Config::getKey(string & str) {
   return SDLK_HOME;
 }
 
-void Config::setKey(string & str, EMKey key) {
+void Config::setKey(string const & str, EMKey key) {
   if (m_hKey.find(str) != m_hKey.end()) {
     m_hKey.erase(m_hKey.find(str));
   }
   m_hKey.insert(pair<string, EMKey>(str, key));
 }
 
-const char * Config::getKeyCommonName(EMKey key) {
+char const * const Config::getKeyCommonName(EMKey key) {
 #if EM_USE_SDL
   return SDL_GetKeyName(key);
 #endif // EM_USESDL
@@ -111,7 +120,7 @@ void Config::saveConfig() {
   string filename;
 
 #if HAVE_SYS_STAT_H && HAVE_SYS_TYPES_H
-  char* home = getenv("HOME");
+  char const * const home = getenv("HOME");
   if (home != NULL) {
     // TODO unsafe
     filename = string(home) + string("/.emilia");
@@ -160,7 +169,7 @@ void Config::loadConfig() {
   this->setDefault();
 
   string filename;
-  char* home = getenv("HOME");
+  char const * const home = getenv("HOME");
   if (home != NULL) {
     // TODO unsafe
     filename = string(home) + string("/.emilia");
@@ -186,11 +195,11 @@ void Config::loadConfig() {
       file >> m_iWidth;
       file >> m_iHeight;
     } else if (str == "sound:") {
-      int vol;
+      int vol=0;
       file >> vol;
       this->setSound(vol);
     } else if (str == "music:") {
-      int vol;
+      int vol=0;
       file >> vol;
       this->setMusic(vol);
     } else if (str == "view:") {
@@ -223,12 +232,12 @@ void Config::loadConfig() {
 	m_iGLFilter = -1;
       }
     } else if (str == "brightness:") {
-      float bright;
+      float bright=0;
       file >> bright;
       this->setBrightness(bright);
     } else if (str == "keyboard:") {
       string keyname;
-      int key;
+      int key=0;
       file >> keyname;
       file >> key;
       this->setKey(keyname, (EMKey)key);
@@ -236,7 +245,7 @@ void Config::loadConfig() {
   }
 }
 
-void Config::setSize(int w, int h) { 
+void Config::setSize(int const w, int const h) { 
   m_iWidth = EM_MIN(1600, EM_MAX(100,w)); 
   m_iHeight = EM_MIN(1200, EM_MAX(100,h)); 
   m_iWidthDiv2 = m_iWidth/2;
@@ -251,7 +260,13 @@ void Config::loadArgs(int & argc, char *argv[]) {
   // Parse and remove arguments, arguments are removed so the main program does not see them
   // E.g. if a program wants to load a file the file name will always be arg 1
   // regardless of 'emilia' arguments.
-#define REMOVEARG(a, argc, argv) for (int aa=a ;aa < argc-1; aa++) argv[aa] = argv[aa+1]; argc--;
+#define REMOVEARG(a, argc, argv) { for (int aa=a ;aa < argc-1; aa++) argv[aa] = argv[aa+1]; argc--; } //!+rzr added scope for msvc
+
+
+#ifdef RZR_PATHRELATIVE
+//!+rzr this workaround Full path to relative ones, usefull for windows port
+  setPaths( argv[0] );
+#endif //!-rzr
 
   int a = 1;
   while (a < argc) { 
@@ -265,8 +280,8 @@ void Config::loadArgs(int & argc, char *argv[]) {
       REMOVEARG(a, argc, argv);
     } else if (strcmp(argv[a], "-size") == 0) {
       if (argc > a+2) {
-	int w = atoi(argv[a+1]);
-	int h = atoi(argv[a+2]);
+        int const w= atoi(argv[a+1]);
+	int const h = atoi(argv[a+2]);
 	this->setSize(w, h);
 	EM_COUT("Using size = " << m_iWidth <<","<< m_iHeight, 1);
 	REMOVEARG(a, argc, argv);
@@ -319,3 +334,53 @@ void Config::loadArgs(int & argc, char *argv[]) {
 #undef REMOVEARG
 }
 
+///!+rzr this workaround Full path to relative ones, usefull for windows port
+bool isAbsolutePath(char const * const argv0 ) //!+rzr
+{
+  //EM_COUT(" check root drive c:\\ // absolute path -  check for wine ?", 42);
+#ifdef WIN32
+ // assert (strlen (argv0) > 3 );
+  if ( ( *(argv0 +1) == ':' ) && ( *(argv0 +2)  == '\\' ) )
+    return  true;
+#endif 
+  if ( *argv0  == '/' )  // WIN32 @ unix wine/ cygwine
+    return true;
+  // check for macs, amigas  etc
+  return false;
+}
+/// TODO; make it more robust for stranges paths 
+/// (ie "c:\\d/i//r\like\\\\this/\\/") , wine virtual pc etc
+void Config::setPaths(char const * const argv0) {
+  EM_COUT("+ Config::getFullPath",0); 
+  //!+rzr : make it work also in relative paths use
+  // and "/long path/brackets" etc
+  //EM_COUT( argv0 , 0);
+  m_sDataDir = EM_DATADIR;
+  
+  if ( *( m_sDataDir.c_str() ) != '/' ) {
+    char* ptr=0; 
+    EM_COUT("relative to exe file",42);
+#ifdef WIN32
+    ptr = (strrchr(argv0,'\\')); 
+#endif
+    if ( ptr == 0 ) ptr = (strrchr(argv0,'/')); // unix /cygwin / check win32 
+    //    assert( (*ptr != 0) );
+    string path( argv0 , ptr - argv0 );
+    EM_COUT( path , 42);    
+    if ( isAbsolutePath( argv0 ) ) {
+      m_sDataDir = path + "/" + EM_DATADIR; 
+    } else {  
+      EM_COUT("relative path from cwd",42);
+      char cwd[256]; getcwd(cwd,256); //check for buffer overload!!!
+      m_sDataDir = string(cwd) + "/" +  path + "/" + EM_DATADIR;
+    }
+  } else { m_sDataDir =  EM_DATADIR; }
+  m_sDataSubDir = m_sDataDir + "/" + m_sSubDir;
+#ifdef WIN32 // !+rzr Path are backlashed 
+  // but works fine that way on wine and win98
+  // m_sDataSubDir.replace (  m_sDataSubDir.find(/,0) , 1,   \\  );
+  // m_sDataDir.replace (  m_sDataDir.find(\\,0) , 1,   /  );
+#endif 
+  EM_COUT( m_sDataDir, 42);
+  EM_COUT("- Config::getFullPath",0);
+} //!-rzr

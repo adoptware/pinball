@@ -12,13 +12,24 @@
 
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <unistd.h>
-#include <dirent.h>
 #include <cstring>
 #include <cstdlib>
 #include <ctime>
 
-#include "Private.h"
+#ifdef _MSC_VER //!+rzr : maybe we can use a portable IO lib such as physicfs
+#include <io.h> //find
+#include <direct.h> //getcwd
+#else
+#include <dirent.h>
+#endif 
+
+#include "Private.h" // macro flags defined here
+
+#ifdef HAVE_UNISTD_H 
+#include <unistd.h> // not in msvc
+#endif //!-rzr
+
+
 #include "Pinball.h"
 #include "Keyboard.h"
 #include "Menu.h"
@@ -172,11 +183,21 @@ protected:
     default: w = 640; h = 480;
     }
     if (config->getWidth() != w) {
+#ifdef WIN32  //!+-rzr 
+      //cout<<("Workround bug (for WIN32) + macosx etc");
+      textureutil->freeTextures();
+#endif
 #if EM_USE_SDL
       SDL_SetVideoMode(w, h, config->getBpp(), 
 		       SDL_OPENGL | (config->useFullScreen() ? SDL_FULLSCREEN : 0));
-#endif
+
+#endif // SDL
       textureutil->resizeView(w, h);
+#ifdef WIN32
+      string filename = Config::getInstance()->getDataDir() + string("/font_34.png");
+      //cout<<filename<<endl;
+      EmFont::getInstance()->loadFont(filename.c_str());
+#endif //!-rzr
     }
     config->setSize(w, h);
 		
@@ -386,12 +407,34 @@ MenuItem* createMenus(Engine * engine) {
 
   // create one entry for each directory
   // TODO scrolling text if to many tables
+#ifdef _MSC_VER //!+rzr : thanx to ramlaid ;)
+  struct _finddata_t dirFile;
+  long hFile=0;
+  char cwd[256];
+  if (getcwd(cwd,256) != NULL)  {
+    chdir(Config::getInstance()->getDataDir());
+    if( (hFile = _findfirst( "*", &dirFile )) != NULL ) {
+      do {
+        if ((dirFile.attrib & _A_SUBDIR) != 0) 	{
+          if (strcmp(".", dirFile.name) != 0 
+              && strcmp("..", dirFile.name) != 0) {
+            MenuFct* menufct = new MyMenuLoad(dirFile.name, NULL, engine);
+            menuload->addMenuItem(menufct);
+          }
+        }
+      }
+      while( _findnext( hFile, &dirFile ) == 0 );
+      chdir(cwd);
+      _findclose( hFile );
+    }
+  }
+#else
   DIR * datadir = opendir(Config::getInstance()->getDataDir());
   char cwd[256];
   if (datadir != NULL && getcwd(cwd, 256) != NULL) {
     struct dirent * entry;
     struct stat statbuf;
-    cerr<<  Config::getInstance()->getDataDir() <<endl; //!+rzr
+    //cerr<<  Config::getInstance()->getDataDir() <<endl; //!+rzr
     chdir(Config::getInstance()->getDataDir());
     while ((entry = readdir(datadir)) != NULL) {
       lstat(entry->d_name, &statbuf);
@@ -405,7 +448,7 @@ MenuItem* createMenus(Engine * engine) {
     chdir(cwd);
     closedir(datadir);
   }
-
+#endif //!+rzr
   menuview = new MenuChoose(engine);
   menuview->addText(  "view:        standard");
   menuview->addText(  "view:             top");
@@ -512,6 +555,7 @@ MenuItem* createMenus(Engine * engine) {
 
 /** Main */
 int main(int argc, char *argv[]) {
+  //cerr<<"+ Pinball::main"<<endl;
   try {
     // Create a engine and parse emilia arguments
     Config::getInstance()->loadConfig();

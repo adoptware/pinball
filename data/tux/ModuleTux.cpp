@@ -280,13 +280,13 @@ public:
     ElseOnSignal( PBL_SIG_LEFTARM_ON ) {
       // BOOT
       bool tmp = m_aBoot[0];
-      for (int a=0; a<3; ++a) {
+	 for (int a=0; a<3; ++a) {
 	if (m_aBoot[a] != m_aBoot[a+1]) {
 	  m_aBoot[a] = m_aBoot[a+1];
 	  if (m_aBoot[a]) SendSignal(m_sigBootOn[a], 0, this->getParent(), NULL);
 	  else SendSignal(m_sigBootOff[a], 0, this->getParent(), NULL);
-	}
-      }
+	} 
+      } 
       if (m_aBoot[3] != tmp) {
 	m_aBoot[3] = tmp;
 	if (m_aBoot[3]) SendSignal(m_sigBootOn[3], 0, this->getParent(), NULL);
@@ -294,13 +294,13 @@ public:
       }
       // LINUX
       tmp = m_aLinux[0];
-      for (int a=0; a<4; ++a) {
-	if (m_aLinux[a] != m_aLinux[a+1]) {
-	  m_aLinux[a] = m_aLinux[a+1];
-	  if (m_aLinux[a]) SendSignal(m_sigLinuxOn[a], 0, this->getParent(), NULL);
-	  else SendSignal(m_sigLinuxOff[a], 0, this->getParent(), NULL);
+	   for (int aa=0; aa<4; ++aa) {
+	if (m_aLinux[aa] != m_aLinux[aa+1]) {
+	  m_aLinux[aa] = m_aLinux[aa+1];
+	  if (m_aLinux[aa]) SendSignal(m_sigLinuxOn[aa], 0, this->getParent(), NULL);
+	  else SendSignal(m_sigLinuxOff[aa], 0, this->getParent(), NULL);
 	}
-      }
+      } 
       if (m_aLinux[4] != tmp) {
 	m_aLinux[4] = tmp;
 	if (m_aLinux[4]) SendSignal(m_sigLinuxOn[4], 0, this->getParent(), NULL);
@@ -310,13 +310,13 @@ public:
     ElseOnSignal( PBL_SIG_RIGHTARM_ON ) {
       // BOOT
       bool tmp = m_aBoot[3];
-      for (int a=3; a>0; --a) {
+      { for (int a=3; a>0; --a) {
 	if (m_aBoot[a] != m_aBoot[a-1]) {
 	  m_aBoot[a] = m_aBoot[a-1];
 	  if (m_aBoot[a]) SendSignal(m_sigBootOn[a], 0, this->getParent(), NULL);
 	  else SendSignal(m_sigBootOff[a], 0, this->getParent(), NULL);
 	}
-      }
+      } }
       if (m_aBoot[0] != tmp) {
 	m_aBoot[0] = tmp;
 	if (m_aBoot[0]) SendSignal(m_sigBootOn[0], 0, this->getParent(), NULL);
@@ -324,13 +324,13 @@ public:
       }
       // LINUX
       tmp = m_aLinux[4];
-      for (int a=4; a>0; --a) {
+      { for (int a=4; a>0; --a) {
 	if (m_aLinux[a] != m_aLinux[a-1]) {
 	  m_aLinux[a] = m_aLinux[a-1];
 	  if (m_aLinux[a]) SendSignal(m_sigLinuxOn[a], 0, this->getParent(), NULL);
 	  else SendSignal(m_sigLinuxOff[a], 0, this->getParent(), NULL);
 	}
-      }
+      } }
       if (m_aLinux[0] != tmp) {
 	m_aLinux[0] = tmp;
 	if (m_aLinux[0]) SendSignal(m_sigLinuxOn[0], 0, this->getParent(), NULL);
