@@ -30,11 +30,13 @@ TriClass::TriClass() {
 	this->add(1, -1, 0, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f);
 	this->add(-1, -1, 0, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f);
 	this->add(0, 1, 0, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f);
+	this->add(1, 1, 0, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f);
 
 	Polygon * p = new Polygon(this, 3);
 	p->add(0);
 	p->add(1);
 	p->add(2);
+	p->add(3);
 	this->add(p);
 
 	this->countNormals();
