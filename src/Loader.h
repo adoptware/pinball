@@ -10,5 +10,6 @@
 #define LOADER_H
 
 int loadFile(const char * fn, Engine * engine);
+int newloadFile(const char * fn, Engine * engine);
 
 #endif // LOADER_H

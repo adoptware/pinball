@@ -5,20 +5,6 @@ walls
  0 0 0
  0 0 0
 end
-rightarm
- data/arm.emi
- data/arm.emi
- 6.5 0 21
- 0 0 0
- 0 0 0
-end
-leftarm
- data/arm.emi
- data/arm.emi
- -6.5 0 21
- 0 0 0
- 0 0 0
-end
 bumper
 ?
 ?
@@ -67,6 +53,26 @@ bumper
  0 0 0
  light
  0 4 0
+ 1 1 1
+end
+bumper
+?
+?
+ -2 0 30
+ 0 0 0
+ 0 0 0
+ light
+ 0 4 0
+ 1 1 1
+end
+bumper
+?
+?
+ 2 0 30
+ 0 0 0 
+ 0 0 0 
+ light
+ 0 4 0 
  1 1 1
 end
 bumper
