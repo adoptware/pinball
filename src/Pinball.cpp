@@ -405,6 +405,19 @@ MenuItem* createMenus(Engine * engine) {
   MenuSub* menukey = new MenuSub("keyboard", engine);
   menucfg->addMenuItem(menukey);
 
+  string filename = string(Config::getInstance()->getDataSubDir()) + "/splash.png";
+  EmTexture * tex = TextureUtil::getInstance()->loadTexture(filename.c_str());
+  if (tex != NULL) {
+		menu->setBackground(tex);
+		menuload->setBackground(tex);
+		menucfg->setBackground(tex);
+		menugfx->setBackground(tex);
+		menuaudio->setBackground(tex);
+		menukey->setBackground(tex);
+	} else {
+		cerr << "Error loading data/splash.png" << endl;
+	}
+
   // create one entry for each directory
   // TODO scrolling text if to many tables
 #ifdef _MSC_VER //!+rzr : thanx to ramlaid ;)
