@@ -123,6 +123,7 @@ int Loader::getSignal(const char * signal) {
 	if (strncmp(signal, "tilt", 63) == 0) return PBL_SIG_TILT;
 	if (strncmp(signal, "extraball", 63) == 0) return PBL_SIG_EXTRABALL;
 	if (strncmp(signal, "multiball_off", 63) == 0) return PBL_SIG_MULTIBALL_OFF;
+	if (strncmp(signal, "allballs_off", 63) == 0) return PBL_SIG_ALLBALLS_OFF;
 	if (strncmp(signal, "lock1", 63) == 0) return PBL_SIG_LOCK_1;
 	if (strncmp(signal, "lock2", 63) == 0) return PBL_SIG_LOCK_2;
 	if (strncmp(signal, "lock3", 63) == 0) return PBL_SIG_LOCK_3;
@@ -161,6 +162,9 @@ const char * Loader::getSignal(int signal) {
 	case PBL_SIG_NULL : return "null";
 	case PBL_SIG_RESET_ALL : return "reset";
 	case PBL_SIG_TILT : return "tilt";
+	case PBL_SIG_EXTRABALL : return "extraball";
+	case PBL_SIG_MULTIBALL_OFF : return "multiball_off";
+	case PBL_SIG_ALLBALLS_OFF : return "allballs_off";
 	case PBL_SIG_LOCK_1 : return "lock1";
 	case PBL_SIG_LOCK_2 : return "lock2";
 	case PBL_SIG_LOCK_3 : return "lock3";

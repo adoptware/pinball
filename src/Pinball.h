@@ -45,26 +45,6 @@
 
 // #define PBL_SIG__grp_type_act/un    (grp)(type)(0)(1=on,2=off)
 
-#define PBL_SIG_LINUX_L_ON        1101          
-#define PBL_SIG_LINUX_L_OFF       1102          
-#define PBL_SIG_LINUX_I_ON        1201          
-#define PBL_SIG_LINUX_I_OFF       1202          
-#define PBL_SIG_LINUX_N_ON        1301          
-#define PBL_SIG_LINUX_N_OFF       1302          
-#define PBL_SIG_LINUX_U_ON        1401          
-#define PBL_SIG_LINUX_U_OFF       1402          
-#define PBL_SIG_LINUX_X_ON        1501          
-#define PBL_SIG_LINUX_X_OFF       1502          
-#define PBL_SIG_LINUX_ALL         1109
-
-#define PBL_SIG_TUX_T_ON          1601          
-#define PBL_SIG_TUX_T_OFF         1602          
-#define PBL_SIG_TUX_U_ON          1701          
-#define PBL_SIG_TUX_U_OFF         1702          
-#define PBL_SIG_TUX_X_ON          1801          
-#define PBL_SIG_TUX_X_OFF         1802          
-#define PBL_SIG_TUX_ALL           1609
-
 #define PBL_SIG_FACTOR_1          2101
 #define PBL_SIG_FACTOR_2          2201
 #define PBL_SIG_FACTOR_3          2301
@@ -84,51 +64,20 @@
 #define PBL_SIG_BALL3_OFF         3302
 #define PBL_SIG_BALL4_ON          3401
 #define PBL_SIG_BALL4_OFF         3402
-#define PBL_SIG_BALL_ALL_OFF      3109
-
-#define PBL_SIG_LOOP_1_ON         4101
-#define PBL_SIG_LOOP_1_OFF        4102
-#define PBL_SIG_LOOP_2_ON         4201
-#define PBL_SIG_LOOP_2_OFF        4202
-#define PBL_SIG_LOOP_3_ON         4301
-#define PBL_SIG_LOOP_3_OFF        4302
-#define PBL_SIG_LOOP_4_ON         4401
-#define PBL_SIG_LOOP_4_OFF        4402
-#define PBL_SIG_LOOP_5_ON         4501
-#define PBL_SIG_LOOP_5_OFF        4502
-
-#define PBL_SIG_LEFT_STOPPER_ON   4301
-#define PBL_SIG_LEFT_STOPPER_OFF  4302
-#define PBL_SIG_RIGHT_STOPPER_ON  4401
-#define PBL_SIG_RIGHT_STOPPER_OFF 4402
+#define PBL_SIG_ALLBALLS_OFF      3109
 
 #define PBL_SIG_LOCK_1            5101
 #define PBL_SIG_LOCK_2            5201
 #define PBL_SIG_LOCK_3            5301
 #define PBL_SIG_LOCK_4            5401
-#define PBL_SIG_LOCK_RELEASE      5501
-#define PBL_SIG_HEAD              5601
-
-#define PBL_SIG_BOOT_B_ON         7101
-#define PBL_SIG_BOOT_B_OFF        7102
-#define PBL_SIG_BOOT_O_ON         7201
-#define PBL_SIG_BOOT_O_OFF        7202
-#define PBL_SIG_BOOT_2_ON         7301
-#define PBL_SIG_BOOT_2_OFF        7302
-#define PBL_SIG_BOOT_T_ON         7401
-#define PBL_SIG_BOOT_T_OFF        7402
-#define PBL_SIG_BOOT_ALL          7109
 
 #define PBL_SIG_BUMPER_ON         9101
 
 #define PBL_SIG_JACKPOT           9201
 
-#define PBL_SIG_CAVE_ON           8101
-#define PBL_SIG_CAVE_OFF          8102
-
 /*
 
-#define PBL_SIG_HIT_CAVE    						1002
+#define PBL_SIG_HIT_CAVE    				1002
 #define PBL_SIG_CAVE_OUT 		    		1012
 #define PBL_SIG_ACTIVATE_EXTRABALL 	1003
 #define PBL_SIG_EXTRABALL						1013

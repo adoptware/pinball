@@ -132,6 +132,7 @@ int loadLevel(Engine * engine, const char * subdir) {
 		return -1;
 	}
 	score = Score::getInstance();
+	score->clear();
 	engine->addBehavior(score);
 	// Add a camera.
 	Group* groupCR = new Group();
