@@ -1,4 +1,4 @@
-//#ident "$Id: Menu.cpp,v 1.13 2003/06/13 13:39:34 rzr Exp $"
+//#ident "$Id: Menu.cpp,v 1.14 2003/06/18 10:43:45 henqvist Exp $"
 /***************************************************************************
                           Menu.cpp  -  description
                              -------------------
@@ -46,11 +46,11 @@ void MenuSub::addMenuItem(MenuItem * menu) {
 }
 
 int MenuSub::perform() {
-  EM_COUT("MenuSub::perform() " << this->getText(), 1)
-    
-    if (m_vMenuItem.size() == 0) {
-      return m_iAction;
-    }
+  EM_COUT("MenuSub::perform() " << this->getText(), 1);
+  
+  if (m_vMenuItem.size() == 0) {
+    return m_iAction;
+  }
   
   int ret = 0;
   
@@ -65,6 +65,11 @@ int MenuSub::perform() {
     this->draw();
     
     key = Keyboard::waitForKey();
+    // escape, exit current menu (go back to previous)
+    if (key == SDLK_ESCAPE) {
+      return EM_MENU_NOP;
+    }
+    // menu chossen, do something
     if (key == SDLK_RETURN) {
       ret = m_vMenuItem[m_iCurrent]->perform();
       switch (ret) {
@@ -287,4 +292,4 @@ int MenuInput::perform() {
 
   return m_iAction;;
 }
-//EOF: $Id: Menu.cpp,v 1.13 2003/06/13 13:39:34 rzr Exp $
+//EOF: $Id: Menu.cpp,v 1.14 2003/06/18 10:43:45 henqvist Exp $
