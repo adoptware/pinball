@@ -4,6 +4,10 @@
     begin                : Fri Jan 26 2001
     copyright            : (C) 2001 by Henrik Enqvist
     email                : henqvist@excite.com
+
+    modifs
+    20030510  pnf        : Send message to signal ExtraBall.
+
  ***************************************************************************/
 
 #include "Private.h"
