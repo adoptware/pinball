@@ -26,10 +26,6 @@ public:
 	~ProfessorBehavior() {};
 
 	void onTick() {
-		if (Keyboard::isKeyDown(SDLK_RETURN)) {
-			cerr << "active "<< Score::getInstance()->active() << 
-				" locked " << Score::getInstance()->locked() << endl;
-		}
 		// launch ball
 		if (Score::getInstance()->active() == 0 && 
 				Score::getInstance()->getCurrentBall() < 4 

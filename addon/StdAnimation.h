@@ -66,6 +66,7 @@ class StdAnimation : public Behavior {
 		/** Sets the end point to the first point. */
 		void setEndStart();
 		inline void setStep(int s) {	m_iStep = s; };
+		inline int getStep() { return m_iStep; };
 		inline void setAnimType(int t) { m_iAnimType = t; };
 		inline void clear() { m_vVertex.clear(); };
 		void StdOnSignal() {};
