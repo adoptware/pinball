@@ -56,12 +56,12 @@ TriggerBehavior::~TriggerBehavior(){
 
 void TriggerBehavior::setTexCoordAct() {
 	SET_TEX(m_vTexCoordAct);
-	EM_COUT("TriggerBehavior::setTexCoordAct()", 1);
+	EM_COUT("TriggerBehavior::setTexCoordAct()", 0);
 }
 
 void TriggerBehavior::setTexCoordUn() {
 	SET_TEX(m_vTexCoordUn);
-	EM_COUT("TriggerBehavior::setTexCoordUn()", 1);
+	EM_COUT("TriggerBehavior::setTexCoordUn()", 0);
 }
 
 #undef SET_TEX
@@ -69,7 +69,7 @@ void TriggerBehavior::setTexCoordUn() {
 void TriggerBehavior::onTick() {
 	m_iTick++;
 	if (!m_bActive) {
-		if (m_iTick < m_iMoveEnd) {
+		if (m_iTick < m_iMoveEnd && m_bMove) {
 			m_vtxRot.x += m_vtxActRot.x;
 			m_vtxRot.y += m_vtxActRot.y;
 			m_vtxRot.z += m_vtxActRot.z;
@@ -77,7 +77,7 @@ void TriggerBehavior::onTick() {
 		}
 		//&& p_Light != NULL) p_Light->setOn(false);
 	} else {
-		if (m_iTick < m_iMoveEnd) {
+		if (m_iTick < m_iMoveEnd && m_bMove) {
 			m_vtxRot.x += m_vtxUnRot.x;
 			m_vtxRot.y += m_vtxUnRot.y;
 			m_vtxRot.z += m_vtxUnRot.z;
@@ -91,19 +91,21 @@ void TriggerBehavior::StdOnSignal() {
 		m_bActive = m_bInit;
 		if (m_bInit) { 
 			m_bActive = true;
-			SetLightOn();
+			SetLightOn(true);
 			if (m_bTexCoord) this->setTexCoordAct();
 		} else {
 			m_bActive = false;
-			SetLightOff();
+			SetLightOn(false);
 			if (m_bTexCoord) this->setTexCoordUn();
 		}
-		p_Parent->setRotation(0,0,0);
+		if (m_bMove) {
+			p_Parent->setRotation(0,0,0);
+		}
 	} else
 	OnSignal( m_iActiveSignal) {
 		if (!m_bActive) {
 			m_bActive = true;
-			SetLightOn();
+			SetLightOn(true);
 			if (m_bTexCoord) this->setTexCoordAct();
 			if (m_bMove) {
 				m_iMoveEnd = m_iTick + 20;
@@ -113,7 +115,7 @@ void TriggerBehavior::StdOnSignal() {
 	OnSignal( m_iUnActiveSignal) {
 		if (m_bActive) {
 			m_bActive = false;
-			SetLightOff();
+			SetLightOn(false);
 			if (m_bMove) {
 				m_iMoveEnd = m_iTick + 20;
 			}

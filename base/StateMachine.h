@@ -17,6 +17,7 @@
 #define StdOnTick()       onTick()
 
 #define OnCallerProperty(a)	if ( em_group != NULL && ( em_group->getUserProperties() & a ) )
+#define GetCallerProperty() em_group->getUserProperties()
 #define OR_CP							|| em_group->getUserProperties() &
 #define AND_CP						&& em_group->getUserProperties() &
 
@@ -33,10 +34,10 @@
 
 #define OnSignal(a) 			if ( em_signal == a )
 #define OR_SI							|| em_signal ==
+#define GetSignal()       em_signal
 //#define AND_SI						&& em_signal ==
 #define SendSignal(a, d, s, r)  SignalSender::getInstance()->addSignal(a, d, s, r)
 
-#define SetLightOn()			if (p_Light != NULL) p_Light->setOn(true)
-#define SetLightOff()			if (p_Light != NULL) p_Light->setOn(false)
+#define SetLightOn(b)			if (p_Light != NULL) p_Light->setOn(b)
 
 #endif // STATEMACHINE_H

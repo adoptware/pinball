@@ -20,17 +20,19 @@ class Node {
 		Node();
 		~Node();
 		void setTransform(float tx, float ty, float tz , float rx, float ry, float rz);
+		void addTransform(float tx, float ty, float tz , float rx, float ry, float rz);
 		void setTranslation(float x, float y, float z);
-		void getTranslation(float & tx, float & ty, float & tz);
+		void getTranslation(float & x, float & y, float & z);
 		void addTranslation(float x, float y, float z);
 		void setRotation(float x, float y, float z);
+		void getRotation(float & x, float & y, float & z);
+		void addRotation(float x, float y, float z);
 
 		Matrix m_mtxSrc;
 		Matrix m_mtxTrans;
 	private:
-		/* Temporary vertices used for caclulation */
-		Vertex3D t_vtxT;
-		Vertex3D t_vtxR;
+		Vertex3D m_vtxT;
+		Vertex3D m_vtxR;
 
 };
 

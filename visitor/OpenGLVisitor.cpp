@@ -44,13 +44,7 @@ void OpenGLVisitor::visit(Group* g) {
 	vector<Shape3D*>::iterator shapeEnd = g->m_vShape3D.end();
 	for ( ; shapeIter != shapeEnd; shapeIter++) {
 		if (EM_SHAPE3D_HIDDEN & (*shapeIter)->m_iProperties) continue;
-		if (EM_SHAPE3D_TRANS & (*shapeIter)->m_iProperties) continue;
-
-		if ((*shapeIter)->m_iProperties & EM_SHAPE3D_DOUBLE) {
-			glDisable(GL_CULL_FACE);
-		} else {
-			glEnable(GL_CULL_FACE);
-		}
+		//if (EM_SHAPE3D_USE_TRANS & (*shapeIter)->m_iProperties) continue;
 
 		// the shape has a texture
 		if ((*shapeIter)->m_Texture != NULL) { 
@@ -76,20 +70,26 @@ void OpenGLVisitor::visit(Group* g) {
 			glAlphaFunc(GL_GREATER, 0.05);
 		}
 
-		if ((*shapeIter)->m_iProperties & EM_SHAPE3D_FLAT) {
-			glShadeModel(GL_FLAT);
-		} else {
-			glShadeModel(GL_SMOOTH);
-		}
+		// TODO Flat polygons
+// 		if ((*shapeIter)->m_iProperties & EM_SHAPE3D_FLAT) {
+// 			glShadeModel(GL_FLAT);
+// 		} else {
+// 			glShadeModel(GL_SMOOTH);
+// 		}
 
-		EM_COUT("OpenGLVisitor::visit() "<< (*shapeIter)->m_vPolygon.size() 
-						<<" polygons", 0);
+		EM_COUT_D("OpenGLVisitor::visit() "<< (*shapeIter)->m_vPolygon.size() <<" polygons", 0);
 		// Clip, project and draw all polygons in Shape3D.
 		vector<Polygon*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
 		vector<Polygon*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
 		for ( ; polyIter != polyEnd; polyIter++) {
 			// if ((*polyIter)->m_iProperties & EM_POLY_HIDDEN) continue;
-			// if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
+			if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
+
+			if ((*polyIter)->m_iProperties & EM_POLY_CCW_VIEW) {
+				glFrontFace(GL_CCW);
+			} else {
+				glFrontFace(GL_CW);
+			}
 
 			if ((*shapeIter)->m_Texture != NULL) { 
 				// textured polygon
@@ -156,11 +156,12 @@ void OpenGLVisitor::visit(Group* g) {
 										 (*shapeIter)->m_vNmlTrans[(*indexIter)].y,
 										 (*shapeIter)->m_vNmlTrans[(*indexIter)].z);
 #else
-					if ((*shapeIter)->m_iProperties & EM_SHAPE3D_FLAT) {
-						glColor3f((*colorIter).r * (*polyIter)->m_colFlatLight.r, 
-											(*colorIter).g * (*polyIter)->m_colFlatLight.g,
-											(*colorIter).b * (*polyIter)->m_colFlatLight.b);
-					} else {
+// 					if ((*shapeIter)->m_iProperties & EM_SHAPE3D_FLAT) {
+// 						glColor3f((*colorIter).r * (*polyIter)->m_colFlatLight.r, 
+// 											(*colorIter).g * (*polyIter)->m_colFlatLight.g,
+// 											(*colorIter).b * (*polyIter)->m_colFlatLight.b);
+// 					} else 
+					{
 						glColor3f((*colorIter).r * (*shapeIter)->m_vLight[(*indexIter)].r +	
 											(*shapeIter)->m_vSpecular[(*indexIter)].r,
 											(*colorIter).g * (*shapeIter)->m_vLight[(*indexIter)].g +
@@ -174,13 +175,13 @@ void OpenGLVisitor::visit(Group* g) {
 										 (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
 										 (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
 
-					EM_COUT("Specular " << (*shapeIter)->m_vSpecular[(*indexIter)].r << " "
+					EM_COUT_D("Specular " << (*shapeIter)->m_vSpecular[(*indexIter)].r << " "
 									<< (*shapeIter)->m_vSpecular[(*indexIter)].g << " "
 									<< (*shapeIter)->m_vSpecular[(*indexIter)].b << endl, 0);
-					EM_COUT("Light " << (*shapeIter)->m_vLight[(*indexIter)].r << " "
+					EM_COUT_D("Light " << (*shapeIter)->m_vLight[(*indexIter)].r << " "
 									<< (*shapeIter)->m_vLight[(*indexIter)].g << " "
 									<< (*shapeIter)->m_vLight[(*indexIter)].b << endl, 0);
-					EM_COUT("Vertex " << (*shapeIter)->m_vVtxAlign[(*indexIter)].x << " " 
+					EM_COUT_D("Vertex " << (*shapeIter)->m_vVtxAlign[(*indexIter)].x << " " 
 									<< (*shapeIter)->m_vVtxAlign[(*indexIter)].y << " " 
 									<< (*shapeIter)->m_vVtxAlign[(*indexIter)].z << endl, 0);
 				}
@@ -236,7 +237,7 @@ void OpenGLVisitor::visit(Group* g) {
 							 b->m_vtxAlign.z);
 		glEnd();
 
-		EM_COUT("OpenGLVisitor::visit() BillBoard at " << b->m_vtxAlign.x <<" "<<
+		EM_COUT_D("OpenGLVisitor::visit() BillBoard at " << b->m_vtxAlign.x <<" "<<
 						b->m_vtxAlign.y <<" "<< b->m_vtxAlign.z, 0);
 
 		glDisable(GL_TEXTURE_2D);

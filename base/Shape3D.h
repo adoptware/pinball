@@ -11,11 +11,11 @@
 
 //#define E_ALLWAYS_LIT 1
 #define EM_SHAPE3D_HIDDEN 1
-#define EM_SHAPE3D_TRANS 2
+#define EM_SHAPE3D_USE_TRANS 2
 #define EM_SHAPE3D_ALPHATEST 4
 #define EM_SHAPE3D_SPECULAR 8
-#define EM_SHAPE3D_FLAT 16
-#define EM_SHAPE3D_DOUBLE 32
+//#define EM_SHAPE3D_FLAT 16
+//#define EM_SHAPE3D_DOUBLE 32
 
 #include "Private.h"
 
@@ -37,7 +37,7 @@ class Shape3D {
 		int add(float x, float y, float z);
 		void add(Polygon*);
 		void countNormals();
-		void setColor(float a, float r, float g, float b);
+		void setColor(float r, float g, float b, float a);
 		void setPolygonProperty(int property);
 		void unsetPolygonProperty(int property);
 		void setProperty(int property);

@@ -49,25 +49,12 @@
 
 #define FPS 50 // req 100 50 33 25 20
 
-#if EM_DEBUG
-#define CHECK_MUTEX() 	\
-if (g_mutexRender == NULL) { \
-	throw string("Engine::startRenderThread() mutex not created, check that your not using an external OpenGL renderer."); \
-}
-#else
-#define CHECK_MUTEX()
-#endif
-
-
-SDL_mutex * g_mutexRender = NULL;
-SDL_Thread * g_threadRender = NULL;
-volatile bool g_bRender = true;
-
 volatile int g_iStartTime = -1;
 volatile int g_iDesiredTime = -1;
 
 volatile int g_iLoops = 0;
 volatile int g_iSeconds = 0;
+volatile float g_fFps = 0;
 
 volatile int g_aFunction[20] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 volatile int g_iCurrentFct = 0;
@@ -76,7 +63,13 @@ volatile int g_iCurrentFct = 0;
 Uint32 fctCallBack(Uint32 interval) {
 	g_iSeconds++;
   g_aFunction[g_iCurrentFct]++;
-  return interval;
+	if (g_iSeconds == 50) {
+		g_fFps = (float)g_iLoops*10.0f / ((float)g_iSeconds);
+		g_iSeconds = 0;
+		g_iLoops = 0;
+		cerr << g_fFps << endl;
+	}
+  return interval;	
 }
 #endif // EM_DEBUG
 
@@ -89,7 +82,7 @@ Engine::Engine(int & argc, char *argv[]) {
 	if (!config->useExternGL()) {
 		this->initGrx();
 #if EM_DEBUG
-		SDL_SetTimer(100, fctCallBack); 
+		SDL_SetTimer(100, fctCallBack); // 10 ticks per sec
 #endif
 	}
 	if (config->useSound()) {
@@ -97,12 +90,9 @@ Engine::Engine(int & argc, char *argv[]) {
 	}
 
   srand((unsigned int)time((time_t *)NULL));
-
-	g_mutexRender = SDL_CreateMutex();
 }
 
 Engine::~Engine() {
-	SDL_DestroyMutex(g_mutexRender);
 	SDL_Quit();
 
 #if EM_DEBUG	
@@ -125,7 +115,7 @@ Engine::~Engine() {
 	cerr << "Function tick out " << g_aFunction[TICK_OUT] << endl;
 	//	cerr << "Seconds " << ((float)g_iSeconds/FPS) <<" " << ((float)g_iLoops*FPS/g_iSeconds) 
 	//			 << " fps" << endl;
-	cerr << "Fps " << (float)(g_iLoops)*1000 / (SDL_GetTicks()-g_iStartTime) << endl;
+	// cerr << "Fps " << (float)(g_iLoops)*1000 / (SDL_GetTicks()-g_iStartTime) << endl;
 #endif
 }
 
@@ -273,50 +263,6 @@ void Engine::setEngineCamera(Group* g) {
 	TransformVisitor::getInstance()->setCamera(g);
 }
 
-/* The startRenderThread starts this function as a thread */
-int fctRender(void * data) {
-	Engine * engine = (Engine *) data;
-
-	engine->initGrx();
-
-	while (g_bRender) {
-		SDL_mutexP(g_mutexRender);
-		
-		engine->render();
-		engine->swap();
-		
-		SDL_mutexV(g_mutexRender);
-
-		EM_COUT("render", 1);
-		SDL_Delay(10);
-	}
-	return 0;
-}
-
-void Engine::startRenderThread() {
-	CHECK_MUTEX();
-	g_bRender = true;
-	g_threadRender = SDL_CreateThread(fctRender, (void *) this);
-}
-
-void Engine::pauseRenderThread() {
-	CHECK_MUTEX();
-	SDL_mutexP(g_mutexRender);
-}
-
-void Engine::resumeRenderThread() {
-	CHECK_MUTEX();
-	SDL_mutexV(g_mutexRender);
-}
-
-void Engine::stopRenderThread() {
-	CHECK_MUTEX();
-	int status;
-	g_bRender = false;
-	EM_COUT("waiting for render thread", 1);
-	SDL_WaitThread(g_threadRender, &status);
-}
-
 void Engine::render() {
 	EM_COUT("Engine::render()", 0);
 	// Put some overall light.
@@ -364,10 +310,7 @@ void Engine::swap() {
 	// Draw to screen.
 	SDL_GL_SwapBuffers();
 
-	GLenum error = glGetError();
-	if( error != GL_NO_ERROR ) {
-		EM_COUT("OpenGL error: " << error << endl, 10);
-	}
+	EM_GLERROR(" In Engine::swap ");
 	g_iCurrentFct = SWAP_OUT;
 }
 
@@ -388,13 +331,11 @@ void Engine::tick() {
 	BehaviorVisitor::getInstance()->empty();
 	this->accept(BehaviorVisitor::getInstance());
 
-	SDL_mutexP(g_mutexRender);
 	// Calculate positions
 	EM_COUT("Engine::tick() trans", 0);
 	g_iCurrentFct = TRANS;
 	TransformVisitor::getInstance()->empty();
 	this->accept(TransformVisitor::getInstance());
-	SDL_mutexV(g_mutexRender);
 
 	// Detect collision.
 	EM_COUT("Engine::tick() collision", 0);
@@ -424,9 +365,10 @@ bool Engine::limitFPS(int fps) {
 	g_iDesiredTime += delay;
 	int time = SDL_GetTicks();
 	int realdelay = (g_iDesiredTime - time);
-	if (realdelay < -1000) {
-		cerr << "TO SLOW" << endl;
+	if (realdelay < -500) {
+		EM_COUT("TO SLOW", 1);
 		g_iDesiredTime = time;
+		return true;
 	} else if (realdelay < 0) {
 		return false;
 	} else {

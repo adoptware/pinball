@@ -1,8 +1,8 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(base/Engine.cpp)
 
-dnl CXXFLAGS="-g"
-dnl CFLAGS="-g"
+dnl CXXFLAGS="-g -W -Wall -O2"
+dnl CFLAGS="-g -W -Wall -O2"
 
 AM_CONFIG_HEADER(conf.h)
 
@@ -11,7 +11,7 @@ SDL_VERSION=1.2.0
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 
-AM_INIT_AUTOMAKE(pinball, 0.0.1)
+AM_INIT_AUTOMAKE(pinball, 0.0.2)
 
 dnl Checks for programs.
 AC_PROG_CC
@@ -20,7 +20,7 @@ AC_PROG_INSTALL
 AC_PROG_RANLIB
 dnl AC_LANG_CPLUSPLUS
 
-dnl Figure out which math library to use
+dnl Figure out which math and GL library to use
 case "$target" in
     *-*-cygwin* | *-*-mingw32*)
         	MATHLIB=""
@@ -76,8 +76,9 @@ GL_LIBS="$SYS_GL_LIBS"
 
 AC_SUBST(GL_LIBS)
 
-dnl TODO sdl_image in source
-LIBS="$GL_LIBS $LIBS -lSDL_image"
+dnl TODO sdl_image in source - DONE!
+dnl LIBS="$GL_LIBS $LIBS -lSDL_image"
+LIBS="$GL_LIBS $LIBS -lpng"
 
 dnl Checks for header files.
 AC_HEADER_STDC

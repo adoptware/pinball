@@ -6,15 +6,18 @@
     email                : henqvist@excite.com
  ***************************************************************************/
 
-#include <stdlib.h>
 #include "BounceBehavior.h"
 #include "Group.h"
 #include "Pinball.h"
 #include "Keyboard.h"
+#include "StateBehavior.h"
+#include "CaveBehavior.h"
+#include "Score.h"
+#include <string>
 
-#define MAX_SPEED 0.7f
-#define MAX_SPEED_Y_DOWN (MAX_SPEED*0.2f)
-#define SPEED_FCT 1.1f
+#define MAX_SPEED 0.5f
+#define MAX_SPEED_Y_DOWN (MAX_SPEED*0.5f)
+#define SPEED_FCT 0.6f
 #define Y_GRAVITY -(SPEED_FCT*0.005f) // -SPEED_FCT/200
 #define Z_GRAVITY (SPEED_FCT*0.002f) //  SPEED_FCT/500
 #define BORDER (SPEED_FCT*0.05f)
@@ -37,7 +40,7 @@
 BounceBehavior::BounceBehavior(int ball) {
 	m_iBall = ball;
 	m_bAlive = false;
-	m_bKnock = false;
+	m_iKnock = 0;
 	m_vtxDir.x = 0.0;
 	m_vtxDir.y = 0.0;
 	m_vtxDir.z = 0.0;
@@ -52,6 +55,7 @@ BounceBehavior::BounceBehavior(int ball) {
 	case PBL_BALL_3: if (p_Parent != NULL) p_Parent->setTranslation(-12, 0, 34); break;
 	default: if (p_Parent != NULL) p_Parent->setTranslation(-16, 0, 34);
 	}
+	this->setType(PBL_TYPE_BOUNCEBEH);
 }
 
 BounceBehavior::~BounceBehavior() {
@@ -96,8 +100,8 @@ void BounceBehavior::StdOnSignal() {
 	}
 	OnSignal( PBL_SIG_BALL2_ON ) {
 		if (m_iBall == PBL_BALL_2) {
-			ACTIVATE_BALL
-				}
+			ACTIVATE_BALL;
+		}
 	}
 	OnSignal( PBL_SIG_BALL3_ON ) {
 		if (m_iBall == PBL_BALL_3) {
@@ -121,37 +125,35 @@ void BounceBehavior::onTick() {
 
 	// debug stuff
 #if EM_DEBUG
-	if (Keyboard::isKeyDown(SDLK_i)) m_vtxDir.z -= 0.01f;
-	if (Keyboard::isKeyDown(SDLK_k)) m_vtxDir.z += 0.01f;
-	if (Keyboard::isKeyDown(SDLK_j)) m_vtxDir.x -= 0.01f;
-	if (Keyboard::isKeyDown(SDLK_l)) m_vtxDir.x += 0.01f;
+	if (Keyboard::isKeyDown(SDLK_i)) m_vtxDir.z -= 0.005f;
+	if (Keyboard::isKeyDown(SDLK_k)) m_vtxDir.z += 0.005f;
+	if (Keyboard::isKeyDown(SDLK_j)) m_vtxDir.x -= 0.005f;
+	if (Keyboard::isKeyDown(SDLK_l)) m_vtxDir.x += 0.005f;
+#endif
 
 	if (Keyboard::isKeyDown(SDLK_v)) return;
 
 	// TODO: better table bump
-	if (Keyboard::isKeyDown(SDLK_SPACE)) {
-		if (!m_bKnock) {
-			m_bKnock = true;
-			m_vtxDir.z -= SPEED_FCT*0.2f;
-		}
-	} else {
-		m_bKnock = false;
+	if (Keyboard::isKeyDown(SDLK_SPACE) && m_iKnock < 1) {
+		m_iKnock = 100;
+		m_vtxDir.z -= SPEED_FCT*0.2f;
+		m_vtxDir.x -= SPEED_FCT*0.001f;
 	}
-#endif
+	m_iKnock--;
+
 	// Gravity
 	m_vtxDir.z += Z_GRAVITY;
+	m_vtxDir.y += Y_GRAVITY;
 	float x, y, z;
 	p_Parent->getTranslation(x, y, z);
 	if (y <= 0) {
-		m_vtxDir.y = 0;
-		p_Parent->setTranslation(x, 0, z);
-	} else {
-		m_vtxDir.y += Y_GRAVITY;
+		p_Parent->addTranslation(0,-y,0);
+		m_vtxDir.y = EM_MAX(m_vtxDir.y, 0);
 	}
-	m_vtxOldDir = m_vtxDir;
 
 	CHECK_SPEED();
 	// move the ball
+	m_vtxOldDir = m_vtxDir;
 	p_Parent->addTranslation(m_vtxDir.x, m_vtxDir.y, m_vtxDir.z);
 
 	if (z > 39) {
@@ -175,49 +177,35 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
 	//p_Parent->addTranslation(-m_vtxDir.x, -m_vtxDir.y, -m_vtxDir.z);
 
 	// we need a wall to do the bouncing on
-	Vertex3D vtxWall, vtxNew;
-	if (vtxW.y > 0.1 || vtxW.y < -0.1) {
-		// this a ramp! use the wall as a base for collision,the ball is actually a cylinder 
-		// so we can not use it with ramps, but look out !!! , using the walls as a base is "evil"
-		// it easily causes the ball to pass through walls 
-		vtxWall.x = vtxW.x;
-		vtxWall.y = vtxW.y;
-		vtxWall.z = vtxW.z;
-	} else {
-		// else use the ball as the base
-		vtxWall.x = -vtxOwn.x;
-		vtxWall.y = 0;
-		vtxWall.z = -vtxOwn.z;
-	}
+	Vertex3D vtxWall;
 
-	EMath::normalizeVector(vtxWall);
-
+	Score::getInstance()->unLockBall(m_iBall);
 	// change direction depending on which type the colliding object is
-	if (pGroup->getUserProperties() & PBL_BUMPER) {
-		if (m_iCollisionPrio > 3) return;
-		m_iCollisionPrio = 3;
-		EMath::reflectionDamp(m_vtxOldDir, vtxWall, m_vtxDir, (float)1.0, (float)SPEED_FCT*0.5, 1, true);
-		EM_COUT("BounceBehavior.onCollision() bumper\n", 0);
-	} else if (pGroup->getUserProperties() & PBL_ACTIVE_ARM) {
-		if (m_iCollisionPrio > 3) return;
-		// add the arm to give more variation to the punch, make the arm smootly curved with lotsa polys
-		vtxWall.x += vtxW.x;
-		vtxWall.z += vtxW.z;
-		EMath::normalizeVector(vtxWall);
-		m_iCollisionPrio = 3;
-		EMath::reflectionDamp(m_vtxOldDir, vtxWall, m_vtxDir, (float)1.0, (float)SPEED_FCT*10, 1, true);
-		// move the ball slightly off the arm
-		p_Parent->addTranslation(0, 0, -0.4);
-		EM_COUT("BounceBehavior.onCollision() active arm\n", 0);
-	} else if (pGroup->getUserProperties() & PBL_TRAP_BOUNCE) {
-		if (m_iCollisionPrio > 3) return;
-		m_iCollisionPrio = 3;
-		// Bbounce ball out of cave, 0 means ignore old speed
-		EMath::reflectionDamp(m_vtxOldDir, vtxW, m_vtxDir, (float)0, (float)SPEED_FCT, 1, true);
-		EM_COUT("BounceBehavior.onCollision() cave bounce\n", 0);
-	} else if (pGroup->getUserProperties() & PBL_TRAP) {
-		if (m_iCollisionPrio > 2) return;
-		m_iCollisionPrio = 2;
+	if (pGroup->getUserProperties() & (PBL_LOCK | PBL_TRAP)) {
+		// trap in
+		Behavior* beh = pGroup->getBehavior(0);
+		EmAssert(beh != NULL, "No behavior");
+		
+		if (beh->getType() == PBL_TYPE_STATEBEH) {
+ 			if (((StateBehavior*)beh)->getOwnerBall() != m_iBall) {
+ 				cerr << ((StateBehavior*)beh)->getOwnerBall() << " != " << m_iBall << endl;
+ 				return;
+ 			}
+		} else if (beh->getType() == PBL_TYPE_CAVEBEH) {
+			// 			if (((CaveBehavior*)beh)->getOwnerBall() != m_iBall) {
+			// 				cerr << ((CaveBehavior*)beh)->getOwnerBall() << " != " << m_iBall << endl;
+			// 				return;
+			// 			}
+		} else {
+			throw string("StateBehavior or CaveBehavior expected");
+		}
+
+		if (pGroup->getUserProperties() & PBL_LOCK) {
+			Score::getInstance()->lockBall(m_iBall);
+		}
+
+		if (m_iCollisionPrio > 5) return;
+		m_iCollisionPrio = 5;
 		float tx, ty, tz;
 		float bx, by, bz;
 		// move the ball slowly towards the center of the cave
@@ -227,47 +215,115 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
 		m_vtxDir.y = 0;
 		m_vtxDir.z = (tz-bz)*0.1;
 		EM_COUT("BounceBehavior.onCollision() cave\n", 0);
+
+	} else if (pGroup->getUserProperties() & PBL_BUMPER) {
+		// bumper
+		if (m_iCollisionPrio > 3) return;
+		m_iCollisionPrio = 3;
+		// use bumper as base
+		EMath::reflectionDamp(m_vtxOldDir, vtxW, m_vtxDir, (float)1.0, (float)SPEED_FCT*0.5, 1, true);
+		EM_COUT("BounceBehavior.onCollision() bumper\n", 0);
+
+	} else if (pGroup->getUserProperties() & PBL_ACTIVE_ARM) {
+		// active arm
+		if (m_iCollisionPrio > 3) return;
+		m_iCollisionPrio = 3;
+		// use the ball as the base
+		vtxWall.x = -vtxOwn.x;
+		vtxWall.y = 0;
+		vtxWall.z = -vtxOwn.z;
+		// add the arm to give more variation to the punch, make the arm smootly curved with lotsa polys
+		vtxWall.x += vtxW.x;
+		vtxWall.z += vtxW.z;
+		EMath::normalizeVector(vtxWall);
+		EMath::reflectionDamp(m_vtxOldDir, vtxWall, m_vtxDir, (float)1.0, (float)SPEED_FCT*10, 1, true);
+		// move the ball slightly off the arm
+		p_Parent->addTranslation(0, 0, -0.4);
+		EM_COUT("BounceBehavior.onCollision() active arm\n", 0);
+
+	} else if (pGroup->getUserProperties() & PBL_TRAP_BOUNCE) {
+		// trap out
+		if (m_iCollisionPrio > 3) return;
+		m_iCollisionPrio = 3;
+		// use the trap polygon as base
+		// Bbounce ball out of cave, 0 means ignore old speed
+		EMath::reflectionDamp(m_vtxOldDir, vtxW, m_vtxDir, (float)0, (float)SPEED_FCT, 1, true);
+		EM_COUT("BounceBehavior.onCollision() cave bounce\n", 1);
+		EM_COUT(vtxW.x << " " << vtxW.y << " " << vtxW.z, 1);
+
 	} else if (pGroup->getUserProperties() & PBL_WALLS_ONE) {
-		if (m_iCollisionPrio > 1) return;
-		m_iCollisionPrio = 1;
+		// oneway wall
+		if (m_iCollisionPrio > 2) return;
+		m_iCollisionPrio = 2;
+		// use wall as base
 		EMath::reflectionDamp(m_vtxOldDir, vtxW, m_vtxDir, (float)0.5, 0, 1);
 		// move the ball slightly off the wall
 		p_Parent->addTranslation(vtxWall.x * BORDER, vtxWall.y * BORDER, vtxWall.z * BORDER);
+
 	} else if (pGroup->getUserProperties() & PBL_UNACTIVE_ARM) {
-		if (m_iCollisionPrio > 1) return;
-		m_iCollisionPrio = 1;
+		// unactive arm
+		if (m_iCollisionPrio > 2) return;
+		m_iCollisionPrio = 2;
+		// use ball as base
+		vtxWall.x = -vtxOwn.x;
+		vtxWall.y = 0;
+		vtxWall.z = -vtxOwn.z;
 		EMath::reflectionDamp(m_vtxOldDir, vtxWall, m_vtxDir, (float)0.2, 0, 1);
 		// move the ball slightly off the wall
-		p_Parent->addTranslation(vtxWall.x * BORDER2, vtxWall.y * BORDER2, vtxWall.z * BORDER2);
+		p_Parent->addTranslation(vtxWall.x * BORDER, vtxWall.y * BORDER, vtxWall.z * BORDER);
 		EM_COUT("BounceBehavior.onCollision() unactive arm\n", 0);
-		EM_COUT("BounceBehavior.onCollision() walls\n" , 0);
+
 	} else if (pGroup->getUserProperties() & PBL_WALLS) {
+		// walls
 		if (m_iCollisionPrio > 1) return;
 		m_iCollisionPrio = 1;
+		if (vtxW.y > 0.2 || vtxW.y < -0.2) {
+			// this a ramp! use the wall as a base for collision,the ball is actually a cylinder 
+			// so we can not use it with ramps, but look out !!! , using the walls as a base is "evil"
+			// it easily causes the ball to pass through walls 
+			vtxWall.x = vtxW.x;
+			vtxWall.y = vtxW.y;
+			vtxWall.z = vtxW.z;
+		} else {
+			// else use the ball as the base
+			vtxWall.x = -vtxOwn.x;
+			vtxWall.y = 0;
+			vtxWall.z = -vtxOwn.z;
+		}
 		EMath::reflectionDamp(m_vtxOldDir, vtxWall, m_vtxDir, (float)0.5, 0, 1);
 		// move the ball slightly off the wall
 		p_Parent->addTranslation(vtxWall.x * BORDER, vtxWall.y * BORDER, vtxWall.z * BORDER);
 		EM_COUT("BounceBehavior.onCollision() walls\n" , 0);
+
 	} else if (pGroup->getUserProperties() & (PBL_BALL_1 | PBL_BALL_2 | PBL_BALL_3 | PBL_BALL_4)) {
+		// ball
 		if (m_iCollisionPrio > 0) return;
 		m_iCollisionPrio = 0;
-		BounceBehavior* beh = (BounceBehavior*) pGroup->getBehavior(0);
-		if (beh != NULL) {
-			Vertex3D vtxDir2, vtxPrj1, vtxPrj2;
-			beh->getDirection(vtxDir2);
-			// the speed given from the other ball to this ball is the projection of the speed
-			// onto the wall
-			EMath::projection(vtxDir2, vtxWall, vtxPrj2);
-			// the speed given from this ball to the other ball is the projection of the speed
-			// onto the inverse wall (which was vtxOwn).
-			EMath::projection(m_vtxOldDir, vtxOwn, vtxPrj1);
-			// From my physics book m1*u1 + m2u2 = m1*v1 + m2*v2. (m1 == m2 in this case)
-			// Gives us v1 = u1 + vtxPrj2 - vtxPrj1. And v2 = u2 + vtxPrj1 - vtxPrj2.
-			m_vtxDir.x += (vtxPrj2.x - vtxPrj1.x);
-			m_vtxDir.y += (vtxPrj2.y - vtxPrj1.y);
-			m_vtxDir.z += (vtxPrj2.z - vtxPrj1.z);
-		}
-		EM_COUT("BounceBehavior.onCollision() ball\n", 0);
+		// use ball as base
+		vtxWall.x = -vtxOwn.x;
+		vtxWall.y = 0;
+		vtxWall.z = -vtxOwn.z;
+
+		Behavior* beh = pGroup->getBehavior(0);
+		EmAssert(beh != NULL && beh->getType() == PBL_TYPE_BOUNCEBEH, "The behavior is not a BounceBeavior");
+
+		Vertex3D vtxDir2, vtxPrj1, vtxPrj2;
+		((BounceBehavior*)beh)->getDirection(vtxDir2);
+		// the speed given from the other ball to this ball is the projection of the speed
+		// onto the wall
+		EMath::projection(vtxDir2, vtxWall, vtxPrj2);
+		// the speed given from this ball to the other ball is the projection of the speed
+		// onto the inverse wall (which was vtxOwn).
+		EMath::projection(m_vtxOldDir, vtxOwn, vtxPrj1);
+		// From my physics book m1*u1 + m2u2 = m1*v1 + m2*v2. (m1 == m2 in this case)
+		// Gives us v1 = u1 + vtxPrj2 - vtxPrj1. And v2 = u2 + vtxPrj1 - vtxPrj2.
+		m_vtxDir.x += (vtxPrj2.x - vtxPrj1.x);
+		m_vtxDir.y += (vtxPrj2.y - vtxPrj1.y);
+		m_vtxDir.z += (vtxPrj2.z - vtxPrj1.z);
+		EM_COUT("BounceBehavior.onCollision() ball\n", 1);
+		// move the ball slightly away the other
+		p_Parent->addTranslation(vtxWall.x * BORDER, vtxWall.y * BORDER, vtxWall.z * BORDER);
+
 	} else {
 		EM_COUT("BounceBehavior.onCollision() unknown\n" ,0);
 	}

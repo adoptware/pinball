@@ -14,9 +14,7 @@
 #include "Light.h"
 #include "StateMachine.h"
 
-/**
- * <p>A behavior for the pinball demo.</p>
- */
+/** A behavior for the pinball demo. */
 
 class CaveBehavior : public Behavior {
 	public:
@@ -25,7 +23,9 @@ class CaveBehavior : public Behavior {
 		void onTick();
 		void StdOnSignal() {};
 		void StdOnCollision();
+		int getBall() { return m_iBall; };
 	private:
+		int m_iBall;
 		int m_iLockCounter;
 		bool m_bLock;
 };

@@ -33,12 +33,12 @@ EmFont * EmFont::getInstance() {
 }
 
 void EmFont::loadFont(char * filename) {
-	m_Font = TextureUtil::loadImage(filename);
+	m_Font = TextureUtil::getInstance()->loadImage(filename);
 	if (m_Font == NULL) {
 		cerr << "Font: " << filename << " not found" << endl;
 		throw string("File not found");
 	}
-	m_Size = m_Font->w;
+	m_Size = m_Font->width;
 	m_Offset = m_Size * m_Size * 3;
 }
 
