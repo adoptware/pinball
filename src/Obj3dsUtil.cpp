@@ -1,4 +1,4 @@
-//#ident "$Id: Obj3dsUtil.cpp,v 1.2 2003/06/01 22:37:44 rzr Exp $" 
+//#ident "$Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $" 
 /** 
  * @author: www.Philippe.COVAL.online.fr - rev: $Author: rzr $
  * 3ds loader wrapper
@@ -36,7 +36,7 @@ extern "C" {
     | grep -v "#include \"" >| /tmp/inl-3ds.c
   */
   //#include "/tmp/inl-3ds.c" //C-x i
-/* #ident "$Id: Obj3dsUtil.cpp,v 1.2 2003/06/01 22:37:44 rzr Exp $" */
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $" */
 /**
  * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
  * Copyright: GPL @ http://rzr.online.fr/licence.htm
@@ -96,8 +96,6 @@ extern "C" {
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-
 
 typedef struct
 {
@@ -240,7 +238,7 @@ void printPoint(Point v)
   printf("{ %d, %d }; \n",v.x,v.y);
 }
 #endif // inclusion
-/* #ident "$Id: Obj3dsUtil.cpp,v 1.2 2003/06/01 22:37:44 rzr Exp $" */
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $" */
 /**
  * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
  * Copyright: GPL @ http://rzr.online.fr/licence.htm
@@ -276,7 +274,7 @@ int fgets_strcmp_token(FILE* f, char* buf) ;
 int fgets_tag(FILE* f, char* buf, char** strarg);
 
 #endif
-/* #ident "$Id: Obj3dsUtil.cpp,v 1.2 2003/06/01 22:37:44 rzr Exp $" */
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $" */
 /**
  * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
  * Copyright: GPL @ http://rzr.online.fr/licence.htm
@@ -721,7 +719,7 @@ int load3dsAscii(char* filename, Object* o)
 }
 
 #endif // inclusion
-/* #ident "$Id: Obj3dsUtil.cpp,v 1.2 2003/06/01 22:37:44 rzr Exp $" */
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $" */
 #ifndef color3ds_h_ 
 #define color3ds_h_ 
 /**
@@ -779,8 +777,8 @@ unsigned int getColorEncoded(unsigned char*r, unsigned char* g,
 int getColorTable(char const * const src, unsigned int * dest);
 
 #endif //_h_ inclusion 
-//$Id: Obj3dsUtil.cpp,v 1.2 2003/06/01 22:37:44 rzr Exp $
-/* #ident "$Id: Obj3dsUtil.cpp,v 1.2 2003/06/01 22:37:44 rzr Exp $" */
+//$Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $" */
 /**
  * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
  * Copyright: GPL @ http://rzr.online.fr/licence.htm
@@ -1027,7 +1025,7 @@ main()
 #endif
 
 #endif //_h_ 
-//EOF $Id: Obj3dsUtil.cpp,v 1.2 2003/06/01 22:37:44 rzr Exp $
+//EOF $Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $
 
 
 //-----------------------------------------------------------------------------
@@ -1282,4 +1280,4 @@ int Obj3dsUtil::write( Group  & in, char const* const filename  )
 
 #endif // RZR_PATCHES_3DS 
 #endif // inclusion 
-//EOF $Id: Obj3dsUtil.cpp,v 1.2 2003/06/01 22:37:44 rzr Exp $
+//EOF $Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $

@@ -1,3 +1,4 @@
+//#ident "$Id: Score.h,v 1.15 2003/06/11 13:25:51 rzr Exp $"
 /***************************************************************************
                           Score.h  -  description
                              -------------------
@@ -62,6 +63,7 @@ class Score : public Behavior  {
   //static Score* p_Score;
 
   bool m_bExtraBall;
+  int m_iHiScore;
 };
 
 #endif // SCORE_H
