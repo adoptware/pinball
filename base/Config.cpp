@@ -19,7 +19,7 @@
 
 #include <cstdio>
 
-#if ( HAVE_UNISTD_H ) // !+rzr: not in msvc
+#if HAVE_UNISTD_H // !+rzr: not in msvc
 #include <unistd.h>
 #endif
 
@@ -281,27 +281,27 @@ void Config::loadArgs(int & argc, char *argv[]) {
     } else if (strcmp(argv[a], "-size") == 0) {
       if (argc > a+2) {
         int const w= atoi(argv[a+1]);
-	int const h = atoi(argv[a+2]);
-	this->setSize(w, h);
-	EM_COUT("Using size = " << m_iWidth <<","<< m_iHeight, 1);
-	REMOVEARG(a, argc, argv);
-	REMOVEARG(a, argc, argv);
-	REMOVEARG(a, argc, argv);
+				int const h = atoi(argv[a+2]);
+				this->setSize(w, h);
+				EM_COUT("Using size = " << m_iWidth <<","<< m_iHeight, 1);
+				REMOVEARG(a, argc, argv);
+				REMOVEARG(a, argc, argv);
+				REMOVEARG(a, argc, argv);
       } else {
-	REMOVEARG(a, argc, argv);
+				REMOVEARG(a, argc, argv);
       }
     } else if (strcmp(argv[a], "-bpp") == 0) {
       if (argc > a+1) {
-	m_iBpp = atoi(argv[a+1]);
-	REMOVEARG(a, argc, argv);
+				m_iBpp = atoi(argv[a+1]);
+				REMOVEARG(a, argc, argv);
       }
       EM_COUT("Using " << m_iBpp << " bpp", 1);
       REMOVEARG(a, argc, argv);
     } else if (strcmp(argv[a], "-data") == 0) {
       if (argc > a) {
-	EM_COUT("Using datapath: " << argv[a+1], 1);
-	this->setDataDir(argv[a+1]);
-	REMOVEARG(a, argc, argv);
+				EM_COUT("Using datapath: " << argv[a+1], 1);
+				this->setDataDir(argv[a+1]);
+				REMOVEARG(a, argc, argv);
       }
       REMOVEARG(a, argc, argv);
     } else if (strcmp(argv[a], "-nosound") == 0) {
@@ -371,7 +371,8 @@ void Config::setPaths(char const * const argv0) {
       m_sDataDir = path + "/" + EM_DATADIR; 
     } else {  
       EM_COUT("relative path from cwd",42);
-      char cwd[256]; getcwd(cwd,256); //check for buffer overload!!!
+      char cwd[256]; 
+			getcwd(cwd,256); // TODO check for buffer overflow
       m_sDataDir = string(cwd) + "/" +  path + "/" + EM_DATADIR;
     }
   } else { m_sDataDir =  EM_DATADIR; }
