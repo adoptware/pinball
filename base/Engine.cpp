@@ -185,6 +185,7 @@ void Engine::drawSplash(EmTexture * tex) {
 	int filter = Config::getInstance()->getGLFilter();
 	if (filter == -1) return;
 	glDisable(GL_DEPTH_TEST);
+  glDepthMask(GL_FALSE);
 	glDisable(GL_ALPHA_TEST);
   glDisable(GL_BLEND);
 	glDepthMask(GL_FALSE);
