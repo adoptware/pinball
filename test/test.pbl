@@ -1,0 +1,206 @@
+version { 0 3 0 }
+
+object dog {
+  1 1 1
+  0 0 0
+  1 1 1
+  sub_object dog_dog {
+    2.3 -3.8 2.7
+    0 0.05 -0.108
+    1 1 1
+    shape {
+      vts { 8 }
+      pls { 6 }
+      vtx { 
+        2.5 2.5 -2.5
+        1 1 0 1
+        0 0
+      }
+      vtx { 
+        -2.5 2.5 -2.5
+        1 1 0 1
+        0 0
+      }
+      vtx { 
+        2.5 -2.5 -2.5
+        1 1 0 1
+        0 0
+      }
+      vtx { 
+        -2.5 -2.5 -2.5
+        1 1 0 1
+        0 0
+      }
+      vtx { 
+        2.5 2.5 2.5
+        1 1 0 1
+        0 0
+      }
+      vtx { 
+        -2.5 2.5 2.5
+        1 1 0 1
+        0 0
+      }
+      vtx { 
+        2.5 -2.5 2.5
+        1 1 0 1
+        0 0
+      }
+      vtx { 
+        -2.5 -2.5 2.5
+        1 1 0 1
+        0 0
+      }
+      ply {
+        pes { 4 }
+        ple { 0 }
+        ple { 1 }
+        ple { 3 }
+        ple { 2 }
+      }
+      ply {
+        pes { 4 }
+        ple { 4 }
+        ple { 0 }
+        ple { 2 }
+        ple { 6 }
+      }
+      ply {
+        pes { 4 }
+        ple { 5 }
+        ple { 4 }
+        ple { 6 }
+        ple { 7 }
+      }
+      ply {
+        pes { 4 }
+        ple { 1 }
+        ple { 5 }
+        ple { 7 }
+        ple { 3 }
+      }
+      ply {
+        pes { 4 }
+        ple { 0 }
+        ple { 4 }
+        ple { 5 }
+        ple { 1 }
+      }
+      ply {
+        pes { 4 }
+        ple { 2 }
+        ple { 3 }
+        ple { 7 }
+        ple { 6 }
+      }
+    }
+    properties {
+      group_1
+    }
+  }
+}
+
+object cat {
+  2 0 0
+  0 0 0
+  1 0.5 1
+  sub_object cat_cat {
+    0 2 0
+    0 0 0
+    1 1 1
+    sub_object cat_cat_cat {
+      0 0 0
+      0 0.1 0
+      1 1 1
+      shape {
+        vts { 8 }
+        pls { 6 }
+        vtx { 
+          2.5 2.5 -2.5
+          0.5 0.5 0.5 1
+          0 0
+        }
+        vtx { 
+          -2.5 2.5 -2.5
+          0.5 0.5 0.5 1
+          0 0
+        }
+        vtx { 
+          2.5 -2.5 -2.5
+          0.5 0.5 0.5 1
+          0 0
+        }
+        vtx { 
+          -2.5 -2.5 -2.5
+          0.5 0.5 0.5 1
+          0 0
+        }
+        vtx { 
+          2.5 2.5 2.5
+          0.5 0.5 0.5 1
+          0 0
+        }
+        vtx { 
+          -2.5 2.5 2.5
+          0.5 0.5 0.5 1
+          0 0
+        }
+        vtx { 
+          2.5 -2.5 2.5
+          0.5 0.5 0.5 1
+          0 0
+        }
+        vtx { 
+          -2.5 -2.5 2.5
+          0.5 0.5 0.5 1
+          0 0
+        }
+        ply {
+          pes { 4 }
+          ple { 0 }
+          ple { 1 }
+          ple { 3 }
+          ple { 2 }
+        }
+        ply {
+          pes { 4 }
+          ple { 4 }
+          ple { 0 }
+          ple { 2 }
+          ple { 6 }
+        }
+        ply {
+          pes { 4 }
+          ple { 5 }
+          ple { 4 }
+          ple { 6 }
+          ple { 7 }
+        }
+        ply {
+          pes { 4 }
+          ple { 1 }
+          ple { 5 }
+          ple { 7 }
+          ple { 3 }
+        }
+        ply {
+          pes { 4 }
+          ple { 0 }
+          ple { 4 }
+          ple { 5 }
+          ple { 1 }
+        }
+        ply {
+          pes { 4 }
+          ple { 2 }
+          ple { 3 }
+          ple { 7 }
+          ple { 6 }
+        }
+      }
+      properties {
+        group_1
+      }
+    }
+  }
+}
