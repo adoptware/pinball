@@ -195,7 +195,7 @@ int MenuFct::perform() {
 
 MenuInput::MenuInput(const char * name, Engine* e) : MenuItem(e, EM_MENU_INPUT) {
 	strncpy(m_Name, name, 63);
-	strcpy(m_Input, "");
+	strcpy(m_Input, ".....");
 	m_iAction = EM_MENU_BACK;
 }
 
