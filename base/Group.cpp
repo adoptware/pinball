@@ -54,11 +54,11 @@ void Group::addShape3D(Shape3D * s) {
 	s->setParent(this);
 }
 
-void Group::addBehavior(Behavior * b) {
+void Group::addBehavior(Behavior * b, bool signal=true) {
 	if (b == NULL) return;
 	m_vBehavior.push_back(b);
 	b->setParent(this);
-	SignalSender::getInstance()->addGroup(this);
+	if (signal) SignalSender::getInstance()->addGroup(this);
 }
 
 Shape3D * Group::getShape3D(int i) {

@@ -18,7 +18,7 @@
 /** A behavior class that implements a onSignal method */
 class CollisionTest : public StdAnimation {
 public:
-	CollisionTest() : StdAnimation(10, EM_TRANSLATION) {};
+	CollisionTest() : StdAnimation(50, EM_TRANSLATION) {};
 	~CollisionTest() {};
 	void StdOnCollision();
 };
@@ -50,8 +50,8 @@ int main(int argc, char *argv[]) {
 	for (int a=0; a<4; a++) {
 		Shape3D * shape;
 		switch (a%3) {
-		case 9: shape = new BigSphere(1.0, 2, 1.0, 1.0, 1.0, 1.0); break;
-		case 10: shape = new Cone(2.0, 1.0, 1.0, 1.0, 1.0); break;
+		case 0: shape = new BigSphere(1.0, 1, 1.0, 1.0, 1.0, 1.0); break;
+		case 1: shape = new Cone(2.0, 1.0, 1.0, 1.0, 1.0); break;
 		default: shape = new Cube(2.0, 1.0, 1.0, 1.0, 1.0);
 		}
 		// Add the shape.
@@ -65,12 +65,12 @@ int main(int argc, char *argv[]) {
 		groupShape->setCollisionBounds(cb);
 		// Add a behavior to the cube
 		CollisionTest* beh = new CollisionTest();
-// 		beh->add(random()%9-4, random()%9-4, random()%9-4);
-// 		beh->add(random()%9-4, random()%9-4, random()%9-4);
-// 		beh->add(random()%9-4, random()%9-4, random()%9-4);
-		beh->add(random()%3-1, random()%3-1, random()%3-1);
-		beh->add(random()%3-1, random()%3-1, random()%3-1);
-		beh->add(random()%3-1, random()%3-1, random()%3-1);
+ 		beh->add(random()%9-4, random()%9-4, random()%9-4);
+ 		beh->add(random()%9-4, random()%9-4, random()%9-4);
+ 		beh->add(random()%9-4, random()%9-4, random()%9-4);
+// 		beh->add(random()%3-1, random()%3-1, random()%3-1);
+// 		beh->add(random()%3-1, random()%3-1, random()%3-1);
+// 		beh->add(random()%3-1, random()%3-1, random()%3-1);
 		beh->setEndStart();
 		groupShape->addBehavior(beh);
 		
@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
 		engine->tick();
 		engine->render();
 		engine->swap();
-		engine->limitFPS(100);
+		engine->limitFPS(10);
 	}
 	delete(engine);
 

@@ -2,14 +2,18 @@
                           Engine.cpp  -  description
                              -------------------
     begin                : Wed Jan 26 2000
-    copyright            : (C) 2000 by 
-    email                : 
+    copyright            : (C) 2000 by Henrik Enqvist, GPL
+    email                : henqvist@excite.com
  ***************************************************************************/
 
 #include <time.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+
+#if EM_THREADS
+#include <sched.h>
+#endif
 
 #include "Private.h"
 
@@ -59,19 +63,25 @@ volatile float g_fFps = 0;
 volatile int g_aFunction[20] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 volatile int g_iCurrentFct = 0;
 
-#if EM_DEBUG
+#if EM_THREADS
+volatile bool g_bThread = true;;
+SDL_mutex* g_Mutex = NULL;
+SDL_Thread* g_Thread = NULL;
+#endif
+
+//#if EM_DEBUG
 Uint32 fctCallBack(Uint32 interval) {
 	g_iSeconds++;
   g_aFunction[g_iCurrentFct]++;
-	if (g_iSeconds == 50) {
-		g_fFps = (float)g_iLoops*10.0f / ((float)g_iSeconds);
+	if (g_iSeconds == 20) {
+		g_fFps = g_fFps*0.2f + 0.8f*(float)g_iLoops*10.0f / ((float)g_iSeconds);
 		g_iSeconds = 0;
 		g_iLoops = 0;
 		cerr << g_fFps << endl;
 	}
   return interval;	
 }
-#endif // EM_DEBUG
+//#endif // EM_DEBUG
 
 Engine::Engine(int & argc, char *argv[]) {
 	m_Background = NULL;
@@ -81,13 +91,11 @@ Engine::Engine(int & argc, char *argv[]) {
 
 	if (!config->useExternGL()) {
 		this->initGrx();
-#if EM_DEBUG
+		//#if EM_DEBUG
 		SDL_SetTimer(100, fctCallBack); // 10 ticks per sec
-#endif
+		//#endif
 	}
-	if (config->useSound()) {
-		this->initSound();
-	}
+	this->initSound();
 
   srand((unsigned int)time((time_t *)NULL));
 }
@@ -95,7 +103,7 @@ Engine::Engine(int & argc, char *argv[]) {
 Engine::~Engine() {
 	SDL_Quit();
 
-#if EM_DEBUG	
+	//#if EM_DEBUG	
 	cerr << "Function null " << g_aFunction[0] << endl;
 	cerr << "Function align " << g_aFunction[ALIGN] << endl;
 	cerr << "Function beh " << g_aFunction[BEH] << endl;
@@ -116,7 +124,7 @@ Engine::~Engine() {
 	//	cerr << "Seconds " << ((float)g_iSeconds/FPS) <<" " << ((float)g_iLoops*FPS/g_iSeconds) 
 	//			 << " fps" << endl;
 	// cerr << "Fps " << (float)(g_iLoops)*1000 / (SDL_GetTicks()-g_iStartTime) << endl;
-#endif
+	//#endif
 }
 
 
@@ -134,11 +142,12 @@ void Engine::initSound() {
 	
 	/* Open the audio device, forcing the desired format */
 	if ( SDL_OpenAudio(&wanted, &obtained) < 0 ) {
+		cerr << "*********************************************************************"  << endl;
 		cerr << "Couldn't open audio: " << SDL_GetError() << endl;
-		cerr << "Make sure that no other application has occupied audio resources."  << endl;
+		cerr << "Make sure that no other application has occupied the audio resources."  << endl;
 		cerr << "If your're running KDE you might try to kill the 'artsd' process." << endl;
-		cerr << "Or run pinball with the '-nosound' switch." << endl;
-		exit(1);
+		cerr << "*********************************************************************"  << endl;
+		return;
 	}
 	
 	cerr << endl;
@@ -179,9 +188,9 @@ void Engine::initGrx() {
 	SDL_Surface* screen = SDL_SetVideoMode(config->getWidth(), config->getHeight(), config->getBpp(), 
 																				 SDL_OPENGL | (config->useFullScreen() ? SDL_FULLSCREEN : 0));
 
-	if (config->useFullScreen()) {
-		SDL_ShowCursor(SDL_DISABLE);
-	}
+	//	if (config->useFullScreen()) {
+	SDL_ShowCursor(SDL_DISABLE);
+	//	}
 	SDL_WM_SetCaption("Emilia Pinball", NULL);
 
 	if (screen == NULL) {
@@ -222,13 +231,13 @@ void Engine::resize( unsigned int w, unsigned int h ) {
  	glEnable(GL_CULL_FACE);
  	glCullFace(GL_BACK);
  	glFrontFace(GL_CW);
- 	
- 	glEnable(GL_DEPTH_TEST);
- 	glDepthFunc(GL_LESS);
+
+	//	glDisable(GL_DITHER);
+	glDisable(GL_LIGHTING);
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glFrustum(-1, 1, -1, 1, 1, 200);
+	glFrustum(-0.1, 0.1, -0.1, 0.1, 0.1, 200);
 	glMatrixMode(GL_MODELVIEW);
 
 #if OPENGL_LIGHTS 
@@ -243,10 +252,12 @@ void Engine::addLight(Light* l) {
 
 void Engine::clearScreen() {
 	g_iCurrentFct = DRAW;
+	glDepthMask(GL_TRUE);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glColor3f(1, 1, 1);
 	glLoadIdentity();
   gluLookAt(0,0,0, 0,0,-1, 0,1,0);
+	g_iCurrentFct = 0;
 }
 
 void Engine::setLightning(float diffuse, float ambient) {
@@ -293,12 +304,26 @@ void Engine::render() {
 	EM_COUT("Engine::render() opengl", 0);
 	g_iCurrentFct = RENDER;
 	this->clearScreen();
+	g_iCurrentFct = RENDER;
+	OpenGLVisitor::getInstance()->setMode(EM_GL_GCOL);
 	OpenGLVisitor::getInstance()->empty();
 	this->accept(OpenGLVisitor::getInstance());
+	OpenGLVisitor::getInstance()->setMode(EM_GL_TEX);
+	OpenGLVisitor::getInstance()->empty();
+	this->accept(OpenGLVisitor::getInstance());
+	OpenGLVisitor::getInstance()->setMode(EM_GL_GCOL_TRANS);
+	OpenGLVisitor::getInstance()->empty();
+	this->accept(OpenGLVisitor::getInstance());
+ 	OpenGLVisitor::getInstance()->setMode(EM_GL_TEX_TRANS);
+ 	OpenGLVisitor::getInstance()->empty();
+ 	this->accept(OpenGLVisitor::getInstance());
+ 	OpenGLVisitor::getInstance()->setMode(EM_GL_CLEAN);
+ 	OpenGLVisitor::getInstance()->empty();
+	
 
 	EM_COUT("Engine::render() opengltrans", 0);
-	OpenGLTransVisitor::getInstance()->empty();
-	this->accept(OpenGLTransVisitor::getInstance());
+	//OpenGLTransVisitor::getInstance()->empty();
+	//this->accept(OpenGLTransVisitor::getInstance());
 
 	g_iCurrentFct = RENDER_OUT;
 }
@@ -343,13 +368,6 @@ void Engine::tick() {
 	CollisionVisitor::getInstance()->empty();
 	this->accept(CollisionVisitor::getInstance());
 
-	/*
-	// Calculate positions one more time, collision may have changed the positions.
-	EM_COUT("Engine::tick() trans" << endl, 0);
-	g_iCurrentFct = TRANS;
-	p_TransformVisitor->empty();
-	this->accept(p_TransformVisitor);
-	*/
 	g_iCurrentFct = TICK_OUT;
 }
 
@@ -372,8 +390,154 @@ bool Engine::limitFPS(int fps) {
 	} else if (realdelay < 0) {
 		return false;
 	} else {
-		while (SDL_GetTicks() < g_iDesiredTime);
+		while ((signed)SDL_GetTicks() < g_iDesiredTime);
+		sched_yield();
 		//SDL_Delay(delay);
 		return true;
 	}
 }
+
+#if EM_THREADS
+void Engine::renderThreadSafe() {
+	this->pauseTickThread();
+
+	EM_COUT("Engine::render()", 0);
+	// Put some overall light.
+	EM_COUT("Engine::render() glight", 0);
+	g_iCurrentFct = GLIGHT;
+	AmbientLightVisitor::getInstance()->empty();
+	this->accept(AmbientLightVisitor::getInstance());
+
+	// Put some light from light sources.
+	EM_COUT("Engine::render() plight", 0);
+	g_iCurrentFct = PLIGHT;
+	PointLightVisitor::getInstance()->empty();
+	this->accept(PointLightVisitor::getInstance());
+
+	// Align vertices to view space.
+	EM_COUT("Engine::render() align", 0);
+	g_iCurrentFct = ALIGN;
+	AlignVisitor::getInstance()->empty();
+	this->accept(AlignVisitor::getInstance());
+
+	// Adjust sounds.
+	EM_COUT("Engine::render() sound", 0);
+	g_iCurrentFct = SOUND;
+//	p_SoundVisitor->empty();
+//	this->accept(p_SoundVisitor);
+
+	this->resumeTickThread();
+	this->pauseTickThread();
+	// Draw screen
+	EM_COUT("Engine::render() opengl", 0);
+	g_iCurrentFct = RENDER;
+	this->clearScreen();
+	g_iCurrentFct = RENDER;
+	OpenGLVisitor::getInstance()->setMode(EM_GL_GCOL);
+	OpenGLVisitor::getInstance()->empty();
+	this->accept(OpenGLVisitor::getInstance());
+	OpenGLVisitor::getInstance()->setMode(EM_GL_TEX);
+	OpenGLVisitor::getInstance()->empty();
+	this->accept(OpenGLVisitor::getInstance());
+
+	this->resumeTickThread();
+	this->pauseTickThread();
+
+	OpenGLVisitor::getInstance()->setMode(EM_GL_GCOL_TRANS);
+	OpenGLVisitor::getInstance()->empty();
+	this->accept(OpenGLVisitor::getInstance());
+ 	OpenGLVisitor::getInstance()->setMode(EM_GL_TEX_TRANS);
+ 	OpenGLVisitor::getInstance()->empty();
+ 	this->accept(OpenGLVisitor::getInstance());
+ 	OpenGLVisitor::getInstance()->setMode(EM_GL_CLEAN);
+ 	OpenGLVisitor::getInstance()->empty();
+	
+
+	EM_COUT("Engine::render() opengltrans", 0);
+	//OpenGLTransVisitor::getInstance()->empty();
+	//this->accept(OpenGLTransVisitor::getInstance());
+
+	// The keyboard is polled here cause it is not allowed get polled from fctThread
+	g_iCurrentFct = KEY;
+	Keyboard::poll();
+
+	g_iCurrentFct = RENDER_OUT;
+
+	this->resumeTickThread();
+}
+
+/* This function is not allowed to call render or event functions.
+ * that's why the poll is moved to 'renderThreadSafe()' */
+int fctThread(void * data) {
+	Engine* engine = (Engine*) data;
+	while (g_bThread) {
+		//cerr << "tick" << endl;
+		if (SDL_mutexP(g_Mutex) == -1) 	cerr << "Error locking mutex" << endl;
+
+		EM_COUT("Engine::tick()", 0);
+		
+		// Perform signals.
+		EM_COUT("Engine::tick() signal", 0);
+		g_iCurrentFct = SIG;
+		SignalSender::getInstance()->tick();
+	
+		// Perform behaviors.
+		EM_COUT("Engine::tick() behavior", 0);
+		g_iCurrentFct = BEH;
+		BehaviorVisitor::getInstance()->empty();
+		engine->accept(BehaviorVisitor::getInstance());
+		
+		// Calculate positions
+		EM_COUT("Engine::tick() trans", 0);
+		g_iCurrentFct = TRANS;
+		TransformVisitor::getInstance()->empty();
+		engine->accept(TransformVisitor::getInstance());
+		
+		// Detect collision.
+		EM_COUT("Engine::tick() collision", 0);
+		g_iCurrentFct = COLLISION;
+		CollisionVisitor::getInstance()->empty();
+		engine->accept(CollisionVisitor::getInstance());
+		
+		if (SDL_mutexV(g_Mutex) == -1) 	cerr << "Error unlocking mutex" << endl;
+		engine->limitFPS(100);
+	}
+	return 0;
+}
+
+void Engine::startTickThread() {
+	g_bThread = true;
+	if (g_Mutex == NULL) {
+		g_Mutex = SDL_CreateMutex();
+	} else {
+		cerr << "Mutex already created" << endl;
+	}
+	if (g_Thread == NULL) {
+		g_Thread = SDL_CreateThread(fctThread, this);
+	} else {
+		cerr << "Thread already created" << endl;
+	}
+}
+
+void Engine::endTickThread() {
+	int status;
+	g_bThread = false;
+	SDL_WaitThread(g_Thread, &status);
+	SDL_DestroyMutex(g_Mutex);
+	g_Thread = NULL;
+	g_Mutex = NULL;
+}
+
+void Engine::pauseTickThread() {
+	if (g_Mutex != NULL) {
+		if (SDL_mutexP(g_Mutex) == -1) 	cerr << "Error unlocking mutex" << endl;
+	}
+}
+
+void Engine::resumeTickThread() {
+	if (g_Mutex != NULL) {
+		if (SDL_mutexV(g_Mutex) == -1) 	cerr << "Error unlocking mutex" << endl;
+	}
+	sched_yield();
+}
+#endif

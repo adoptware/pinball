@@ -45,20 +45,20 @@ void Shape3DUtil::readPolygon(ifstream & file, Shape3D* shape) {
 	EM_READ(file, str);
 	while (str != "}") {
 		if (str == "tpt") {
-			EM_COUT("loading transparent", 1);
+			EM_COUT("loading transparent", 0);
 			Shape3DUtil::readUnknown(file);
 			poly->setProperty(EM_POLY_TRANS);
 			shape->setProperty(EM_SHAPE3D_USE_TRANS);
 		} else if (str == "dbl") {
-			EM_COUT("loading double sided", 1);
+			EM_COUT("loading double sided", 0);
 			Shape3DUtil::readUnknown(file);
 			poly->setProperty(EM_POLY_DOUBLE);
 		} else if (str == "ccw") {
-			EM_COUT("loading double sided", 1);
+			EM_COUT("loading double sided", 0);
 			Shape3DUtil::readUnknown(file);
 			poly->setProperty(EM_POLY_CCW_VIEW);
 		} else if (str == "flt") {
-			EM_COUT("loading flat", 1);
+			EM_COUT("loading flat", 0);
 			Shape3DUtil::readUnknown(file);
 			poly->setProperty(EM_POLY_FLAT);
 		} else if (str == "ple") {

@@ -47,8 +47,7 @@ class Behavior {
 	Light* p_Light;
 	Group* p_Parent;
 	int m_iType;
-	int m_iState[256];
-	private:
+ private:
 	friend class Group;
 	/** Only for internal use. The Group class uses this when a
 	 * behavior is added to the group. */

@@ -23,7 +23,11 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_thread.h>
 
+#ifdef HAVE_CONFIG_H
 #include "conf.h"
+#else
+#error "Must have conf.h file"
+#endif
 
 using namespace std;
 
@@ -68,26 +72,6 @@ bool operator == (const PolygonEdge & peA, const PolygonEdge & peB) {
 
 extern Matrix identityMatrix;
 
-#ifndef EM_DEBUG
-#define EM_DEBUG 0
-#endif
-
-#ifndef EM_FULL_DEBUG
-#define EM_FULL_DEBUG 0
-#endif
-
-#ifndef EM_DEBUG_COLLISION 
-#define EM_DEBUG_COLLISION 0
-#endif
-
-#ifndef EM_USE_GLOBAL_SPECULAR
-#define EM_USE_GLOBAL_SPECULAR 0
-#endif
-
-#ifndef EM_USE_SOURCE_SPECULAR
-#define EM_USE_SOURCE_SPECULAR 1
-#endif
-
 #if EM_DEBUG
   #define EM_COUT(a, level) if (level > 0) { cerr << a << endl; };
 #else
@@ -117,8 +101,6 @@ extern Matrix identityMatrix;
 #define EmAssert(a, b)
 #endif
 
-#define OPENGL_LIGHTS 0
-
 typedef struct {
 	SDL_AudioSpec spec;
 	Uint32 length;
@@ -139,6 +121,5 @@ typedef struct {
 #define EmImage struct_image
 #define EmTexture GLuint
 #define EmSample WaveStruct
-#define EmSound int
 
 #endif // PRIVATE_H

@@ -10,7 +10,7 @@
 #include "Group.h"
 #include "Pinball.h"
 #include "Keyboard.h"
-#include "SoundUtil.h"
+//#include "SoundUtil.h"
 #include "TextureUtil.h"
 #include "EmFont.h"
 #include "Config.h"
@@ -22,19 +22,20 @@ Score* Score::p_Score = NULL;
 
 Score::Score() {
 	char filename[256];
+	/*
 	sprintf(filename, "%s/bump.wav", Config::getInstance()->getDataDir());
-	m_aSample[0] = SoundUtil::loadSample(filename);
+	m_aSample[0] = SoundUtil::getInstance()->loadSample(filename);
 	sprintf(filename, "%s/fjong.wav", Config::getInstance()->getDataDir());
-	m_aSample[1] = SoundUtil::loadSample(filename);
+	m_aSample[1] = SoundUtil::getInstance()->loadSample(filename);
 	sprintf(filename, "%s/lock.wav", Config::getInstance()->getDataDir());
-	m_aSample[2] = SoundUtil::loadSample(filename);
+	m_aSample[2] = SoundUtil::getInstance()->loadSample(filename);
 	sprintf(filename, "%s/fart.wav", Config::getInstance()->getDataDir());
-	m_aSample[3] = SoundUtil::loadSample(filename);
+	m_aSample[3] = SoundUtil::getInstance()->loadSample(filename);
 	sprintf(filename, "%s/flush.wav", Config::getInstance()->getDataDir());
-	m_aSample[4] = SoundUtil::loadSample(filename);
-
+	m_aSample[4] = SoundUtil::getInstance()->loadSample(filename);
+	*/
 	m_Font = EmFont::getInstance();
-	sprintf(filename, "%s/font_16.png", Config::getInstance()->getDataDir());
+	sprintf(filename, "%s/font_34.png", Config::getInstance()->getDataDir());
 	m_Font->loadFont(filename);
 
 	this->clear();
@@ -81,14 +82,9 @@ void Score::unLockBall(int ball) {
 	}
 }
 
-void Score::playSample(int i) {
-	SoundUtil::play(m_aSample[i], false);
-}
-
 void Score::onTick() {
 	if (m_bLaunch && m_iBall < 4 && Keyboard::isKeyDown(SDLK_RETURN)) {
 		m_bLaunch = false;
-		SoundUtil::play(m_aSample[1], false);
 		switch (m_iBall) {
 		case 1 :
 			if (m_aAliveBall[0] == PBL_DEAD) {
@@ -143,6 +139,8 @@ void Score::onTick() {
 }
 
 void Score::StdOnSignal() {
+	EM_COUT(cerr << (int)em_signal, 1);
+
 	OnSignal( PBL_SIG_RESET_ALL ) {
 		this->clear();
 	} else
@@ -161,24 +159,21 @@ void Score::StdOnSignal() {
 	OnSignal( PBL_SIG_BUMPER_ON ) {
 		m_iScore += 450;
 		m_iBumps++;
-		SoundUtil::play(m_aSample[0], false);
  	}	else 
  		OnSignal( PBL_SIG_LOCK_1_LOCK OR_SI PBL_SIG_LOCK_2_LOCK ) {
 		m_bLaunch = true;
  		m_iScore += 7500;
- 		SoundUtil::play(m_aSample[2], false);
 	}	else
 	OnSignal( PBL_SIG_CAVE_ON ) {
 		m_iScore += 10000;
 		if (m_aMission[1] == 1) {
 			m_aMission[1] = -1;
 			m_iScore += 50000;
-			SoundUtil::play(m_aSample[1], false);
 		}
 	}	else
 	OnSignal( PBL_SIG_CAVE_OFF ) {
-		SoundUtil::play(m_aSample[2], false);
 	} else 
+		// L I N U X
 	OnSignal( PBL_SIG_LINUX_L_ON ) {
 		m_aLinux[0] = true;
 	} else
@@ -209,9 +204,91 @@ void Score::StdOnSignal() {
 	OnSignal( PBL_SIG_LINUX_X_OFF ) {
 		m_aLinux[4] = false;
 	} else 
+	OnSignal( PBL_SIG_LINUX_I_ON ) {
+		m_aLinux[1] = true;
+	} else
+		// T U X
+	OnSignal( PBL_SIG_TUX_T_ON ) {
+		m_aTux[0] = true;
+	} else
+	OnSignal( PBL_SIG_TUX_U_ON ) {
+		m_aTux[1] = true;
+	} else
+	OnSignal( PBL_SIG_TUX_X_ON ) {
+		m_aTux[2] = true;
+	} else
+	OnSignal( PBL_SIG_TUX_T_OFF ) {
+		m_aTux[0] = false;
+	} else
+	OnSignal( PBL_SIG_TUX_U_OFF ) {
+		m_aTux[1] = false;
+	} else
+	OnSignal( PBL_SIG_TUX_X_OFF ) {
+		m_aTux[2] = false;
+	} else
+		// B O O T
+	OnSignal( PBL_SIG_BOOT_B_ON ) {
+		m_aBoot[0] = true;
+	} else
+	OnSignal( PBL_SIG_BOOT_O_ON ) {
+		m_aBoot[1] = true;
+	} else
+	OnSignal( PBL_SIG_BOOT_2_ON ) {
+		m_aBoot[2] = true;
+	} else
+	OnSignal( PBL_SIG_BOOT_T_ON ) {
+		m_aBoot[3] = true;
+	} else
+	OnSignal( PBL_SIG_BOOT_B_OFF ) {
+		m_aBoot[0] = false;
+	} else
+	OnSignal( PBL_SIG_BOOT_O_OFF ) {
+		m_aBoot[1] = false;
+	} else
+	OnSignal( PBL_SIG_BOOT_2_OFF ) {
+		m_aBoot[2] = false;
+	} else
+	OnSignal( PBL_SIG_BOOT_T_OFF ) {
+		m_aBoot[3] = false;
+	} else
+		// Arms shifts BOOT
+	OnSignal( PBL_SIG_RIGHTARM_ON ) {
+		bool tmp = m_aBoot[0];
+		m_aBoot[0] = m_aBoot[3];
+		m_aBoot[3] = m_aBoot[2];
+		m_aBoot[2] = m_aBoot[1];
+		m_aBoot[1] = tmp;
+		if (m_aBoot[0])	SendSignal(PBL_SIG_BOOT_B_ON, 0, this->p_Parent, NULL);
+		else            SendSignal(PBL_SIG_BOOT_B_OFF, 0, this->p_Parent, NULL);
+		if (m_aBoot[1])	SendSignal(PBL_SIG_BOOT_O_ON, 0, this->p_Parent, NULL);
+		else            SendSignal(PBL_SIG_BOOT_O_OFF, 0, this->p_Parent, NULL);
+		if (m_aBoot[2])	SendSignal(PBL_SIG_BOOT_2_ON, 0, this->p_Parent, NULL);
+		else            SendSignal(PBL_SIG_BOOT_2_OFF, 0, this->p_Parent, NULL);
+		if (m_aBoot[3])	SendSignal(PBL_SIG_BOOT_T_ON, 0, this->p_Parent, NULL);
+		else            SendSignal(PBL_SIG_BOOT_T_OFF, 0, this->p_Parent, NULL);
+	} else
+	OnSignal( PBL_SIG_LEFTARM_ON ) {
+		bool tmp = m_aBoot[0];
+		m_aBoot[0] = m_aBoot[1];
+		m_aBoot[1] = m_aBoot[2];
+		m_aBoot[2] = m_aBoot[3];
+		m_aBoot[3] = tmp;
+		if (m_aBoot[0])	SendSignal(PBL_SIG_BOOT_B_ON, 0, this->p_Parent, NULL);
+		else            SendSignal(PBL_SIG_BOOT_B_OFF, 0, this->p_Parent, NULL);
+		if (m_aBoot[1])	SendSignal(PBL_SIG_BOOT_O_ON, 0, this->p_Parent, NULL);
+		else            SendSignal(PBL_SIG_BOOT_O_OFF, 0, this->p_Parent, NULL);
+		if (m_aBoot[2])	SendSignal(PBL_SIG_BOOT_2_ON, 0, this->p_Parent, NULL);
+		else            SendSignal(PBL_SIG_BOOT_2_OFF, 0, this->p_Parent, NULL);
+		if (m_aBoot[3])	SendSignal(PBL_SIG_BOOT_T_ON, 0, this->p_Parent, NULL);
+		else            SendSignal(PBL_SIG_BOOT_T_OFF, 0, this->p_Parent, NULL);
+	} else
+		// Stuff
 	OnSignal( PBL_SIG_JACKPOT ) {
 		m_iScore += 150000;
-		SoundUtil::play(m_aSample[0], false);
+	} else
+	OnSignal( PBL_SIG_EXTRA_BALL ) {
+		m_bExtraBall = true;
+		m_iScore += 50000;
 	}
 // 	}	else
 // 	OnSignal( PBL_SIG_LEFT_LOOP ) {
@@ -274,6 +351,25 @@ void Score::StdOnSignal() {
 // 		SendSignal( PBL_SIG_MISSION_2, 0, this->p_Parent, NULL );
 // 	}
 
+  OnSignal( PBL_SIG_TUX_T_ON OR_SI
+						PBL_SIG_TUX_U_ON OR_SI
+						PBL_SIG_TUX_X_ON ) {
+		if (m_aTux[0] && m_aTux[1] && m_aTux[2]) {
+			SendSignal(PBL_SIG_TUX_ALL, 0, this->p_Parent, NULL);
+			m_aTux[0] = m_aTux[1] = m_aTux[2] = false;
+		}
+	}
+
+  OnSignal( PBL_SIG_BOOT_B_ON OR_SI
+						PBL_SIG_BOOT_O_ON OR_SI
+						PBL_SIG_BOOT_2_ON OR_SI
+						PBL_SIG_BOOT_T_ON ) {
+		if (m_aBoot[0] && m_aBoot[1] && m_aBoot[2] && m_aBoot[3]) {
+			SendSignal(PBL_SIG_BOOT_ALL, 0, this->p_Parent, NULL);
+			m_aBoot[0] = m_aBoot[1] = m_aBoot[2] = m_aBoot[3] = false;
+		}
+	}
+
   OnSignal( PBL_SIG_LINUX_L_ON OR_SI
 						PBL_SIG_LINUX_I_ON OR_SI
 						PBL_SIG_LINUX_N_ON OR_SI
@@ -288,11 +384,8 @@ void Score::StdOnSignal() {
 			case 4: SendSignal(PBL_SIG_FACTOR_4, 0, this->p_Parent, NULL); break;
 			case 5: SendSignal(PBL_SIG_FACTOR_5, 0, this->p_Parent, NULL); break;
 			}
-			SendSignal(PBL_SIG_LINUX_L_OFF, 0, this->p_Parent, NULL);
-			SendSignal(PBL_SIG_LINUX_I_OFF, 0, this->p_Parent, NULL);
-			SendSignal(PBL_SIG_LINUX_N_OFF, 0, this->p_Parent, NULL);
-			SendSignal(PBL_SIG_LINUX_U_OFF, 0, this->p_Parent, NULL);
-			SendSignal(PBL_SIG_LINUX_X_OFF, 0, this->p_Parent, NULL);
+			m_aLinux[0] = m_aLinux[1] = m_aLinux[2] = m_aLinux[3] = m_aLinux[4] = false;
+			SendSignal(PBL_SIG_LINUX_ALL, 0, this->p_Parent, NULL);
 		}
 	}
 
@@ -324,12 +417,15 @@ void Score::StdOnSignal() {
 		if (alive == 0) {
 			if (m_iBall >= 3) {
 				m_Text1 = "press r to start new game";
-				SoundUtil::play(m_aSample[4], false);
 			} else {
-				m_iBall++;
+				if (m_bExtraBall) {
+					m_bExtraBall = false;
+				} else {
+					m_iBall++;
+				}
 				m_bLaunch = true;
 				m_Text1 = "press enter to launch ball";
-				SoundUtil::play(m_aSample[3], false);
+				SendSignal(PBL_SIG_BALL_ALL_OFF, 0, this->p_Parent, NULL);
 			}
 		}
 	}	
@@ -342,18 +438,14 @@ extern volatile float g_fFps;
 void Score::draw() {
 	char buffer[256];
 	sprintf(buffer, "SCORE %d BALL %d\n", m_iScore, m_iBall);
-	m_Font->print(buffer, 10, em_height_ - 20);
-#if EM_DEBUG
+	m_Font->print(buffer, -1, 1);
+	//#if EM_DEBUG
 	sprintf(buffer, "FPS %f\n", g_fFps);
-	m_Font->print(buffer, 10, em_height_ - 40);
-#endif
+	m_Font->print(buffer, -1, 1-EM_FONTSIZE_Y);
+	//#endif
 
-	m_Font->print(m_Text1, 
-								em_width_div2_ - strlen(m_Text1)*EmFont::getInstance()->getSize()/2, 
-								em_height_div2_ + EmFont::getInstance()->getSize()/2+2);
-	m_Font->print(m_Text2, 
-								em_width_div2_ - strlen(m_Text2)*EmFont::getInstance()->getSize()/2, 
-								em_height_div2_ - EmFont::getInstance()->getSize()/2-2);
+	m_Font->print(m_Text1, -1, EM_FONTSIZE_Y/2);
+	m_Font->print(m_Text2, -1, -EM_FONTSIZE_Y/2);
 }
 
 void Score::clear() {
@@ -375,6 +467,13 @@ void Score::clear() {
 	m_aLinux[2] = false;
 	m_aLinux[3] = false;
 	m_aLinux[4] = false;
+	m_aBoot[0] = false;
+	m_aBoot[1] = false;
+	m_aBoot[2] = false;
+	m_aBoot[3] = false;
+	m_aTux[0] = false;
+	m_aTux[1] = false;
+	m_aTux[2] = false;
 	m_aAliveBall[0] = PBL_DEAD;
 	m_aAliveBall[1] = PBL_DEAD;
 	m_aAliveBall[2] = PBL_DEAD;

@@ -13,8 +13,9 @@
 #include "Polygon.h"
 #include "Shape3D.h"
 #include "Score.h"
+#include "SoundUtil.h"
 
-CaveBehavior::CaveBehavior() {
+CaveBehavior::CaveBehavior() : Behavior() {
 	m_iBall = PBL_NULL;
 	m_iLockCounter = -1;
 	m_bLock = false;
@@ -39,7 +40,7 @@ void CaveBehavior::onTick() {
 		UnsetProperty( PBL_TRAP_BOUNCE );
 		//		SendSignal( PBL_SIG_CAVE_OFF, 0, this->p_Parent, NULL );
 		m_bLock = false;
-		Score::getInstance()->playSample(1);
+		SoundUtil::getInstance()->play(m_iSound, false);
 		Score::getInstance()->addScore(1200);
 	}
 	if (m_iLockCounter > -1) m_iLockCounter--;

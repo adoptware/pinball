@@ -28,6 +28,7 @@
 #include "KeyRotBehavior.h"
 #include "Polygon.h"
 #include "TextureUtil.h"
+#include "SoundUtil.h"
 #include "Score.h"
 #include "CollisionBounds.h"
 #include "StateMachine.h"
@@ -51,7 +52,7 @@ int main(int argc, char *argv[]) {
 	engine->setLightning(0.0f, 0.1f);
 
 	// Add a score board and a menu.
-	Meny* menu = createMenus(engine);
+	MenuItem* menu = createMenus(engine);
 	Score* score = Score::getInstance();
 	engine->addBehavior(score);
 	
@@ -90,11 +91,12 @@ int main(int argc, char *argv[]) {
 	Group* groupG = new Group();
 	sprintf(filename, "%s/floor2.png", Config::getInstance()->getDataDir());
 	EmTexture* tex = TextureUtil::getInstance()->loadTexture(filename);
-	Shape3D* gs = new Grid(tex, 80.0f, 40.0f, 16, 1.0f/16.0f, 1, 1, 1, 1);
+	Shape3D* gs = new Grid(tex, 78.0f, 43.0f, 16, 1.0f/16.0f, 1, 1, 1, 1);
+	gs->setProperty(EM_SHAPE3D_BEHIND2);
 
 	engine->add(groupG);
 	groupG->addShape3D(gs);
-	groupG->setTransform(0.0f, -1.0f, 0.0f, 0.0f, 0.25f, 0.0f);
+	groupG->setTransform(1.5f, -1.0f, -3.0f, 0.0f, 0.25f, 0.0f);
 	groupG->setProperty(EM_GROUP_TRANSFORM_ONCE);
 
 
@@ -163,11 +165,15 @@ int main(int argc, char *argv[]) {
 	BALL(1, 0, 1, PBL_BALL_4, -8);
 	*/
 
-	groupCT->addBehavior(new EyeBehavior(gb1, gb2, gb3));
+	EyeBehavior* eyebeh = new EyeBehavior(gb1, gb2, gb3);
+	sprintf(filename, "%s/nudge.wav", Config::getInstance()->getDataDir());
+	eyebeh->setSound(SoundUtil::getInstance()->loadSample(filename));
+	groupCT->addBehavior(eyebeh);
 
 	// Reset pinball
 	SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
 		
+#if 1
 	// Draw to the screen.
   int exit = 0;
 	bool render = true;
@@ -176,7 +182,6 @@ int main(int argc, char *argv[]) {
 	while (exit == 0) {
 		engine->tick();
 		engine->tick();
-		//		engine->tick();
 		if (render) {
 			engine->render();
 			score->draw();
@@ -189,24 +194,52 @@ int main(int argc, char *argv[]) {
 			SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
 		}
 		if (Keyboard::isKeyDown(SDLK_ESCAPE)) {
-			if (menu->start() == EM_MENU_EXIT) exit = 1;
+			if (menu->perform() == EM_MENU_EXIT) exit = 1;
 		}
 		if (Keyboard::isKeyDown(SDLK_p)) {
 			Keyboard::waitForKey();
 			Keyboard::clear();
 		}
-		render = engine->limitFPS(60);
+		render = engine->limitFPS(50);
 	}
+#else
+	engine->startTickThread();
+	int exit = 0;
+	int skip = 0;
+	int all = 0;
+	while (exit == 0) {
+		engine->renderThreadSafe();
+		engine->pauseTickThread();
+		score->draw();
+		engine->resumeTickThread();
+		engine->swap();
 
-	extern float em_groups_m, em_shapes_m, em_bounds_m, em_polygons_m;
+		engine->pauseTickThread();
+		if (Keyboard::isKeyDown(SDLK_r)) {
+			SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
+		}
+		if (Keyboard::isKeyDown(SDLK_ESCAPE)) {
+			if (menu->perform() == EM_MENU_EXIT) exit = 1;
+		}
+		if (Keyboard::isKeyDown(SDLK_p)) {
+			Keyboard::waitForKey();
+			Keyboard::clear();
+		}
+		engine->resumeTickThread();
+	}
+	engine->endTickThread();
+#endif
 
 #if EM_DEBUG
+	extern float em_groups_m, em_shapes_m, em_bounds_m, em_polygons_m;
+	extern float em_poly_m;
+
 	cerr << "Groups " << em_groups_m << endl;
 	cerr << "Shapes " << em_shapes_m << endl;
 	cerr << "Bounds " << em_bounds_m << endl;
 	cerr << "Polys " << em_polygons_m << endl;
-
 	cerr << "Skip " << skip  << " of " << all << endl;
+	cerr << "Draw " << em_poly_m << " polys" << endl;
 #endif
 
 	Config::getInstance()->saveConfig();

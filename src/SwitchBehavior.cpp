@@ -11,11 +11,12 @@
 #include "Light.h"
 #include "Pinball.h"
 
-SwitchBehavior::SwitchBehavior(int aSignal, int uSignal, bool init) {
+SwitchBehavior::SwitchBehavior(int aSignal, int uSignal, bool init) : Behavior() {
 	m_iActiveSignal = aSignal;
 	m_iUnActiveSignal = uSignal;
 	m_bInit = init;
 	p_Light = NULL;
+	this->setType(PBL_TYPE_SWITCHBEH);
 }
 
 SwitchBehavior::~SwitchBehavior(){

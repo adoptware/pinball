@@ -51,13 +51,13 @@ int main(int argc, char *argv[]) {
 		groupCube->add(groupBB);                                 \
 		groupBB->setBillBoard(billboard);                        \
                                                              \
-		StdAnimation * anim = new StdAnimation(10, EM_BILLBOARD_SIZE);  \
+		StdAnimation * anim = new StdAnimation(50, EM_BILLBOARD_SIZE);  \
 		anim->add(0,0,0);                                        \
 		anim->add(0,0,0);                                        \
 		anim->add(0,0,0);                                        \
 		anim->add(0,0,0);                                        \
 		anim->add(0,0,0);                                        \
-		anim->setEnd(4, 4, 2);                                   \
+		anim->setEnd(4, 4, 4);                                   \
 		groupBB->addBehavior(anim);                              \
 	}
 
