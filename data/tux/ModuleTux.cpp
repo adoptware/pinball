@@ -20,6 +20,9 @@ public:
 	TuxBehavior() : Behavior() {
 		Loader * loader = Loader::getInstance();
 		// init signals
+		m_sigExtraBall = loader->getSignal("extraball");
+		m_sigAllBallsOff = loader->getSignal("allballs_off");
+		m_sigMultiballOff = loader->getSignal("multiball_off");
 		m_sigReleaseLock = loader->getSignal("releaselock");
 		m_sigRightLoop = loader->getSignal("rightloop");
 		m_sigLinuxAll = loader->getSignal("linux_all");
@@ -61,6 +64,11 @@ public:
 		m_sigBootOff[1] = loader->getSignal("booto_off");
 		m_sigBootOff[2] = loader->getSignal("bootoo_off");
 		m_sigBootOff[3] = loader->getSignal("boott_off");
+		m_sigMultiplier[0] = loader->getSignal("multiplier1");
+		m_sigMultiplier[1] = loader->getSignal("multiplier2");
+		m_sigMultiplier[2] = loader->getSignal("multiplier3");
+		m_sigMultiplier[3] = loader->getSignal("multiplier4");
+		m_sigMultiplier[4] = loader->getSignal("multiplier5");
 
 		this->clear();
 	};
@@ -119,7 +127,7 @@ public:
 	void StdOnCollision() {};
 
 	void StdOnSignal() {
-		EM_COUT((int)em_signal, 1);
+		//EM_COUT((int)em_signal, 1);
 		
 		OnSignal( PBL_SIG_RESET_ALL ) {
 			this->clear();
@@ -130,9 +138,10 @@ public:
 							PBL_SIG_BALL3_OFF OR_SI 
 							PBL_SIG_BALL4_OFF ) {
 			if (Score::getInstance()->active() == 1) {
-				SendSignal( PBL_SIG_MULTIBALL_OFF, 0, this->getParent(), NULL );
+				SendSignal( m_sigMultiballOff, 0, this->getParent(), NULL );
 			}
 			if (Score::getInstance()->active() == 0) {
+				SendSignal( m_sigAllBallsOff, 0, this->getParent(), NULL );
 				if (Score::getInstance()->getCurrentBall() < 3 || !m_bExtraBall) {
 					if (m_bExtraBall) {
 						m_bExtraBall = false;
@@ -146,52 +155,37 @@ public:
 		} else
 		// multiball
 		OnSignal( m_sigReleaseLock ) {
-			Score::getInstance()->unLockBall(0);
-			Score::getInstance()->unLockBall(1);
-			Score::getInstance()->unLockBall(2);
+			Score::getInstance()->unLockBall(PBL_BALL_1);
+			Score::getInstance()->unLockBall(PBL_BALL_2);
+			Score::getInstance()->unLockBall(PBL_BALL_3);
 		} else
 		// LINUX
 		OnSignal(m_sigLinux[0]) {
-			if (m_aLinux[0]) {
- 				SendSignal(m_sigLinuxOff[0], 0, this->getParent(), NULL);
-				m_aLinux[0] = false;
-			} else {
+			if (!m_aLinux[0]) {
  				SendSignal(m_sigLinuxOn[0], 0, this->getParent(), NULL);
 				m_aLinux[0] = true;
 			}
 		} else
 		OnSignal(m_sigLinux[1]) {
-			if (m_aLinux[1]) {
- 				SendSignal(m_sigLinuxOff[1], 0, this->getParent(), NULL);
-				m_aLinux[1] = false;
-			} else {
+			if (!m_aLinux[1]) {
  				SendSignal(m_sigLinuxOn[1], 0, this->getParent(), NULL);
 				m_aLinux[1] = true;
 			}
 		} else
 		OnSignal(m_sigLinux[2]) {
-			if (m_aLinux[2]) {
- 				SendSignal(m_sigLinuxOff[2], 0, this->getParent(), NULL);
-				m_aLinux[2] = false;
-			} else {
+			if (!m_aLinux[2]) {
  				SendSignal(m_sigLinuxOn[2], 0, this->getParent(), NULL);
 				m_aLinux[2] = true;
 			}
 		} else
 		OnSignal(m_sigLinux[3]) {
-			if (m_aLinux[3]) {
- 				SendSignal(m_sigLinuxOff[3], 0, this->getParent(), NULL);
-				m_aLinux[3] = false;
-			} else {
+			if (!m_aLinux[3]) {
  				SendSignal(m_sigLinuxOn[3], 0, this->getParent(), NULL);
 				m_aLinux[3] = true;
 			}
 		} else
 		OnSignal(m_sigLinux[4]) {
-			if (m_aLinux[4]) {
- 				SendSignal(m_sigLinuxOff[4], 0, this->getParent(), NULL);
-				m_aLinux[4] = false;
-			} else {
+			if (!m_aLinux[4]) {
  				SendSignal(m_sigLinuxOn[4], 0, this->getParent(), NULL);
 				m_aLinux[4] = true;
 			}
@@ -315,6 +309,7 @@ public:
 		} else
 		OnSignal(m_sigRightLoop) {
 			if (m_bExtraBallWaiting) {
+				SendSignal( m_sigExtraBall, 0, this->getParent(), NULL );
 				m_bExtraBall = true;
 				m_bExtraBallWaiting = false;
 			}
@@ -331,6 +326,25 @@ public:
 		if (m_aLinux[0] && m_aLinux[1] && m_aLinux[2] && m_aLinux[3] && m_aLinux[4]) {
 			SendSignal(m_sigLinuxAll, 0, this->getParent(), NULL);
 			m_aLinux[0] = m_aLinux[1] = m_aLinux[2] = m_aLinux[3] = m_aLinux[4] = false;
+			switch (Score::getInstance()->getMultiplier()) {
+			case 1: 
+				Score::getInstance()->setMultiplier(2);
+				SendSignal(m_sigMultiplier[1], 0, this->getParent(), NULL);
+				break;
+			case 2: 
+				Score::getInstance()->setMultiplier(3);
+				SendSignal(m_sigMultiplier[2], 0, this->getParent(), NULL);
+				break;
+			case 3: 
+				Score::getInstance()->setMultiplier(4);
+				SendSignal(m_sigMultiplier[3], 0, this->getParent(), NULL);
+				break;
+			case 4: 
+				cerr << "555555" << endl;
+				Score::getInstance()->setMultiplier(5);
+				SendSignal(m_sigMultiplier[4], 0, this->getParent(), NULL);
+				break;
+			}
 		}
 
 		// BOOT all
@@ -358,6 +372,9 @@ public:
 	};
 
 private:
+	int m_sigAllBallsOff;
+	int m_sigExtraBall;
+	int m_sigMultiballOff;
 	int m_sigReleaseLock;
 	int m_sigRightLoop;
 	int m_sigLinuxAll;
@@ -372,12 +389,12 @@ private:
 	int m_sigBoot[4];
 	int m_sigBootOn[4];
 	int m_sigBootOff[4];
+	int m_sigMultiplier[4];
 	bool m_aLinux[5];
 	bool m_aBoot[4];
 	bool m_aTux[3];
 	bool m_bExtraBall;
 	bool m_bExtraBallWaiting;
-	bool m_bLaunch;
 };
 
 extern "C"  void * new_object_fct(void) {

@@ -295,10 +295,10 @@ void Score::draw() {
 	sprintf(buffer, "SCORE %d BALL %d\n", m_iScore, m_iBall);
 	m_Font->printRow(buffer, 0);
 #if EM_DEBUG
-	//if (m_bShowFPS) {
+	if (Config::getInstance()->getShowFPS()) {
 	sprintf(buffer, "FPS %f\n", g_fFps);
 	m_Font->printRow(buffer, 1);
-	//}
+	}
 #endif
 	m_Font->printRowCenter(m_Text1, 6);
 	m_Font->printRowCenter(m_Text2, 7);
@@ -315,6 +315,5 @@ void Score::clear() {
 	m_aBall[3] = PBL_DEAD;
 	m_iScore = 0;
 	m_iFactor = 1;
-	m_bShowFPS = false;
 }
 

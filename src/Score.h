@@ -51,6 +51,8 @@ class Score : public Behavior  {
 	void setCurrentBall(int ball) { m_iBall = ball; };
 	void setShowFPS(bool fps) { m_bShowFPS = fps; };
 	bool getShowFPS() { return m_bShowFPS; };
+	void setMultiplier(int m) { m_iFactor = m; };
+	int getMultiplier() { return m_iFactor; };
  private:
 	char m_Text1[64];
 	char m_Text2[64];
