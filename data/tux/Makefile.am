@@ -10,19 +10,26 @@ libmodule_tux_la_LDFLAGS = -module
 libmodule_tux_la_SOURCES = ModuleTux.cpp
 
 tuxdata_DATA = \
+bumphard.wav \
+bumpsoft.wav \
 bump.wav \
 face.png \
 face.png.pcx \
-game.mid \
-gameover.wav \
 flip.wav \
 floor2.png \
 floor2.png.pcx \
+game.mid \
+gameover.wav \
+intro.mid \
+locklock.wav \
+loop.wav \
 floor.pbl \
 intro.mid \
 multiball.mid \
 nudge.wav \
+opentux.wav \
 pinball.pbl \
+shoot.wav \
 tiles.png \
 tiles.png.pcx \
 up.wav
