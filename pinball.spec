@@ -1,6 +1,6 @@
 Name: 		pinball
 Version: 	0.3.0
-Release: 	1rh73
+Release: 	1rh80
 
 Group:    	Amusements/Games
 Summary: 	Emilia Pinball is free OpenGL pinball game.
@@ -15,25 +15,25 @@ BuildRoot: 	%{_tmppath}/%{name}-%{version}-root
 %description
 Pinball game.
 
-
 %prep
-#rm -rf %{buildroot}
-%setup
+# rm -rf %{buildroot}
+%setup -q
 
 %build
-./configure --prefix=%{buildroot}%{_prefix}
-#./configure --prefix=%{_prefix}
-#mkdir -p %{buildroot}%{_prefix}/bin
-#make prefix=%{buildroot}%{_prefix}
+./configure --build=%{_target_platform} --prefix=%{_prefix} \
+            --exec-prefix=%{_exec_prefix} --bindir=%{_bindir} \
+            --sbindir=%{_sbindir} --sysconfdir=%{_sysconfdir} \
+            --datadir=%{_datadir} --includedir=%{_includedir} \
+            --libdir=%{_libdir} --libexecdir=%{_libexecdir} \
+            --localstatedir=%{_localstatedir} \
+            --sharedstatedir=%{_sharedstatedir} --mandir=%{_mandir} \
+            --infodir=%{_infodir} --with-buildroot-prefix=%{buildroot} \
+            $BUILD_ARGS
 make
 
 
 %install
-#make prefix=%{buildroot}%{_prefix} install
-#some sort of hack
-#cp %{_prefix}/bin/pinball %{buildroot}%{_prefix}/bin/.
-#cp %{_prefix}/bin/pinball-config %{buildroot}%{_prefix}/bin/.
-make install
+make DESTDIR=%{?buildroot:%{buildroot}} LIBRARY_PATH=%{?buildroot:%{buildroot}}%{_libdir} install
 
 #Install application link for X-Windows
 #install -d /etc/X11/applnk/Games
@@ -55,15 +55,18 @@ make uninstall
 %defattr(-,root,root)
 %doc AUTHORS COPYING INSTALL NEWS README
 #/etc/X11/applnk/Games/EmiliaPinball.desktop
-%{_prefix}/bin/pinball
-%{_prefix}/bin/pinball-config
-%{_prefix}/share/pinball/*
-%{_prefix}/lib/pinball/*
-%{_prefix}/include/pinball/*
-
-
+%{_bindir}/pinball
+%{_bindir}/pinball-config
+%{_datadir}/pinball/*
+%{_libdir}/pinball/*
+%{_includedir}/pinball/*
+/var/games/pinball/tux/highscores
+/var/games/pinball/professor/highscores
 
 %changelog
+* Wed May 28 2003 Henrik Enqvist
+- put buildroot back
+- again some fixes to make things work, copied some stuff from xine-lib.spec
 * Wed Mar 05 2003 Henrik Enqvist
 - removed build_root to make it work with libtool (ugly)
 * Fri Mar 08 2002 Michal Ambroz (O_O) <rebus@seznam.cz>
