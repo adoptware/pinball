@@ -38,9 +38,9 @@ class MenuItem {
   virtual int perform() = 0;
   inline int getType() { return m_iType; };
   inline Engine * getEngine() { return p_Engine; };
-	inline void setBackground(EmTexture * tex) { p_Texture = tex; };
+  inline void setBackground(EmTexture * tex) { p_Texture = tex; };
  protected:
-	EmTexture * p_Texture;
+  EmTexture * p_Texture;
   EmFont* p_EmFont;
   Engine* p_Engine;
   int m_iType;
@@ -58,11 +58,17 @@ class MenuSub : public MenuItem {
   inline int size() { return m_vMenuItem.size(); };
   inline void setAction(int a) { m_iAction = a; };
   inline const char* getText() { return m_Name; };
+  /** Add a text which is to appear under the name when the item is selected. TODO */
+  void addInfoText(const char * text);
+  /** Add a text which is to appear under the name when the item is selected */
+  void setBottomText(const char * text);
  protected:
   char m_Name[MAX_MENU_NAME + 1];
   int m_iCurrent;
   int m_iAction;
   vector<MenuItem*> m_vMenuItem;
+  vector<char*> m_vInfoText;
+  char m_BottomText[MAX_MENU_NAME + 1];
 };
 
 class MenuChoose : public MenuItem {
