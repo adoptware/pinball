@@ -113,7 +113,7 @@ void MenuSub::draw() {
   p_Engine->swap();
 }
 
-/*************************************************************************'
+/**************************************************************************
  * A meny where you can choose items */
 
 MenuChoose::MenuChoose(Engine* e) : MenuItem(e, EM_MENU_CHOOSE) {
@@ -175,7 +175,7 @@ int MenuChoose::prev() {
 }
 
 
-/*************************************************************************''
+/***************************************************************************
  * A menu that performs a function when choosen */
 
 MenuFct::MenuFct(const char * name, int (*fct)(void), Engine* e) : MenuItem(e, EM_MENU_FCT) {
@@ -188,4 +188,56 @@ MenuFct::~MenuFct() {
 
 int MenuFct::perform() {
   return p_Fct();
+}
+
+/**************************************************************************
+ * A meny item to input text */
+
+MenuInput::MenuInput(const char * name, Engine* e) : MenuItem(e, EM_MENU_INPUT) {
+	strncpy(m_Name, name, 63);
+	strcpy(m_Input, "");
+	m_iAction = EM_MENU_BACK;
+}
+
+MenuInput::~MenuInput() {
+}
+
+const char* MenuInput::getInput() {
+	return m_Input;
+}
+
+void MenuInput::draw() {
+  EM_COUT("MenuSub::draw() " << this->getText(), 1);
+  p_Engine->clearScreen();
+	if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
+  
+  p_EmFont->printRowCenter(this->getText(), 8);
+  p_EmFont->printRowCenter(this->getInput(), 10);
+  
+  p_Engine->swap();
+}
+
+int MenuInput::perform() {
+  EM_COUT("MenuInput::perform() " << this->getText(), 1);
+	this->draw();
+
+	int iLetter = 0;
+	while (iLetter < 63) {
+		EMKey key = Keyboard::waitForKey();
+		if ((key == SDLK_RETURN && iLetter > 0) || key == SDLK_ESCAPE) {
+			break;
+		} else if (key == SDLK_BACKSPACE || key == SDLK_DELETE) {
+			if (iLetter > 0) {
+				--iLetter;
+				m_Input[iLetter] = '\0';
+			}
+		} else {
+			m_Input[iLetter] = key;
+			++iLetter;
+			m_Input[iLetter] = '\0';
+		}
+		EM_COUT("MenuInput::perform() input " << this->getInput(), 1);
+		this->draw();
+	}
+	return m_iAction;;
 }

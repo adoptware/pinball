@@ -83,6 +83,9 @@ int main(int argc, char *argv[]) {
   MenuSub* menuback = new MenuSub("back", engine);
   menuback->setAction(EM_MENU_BACK);
   menusub->addMenuItem(menuback);
+
+	MenuInput * menuinput = new MenuInput("input", engine);
+	menusub->addMenuItem(menuinput);
 	
   bool done = false;
   engine->resetTick();
