@@ -49,6 +49,21 @@ AC_SUBST(EM_LIBDIR)
 eval EM_LIBPATH=`eval echo "$EM_LIBDIR"`
 AC_DEFINE_UNQUOTED(EM_LIBDIR, "$EM_LIBPATH", [The library or plugin dir /usr/local/lib/pinball])
 
+
+AC_ARG_WITH(highscore-prefix, [  --with-highscore-prefix=PFX    Install highscore files in PFX (/var/games/pinball)], highscore_prefix="$withval", highscore_prefix="")
+
+if test x"$highscore_prefix" != "x"; then
+	EM_HIGHSCORE_DIR=$highscore_prefix
+else
+	EM_HIGHSCORE_DIR="/var/games/pinball"
+fi
+
+dnl EM_HIGHSCORE_DIR="/var/games/pinball"
+AC_SUBST(EM_HIGHSCORE_DIR)
+eval EM_HIGHSCORE_PATH=`eval echo "$EM_HIGHSCORE_DIR"`
+AC_DEFINE_UNQUOTED(EM_HIGHSCORE_DIR, "$EM_HIGHSCORE_PATH", [Highscore directory])
+
+
 AC_ARG_ENABLE(libtest, [  --disable-libtest     SDL_image _mixer libtest work around ], , enable_libtest=yes)
 
 dnl *******************************************

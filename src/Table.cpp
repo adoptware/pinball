@@ -23,6 +23,8 @@
 #include <iostream>
 #include <fstream>
 
+#include <cstdio>
+
 /******************************************************* 
  * Singleton suff 
  ******************************************************/
@@ -230,7 +232,7 @@ void Table::saveNewHighScore(int nNewHighScore, const char * name) {
 // pnf
 //
 
-#define HIGH_SCORES_FILENAME      "/highscores"
+#define HIGH_SCORES_FILENAME "/highscores"
 
 bool Table::readHighScoresFile() {
   // This is the current table's name
@@ -240,7 +242,8 @@ bool Table::readHighScoresFile() {
 	}
   // Clear old high scores
   m_mapHighScores.clear();
-  string sFileName = string(Config::getInstance()->getDataSubDir()) + HIGH_SCORES_FILENAME;
+  //string sFileName = string(Config::getInstance()->getDataSubDir()) + HIGH_SCORES_FILENAME;
+	string sFileName = string(EM_HIGHSCORE_DIR) +"/"+ m_sTableName + HIGH_SCORES_FILENAME;
 	
   ifstream file(sFileName.c_str());
   if (!file) {
@@ -288,11 +291,13 @@ bool Table::readHighScoresFile() {
 bool Table::writeHighScoresFile() {
   // This is the current table's name
   if (m_sTableName.length() == 0) {
-    cerr << "No current table name! (the first time is normal..." << endl;
+    cerr << "No current table name! (the first time is normal...)" << endl;
     return false;
   }
 
-  string sFileName = string(Config::getInstance()->getDataSubDir()) + HIGH_SCORES_FILENAME;
+  //string sFileName = string(Config::getInstance()->getDataSubDir()) + HIGH_SCORES_FILENAME;
+	string sFileName = string(EM_HIGHSCORE_DIR) +"/"+ m_sTableName + HIGH_SCORES_FILENAME;
+
 
   ofstream file(sFileName.c_str());//, ios_base::out | ios_base::trunc);
 
