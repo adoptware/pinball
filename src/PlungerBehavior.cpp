@@ -54,11 +54,11 @@ void PlungerBehavior::onTick() {
     } else if (m_iLaunchState == 2) {
       if (m_iCounter > -1) {
 	// short delay after launching
-	--m_iCounter;
+				--m_iCounter;
       } else {
 	// reset
-	m_iLaunchState = 0;
-	m_fPower = 0.0f;
+				m_iLaunchState = 0;
+				m_fPower = 0.0f;
       }
     }
   }
