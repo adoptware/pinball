@@ -10,15 +10,16 @@
 #include "Config.h"
 #include "EMath.h"
 
+#include <cstdio>
+#include <fstream>
+#include <iostream>
+
 #if HAVE_SYS_STAT_H
 #include <sys/stat.h>
 #endif
 #if HAVE_SYS_TYPES_H
 #include <sys/types.h>
 #endif
-
-#include <cstdio>
-
 #if HAVE_UNISTD_H // !+rzr: not in msvc
 #include <unistd.h>
 #endif
@@ -250,10 +251,6 @@ void Config::setSize(int const w, int const h) {
   m_iHeight = EM_MIN(1200, EM_MAX(100,h)); 
   m_iWidthDiv2 = m_iWidth/2;
   m_iHeightDiv2 = m_iHeight/2;
-  //   em_width_ = m_iWidth;
-  //   em_height_ = m_iHeight;
-  //   em_width_div2_ = m_iWidth/2;
-  //   em_height_div2_ = m_iHeight/2;
 }
 
 void Config::loadArgs(int & argc, char *argv[]) {
@@ -335,11 +332,10 @@ void Config::loadArgs(int & argc, char *argv[]) {
 }
 
 ///!+rzr this workaround Full path to relative ones, usefull for windows port
-bool isAbsolutePath(char const * const argv0 ) //!+rzr
-{
+bool isAbsolutePath(char const * const argv0 ) { //!+rzr
   //EM_COUT(" check root drive c:\\ // absolute path -  check for wine ?", 42);
 #ifdef WIN32
- // assert (strlen (argv0) > 3 );
+	// assert (strlen (argv0) > 3 );
   if ( ( *(argv0 +1) == ':' ) && ( *(argv0 +2)  == '\\' ) )
     return  true;
 #endif 
@@ -385,154 +381,3 @@ void Config::setPaths(char const * const argv0) {
   EM_COUT( m_sDataDir, 42);
   EM_COUT("- Config::getFullPath",0);
 } //!-rzr
-
-
-//
-// HighScores
-// pnf
-//
-
-#define HIGH_SCORES_FILENAME      "/highscores"
-
-bool Config::readHighScoresFile()
-{
-  // This is the current table's name
-  if (m_sSubDir.length() == 0)
-  {
-    cerr << "No current table name!" << endl;
-    return false;
-  }
-
-  // Clear old high scores
-  m_mapHighScores.clear();
-
-  string sFileName = m_sDataSubDir + HIGH_SCORES_FILENAME;
-
-  ifstream file(sFileName.c_str());
-
-  if (!file)
-  {
-    cerr << "Couldn't open high scores file: " << sFileName << endl;
-    cerr << "Using default values!" << endl;
-
-    for (int i=0; i<10; i++)
-      m_mapHighScores.insert(pair<int, string>(10 - i, "lia"));
-
-    return false;
-  }
-
-cerr << "read HS file..." << endl;
-
-  int nScore = 0;
-
-  string sName;
-
-  while (file)
-  {
-    file >> nScore;
-    file >> sName;
-
-    if (nScore == 0)
-      continue;
-
-    m_mapHighScores.insert(pair<int, string>(nScore, sName));
-
-    // We only read 10 scores from the file!
-    if (m_mapHighScores.size() >= 10)
-      break;
-  }
-
-  // If we read less then 10 scores
-  for (int i=m_mapHighScores.size(); i<10; i++)
-    m_mapHighScores.insert(pair<int, string>(10 - i, "lia"));
-
-  return true;
-}
-
-// NOTE!!!
-// For now the high scores are saved in a file that is in directory
-//  /usr/local/share/pinball/tux (for table tux, last dir is table's name)
-// Problem: this file must be owned by user pinball with write access
-//  to all (don't create a root file with write access to all...!).
-// For now please create this file by hand if you want to save your scores:
-// # su <- give root password
-// # adduser pinball
-// # cd /usr/local/share/pinball/tux
-// # touch highscores
-// # chown pinball:pinball highscores
-// # chmod a+w highscores
-// TODO: Find a way to safely write in a common file all high scores, this
-//  method also should be FHS friendly...
-//
-bool Config::writeHighScoresFile()
-{
-  // This is the current table's name
-  if (m_sSubDir.length() == 0)
-  {
-    cerr << "No current table name! (the first time is normal..." << endl;
-    return false;
-  }
-
-  string sFileName = m_sDataSubDir + HIGH_SCORES_FILENAME;
-
-  ofstream file(sFileName.c_str(), ios_base::out | ios_base::trunc);
-
-  if (!file)
-  {
-    cerr << "Couldn't open high scores file: " << sFileName << endl;
-    cerr << "Can't save high scores!" <<  endl;
-
-    return false;
-  }
-
-  int nIndex = 1;
-  int nScore = 0;
-
-  string sName;
-
-  for (multimap<int, string>::iterator it = m_mapHighScores.begin();
-       it != m_mapHighScores.end(); it++)
-  {
-    nScore = (*it).first;
-    sName  = (*it).second;
-
-    file << nScore << " " << sName << endl;
-
-    // We only write 10 scores to file! (for safety...)
-    if (nIndex >= 10)
-      break;
-
-    nIndex++;
-  }
-
-  return true;
-}
-
-void Config::getHighScores(multimap<int, string>& mapHighScores)
-{
-  copyMaps(m_mapHighScores, mapHighScores);
-}
-
-void Config::setHighScores(multimap<int, string>& mapHighScores)
-{
-  copyMaps(mapHighScores, m_mapHighScores);
-}
-
-void Config::copyMaps(multimap<int, string>& mapOrig,
-                      multimap<int, string>& mapDest)
-{
-  // Clear old map
-  mapDest.clear();
-
-  int nScore   = 0;
-  string sName;
-
-  for (multimap<int, string>::iterator it = mapOrig.begin();
-       it != mapOrig.end(); ++it)
-  {
-    nScore = (*it).first;
-    sName  = (*it).second;
-
-    mapDest.insert(pair<int, string>(nScore, sName));
-  }
-}

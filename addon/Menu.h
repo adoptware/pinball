@@ -36,7 +36,9 @@ class MenuItem {
   virtual int perform() = 0;
   inline int getType() { return m_iType; };
   inline Engine * getEngine() { return p_Engine; };
+	inline void setBackground(EmTexture * tex) { p_Texture = tex; };
  protected:
+	EmTexture * p_Texture;
   EmFont* p_EmFont;
   Engine* p_Engine;
   int m_iType;
@@ -50,7 +52,6 @@ class MenuSub : public MenuItem {
   void addMenuItem(MenuItem* m);
   int perform();
   void draw();
-	inline void setBackground(EmTexture * tex) { p_Texture = tex; };
   /** Gives the number of submenus */
   inline int size() { return m_vMenuItem.size(); };
   inline void setAction(int a) { m_iAction = a; };
@@ -59,7 +60,6 @@ class MenuSub : public MenuItem {
   char m_Name[64];
   int m_iCurrent;
   int m_iAction;
-	EmTexture * p_Texture;
   vector<MenuItem*> m_vMenuItem;
 };
 
