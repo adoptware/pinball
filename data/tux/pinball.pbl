@@ -1,9 +1,10 @@
+version { 0 2 1 }
 object walls {
   0 0 0
   0 0 0
   shape {
-    vts { 480 }
-    pls { 313 }
+    vts { 482 }
+    pls { 315 }
     bhi { }
     vtx { 
       -4 1 37.1
@@ -2405,6 +2406,16 @@ object walls {
       1 1 1 1
       0 0
     }
+    vtx { 
+      21 1 42
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      21 -1 42
+      1 1 1 1
+      0 0
+    }
     ply {
       pes { 4 }
       ple { 3 }
@@ -4703,6 +4714,20 @@ object walls {
       ple { 478 }
       ple { 479 }
       ple { 477 }
+    }
+    ply {
+      pes { 4 }
+      ple { 422 }
+      ple { 480 }
+      ple { 481 }
+      ple { 423 }
+    }
+    ply {
+      pes { 4 }
+      ple { 422 }
+      ple { 480 }
+      ple { 481 }
+      ple { 423 }
     }
   }
   shape {
@@ -7233,7 +7258,8 @@ object left_stopper {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -7243,7 +7269,8 @@ object left_stopper {
         light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -7300,7 +7327,8 @@ object right_stopper {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -7310,7 +7338,8 @@ object right_stopper {
         light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -7368,7 +7397,8 @@ object right_loop_cave {
         no_light
       no_sound
       no_music
-      property 65536
+      user_property 65536
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -7378,7 +7408,8 @@ object right_loop_cave {
         light
       no_sound
       no_music
-      property 65536
+      user_property 65536
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -7388,7 +7419,8 @@ object right_loop_cave {
         no_light
       no_sound
       no_music
-      property 2048
+      user_property 2048
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -7534,32 +7566,35 @@ object cave {
   }
   state_behavior {
     state_item {
-      null null 1 -1 -1
+      null cave 1 -1 -1
       no_move
         no_light
       no_sound
       no_music
-      property 65536
+      user_property 65536
+      no_shape_property
       no_texcoord
       no_shape
     }
     state_item {
-      null null -1 2 50
+      null null -1 2 100
       no_move
         light
-      sound shoot.wav
+      no_sound
       no_music
-      property 65536
+      user_property 65536
+      no_shape_property
       no_texcoord
       no_shape
     }
     state_item {
-      null null -1 0 50
+      null null -1 0 100
       no_move
         no_light
-      no_sound
+      sound shoot.wav
       no_music
-      property 2048
+      user_property 2048
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -7616,7 +7651,8 @@ object lock1 {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -7626,7 +7662,8 @@ object lock1 {
         light
       no_sound
       no_music
-      property 1
+      user_property 1
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -7636,7 +7673,8 @@ object lock1 {
         no_light
       sound lock.wav
       no_music
-      property 1
+      user_property 1
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -7693,7 +7731,8 @@ object lock2 {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -7703,7 +7742,8 @@ object lock2 {
         light
       no_sound
       no_music
-      property 1
+      user_property 1
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -7713,7 +7753,8 @@ object lock2 {
         no_light
       sound lock.wav
       no_music
-      property 1
+      user_property 1
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -7810,7 +7851,8 @@ object releaselock {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         1
@@ -7824,7 +7866,8 @@ object releaselock {
         light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -8232,7 +8275,8 @@ object head {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -8245,7 +8289,8 @@ object head {
         no_light
       sound opentux.wav
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -8258,7 +8303,8 @@ object head {
         no_light
       sound opentux.wav
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -9561,7 +9607,6 @@ object floor_lane_o {
   shape {
     vts { 4 }
     pls { 1 }
-    lit { }
     tex { 
       tiles.png
     }
@@ -9637,7 +9682,8 @@ object floor_lane_o {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -9651,7 +9697,8 @@ object floor_lane_o {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -9665,7 +9712,8 @@ object floor_lane_o {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -9679,7 +9727,8 @@ object floor_lane_o {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -12245,29 +12294,28 @@ object floor_lane_b {
   shape {
     vts { 4 }
     pls { 1 }
-    lit { }
     tex { 
       tiles.png
     }
     vtx { 
       -1 -1 -1
       1 1 1 1
-      0 0.25
+      0 0.375
     }
     vtx { 
       1 -1 -1
       1 1 1 1
-      0.125 0.25
+      0.125 0.375
     }
     vtx { 
       1 -1 1
       1 1 1 1
-      0.125 0.375
+      0.125 0.5
     }
     vtx { 
       -1 -1 1
       1 1 1 1
-      0 0.375
+      0 0.5
     }
     ply {
       pes { 4 }
@@ -12321,7 +12369,8 @@ object floor_lane_b {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -12335,7 +12384,8 @@ object floor_lane_b {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -12349,7 +12399,8 @@ object floor_lane_b {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -12363,7 +12414,8 @@ object floor_lane_b {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -12492,7 +12544,8 @@ object floor_lane_oo {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -12506,7 +12559,8 @@ object floor_lane_oo {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -12520,7 +12574,8 @@ object floor_lane_oo {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -12534,7 +12589,8 @@ object floor_lane_oo {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -12663,7 +12719,8 @@ object floor_lane_t {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -12677,7 +12734,8 @@ object floor_lane_t {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -12691,7 +12749,8 @@ object floor_lane_t {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -12705,7 +12764,8 @@ object floor_lane_t {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -12730,7 +12790,8 @@ object music {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -12740,7 +12801,8 @@ object music {
         no_light
       no_sound
       music intro.mid
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -12750,7 +12812,8 @@ object music {
         no_light
       no_sound
       music game.mid
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -12760,7 +12823,8 @@ object music {
         no_light
       no_sound
       music multiball.mid
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -12770,7 +12834,8 @@ object music {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -12780,7 +12845,8 @@ object music {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -12790,7 +12856,8 @@ object music {
         no_light
       sound gameover.wav
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -12914,7 +12981,8 @@ object floor_top_l {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -12928,7 +12996,8 @@ object floor_top_l {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -12942,7 +13011,8 @@ object floor_top_l {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -12956,7 +13026,8 @@ object floor_top_l {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13085,7 +13156,8 @@ object floor_top_i {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13099,7 +13171,8 @@ object floor_top_i {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13113,7 +13186,8 @@ object floor_top_i {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13127,7 +13201,8 @@ object floor_top_i {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13256,7 +13331,8 @@ object floor_top_n {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13270,7 +13346,8 @@ object floor_top_n {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13284,7 +13361,8 @@ object floor_top_n {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13298,7 +13376,8 @@ object floor_top_n {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13427,7 +13506,8 @@ object floor_top_u {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13441,7 +13521,8 @@ object floor_top_u {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13455,7 +13536,8 @@ object floor_top_u {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13469,7 +13551,8 @@ object floor_top_u {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13598,7 +13681,8 @@ object floor_top_x {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13612,7 +13696,8 @@ object floor_top_x {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13626,7 +13711,8 @@ object floor_top_x {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13640,7 +13726,8 @@ object floor_top_x {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13829,7 +13916,8 @@ object floor_target_t {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13843,7 +13931,8 @@ object floor_target_t {
         no_light
       sound bumphard.wav
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 8
         0
@@ -13861,7 +13950,8 @@ object floor_target_t {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -13875,7 +13965,8 @@ object floor_target_t {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -14064,7 +14155,8 @@ object floor_target_u {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -14078,7 +14170,8 @@ object floor_target_u {
         no_light
       sound bumphard.wav
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 8
         0
@@ -14096,7 +14189,8 @@ object floor_target_u {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -14110,7 +14204,8 @@ object floor_target_u {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -14299,7 +14394,8 @@ object floor_target_x {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -14313,7 +14409,8 @@ object floor_target_x {
         no_light
       sound bumphard.wav
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 8
         0
@@ -14331,7 +14428,8 @@ object floor_target_x {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -14345,7 +14443,8 @@ object floor_target_x {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -14413,7 +14512,8 @@ object left_loop {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -14423,7 +14523,8 @@ object left_loop {
         light
       sound up.wav
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -14480,7 +14581,8 @@ object right_loop {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -14490,7 +14592,8 @@ object right_loop {
         no_light
       sound shoot.wav
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -14581,7 +14684,8 @@ object jackpot_light {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         1
@@ -14595,7 +14699,8 @@ object jackpot_light {
         light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -14693,7 +14798,8 @@ object extraball_light {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         1
@@ -14707,7 +14813,8 @@ object extraball_light {
         light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -14805,7 +14912,8 @@ object extraball_on {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         1
@@ -14819,7 +14927,8 @@ object extraball_on {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 4
         0
@@ -14834,7 +14943,7 @@ object extraball_on {
   }
 }
 object multiplier {
-  -4.4 0 -25.5
+  -4.4 0 -26.1
   0 0 0
   shape {
     vts { 4 }
@@ -14844,22 +14953,22 @@ object multiplier {
       tiles.png
     }
     vtx { 
-      -1.5 -1 -1.5
+      -2 -1 -2
       1 1 1 1
       0 0.5
     }
     vtx { 
-      1.5 -1 -1.5
+      2 -1 -2
       1 1 1 1
       0.125 0.5
     }
     vtx { 
-      1.5 -1 1.5
+      2 -1 2
       1 1 1 1
       0.125 0.625
     }
     vtx { 
-      -1.5 -1 1.5
+      -2 -1 2
       1 1 1 1
       0 0.625
     }
@@ -14880,22 +14989,22 @@ object multiplier {
       tiles.png
     }
     vtx { 
-      -1.5 -1 -1.5
+      -2 -1 -2
       1 1 1 1
       0.125 0.5
     }
     vtx { 
-      1.5 -1 -1.5
+      2 -1 -2
       1 1 1 1
       0.25 0.5
     }
     vtx { 
-      1.5 -1 1.5
+      2 -1 2
       1 1 1 1
       0.25 0.625
     }
     vtx { 
-      -1.5 -1 1.5
+      -2 -1 2
       1 1 1 1
       0.125 0.625
     }
@@ -14916,22 +15025,22 @@ object multiplier {
       tiles.png
     }
     vtx { 
-      -1.5 -1 -1.5
+      -2 -1 -2
       1 1 1 1
       0.25 0.5
     }
     vtx { 
-      1.5 -1 -1.5
+      2 -1 -2
       1 1 1 1
       0.375 0.5
     }
     vtx { 
-      1.5 -1 1.5
+      2 -1 2
       1 1 1 1
       0.375 0.625
     }
     vtx { 
-      -1.5 -1 1.5
+      -2 -1 2
       1 1 1 1
       0.25 0.625
     }
@@ -14952,22 +15061,22 @@ object multiplier {
       tiles.png
     }
     vtx { 
-      -1.5 -1 -1.5
+      -2 -1 -2
       1 1 1 1
       0.375 0.5
     }
     vtx { 
-      1.5 -1 -1.5
+      2 -1 -2
       1 1 1 1
       0.5 0.5
     }
     vtx { 
-      1.5 -1 1.5
+      2 -1 2
       1 1 1 1
       0.5 0.625
     }
     vtx { 
-      -1.5 -1 1.5
+      -2 -1 2
       1 1 1 1
       0.375 0.625
     }
@@ -14988,22 +15097,22 @@ object multiplier {
       tiles.png
     }
     vtx { 
-      -1.5 -1 -1.5
+      -2 -1 -2
       1 1 1 1
       0.5 0.5
     }
     vtx { 
-      1.5 -1 -1.5
+      2 -1 -2
       1 1 1 1
       0.625 0.5
     }
     vtx { 
-      1.5 -1 1.5
+      2 -1 2
       1 1 1 1
       0.625 0.625
     }
     vtx { 
-      -1.5 -1 1.5
+      -2 -1 2
       1 1 1 1
       0.5 0.625
     }
@@ -15023,7 +15132,8 @@ object multiplier {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 8
         1
@@ -15041,7 +15151,8 @@ object multiplier {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 8
         0
@@ -15059,7 +15170,8 @@ object multiplier {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 8
         0
@@ -15077,7 +15189,8 @@ object multiplier {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 8
         0
@@ -15095,7 +15208,8 @@ object multiplier {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 8
         0
@@ -15158,22 +15272,22 @@ object left_shoot {
     vtx { 
       -1 -1 -2
       1 1 1 1
-      0.75 0.5
+      0.875 0.625
     }
     vtx { 
       1 -1 -2
       1 1 1 1
-      0.875 0.5
+      1 0.625
     }
     vtx { 
       1 -1 0
       1 1 1 1
-      0.875 0.625
+      1 0.75
     }
     vtx { 
       -1 -1 0
       1 1 1 1
-      0.75 0.625
+      0.875 0.75
     }
     ply {
       pes { 4 }
@@ -15194,22 +15308,22 @@ object left_shoot {
     vtx { 
       -1 -1 -2
       1 1 1 1
-      0.625 0.5
+      0.75 0.625
     }
     vtx { 
       1 -1 -2
       1 1 1 1
-      0.75 0.5
+      0.875 0.625
     }
     vtx { 
       1 -1 0
       1 1 1 1
-      0.75 0.625
+      0.875 0.75
     }
     vtx { 
       -1 -1 0
       1 1 1 1
-      0.625 0.625
+      0.75 0.75
     }
     ply {
       pes { 4 }
@@ -15227,7 +15341,8 @@ object left_shoot {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 8
         0
@@ -15245,7 +15360,8 @@ object left_shoot {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 8
         0
@@ -15263,7 +15379,8 @@ object left_shoot {
         light
       sound shoot.wav
       no_music
-      property 2048
+      user_property 2048
+      no_shape_property
       no_texcoord
       shape 8
         0
@@ -15331,22 +15448,22 @@ object right_shoot {
     vtx { 
       -1 -1 -2
       1 1 1 1
-      0.75 0.5
+      0.875 0.625
     }
     vtx { 
       1 -1 -2
       1 1 1 1
-      0.875 0.5
+      1 0.625
     }
     vtx { 
       1 -1 0
       1 1 1 1
-      0.875 0.625
+      1 0.75
     }
     vtx { 
       -1 -1 0
       1 1 1 1
-      0.75 0.625
+      0.875 0.75
     }
     ply {
       pes { 4 }
@@ -15367,22 +15484,22 @@ object right_shoot {
     vtx { 
       -1 -1 -2
       1 1 1 1
-      0.625 0.5
+      0.75 0.625
     }
     vtx { 
       1 -1 -2
       1 1 1 1
-      0.75 0.5
+      0.875 0.625
     }
     vtx { 
       1 -1 0
       1 1 1 1
-      0.75 0.625
+      0.875 0.75
     }
     vtx { 
       -1 -1 0
       1 1 1 1
-      0.625 0.625
+      0.75 0.75
     }
     ply {
       pes { 4 }
@@ -15400,7 +15517,8 @@ object right_shoot {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 8
         0
@@ -15418,7 +15536,8 @@ object right_shoot {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       shape 8
         0
@@ -15436,7 +15555,8 @@ object right_shoot {
         light
       sound shoot.wav
       no_music
-      property 2048
+      user_property 2048
+      no_shape_property
       no_texcoord
       shape 8
         0
@@ -15589,6 +15709,2281 @@ object plunger {
   }
   properties {
     collision
+    group_1
+  }
+}
+object side_target_1 {
+  -12.6667 0 -18.6167
+  0 -0.02 0
+  shape {
+    vts { 8 }
+    pls { 6 }
+    vtx { 
+      0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 3 }
+      ple { 2 }
+    }
+    ply {
+      pes { 4 }
+      ple { 4 }
+      ple { 0 }
+      ple { 2 }
+      ple { 6 }
+    }
+    ply {
+      pes { 4 }
+      ple { 5 }
+      ple { 4 }
+      ple { 6 }
+      ple { 7 }
+    }
+    ply {
+      pes { 4 }
+      ple { 1 }
+      ple { 5 }
+      ple { 7 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 4 }
+      ple { 5 }
+      ple { 1 }
+    }
+    ply {
+      pes { 4 }
+      ple { 2 }
+      ple { 3 }
+      ple { 7 }
+      ple { 6 }
+    }
+  }
+  shape {
+    vts { 8 }
+    pls { 6 }
+    lit { }
+    vtx { 
+      0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 3 }
+      ple { 2 }
+    }
+    ply {
+      pes { 4 }
+      ple { 4 }
+      ple { 0 }
+      ple { 2 }
+      ple { 6 }
+    }
+    ply {
+      pes { 4 }
+      ple { 5 }
+      ple { 4 }
+      ple { 6 }
+      ple { 7 }
+    }
+    ply {
+      pes { 4 }
+      ple { 1 }
+      ple { 5 }
+      ple { 7 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 4 }
+      ple { 5 }
+      ple { 1 }
+    }
+    ply {
+      pes { 4 }
+      ple { 2 }
+      ple { 3 }
+      ple { 7 }
+      ple { 6 }
+    }
+  }
+  state_behavior {
+    state_item {
+      side_target_1_off side_target_1 1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      null null -1 0 50
+      no_move
+        light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      side_target_1_blink side_target_1 5 3 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      null side_target_1 5 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      side_target_1_on side_target_1 5 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      null null -1 4 50
+      no_move
+        light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    light {
+      0 0 1
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object side_target_2 {
+  -8.93333 0 -25.75
+  0 -0.0155 0
+  shape {
+    vts { 8 }
+    pls { 6 }
+    vtx { 
+      0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 3 }
+      ple { 2 }
+    }
+    ply {
+      pes { 4 }
+      ple { 4 }
+      ple { 0 }
+      ple { 2 }
+      ple { 6 }
+    }
+    ply {
+      pes { 4 }
+      ple { 5 }
+      ple { 4 }
+      ple { 6 }
+      ple { 7 }
+    }
+    ply {
+      pes { 4 }
+      ple { 1 }
+      ple { 5 }
+      ple { 7 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 4 }
+      ple { 5 }
+      ple { 1 }
+    }
+    ply {
+      pes { 4 }
+      ple { 2 }
+      ple { 3 }
+      ple { 7 }
+      ple { 6 }
+    }
+  }
+  shape {
+    vts { 8 }
+    pls { 6 }
+    lit { }
+    vtx { 
+      0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 3 }
+      ple { 2 }
+    }
+    ply {
+      pes { 4 }
+      ple { 4 }
+      ple { 0 }
+      ple { 2 }
+      ple { 6 }
+    }
+    ply {
+      pes { 4 }
+      ple { 5 }
+      ple { 4 }
+      ple { 6 }
+      ple { 7 }
+    }
+    ply {
+      pes { 4 }
+      ple { 1 }
+      ple { 5 }
+      ple { 7 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 4 }
+      ple { 5 }
+      ple { 1 }
+    }
+    ply {
+      pes { 4 }
+      ple { 2 }
+      ple { 3 }
+      ple { 7 }
+      ple { 6 }
+    }
+  }
+  state_behavior {
+    state_item {
+      side_target_2_off side_target_2 1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      null null -1 0 50
+      no_move
+        light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      side_target_2_blink side_target_2 5 3 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      null side_target_2 5 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      side_target_2_on side_target_2 5 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      null null -1 4 50
+      no_move
+        light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    light {
+      0 0 1
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object side_target_3 {
+  9.25 0 -0.866667
+  0 0.0865 0
+  shape {
+    vts { 8 }
+    pls { 6 }
+    vtx { 
+      0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 3 }
+      ple { 2 }
+    }
+    ply {
+      pes { 4 }
+      ple { 4 }
+      ple { 0 }
+      ple { 2 }
+      ple { 6 }
+    }
+    ply {
+      pes { 4 }
+      ple { 5 }
+      ple { 4 }
+      ple { 6 }
+      ple { 7 }
+    }
+    ply {
+      pes { 4 }
+      ple { 1 }
+      ple { 5 }
+      ple { 7 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 4 }
+      ple { 5 }
+      ple { 1 }
+    }
+    ply {
+      pes { 4 }
+      ple { 2 }
+      ple { 3 }
+      ple { 7 }
+      ple { 6 }
+    }
+  }
+  shape {
+    vts { 8 }
+    pls { 6 }
+    lit { }
+    vtx { 
+      0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 3 }
+      ple { 2 }
+    }
+    ply {
+      pes { 4 }
+      ple { 4 }
+      ple { 0 }
+      ple { 2 }
+      ple { 6 }
+    }
+    ply {
+      pes { 4 }
+      ple { 5 }
+      ple { 4 }
+      ple { 6 }
+      ple { 7 }
+    }
+    ply {
+      pes { 4 }
+      ple { 1 }
+      ple { 5 }
+      ple { 7 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 4 }
+      ple { 5 }
+      ple { 1 }
+    }
+    ply {
+      pes { 4 }
+      ple { 2 }
+      ple { 3 }
+      ple { 7 }
+      ple { 6 }
+    }
+  }
+  state_behavior {
+    state_item {
+      side_target_3_off side_target_3 1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      null null -1 0 50
+      no_move
+        light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      side_target_3_blink side_target_3 5 3 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      null side_target_3 5 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      side_target_3_on side_target_3 5 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      null null -1 4 50
+      no_move
+        light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    light {
+      0 0 1
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object side_target_4 {
+  13.3667 0 1.3
+  0 0.0663333 0
+  shape {
+    vts { 8 }
+    pls { 6 }
+    vtx { 
+      0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 3 }
+      ple { 2 }
+    }
+    ply {
+      pes { 4 }
+      ple { 4 }
+      ple { 0 }
+      ple { 2 }
+      ple { 6 }
+    }
+    ply {
+      pes { 4 }
+      ple { 5 }
+      ple { 4 }
+      ple { 6 }
+      ple { 7 }
+    }
+    ply {
+      pes { 4 }
+      ple { 1 }
+      ple { 5 }
+      ple { 7 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 4 }
+      ple { 5 }
+      ple { 1 }
+    }
+    ply {
+      pes { 4 }
+      ple { 2 }
+      ple { 3 }
+      ple { 7 }
+      ple { 6 }
+    }
+  }
+  shape {
+    vts { 8 }
+    pls { 6 }
+    lit { }
+    vtx { 
+      0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 3 }
+      ple { 2 }
+    }
+    ply {
+      pes { 4 }
+      ple { 4 }
+      ple { 0 }
+      ple { 2 }
+      ple { 6 }
+    }
+    ply {
+      pes { 4 }
+      ple { 5 }
+      ple { 4 }
+      ple { 6 }
+      ple { 7 }
+    }
+    ply {
+      pes { 4 }
+      ple { 1 }
+      ple { 5 }
+      ple { 7 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 4 }
+      ple { 5 }
+      ple { 1 }
+    }
+    ply {
+      pes { 4 }
+      ple { 2 }
+      ple { 3 }
+      ple { 7 }
+      ple { 6 }
+    }
+  }
+  state_behavior {
+    state_item {
+      side_target_4_off side_target_4 1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      null null -1 0 50
+      no_move
+        light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      side_target_4_blink side_target_4 5 3 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      null side_target_4 5 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      side_target_4_on side_target_4 5 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      null null -1 4 50
+      no_move
+        light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    light {
+      0 0 1
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object big_tux_1 {
+  -16.7 0 6.55
+  0 -0.082 0
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1.5
+      1 1 1 1
+      0.75 0.75
+    }
+    vtx { 
+      1.5 -1 -1.5
+      1 1 1 1
+      1 0.75
+    }
+    vtx { 
+      1.5 -1 1.5
+      1 1 1 1
+      1 1
+    }
+    vtx { 
+      -1.5 -1 1.5
+      1 1 1 1
+      0.75 1
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    lit { }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1.5
+      1 1 1 1
+      0.5 0.75
+    }
+    vtx { 
+      1.5 -1 -1.5
+      1 1 1 1
+      0.75 0.75
+    }
+    vtx { 
+      1.5 -1 1.5
+      1 1 1 1
+      0.75 1
+    }
+    vtx { 
+      -1.5 -1 1.5
+      1 1 1 1
+      0.5 1
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      big_tux_1_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      big_tux_1_blink null -1 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      null null -1 1 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      big_tux_1_on null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object big_tux_2 {
+  -18.3 0 3
+  0 -0.054 0
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1.5
+      1 1 1 1
+      0.75 0.75
+    }
+    vtx { 
+      1.5 -1 -1.5
+      1 1 1 1
+      1 0.75
+    }
+    vtx { 
+      1.5 -1 1.5
+      1 1 1 1
+      1 1
+    }
+    vtx { 
+      -1.5 -1 1.5
+      1 1 1 1
+      0.75 1
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    lit { }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1.5
+      1 1 1 1
+      0.5 0.75
+    }
+    vtx { 
+      1.5 -1 -1.5
+      1 1 1 1
+      0.75 0.75
+    }
+    vtx { 
+      1.5 -1 1.5
+      1 1 1 1
+      0.75 1
+    }
+    vtx { 
+      -1.5 -1 1.5
+      1 1 1 1
+      0.5 1
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      big_tux_2_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      big_tux_2_blink null -1 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      null null -1 1 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      big_tux_2_on null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object big_tux_3 {
+  -19.2 0 -0.7
+  0 -0.021 0
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1.5
+      1 1 1 1
+      0.75 0.75
+    }
+    vtx { 
+      1.5 -1 -1.5
+      1 1 1 1
+      1 0.75
+    }
+    vtx { 
+      1.5 -1 1.5
+      1 1 1 1
+      1 1
+    }
+    vtx { 
+      -1.5 -1 1.5
+      1 1 1 1
+      0.75 1
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1.5
+      1 1 1 1
+      0.5 0.75
+    }
+    vtx { 
+      1.5 -1 -1.5
+      1 1 1 1
+      0.75 0.75
+    }
+    vtx { 
+      1.5 -1 1.5
+      1 1 1 1
+      0.75 1
+    }
+    vtx { 
+      -1.5 -1 1.5
+      1 1 1 1
+      0.5 1
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      big_tux_3_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      big_tux_3_blink null -1 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      null null -1 1 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      big_tux_3_on null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object big_tux_4 {
+  -19.5 0 -4.4
+  0 0 0
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1.5
+      1 1 1 1
+      0.75 0.75
+    }
+    vtx { 
+      1.5 -1 -1.5
+      1 1 1 1
+      1 0.75
+    }
+    vtx { 
+      1.5 -1 1.5
+      1 1 1 1
+      1 1
+    }
+    vtx { 
+      -1.5 -1 1.5
+      1 1 1 1
+      0.75 1
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1.5
+      1 1 1 1
+      0.5 0.75
+    }
+    vtx { 
+      1.5 -1 -1.5
+      1 1 1 1
+      0.75 0.75
+    }
+    vtx { 
+      1.5 -1 1.5
+      1 1 1 1
+      0.75 1
+    }
+    vtx { 
+      -1.5 -1 1.5
+      1 1 1 1
+      0.5 1
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      big_tux_4_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      big_tux_4_blink null -1 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      null null -1 1 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      big_tux_4_on null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object arrow_1 {
+  -11.5667 0 -25.7333
+  0 -0.038 0
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -2
+      1 1 1 1
+      0.625 0.25
+    }
+    vtx { 
+      1 -1 -2
+      1 1 1 1
+      0.75 0.25
+    }
+    vtx { 
+      1 -1 2
+      1 1 1 1
+      0.75 0.5
+    }
+    vtx { 
+      -1 -1 2
+      1 1 1 1
+      0.625 0.5
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    lit { }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -2
+      1 1 1 1
+      0.625 0
+    }
+    vtx { 
+      1 -1 -2
+      1 1 1 1
+      0.75 0
+    }
+    vtx { 
+      1 -1 2
+      1 1 1 1
+      0.75 0.25
+    }
+    vtx { 
+      -1 -1 2
+      1 1 1 1
+      0.625 0.25
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      arrow_1_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      arrow_1_blink null -1 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      null null -1 1 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      arrow_1_on null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object arrow_2 {
+  15.0375 0 3.4
+  0 0.084 0
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -2
+      1 1 1 1
+      0.625 0.25
+    }
+    vtx { 
+      1 -1 -2
+      1 1 1 1
+      0.75 0.25
+    }
+    vtx { 
+      1 -1 2
+      1 1 1 1
+      0.75 0.5
+    }
+    vtx { 
+      -1 -1 2
+      1 1 1 1
+      0.625 0.5
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      arrow_2_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      arrow_2_blink null -1 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 0
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 1 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      arrow_2_on null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 0
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object arrow_1_switch {
+  -11.2 0 -38.45
+  0 0 0
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 0 1
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      null arrow_1 -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    group_1
+  }
+}
+object arrow_2_switch {
+  15.65 0 -6.45
+  0 0 0
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 0 1
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      null arrow_2 -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    group_1
+  }
+}
+object arrow_3 {
+  -16.6 0.210526 -20.1684
+  -0.00789471 -0.057 0
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -2
+      1 1 1 1
+      0.625 0
+    }
+    vtx { 
+      1 -1 -2
+      1 1 1 1
+      0.75 0
+    }
+    vtx { 
+      1 -1 2
+      1 1 1 1
+      0.75 0.25
+    }
+    vtx { 
+      -1 -1 2
+      1 1 1 1
+      0.625 0.25
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      arrow_3_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      arrow_3_blink null -1 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 0
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 1 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      arrow_3_on null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 0
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    transform_once
     group_1
   }
 }
