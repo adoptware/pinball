@@ -15,7 +15,9 @@
 #if EM_USE_SDL
 #include <GL/gl.h>
 // TODO remove glu
+#if EM_DEBUG
 #include <GL/glu.h>
+#endif
 #include <SDL/SDL.h>
 #include <SDL_image.h>
 

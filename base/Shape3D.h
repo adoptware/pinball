@@ -41,6 +41,8 @@ class Shape3D {
 	 * creating polygons. @see Polygon */
 	int add(float x, float y, float z);
 	int add(float z, float y, float z, float r, float g, float b, float a, float u, float v);
+	int addAt(int index, float x, float y, float z,
+						float r, float g, float b, float a, float u, float v);
 	/** Adds a polygon. @see Polygon */
 	void add(Polygon*);
 	/** Counts the polygon normals used for lightning. This must be called when
@@ -60,8 +62,8 @@ class Shape3D {
 	/** Gets the vertex at position index. It is a bit unsafe to reference pointers
 	 * to vertices as the adding new vertices may change allocation position of
 	 * vertex. */
-	Vertex3D* getVertex3D(int index);
-		/** Warning, this function is slow. */
+	Vertex3D * getVertex3D(int index);
+	/** Warning, this function is slow. */
 	int getVertex3DIndex(Vertex3D * vtx);
 	int getVertex3DSize();
 	/** To be able to remove vertices they polygons first using them must be

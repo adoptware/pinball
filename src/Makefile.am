@@ -10,7 +10,7 @@ dnl libemilia_pin_la_LDFLAGS = -static
 INCLUDES = -I../base -I../addon -I../visitor @INCLTDL@
 
 pinball_LDADD = ../src/libemilia_pin.a ../addon/libemilia_addon.a ../base/libemilia_base.a @LIBLTDL@
-pinball_LDFLAGS = -static -export-dynamic
+pinball_LDFLAGS = -export-dynamic
 
 pinball_SOURCES = Pinball.cpp
 
