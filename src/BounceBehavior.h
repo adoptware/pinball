@@ -37,7 +37,8 @@ class BounceBehavior : public Behavior {
   void getDirection(Vertex3D & vtx);
   inline bool isAlive() { return m_bAlive; };
   inline void setFire(bool f) { m_bFire = f; };
-  void activateBall();
+	/** drops the ball at x,y,z */
+  void activateBall(float x, float y, float z);
  private:
   void checkSpeed();
 

@@ -247,7 +247,8 @@ void Loader::loadProperties(ifstream & file, istringstream & ist, Group * group)
 			EM_COUT("Loader::loadProperties - wall_one_way", 0);
 
 		} else if (str == "group_1") {
-			group->setUserProperty(PBL_GROUP1);
+			//group->setUserProperty(PBL_GROUP1);
+			group->setCollisionGroup(1);
 			EM_COUT("Loader::loadProperties - group_1", 0);
 
 		} else if (str == "alpha_test") {

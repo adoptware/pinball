@@ -58,6 +58,8 @@ class Engine : public Group {
   void delay(int ms);
   void setClearColor(float r, float g, float b, float a);
   static float getFps() { return m_fFps; };
+	/** A short cut to the last created engine, NULL if non created. */
+	inline static Engine * getCurrentEngine() { return p_Engine; };
 #if EM_THREADS
   /** When using threaded ticks you must use this function instead of render(). */
   void renderThreadSafe();
@@ -68,6 +70,7 @@ class Engine : public Group {
 #endif
  private:
   static float m_fFps;
+	static Engine * p_Engine;
 };
 
 #endif // ENGINE_H

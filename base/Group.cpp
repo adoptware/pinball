@@ -22,6 +22,7 @@
 Group::Group() {
   m_iProperties = 0;
   m_iUserProperties = 0;
+	m_iCollisionGroup = 0;
   strncpy(m_Name, "unknown", 256);
   p_BillBoard = NULL;
   p_CollisionBounds = NULL;
