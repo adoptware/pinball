@@ -24,8 +24,10 @@ Esc: Meny
 Enter: Launch Ball
 R: Reset Game
 Left Shift: Left Flipper
+Left Ctrl: Nudge from left
 Right Shift: Right Flipper
-Space: Bumps the Table
+Right Ctrl: Nudge from right
+Space: Nudge
 
 Known Bugs
 ==========

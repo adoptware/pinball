@@ -8,8 +8,7 @@
 
 #undef EM_DATADIR
 
-/* Define if you have the <png.h> header file.  */
-#undef HAVE_PNG_H
+#undef EM_USE_SOURCE_SPECULAR
 
 /* Define if you have the <sys/stat.h> header file.  */
 #undef HAVE_SYS_STAT_H

@@ -1,8 +1,9 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(base/Engine.cpp)
 
-dnl CXXFLAGS="-g -W -Wall -O2"
-dnl CFLAGS="-g -W -Wall -O2"
+dnl this is a c++ program
+CFLAGS="-g -W -Wall -O2"
+CXXFLAGS="-g -W -Wall -O2"
 
 AM_CONFIG_HEADER(conf.h)
 
@@ -11,23 +12,37 @@ SDL_VERSION=1.2.0
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 
-AM_INIT_AUTOMAKE(pinball, 0.0.2)
+AM_INIT_AUTOMAKE(pinball, 0.0.3)
 
 dnl Checks for programs.
-AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_INSTALL
 AC_PROG_RANLIB
 dnl AC_LANG_CPLUSPLUS
 
+dnl PATHS AND DIRS *********************
+dnl data dirs, fuck I hate autoconf, spent 4 hours getting this right had to steal it from 
+dnl xine and even that took a couple of hours
+if test "x$prefix" = xNONE; then
+   prefix="${ac_default_prefix}"
+fi
+
+EM_DATADIR="$datadir/$PACKAGE"
+eval EM_DATAPATH=`eval echo "$EM_DATADIR"`
+AC_DEFINE_UNQUOTED(EM_DATADIR, "$EM_DATAPATH")
+AC_SUBST(EM_DATAPATH)
+
+AC_SUBST(EM_DATADIR)
+
+dnl OPENGL ************************************
 dnl Figure out which math and GL library to use
 case "$target" in
     *-*-cygwin* | *-*-mingw32*)
-        	MATHLIB=""
+        MATHLIB=""
         SYS_GL_LIBS="-lopengl32"
         ;;	
     *-*-beos*)
-        MATHLI	B=""
+        MATHLIB=""
         SYS_GL_LIBS="-lGL"
         ;;
     *-*-darwin*)
@@ -46,19 +61,14 @@ case "$target" in
         AC_PATH_XTRA
         if test x$have_x = xyes; then
             CFLAGS="$CFLAGS $X_CFLAGS"
-            SYS_GL_LIBS="$X_LIBS -lGL -lGLU"
+            SYS_GL_LIBS="$X_PRE_LIBS $X_LIBS $X_EXTRA_LIBS -lGL -lGLU"
         else
             SYS_GL_LIBS="-lGL -lGLU"
         fi
         ;;
 esac
-AC_SUBST(MATHLIB)
 
-dnl Check for SDL
-AM_PATH_SDL( $SDL_VERSION, :, AC_MSG_ERROR([*** SDL version $SDL_VERSION not found!]) )
-CFLAGS="$CFLAGS $SDL_CFLAGS"
-CXXFLAGS="$CXXFLAGS $SDL_CFLAGS"
-LIBS="$SDL_LIBS $LIBS"
+AC_SUBST(MATHLIB)
 
 dnl Check for OpenGL
 AC_MSG_CHECKING(for OpenGL support)
@@ -68,46 +78,72 @@ AC_TRY_COMPILE([
  #else
  #include <GL/gl.h>
  #endif
-], , , AC_MSG_ERROR(*** OpenGL, Mesa, not found on system!))
-
+], , , AC_MSG_ERROR([*** OpenGL Mesa not found on system!]))
 AC_MSG_RESULT(yes)
-CFLAGS="$CFLAGS -DHAVE_OPENGL"
 GL_LIBS="$SYS_GL_LIBS"
-
 AC_SUBST(GL_LIBS)
+LIBS="$GL_LIBS $LIBS"
 
-dnl TODO sdl_image in source - DONE!
-dnl LIBS="$GL_LIBS $LIBS -lSDL_image"
-LIBS="$GL_LIBS $LIBS -lpng"
 
+dnl SDL ***************************************
+dnl Check for SDL
+AM_PATH_SDL( $SDL_VERSION, :, AC_MSG_ERROR([*** SDL version $SDL_VERSION not found!]) )
+CFLAGS="$CFLAGS $SDL_CFLAGS"
+CXXFLAGS="$CXXFLAGS $SDL_CFLAGS"
+LIBS="$SDL_LIBS $LIBS"
+
+dnl PNG ***************************************
+AC_ARG_WITH(png-prefix, [  --with-png-prefix=PFX   Prefix where PNG library is installed (optional)], png_prefix="$withval", png_prefix="")
+
+if test x"$png_prefix" != "x"; then
+	PNG_LIB="-L$png_prefix/lib"
+	PNG_CFLAGS="-I$png_prefix/include"
+	LDFLAGS="$PNG_LIB $LDFLAGS"
+	CPPFLAGS="$CPPFLAGS $PNG_CFLAGS"
+	CFLAGS="$CFLAGS $PNG_CFLAGS"	
+fi
+
+dnl
+dnl Look for a -lpng library, that provides a png_read_info routine
+dnl If we find such a library,  check that the png.h header is available, too.
+dnl
+
+AC_CHECK_LIB(png, png_read_info, 
+	[AC_CHECK_HEADER(png.h, ,AC_MSG_ERROR([*** header png.h not found - try to use --with-png-prefix option ***]))],
+  [AC_MSG_ERROR([*** libpng is needed (PNG library not found) - try to use --with-png-prefix option ***])], 
+	[-lz -lm])
+
+dnl OK, -lpng library and <png.h> header found.
+dnl Check if this png is an old png version.
+
+AC_MSG_CHECKING([for png_structp in png.h]) 
+AC_TRY_COMPILE([#include <png.h>],
+	[
+	png_structp pp; 
+	png_infop info; 
+	png_colorp cmap; 
+
+	png_create_read_struct; 
+	png_set_IHDR;
+	], png_ok=yes, png_ok=no)
+
+AC_MSG_RESULT($png_ok)
+if test x"$png_ok" = xno; then
+	AC_MSG_ERROR([*** libpng is needed (PNG library is too old) ***])
+fi
+
+LIBS="$LIBS -lpng"
+
+dnl HEADERS ***************************
 dnl Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS(sys/stat.h, ,AC_MSG_ERROR(*** header sys/stat.h not found, not able to save config))
 AC_CHECK_HEADERS(sys/types.h, ,AC_MSG_ERROR(*** header sys/types.h not found, not able to save config))
-AC_CHECK_HEADERS(png.h, ,AC_MSG_ERROR(*** header png.h not found, install the png library))
 
-dnl build debug version
+dnl DEBUG *****************************
+dnl debug and config stuff
 dnl AC_DEFINE(EM_DEBUG)
+AC_DEFINE(EM_USE_SOURCE_SPECULAR)
 
-dnl data dirs, fuck I hate autoconf, spent 4 hours getting this right had to steal it from 
-dnl xine and even that took a couple of hours
-if test "x$prefix" = xNONE; then
-   prefix="${ac_default_prefix}"
-fi
-
-EM_DATADIR="$datadir/$PACKAGE"
-eval EM_DATAPATH=`eval echo "$EM_DATADIR"`
-AC_DEFINE_UNQUOTED(EM_DATADIR, "$EM_DATAPATH")
-AC_SUBST(EM_DATAPATH)
-
-AC_SUBST(EM_DATADIR)
-
-dnl XINE_SKINDIR="${datadir}/xine/skins"
-dnl eval XINE_SKINPATH="$XINE_SKINDIR"
-dnl AC_DEFINE_UNQUOTED(XINE_SKINDIR,"$XINE_SKINPATH")
-dnl AC_SUBST(XINE_SKINPATH)
-
-
-dnl AC_SUBST(datadir)
 
 AC_OUTPUT(Makefile base/Makefile visitor/Makefile addon/Makefile test/Makefile src/Makefile data/Makefile)

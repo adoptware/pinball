@@ -23,10 +23,12 @@ class CaveBehavior : public Behavior {
 		void onTick();
 		void StdOnSignal() {};
 		void StdOnCollision();
+		void setSound(int s) { m_iSound = s; };
 		int getBall() { return m_iBall; };
 	private:
 		int m_iBall;
 		int m_iLockCounter;
+		int m_iSound;
 		bool m_bLock;
 };
 

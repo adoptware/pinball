@@ -49,9 +49,10 @@ int main(int argc, char *argv[]) {
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
 		engine->tick();
 		engine->render();
-		font->print("the brown fox jumped over", 10, 100);
-		font->print("the lazy dog", 10, 80);
-		font->print("press esc to quit", 10, 60);
+		font->print("the brown fox jumped over", -1, 1);
+		font->print("the lazy dog :;<=>?@ {}", -1, 1-EM_FONTSIZE_Y*2);
+		font->print("1234567890 !\"#$\%&'()*+,-./", -1, 1-EM_FONTSIZE_Y*3);
+		font->print("press esc to quit", -1, 1-EM_FONTSIZE_Y*4);
 		engine->swap();
 	}
 	delete(engine);

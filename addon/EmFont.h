@@ -11,26 +11,30 @@
 
 #include "Private.h"
 
-/**
- * <p> A singleton utility for fonts.</p>
- */
+#define EM_FONTSIZE_X 0.06f
+#define EM_FONTSIZE_Y 0.08f
+
+#define EM_FONT_X_2 17
+#define EM_FONT_Y_2 13
+
+/** A singleton utility for fonts. */
 
 class EmFont {
 	public:
 		~EmFont();
-		/** <p>Get singleton object.</p> */
+		/** Get singleton object. */
 		static EmFont * getInstance();
 		void loadFont(char * fileName);
-		/** <p>As this is GL, 0,0 is lower left corner.</p> */
-		void print(char * buffer, int x, int y);
+		/** -1, 1 is upper left, 1, -1 is lower right */
+		void print(char * buffer, float x, float y);
 		int getSize() { return m_Size; };
 	protected:
 		EmFont();
 	private:
-		EmImage * m_Font;
+		//EmImage * m_Font;
+		EmTexture * m_Texture;
 		int m_Size;
-		int m_Offset;
-		static EmFont * p_Instance;
+		static EmFont * p_EmFont;
 };
 
 #endif // EMFONT_H

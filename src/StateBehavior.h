@@ -24,6 +24,8 @@ class StateItem {
 	void addTexCoord(float u, float v);
 	void setProperty(int p) { m_iProperty = p; };
 	void setLight(bool b) { m_bLight = b; };
+	void setSound(int s) { m_iSound = s; };
+	void setDelay(int d) { m_iDelay = d; };
 
 	int m_iActSig;
 	int m_iCollSig;
@@ -35,6 +37,10 @@ class StateItem {
 	float m_fRotSpeed;
 	vector<TexCoord> m_vTexCoord;
 	int m_iProperty;
+	int m_iSound;
+	int m_iDelay;
+	int m_iTick;
+	StateItem* p_NextStateItem;
 };
 
 /** @author Henrik Enqvist */
@@ -46,10 +52,11 @@ class StateBehavior : public Behavior  {
 		void StdOnSignal();
 		void StdOnCollision();
 		void useMove(bool t) { m_bMove = t; };
-		void useTexCoord(bool t) {m_bTexCoord = t; };
+		void useTexCoord(bool t) { m_bTexCoord = t; };
 		void useProperty(bool t) { m_bProperty = t; };
 		void addStateItem(StateItem* s);
 		int getOwnerBall() { return m_iOwnerBall; };
+		void setState(StateItem* s);
 	private:
 		int m_iOwnerBall;
 		int m_iTick;

@@ -31,9 +31,9 @@ OpenGLTransVisitor * OpenGLTransVisitor::getInstance() {
 }
 
 void OpenGLTransVisitor::visit(Group* g) {
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glDepthMask(0);
+ 	glEnable(GL_BLEND);
+ 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+ 	glDepthMask(0);
 
 	vector<Shape3D*>::iterator shapeIter = g->m_vShape3D.begin();
 	vector<Shape3D*>::iterator shapeEnd = g->m_vShape3D.end();
@@ -42,21 +42,21 @@ void OpenGLTransVisitor::visit(Group* g) {
 		if (!(EM_SHAPE3D_USE_TRANS & (*shapeIter)->m_iProperties)) continue;
 
 		// the shape has a texture
-		if ((*shapeIter)->m_Texture != NULL) { 
+		int filter = Config::getInstance()->getGLFilter();
+		if ((*shapeIter)->m_Texture != NULL && filter != -1) { 
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, *((*shapeIter)->m_Texture));
 
-			int filter = Config::getInstance()->getGLFilter();
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-			if (g->m_iProperties & EM_GROUP_NO_LIGHT) {
-				glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-			} else {
-				glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-			}
+			//			if (g->m_iProperties & EM_GROUP_NO_LIGHT) {
+			//				glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+			//			} else {
+			glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+			//			}
 		}
 
 		// should some pixels be masked
@@ -80,7 +80,7 @@ void OpenGLTransVisitor::visit(Group* g) {
 				glFrontFace(GL_CW);
 			}
 			
-			if ((*shapeIter)->m_Texture != NULL) { // textured polygon
+			if ((*shapeIter)->m_Texture != NULL && filter != -1) {
 				// textured polygon
 				vector<unsigned int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
 				vector<unsigned int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
@@ -107,7 +107,6 @@ void OpenGLTransVisitor::visit(Group* g) {
 				glEnd();
 			} else if ((*polyIter)->m_iProperties & EM_WIREFRAME) { // wireframe polygon
 			} else { // color polygon
-				glBegin(GL_POLYGON);
 				vector<unsigned int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
 				vector<unsigned int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
 				vector<Color>::iterator colorIter = (*polyIter)->m_vColor.begin();
@@ -115,6 +114,7 @@ void OpenGLTransVisitor::visit(Group* g) {
 
 				EmAssert((*polyIter)->m_vIndex.size() == (*polyIter)->m_vColor.size(),
 								 "size miss match");
+				glBegin(GL_POLYGON);
 				for ( ; indexIter != indexEnd; indexIter++, colorIter++) {
 #if OPENGL_LIGHTS
 					// stupid materials!
@@ -128,11 +128,11 @@ void OpenGLTransVisitor::visit(Group* g) {
 										 (*shapeIter)->m_vNmlTrans[(*indexIter)].z);
 #else
 					/* transparent polygons should not be lit, or ? */
-  					glColor4f((*colorIter).r * (*shapeIter)->m_vLight[(*indexIter)].r,
-  										(*colorIter).g * (*shapeIter)->m_vLight[(*indexIter)].g,
-  										(*colorIter).b * (*shapeIter)->m_vLight[(*indexIter)].b,
-  										(*colorIter).a);
-// 					glColor4f((*colorIter).r,	(*colorIter).g,	(*colorIter).b, (*colorIter).a);
+					glColor4f((*colorIter).r * (*shapeIter)->m_vLight[(*indexIter)].r,
+										(*colorIter).g * (*shapeIter)->m_vLight[(*indexIter)].g,
+										(*colorIter).b * (*shapeIter)->m_vLight[(*indexIter)].b,
+										(*colorIter).a);
+					//glColor4f((*colorIter).r,	(*colorIter).g,	(*colorIter).b, (*colorIter).a);
 					
 					
 					//glColor4f((*colorIter).r, (*colorIter).g, (*colorIter).b, (*colorIter).a);
@@ -199,7 +199,7 @@ void OpenGLTransVisitor::visit(Group* g) {
 		glDisable(GL_ALPHA_TEST);
 	}
 
-	glDepthMask(1);
-	glDisable(GL_BLEND);
+ 	glDepthMask(1);
+ 	glDisable(GL_BLEND);
 }
 

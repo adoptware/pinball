@@ -13,10 +13,13 @@
 #include "Polygon.h"
 #include "Shape3D.h"
 #include "Score.h"
+#include "SoundUtil.h"
 
-BumperBehavior::BumperBehavior() {
+BumperBehavior::BumperBehavior() : Behavior() {
 	m_iLightCounter = -1;
+	m_iSound = -1;
 	p_Light = NULL;
+	this->setType(PBL_TYPE_BUMPERBEH);
 }
 
 BumperBehavior::~BumperBehavior() {
@@ -28,6 +31,8 @@ void BumperBehavior::onTick() {
 }
 
 void BumperBehavior::StdOnCollision() {
+	EM_COUT("BumperBehavior::StdOnCollision()", 1);
+
 	OnCallerProperty( PBL_BALL_1 OR_CP PBL_BALL_2 OR_CP PBL_BALL_3 OR_CP PBL_BALL_4 ) {
 		if (m_iLightCounter > 10) {
 			return;
@@ -35,6 +40,6 @@ void BumperBehavior::StdOnCollision() {
 		m_iLightCounter = 20;
 		SetLightOn(true);
 		Score::getInstance()->addScore(450);
-		Score::getInstance()->playSample(0);
+		SoundUtil::getInstance()->play(m_iSound, false);
 	}
 }

@@ -28,40 +28,41 @@ class Camera;
 class Light;
 class BillBoard;
 
-/**
- * <p>Groups are a essential element when building the 3D world.</p>
- * <p>All Shape3Ds, Sounds, Lights, Behavoir etc must be connected to
- * Groups ( the Camera is a execption, it is recommended that it is connected
- * to a Group, but it is not requirement for the context to be render ). Groups
- * are then connected to the Engine or connected to other Groups that are connected
- * to the Engine. Engine it self is the matter a fact a Group.</p>
- * <p>Groups must form a tree structure, loops will cause the program to hang.</p>
- * <p>Example:</p>
- * <pre>
- * Legal tree:              Illegal tree:
- *
- *   engine                   engine
- *   /    \                   /   \
- * group  group           group  group
- *        /   \               \  /
- *     group group           group
- * </pre>
- * <h2>Usage.</h2>
- * <p>Groups are used to group elements together. Each Group represent a transform that
- * is applied to all its children.</p>
- * <p>Example: A butterfly with two wings. The butterfly as a whole is reprented by a Group ( bfGroup ).
- * To this group we have attached two Groups ( lwGroup and rwGroup ), one for each wing. By adding
- * a Animation to lwGroup and an other for rwGroup we can make the butterfly flap with the wings.
- * We can then apply transformation to the bfGroup and make the butterfly to move. We have created
- * a nice little butterfly who flaps with its wing and flies around</p>
- * <pre>
- *                  bfGroup
- *                  /    \
- *                 /      \
- * Animation -- lwGroup   rwGroup -- Animation
- * </pre>
- */
-
+/** Groups are a essential element when building the 3D world.</p>
+ ** All Shape3Ds, Sounds, Lights, Behavoir etc must be added to
+ ** Groups ( the Camera is a execption, it is recommended that it is added
+ ** to a Group, but this is not requirement for the context to be render ). Groups
+ ** are then added to the Engine or added to other Groups that are in
+ ** the Engine. Engine itself is the matter a fact a Group.
+ ** Groups must form a tree structure, loops will cause the program to hang. There
+ ** is currently no check for illegal loop structures, it is up to the programmer
+ ** to avoid cyclic graphs.
+ **
+ ** Example:
+ ** <pre>
+ ** Legal tree:              Illegal tree:
+ **
+ **   engine                   engine
+ **   /    \                   /   \
+ ** group  group           group  group
+ **        /   \               \  /
+ **     group group           group
+ ** </pre>
+ **
+ ** Usage.
+ ** Groups are used to group elements together. Each Group represent a transform that
+ ** is applied to all its children.
+ ** Example: A butterfly with two wings. The butterfly as a whole is reprented by a Group ( bfGroup ).
+ ** To this group we have attached two Groups ( lwGroup and rwGroup ), one for each wing. By adding
+ ** a Animation to lwGroup and an other for rwGroup we can make the butterfly flap with the wings.
+ ** We can then apply transformation to the bfGroup and make the butterfly to move. We have created
+ ** a nice little butterfly who flaps with its wing and flies around</p>
+ ** <pre>
+ **                  bfGroup
+ **                  /    \
+ **                 /      \
+ ** Animation -- lwGroup   rwGroup -- Animation
+ ** </pre> */
 class Group : public Node {
  public:
 	Group();
@@ -70,7 +71,7 @@ class Group : public Node {
 	void accept(Visitor * v);
 	void add(Group * g);
 	
-	void addBehavior(Behavior * b);
+	void addBehavior(Behavior * b, bool signal=true);
 	Behavior * getBehavior(int i);
 	int getBehaviorSize();
 	

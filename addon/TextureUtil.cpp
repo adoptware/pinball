@@ -73,7 +73,7 @@ struct_image* loadP(const char * filename) {
 		fprintf(stderr, "Only 32 bit RGBA and 24 bit RGB images supported");
 		return NULL;
 	}
-	fprintf(stderr, "w %d, h %d, d %d c %d\n", width, height, depth, channels);
+	//fprintf(stderr, "w %d, h %d, d %d c %d\n", width, height, depth, channels);
 
 	image = (struct_image*)malloc(sizeof(struct_image));
 	if (image == NULL) {
@@ -128,7 +128,7 @@ EmTexture* TextureUtil::loadTexture(char* filename) {
 	// Load Texture
 	struct_image* image;
 
-	// lock if the texture is already loaded
+	// look if the texture is already loaded
 	if (m_hEmTexture.count(string(filename)) != 0) {
 		EM_COUT("found texture " << filename << " in cache", 1);
 		map<string, EmTexture*>::iterator element = m_hEmTexture.find(string(filename));

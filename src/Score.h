@@ -35,14 +35,12 @@ class Score : public Behavior  {
 	void StdOnCollision() {};
 	int getScore() { return m_iScore; };
 	void addScore(int s);
-	void playSample(int i);
 	void clear();
 	void draw();
 	void lockBall(int ball);
 	void unLockBall(int ball);
 	bool isBallActive(int ball);
  private:
-	EmSound m_aSample[256];
 	char* m_Text1;
 	char* m_Text2;
 	int m_aAliveBall[4];
@@ -55,6 +53,7 @@ class Score : public Behavior  {
 	bool m_aTarget[2];
 	bool m_aLinux[5];
 	bool m_aBoot[4];
+	bool m_aTux[3];
 	bool m_bExtraBall;
 	EmFont * m_Font;
 

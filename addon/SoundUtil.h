@@ -2,7 +2,7 @@
                           SoundUtil.h  -  description
                              -------------------
     begin                : Thu Jan 11 2001
-    copyright            : (C) 2001 by Henrik Enqvist
+    copyright            : (C) 2001 by Henrik Enqvist, GPL
     email                : henqvist@excite.com
  ***************************************************************************/
 
@@ -11,18 +11,22 @@
 #define SOUNDUTIL_H
 
 #include "Private.h"
+#include <string>
+#include <map>
 
-/**
-  *@author Henrik Enqvist
-  */
-
+/** Singleton class for loading and playing samples */
 class SoundUtil {
-	public:
-		/** */
-		static EmSound loadSample(char* fileName);
-		static void play(EmSound, bool loop);
+ protected:
+	SoundUtil();
+ public:
+	~SoundUtil();
+	static SoundUtil* getInstance();
+	int loadSample(char* fileName);
+	void play(int, bool loop);
+	vector<EmSample*> m_vEmSample;
  private:
-		// EmSample* p_Sample;
+ 	map<string, int> m_hEmSample;
+	static SoundUtil* p_SoundUtil;
 };
 
 #endif

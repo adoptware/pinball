@@ -28,29 +28,19 @@ CollisionVisitor * CollisionVisitor::p_CollisionVisitor = NULL;
 
 CollisionVisitor * CollisionVisitor::getInstance() {
 	if (p_CollisionVisitor == NULL) {
-		p_CollisionVisitor = new CollisionVisitor(256);
+		p_CollisionVisitor = new CollisionVisitor();
 	}
 	return p_CollisionVisitor;
 }
 
-/* TODO: max not used */
-CollisionVisitor::CollisionVisitor(int max) {	
-	m_iPolygonsA = 0;
-	m_iPolygonsB = 0;
+CollisionVisitor::CollisionVisitor() {	
+	//m_iPolygonsA = 0;
+	//m_iPolygonsB = 0;
+	// TODO: Some way to control the global octtree
 	p_OctTree = new OctTree(1, 100);
 }
 
 CollisionVisitor::~CollisionVisitor() {
-}
-
-/* Adds polygon to the array of polygons that intersect. */
-void CollisionVisitor::addToArray(Polygon* p1, Polygon* p2) {
-	if (m_iPolygonsA < MAX_POLYGONS) {
-		m_aPolygonsA[m_iPolygonsA++] = p1;
-	}
-	if (m_iPolygonsB < MAX_POLYGONS) {
-		m_aPolygonsB[m_iPolygonsB++] = p2;
-	}
 }
 
 /* Returns true if the bounds of cb1 and cb2 intersects. */
@@ -84,13 +74,34 @@ bool CollisionVisitor::collidePolygons(CollisionBounds * nb1, CollisionBounds * 
 #if EM_DEBUG_COLLISION
 		(*iter1)->setColor(0, 0, 1, 0.5f);
 #endif
-		// TODO: if (this->isInArray( (*iter1) )) continue;
+		// skip if polygon already in vector
+		vector<Polygon*>::iterator vectIter = m_vPolygon1.begin();
+		vector<Polygon*>::iterator vectEnd = m_vPolygon1.end();
+		bool isin = false;
+		for (; vectIter != vectEnd; vectIter++) {
+			if ((*vectIter) == (*iter1)) {
+				isin = true;
+				break;
+			}
+		}
+		if (isin) continue;
 		vector<Polygon*>::iterator iter2 = nb2->m_vPolygon.begin();
 		vector<Polygon*>::iterator end2 = nb2->m_vPolygon.end();
 		for ( ; iter2 != end2; iter2++) {
 #if EM_DEBUG_COLLISION
 			(*iter2)->setColor(0, 0, 1, 0.5f); // debug thing
 #endif
+			// skip if polygon already in vector
+			vectIter = m_vPolygon1.begin();
+			vectEnd = m_vPolygon1.end();
+			isin = false;
+			for (; vectIter != vectEnd; vectIter++) {
+				if ((*vectIter) == (*iter2)) {
+					isin = true;
+					break;
+				}
+			}
+			if (isin) continue;
 			// TODO: if (this->isInArray( (*iter2) )) continue;
 			EM_COUT_D("CollisionVisitor:collidePolygons() intersecting polygons " << a << "-" << b << endl, 0);
 			if ( CollisionVisitor::intersect((*iter1), (*iter2)) ) {
@@ -98,7 +109,8 @@ bool CollisionVisitor::collidePolygons(CollisionBounds * nb1, CollisionBounds * 
 				(*iter1)->setColor(1, 0, 0, 0.5f);
 				(*iter2)->setColor(1, 0, 0, 0.5f);
 #endif
-				this->addToArray((*iter1), (*iter2));
+				m_vPolygon1.push_back(*iter1);
+				m_vPolygon2.push_back(*iter2);
 				bCollision = true;
 			}
 			EM_COUT_D("CollisionVisitor:collidePolygons() intersected polygons" << endl, 0);				
@@ -108,15 +120,17 @@ bool CollisionVisitor::collidePolygons(CollisionBounds * nb1, CollisionBounds * 
 }
 
 /* Count a median normal for all polygons */
-void CollisionVisitor::countNormal(Vertex3D & vtx, Polygon** paPolygons, int piPolygons) {
-	EM_COUT_D("CollisionVisitor::countNormal " << piPolygons << " polygons" << endl, 0);
+void CollisionVisitor::countNormal(Vertex3D & vtx, vector<Polygon*> vPolygon) {
+	EM_COUT_D("CollisionVisitor::countNormal " << vPolygon.size() << " polygons" << endl, 0);
 	vtx.x = 0;
 	vtx.y = 0;
 	vtx.z = 0;
-	for (int a=0; a<piPolygons; a++) {
-		vtx.x += paPolygons[a]->m_nmlTrans.x;
-		vtx.y += paPolygons[a]->m_nmlTrans.y;
-		vtx.z += paPolygons[a]->m_nmlTrans.z;
+	vector<Polygon*>::iterator iter = vPolygon.begin();
+	vector<Polygon*>::iterator end = vPolygon.end();
+	for (; iter != end; iter++) {
+		vtx.x += (*iter)->m_nmlTrans.x;
+		vtx.y += (*iter)->m_nmlTrans.y;
+		vtx.z += (*iter)->m_nmlTrans.z;
 	}
 	if ( EM_ZERO(vtx.x) &&	
 			EM_ZERO(vtx.y) &&
@@ -175,12 +189,10 @@ bool CollisionVisitor::detectCollision(CollisionBounds * cb1, CollisionBounds * 
 		// cb1 and cb2 are leaves
 		} else {
 		 	if (this->collidePolygons(cb1, cb2)) {
-				this->countNormal(n1, m_aPolygonsA, m_iPolygonsA);
-				this->countNormal(n2, m_aPolygonsB, m_iPolygonsB);
-				EM_COUT_D("CollisionVisitor::detectCollision() A "<< m_iPolygonsA <<" polys "<< n1.x <<" "<< n1.y <<
-								" "<< n1.z, 0);
-				EM_COUT_D("CollisionVisitor::detectCollision() B "<< m_iPolygonsB <<" polys "<< n2.x <<" "<< n2.y <<
-								" "<< n2.z, 0);
+				this->countNormal(n1, m_vPolygon1);
+				this->countNormal(n2, m_vPolygon2);
+				EM_COUT_D("CollisionVisitor::detectCollision() A  polys "<< n1.x <<" "<< n1.y << " "<< n1.z, 0);
+				EM_COUT_D("CollisionVisitor::detectCollision() B  polys "<< n2.x <<" "<< n2.y << " "<< n2.z, 0);
 				return true;
 			}
 			EM_COUT_D("CollisionVisitor::detectCollision() false alarm", 0);
@@ -216,10 +228,10 @@ bool CollisionVisitor::detection2d(Polygon * p1, Polygon * p2) {
 
 /* Call this method each render loop. */
 void CollisionVisitor::empty() {
-	em_bounds_m = em_bounds_m*0.5 + em_bounds*0.5;
-	em_shapes_m = em_shapes_m*0.5 + em_shapes*0.5;
-	em_polygons_m = em_polygons_m*0.5 + em_polygons*0.5;
-	em_groups_m = em_groups_m*0.5 + em_groups*0.5;
+	em_bounds_m = em_bounds_m*0.7 + em_bounds*0.3;
+	em_shapes_m = em_shapes_m*0.7 + em_shapes*0.3;
+	em_polygons_m = em_polygons_m*0.7 + em_polygons*0.3;
+	em_groups_m = em_groups_m*0.7 + em_groups*0.3;
 
 	EM_COUT("CollisionVisitor::empty() groups " << em_groups, 0);
 	EM_COUT("CollisionVisitor::empty() shapes " << em_shapes, 0);
@@ -239,7 +251,7 @@ void CollisionVisitor::empty() {
 /* Macro to project line from v1 to v2 onto a axis.
  * Axis = 1 : x-axis. Axis = 2 : y-axis. Axis = 3 : z-axis. 
  * TODO: move the if clause outside this macro to speed things up. */
-#define AXISPROJECTION(_axis, _v1, _v2, _dist1, _dist2, _ans)			\
+#define AXISPROJECTION(_axis, _v1, _v2, _dist1, _dist2, _ans)		\
 {																																	\
 	float _dx;																											\
 	float _xDd;	    			                                					\
@@ -263,36 +275,86 @@ void CollisionVisitor::empty() {
 	}                                                     					\
 }
 
-/* NOT USED: replace by the a function (a bit easier to debug) */
-#define FINDLINE(_poly, _A, _B, _C, _D, _iter, _end, _axis, _ans)	\
-{	                                                          			\
-	/* Find line in poly that intersects plane A, B, C, D */				\
-	for ( ; ; _iter++)	{	                                					\
-		/* Exit if not enough lines found */	          	    				\
-		if (_loop == _end) return false;															\
-		/* The distance from a point x, y, z is		       							\
-		 * Ax + By + Cz + D / sqrt(A*A + B*B + C*C)										\
-		 * The normal is normalized, meaning that											\
-		 * sqrt(A*A + B*B + C*C) = 1, we							            		\
-		 * can skip the division. */								             		 	\
-		float _dist1 = _A*(*_iter).vtx->trVtx.x												\
-			+ _B*(*_iter).vtx->trVtx.y																	\
-			+ _C*(*_iter).vtx->trVtx.z + _D;														\
-		int _nextIter = (_iter+1)%_poly->iPolygonEdges;										\
-		float _dist2 = _A*_poly->aPolygonEdges[_nextLoop].vtx->trVtx.x		\
-			+ _B*_poly->aPolygonEdges[_nextLoop].vtx->trVtx.y        				\
-			+ _C*_poly->aPolygonEdges[_nextLoop].vtx->trVtx.z + _D;   			\
-		/* Distances have diffrent signs */                       				\
-		if (_dist1*_dist2 <0)	{																						\
-			Vertex3D _vtxA = _poly->aPolygonEdges[_loop].vtx->trVtx;				\
-			Vertex3D _vtxB = _poly->aPolygonEdges[_nextLoop].vtx->trVtx;		\
-			AXISPROJECTION(_axis, _vtxA, _vtxB, _dist1, _dist2, _ans);			\
-			_loop++;																										\
-			break;                                                  		\
-		}                                                         		\
-	}                                                           		\
-}															
-	
+/* FINDLINE(int axis, float A, float B, float C, float D, float & x, Shape3D * s, 
+ *					vector<unsigned int>::iterator & iter,	vector<unsigned int>::iterator & nextIter,	
+ *   				vector<unsigned int>::iterator & begin,	vector<unsigned int>::iterator & end) */
+#define FINDLINE(d_axis, d_A, d_B, d_C, d_D, d_x, d_s, d_iter, d_nextIter, d_begin, d_end)  \
+	for ( ; ; d_iter++, d_nextIter++ )	{                                                     \
+		if (d_iter == d_end) return false;                                                      \
+		if (d_nextIter == d_end) d_nextIter = d_begin;										                      \
+		float dist1 = d_A * d_s->m_vVtxTrans[(*d_iter)].x +	d_B * d_s->m_vVtxTrans[(*iter)].y + \
+									d_C * d_s->m_vVtxTrans[(*d_iter)].z + d_D;                                \
+		float dist2 = d_A * d_s->m_vVtxTrans[(*d_nextIter)].x +	d_B * d_s->m_vVtxTrans[(*nextIter)].y + \
+									d_C * d_s->m_vVtxTrans[(*d_nextIter)].z + d_D;                            \
+		if (dist1*dist2 < 0) {																						                      \
+			Vertex3D vtxA = d_s->m_vVtxTrans[(*d_iter)];				                                  \
+			Vertex3D vtxB = d_s->m_vVtxTrans[(*d_nextIter)];		                                  \
+			AXISPROJECTION(d_axis, vtxA, vtxB, dist1, dist2, d_x);			                          \
+			iter++;	nextIter++;	break;                                                  		      \
+		}                                                         		                          \
+	}
+
+#define FINDLINE_X(A, B, C, D, xx, ss, iter, nextIter, begin, end)                            \
+	for ( ; ; iter++, nextIter++ )	{                                                         \
+		if (iter == end) return false;                                                          \
+		if (nextIter == end) nextIter = begin;										                              \
+		float dist1 = A * ss->m_vVtxTrans[(*iter)].x +	B * ss->m_vVtxTrans[(*iter)].y +           \
+									C * ss->m_vVtxTrans[(*iter)].z + D;                                        \
+		float dist2 = A * ss->m_vVtxTrans[(*nextIter)].x +	B * ss->m_vVtxTrans[(*nextIter)].y +   \
+									C * ss->m_vVtxTrans[(*nextIter)].z + D;                                    \
+		if (dist1*dist2 < 0) {																						                      \
+			Vertex3D vtxA = ss->m_vVtxTrans[(*iter)];				                                      \
+			Vertex3D vtxB = ss->m_vVtxTrans[(*nextIter)];		                                      \
+	    dist1 = EM_ABS(dist1);																                                \
+	    dist2 = dist1 + EM_ABS(dist2);		                                                    \
+	    float xDd = dist1/dist2;														                                  \
+	    float dx = vtxB.x - vtxA.x;	                         		                              \
+	    xx = vtxA.x + dx*xDd;															                                    \
+			iter++;	nextIter++;	break;                                                  		      \
+		}                                                         		                          \
+	}
+
+#define FINDLINE_Y(A, B, C, D, yy, ss, iter, nextIter, begin, end)                            \
+	for ( ; ; iter++, nextIter++ )	{                                                         \
+		if (iter == end) return false;                                                          \
+		if (nextIter == end) nextIter = begin;										                              \
+		float dist1 = A * ss->m_vVtxTrans[(*iter)].x +	B * ss->m_vVtxTrans[(*iter)].y +           \
+									C * ss->m_vVtxTrans[(*iter)].z + D;                                        \
+		float dist2 = A * ss->m_vVtxTrans[(*nextIter)].x +	B * ss->m_vVtxTrans[(*nextIter)].y +   \
+									C * ss->m_vVtxTrans[(*nextIter)].z + D;                                    \
+		if (dist1*dist2 < 0) {																						                      \
+			Vertex3D vtxA = ss->m_vVtxTrans[(*iter)];				                                      \
+			Vertex3D vtxB = ss->m_vVtxTrans[(*nextIter)];		                                      \
+	    dist1 = EM_ABS(dist1);																                                \
+	    dist2 = dist1 + EM_ABS(dist2);		                                                    \
+	    float yDd = dist1/dist2;														                                  \
+	    float dy = vtxB.y - vtxA.y;	                         		                              \
+	    yy = vtxA.y + dy*yDd;															                                    \
+			iter++;	nextIter++;	break;                                                  		      \
+		}                                                         		                          \
+	}
+
+#define FINDLINE_Z(A, B, C, D, zz, ss, iter, nextIter, begin, end)                            \
+	for ( ; ; iter++, nextIter++ )	{                                                         \
+		if (iter == end) return false;                                                          \
+		if (nextIter == end) nextIter = begin;										                              \
+		float dist1 = A * ss->m_vVtxTrans[(*iter)].x +	B * ss->m_vVtxTrans[(*iter)].y +           \
+									C * ss->m_vVtxTrans[(*iter)].z + D;                                        \
+		float dist2 = A * ss->m_vVtxTrans[(*nextIter)].x +	B * ss->m_vVtxTrans[(*nextIter)].y +   \
+									C * ss->m_vVtxTrans[(*nextIter)].z + D;                                    \
+		if (dist1*dist2 < 0) {																						                      \
+			Vertex3D vtxA = ss->m_vVtxTrans[(*iter)];				                                      \
+			Vertex3D vtxB = ss->m_vVtxTrans[(*nextIter)];		                                      \
+	    dist1 = EM_ABS(dist1);																                                \
+	    dist2 = dist1 + EM_ABS(dist2);		                                                    \
+	    float zDd = dist1/dist2;														                                  \
+	    float dz = vtxB.z - vtxA.z;	                         		                              \
+	    zz = vtxA.z + dz*zDd;															                                    \
+			iter++;	nextIter++;	break;                                                  		      \
+		}                                                         		                          \
+	}
+
+/* This is the same	as the FINDLINE macro, used for debuging */
 bool CollisionVisitor::findLine(int axis, float A, float B, float C, float D, float & x, Shape3D * s, 
 																vector<unsigned int>::iterator & iter,	
 																vector<unsigned int>::iterator & nextIter,	
@@ -315,7 +377,7 @@ bool CollisionVisitor::findLine(int axis, float A, float B, float C, float D, fl
 									C * s->m_vVtxTrans[(*nextIter)].z + D;
 		// Distances have diffrent signs meaning that the points are on different sides of the
 		// plane. The line intersect the plane.
-		if (dist1*dist2 <0)	{																						
+		if (dist1*dist2 < 0) {																						
 			Vertex3D vtxA = s->m_vVtxTrans[(*iter)];				
 			Vertex3D vtxB = s->m_vVtxTrans[(*nextIter)];		
 			AXISPROJECTION(axis, vtxA, vtxB, dist1, dist2, x);			
@@ -327,12 +389,10 @@ bool CollisionVisitor::findLine(int axis, float A, float B, float C, float D, fl
 	return true;
 }
 
-/* Check if two polygons intersect. This is a tough one.
- * Polygon intersection test. Only for convex polygons.
- * Checks that the polygons has at least tre vertices.
- * Use some macros to speed things up. */
+/* Check if two polygons intersect. Only for convex polygons.
+ * Checks that the polygons has at least tre vertices. Use some macros to speed things up. */
 bool CollisionVisitor::intersect(Polygon * p1, Polygon * p2) {
-	if (p1->m_vIndex.size()<3 || p2->m_vIndex.size()<3) return false;
+	if (p1->m_vIndex.size() < 3 || p2->m_vIndex.size() < 3) return false;
 	
 	em_polygons++;
 	EM_COUT_D("CollisionVisitor::intersect()", 0);
@@ -390,63 +450,60 @@ bool CollisionVisitor::intersect(Polygon * p1, Polygon * p2) {
 	else axis = 3;
 	
 	EM_COUT_D("CollisionVisitor::intersect() axis " << axis, 0);
+
 	// Find lines in p1 intersecting p2. Intersection point between line and
 	// plane will be projected on the chosen axis, x1 is the projecton
 	// onto the axis for line 1, x2 projection for line 2.
 	// We get a projection of polygon p1 to a axis defined by x1 and x2.
 	// I.e. polygon 1 lies between points x1 and x2.
-	vector<unsigned int>::iterator begin = p1->m_vIndex.begin();
-	vector<unsigned int>::iterator iter = p1->m_vIndex.begin();
-	vector<unsigned int>::iterator nextIter = begin + 1;
-	vector<unsigned int>::iterator end = p1->m_vIndex.end();
-	
-	float A = normalA.x;
-	float B = normalA.y;
-	float C = normalA.z;
-	float D = D1;
-	
-	// Find first line in poly1 that intersects plane A, B, C, D
-	// Find second line in poly1 that intersects plane A, B, C, D
-	if (!CollisionVisitor::findLine(axis, normalB.x, normalB.y, normalB.z, D2, x1, s1, 
-																	iter, nextIter, begin, end)) {
-		return false;
-	}
-	if (!CollisionVisitor::findLine(axis, normalB.x, normalB.y, normalB.z, D2, x2, s1, 
-																	iter, nextIter, begin, end)) {
-		return false;
-	}
-	
-//	FINDLINE(p1, normalB.x, normalB.y, normalB.z, D2, iter, end, axis, x1);
-//	FINDLINE(p1, normalB.x, normalB.y, normalB.z, D2, iter, end, axis, x2);
+	vector<unsigned int>::iterator begin1 = p1->m_vIndex.begin();
+	vector<unsigned int>::iterator iter1 = p1->m_vIndex.begin();
+	vector<unsigned int>::iterator nextIter1 = begin1 + 1;
+	vector<unsigned int>::iterator end1 = p1->m_vIndex.end();
+
 	// Find lines in p2 intersecting p1. Intersection point between line and
 	// plane will be projected on the chosen axis., x3 is value for projecton
 	// onto acis for line 1, x4 for line 2.
 	// We get a projection of polygon p1 to a axis defined by x3 and x4.
 	// I.e. polygon 2 lies between points x3 and x4.
-	begin = p2->m_vIndex.begin();
-	iter = p2->m_vIndex.begin();
-	nextIter = begin + 1;
-	end = p2->m_vIndex.end();
+	vector<unsigned int>::iterator begin2 = p2->m_vIndex.begin();
+	vector<unsigned int>::iterator iter2 = p2->m_vIndex.begin();
+	vector<unsigned int>::iterator nextIter2 = begin2 + 1;
+	vector<unsigned int>::iterator end2 = p2->m_vIndex.end();
+
+	if (axis == 1) {
+		// Find first line in poly1 that intersects plane A, B, C, D
+		// Find second line in poly1 that intersects plane A, B, C, D
+		FINDLINE_X(normalB.x, normalB.y, normalB.z, D2, x1, s1, iter1, nextIter1, begin1, end1);
+		FINDLINE_X(normalB.x, normalB.y, normalB.z, D2, x2, s1, iter1, nextIter1, begin1, end1);
 	
-	A = normalB.x;
-	B = normalB.y;
-	C = normalB.z;
-	D = D2;
+		// Find first line in poly2 that intersects plane A, B, C, D
+		// Find second line in poly2 that intersects plane A, B, C, D
+		FINDLINE_X(normalA.x, normalA.y, normalA.z, D1, x3, s2, iter2, nextIter2, begin2, end2);
+		FINDLINE_X(normalA.x, normalA.y, normalA.z, D1, x4, s2, iter2, nextIter2, begin2, end2);
+	} else if (axis == 2) {
+		// Find first line in poly1 that intersects plane A, B, C, D
+		// Find second line in poly1 that intersects plane A, B, C, D
+		FINDLINE_Y(normalB.x, normalB.y, normalB.z, D2, x1, s1, iter1, nextIter1, begin1, end1);
+		FINDLINE_Y(normalB.x, normalB.y, normalB.z, D2, x2, s1, iter1, nextIter1, begin1, end1);
 	
-	// Find first line in poly1 that intersects plane A, B, C, D
-	// Find second line in poly1 that intersects plane A, B, C, D
-	if (!CollisionVisitor::findLine(axis, normalA.x, normalA.y, normalA.z, D1, x3, s2,
-																	iter, nextIter, begin, end)) {
-		return false;
-	}
-	if (!CollisionVisitor::findLine(axis, normalA.x, normalA.y, normalA.z, D1, x4, s2, 
-																	iter, nextIter, begin, end)) {
-		return false;
+		// Find first line in poly2 that intersects plane A, B, C, D
+		// Find second line in poly2 that intersects plane A, B, C, D
+		FINDLINE_Y(normalA.x, normalA.y, normalA.z, D1, x3, s2, iter2, nextIter2, begin2, end2);
+		FINDLINE_Y(normalA.x, normalA.y, normalA.z, D1, x4, s2, iter2, nextIter2, begin2, end2);
+	} else {
+		// Find first line in poly1 that intersects plane A, B, C, D
+		// Find second line in poly1 that intersects plane A, B, C, D
+		FINDLINE_Z(normalB.x, normalB.y, normalB.z, D2, x1, s1, iter1, nextIter1, begin1, end1);
+		FINDLINE_Z(normalB.x, normalB.y, normalB.z, D2, x2, s1, iter1, nextIter1, begin1, end1);
+	
+		// Find first line in poly2 that intersects plane A, B, C, D
+		// Find second line in poly2 that intersects plane A, B, C, D
+		FINDLINE_Z(normalA.x, normalA.y, normalA.z, D1, x3, s2, iter2, nextIter2, begin2, end2);
+		FINDLINE_Z(normalA.x, normalA.y, normalA.z, D1, x4, s2, iter2, nextIter2, begin2, end2);
 	}
 
-	// loop=0;
-	// FINDLINE(p2, normalA.x, normalA.y, normalA.z, D1, loop, axis, x3);
-	// FINDLINE(p2, normalA.x, normalA.y, normalA.z, D1, loop, axis, x4);
+
   EM_COUT_D(x1 <<" "<< x2 <<" "<< x3 <<" "<< x4, 0);
 	// Polygons intersect if line x1,x2 and x3,x4 intersect.	
 	if ((EM_MAX(x1,x2) > EM_MIN(x3, x4)) && (EM_MAX(x3, x4) > EM_MIN(x1, x2))) return true;
@@ -467,8 +524,8 @@ void CollisionVisitor::traverse(Group * g, OctTree * octtree) {
 	// collide group against all groups in octtree node
 	for (; groupIter != groupEnd; groupIter++) {
 		em_groups++;
-		m_iPolygonsA = 0;
-		m_iPolygonsB = 0;
+		m_vPolygon1.clear();
+		m_vPolygon2.clear();
 		Vertex3D vtxNormal1;
 		Vertex3D vtxNormal2;
 		// groups in with same user properties are not collided
