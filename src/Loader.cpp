@@ -1,4 +1,4 @@
-//#ident "$Id: Loader.cpp,v 1.28 2003/05/20 21:15:23 pedro_nf Exp $"
+//#ident "$Id: Loader.cpp,v 1.29 2003/05/21 17:54:51 henqvist Exp $"
 /***************************************************************************
                             Loader.cpp -  description
                              -------------------
@@ -46,9 +46,9 @@
 #include "PlungerBehavior.h"
 #include "LoaderModule.h" //!+rzr :  I put it appart
 
-#ifdef RZR_PATCHES_3DS
+//#ifdef RZR_PATCHES_3DS
 #include "Obj3dsUtil.h" //!+rzr :  I put it appart
-#endif
+//#endif
 
 #define EmReadCmp(file_, ist_, str_, cmp_) \
   this->readNextToken(file_, ist_, str_);               \
@@ -65,16 +65,16 @@ Loader::Loader() {
   m_iNextVariable = LOADER_FIRSTVARIABLE;
   m_bModules = true;
   m_LoaderModule = 0;
-#ifdef RZR_PATCHES_RZR
-  m_Obj3dsUtil = 0;
-#endif
+  //#ifdef RZR_PATCHES_RZR
+  //m_Obj3dsUtil = 0;
+  //#endif
 }
 
 Loader::~Loader() {
   delete m_LoaderModule;
-#ifdef RZR_PATCHES_RZR
-  delete m_Obj3dsUtil;
-#endif
+  //#ifdef RZR_PATCHES_RZR
+  //delete m_Obj3dsUtil;
+  //#endif
 };
 
 Loader * Loader::getInstance() {
@@ -538,7 +538,7 @@ void Loader::loadStateItem(ifstream & file, istringstream & ist, Engine * engine
   }
   
   // version hack
-  if (m_FileVersion.major == 0 && m_FileVersion.minor == 2 && m_FileVersion.micro == 0) {
+  if (this->cmpVersion(m_FileVersion, 0, 2 ,1) < 0) { // 0.2.0
     this->readNextToken(file, ist, str);
     if (str == "property") {
       int p;
@@ -546,9 +546,9 @@ void Loader::loadStateItem(ifstream & file, istringstream & ist, Engine * engine
       stateitem->setUserProperty(p);
     } else if (str == "no_property") {
     } else {
-      throw string("No user property field in StateItem");
+      throw string("No user property field in StateItem"); 
     }
-  } else {
+  } else { // 0.2.1 and above
     this->readNextToken(file, ist, str);
     if (str == "user_property") {
       int p;
@@ -712,6 +712,20 @@ void Loader::loadModule(ifstream & file, istringstream & ist, Engine *, Group * 
  ** Top level loading
  ****************************************************************/
 
+int Loader::cmpVersion(const FileVersion & version, const int major, const int minor, const int micro) {
+  if (version.major > major) return 1;
+  else if (version.minor < major) return -1;
+  else {
+    if (version.minor > minor) return 1;
+    else if (version.minor < minor) return -1;
+    else {
+      if (version.micro > micro) return 1;
+      else if (version.micro < micro) return -1;
+    }
+  }
+  return 0;
+}
+
 /* Things added to objects, e.g. lights, animation, behavior*/
 void Loader::loadMisc(ifstream & file, istringstream & ist, Engine * engine, Group * group, Behavior * beh) {
   EM_COUT("Loader::loadMisc", 0);
@@ -746,10 +760,10 @@ void Loader::loadMisc(ifstream & file, istringstream & ist, Engine * engine, Gro
     } else if (str == "sub_object") {
       Group * g = this->loadStdObject(file, ist, engine);
       group->add(g);
-#ifdef RZR_PATCHES_3DS
-    } else if (str == "shape_include_3ds_ascii") {
+      //#ifdef RZR_PATCHES_3DS
+    } else if (str == "shape_include_3ds_ascii") { // version 0.3.0 and above
       this->loadShape3dsAscii(file, ist, engine, group, beh);
-#endif
+      //#endif
     } else {
       cerr << str << endl;
       throw string("UNKNOWN in misc block");
@@ -769,15 +783,25 @@ Group * Loader::loadStdObject(ifstream & file, istringstream & ist, Engine * eng
 
   EmReadCmp(file, ist, str, "{");
 
-  float tx, ty, tz, rx, ry, rz;
+  float tx, ty, tz, rx, ry, rz, sx, sy, sz;
   this->readNextToken(file, ist, tx); 
   this->readNextToken(file, ist, ty); 
   this->readNextToken(file, ist, tz);
   this->readNextToken(file, ist, rx); 
   this->readNextToken(file, ist, ry);	
   this->readNextToken(file, ist, rz);
+  if (this->cmpVersion(m_FileVersion, 0, 3, 0) >= 0) { // 0.3.0 and above
+    this->readNextToken(file, ist, sx); 
+    this->readNextToken(file, ist, sy);	
+    this->readNextToken(file, ist, sz);
+  } else { // below 0.3.0
+    sx = 1.0f;
+    sy = 1.0f;
+    sz = 1.0f;
+  }
 	
   group->setTransform(tx, ty, tz, rx, ry, rz);
+  group->setScale(sx, sy, sz);
 
   this->loadMisc(file, ist, engine, group, NULL);
   return group;
@@ -983,20 +1007,17 @@ int Loader::loadFile(const char* fn, Engine * engine) {
       this->readNextToken(file, ist, m_FileVersion.minor);
       this->readNextToken(file, ist, m_FileVersion.micro);
       EmReadCmp(file, ist, str, "}");
-      if ((m_FileVersion.major > 0) ||
-	  (m_FileVersion.major == 0 && m_FileVersion.minor > 2) ||
-	  (m_FileVersion.major == 0 && m_FileVersion.minor == 2 && m_FileVersion.micro > 1)) {
-	cerr << "WARNING! Version above 0.2.1 not supported, file is " <<
-	  m_FileVersion.major <<" "<< m_FileVersion.minor <<" "<< m_FileVersion.micro << endl;
+      if (this->cmpVersion(m_FileVersion, 0, 3, 0) > 0) {
+        cerr << "WARNING! Version above 0.3.0 not supported, file is " <<
+          m_FileVersion.major <<" "<< m_FileVersion.minor <<" "<< m_FileVersion.micro << endl;
       }
-
     } else {
-      cerr << "Version string not found assuming 0.2.0" << endl;
+      cerr << "Version string not found assuming, 0.2.0" << endl;
     }
     while (file) {
       if (str == "object") {
-	Group * group = this->loadStdObject(file, ist, engine); 
-	engine->add(group);
+        Group * group = this->loadStdObject(file, ist, engine); 
+        engine->add(group);
       }
       this->readNextToken(file, ist, str);
       //cerr << str << endl;
@@ -1011,7 +1032,7 @@ int Loader::loadFile(const char* fn, Engine * engine) {
   }
   return 0;
 }
-#ifdef RZR_PATCHES_3DS //---------------------------------------------------------
+//#ifdef RZR_PATCHES_3DS //---------------------------------------------------------
 /*
   object cube3ds {
   0 0 0
@@ -1041,7 +1062,7 @@ void Loader::loadShape3dsAscii(ifstream & file, istringstream & ist,
   }
   //EM_COUT("-Loader::loadShape3dsAscii", 0);
 }
-#endif //--------------------------------------------------------------------
-//EOF $Id: Loader.cpp,v 1.28 2003/05/20 21:15:23 pedro_nf Exp $
+//#endif //--------------------------------------------------------------------
+//EOF $Id: Loader.cpp,v 1.29 2003/05/21 17:54:51 henqvist Exp $
 
 
