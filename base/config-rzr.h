@@ -1,4 +1,4 @@
-//#ident "$Id: config-rzr.h,v 1.10 2003/07/16 20:02:04 rzr Exp $"
+//#ident "$Id: config-rzr.h,v 1.11 2003/07/25 01:01:54 rzr Exp $"
 //#warning "!+rzr: Win32 portability hacks @ www.rzr.online.fr"
 #ifndef config_rzr_h_ // !+rzr 
 #define config_rzr_h_
@@ -50,7 +50,7 @@
 
 /// devel only until official release
 //#undef  RZR_PATCHES_3DS
-//#define RZR_PATCHES_3DS
+#define RZR_PATCHES_3DS
 
 ///
 //#undef RZR_DEBUG
@@ -267,4 +267,4 @@ using namespace std;
 #endif
 #endif
 #endif //!-rzr ----------------------------------------------------------------
-//EOF: $Id: config-rzr.h,v 1.10 2003/07/16 20:02:04 rzr Exp $
+//EOF: $Id: config-rzr.h,v 1.11 2003/07/25 01:01:54 rzr Exp $

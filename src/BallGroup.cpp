@@ -1,3 +1,4 @@
+//#ident "$Id: BallGroup.cpp,v 1.7 2003/07/25 01:01:56 rzr Exp $"
 /***************************************************************************
                           BallGroup.cpp  -  description
                              -------------------
@@ -57,7 +58,7 @@ BallGroup::BallGroup(float r, float g, float b, int pbl) : Group() {
   shadow->setProperty(EM_SHAPE3D_USE_TRANS);
   shadow->countNormals();
 
-  BounceBehavior* bouBeh = new BounceBehavior(pbl);
+  BounceBehavior* bouBeh = new BounceBehavior(pbl); //!rzr MLK
   if (Config::getInstance()->getFire()) {
     bouBeh->setFire(true);
   } else {
