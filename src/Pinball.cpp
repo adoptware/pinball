@@ -389,6 +389,10 @@ MenuItem* createMenus(Engine * engine) {
   MenuSub* menuload = new MenuSub("load table", engine);
   menu->addMenuItem(menuload);
 
+  // Show high scores for current loadad table - pnf
+  MenuSub* menuhighscores = new MenuSub("high scores", engine);
+  menu->addMenuItem(menuhighscores);
+
   MenuSub* menucfg = new MenuSub("config", engine);
   menu->addMenuItem(menucfg);
 
@@ -410,6 +414,7 @@ MenuItem* createMenus(Engine * engine) {
   if (tex != NULL) {
 		menu->setBackground(tex);
 		menuload->setBackground(tex);
+		menuhighscores->setBackground(tex);
 		menucfg->setBackground(tex);
 		menugfx->setBackground(tex);
 		menuaudio->setBackground(tex);
@@ -559,6 +564,8 @@ MenuItem* createMenus(Engine * engine) {
   menugfx->addMenuItem(menucancel);
   menuaudio->addMenuItem(menucancel);
   menuload->addMenuItem(menucancel);
+  // pnf
+  menuhighscores->addMenuItem(menucancel);
   menukey->addMenuItem(menucancel);
 
   get_config();
