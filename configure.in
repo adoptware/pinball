@@ -55,9 +55,9 @@ AC_SUBST(EM_LIBDIR)
 dnl *******************************************
 dnl Allegro or SDL version ********************
 
-AC_ARG_WITH(allegro, [  --with-allegro          use allegro (software rendering) instead of SDL and OpenGL], use_allegro="yes", use_allegro="no")
+dnl AC_ARG_WITH(allegro, [  --with-allegro          use allegro (software rendering) instead of SDL and OpenGL], use_allegro="yes", use_allegro="no")
 
-if test x"$use_allegro" == "xno"; then
+dnl if test x"$use_allegro" == "xno"; then
 
 AC_DEFINE(EM_USE_SDL)
 
@@ -151,29 +151,36 @@ LIBS="$LIBS -lSDL_mixer"
 
 dnl else use allegro instead of sdl
 
-else
+dnl else
 
-AC_DEFINE(EM_USE_ALLEGRO)
+dnl AC_DEFINE(EM_USE_ALLEGRO)
 
 dnl *******************************************
 dnl ALLEGRO ***********************************
-AM_PATH_ALLEGRO($ALLEGRO_VERSION, : , AC_MSG_ERROR([*** Allegro version $ALLEGRO_VERSION not found! Make sure you have the development package of Allegro installed - (www.talula.demon.co.uk/allegro) - or try to use the --with-allegro-prefix option]) )
-CFLAGS="$CFLAGS $ALLEGRO_CFLAGS"
-CPPFLAGS="$CPPFLAGS $ALLEGRO_CFLAGS"
-LIBS="$LIBS $ALLEGRO_LIBS"
+dnl AM_PATH_ALLEGRO($ALLEGRO_VERSION, : , AC_MSG_ERROR([*** Allegro version $ALLEGRO_VERSION not found! Make sure you have the development package of Allegro installed - (www.talula.demon.co.uk/allegro) - or try to use the --with-allegro-prefix option]) )
+dnl CFLAGS="$CFLAGS $ALLEGRO_CFLAGS"
+dnl CPPFLAGS="$CPPFLAGS $ALLEGRO_CFLAGS"
+dnl LIBS="$LIBS $ALLEGRO_LIBS"
 
-fi 
+dnl fi 
 dnl End Allegro or SDL *************************
 
 
 dnl ********************************************
 dnl CPP_UNIT ***********************************
+
+AC_ARG_WITH(unittest, [  --with-unittest         Try to use unitest], use_unittest="yes", use_unittest="no")
+
+if test x"$use_unittest" == "xyes"; then
+
 AM_PATH_CPPUNIT(1.8.0, [
   AC_DEFINE(EM_UNIT_TEST) 
   CPPFLAGS="$CPPFLAGS $CPPUNIT_CFLAGS"	
   CFLAGS="$CFLAGS $CPPUNIT_CFLAGS" 
   LIBS="$LIBS $CPPUNIT_LIBS"
   ], AC_MSG_WARN([*** CppUnit was not found. No unit testing.]))
+
+fi
 
 dnl ********************************************
 dnl HEADERS ************************************
