@@ -32,7 +32,8 @@ Group::Group() {
 	m_Name[0] = '\0';
 	m_vChildren.clear();
 	m_vShape3D.clear();
-	m_vBehavior.clear();
+	//m_vBehavior.clear();
+	p_Behavior = NULL;	
 
 	EM_COUT("Group::Group()" << endl, 0);
 }
@@ -58,15 +59,16 @@ void Group::freeObjects() {
 	}
 	m_vShape3D.clear();
 
-	vector<Behavior*>::iterator biter = m_vBehavior.begin();
-	vector<Behavior*>::iterator bend = m_vBehavior.end();
-	for (; biter != bend; ++biter) {
-		EmAssert(*biter != NULL, "Group::freeObjects behavior NULL");
-		delete (*biter);
-	}
-	m_vBehavior.clear();
+// 	vector<Behavior*>::iterator biter = m_vBehavior.begin();
+// 	vector<Behavior*>::iterator bend = m_vBehavior.end();
+// 	for (; biter != bend; ++biter) {
+// 		EmAssert(*biter != NULL, "Group::freeObjects behavior NULL");
+// 		delete (*biter);
+// 	}
+// 	m_vBehavior.clear();
 
-	if (p_BillBoard != NULL) delete p_BillBoard;;
+	if (p_Behavior != NULL) delete p_Behavior;
+	if (p_BillBoard != NULL) delete p_BillBoard;
 	if (p_Camera != NULL) delete p_Camera;
 	if (p_Light != NULL) delete p_Light;
 	if (p_Sound != NULL) delete p_Sound;
@@ -132,24 +134,32 @@ void Group::removeShape3D(Shape3D * s) {
 	}
 }
 
-void Group::addBehavior(Behavior * b, bool signal) {
-	if (b == NULL) return;
-	m_vBehavior.push_back(b);
-	b->setParent(this);
-	if (signal) SignalSender::getInstance()->addGroup(this);
-}
+// void Group::addBehavior(Behavior * b, bool signal) {
+// 	if (b == NULL) return;
+// 	m_vBehavior.push_back(b);
+// 	b->setParent(this);
+// 	if (signal) SignalSender::getInstance()->addGroup(this);
+// }
 
-void Group::removeBehavior(Behavior * b) {
-	if (b == NULL) return;
-	vector<Behavior*>::iterator iter = m_vBehavior.begin();
-	vector<Behavior*>::iterator end = m_vBehavior.end();
-	for (; iter != end; iter++) {
-		if ((*iter) == b) {
-			m_vBehavior.erase(iter);
-			return;
-		}
+void Group::setBehavior(Behavior * b, bool signal) {
+	p_Behavior = b;
+	if (b != NULL && signal) {
+		b->setParent(this);
+		SignalSender::getInstance()->addGroup(this);
 	}
 }
+
+// void Group::removeBehavior(Behavior * b) {
+// 	if (b == NULL) return;
+// 	vector<Behavior*>::iterator iter = m_vBehavior.begin();
+// 	vector<Behavior*>::iterator end = m_vBehavior.end();
+// 	for (; iter != end; iter++) {
+// 		if ((*iter) == b) {
+// 			m_vBehavior.erase(iter);
+// 			return;
+// 		}
+// 	}
+// }
 
 Shape3D * Group::getShape3D(int i) {
 	if (i < 0 || (signed) m_vShape3D.size() <=  i) return NULL;
@@ -161,13 +171,17 @@ int Group::getShape3DSize() {
 }
 
 
-Behavior * Group::getBehavior(int i) {
-	if (i < 0 || (signed) m_vBehavior.size() <= i) return NULL;
-	return m_vBehavior[i];
-}
+// Behavior * Group::getBehavior(int i) {
+// 	if (i < 0 || (signed) m_vBehavior.size() <= i) return NULL;
+// 	return m_vBehavior[i];
+// }
 
-int Group::getBehaviorSize() {
-	return m_vBehavior.size();
+// int Group::getBehaviorSize() {
+// 	return m_vBehavior.size();
+// }
+
+Behavior * Group::getBehavior() {
+	return p_Behavior;
 }
 
 BillBoard * Group::getBillBoard() {

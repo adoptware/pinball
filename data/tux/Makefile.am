@@ -13,14 +13,18 @@ tuxdata_DATA = \
 bump.wav \
 face.png \
 face.png.pcx \
+game.mid \
+gameover.wav \
 flip.wav \
 floor2.png \
 floor2.png.pcx \
 floor.pbl \
+intro.mid \
+multiball.mid \
 nudge.wav \
 pinball.pbl \
 tiles.png \
 tiles.png.pcx \
-tux.mid
+up.wav
 
 EXTRA_DIST = $(tuxdata_DATA)

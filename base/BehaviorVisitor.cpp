@@ -30,9 +30,12 @@ void BehaviorVisitor::visit(Group* g) {
 	// Check properties before applying behavior
 	if (g->m_iProperties & EM_GROUP_NO_BEHAVIOR) return;
 
-	vector<Behavior*>::iterator iter = g->m_vBehavior.begin();
-	vector<Behavior*>::iterator end = g->m_vBehavior.end();
-	for(; iter != end; iter++) {
-		(*iter)->onTick();
+// 	vector<Behavior*>::iterator iter = g->m_vBehavior.begin();
+// 	vector<Behavior*>::iterator end = g->m_vBehavior.end();
+// 	for(; iter != end; iter++) {
+// 		(*iter)->onTick();
+// 	}
+	if (g->getBehavior() != NULL) {
+		g->getBehavior()->onTick();
 	}
 }

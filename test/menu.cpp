@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 	
 	// Add a behavior to the cube
 	KeyRotBehavior* keyRBeh = new KeyRotBehavior();
-	groupCube->addBehavior(keyRBeh);
+	groupCube->setBehavior(keyRBeh);
 	
 	// Load a font
 	EmFont* font = EmFont::getInstance();

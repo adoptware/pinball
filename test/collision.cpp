@@ -132,7 +132,7 @@ int main(int argc, char *argv[]) {
 //  		beh->add(random()%11-5, random()%11-5, random()%11-5);
 //  		beh->add(random()%11-5, random()%11-5, random()%11-5);
 		beh->setEndStart();
-		groupShape->addBehavior(beh);
+		groupShape->setBehavior(beh);
 		
 		engine->add(groupShape);
 	}
