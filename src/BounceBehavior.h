@@ -1,5 +1,5 @@
 /***************************************************************************
-                          BouBeh.h  -  description
+                          BounceBehavior.h  -  description
                              -------------------
     begin                : Thu Mar 9 2000
     copyright            : (C) 2000 by 
@@ -23,7 +23,7 @@ class BounceBehavior : public Behavior {
 	void StdOnSignal();
 	void onCollision(const Vertex3D & vtx, const Vertex3D & vtx, Group* g);
 	void getDirection(Vertex3D & vtx);
-	bool isAlive() {return m_bAlive;};
+	inline bool isAlive() {return m_bAlive;};
  private:
 	bool m_bAlive;
 	int m_iBall;

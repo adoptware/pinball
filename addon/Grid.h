@@ -2,23 +2,16 @@
                           Grid.h  -  description
                              -------------------
     begin                : Tue Feb 8 2000
-    copyright            : (C) 2000 by 
-    email                : 
+    copyright            : (C) 2000 by Henrik Enqvist
+    email                : henqvist@excite.com
  ***************************************************************************/
 
 #ifndef GRID_H
 #define GRID_H
 
-#include "Private.h"
-
 #include "Shape3D.h"
 
-/**
- * <p>Class Grid is a simple way to create a Shape3D that looks
- * like a grid.</p>
- * @see Shape3D
- */
-
+/** A simple grid. @see Shape3D */
 class Grid : public Shape3D {
 	public:
 	  /**

@@ -3,6 +3,7 @@
  The arrow keys rotates the cube.
  ***************************************************************************/
 
+#include "Private.h"
 #include "Engine.h"
 #include "Camera.h"
 #include "Cube.h"
@@ -41,8 +42,12 @@ int main(int argc, char *argv[]) {
 			engine->render();
 			engine->swap();
 		}
-		render = engine->limitFPS(100); // 33 FPS
+		//render = engine->limitFPS(100);
 	}
 	delete(engine);
 	return 0;
 }
+
+#if EM_USE_ALLEGRO
+END_OF_MAIN();
+#endif

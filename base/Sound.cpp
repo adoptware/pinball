@@ -2,20 +2,20 @@
                           Sound.cpp  -  description
                              -------------------
     begin                : Wed Jan 26 2000
-    copyright            : (C) 2000 by 
-    email                : 
+    copyright            : (C) 2000 by Henrik Enqvist
+    email                : henqvist@excite.com
  ***************************************************************************/
 
 #include <stddef.h>
 
+#include "Private.h"
 #include "Sound.h"
 #include "Group.h"
 
-
-Sound::Sound(EmSample* sample, float dist, bool b3D = true) {
+Sound::Sound(EmSample* sample, float dist, bool b3D) {
 	m_b3D = b3D;
 	m_fDistance = dist;
-	m_Sample = sample;
+	p_Sample = sample;
 	m_vtxSrc.x = 0;
 	m_vtxSrc.y = 0;
 	m_vtxSrc.z = 0;
@@ -27,9 +27,9 @@ void Sound::setParent(Group* g) {
 }
 
 
-void Sound::play(bool loop = true) {
+void Sound::play(bool loop) {
 	m_bLoop = loop;
-	if (m_Sample == NULL) return;
+	if (p_Sample == NULL) return;
 }
 
 void Sound::adjust() {
@@ -38,7 +38,7 @@ void Sound::adjust() {
 //	float r2;
 
 	if (!m_b3D) return;
-	if (m_Sample == NULL) return;
+	if (p_Sample == NULL) return;
 	
 	// Volume.
 /*	r2 = (vtxAlPos.x*vtxAlPos.x + vtxAlPos.y*vtxAlPos.y + vtxAlPos.z*vtxAlPos.z)/100;

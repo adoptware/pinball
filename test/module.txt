@@ -1,0 +1,3 @@
+{
+  libemilia_module_test.la
+}

@@ -4,17 +4,18 @@
  The arrow keys rotates the cube.
  ***************************************************************************/
 
+#include "Private.h"
 #include "Engine.h"
 #include "Camera.h"
 #include "Cube.h"
 #include "KeyRotBehavior.h"
+#include "KeyBehavior.h"
 #include "Keyboard.h"
 #include "TextureUtil.h"
 #include "Light.h"
+#include "Polygon.h"
 
-/**
- * Main
- */
+/** Main */
 int main(int argc, char *argv[]) {
 	cerr << "Simple emilia test." << endl;
 
@@ -51,6 +52,8 @@ int main(int argc, char *argv[]) {
 	engine->add(groupCube2);
 	groupCube1->addShape3D(cube1);
 	groupCube2->addShape3D(cube2);
+	cube1->setPolygonProperty(EM_POLY_TRANS);
+	cube1->setProperty(EM_SHAPE3D_USE_TRANS);
 	
 	// Add a light
 	Light* lightR = new Light(1, 0, 0,  1, 0, 0);
@@ -60,16 +63,22 @@ int main(int argc, char *argv[]) {
 	groupLightR->setTranslation(5, 0, 0);
 	engine->addLight(lightR);
 
-	// Add a behavior to the cube
+	// Add behaviors to the cubes
 	KeyRotBehavior* keyRBeh = new KeyRotBehavior();
 	groupCube1->addBehavior(keyRBeh);
+	KeyBehavior* keyBeh = new KeyBehavior();
+	groupCube2->addBehavior(keyBeh);
 		
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
 		engine->tick();
 		engine->render();
 		engine->swap();
-		//		SDL_Delay(50);
+		engine->limitFPS(50);
 	}
-	delete(engine);
+	engine->stopEngine();
 	return 0;
 }
+
+#if EM_USE_ALLEGRO
+END_OF_MAIN();
+#endif

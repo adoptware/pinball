@@ -6,34 +6,49 @@
     email                : henqvist@excite.com
  ***************************************************************************/
 
+#include <cstring>
+#include "Private.h"
 #include "Keyboard.h"
 
-SDL_Event eEvent;
-bool abKey[KEY_MAX];
+#if EM_USE_SDL
+bool Keyboard::m_abKey[KEY_MAX];
+#endif
 
 Keyboard::Keyboard(){
-	memset(abKey, false, KEY_MAX*sizeof(bool));
+	this->clear();
 }
 
 Keyboard::~Keyboard(){
 }
 
 void Keyboard::poll() {
-	while(SDL_PollEvent(&eEvent)) {
-		if (eEvent.type == SDL_KEYDOWN) {
-			abKey[eEvent.key.keysym.sym] = true;
+#if EM_USE_SDL
+	SDL_Event event;
+	while(SDL_PollEvent(&event)) {
+		if (event.type == SDL_KEYDOWN) {
+			m_abKey[event.key.keysym.sym] = true;
 		}
-		if (eEvent.type == SDL_KEYUP) {
-			abKey[eEvent.key.keysym.sym] = false;
+		if (event.type == SDL_KEYUP) {
+			m_abKey[event.key.keysym.sym] = false;
 		}
 	}
+#endif
+#if EM_USE_ALLEGRO
+	poll_keyboard();
+#endif
 }
 
 void Keyboard::clear() {
-	memset(abKey, false, KEY_MAX*sizeof(bool));
+#if EM_USE_SDL
+	memset(m_abKey, false, KEY_MAX*sizeof(bool));
+#endif
+#if EM_USE_ALLEGRO
+	clear_keybuf();
+#endif
 }
 
-SDLKey Keyboard::waitForKey() {
+EMKey Keyboard::waitForKey() {
+#if EM_USE_SDL
 	while(true) {
 		SDL_Event event;
 		SDL_WaitEvent(&event);
@@ -48,8 +63,17 @@ SDLKey Keyboard::waitForKey() {
 			return event.key.keysym.sym;
 		}
 	}
+#endif
+#if EM_USE_ALLEGRO
+	return (readkey() >> 8);
+#endif
 }
 
 bool Keyboard::isKeyDown(int piKey) {
-	return abKey[piKey];
+#if EM_USE_SDL
+	return m_abKey[piKey];
+#endif
+#if EM_USE_ALLEGRO
+	return key[piKey];
+#endif
 }

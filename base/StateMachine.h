@@ -38,6 +38,6 @@
 //#define AND_SI						&& em_signal ==
 #define SendSignal(a, d, s, r)  SignalSender::getInstance()->addSignal(a, d, s, r)
 
-#define SetLightOn(b)			if (p_Light != NULL) p_Light->setOn(b)
+#define SetLightOn(b)			if (this->getLight() != NULL) this->getLight()->setOn(b)
 
 #endif // STATEMACHINE_H

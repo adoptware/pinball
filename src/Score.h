@@ -10,7 +10,6 @@
 #ifndef SCORE_H
 #define SCORE_H
 
-#include "Private.h"
 #include "Behavior.h"
 #include "StateMachine.h"
 
@@ -20,10 +19,7 @@
 
 class EmFont;
 
-/**
- *@author Henrik Enqvist
- */
-
+/** @author Henrik Enqvist */
 class Score : public Behavior  {
  protected:
 	Score();
@@ -38,22 +34,29 @@ class Score : public Behavior  {
 	void clear();
 	void draw();
 	void lockBall(int ball);
+	int locked();
+	int alive();
 	void unLockBall(int ball);
 	bool isBallActive(int ball);
+	void setShowFPS(bool fps) { m_bShowFPS = fps; };
+	bool getShowFPS() { return m_bShowFPS; };
  private:
 	char* m_Text1;
 	char* m_Text2;
+	char* m_Text3;
+	char* m_Text4;
 	int m_aAliveBall[4];
 	bool m_bLaunch;
+	bool m_bShowFPS;
 	int m_iBall;
 	int m_iScore;
 	int m_iBumps;
-	int m_aMission[8];
+	//	int m_aMission[8];
 	int m_iFactor;
-	bool m_aTarget[2];
-	bool m_aLinux[5];
-	bool m_aBoot[4];
-	bool m_aTux[3];
+/* 	bool m_aTarget[2]; */
+/* 	bool m_aLinux[5]; */
+/* 	bool m_aBoot[4]; */
+/* 	bool m_aTux[3]; */
 	bool m_bExtraBall;
 	EmFont * m_Font;
 

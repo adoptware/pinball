@@ -7,18 +7,25 @@
  ***************************************************************************/
 
 #include <math.h>
+#include <stdlib.h>
+
+#include "Private.h"
 #include "EMath.h"
 
-Matrix identityMatrix =
+#if EM_USE_FAST_FLOAT2INT
+IntOrFloat gBias; //.i = (23 + 127) << 23;
+#endif
+
+const Matrix EMath::identityMatrix =
 {
 	{
   	/* 3x3 identity */
-   	{ 1.0, 0.0, 0.0 },
-   	{ 0.0, 1.0, 0.0 },
-   	{ 0.0, 0.0, 1.0 },
+   	{ 1.0f, 0.0f, 0.0f },
+   	{ 0.0f, 1.0f, 0.0f },
+   	{ 0.0f, 0.0f, 1.0f },
   },
 	/* zero translation */
-	{ 0.0, 0.0, 0.0 }
+	{ 0.0f, 0.0f, 0.0f }
 };
 
 EMath::EMath() {
@@ -87,8 +94,7 @@ float EMath::emPow(float x, float y) {
 	return (float)pow(x, y);
 }
 
-/*
- */
+/* */
 void EMath::getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT, const Vertex3D & vtxR) {
 	float sin_x = EMath::emSin(vtxR.x);
   float cos_x = EMath::emCos(vtxR.x);
@@ -119,8 +125,7 @@ void EMath::getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT, const V
   mtx.t[2] = vtxT.z;
 }
 
-/* Stolen from allegro. Thanks to allegro.
- */
+/* Stolen from allegro. Thanks!! */
 void EMath::inverse(const Matrix & mtx, Matrix & inv) {
 	Matrix mtxTmp = mtx;
 	inv = identityMatrix;
@@ -209,42 +214,50 @@ void EMath::matrixMulti(const Matrix & mtxA, const Matrix & mtxB, Matrix & mtxOu
 }
 
 
-/*
- */
+/* */
 void EMath::normalizeVector(Vertex3D & vtx) {
 	float length_1;
 	float length = EMath::vectorLength(vtx);
 	if (EM_ZERO(length)) return;
-	length_1 = 1.0 / length;
+	length_1 = 1.0f / length;
 	vtx.x *= length_1;
 	vtx.y *= length_1;
 	vtx.z *= length_1;
 }
 
-/*
- */
+/* */
 void EMath::scaleVector(Vertex3D & vtx, float sc) {
 	vtx.x *= sc;
 	vtx.y *= sc;
 	vtx.z *= sc;
 }
 
-/* Projection of vector A onto B.
- */
+/* Projection of vector A onto B. */
 float EMath::projection(const Vertex3D & vtxA, const Vertex3D & vtxB, Vertex3D & vtxOut) {
 	float k =(vtxA.x * vtxB.x  +  vtxA.y * vtxB.y  +  vtxA.z * vtxB.z) /
 		(vtxB.x * vtxB.x  +  vtxB.y * vtxB.y  +  vtxB.z * vtxB.z);
-
-		vtxOut.x = k * vtxB.x;
-		vtxOut.y = k * vtxB.y;
-		vtxOut.z = k * vtxB.z;
-
-		return k;
+	
+	vtxOut.x = k * vtxB.x;
+	vtxOut.y = k * vtxB.y;
+	vtxOut.z = k * vtxB.z;
+	
+	return k;
 }
 
-/*
- */
-float EMath::polygonZNormal(const Vertex3D & edgeA, const Vertex3D & edgeB, const Vertex3D & edgeC) {
+float EMath::perpendicular(const Vertex3D & vtxA, const Vertex3D & vtxB, Vertex3D & vtxOut) {
+	float k =(vtxA.x * vtxB.x  +  vtxA.y * vtxB.y  +  vtxA.z * vtxB.z) /
+		(vtxB.x * vtxB.x  +  vtxB.y * vtxB.y  +  vtxB.z * vtxB.z);
+	
+	vtxOut.x = vtxA.x - k * vtxB.x;
+	vtxOut.y = vtxA.y - k * vtxB.y;
+	vtxOut.z = vtxA.z - k * vtxB.z;
+	
+	return k;
+}
+
+/* */
+float EMath::polygonZNormal(const Vertex3D & edgeA, const Vertex3D & edgeB, 
+																	 const Vertex3D & edgeC) {
 	return ((edgeB.x - edgeA.x) * (edgeC.y - edgeB.y)) - ((edgeC.x - edgeB.x) * (edgeB.y - edgeA.y));
 }
 
@@ -252,9 +265,9 @@ float EMath::polygonZNormal(const Vertex3D & edgeA, const Vertex3D & edgeB, cons
 /* First the projection of vtxIn onto vtxWall is counted.
  * the reflection is then vtxOut = vtxIn - 2*vtxPro.
  * If k > 0 the vtxIn vector is comming from behind the wall and
- * no reflection is made.
- */
-void EMath::reflection(const Vertex3D & vtxIn, const Vertex3D & vtxWall, Vertex3D & vtxOut, bool bBehind) {
+ * no reflection is made. */
+void EMath::reflection(const Vertex3D & vtxIn, const Vertex3D & vtxWall, Vertex3D & vtxOut, 
+															bool bBehind) {
 	Vertex3D vtxPro;
 	float k =(vtxIn.x * vtxWall.x  +  vtxIn.y * vtxWall.y  +  vtxIn.z * vtxWall.z) /
 		(vtxWall.x * vtxWall.x  +  vtxWall.y * vtxWall.y  +  vtxWall.z * vtxWall.z);
@@ -273,9 +286,9 @@ void EMath::reflection(const Vertex3D & vtxIn, const Vertex3D & vtxWall, Vertex3
 /* First the projection of vtxIn onto vtxWall is counted.
  * the reflection is then vtxOut = vtxIn - 2*vtxPro.
  * If k > 0 the vtxIn vector is comming from behind the wall and
- * no reflection is made.
- */
-void EMath::reflectionDamp(const Vertex3D & vtxIn, const Vertex3D & vtxWall, Vertex3D & vtxOut, float damp, float extra, float scale, bool bBehind) {
+ * no reflection is made. */
+void EMath::reflectionDamp(const Vertex3D & vtxIn, const Vertex3D & vtxWall, Vertex3D & vtxOut, 
+																	float damp, float extra, float scale, bool bBehind) {
 	Vertex3D vtxPro;
 	float k =(vtxIn.x * vtxWall.x  +  vtxIn.y * vtxWall.y  +  vtxIn.z * vtxWall.z) /
 		(vtxWall.x * vtxWall.x  +  vtxWall.y * vtxWall.y  +  vtxWall.z * vtxWall.z);
@@ -291,14 +304,38 @@ void EMath::reflectionDamp(const Vertex3D & vtxIn, const Vertex3D & vtxWall, Ver
 	}
 }
 
-/*
- */
 float EMath::vectorLength(const Vertex3D & vtx) {
 	return EMath::emSqrt(vtx.x * vtx.x + vtx.y * vtx.y + vtx.z * vtx.z);
 }
 
-/*
- */
-float EMath::volume(const Vertex3D & vtxA, const Vertex3D & vtxB, const Vertex3D & vtxC) {
-	return vtxA.x*( vtxB.y*vtxC.z - vtxB.z*vtxC.y ) - vtxA.y*( vtxB.x*vtxC.z - vtxB.z*vtxC.x ) + vtxA.z*( vtxB.x*vtxC.y - vtxB.y*vtxC.x );
+float EMath::vectorLengthSqr(const Vertex3D & vtx) {
+	return (vtx.x * vtx.x + vtx.y * vtx.y + vtx.z * vtx.z);
 }
+
+/* */
+float EMath::volume(const Vertex3D & vtxA, const Vertex3D & vtxB, const Vertex3D & vtxC) {
+	return vtxA.x*( vtxB.y*vtxC.z - vtxB.z*vtxC.y ) - 
+		vtxA.y*( vtxB.x*vtxC.z - vtxB.z*vtxC.x ) + 
+		vtxA.z*( vtxB.x*vtxC.y - vtxB.y*vtxC.x );
+}
+
+float EMath::quadratic(float f0, float f1, float f2, float t) {
+	// this was a beizer curve
+	// float t1 = 1.0f - t;
+	// return t1*t1*f0 + 2.0f*t*t1*f1 + t*t*f2;
+	float df1 = f1 - f0;
+	float df2 = f2 - f1;
+	float ddf = df2 - df1;
+	return f0 + t*df1 + 0.5f*t*(t-1.0f)*ddf;
+}
+
+float EMath::cubic(float f0, float f1, float f2, float f3, float t) {
+	float df1 = f1 - f0;
+	float df2 = f2 - f1;
+	float df3 = f3 - f2;
+	float ddf1 = df2 - df1;
+	float ddf2 = df3 - df2;
+	float dddf = ddf2 - ddf1;
+	return f0 + t*df1 + 0.5*t*(t-1.0f)*ddf1 + 0.166667f*t*(t-1.0f)*(t-2.0f)*dddf;
+}
+

@@ -6,11 +6,13 @@
     email                : henqvist@excite.com
  ***************************************************************************/
 
+#include "Private.h"
 #include "Config.h"
 #include "EMath.h"
 
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <stdio.h>
 
 int em_width_ = 640;
 int em_height_ = 480;
@@ -20,6 +22,9 @@ int em_height_div2_ = 240;
 Config * Config::p_Instance = NULL;
 
 Config::Config() {
+	m_sDataDir = "";
+	m_sSubDir = "";
+	m_sDataSubDir = "";
 }
 
 Config::~Config() {
@@ -36,35 +41,43 @@ Config * Config::getInstance() {
 
 void Config::setDefault() {
 	// Default values
-	m_iWidth = 640;
-	m_iHeight = 480;
-	m_bSound = true;
-	m_iBpp = 16;
-	m_iGLFilter = GL_LINEAR;
-	m_iView = 0;
-	m_bFullScreen = false;
+	this->setSize(640, 480);
+	this->setSound(true);
+	this->setBpp(16);
+	this->setGLFilter(EM_LINEAR);
+	this->setView(0);
+	this->setFullScreen(false);
 	m_bExternGL = false;
-	m_sDataDir = EM_DATADIR;
+	this->setDataDir(EM_DATADIR);
+	this->setLights(true);
+	this->setBrightness(0.1f);
+}
+
+void Config::setDataDir(const char* ch) { 
+	m_sDataDir = string(ch); 
+	m_sDataSubDir = m_sDataDir + "/" + m_sSubDir;
+}
+
+void Config::setSubDir(const char* ch) { 
+	m_sSubDir = string(ch); 
+	m_sDataSubDir = m_sDataDir + "/" + m_sSubDir;
 }
 
 void Config::saveConfig() {
-#if HAVE_SYS_TYPES_H
-#if HAVE_SYS_STAT_H
-	char filename[256];
+	string filename;
 	char* home = getenv("HOME");
 	if (home != NULL) {
 		// TODO unsafe
-		sprintf(filename, "%s/.emilia", home);
-		mkdir(filename, S_IRUSR | S_IWUSR |S_IXUSR);
-		sprintf(filename, "%s/.emilia/%s", home, PACKAGE);
+		filename = string(home) + string("/.emilia");
+		mkdir(filename.c_str(), S_IRUSR | S_IWUSR |S_IXUSR);
+		filename = string(home) + string("/.emilia/") + string(PACKAGE); 
 	} else {
 		cerr << "Could not find environment variable HOME." << endl;
 		cerr << "Not able to read or write config file" << endl;
 		return;
 	}
 
-
-	ofstream file(filename);
+	ofstream file(filename.c_str());
 	if (!file) {
 		cerr << "Couldn't open config file: " << filename << endl;
 		cerr << "Can't save config" <<  endl;
@@ -75,43 +88,34 @@ void Config::saveConfig() {
 	file << "view: " << m_iView << endl;
 	file << "bpp: " << m_iBpp << endl;
 	file << "fullscreen: " << (m_bFullScreen ? "1" : "0") << endl;
-	if (m_iGLFilter == GL_LINEAR) {
+	file << "lights: " << (m_bLights ? "1" : "0") << endl;
+	file << "brightness: " << m_fBrightness << endl;
+	if (m_iGLFilter == EM_LINEAR) {
 		file << "texture_filter: " << "0" << endl;
-	} else if (m_iGLFilter == GL_NEAREST) {
+	} else if (m_iGLFilter == EM_NEAREST) {
 		file << "texture_filter: " << "1" << endl;
 	} else {
 		file << "texture_filter: " << "-1" << endl;
 	}
-
-#else
-	cerr << "Unable save config file because some header files were missing";
-	return;
-#endif
-#else
-	cerr << "Unable save config file because some header files were missing";
-	return;
-#endif
 }
 
 void Config::loadConfig() {
 	this->setDefault();
-#if HAVE_SYS_TYPES_H
-#if HAVE_SYS_STAT_H
 
-	char filename[256];
+	string filename;
 	char* home = getenv("HOME");
 	if (home != NULL) {
 		// TODO unsafe
-		sprintf(filename, "%s/.emilia", home);
-		mkdir(filename, S_IRUSR | S_IWUSR |S_IXUSR);
-		sprintf(filename, "%s/.emilia/%s", home, PACKAGE);
+		filename = string(home) + string("/.emilia");
+		mkdir(filename.c_str(), S_IRUSR | S_IWUSR | S_IXUSR);
+		filename = string(home) + string("/.emilia/") + string(PACKAGE);
 	} else {
 		cerr << "Could not find environment variable HOME." << endl;
 		cerr << "Not able to read or write config file" << endl;
 		return;
 	}
 
-	ifstream file(filename);
+	ifstream file(filename.c_str());
 	if (!file) {
 		cerr << "Couldn't open config file: " << filename << endl;
 		cerr << "Using default values" <<  endl;
@@ -126,40 +130,44 @@ void Config::loadConfig() {
 			file >> m_iHeight;
 		} else if (str == "sound:") {
 			file >> str;
-			if (str == "0") m_bSound = false;
-			else m_bSound = true;
+			if (str == "0") this->setSound(false);
+			else this->setSound(true);
 		} else if (str == "view:") {
 			file >> m_iView;
 		} else if (str == "bpp:") {
 			file >> m_iBpp;
 		} else if (str == "fullscreen:") {
 			file >> str;
-			if (str == "0") m_bFullScreen = false;
-			else m_bFullScreen = true;
+			if (str == "0") this->setFullScreen(false);
+			else this->setFullScreen(true);
+		} else if (str == "lights:") {
+			file >> str;
+			if (str == "0") this->setLights(false);
+			else this->setLights(true);
 		} else if (str == "texture_filter:") {
 			file >> str;
 			if (str == "0") {
-				m_iGLFilter = GL_LINEAR;
+				m_iGLFilter = EM_LINEAR;
 			} else if (str == "1") {
-				m_iGLFilter = GL_NEAREST;
+				m_iGLFilter = EM_NEAREST;
 			} else {
 				m_iGLFilter = -1;
 			}
+		} else if (str == "brightness:") {
+			float bright;
+			file >> bright;
+			this->setBrightness(bright);
 		}
 	}
-#else
-	cerr << "Unable load config file because some header files were missing";
-	return;
-#endif
-#else
-	cerr << "Unable load config file because some header files were missing";
-	return;
-#endif
 }
 
 void Config::setSize(int w, int h) { 
 	m_iWidth = EM_MIN(1600, EM_MAX(100,w)); 
-	m_iHeight = EM_MIN(1600, EM_MAX(100,h)); 
+	m_iHeight = EM_MIN(1200, EM_MAX(100,h)); 
+  em_width_ = m_iWidth;
+  em_height_ = m_iHeight;
+  em_width_div2_ = m_iWidth/2;
+  em_height_div2_ = m_iHeight/2;
 }
 
 void Config::loadArgs(int & argc, char *argv[]) {
@@ -205,8 +213,12 @@ void Config::loadArgs(int & argc, char *argv[]) {
 			this->setSound(false);
 			EM_COUT("Disabling sound", 1);
 			REMOVEARG(a, argc, argv);
+   	} else if (strcmp(argv[a], "-nolights") == 0) {
+			this->setLights(false);
+			EM_COUT("Disabling lights", 1);
+			REMOVEARG(a, argc, argv);
    	} else if (strcmp(argv[a], "-nearest") == 0) {
-			this->setGLFilter(GL_NEAREST);
+			this->setGLFilter(EM_NEAREST);
 			EM_COUT("Using nearest for texture mapping", 1);
 			REMOVEARG(a, argc, argv);
    	} else if (strcmp(argv[a], "-externgl") == 0) {

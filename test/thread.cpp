@@ -3,6 +3,7 @@
  The arrow keys rotates the cube.
  ***************************************************************************/
 
+#include "Private.h"
 #include "Engine.h"
 #include "Camera.h"
 #include "Cube.h"
@@ -49,3 +50,7 @@ int main(int argc, char *argv[]) {
 	return 0;
 #endif
 }
+
+#if EM_USE_ALLEGRO
+END_OF_MAIN();
+#endif

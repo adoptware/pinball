@@ -2,18 +2,20 @@
                           StdAnimation.cpp  -  description
                              -------------------
     begin                : Wed Jan 26 2000
-    copyright            : (C) 2000 by 
-    email                : 
+    copyright            : (C) 2000 by Henrik Enqvist
+    email                : henqvist@excite.com
  ***************************************************************************/
 
+#include "Private.h"
 #include "StdAnimation.h"
 #include "Group.h"
 #include "math.h"
 #include "Light.h"
 #include "BillBoard.h"
 
-StdAnimation::StdAnimation(int step, int type) {
-	m_iType = type;
+StdAnimation::StdAnimation(int step, int type) : Behavior() {
+	this->setType(EM_TYPE_STDANIMATION);
+	m_iAnimType = type;
 	m_iStep = step;
 	m_iTick = 0;
 	m_iIndex = 0;
@@ -47,7 +49,7 @@ void StdAnimation::setEndStart() {
 }
 
 void StdAnimation::onTick() {
-	EmAssert(p_Parent != NULL, "Parent not allowed to be null");
+	EmAssert(this->getParent() != NULL, "Parent not allowed to be null");
 	
 	float x, y, z;
 	float sX, sY, sZ;
@@ -83,17 +85,17 @@ void StdAnimation::onTick() {
 
 	m_iTick++;
 
-	if (m_iType & EM_TRANSLATION) {
-		p_Parent->setTranslation(x, y, z);
-	}	else if (m_iType & EM_ROTATION) {
-		p_Parent->setRotation(x, y, z);
-	}	else if (m_iType & EM_LIGHT) {
-		Light* l = p_Parent->getLight();
+	if (m_iAnimType & EM_TRANSLATION) {
+		this->getParent()->setTranslation(x, y, z);
+	}	else if (m_iAnimType & EM_ROTATION) {
+		this->getParent()->setRotation(x, y, z);
+	}	else if (m_iAnimType & EM_LIGHT) {
+		Light* l = this->getParent()->getLight();
 		if (l != NULL) {
 			l->setColor(x, y, z);
 		}
-	} else if (m_iType & EM_BILLBOARD_SIZE) {
-		BillBoard * b = p_Parent->getBillBoard();
+	} else if (m_iAnimType & EM_BILLBOARD_SIZE) {
+		BillBoard * b = this->getParent()->getBillBoard();
 		if (b != NULL) {
 			b->setSize(x, y);
 			b->setZOffset(z);

@@ -9,8 +9,6 @@
 #ifndef VISITOR_H
 #define VISITOR_H
 
-#include "Private.h"
-
 class Group;
 /**
  * <p><b>Only for internal use.</b></p>

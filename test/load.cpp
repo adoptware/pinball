@@ -3,14 +3,14 @@
  The arrow keys rotates the object.
  ***************************************************************************/
 
+#include "Private.h"
 #include "Engine.h"
 #include "Camera.h"
 #include "Cube.h"
 #include "KeyBehavior.h"
 #include "KeyRotBehavior.h"
 #include "Keyboard.h"
-#include "Shape3DUtil.h"
-#include "SDL/SDL.h"
+#include "Loader.h"
 
 /** Main */
 int main(int argc, char *argv[]) {
@@ -21,11 +21,12 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 
-	// Create the engine.
+	// create the engine.
 	Engine* engine = new Engine(argc, argv);
 	engine->setLightning(0.5f, 0.1f);
+	engine->setClearColor(0.1f, 0.0f, 0.3f, 0.0f);
 
-	// Add a camera. Move a bit.
+	// add a camera. Move a bit.
 	Camera* camera = new Camera();
 	Group* groupCamera = new Group();
 	engine->add(groupCamera);
@@ -33,26 +34,32 @@ int main(int argc, char *argv[]) {
 	groupCamera->setTranslation(0, 0, 10);
 	engine->setEngineCamera(groupCamera);
 
-	// Add a behavior to the camera
+	// add a behavior to the camera
 	KeyBehavior* keyBeh = new KeyBehavior();
 	groupCamera->addBehavior(keyBeh);
 
-	// Load the shape.
-	Shape3D* shape = Shape3DUtil::loadShape3D(argv[1]);
-	Group* groupShape = new Group();
-	engine->add(groupShape);
-	groupShape->addShape3D(shape);
-	
-	// Add a behavior to the shape
-	KeyRotBehavior* keyRBeh = new KeyRotBehavior();
-	groupShape->addBehavior(keyRBeh);
+	// load the file
+	if (Loader::getInstance()->loadFile(argv[1], engine) < 0) {
+		cerr << "error loading file " << argv[1] << endl;
+		return 0;
+	}
+	// add a behavior to the shape
+	Group * g = engine->getGroup(1);
+	if (g != NULL) {
+		KeyRotBehavior* keyRBeh = new KeyRotBehavior();
+		g->addBehavior(keyRBeh);
+	}
 		
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
 		engine->tick();
 		engine->render();
 		engine->swap();
-		SDL_Delay(20);
+		engine->limitFPS(50);
 	}
 	delete(engine);
 	return 0;
 }
+
+#if EM_USE_ALLEGRO
+END_OF_MAIN();
+#endif

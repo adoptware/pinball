@@ -2,15 +2,18 @@
                           Engine.h  -  description
                              -------------------
     begin                : Wed Jan 26 2000
-    copyright            : (C) 2000 by 
-    email                : 
+    copyright            : (C) 2000 by Henrik Enqvist
+    email                : henqvist@excite.com
  ***************************************************************************/
 
 #ifndef ENGINE_H
 #define ENGINE_H
 
+#ifndef PRIVATE_H
+#error Must include Private.h before Engine.h
+#endif
 
-#include "Private.h"
+#include "TextureUtil.h"
 #include "Group.h"
 
 class Light;
@@ -26,12 +29,15 @@ class Engine : public Group {
 		/** Engine(argc, argv). All arguments belonging to the engine are removed from the vector. */
 		Engine(int & argc, char** argv);
 		~Engine();
-		void initGrx();
-		void initSound();
+		/** Shutdown the engine */
+		void stopEngine();
 		void clearScreen();
+		/** Deallocate all objects in engine. */
+		void clear();
 		/** Adds a static background that will be rendered before the 3D shapes. UNIMPLEMENTED. */
 		void setBackground(EmImage*);
-		/** Aligns vertices, calculates light, clears the screen and draws the polygons to the GL buffer. */
+		/** Aligns vertices, calculates light, clears the screen and draws the polygons to 
+		 * the GL buffer. */
 		void render();
 		/** Swaps the SDL buffers. Extern GLs must use something else. */
 		void swap();
@@ -46,6 +52,8 @@ class Engine : public Group {
 		 ** Returns false if the thread is behind schedule else true. 
 		 ** Available FSP 100, 50, 40, 33, 25, 20 */
 		bool limitFPS(int fps);
+		void delay(int ms);
+		void setClearColor(float r, float g, float b, float a);
 #if EM_THREADS
 		/** When using threaded ticks you must use this function instead of render(). */
 		void renderThreadSafe();
@@ -57,7 +65,6 @@ class Engine : public Group {
 	private:
 		EmImage* m_Background;
 
-		void resize(unsigned int w, unsigned int h);
 };
 
 #endif // ENGINE_H

@@ -9,44 +9,36 @@
 #ifndef PRIVATE_H
 #define PRIVATE_H
 
-#include <sys/stat.h>
-
-#include <stddef.h>
-#include <stdlib.h>
-#include <iostream>
-#include <vector>
-
-#include <GL/gl.h>
-#include <GL/glx.h>
-#include <GL/glut.h>
-
-#include <SDL/SDL.h>
-#include <SDL/SDL_thread.h>
-
 #ifdef HAVE_CONFIG_H
-#include "conf.h"
+#include "config.h"
 #else
-#error "Must have conf.h file"
+#error "Must have config.h file"
 #endif
 
-using namespace std;
+#ifndef EM_USE_SDL
+#define EM_USE_SDL 0
+#endif
 
-typedef struct {
-	float v[3][3];
-	float t[3];
-} Matrix;
+#ifndef EM_USE_ALLEGRO
+#define EM_USE_ALLEGRO 0
+#endif
 
-typedef struct {
-	float x, y, z;
-} Vertex3D;
+#if EM_USE_SDL
+#if EM_USE_ALLEGRO
+#error "Can't compile sdl and allegro at the same time."
+#endif
+#endif
 
-typedef struct {
-	float u, v;
-} TexCoord;
+#if EM_USE_SDL
+#else
+#if EM_USE_ALLEGRO
+#else
+#error "Must specify allegro or sdl."
+#endif
+#endif
 
-typedef struct {
-	float r, g, b, a;
-} Color;
+
+// using namespace std;
 
 // Dummy operator to make MSVC carp work ??
 /*
@@ -70,7 +62,6 @@ bool operator == (const PolygonEdge & peA, const PolygonEdge & peB) {
 }
 */
 
-extern Matrix identityMatrix;
 
 #if EM_DEBUG
   #define EM_COUT(a, level) if (level > 0) { cerr << a << endl; };
@@ -84,15 +75,17 @@ extern Matrix identityMatrix;
 	#define EM_COUT_D(a, level)
 #endif
 
+#if EM_USE_SDL
 #define EM_GLERROR(a) \
 	GLenum error = glGetError(); \
 	if (error != GL_NO_ERROR) {  \
 		const GLubyte* str = gluErrorString(error); \
 		cerr << "OpenGL error: " << a << str << endl;    \
 	}
+#endif // EM_USE_SDL
 
 #if EM_DEBUG
-  #define EmAssert(a, b)	\
+#define EmAssert(a, b)	\
 	   if (!(a)) {						\
 		   cerr << b << " : In file " << __FILE__ << ":" << __LINE__ << endl; \
 		   exit(0);							\
@@ -101,25 +94,5 @@ extern Matrix identityMatrix;
 #define EmAssert(a, b)
 #endif
 
-typedef struct {
-	SDL_AudioSpec spec;
-	Uint32 length;
-	Uint32 pos;
-	Uint8 *wave;
-	bool loop;
-} WaveStruct;
-
-
-typedef struct {
-	unsigned int width;
-	unsigned int height;
-	unsigned int channels;
-	unsigned char* pixels;
-} struct_image;
-
-
-#define EmImage struct_image
-#define EmTexture GLuint
-#define EmSample WaveStruct
 
 #endif // PRIVATE_H
