@@ -29,11 +29,10 @@ Shape3D::Shape3D(int v, int p) {
 
 	m_vLight.reserve(v);
 	m_vSpecular.reserve(v);
-#if EM_USE_SHARED_COLOR
+
 	m_vColor.reserve(v);
 	m_vLitColor.reserve(v);
 	m_vTexCoord.reserve(v);
-#endif
 
 	m_Texture = NULL;
 }
@@ -107,7 +106,7 @@ int Shape3D::add(float x, float y, float z, float r, float g, float b, float a, 
 	Color color = {1.0f, 1.0f, 1.0f, 1.0f};
 	m_vLight.push_back(color);
 	m_vSpecular.push_back(color);
-#if EM_USE_SHARED_COLOR
+
 	color.r = r;
 	color.g = g;
 	color.b = b;
@@ -118,10 +117,48 @@ int Shape3D::add(float x, float y, float z, float r, float g, float b, float a, 
 	texcoord.u = u;
 	texcoord.v = v;
 	m_vTexCoord.push_back(texcoord);
-#endif
 
 	return m_vVtxSrc.size() - 1;
 }
+
+int Shape3D::addAt(int index, float x, float y, float z,
+									 float r, float g, float b, float a, float u, float v) {
+	if (index < 0 || index >= (signed)m_vVtxSrc.size()) {
+		return this->add(x, y, z, r, g, b, a, u, v);
+	}
+
+	Vertex3D vtx;
+	vtx.x = x;
+	vtx.y = y;
+	vtx.z = z;
+	m_vVtxSrc.insert(&m_vVtxSrc[index], vtx);
+	// Add dummy values to trans and align, i.e. allocate space
+	m_vVtxTrans.insert(&m_vVtxTrans[index], vtx);
+	m_vVtxAlign.insert(&m_vVtxAlign[index], vtx);
+	// Add dummy values to normals, i.e. allocate space
+	m_vNmlSrc.insert(&m_vNmlSrc[index], vtx);
+	m_vNmlTrans.insert(&m_vNmlTrans[index], vtx);
+	m_vNmlAlign.insert(&m_vNmlAlign[index], vtx);
+
+	Color color = {1.0f, 1.0f, 1.0f, 1.0f};
+	m_vLight.insert(&m_vLight[index], color);
+	m_vSpecular.insert(&m_vSpecular[index], color);
+
+	color.r = r;
+	color.g = g;
+	color.b = b;
+	color.a = a;
+	m_vColor.insert(&m_vColor[index], color);
+	m_vLitColor.insert(&m_vLitColor[index], color);
+	TexCoord texcoord;
+	texcoord.u = u;
+	texcoord.v = v;
+	m_vTexCoord.insert(&m_vTexCoord[index], texcoord);
+
+	return index;
+}
+
+
 
 Vertex3D * Shape3D::getVertex3D(int index) {
 	if ( index < 0 || index >= (signed)m_vVtxSrc.size() ) {
@@ -144,7 +181,6 @@ int Shape3D::getVertex3DIndex(Vertex3D * vtx) {
 	return -1;
 }
 
-#if EM_USE_SHARED_COLOR
 Color * Shape3D::getColor(int index) {
 	if (index < 0 || index >= (signed)m_vColor.size()) {
 		return NULL;
@@ -176,7 +212,6 @@ void Shape3D::setTexCoord(int index, float u, float v) {
 	m_vTexCoord[index].u = u;
 	m_vTexCoord[index].v = v;
 }
-#endif // EM_USE_SHARED_COLOR
 
 bool Shape3D::removeLooseVertex3D(int vtxindex) {
 	if (vtxindex < 0 || vtxindex >= (signed)m_vVtxSrc.size()) return false;

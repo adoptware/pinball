@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <cstring>
+#include <ctime>
 
 #if EM_THREADS
 #include <sched.h>
@@ -36,7 +37,9 @@
 
 // TODO Remove glu
 #if EM_USE_SDL
+#if EM_DEBUG
 #include <GL/glu.h>
+#endif
 #endif
 
 volatile int g_iStartTime = -1;
@@ -293,6 +296,7 @@ void Engine::delay(int ms) {
 #endif
 
 #if EM_USE_ALLEGRO
+//#define GET_TIME 1
 #define GET_TIME g_iMSeconds
 #endif
 

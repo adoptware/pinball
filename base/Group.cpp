@@ -143,8 +143,8 @@ void Group::removeShape3D(Shape3D * s) {
 
 void Group::setBehavior(Behavior * b, bool signal) {
 	p_Behavior = b;
+	b->setParent(this);
 	if (b != NULL && signal) {
-		b->setParent(this);
 		SignalSender::getInstance()->addGroup(this);
 	}
 }
