@@ -231,8 +231,6 @@ bool Table::getHighScoresData(list<string>& listHighScores)
     sRow  = sName;
     sRow += sScore;
 
-cerr << "sRow=" << sRow << endl;
-
     listHighScores.push_back(sRow);
 
     // We only want 10 scores to display
@@ -325,8 +323,6 @@ bool Table::readHighScoresFile()
 
       if (sName.length() == 0)
 	sName = "?";
-
-cerr << "score=" << nScore << " - " << "Name=" << sName << endl;
 
       m_mapHighScores.insert(pair<int, string>(nScore, sName));
     }
