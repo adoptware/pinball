@@ -10,11 +10,13 @@ usage()
 	cat <<EOF
 Usage: pinball-config [OPTION]
 Options:
-	[--version]
-        [--libs]
-	[--cflags]
-	[--datadir]
-	[--libdir]
+		[--version]
+		[--libs]
+		[--cflags]
+		[--datadir]
+		[--libdir]
+		[--prefix]
+		[--exec-prefix]
 EOF
 	exit $1
 }
@@ -40,6 +42,12 @@ while test $# -gt 0; do
     --libdir)
       echo_libdir=yes
       ;;
+    --prefix)
+      echo_prefix=yes
+      ;;
+    --exec-prefix)
+      echo_execprefix=yes
+      ;;
     *)
       usage 1 1>&2
       ;;
@@ -59,4 +67,10 @@ if test "$echo_datadir" = "yes"; then
 fi
 if test "$echo_libdir" = "yes"; then
       echo @EM_LIBDIR@
+fi      
+if test "$echo_prefix" = "yes"; then
+      echo @prefix@
+fi      
+if test "$echo_execprefix" = "yes"; then
+      echo @execprefix@
 fi      
