@@ -27,6 +27,7 @@
 #include "Engine.h"
 #include "OpenGLVisitor.h"
 #include "Menu.h"
+#include "Loader.h"
 
 Score::Score() {
   m_Font = EmFont::getInstance();
@@ -105,7 +106,7 @@ void Score::StdOnSignal() {
   ElseOnSignal( PBL_SIG_BALL_OFF ) {
     this->m_bExtraBall = false;
   }
-  ElseOnSignal( PBL_SIG_EXTRABALL ) {
+  ElseOnSignal( Loader::getInstance()->getSignal("extraball") ) {
     this->m_bExtraBall = true;
   }
   ElseOnSignal( PBL_SIG_GAME_OVER ) {
@@ -166,6 +167,7 @@ void Score::clear() {
   Table::getInstance()->setCurrentBall(0);
   m_iInfoDelay = -1;
   m_iScore = 0;
+	m_bExtraBall = false;
 }
 
 // Tests for a high score, if test positive asks for the user name
