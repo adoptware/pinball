@@ -1,6 +1,9 @@
 AUTOMAKE_OPTIONS = gnu
 
-pkglib_LIBRARIES = libemilia_addon.a
+pinlibdir = $(libdir)/pinball
+pinincludedir = $(includedir)/pinball
+
+pinlib_LIBRARIES = libemilia_addon.a
 
 INCLUDES = -I../base
 
@@ -18,7 +21,7 @@ Sphere.cpp \
 StdAnimation.cpp \
 TexAnimation.cpp
 
-pkginclude_HEADERS = \
+pininclude_HEADERS = \
 BigSphere.h \
 ColorBehavior.h \
 Cone.h \
