@@ -212,90 +212,90 @@ void Loader::clearSignalVariable() {
  ******************************************************/
 
 void Loader::loadProperties(ifstream & file, istringstream & ist, Group * group) {
-	EM_COUT("Loader::loadProperties", 0);
-
-	string str;
-	
-	EmReadCmp(file, ist, str, "{");
-
-	this->readNextToken(file, ist, str);
-
-	while (str != "}") {
-		if (str == "transform_once") {
-			group->setProperty(EM_GROUP_TRANSFORM_ONCE);
-			EM_COUT("Loader::loadProperties - transform once", 0);
-
-		} else if (str == "no_light") {
-			group->setProperty(EM_GROUP_NO_LIGHT);
-			EM_COUT("Loader::loadProperties - no light", 0);
-
-		} else if (str == "light_once") {
-			group->setProperty(EM_GROUP_LIGHT_ONCE);
-			EM_COUT("Loader::loadProperties - light once", 0);
-
-			// TODO we don't need this
-		} else if (str == "no_signal") {
-			group->setProperty(EM_GROUP_NO_SIGNAL);
-			EM_COUT("Loader::loadProperties - no signal - deprecated", 0);
-
-		} else if (str == "wall") {
-			group->setUserProperty(PBL_WALLS);
-			EM_COUT("Loader::loadProperties - wall", 0);
-
-		} else if (str == "wall_one_way") {
-			group->setUserProperty(PBL_WALLS_ONE);
-			EM_COUT("Loader::loadProperties - wall_one_way", 0);
-
-		} else if (str == "group_1") {
-			//group->setUserProperty(PBL_GROUP1);
-			group->setCollisionGroup(1);
-			EM_COUT("Loader::loadProperties - group_1", 0);
-
-		} else if (str == "alpha_test") {
-			for (int a=0; a<group->getShape3DSize(); a++) {
-				group->getShape3D(a)->setProperty(EM_SHAPE3D_ALPHATEST);
-			}
-			EM_COUT("Loader::loadProperties - alpha test", 0);
-
-			/* I don't think we need this
-				 } else if (str == "transparent") {
-				 for (int a=0; a<group->getShape3DSize(); a++) {
-				 Shape3D* shape = group->getShape3D(a);
-				 shape->setProperty(EM_SHAPE3D_USE_TRANS);
-				 vector<Polygon3D*>::iterator polyIter = shape->m_vPolygon.begin();
-				 vector<Polygon3D*>::iterator polyEnd = shape->m_vPolygon.end();
-				 for (; polyIter != polyEnd; polyIter++) {
-				 (*polyIter)->setProperty(EM_POLY_TRANS);
-				 }
-				 }
-				 EM_COUT("Loader::loadProperties - transparent", 0);
-			*/
-		} else if (str == "collision") {
-			Shape3D * shape = group->getShape3D(0);
-			if (shape == NULL) {
-				EM_COUT("Loader::loadProperties - no shape", 0); 
-			} else {
-				CollisionBounds* bounds = new CollisionBounds(shape->getCollisionSize());
-				if (shape->getCollisionSize() > 16) {
-					bounds->setShape3D(shape, 4); //4
-				} else if (shape->getCollisionSize() > 8) {
-					bounds->setShape3D(shape, 3); //4
-				} else if (shape->getCollisionSize() > 4) {
-					bounds->setShape3D(shape, 2); //4
-				} else if (shape->getCollisionSize() > 2) {
-				bounds->setShape3D(shape, 1); //4
-				} else {
-					bounds->setShape3D(shape, 1);
-				}				
-				group->setCollisionBounds(bounds);
-			}
-			EM_COUT("Loader::loadProperties - collision", 0);
-			
-		} else {
-			throw string("--UNKNOWN property in property block");
-		}
-		this->readNextToken(file, ist, str);
-	}
+  EM_COUT("Loader::loadProperties", 0);
+  
+  string str;
+  
+  EmReadCmp(file, ist, str, "{");
+  
+  this->readNextToken(file, ist, str);
+  
+  while (str != "}") {
+    if (str == "transform_once") {
+      group->setProperty(EM_GROUP_TRANSFORM_ONCE);
+      EM_COUT("Loader::loadProperties - transform once", 0);
+      
+    } else if (str == "no_light") {
+      group->setProperty(EM_GROUP_NO_LIGHT);
+      EM_COUT("Loader::loadProperties - no light", 0);
+      
+    } else if (str == "light_once") {
+      group->setProperty(EM_GROUP_LIGHT_ONCE);
+      EM_COUT("Loader::loadProperties - light once", 0);
+      
+      // TODO we don't need this
+    } else if (str == "no_signal") {
+      group->setProperty(EM_GROUP_NO_SIGNAL);
+      EM_COUT("Loader::loadProperties - no signal - deprecated", 0);
+      
+    } else if (str == "wall") {
+      group->setUserProperty(PBL_WALLS);
+      EM_COUT("Loader::loadProperties - wall", 0);
+      
+    } else if (str == "wall_one_way") {
+      group->setUserProperty(PBL_WALLS_ONE);
+      EM_COUT("Loader::loadProperties - wall_one_way", 0);
+      
+    } else if (str == "group_1") {
+      //group->setUserProperty(PBL_GROUP1);
+      group->setCollisionGroup(1);
+      EM_COUT("Loader::loadProperties - group_1", 0);
+      
+    } else if (str == "alpha_test") {
+      for (int a=0; a<group->getShape3DSize(); a++) {
+	group->getShape3D(a)->setProperty(EM_SHAPE3D_ALPHATEST);
+      }
+      EM_COUT("Loader::loadProperties - alpha test", 0);
+      
+      /* I don't think we need this
+	 } else if (str == "transparent") {
+	 for (int a=0; a<group->getShape3DSize(); a++) {
+	 Shape3D* shape = group->getShape3D(a);
+	 shape->setProperty(EM_SHAPE3D_USE_TRANS);
+	 vector<Polygon3D*>::iterator polyIter = shape->m_vPolygon.begin();
+	 vector<Polygon3D*>::iterator polyEnd = shape->m_vPolygon.end();
+	 for (; polyIter != polyEnd; polyIter++) {
+	 (*polyIter)->setProperty(EM_POLY_TRANS);
+	 }
+	 }
+	 EM_COUT("Loader::loadProperties - transparent", 0);
+      */
+    } else if (str == "collision") {
+      Shape3D * shape = group->getShape3D(0);
+      if (shape == NULL) {
+	EM_COUT("Loader::loadProperties - no shape", 0); 
+      } else {
+	CollisionBounds* bounds = new CollisionBounds(shape->getCollisionSize());
+	if (shape->getCollisionSize() > 16) {
+	  bounds->setShape3D(shape, 4); //4
+	} else if (shape->getCollisionSize() > 8) {
+	  bounds->setShape3D(shape, 3); //4
+	} else if (shape->getCollisionSize() > 4) {
+	  bounds->setShape3D(shape, 2); //4
+	} else if (shape->getCollisionSize() > 2) {
+	  bounds->setShape3D(shape, 1); //4
+	} else {
+	  bounds->setShape3D(shape, 1);
+	}				
+	group->setCollisionBounds(bounds);
+      }
+      EM_COUT("Loader::loadProperties - collision", 0);
+      
+    } else {
+      throw string("--UNKNOWN property in property block");
+    }
+    this->readNextToken(file, ist, str);
+  }
 }
 
 /**************************************************************
@@ -541,14 +541,37 @@ void Loader::loadStateItem(ifstream & file, istringstream & ist, Engine * engine
     throw string("No music field in StateItem");
   }
   
-  this->readNextToken(file, ist, str);
-  if (str == "property") {
-    int p;
-    this->readNextToken(file, ist, p);
-    stateitem->setProperty(p);
-  } else if (str == "no_property") {
+  // version hack
+  if (m_FileVersion.major == 0 && m_FileVersion.minor == 2 && m_FileVersion.micro == 0) {
+    this->readNextToken(file, ist, str);
+    if (str == "property") {
+      int p;
+      this->readNextToken(file, ist, p);
+      stateitem->setUserProperty(p);
+    } else if (str == "no_property") {
+    } else {
+      throw string("No user property field in StateItem");
+    }
   } else {
-    throw string("No property field in StateItem");
+    this->readNextToken(file, ist, str);
+    if (str == "user_property") {
+      int p;
+      this->readNextToken(file, ist, p);
+      stateitem->setUserProperty(p);
+    } else if (str == "no_user_property") {
+    } else {
+      throw string("No user property field in StateItem");
+    }
+    
+    this->readNextToken(file, ist, str);
+    if (str == "shape_property") {
+      int p;
+      this->readNextToken(file, ist, p);
+      stateitem->setShapeProperty(p);
+    } else if (str == "no_shape_property") {
+    } else {
+      throw string("No shape property field in StateItem");
+    }
   }
   
   this->readNextToken(file, ist, str);
@@ -923,7 +946,7 @@ Shape3D* Loader::loadShape3DChunk(ifstream & file, istringstream & ist) {
       shape->setProperty(EM_SHAPE3D_BEHIND2);
       this->readUnknown(file, ist);
     } else if (str == "lit") {
-      shape->setProperty(EM_SHAPE3D_ALLWAYSLIT);
+      shape->setProperty(EM_SHAPE3D_ALWAYSLIT);
       this->readUnknown(file, ist);
     } else {
       this->readUnknown(file, ist);
@@ -950,11 +973,30 @@ int Loader::loadFile(const char* fn, Engine * engine) {
     string str("");
     istringstream ist("");
     m_iLineNumber = 0;
+    m_FileVersion.major = 0;
+    m_FileVersion.minor = 2;
+    m_FileVersion.micro = 0;
     this->readNextToken(file, ist, str);
+    if (str == "version") {
+      EmReadCmp(file, ist, str, "{");
+      this->readNextToken(file, ist, m_FileVersion.major);
+      this->readNextToken(file, ist, m_FileVersion.minor);
+      this->readNextToken(file, ist, m_FileVersion.micro);
+      EmReadCmp(file, ist, str, "}");
+      if ((m_FileVersion.major > 0) ||
+	  (m_FileVersion.major == 0 && m_FileVersion.minor > 2) ||
+	  (m_FileVersion.major == 0 && m_FileVersion.minor == 2 && m_FileVersion.micro > 1)) {
+	cerr << "WARNING! Version above 0.2.1 not supported, file is " <<
+	  m_FileVersion.major <<" "<< m_FileVersion.minor <<" "<< m_FileVersion.micro << endl;
+      }
+
+    } else {
+      cerr << "Version string not found assuming 0.2.0" << endl;
+    }
     while (file) {
       if (str == "object") {
-				Group * group = this->loadStdObject(file, ist, engine); 
-				engine->add(group);
+	Group * group = this->loadStdObject(file, ist, engine); 
+	engine->add(group);
       }
       this->readNextToken(file, ist, str);
       //cerr << str << endl;
