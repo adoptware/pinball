@@ -22,6 +22,7 @@ BumperBehavior.cpp \
 EyeBehavior.cpp \
 LoaderModule.cpp \
 Loader.cpp \
+Obj3dsUtil.cpp \
 PlungerBehavior.cpp \
 Score.cpp \
 Script.cpp \
@@ -39,6 +40,7 @@ EyeBehavior.h \
 FakeModuleBehavior.h \
 LoaderModule.h \
 Loader.h \
+Obj3dsUtil.h \
 Pinball.h \
 PlungerBehavior.h \
 Score.h \
