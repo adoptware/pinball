@@ -1,6 +1,6 @@
-//#ident "$Id: Obj3dsUtil.cpp,v 1.2 2003/05/27 11:53:25 rzr Exp $" 
+//#ident "$Id: Obj3dsUtil.cpp,v 1.1 2003/05/28 07:11:21 henqvist Exp $" 
 /** 
- * @author: www.Philippe.COVAL.online.fr - rev: $Author: rzr $
+ * @author: www.Philippe.COVAL.online.fr - rev: $Author: henqvist $
  * 3ds loader wrapper
  **/
 /*
@@ -17,7 +17,7 @@
 //----------------------------------------------------------------
 extern "C" {
   /** 
-   * @author: www.Philippe.COVAL.online.fr - rev: $Author: rzr $
+   * @author: www.Philippe.COVAL.online.fr - rev: $Author: henqvist $
    * C code excrapt from 3ds mini library  (GPL)
    * Modifying code here is not a good idea, 
    * please contact the author before, I may release something cleaner
@@ -38,7 +38,7 @@ extern "C" {
   //#include "/tmp/inl-3ds.c"
   /* #ident "$Id: */
   /**
-   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: henqvist $ 
    * Copyright: GPL @ http://rzr.online.fr/licence.htm
    **/
 
@@ -86,7 +86,7 @@ extern "C" {
 #endif //_h_
   /* #ident "$Id: */
   /**
-   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: henqvist $ 
    * Copyright: GPL @ http://rzr.online.fr/licence.htm
    **/
 
@@ -177,7 +177,7 @@ extern "C" {
 
 #endif //_h_
   /**
-   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: henqvist $ 
    * Copyright: GPL @ http://rzr.online.fr/licence.htm
    **/
 #ifndef types3d_c_
@@ -240,9 +240,9 @@ extern "C" {
     printf("{ %d, %d }; \n",v.x,v.y);
   }
 #endif // inclusion
-  /* #ident "$Id: Obj3dsUtil.cpp,v 1.2 2003/05/27 11:53:25 rzr Exp $" */
+  /* #ident "$Id: Obj3dsUtil.cpp,v 1.1 2003/05/28 07:11:21 henqvist Exp $" */
   /**
-   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: henqvist $ 
    * Copyright: GPL @ http://rzr.online.fr/licence.htm
    **/
 #ifndef parse3ds_h_
@@ -276,9 +276,9 @@ extern "C" {
   int fgets_tag(FILE* f, char* buf, char** strarg);
 
 #endif
-  /* #ident "$Id: Obj3dsUtil.cpp,v 1.2 2003/05/27 11:53:25 rzr Exp $" */
+  /* #ident "$Id: Obj3dsUtil.cpp,v 1.1 2003/05/28 07:11:21 henqvist Exp $" */
   /**
-   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: henqvist $ 
    * Copyright: GPL @ http://rzr.online.fr/licence.htm
    **/
 #ifndef parse3ds_c_
@@ -721,12 +721,12 @@ extern "C" {
   }
 
 #endif // inclusion
-  /* #ident "$Id: Obj3dsUtil.cpp,v 1.2 2003/05/27 11:53:25 rzr Exp $" */
+  /* #ident "$Id: Obj3dsUtil.cpp,v 1.1 2003/05/28 07:11:21 henqvist Exp $" */
 #ifndef color3ds_h_ 
 #define color3ds_h_ 
   /**
    * Unstable 
-   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: henqvist $ 
    * Copyright: GPL @ http://rzr.online.fr/licence.htm
    **/
 
@@ -776,10 +776,10 @@ extern "C" {
 
 
 #endif //_h_ inclusion 
-  //$Id: Obj3dsUtil.cpp,v 1.2 2003/05/27 11:53:25 rzr Exp $
-  /* #ident "$Id: Obj3dsUtil.cpp,v 1.2 2003/05/27 11:53:25 rzr Exp $" */
+  //$Id: Obj3dsUtil.cpp,v 1.1 2003/05/28 07:11:21 henqvist Exp $
+  /* #ident "$Id: Obj3dsUtil.cpp,v 1.1 2003/05/28 07:11:21 henqvist Exp $" */
   /**
-   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: henqvist $ 
    * Copyright: GPL @ http://rzr.online.fr/licence.htm
    **/
 
@@ -1015,7 +1015,7 @@ extern "C" {
 #endif
 
 #endif //_h_ 
-  //EOF $Id: Obj3dsUtil.cpp,v 1.2 2003/05/27 11:53:25 rzr Exp $
+  //EOF $Id: Obj3dsUtil.cpp,v 1.1 2003/05/28 07:11:21 henqvist Exp $
 
 #endif
 
@@ -1273,4 +1273,4 @@ int Obj3dsUtil::write( Group  & in, char const* const filename  )
 #endif // inclusion 
 
 
-//EOF $Id: Obj3dsUtil.cpp,v 1.2 2003/05/27 11:53:25 rzr Exp $
+//EOF $Id: Obj3dsUtil.cpp,v 1.1 2003/05/28 07:11:21 henqvist Exp $
