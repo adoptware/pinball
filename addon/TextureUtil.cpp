@@ -65,7 +65,3 @@ EmTexture* TextureUtil::loadTexture(char* fileName) {
 
 	return texture;
 }
-
-
-
-

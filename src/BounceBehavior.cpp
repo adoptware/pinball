@@ -120,6 +120,7 @@ void BounceBehavior::onTick() {
 	m_iCollisionPrio = 0;
 
 	// debug stuff
+#if EM_DEBUG
 	if (Keyboard::isKeyDown(SDLK_i)) m_vtxDir.z -= 0.01f;
 	if (Keyboard::isKeyDown(SDLK_k)) m_vtxDir.z += 0.01f;
 	if (Keyboard::isKeyDown(SDLK_j)) m_vtxDir.x -= 0.01f;
@@ -136,7 +137,7 @@ void BounceBehavior::onTick() {
 	} else {
 		m_bKnock = false;
 	}
-
+#endif
 	// Gravity
 	m_vtxDir.z += Z_GRAVITY;
 	float x, y, z;

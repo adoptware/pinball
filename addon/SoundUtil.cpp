@@ -39,7 +39,8 @@ EmSound SoundUtil::loadSample(char* fileName) {
 	EmSample* sample = (EmSample*) malloc(sizeof(EmSample));
 	/* Load the wave file into memory */
 	if ( SDL_LoadWAV(fileName, &(sample->spec), &(sample->wave), &(sample->length)) == NULL ) {
-		cerr << "Couldn't load " << fileName <<" "<< SDL_GetError();
+		cerr << "Couldn't load " << fileName <<" "<< SDL_GetError() << endl;
+		return -1;
 	}
 	sample->spec.callback = fctFillAudio;
 	sample->pos = sample->length; // set pos to end to prevent playback

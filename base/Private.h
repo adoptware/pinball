@@ -9,6 +9,8 @@
 #ifndef PRIVATE_H
 #define PRIVATE_H
 
+#include <sys/stat.h>
+
 #include <stddef.h>
 #include <stdlib.h>
 #include <iostream>
@@ -20,6 +22,8 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_thread.h>
+
+#include "conf.h"
 
 using namespace std;
 

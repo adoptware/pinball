@@ -9,6 +9,7 @@
 #include "EmFont.h"
 #include "TextureUtil.h"
 #include <stdio.h>
+#include <string>
 
 extern int em_width_;
 extern int em_height_;
@@ -31,17 +32,20 @@ EmFont * EmFont::getInstance() {
 	return p_Instance;
 }
 
-void EmFont::loadFont(char * fileName) {
-	m_Font = TextureUtil::loadImage(fileName);
+void EmFont::loadFont(char * filename) {
+	m_Font = TextureUtil::loadImage(filename);
+	if (m_Font == NULL) {
+		cerr << "Font: " << filename << " not found" << endl;
+		throw string("File not found");
+	}
 	m_Size = m_Font->w;
 	m_Offset = m_Size * m_Size * 3;
-	if (m_Font == NULL) {
-		cerr << "Font not found" << endl;
-	}
 }
 
 void EmFont::print(char * buffer, int x, int y) {
 	if (buffer == NULL) return;
+
+ 	glDisable(GL_DEPTH_TEST);
 
 	glMatrixMode(GL_MODELVIEW);
   glPushMatrix();
@@ -92,4 +96,7 @@ void EmFont::print(char * buffer, int x, int y) {
 
   glMatrixMode(GL_MODELVIEW);
   glPopMatrix();
+
+ 	glEnable(GL_DEPTH_TEST);
+
 }
