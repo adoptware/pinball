@@ -3,7 +3,8 @@ AUTOMAKE_OPTIONS = gnu
 testlibdir = $(EM_LIBDIR)
 testdatadir = $(pkgdatadir)
 
-noinst_PROGRAMS = scale simple light texture load explode collision signal billboard font thread menu joy sound trans math misc varray unittest
+#noinst_PROGRAMS = scale
+noinst_PROGRAMS = simple light texture load explode collision signal billboard font thread menu joy sound trans math misc varray unittest
 dnl noinst_PROGRAMS = unittest
 
 INCLUDES = -I../base -I../addon -I../src @INCLTDL@
@@ -27,7 +28,7 @@ load_SOURCES = load.cpp
 math_SOURCES = math.cpp
 menu_SOURCES = menu.cpp
 misc_SOURCES = misc.cpp
-scale_SOURCES = scale.cpp
+#scale_SOURCES = scale.cpp
 signal_SOURCES = signal.cpp
 simple_SOURCES = simple.cpp
 sound_SOURCES = sound.cpp
