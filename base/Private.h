@@ -37,8 +37,7 @@
 #endif
 #endif
 
-
-// using namespace std;
+using namespace std;
 
 // Dummy operator to make MSVC carp work ??
 /*
@@ -76,12 +75,16 @@ bool operator == (const PolygonEdge & peA, const PolygonEdge & peB) {
 #endif
 
 #if EM_USE_SDL
+#if EM_DEBUG
 #define EM_GLERROR(a) \
 	GLenum error = glGetError(); \
 	if (error != GL_NO_ERROR) {  \
 		const GLubyte* str = gluErrorString(error); \
 		cerr << "OpenGL error: " << a << str << endl;    \
-	}
+	} asdf
+#else
+#define EM_GLERROR(a)
+#endif
 #endif // EM_USE_SDL
 
 #if EM_DEBUG
