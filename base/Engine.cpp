@@ -83,8 +83,6 @@ extern "C" {
 
 
 Engine::Engine(int & argc, char *argv[]) {
-  m_Background = NULL;
-
   Config * config = Config::getInstance();
   config->loadArgs(argc, argv);
 
@@ -182,8 +180,34 @@ void Engine::setLightning(float diffuse, float ambient) {
   // light model
 }
 
-void Engine::setBackground(EmImage * bg) {
-  m_Background = bg;
+void Engine::drawSplash(EmTexture * tex) {
+#if EM_USE_SDL
+	int filter = Config::getInstance()->getGLFilter();
+	if (filter == -1) return;
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_ALPHA_TEST);
+  glDisable(GL_BLEND);
+	glDepthMask(GL_FALSE);
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D, *(tex));
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3f(-EM_RIGHT, EM_UP, -1); 
+	glTexCoord2f(1, 0);
+	glVertex3f(EM_RIGHT, EM_UP, -1); 
+	glTexCoord2f(1, 1);
+	glVertex3f(EM_RIGHT, -EM_UP, -1);
+	glTexCoord2f(0, 1);
+	glVertex3f(-EM_RIGHT, -EM_UP, -1);
+	glEnd();
+#endif
+	// allegro todo	
 }
 
 void Engine::setEngineCamera(Group* g) {
