@@ -105,12 +105,23 @@ void EmFont::printRowCenter(const char * buffer, float row) {
     return;
   }
 #if EM_USE_SDL
-  this->print(buffer, -(float)strlen(buffer)*EM_FONTSIZE_X/2, EM_UP - row*EM_FONTSIZE_Y);
+  if (row > -0.0001f) {
+    this->print(buffer, -(float)strlen(buffer)*EM_FONTSIZE_X/2, EM_UP - row*EM_FONTSIZE_Y);
+  } else {
+    this->print(buffer, -(float)strlen(buffer)*EM_FONTSIZE_X/2, -EM_UP - row*EM_FONTSIZE_Y);
+  }
 #endif
 #if EM_USE_ALLEGRO
-  this->print(buffer, p_Config->getWidthDiv2() - 
-	      (int)((float)strlen(buffer)*(float)p_Config->getHeightDiv2()*EM_FONTSIZE_Y), 
-	      (int)(row*(float)p_Config->getHeight()*EM_FONTSIZE_Y));
+  if (row > -0.0001f) {
+    this->print(buffer, p_Config->getWidthDiv2() - 
+		(int)((float)strlen(buffer)*(float)p_Config->getHeightDiv2()*EM_FONTSIZE_Y), 
+		(int)(row*(float)p_Config->getHeight()*EM_FONTSIZE_Y));
+  } else {
+    this->print(buffer, p_Config->getWidthDiv2() - 
+		(int)((float)strlen(buffer)*(float)p_Config->getHeightDiv2()*EM_FONTSIZE_Y),
+		(int)(p_Config->getHeight() + 
+		      (int)(row*(float)p_Config->getHeight()*EM_FONTSIZE_Y)));
+  }
 #endif
 }
 
