@@ -39,41 +39,41 @@ class Config {
   ~Config();
   static Config * getInstance();
   void loadArgs(int & argc, char* argv[]);
-  inline int getWidth() { return m_iWidth; };
-  inline int getHeight() { return m_iHeight; };
-  inline int getWidthDiv2() { return m_iWidthDiv2; };
-  inline int getHeightDiv2() { return m_iHeightDiv2; };
-  inline int getBpp() { return m_iBpp; };
-  inline int getGLFilter() { return m_iGLFilter; };
-  inline int getView() { return m_iView; };
-  inline float getBrightness() { return m_fBrightness; };
-  inline bool useFullScreen() { return m_bFullScreen; };
-  inline int getSound() { return m_iSound; };
-  inline int getMusic() { return m_iMusic; };
-  inline bool getFire() { return m_bFire; };
-  inline bool useExternGL() { return m_bExternGL; };
-  inline bool useLights() { return m_bLights; };
-  void setSize(int w, int h);
-  inline void setBpp(int bpp) { m_iBpp = bpp; };
-  inline void setGLFilter(int filter) { m_iGLFilter = filter; };
-  inline void setView(int view) { m_iView = view; };
-  inline void setShowFPS(bool fps) { m_bShowFPS = fps; };
+  inline const int getWidth() { return m_iWidth; };
+  inline const int getHeight() { return m_iHeight; };
+  inline const int getWidthDiv2() { return m_iWidthDiv2; };
+  inline const int getHeightDiv2() { return m_iHeightDiv2; };
+  inline const int getBpp() { return m_iBpp; };
+  inline const int getGLFilter() { return m_iGLFilter; };
+  inline const int getView() { return m_iView; };
+  inline const float getBrightness() { return m_fBrightness; };
+  inline const bool useFullScreen() { return m_bFullScreen; };
+  inline const int getSound() { return m_iSound; };
+  inline const int getMusic() { return m_iMusic; };
+  inline const bool getFire() { return m_bFire; };
+  inline const bool useExternGL() { return m_bExternGL; };
+  inline const bool useLights() { return m_bLights; };
+  void setSize(int const w, int const h);
+  inline void setBpp(int const bpp) { m_iBpp = bpp; };
+  inline void setGLFilter(int const filter) { m_iGLFilter = filter; };
+  inline void setView(int const view) { m_iView = view; };
+  inline void setShowFPS(bool const fps) { m_bShowFPS = fps; };
   inline bool getShowFPS() { return m_bShowFPS; };
   /** This will NOT set the engine to full screen. You have to do
    * that manually. */
-  inline void setFullScreen(bool f) { m_bFullScreen = f; };
-  inline void setSound(int s) { m_iSound = EM_MIN( EM_MAX(s, 0), 8); };
-  inline void setMusic(int m) { m_iMusic = EM_MIN( EM_MAX(m, 0), 8); };
-  inline void setFire(bool f) { m_bFire = f; };
-  inline void setLights(bool l) { m_bLights = l; };
+  inline void setFullScreen(bool const f) { m_bFullScreen = f; };
+  inline void setSound(int const s) { m_iSound = EM_MIN( EM_MAX(s, 0), 8); };
+  inline void setMusic(int const m) { m_iMusic = EM_MIN( EM_MAX(m, 0), 8); };
+  inline void setFire(bool const f) { m_bFire = f; };
+  inline void setLights(bool const l) { m_bLights = l; };
   /** This will NOT set the brightness in the engine. You
    * have to do that manually. */
-  inline void setBrightness(float b) { m_fBrightness = b; };
+  inline void setBrightness(float const b) { m_fBrightness = b; };
   /** Gets the key code from a key identifier. (e.g. "leftnudge" -> 306)*/
-  EMKey getKey(string & str);
+  EMKey getKey(string const & str);
   /** Gets the common name from a key code. (e.g. 306 -> "left ctrl") */
-  const char * getKeyCommonName(EMKey);
-  void setKey(string & str, EMKey key);
+  char const *  const getKeyCommonName(EMKey);
+  void setKey(string const & str, EMKey key);
   void setDataDir(const char * ch);
   void setSubDir(const char * ch);
   inline const char * getDataDir() { return m_sDataDir.c_str(); };
@@ -81,6 +81,8 @@ class Config {
   void saveConfig();
   void loadConfig();
   void setDefault();
+  /// set RELATIVE path according to current work directory of exec
+  void setPaths(char const * const argv0);  //!+rzr
  private:
   int m_iWidth;
   int m_iHeight;

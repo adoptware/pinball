@@ -13,25 +13,25 @@
 Cylinder::Cylinder(float fSize, float fR, float fG, float fB, float fA, bool bTop) : Shape3D(8+8, 8+2) {
 	Polygon* p;
 	// First ring of vertices.
-	for (float a=0; a<8; a+=1) {
+	{ for (float a=0; a<8; a+=1) {
 		this->add(EMath::emSin(a/8)*fSize/2, (float)fSize/2 , EMath::emCos(a/8)*fSize/2,
 							fR, fG, fB, fA, 0.0f, 0.0f);
-	}	
+	} }	
 	// Second ring.
-	for (float a=0; a<8; a+=1) {
+	{ for (float a=0; a<8; a+=1) {
 		this->add(EMath::emSin(a/8)*fSize/2, (float)-fSize/2, EMath::emCos(a/8)*fSize/2,
 							fR, fG, fB, fA, 0.0f, 0.0f);
-	}
+	} }
 	// Add vertices.
 	// The ring of polygons.
-	for (int a=0; a<7; a++) {
+	{ for (int a=0; a<7; a++) {
 		p = new Polygon(this, 4);
 		p->add(a);
 		p->add(a+1);
 		p->add(a+9);
 		p->add(a+8);
 		this->add(p);
-	}
+	} }
 
 	p = new Polygon(this, 4);
 	p->add(7);

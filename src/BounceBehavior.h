@@ -33,7 +33,7 @@ class BounceBehavior : public Behavior {
   ~BounceBehavior();
   void onTick();
   void StdOnSignal();
-  void onCollision(const Vertex3D & vtx, const Vertex3D & vtx, Group* g);
+  void onCollision(const Vertex3D & vtx1, const Vertex3D & vtx2, Group* g);
   void getDirection(Vertex3D & vtx);
   inline bool isAlive() { return m_bAlive; };
   inline void setFire(bool f) { m_bFire = f; };
