@@ -1,3 +1,4 @@
+//#ident "$Id: Private.h,v 1.15 2003/05/12 12:17:59 rzr Exp $"
 /***************************************************************************
                           Private.h  -  description
                              -------------------
@@ -9,15 +10,18 @@
 #ifndef PRIVATE_H
 #define PRIVATE_H
 
-#ifndef _MSC_VER //!+rzr: msvc is appart
-#ifdef HAVE_CONFIG_H
+#ifdef HAVE_CONFIG_H //autoconf
 #include "pinconfig.h"
-#else
-#error "Must have config.h file"
-#endif
+#else //!+rzr: will merge in a config-static.h
+#define RZR_PATCHES   
+#endif // msvc
+
+#ifndef unix
+#undef  RZR_PATCHES   
+#define RZR_PATCHES   
 #endif
 
-//#define RZR_PATCHES // for win32 port + some upcoming stuff
+
 #ifdef RZR_PATCHES  
 #include "config-rzr.h" // in a separate file until a better integration
 #endif //!-rzr 
@@ -43,8 +47,9 @@
 #error "Must specify allegro or sdl."
 #endif
 #endif
-
+#ifdef _MSC_VER
 namespace std {}; // !+-rzr: must be definied before used  (msvc)
+#endif
 using namespace std;
 
 // Dummy operator to make MSVC carp work ??

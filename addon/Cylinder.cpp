@@ -1,3 +1,4 @@
+//#ident "$Id: Cylinder.cpp,v 1.7 2003/05/12 12:17:58 rzr Exp $"
 /***************************************************************************
                           Cylinder.cpp  -  description
                              -------------------
@@ -49,9 +50,9 @@ Cylinder::Cylinder(float fSize, int sides, float fR, float fG, float fB, float f
 		this->add(p);
 		// Bottom
 		p = new Polygon3D(this, sides);
-		for (int a=sides; a<sides+sides; ++a) {
+		{ for (int a=sides; a<sides+sides; ++a) {
 			p->add(a);
-		}
+		} }
 		this->add(p);
 	}
 
