@@ -1,4 +1,4 @@
-//#Ident "$Id: TextureUtil.cpp,v 1.13 2003/06/13 13:39:46 rzr Exp $"
+//#Ident "$Id: TextureUtil.cpp,v 1.14 2003/06/16 13:06:11 rzr Exp $"
 /***************************************************************************
                           TextureUtil.cpp  -  description
                              -------------------
@@ -391,8 +391,9 @@ EmTexture* TextureUtil::loadTexture(const char* filename) {
     return (*element).second;
   }
 
-  texture = (EmTexture*) malloc(sizeof(EmTexture));
-  genTexture( filename, texture); //!rzr
+  texture =  new EmTexture;
+  int t = genTexture( filename, texture); //!rzr {
+  if ( t < 0 ) { delete texture; return 0; } // could have been written better
 
   //EM_GLERROR(" In TextureUtil::loadTexture ");
   // insert the texture into the cache
@@ -430,4 +431,4 @@ const char * TextureUtil::getTextureName(EmTexture * tex) {
   }
 */
 
-//EOF: $Id: TextureUtil.cpp,v 1.13 2003/06/13 13:39:46 rzr Exp $
+//EOF: $Id: TextureUtil.cpp,v 1.14 2003/06/16 13:06:11 rzr Exp $
