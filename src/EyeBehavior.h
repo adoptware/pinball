@@ -12,18 +12,23 @@
 #include "Behavior.h"
 #include "StateMachine.h"
 
+class Score;
+
 /**
  * <p>A Behavior for the pinball demo.</p>
  */
 class EyeBehavior : public Behavior {
 	public:
-		EyeBehavior(Group * group);
+		EyeBehavior(Group* g1, Group* g2, Group* g3);
 		~EyeBehavior();
 		void onTick();
 		void StdOnSignal() {};
 		void StdOnCollision() {};
 	private:
-		Group* m_gBall;
+		Group* p_gBall1;
+		Group* p_gBall2;
+		Group* p_gBall3;
+		Score* p_Score;
 };
 
 #endif // EYEBEHAVIOR_H
