@@ -38,13 +38,16 @@ class Node {
   void setRotation(float x, float y, float z);
   void getRotation(float & x, float & y, float & z);
   void addRotation(float x, float y, float z);
+  void setScale(float x, float y, float z);
+  void getScale(float & x, float & y, float & z);
+  void addScale(float x, float z, float z);
   
   Matrix m_mtxSrc;
   Matrix m_mtxTrans;
  private:
   Vertex3D m_vtxT;
   Vertex3D m_vtxR;
-  
+  Vertex3D m_vtxS;
 };
 
 #endif // NODE_H

@@ -251,6 +251,7 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     // the new calculated direction and speed vector
     Vertex3D vtxDir;
     const Vertex3D vtxNull = {0.0f, 0.0f, 0.0f};
+    const Vertex3D vtxOne = {1.0f, 1.0f, 1.0f};
     const Vertex3D vtxRight = {1.0f, 0.0f, 0.0f};
     const Vertex3D vtxSlightUp = {0.0f, 0.0f, -0.5f};
     // get arm rotation and translation
@@ -266,7 +267,7 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     vtxBall.z -= vtxArmTr.z;
     // project the ball on the longside of the arm
     // first rotate everything so that the arms long side lies along x-axis
-    EMath::getTransformationMatrix(mtxArmRotInv, vtxNull, vtxArmRotInv);
+    EMath::getTransformationMatrix(mtxArmRotInv, vtxNull, vtxArmRotInv, vtxOne);
     EMath::applyMatrixRot(mtxArmRotInv, vtxBall, vtxBallRot);
     EMath::projection(vtxBallRot, vtxRight, vtxProj);
 		
@@ -301,7 +302,7 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     }
     vtxDir.y = 0.0f;
     // rotate the new direction according to the arm
-    EMath::getTransformationMatrix(mtxArmRot, vtxNull, vtxArmRot);
+    EMath::getTransformationMatrix(mtxArmRot, vtxNull, vtxArmRot, vtxOne);
     EMath::applyMatrixRot(mtxArmRot, vtxDir, m_vtxDir);
     // move the ball slightly off the arm TODO - fix this to something better
     EMath::applyMatrixRot(mtxArmRot, vtxSlightUp, vtxDir);
