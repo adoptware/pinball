@@ -40,6 +40,8 @@
 #define PBL_SIG_TNUDGE          674
 #define PBL_SIG_LEFTARM_ON      681
 #define PBL_SIG_RIGHTARM_ON     682
+#define PBL_SIG_MULTIBALL_OFF   691
+#define PBL_SIG_EXTRABALL       692
 
 // #define PBL_SIG__grp_type_act/un    (grp)(type)(0)(1=on,2=off)
 
@@ -106,7 +108,6 @@
 #define PBL_SIG_LOCK_4            5401
 #define PBL_SIG_LOCK_RELEASE      5501
 #define PBL_SIG_HEAD              5601
-#define PBL_SIG_MULTIBALL_OFF     5701
 
 #define PBL_SIG_BOOT_B_ON         7101
 #define PBL_SIG_BOOT_B_OFF        7102
@@ -121,7 +122,6 @@
 #define PBL_SIG_BUMPER_ON         9101
 
 #define PBL_SIG_JACKPOT           9201
-#define PBL_SIG_EXTRA_BALL        9301
 
 #define PBL_SIG_CAVE_ON           8101
 #define PBL_SIG_CAVE_OFF          8102

@@ -121,6 +121,8 @@ int Loader::getSignal(const char * signal) {
 	if (strncmp(signal, "null", 63) == 0) return PBL_SIG_NULL;
 	if (strncmp(signal, "reset", 63) == 0) return PBL_SIG_RESET_ALL;
 	if (strncmp(signal, "tilt", 63) == 0) return PBL_SIG_TILT;
+	if (strncmp(signal, "extraball", 63) == 0) return PBL_SIG_EXTRABALL;
+	if (strncmp(signal, "multiball_off", 63) == 0) return PBL_SIG_MULTIBALL_OFF;
 	if (strncmp(signal, "lock1", 63) == 0) return PBL_SIG_LOCK_1;
 	if (strncmp(signal, "lock2", 63) == 0) return PBL_SIG_LOCK_2;
 	if (strncmp(signal, "lock3", 63) == 0) return PBL_SIG_LOCK_3;
@@ -398,6 +400,10 @@ void Loader::loadBumperBehavior(ifstream & file, istringstream & ist, Engine * e
 
 	BumperBehavior* beh = new BumperBehavior();
 	group->addBehavior(beh);
+
+	int score;
+	this->readNextToken(file, ist, score);
+	beh->setScore(score);
 
 	this->readNextToken(file, ist, str);
 	if (str == "sound") {
