@@ -45,7 +45,7 @@ void Shape3DUtil::readDouble(ifstream & file, Shape3D* shape) {
 	if (str != "{") throw string("parse error");
 	file >> str; 
 	if (str != "}") throw string("parse error");
-	//shape->setProperty(EM_SHAPE3D_DOUBLE);
+	shape->setProperty(EM_SHAPE3D_DOUBLE);
 }
 
 void Shape3DUtil::readFlat(ifstream & file, Shape3D* shape) {
@@ -89,14 +89,14 @@ void Shape3DUtil::readPolygonEdge(ifstream & file, Polygon* poly) {
 	THROW_EOF(file); file >> i;
 	THROW_EOF(file); file >> u;
 	THROW_EOF(file); file >> v;
-	THROW_EOF(file); file >> a;
 	THROW_EOF(file); file >> r;
 	THROW_EOF(file); file >> g;
 	THROW_EOF(file); file >> b;
+	THROW_EOF(file); file >> a;
 
 	THROW_EOF(file); file >> str; if (str != "}") throw string("parse error");
 
-	poly->add(i, u, v, a, r, g, b);
+	poly->add(i, u, v, r, g, b, a);
 
 }
 

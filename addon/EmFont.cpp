@@ -67,8 +67,11 @@ void EmFont::print(char * buffer, int x, int y) {
 			// a small character
 			} else if (96<b && b<123) {
 				c = b - 97 + 10;
-			} else {
+			} else if (b==32) {
+				// space
 				c=36;
+			} else {
+				c=37;
 			}
 			//		cerr << b <<" "<< c <<" "<< (char)b << endl;
 			if (m_Font != NULL) {

@@ -28,11 +28,11 @@ void KeyBehavior::onTick() {
 	m_x = p_Parent->m_mtxSrc.t[0];
 	m_y = p_Parent->m_mtxSrc.t[1];
 	m_z = p_Parent->m_mtxSrc.t[2];
-	if (Keyboard::isKeyDown(SDLK_a)) m_x -= 0.1;
-	if (Keyboard::isKeyDown(SDLK_d)) m_x += 0.1;
-	if (Keyboard::isKeyDown(SDLK_w)) m_z -= 0.1;
-	if (Keyboard::isKeyDown(SDLK_s)) m_z += 0.1;
-	if (Keyboard::isKeyDown(SDLK_q)) m_y -= 0.1;
-	if (Keyboard::isKeyDown(SDLK_e)) m_y += 0.1;
+	if (Keyboard::isKeyDown(SDLK_a)) m_x -= 0.2;
+	if (Keyboard::isKeyDown(SDLK_d)) m_x += 0.2;
+	if (Keyboard::isKeyDown(SDLK_w)) m_z -= 0.2;
+	if (Keyboard::isKeyDown(SDLK_s)) m_z += 0.2;
+	if (Keyboard::isKeyDown(SDLK_q)) m_y -= 0.2;
+	if (Keyboard::isKeyDown(SDLK_e)) m_y += 0.2;
 	p_Parent->setTranslation(m_x, m_y, m_z);
 }

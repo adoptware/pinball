@@ -15,7 +15,6 @@ Light::Light(float c, float l, float q, float r, float g, float b) {
 	m_fQuadratic = EM_MAX(q, 0.0);
 	m_fBounds = 1.0;
 	m_iProperties = 0;
-	m_iIndex = -1;
 	m_fR = EM_MAX(EM_MIN(1.0, r), 0.0);
 	m_fG = EM_MAX(EM_MIN(1.0, g), 0.0);
 	m_fB = EM_MAX(EM_MIN(1.0, b), 0.0);
@@ -27,23 +26,6 @@ Light::Light(float c, float l, float q, float r, float g, float b) {
 }
 
 Light::~Light() {
-}
-
-void Light::setColor(float r, float g, float b) {
-	m_fR = EM_MAX(EM_MIN(1.0, r), 0.0);
-	m_fG = EM_MAX(EM_MIN(1.0, g), 0.0);
-	m_fB = EM_MAX(EM_MIN(1.0, b), 0.0);
-}
-
-void Light::setIndex(int i) {
-	m_iIndex = i;
-#if OPENGL_LIGHTS
-	GLfloat pos[] = {0.0f, 0.0f, 0.0f, 0.0f};
-	GLfloat light[] = {m_fR, m_fG, m_fB, 1.0f};
-	glLightfv(m_iIndex, GL_POSITION, pos);
-	glLightfv(m_iIndex, GL_DIFFUSE, light);
-	glLightfv(m_iIndex, GL_SPECULAR, light);
-#endif
 }
 
 void Light::setProperty(int p) {

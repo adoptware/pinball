@@ -39,7 +39,11 @@ class Light {
 	~Light();
 	void setOn(bool on=true) { m_bOn = on;};
 	bool getOn() { return m_bOn;};
-	void setColor(float, float, float);
+	void setColor(float r, float g, float b) {
+		m_fR = EM_MAX(EM_MIN(1.0, r), 0.0);
+		m_fG = EM_MAX(EM_MIN(1.0, g), 0.0);	
+		m_fB = EM_MAX(EM_MIN(1.0, b), 0.0);	
+	};
 	void setProperty(int);
 	void unsetProperty(int);
 	void setBounds(float b) { m_fBounds = b; };
@@ -56,7 +60,6 @@ class Light {
 	float m_fQuadratic;
 	float m_fR, m_fG, m_fB;
 	float m_fBounds;
-	int m_iIndex;
 	bool m_bOn;
 	int m_iProperties;
 };

@@ -11,4 +11,4 @@ ArmBehavior.h       CaveBehavior.cpp  Menu.h       SwitchBehavior.cpp \
 BounceBehavior.cpp  CaveBehavior.h    Pinball.cpp  SwitchBehavior.h \
 BounceBehavior.h    LockBehavior.cpp  Pinball.h    TriggerBehavior.cpp \
 BumperBehavior.cpp  LockBehavior.h    Score.cpp    TriggerBehavior.h \
-Loader.cpp Loader.h
+EyeBehavior.cpp	    EyeBehavior.h     Loader.cpp   Loader.h

@@ -14,6 +14,8 @@
 #include "Polygon.h"
 #include "OctTree.h"
 
+#define EM_DEBUG_COLLISION 1
+
 int em_bounds = 0;
 int em_shapes = 0;
 int em_polygons = 0;
@@ -81,15 +83,23 @@ bool CollisionVisitor::collidePolygons(CollisionBounds * nb1, CollisionBounds * 
 	vector<Polygon*>::iterator iter1 = nb1->m_vPolygon.begin();
 	vector<Polygon*>::iterator end1 = nb1->m_vPolygon.end();
 	for ( ; iter1 != end1; iter1++) {
-		// (*iter1)->setColor(1.0f, 1.0f, 0.0f, 0.0f); // debug thing
+#if EM_DEBUG_COLLISION
+		(*iter1)->setColor(0, 0, 1, 0.5f);
+#endif
 		// TODO: if (this->isInArray( (*iter1) )) continue;
 		vector<Polygon*>::iterator iter2 = nb2->m_vPolygon.begin();
 		vector<Polygon*>::iterator end2 = nb2->m_vPolygon.end();
 		for ( ; iter2 != end2; iter2++) {
-			// (*iter2)->setColor(1.0f, 1.0f, 0.0f, 0.0f); // debug thing
+#if EM_DEBUG_COLLISION
+			(*iter2)->setColor(0, 0, 1, 0.5f); // debug thing
+#endif
 			// TODO: if (this->isInArray( (*iter2) )) continue;
 			// EM_COUT("CollisionVisitor:collidePolygons() intersecting polygons " << a << "-" << b << endl, 0);
 			if ( CollisionVisitor::intersect((*iter1), (*iter2)) ) {
+#if EM_DEBUG_COLLISION
+				(*iter1)->setColor(1, 0, 0, 0.5f);
+				(*iter2)->setColor(1, 0, 0, 0.5f);
+#endif
 				this->addToArray((*iter1), (*iter2));
 				bCollision = true;
 			}
@@ -213,6 +223,9 @@ void CollisionVisitor::empty() {
 	em_polygons_m = em_polygons_m*0.5 + em_polygons*0.5;
 	em_groups_m = em_groups_m*0.5 + em_groups*0.5;
 
+	EM_COUT("CollisionVisitor::empty() groups " << em_groups, 0);
+	EM_COUT("CollisionVisitor::empty() shapes " << em_shapes, 0);
+	EM_COUT("CollisionVisitor::empty() bounds " << em_bounds, 0);
 	EM_COUT("CollisionVisitor::empty() polys " << em_polygons, 0);
 
 	em_bounds = 0;
@@ -471,8 +484,7 @@ void CollisionVisitor::traverse(Group * g, OctTree * octtree) {
 		}
 		em_shapes++;
 		// check collision
-		if (this->detectCollision((*groupIter)->p_CollisionBounds, g->p_CollisionBounds, 
-															vtxNormal1, vtxNormal2)) {
+		if (this->detectCollision((*groupIter)->p_CollisionBounds, g->p_CollisionBounds, vtxNormal1, vtxNormal2)) {
 			// call all onCollision methods for behaviors in both groups
 			vector<Behavior*>::iterator behIter = (*groupIter)->m_vBehavior.begin();
 			vector<Behavior*>::iterator behEnd = (*groupIter)->m_vBehavior.end();
@@ -489,7 +501,6 @@ void CollisionVisitor::traverse(Group * g, OctTree * octtree) {
 	
 	// propagate the group to all the nodes
 	if (octtree->m_vOctTree.size() > 0) {
-		// try to add the group to a child, exit if it was added
 		vector<OctTree*>::iterator iter = octtree->m_vOctTree.begin();
 		vector<OctTree*>::iterator end = octtree->m_vOctTree.end();
 		for ( ; iter != end; iter++) {
@@ -500,6 +511,9 @@ void CollisionVisitor::traverse(Group * g, OctTree * octtree) {
 
 void CollisionVisitor::visit(Group * g) {	
 	if (g->p_CollisionBounds == NULL) return;
+#ifdef EM_DEBUG_COLLISION
+	if (g->getShape3DSize() > 0) g->getShape3D(0)->setColor(1,1,1,0.3f);
+#endif
 	// check collisions with nodes in octtree
 	this->traverse(g, p_OctTree);
 	// insert group into octtree
