@@ -26,6 +26,12 @@ class LoaderModule;
 
 #define SignalByName(name) Loader::getInstance()->getSignal(name)
 
+typedef struct {
+  int major;
+  int minor;
+  int micro;
+} FileVersion;
+
 class Loader {
  protected:
   Loader();
@@ -93,6 +99,8 @@ class Loader {
   map<int, string> m_hSignalString;
   map<string, int> m_hVariableInt;
   map<int, string> m_hVariableString;
+  // lazy version 210 means 0.2.10
+  FileVersion m_FileVersion;
 
   LoaderModule* m_loaderModule; //!+rzr
 };
