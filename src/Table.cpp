@@ -219,8 +219,6 @@ bool Table::getHighScoresData(list<string>& listHighScores)
     sRow  = sName;
     sRow += sScore;
 
-cerr << "sRow=" << sRow << "X" << endl;
-
     listHighScores.push_front(sRow);
   }
 
