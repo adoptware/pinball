@@ -17,7 +17,7 @@ Cone::Cone(float fSize, int sides, float fR, float fG, float fB, float fA) : Sha
 	this->add(0, fSize/2, 0);
 	// Ring of vertices.
 	for (float a=0; a<sides; ++a)	{
-		this->add( EMath::emSin(a/8)*fSize/2, -fSize/2 , EMath::emCos(a/8)*fSize/2,
+		this->add( EMath::emSin(a/sides)*fSize/2, -fSize/2 , EMath::emCos(a/sides)*fSize/2,
 							 fR, fG, fB, fA, 0.0f, 0.0f);
 	}	
 	// The ring of polygons.

@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 	// create the engine.
 	Engine* engine = new Engine(argc, argv);
 	engine->setLightning(0.5f, 0.1f);
-	engine->setClearColor(0.1f, 0.0f, 0.3f, 0.0f);
+	engine->setClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 
 	// add a camera. Move a bit.
 	Camera* camera = new Camera();
@@ -53,9 +53,36 @@ int main(int argc, char *argv[]) {
 	}
 		
 	engine->resetTick();
+	bool keydown = false;
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
-	  if (engine->nextTickFPS(100)) {
+	  if (engine->nextTickFPS(50)) {
 	    engine->tick();
+			Group * g = engine->getGroup(1);
+			if (g != NULL) {
+				Shape3D * s = NULL;
+				
+				bool skip = false;
+				if (keydown) skip = true;
+				if (Keyboard::isKeyDown(SDLK_1)) { s = g->getShape3D(0); keydown = true; }
+				else if (Keyboard::isKeyDown(SDLK_2)) { s = g->getShape3D(1); keydown = true; }
+				else if (Keyboard::isKeyDown(SDLK_3)) { s = g->getShape3D(2); keydown = true; }
+				else if (Keyboard::isKeyDown(SDLK_4)) { s = g->getShape3D(3); keydown = true; }
+				else if (Keyboard::isKeyDown(SDLK_5)) { s = g->getShape3D(4); keydown = true; }
+				else if (Keyboard::isKeyDown(SDLK_6)) { s = g->getShape3D(5); keydown = true; }
+				else if (Keyboard::isKeyDown(SDLK_7)) { s = g->getShape3D(6); keydown = true; }
+				else if (Keyboard::isKeyDown(SDLK_8)) { s = g->getShape3D(7); keydown = true; }
+				else if (Keyboard::isKeyDown(SDLK_9)) { s = g->getShape3D(8); keydown = true; }
+				else if (Keyboard::isKeyDown(SDLK_0)) { s = g->getShape3D(9); keydown = true; }
+				else keydown = false;
+				
+				if (s != NULL && !skip) {
+					if (s->getProperties() & EM_SHAPE3D_HIDDEN) {
+						s->unsetProperty(EM_SHAPE3D_HIDDEN);
+					} else {
+						s->setProperty(EM_SHAPE3D_HIDDEN);
+					}
+				}
+			}
 	  } else {
 	    engine->render();
 	    engine->swap();
