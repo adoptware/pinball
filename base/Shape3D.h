@@ -40,7 +40,7 @@ class Shape3D {
   /** Creates a new vertex and returns the index. The index is used when 
    * creating polygons. @see Polygon */
   int add(float x, float y, float z);
-  int add(float z, float y, float z, float r, float g, float b, float a, float u, float v);
+  int add(float x, float y, float z, float r, float g, float b, float a, float u, float v);
   int addAt(int index, float x, float y, float z,
 	    float r, float g, float b, float a, float u, float v);
   /** Adds a polygon. @see Polygon */

@@ -9,11 +9,18 @@
 #ifndef PRIVATE_H
 #define PRIVATE_H
 
+#ifndef _MSC_VER //!+rzr: msvc is appart
 #ifdef HAVE_CONFIG_H
 #include "pinconfig.h"
 #else
 #error "Must have config.h file"
 #endif
+#endif
+
+#define RZR_PATCHES // for win32 port + some upcoming stuff
+#ifdef RZR_PATCHES  
+#include "config-rzr.h" // in a separate file until a better integration
+#endif //!-rzr 
 
 #ifndef EM_USE_SDL
 #define EM_USE_SDL 0
@@ -101,9 +108,5 @@ bool operator == (const PolygonEdge & peA, const PolygonEdge & peB) {
 #define EmAssert(a, b)
 #endif
 
-#define RZR_PATCHES //!+rzr : for win32 port + some upcoming stuff
-#ifdef RZR_PATCHES  
-#include "config-rzr.h" // in a separate file until a better integration
-#endif //!-rzr 
 
 #endif // PRIVATE_H

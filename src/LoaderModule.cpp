@@ -1,4 +1,4 @@
-//#ident "$Id: LoaderModule.cpp,v 1.1 2003/04/08 00:39:03 rzr Exp $" 
+//#ident "$Id: LoaderModule.cpp,v 1.2 2003/04/09 12:19:07 rzr Exp $" 
 #ifndef LoaderModule_cpp_ 
 #define LoaderModule_cpp_
 /**
@@ -11,9 +11,10 @@
  * Toggle dynlib off / Workaround dynlib loading bugs  
  * (and keyboard bug that goes along on win32)
  **/
+#include "Private.h"
+
 #include "Behavior.h"
 #include "LoaderModule.h"
-#include "Private.h"
 
 #include <map> 
 #include <string> 
@@ -39,8 +40,6 @@ using namespace std;
 #define new_object_fct new_object_fct_Professor
 #include "../data/professor/ModuleProfessor.cpp"
 #undef  new_object_fct
-
-
 //-----------------------------------------------------------------------------
 LoaderModule * LoaderModule::p_Instance = NULL;
 
@@ -53,6 +52,7 @@ LoaderModule::LoaderModule()
 LoaderModule::~LoaderModule()
 {
   lt_dlexit();
+  EM_COUT("- LoaderModule::~LoaderModule",1);
 }
 
 LoaderModule* LoaderModule::getInstance()
@@ -72,7 +72,7 @@ Behavior* LoaderModule::readLibStatic(string & filename)
   string::size_type pos = filename.rfind('/', filename.length() ) ;
   if ( pos ) pos++;
   string name= filename.substr ( pos , filename.length() - pos );
-  cout<<"=="<<name<<pos<<endl; 
+  //cout<<"=="<<name<<pos<<endl; 
   beh = m_hMods[ (char* const) name.c_str() ];
   // TODO: if not found ?
   return beh;
@@ -81,6 +81,7 @@ Behavior* LoaderModule::readLibStatic(string & filename)
 ///
 Behavior* LoaderModule::readLibDynamic(string & filename) 
 {
+  EM_COUT("+ LoaderModule::readLibDynamic",0);
   Behavior * beh =0;
 #ifndef RZR_LIBSTATIC
   lt_dlhandle handle = lt_dlopen(filename.c_str());
@@ -90,27 +91,27 @@ Behavior* LoaderModule::readLibDynamic(string & filename)
   } else {
     lt_ptr fct_ptr = lt_dlsym(handle, "new_object_fct");
     if (fct_ptr == NULL) {
-      throw (string("Could not find symbol 'new_object_fct' in library") 
+      throw (string("Could not find symbol new_object_fct in library") 
              + string(lt_dlerror()));
     } else {
       beh = (Behavior*) ((void * (*)(void))fct_ptr)();
     }
   }
 #endif
-  EM_COUT("-LoaderModule::readLibDynamic",2);
+  EM_COUT("- LoaderModule::readLibDynamic",0);
   return beh;
 }
 
 Behavior* LoaderModule::read(string  & filename)
 {
-  EM_COUT("+LoaderModule::read",2);
-  cerr<<filename<<endl;
+  EM_COUT("+ LoaderModule::read",0);
+  //cerr<<filename<<endl;
 #ifdef RZR_LIBSTATIC
   return readLibStatic(filename);
 #else
   return readLibDynamic(filename);
 #endif
-  EM_COUT("-LoaderModule::read",2);
+  EM_COUT("- LoaderModule::read",0);
 }
 #endif // inclusion
-//$Id: LoaderModule.cpp,v 1.1 2003/04/08 00:39:03 rzr Exp $
+//$Id: LoaderModule.cpp,v 1.2 2003/04/09 12:19:07 rzr Exp $

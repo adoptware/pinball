@@ -17,9 +17,9 @@
 #define EM_GROUP_NO_SIGNAL       0x10
 #define EM_GROUP_NO_BEHAVIOR     0x20
 
-using namespace std;
 
 #include <vector>
+using namespace std;
 
 #include "Node.h"
 

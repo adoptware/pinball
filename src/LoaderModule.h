@@ -1,4 +1,4 @@
-//#ident "$Id: LoaderModule.h,v 1.1 2003/04/08 00:39:04 rzr Exp $" 
+//#ident "$Id: LoaderModule.h,v 1.2 2003/04/09 12:19:07 rzr Exp $" 
 #ifndef LoaderModule_h_ 
 #define LoaderModule_h_ 
 #include <string> 
@@ -37,7 +37,7 @@ public:
   Behavior* read(string & filename);
   ///
   Behavior* readLibStatic(string & filename) ;
-  /// 
+  /// portable dyn lib loading
   Behavior* readLibDynamic(string & filename);
 
 protected:
@@ -47,4 +47,4 @@ protected:
   static LoaderModule * p_Instance;
 };
 #endif //_h_ inclusion 
-//$Id: LoaderModule.h,v 1.1 2003/04/08 00:39:04 rzr Exp $
+//$Id: LoaderModule.h,v 1.2 2003/04/09 12:19:07 rzr Exp $
