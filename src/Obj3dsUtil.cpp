@@ -1,12 +1,8 @@
-//#ident "$Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $"
+//#ident "$Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $"
 /**
  * @author: www.Philippe.COVAL.online.fr - rev: $Author: rzr $
  * 3ds loader wrapper 
  **/
-/*
-
-
-*/
 
 #ifndef Obj3dsUtil_cpp_
 #define Obj3dsUtil_cpp_
@@ -23,33 +19,38 @@ extern "C" {
    * Modifying code here is not a good idea,
    * please contact the author before, I may release something cleaner
    **/
+
   //#define RZR_LOCAL
 #if 0 //def  RZR_LOCAL
-#include "../../3dsview/src/include.h"
-#include "../../3dsview/src/types3d.c"
-#include "../../3dsview/src/parse3ds.c"
-#include "../../3dsview/src/color3ds.c"
+#include "../../mini3d/src/include.h"
+#include "../../mini3d/src/types3d.c"
+#include "../../mini3d/src/parse3ds.c"
+#include "../../mini3d/src/color3ds.c"
 #else
   /*
-    cd ../3dsview/src && \
+    cd ../mini3d/src && \
     cat include.h types3d.h types3d.c \
     parse3ds.h parse3ds.c color3ds.h color3ds.c\
-    | grep -v "#include \"" >| /tmp/inl-3ds.c
+    | grep -v "#include \"" >| /tmp/inl-3ds.c 
+
   */
   //#include "/tmp/inl-3ds.c" //C-x i
-  /* #ident "$Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $" */
-  /**
-   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
-   * Copyright: GPL @ http://rzr.online.fr/licence.htm
-   **/
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $" */
+/**
+ * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+ * Copyright: GPL @ http://rzr.online.fr/licence.htm
+ **/
 
 #ifndef include_h_
 #define include_h_
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <malloc.h>
 #include <math.h>
+
+#ifndef WANT_MALLOC_NO // might cause troubles on Macosx Project builder
+#include <malloc.h>
+#endif // !+Eye
 
 #undef assert
 #include <assert.h>
@@ -85,218 +86,222 @@ extern "C" {
 
 #define float2int(x) ( (int) ( x + .5 ) )
 
-#define SQRT2 1.4142135f
+#define SQRT2 1.4142135f 
 #ifndef Uint32
 #define Uint32 unsigned int
 #endif
 #endif //_h_
-  /* #ident "$Id: */
-  /**
-   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
-   * Copyright: GPL @ http://rzr.online.fr/licence.htm
-   **/
+/* #ident "$Id: */
+/**
+ * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+ * Copyright: GPL @ http://rzr.online.fr/licence.htm
+ * This lib provide read/write 3ds object in ascii (.asc) and other utils
+ * May merge in view3ds / lib3ds
+ **/
 
 #ifndef types3d_h_
 #define types3d_h_
 
 #ifdef __cplusplus
-  extern "C" {
+extern "C" {
 #endif
 
 
 
-    typedef struct
-    {
-      float x, y, z;
-      float u,v;
-    } Vertex;
+typedef struct
+{
+  float x, y, z;
+  float u,v;
+} Vertex;
 
-    typedef struct
-    {
-      int x, y;
-    } Point;
-
-
-    /*
-      Face list
-      Face 0:  A:4 B:7 C:3 AB:1 BC:1 CA:1
-      Material:"BLUE"
-      Smoothing:  1
-    */
-    typedef struct
-    {
-      unsigned int a,b,c;
-      unsigned int aa, ab, ac;
-      unsigned char col;
-      char smoothing;
-      char *material;
-    } Face;
+typedef struct
+{
+  int x, y;
+} Point;
 
 
-    typedef struct
-    {
-      Vertex* vv;
-      Face*   vf;
-      unsigned int nv;
-      unsigned int nf;
-      char * name;
-    } Object; //TriMesh
+/*
+Face list
+Face 0:  A:4 B:7 C:3 AB:1 BC:1 CA:1
+Material:"BLUE"
+Smoothing:  1
+*/
+typedef struct
+{
+  unsigned int a,b,c;
+  unsigned int aa, ab, ac;
+  unsigned char col;
+  char smoothing;
+  char *material;
+} Face;
+
+
+typedef struct
+{
+  Vertex* vv;
+  Face*   vf;
+  unsigned int nv;
+  unsigned int nf;
+  char * name;
+} Object; //TriMesh
 
 
 
-    /*
-      Ambient light color: Red=0.2 Green=0.2 Blue=0.2
-    */
+/*
+Ambient light color: Red=0.2 Green=0.2 Blue=0.2
+*/
 
-    typedef struct
-    {
-      Vertex lightColorAmbiant;
-      Object* vo;
-      unsigned int no;
-    } Scene;
+typedef struct
+{
+  Vertex lightColorAmbiant;
+  Object* vo;
+  unsigned int no;
+} Scene;
 
-    void initObject(Object* a);
+void initObject(Object* a);
 
-    void freeObject(Object* o);
+void freeObject(Object* o);
 
-    void freeScene(Scene* o);
+void freeScene(Scene* o);
 
-    void initScene(Scene* s);
+void initScene(Scene* s);
 
-    void statsScene(Scene const * const s);
+void statsScene(Scene const * const s);
 
-    void reset(Vertex* v);
+void reset(Vertex* v);
 
-    void printV( Vertex const v);
+void printV( Vertex const v);
 
-    void printFace( Face const v);
+void printFace( Face const v);
 
 #ifdef __cplusplus
-  }
+}
 #endif
 
 #endif //_h_
-  /* #ident "$Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $" */
-  /**
-   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
-   * Copyright: GPL @ http://rzr.online.fr/licence.htm
-   **/
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $" */
+/**
+ * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+ * Copyright: GPL @ http://rzr.online.fr/licence.htm
+ **/
 #ifndef types3d_c_
 #define types3d_c_
 
 #include <stdlib.h>
 
 
-  void freeObject(Object* o)
-  {
-    unsigned int i=0;
-    for (i=0;i< o->nf;i++) {
-      free ( o->vf[i].material );
-    }
-    free( o->vv); o->vv=0;
-    free( o->vf); o->vv=0;
-    initObject(o);
+void freeObject(Object* o)
+{
+  unsigned int i=0;
+  for (i=0;i< o->nf;i++) {
+    free ( o->vf[i].material );
   }
+  free( o->vv); o->vv=0;
+  free( o->vf); o->vv=0;
+  initObject(o);
+}
 
-  void initObject(Object* a)
-  {
-    a->nv = 0;
-    a->nf = 0;
-    a->name = 0;
-  }
+void initObject(Object* a)
+{
+  a->nv = 0; 
+  a->nf = 0;  
+  a->name = 0;
+}
 
-  void initScene(Scene* s)
-  {
-    //debug("+initScene");
-    s->no = 0;
-    s->vo = 0;
-    //debug("-initScene");
-  }
+void initScene(Scene* s)
+{
+  //debug("+initScene");
+  s->no = 0;
+  s->vo = 0;
+  //debug("-initScene");
+}
 
-  void statsScene(Scene const * const s)
-  {
-    debugf("%d",s->no);
-    //debug("- statsScene");
-  }
+void statsScene(Scene const * const s)
+{
+  debugf("%d",s->no);
+  //debug("- statsScene");
+}
 
-  void freeScene(Scene* s)
-  {
-    unsigned int i=0;
-    for(i=0;i< s->no; i++)
-      freeObject( &(s->vo)[i]);
-    free( s->vo );
-    initScene(s);
-  }
+void freeScene(Scene* s)
+{
+  unsigned int i=0;
+  for(i=0;i< s->no; i++)
+    freeObject( &(s->vo)[i]);
+  free( s->vo );
+  initScene(s);
+}
 
-  void reset(Vertex* v)
-  {
-    v->x=0; v->y=0; v->z=0;
-  }
-  void printFace( Face const v)
-  {
-    printf("{ { %d, %d, %d}; \n",v.a,v.b,v.c);
-  }
+void reset(Vertex* v)
+{
+  v->x=0; v->y=0; v->z=0;
+}
+void printFace( Face const v)
+{
+  printf("{ { %d, %d, %d}; \n",v.a,v.b,v.c);
+}
 
-  void printV( Vertex const v)
-  {
-    printf("{ { %f, %f, %f} , { %f, %f} }; \n",v.x,v.y,v.z,v.u,v.v);
-  }
-  void printPoint(Point v)
-  {
-    printf("{ %d, %d }; \n",v.x,v.y);
-  }
+void printV( Vertex const v)
+{
+  printf("{ { %f, %f, %f} , { %f, %f} }; \n",v.x,v.y,v.z,v.u,v.v);
+}
+void printPoint(Point v)
+{
+  printf("{ %d, %d }; \n",v.x,v.y);
+}
 
 
 
 #endif // inclusion
-  /* #ident "$Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $" */
-  /**
-   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
-   * Copyright: GPL @ http://rzr.online.fr/licence.htm
-   **/
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $" */
+/**
+ * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+ * Copyright: GPL @ http://rzr.online.fr/licence.htm
+ **/
 #ifndef parse3ds_h_
 #define parse3ds_h_
 #include <stdio.h>
 
-  int errorIO(FILE* f,int const t, const char *  msg);
+int errorIO(FILE* f,int const t, const char *  msg);
 
-  char* skipafter(char* src, char* pat);
+char* skipafter(char* src, char* pat);
 
-  int parse3dsAscii(FILE* f, Object* o);
+int parse3dsAscii(FILE* f, Object* o);
 
-  int load3dsAscii(char* filename,  Object* o);
+int load3dsAscii(char* filename,  Object* o);
 
-  int readScene3dsAscii(FILE* f, Scene* s) ;
+int readScene3dsAscii(FILE* f, Scene* s) ;
 
-  int loadScene3dsAscii(char* filename, Scene* s) ;
+int loadScene3dsAscii(char* filename, Scene* s) ;
 
-  int get3dsAscii(char* filename, Object* o) ;
+int get3dsAscii(char* filename, Object* o) ;
 
-  int fprintObject(FILE*f, Object const * const o);
+int fprintObject(FILE*f, Object const * const o);
 
-  int saveObject(Object const * const in, char const * const filename);
+int saveObject(Object const * const in, char const * const filename);
 
-  int saveScene(Scene const *  const in, char const * const filename);
+int saveScene(Scene const *  const in, char const * const filename);
 
-  //int saveObject(Object* o, FILE* out = stdout);
+//int saveObject(Object* o, FILE* out = stdout);
 
-  int fgets_strcmp_token(FILE* f, char* buf) ;
+int fgets_strcmp_token(FILE* f, char* buf) ;
 
-  int fgets_tag(FILE* f, char* buf, char** strarg);
+int fgets_tag(FILE* f, char* buf, char** strarg);
 
 #endif
-  /* #ident "$Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $" */
-  /**
-   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
-   * Copyright: GPL @ http://rzr.online.fr/licence.htm
-   **/
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $" */
+/**
+ * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+ * Copyright: GPL @ http://rzr.online.fr/licence.htm
+ **/
 #ifndef parse3ds_c_
 #define parse3ds_c_
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef WANT_MALLOC_NO // might cause troubles on Macosx Project builder
 #include <malloc.h>
+#endif
 #include <math.h>
 #include <assert.h>
 
@@ -305,8 +310,8 @@ extern "C" {
 #define BOUND 1000.
 
 
-  char* keyword[] = { "Tri-mesh,", "Vertex list", "Face list",
-                      "Vertex", "Face", "Material" , "Smoothing"};
+char* keyword[] = { "Tri-mesh,", "Vertex list", "Face list",
+                    "Vertex", "Face", "Material" , "Smoothing"};
 
 
 
@@ -318,493 +323,493 @@ extern "C" {
 #define MATERIAL 5
 #define SMOOTHING 6
 
-  int nkey= 7; //sizeof(keyword);
+int nkey= 7; //sizeof(keyword); 
 
-  int errorIO(FILE* f,int const t,  const char * msg)
-  {
-    //debug("+ errorIO");
-    const char * s = "!!! Err/IO/(exiting)";
-    if ( f ) fclose( f );
-    if ( msg != 0  ) perror(msg);
-    else perror(s);
-    //debug("- errorIO");
-    exit(t);
-    return(t);
+int errorIO(FILE* f,int const t,  const char * msg)
+{
+  //debug("+ errorIO");
+  const char * s = "!!! Err/IO/(exiting)";
+  if ( f ) fclose( f );
+  if ( msg != 0  ) perror(msg);
+  else perror(s);
+  //debug("- errorIO");
+  exit(t);
+  return(t);
+}
+
+
+char* sscanStrQuoted(char* src, char** dest)
+{
+  char* e=0;
+  int n=0;
+  //debugf("+ sscanStrQuotted (%s)\n",src);
+  assert( src );
+  assert( dest);
+  e = strchr( src, '"');
+  if ( e == 0) { *dest=0; return e; }
+  src = e;
+  //debugf("find 2d quote (%s)\n",e);
+  
+  do {
+    e = strchr( e+1, '"');
+  } while ( e && (*(e-1) == '\\') );
+  if ( e ==0 ) { *dest=0; return e; }
+  n = e - src;
+  //debugf("alloc %d \n",n);  
+  *dest = (char*)  malloc( n );
+  strncpy( *dest , src + 1 , n );  
+  *((*dest)+(n-1)) = 0;
+  //debugf("- sscanStrQuotted \"%s\"\n",*dest);
+  return e+1;
+}
+
+
+int loadScene3dsAscii(char* filename, Scene* s) 
+{
+  FILE *f = 0;
+  int t=0;
+  //assert( filename); assert(s);
+  //debugf("+loadScene3dsAscii \"%s\"\n",filename);
+  if( !(f=fopen(filename, "ra")) ) {
+    return errorIO(f,-1,"Err/IO/ Need a 3DS ascii file");
   }
+  t = readScene3dsAscii( f, s);
+  assert(t>0);
+  fclose( f );
+  //debugf("-loadScene3dsAscii (%d)\n",t);
+  return t;
+  
+}
 
-
-  char* sscanStrQuoted(char* src, char** dest)
-  {
-    char* e=0;
-    int n=0;
-    //debugf("+ sscanStrQuotted (%s)\n",src);
-    assert( src );
-    assert( dest);
-    e = strchr( src, '"');
-    if ( e == 0) { *dest=0; return e; }
-    src = e;
-    //debugf("find 2d quote (%s)\n",e);
-
-    do {
-      e = strchr( e+1, '"');
-    } while ( e && (*(e-1) == '\\') );
-    if ( e ==0 ) { *dest=0; return e; }
-    n = e - src;
-    //debugf("alloc %d \n",n);
-    *dest = (char*)  malloc( n );
-    strncpy( *dest , src + 1 , n );
-    *((*dest)+(n-1)) = 0;
-    //debugf("- sscanStrQuotted \"%s\"\n",*dest);
-    return e+1;
-  }
-
-
-  int loadScene3dsAscii(char* filename, Scene* s)
-  {
-    FILE *f = 0;
-    int t=0;
-    //assert( filename); assert(s);
-    //debugf("+loadScene3dsAscii \"%s\"\n",filename);
-    if( !(f=fopen(filename, "ra")) ) {
-      return errorIO(f,-1,"Err/IO/ Need a 3DS ascii file");
-    }
-    t = readScene3dsAscii( f, s);
-    assert(t>0);
-    fclose( f );
-    //debugf("-loadScene3dsAscii (%d)\n",t);
-    return t;
-
-  }
-
-  int readScene3dsAscii(FILE* f, Scene* s)
-  {
-    char buf[BSIZE];
-    int a,b,c=0;
-    float x,y,z,u,v=0;
-    unsigned int i=0;
-    int t=0;
-    char tmpc=0;
-    char * str= NULL;
-    unsigned int nv = 0;
-    unsigned int nf =0;
-    Object *o = NULL;
-
-    //debug("+ readScene3dsAscii" );
-    assert(f);
-    assert(s);
-
-    buf[0]= 0;
-    str = & tmpc;
-    initScene(s);
-    t = fgets_tag(f,buf,&str);
-    while ( t >=0 ) {
-      //debug(buf);
-      switch(t) {
-      case TRIMESH:
-        //debugf(".read trimesh %d\n",s->no);
-        s->vo =(Object*)  realloc( s->vo, ++(s->no) * sizeof(Object) );
-
-        o = & (s->vo)[ (s->no) - 1];
-        sscanf( str, "%s %d %s %d", buf, &nv, buf, &nf );
-        //debugf( "Vertices=%d; Faces=%d;\n",  nv , nf );
-
-        o->vv  = (Vertex *) calloc( nv ,sizeof(Vertex) );
-        o->vf = (Face *) calloc( nf, sizeof(Face) );
-        o->nv = nv;
-        o->nf = nf;
-        //debugf("read vertexes (%d)\n", o->nv);
+int readScene3dsAscii(FILE* f, Scene* s)
+{
+  char buf[BSIZE];
+  int a,b,c=0;
+  float x,y,z,u,v=0;
+  unsigned int i=0;
+  int t=0;
+  char tmpc=0;
+  char * str= NULL;
+  unsigned int nv = 0;
+  unsigned int nf =0;
+  Object *o = NULL;
+  
+  //debug("+ readScene3dsAscii" );  
+  assert(f);
+  assert(s);
+  
+  buf[0]= 0;
+  str = & tmpc;
+  initScene(s);
+  t = fgets_tag(f,buf,&str);  
+  while ( t >=0 ) {
+    //debug(buf);
+    switch(t) {
+    case TRIMESH:
+      //debugf(".read trimesh %d\n",s->no);
+      s->vo =(Object*)  realloc( s->vo, ++(s->no) * sizeof(Object) );
+      
+      o = & (s->vo)[ (s->no) - 1];
+      sscanf( str, "%s %d %s %d", buf, &nv, buf, &nf );
+      //debugf( "Vertices=%d; Faces=%d;\n",  nv , nf );
+      
+      o->vv  = (Vertex *) calloc( nv ,sizeof(Vertex) );
+      o->vf = (Face *) calloc( nf, sizeof(Face) );
+      o->nv = nv; 
+      o->nf = nf;
+      //debugf("read vertexes (%d)\n", o->nv);
+      t = fgets_tag(f,buf,&str);
+    case VERTEXLIST:
+      //debugf("read vertext list %d\n",nv);
+      //debug(str);
+      for( i=0; i<nv; i++ ) { //Vertex 0:  X:-1.0	Y:1.0	Z:1.0
         t = fgets_tag(f,buf,&str);
-      case VERTEXLIST:
-        //debugf("read vertext list %d\n",nv);
+        assert ( t == VERTEX);
+        str = skipafter( str, "X:"); assert(str); 
+        sscanf(str,"%f",&x);
+        str = skipafter( str, "Y:"); assert(str); 
+        sscanf(str,"%f",&y);
+        str = skipafter( str, "Z:"); assert(str);
+        sscanf(str,"%f",&z);
+        //debug(".texture");
+        u = v = 0;
+        str = skipafter( str, "U:"); 
+        if (str) sscanf(str,"%f",&u);
+        str = skipafter( str, "V:"); 
+        if (str) sscanf(str,"%f",&v);
+                
+        //assert3gl( x , -BOUND , +BOUND );
+        //assert3gl( y , -BOUND , +BOUND );
+        //assert3gl( z , -BOUND , +BOUND );
+        //assert3gl( u , 0 , 1);
+        //assert3gl( v , 0 , 1);
+        o->vv[i].x = x; o->vv[i].y = y; o->vv[i].z = z;
+        o->vv[i].u = u; o->vv[i].v = v;
+        //printV( o->vv[i] );
+      }
+      t = fgets_tag(f,buf,&str);  
+    case FACELIST:
+      //debugf("read faces %d\n",nf);
+      t = fgets_tag(f,buf,&str);
+      for( i=0; i<nf; i++ ) { 
+        //debugf("face[%d]=%s\n",i,buf);
+         //str= skipafter( str, ":");
         //debug(str);
-        for( i=0; i<nv; i++ ) { //Vertex 0:  X:-1.0     Y:1.0   Z:1.0
-          t = fgets_tag(f,buf,&str);
-          assert ( t == VERTEX);
-          str = skipafter( str, "X:"); assert(str);
-          sscanf(str,"%f",&x);
-          str = skipafter( str, "Y:"); assert(str);
-          sscanf(str,"%f",&y);
-          str = skipafter( str, "Z:"); assert(str);
-          sscanf(str,"%f",&z);
-          //debug(".texture");
-          u = v = 0;
-          str = skipafter( str, "U:");
-          if (str) sscanf(str,"%f",&u);
-          str = skipafter( str, "V:");
-          if (str) sscanf(str,"%f",&v);
+        //assert ( t == FACE);
+        //assert(str);
+        str = skipafter( str, "A:"); assert(str); 
+        sscanf(str,"%d",&a);
+        str = skipafter( str, "B:"); assert(str); 
+        sscanf(str,"%d",&b);
+        str = skipafter( str, "C:"); assert(str); 
+        sscanf(str,"%d",&c);
+        //debugf("face[%d]={ %d, %d, %d }; \n",i,a,b,c);
+        o->vf[i].a = a; o->vf[i].b = b; o->vf[i].c = c;
+        //assert3gl( a , 0 , o->nf);
+        //assert3gl( b , 0 , o->nf);
+        //assert3gl( c , 0 , o->nf);
+        //
 
-          //assert3gl( x , -BOUND , +BOUND );
-          //assert3gl( y , -BOUND , +BOUND );
-          //assert3gl( z , -BOUND , +BOUND );
-          //assert3gl( u , 0 , 1);
-          //assert3gl( v , 0 , 1);
-          o->vv[i].x = x; o->vv[i].y = y; o->vv[i].z = z;
-          o->vv[i].u = u; o->vv[i].v = v;
-          //printV( o->vv[i] );
-        }
         t = fgets_tag(f,buf,&str);
-      case FACELIST:
-        //debugf("read faces %d\n",nf);
-        t = fgets_tag(f,buf,&str);
-        for( i=0; i<nf; i++ ) {
-          //debugf("face[%d]=%s\n",i,buf);
-          //str= skipafter( str, ":");
-          //debug(str);
-          //assert ( t == FACE);
-          //assert(str);
-          str = skipafter( str, "A:"); assert(str);
-          sscanf(str,"%d",&a);
-          str = skipafter( str, "B:"); assert(str);
-          sscanf(str,"%d",&b);
-          str = skipafter( str, "C:"); assert(str);
-          sscanf(str,"%d",&c);
-          //debugf("face[%d]={ %d, %d, %d }; \n",i,a,b,c);
-          o->vf[i].a = a; o->vf[i].b = b; o->vf[i].c = c;
-          //assert3gl( a , 0 , o->nf);
-          //assert3gl( b , 0 , o->nf);
-          //assert3gl( c , 0 , o->nf);
-          //
-
+        //debug(str);
+        
+        switch ( t ) {
+        case MATERIAL :
+          str= skipafter( str, ":");
+          sscanStrQuoted(str, & (o->vf[i].material) );
+          //debugf(".-Material[%d]=\"%s\"\n",i, o->vf[i].material );
           t = fgets_tag(f,buf,&str);
-          //debug(str);
-
+          //debugf("%d=%s\n",t,buf);
+        case SMOOTHING:
+          //assert( t == SMOOTHING); // ??? I dont understand 
+          
+          //debugf("%d=%s\n",t,buf);
           switch ( t ) {
-          case MATERIAL :
-            str= skipafter( str, ":");
-            sscanStrQuoted(str, & (o->vf[i].material) );
-            //debugf(".-Material[%d]=\"%s\"\n",i, o->vf[i].material );
-            t = fgets_tag(f,buf,&str);
-            //debugf("%d=%s\n",t,buf);
-          case SMOOTHING:
-            //assert( t == SMOOTHING); // ??? I dont understand
-
-            //debugf("%d=%s\n",t,buf);
-            switch ( t ) {
             case SMOOTHING:
               // debugf(".? %d Smoothing=\"%s\",\n",t,buf);
               str= skipafter( str, ":");
               sscanf(str,"%d", &t);
               o->vf[i].smoothing = t;
-              //t = fgets_strcmp_token(f,buf); str = buf;
+          //t = fgets_strcmp_token(f,buf); str = buf;
               t = fgets_tag(f,buf,&str);
               //debug(buf);
-            }
-
           }
+          
         }
       }
     }
-    //debugf( "no=%d\n",s->no);
-    //debugf("read v=(%d) f=(%d)\n", o->nv, o->nf);
-
-    //printObject(o);
-    //fprintObject(stdout, o);
-    //debugf("- readScene3dsAscii (%d)\n",s->no);
-    return s->no;
   }
+  //debugf( "no=%d\n",s->no);
+  //debugf("read v=(%d) f=(%d)\n", o->nv, o->nf);
+  
+  //printObject(o);
+  //fprintObject(stdout, o);
+  //debugf("- readScene3dsAscii (%d)\n",s->no);  
+  return s->no;
+}
 
 
-  char* skipafter(char* src, char* pat)
-  {
-    char* str=0;
-    //debugf("+ skipafter [%s]@[%s]\n",pat,src);
-    //assert(src);
-    if ( src == 0 ) return 0;
-    str=strstr(src, pat);
-    if (str) str+=strlen(pat);
-    //debug(str);
-    return str;
-  }
+char* skipafter(char* src, char* pat) 
+{
+  char* str=0;
+  //debugf("+ skipafter [%s]@[%s]\n",pat,src);
+  //assert(src);
+  if ( src == 0 ) return 0;
+  str=strstr(src, pat);
+  if (str) str+=strlen(pat);
+  //debug(str);
+  return str;
+}
+  
 
-
-  int fgets_strcmp_token(FILE* f, char* buf)
-  {
-    char* str=0;
-    int i=0;
-    *buf=0;
-    assert(buf);
-    assert(f);
-    //debug("+ fgets_strcmp_token");
-    do {
-      str = fgets(buf, BSIZE,f);
-      //debug(buf);
-      //assert(str);
-      if ( str == 0 ) return -1;
-      //buf [ strlen(buf) - 2 ] = 0;
-      //debugf("+ [%s]\n",buf);
-      for (i=0; (i<nkey) || (str !=0 ) ;i++) {
-        //debugf("? k[%i]=%s\n",i,keyword[i]);
-        str = strstr( buf, keyword[i] );
-        if (str ) return i;
-      }
-    } while( str == 0 );
-    //assert(str);
-    //debug("- fgets_strcmp_token");
-    return -2;
-  }
-
-  int fgets_tag(FILE* f, char* buf, char** strarg)
-  {
-    int t=0;
-    char * str = 0;
-
-    //debug("+fgets_tag");
-    assert(f);
-    assert(buf);
-    assert(strarg);
-    t = fgets_strcmp_token(f, buf);
-    //assert(t >= 0);
+int fgets_strcmp_token(FILE* f, char* buf) 
+{
+  char* str=0;
+  int i=0;
+  *buf=0;
+  assert(buf);
+  assert(f);
+  //debug("+ fgets_strcmp_token");
+  do {
+    str = fgets(buf, BSIZE,f);
     //debug(buf);
-    //debug(keyword[t]);
-    if (t >=0 ) str = skipafter( buf, keyword[t] );
-    else { str = 0; }
-    //debug(str);
-    *strarg = str;
-    //debug("-fgets_tag");
-    return t;
-  }
-
-  int saveScene(Scene const * const in, char const * const filename)
-  {
-    int t=0;
-    unsigned int i=0; FILE* f=0;
-
-    f=fopen( filename, "wt");
-    if ( ! f ) return (int) f;
-    for(i=0; i < in->no; i++) {
-      t = fprintObject( f, & (in->vo[i]) );
+    //assert(str); 
+    if ( str == 0 ) return -1;
+    //buf [ strlen(buf) - 2 ] = 0;
+    //debugf("+ [%s]\n",buf);
+    for (i=0; (i<nkey) || (str !=0 ) ;i++) {
+      //debugf("? k[%i]=%s\n",i,keyword[i]);
+      str = strstr( buf, keyword[i] );
+      if (str ) return i;
     }
-    fclose(f);
-    return t;
+  } while( str == 0 );
+  //assert(str);
+  //debug("- fgets_strcmp_token");
+  return -2;
+}
+
+int fgets_tag(FILE* f, char* buf, char** strarg) 
+{
+  int t=0;
+  char * str = 0;
+  
+  //debug("+fgets_tag");
+  assert(f);
+  assert(buf);
+  assert(strarg);
+  t = fgets_strcmp_token(f, buf);
+  //assert(t >= 0);
+  //debug(buf);
+  //debug(keyword[t]);
+  if (t >=0 ) str = skipafter( buf, keyword[t] );
+  else { str = 0; }
+  //debug(str);
+  *strarg = str;
+  //debug("-fgets_tag");
+  return t;
+}
+
+int saveScene(Scene const * const in, char const * const filename)
+{
+  int t=0;
+  unsigned int i=0; FILE* f=0;
+  
+  f=fopen( filename, "wt");
+  if ( ! f ) return (int) f;
+  for(i=0; i < in->no; i++) {
+    t = fprintObject( f, & (in->vo[i]) );
   }
+  fclose(f);
+  return t;
+}
 
 
-  int saveObject(Object const * const o, char const * const filename)
-  {
-    int t=0;
-    FILE* f=0;
-    //debugf("+saveObject %s\n",filename);
-    f=fopen( filename, "wt");
-    if ( ! f ) return (int) f;
-    t = fprintObject( f, o);
-    fclose(f);
-    //debug("-saveObject");
-    return t;
+int saveObject(Object const * const o, char const * const filename)
+{
+  int t=0;
+  FILE* f=0;
+  //debugf("+saveObject %s\n",filename);
+  f=fopen( filename, "wt");
+  if ( ! f ) return (int) f;
+  t = fprintObject( f, o);
+  fclose(f);
+  //debug("-saveObject");
+  return t;
+  
+  
+}
 
-
+int fprintObject(FILE* f, Object const * const  o)
+{
+  unsigned int i=0;
+  fprintf(f,"Named object: \"");
+  if ( o->name) fprintf(f,"%s",o->name);
+  else
+    fprintf(f,"%dV_%dF_@_www.rzr.online.fr", o->nv, o->nf);
+  
+  fprintf(f,"\"\r\n");
+  fprintf(f,"\r\nTri-mesh, Vertices: %d Faces: %d\r\n",o->nv, o->nf);
+  fprintf(f,"\r\nVertex list\r\n");
+  
+  for(i=0;i<o->nv;i++) {
+    fprintf( f,"Vertex %d: X: %f Y: %f Z: %f ",i,
+	     o->vv[i].x,  o->vv[i].y, o->vv[i].z);
+    fprintf( f,"\t U: %f V: %f \r\n", o->vv[i].u,  o->vv[i].v);
   }
-
-  int fprintObject(FILE* f, Object const * const  o)
-  {
-    unsigned int i=0;
-    fprintf(f,"Named object: \"");
-    if ( o->name) fprintf(f,"%s",o->name);
-    else
-      fprintf(f,"%dV_%dF_@_www.rzr.online.fr", o->nv, o->nf);
-
-    fprintf(f,"\"\r\n");
-    fprintf(f,"\r\nTri-mesh, Vertices: %d Faces: %d\r\n",o->nv, o->nf);
-    fprintf(f,"\r\nVertex list\r\n");
-
-    for(i=0;i<o->nv;i++) {
-      fprintf( f,"Vertex %d: X: %f Y: %f Z: %f ",i,
-               o->vv[i].x,  o->vv[i].y, o->vv[i].z);
-      fprintf( f,"\t U: %f V: %f \r\n", o->vv[i].u,  o->vv[i].v);
+  fprintf(f,"\r\nFace list\r\n");
+  for(i=0;i<o->nf;i++) {
+    fprintf( f,"Face %d: A:%d B:%d C:%d",i,
+	     o->vf[i].a,  o->vf[i].b, o->vf[i].c);
+    fprintf(f,"\t AB:1 BC:1 CA:1 \r\n"); //!!!
+    if( o->vf[i].material) {
+      fprintf(f, "Material: \"%s\"\r\n",o->vf[i].material);
+      fprintf(f, "Smoothing:1\r\n");
     }
-    fprintf(f,"\r\nFace list\r\n");
-    for(i=0;i<o->nf;i++) {
-      fprintf( f,"Face %d: A:%d B:%d C:%d",i,
-               o->vf[i].a,  o->vf[i].b, o->vf[i].c);
-      fprintf(f,"\t AB:1 BC:1 CA:1 \r\n"); //!!!
-      if( o->vf[i].material) {
-        fprintf(f, "Material: \"%s\"\r\n",o->vf[i].material);
-        fprintf(f, "Smoothing:1\r\n");
-      }
-
-      //fprintf( f, "Smoothing: \"%d\"\r\n",o->vf[i].smoothing);
-    }
-    return 1;
+    
+    //fprintf( f, "Smoothing: \"%d\"\r\n",o->vf[i].smoothing);
   }
+  return 1;
+}
 
 
 
-  int parse3dsAscii(FILE* f, Object* o)
-  {
-    char buf[BSIZE];
-    int a,b,c=0;
-    float x,y,z=0;
-    int i=0;
-    int t=0;
-    char tmpc;
-    int nv = 0;
-    int nf =0;
-    char * str = NULL;
-    //debug("+ parse3dsAscii");
-    exit(0);
-
-    buf[0]= 0;
-    str = & tmpc;
-    //debug("skip to 1st object");
-    t = fgets_tag(f,buf,&str);
-    while ( t >=0 ) {
-      switch(t) {
-      case TRIMESH:
-        //debug("read trimesh");
-        sscanf( str, "%s %d %s %d", buf, &nv, buf, &nf );
-        //debugf( "Vertices=%d; Faces=%d;\n",  nv , nf );
-
-        o->vv  = (Vertex *) calloc( nv ,sizeof(Vertex) );
-        o->vf = (Face *) calloc( nf, sizeof(Face) );
-        o->nv = nv;
-        o->nf = nf;
-        //debugf("read vertexes (%d)\n", o->nv);
+int parse3dsAscii(FILE* f, Object* o) 
+{
+  char buf[BSIZE];
+  int a,b,c=0;
+  float x,y,z=0;
+  int i=0;
+  int t=0;
+  char tmpc;
+  int nv = 0;
+  int nf =0;
+  char * str = NULL;
+  //debug("+ parse3dsAscii");  
+  exit(0);
+  
+  buf[0]= 0;
+  str = & tmpc;
+  //debug("skip to 1st object");
+  t = fgets_tag(f,buf,&str);  
+  while ( t >=0 ) {
+    switch(t) {
+    case TRIMESH:
+      //debug("read trimesh");
+      sscanf( str, "%s %d %s %d", buf, &nv, buf, &nf );
+      //debugf( "Vertices=%d; Faces=%d;\n",  nv , nf );
+      
+      o->vv  = (Vertex *) calloc( nv ,sizeof(Vertex) );
+      o->vf = (Face *) calloc( nf, sizeof(Face) );
+      o->nv = nv; 
+      o->nf = nf;
+      //debugf("read vertexes (%d)\n", o->nv);
+      t = fgets_tag(f,buf,&str);
+    case VERTEXLIST:
+      //debugf("read vertext list %d\n",nv);
+      //debug(str);
+      for( i=0; i<nv; i++ ) { //Vertex 0:  X:-1.0	Y:1.0	Z:1.0
         t = fgets_tag(f,buf,&str);
-      case VERTEXLIST:
-        //debugf("read vertext list %d\n",nv);
+        assert ( t == VERTEX);
+        str = skipafter( str, "X:"); assert(str); 
+        sscanf(str,"%f",&x);
+        str = skipafter( str, "Y:"); assert(str); 
+        sscanf(str,"%f",&y);
+        str = skipafter( str, "Z:"); assert(str); 
+        sscanf(str,"%f",&z);
+        //debugf("vertex[%d]={ %f, %f, %f };\n",i,x,y,z);
+        //assert3gl( x , -BOUND , +BOUND );
+        // assert3gl( y , -BOUND , +BOUND ); assert3gl( z , -BOUND , +BOUND );
+        o->vv[i].x = x; o->vv[i].y = y; o->vv[i].z = z;
+        //exit(0);
+      }
+      t = fgets_tag(f,buf,&str);  
+    case FACELIST:
+      //debugf("read faces %d\n",nf);
+      t = fgets_tag(f,buf,&str);
+      for( i=0; i<nf; i++ ) { //Vertex 0:  X:-1.0	Y:1.0	Z:1.0
+        //str= skipafter( str, ":");
         //debug(str);
-        for( i=0; i<nv; i++ ) { //Vertex 0:  X:-1.0     Y:1.0   Z:1.0
-          t = fgets_tag(f,buf,&str);
-          assert ( t == VERTEX);
-          str = skipafter( str, "X:"); assert(str);
-          sscanf(str,"%f",&x);
-          str = skipafter( str, "Y:"); assert(str);
-          sscanf(str,"%f",&y);
-          str = skipafter( str, "Z:"); assert(str);
-          sscanf(str,"%f",&z);
-          //debugf("vertex[%d]={ %f, %f, %f };\n",i,x,y,z);
-          //assert3gl( x , -BOUND , +BOUND );
-          // assert3gl( y , -BOUND , +BOUND ); assert3gl( z , -BOUND , +BOUND );
-          o->vv[i].x = x; o->vv[i].y = y; o->vv[i].z = z;
-          //exit(0);
-        }
+        //assert ( t == FACE);
+        //assert(str);
+        str = skipafter( str, "A:"); assert(str); 
+        sscanf(str,"%d",&a);
+        str = skipafter( str, "B:"); assert(str); 
+        sscanf(str,"%d",&b);
+        str = skipafter( str, "C:"); assert(str); 
+        sscanf(str,"%d",&c);
+        //debugf("face[%d]={ %d, %d, %d }; \n",i,a,b,c);
+        o->vf[i].a = a; o->vf[i].b = b; o->vf[i].c = c;
+        //assert3gl( a , 0 , o->nf);
+        //assert3gl( b , 0 , o->nf);        assert3gl( c , 0 , o->nf);
         t = fgets_tag(f,buf,&str);
-      case FACELIST:
-        //debugf("read faces %d\n",nf);
-        t = fgets_tag(f,buf,&str);
-        for( i=0; i<nf; i++ ) { //Vertex 0:  X:-1.0     Y:1.0   Z:1.0
-          //str= skipafter( str, ":");
-          //debug(str);
-          //assert ( t == FACE);
-          //assert(str);
-          str = skipafter( str, "A:"); assert(str);
-          sscanf(str,"%d",&a);
-          str = skipafter( str, "B:"); assert(str);
-          sscanf(str,"%d",&b);
-          str = skipafter( str, "C:"); assert(str);
-          sscanf(str,"%d",&c);
-          //debugf("face[%d]={ %d, %d, %d }; \n",i,a,b,c);
-          o->vf[i].a = a; o->vf[i].b = b; o->vf[i].c = c;
-          //assert3gl( a , 0 , o->nf);
-          //assert3gl( b , 0 , o->nf);        assert3gl( c , 0 , o->nf);
+        //debug(str);
+        switch ( t ) {
+        case MATERIAL :
+          str= skipafter( str, ":");
+          sscanStrQuoted(str, & (o->vf[i].material) );
+          //debugf(".-Material[%d]=\"%s\"\n",i, o->vf[i].material );
           t = fgets_tag(f,buf,&str);
+          //debugf("%d=%s\n",t,buf);
+        case SMOOTHING:
           //debug(str);
-          switch ( t ) {
-          case MATERIAL :
-            str= skipafter( str, ":");
-            sscanStrQuoted(str, & (o->vf[i].material) );
-            //debugf(".-Material[%d]=\"%s\"\n",i, o->vf[i].material );
-            t = fgets_tag(f,buf,&str);
-            //debugf("%d=%s\n",t,buf);
-          case SMOOTHING:
-            //debug(str);
-            //debug(pat);
-            str= skipafter( str, ":");
-            sscanf(str,"%d", &t);
-            o->vf[i].smoothing = t;
-            t = fgets_strcmp_token(f,buf); str = buf;
-          }
+          //debug(pat);
+          str= skipafter( str, ":");
+          sscanf(str,"%d", &t);
+          o->vf[i].smoothing = t;
+          t = fgets_strcmp_token(f,buf); str = buf;
         }
-
       }
+      
     }
-    //debugf("read v=(%d) f=(%d)\n", o->nv, o->nf);
-    //debug("- parse3dsAscii");
-    return 0;
   }
+  //debugf("read v=(%d) f=(%d)\n", o->nv, o->nf);
+  //debug("- parse3dsAscii");  
+  return 0;
+}
 
-  int load3dsAscii(char* filename, Object* o)
-  {
-    FILE *f = 0;
-    int t=0;
-    //debugf("+read parse3ds %s\n",filename );
-    if( !(f=fopen(filename, "ra")) ) {
-      perror("Err/IO/ Need a 3DS ascii file \n");
-      return(-1);
-    }
-    t = parse3dsAscii( f, o);
-    fclose( f );
-    //debugf("+read parse3ds %d\n",t);
-    return t;
+int load3dsAscii(char* filename, Object* o)
+{ 
+  FILE *f = 0;
+  int t=0;
+  //debugf("+read parse3ds %s\n",filename );
+  if( !(f=fopen(filename, "ra")) ) {
+    perror("Err/IO/ Need a 3DS ascii file \n");
+    return(-1);
   }
+  t = parse3dsAscii( f, o);
+  fclose( f );
+  //debugf("+read parse3ds %d\n",t);
+  return t;
+}
 
 #endif // inclusion
-  /* #ident "$Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $" */
-#ifndef color3ds_h_
-#define color3ds_h_
-  /**
-   * Unstable
-   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
-   * Copyright: GPL @ http://rzr.online.fr/licence.htm
-   **/
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $" */
+#ifndef color3ds_h_ 
+#define color3ds_h_ 
+/**
+ * Unstable 
+ * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+ * Copyright: GPL @ http://rzr.online.fr/licence.htm
+ **/
 
-  int convertColorUint32ToRGB(unsigned int const src, char* dest);
+int convertColorUint32ToRGB(unsigned int const src, char* dest);
 
-  int convertColorRGBFloatToString(float const r, float const g, float const b,
-                                   const float a, char* dest);
+int convertColorRGBFloatToString(float const r, float const g, float const b,
+                                 const float a, char* dest);
 
-  int convertColorRGBFloatToRGB8(float const r, float const g, float const b,
-                                 unsigned char * dr,
-                                 unsigned char * dg,unsigned char * db);
+int convertColorRGBFloatToRGB8(float const r, float const g, float const b,
+                               unsigned char * dr, 
+                               unsigned char * dg,unsigned char * db);
 
-  int convertColorRGBFloatToAnsi(float const r, float const g, float const b,
-                                 int * res);
+int convertColorRGBFloatToAnsi(float const r, float const g, float const b,
+                               int * res);
 
-  int convertColorToRGB8(unsigned int const src,
-                         unsigned  char* r, unsigned  char* g, unsigned  char* b,
-                         unsigned  char* a);
+int convertColorToRGB8(unsigned int const src, 
+                       unsigned  char* r, unsigned  char* g, unsigned  char* b,
+                       unsigned  char* a);
 
-  int convertColorToRGBFloat(unsigned int const src,
-                             float* r, float* g, float* b , float *a);
+int convertColorToRGBFloat(unsigned int const src,
+                           float* r, float* g, float* b , float *a);
 
-  int convertColorStringRGBAToRGBA8(char const * const p,
-                                    unsigned char *r, unsigned char* g,
-                                    unsigned char* b,unsigned char* a,
-                                    unsigned int* dest);
+int convertColorStringRGBAToRGBA8(char const * const p,
+                                  unsigned char *r, unsigned char* g, 
+                                  unsigned char* b,unsigned char* a,
+                                  unsigned int* dest);
 
-  int convertColorStringRGBAToRGBAFloat(char const * const p,
-                                        float *r, float* g, float* b, float* a,
-                                        unsigned int* dest);
+int convertColorStringRGBAToRGBAFloat(char const * const p,
+                                      float *r, float* g, float* b, float* a,
+                                      unsigned int* dest);
 
-  int convertColorStringToRGBAFloat(char const * const p,
-                                    float *r, float* g, float* b, float* a,
-                                    unsigned int* dest);
-  ///
-  unsigned int getColor(char const * const p);
-  ///
-  unsigned int getColorRGB(unsigned char* r, unsigned char*g, unsigned char*b ,
-                           char const * const p) ;
-  ///
-  unsigned int getColorRGBFloat(float* r, float*g, float*b , float *a,
-                                char const * const p) ;
-  /// r010g256b0a0
-  int getColorEncodedUint32(unsigned int const src, char* dest);
+int convertColorStringToRGBAFloat(char const * const p,
+                                  float *r, float* g, float* b, float* a,
+                                  unsigned int* dest);
+///
+unsigned int getColor(char const * const p);
+///
+unsigned int getColorRGB(unsigned char* r, unsigned char*g, unsigned char*b , 
+                         char const * const p) ;
+///
+unsigned int getColorRGBFloat(float* r, float*g, float*b , float *a,
+                              char const * const p) ;
+/// r010g256b0a0
+int getColorEncodedUint32(unsigned int const src, char* dest);
 
-  unsigned int getColorEncoded(unsigned char*r, unsigned char* g,
-                               unsigned char* b, unsigned char* a,
-                               char const * const p);
+unsigned int getColorEncoded(unsigned char*r, unsigned char* g, 
+                             unsigned char* b, unsigned char* a,
+                             char const * const p);
 
-  int getColorTable(char const * const src, unsigned int * dest);
+int getColorTable(char const * const src, unsigned int * dest);
 
-#endif //_h_ inclusion
-  //$Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $
-  /* #ident "$Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $" */
-  /**
-   * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
-   * Copyright: GPL @ http://rzr.online.fr/licence.htm
-   **/
+#endif //_h_ inclusion 
+//$Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $" */
+/**
+ * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+ * Copyright: GPL @ http://rzr.online.fr/licence.htm
+ **/
 
-#ifndef color3ds_c_
-#define color3ds_c_
+#ifndef color3ds_c_ 
+#define color3ds_c_ 
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -817,236 +822,243 @@ extern "C" {
 #define red(x) ( (x>>16) & 0x0000FF )
 #define alpha(x) ( (x>>24) & 0x0000FF )
 
-  int convertColorUint32ToRGB(unsigned int const src, char* dest)
-  {
-    char r= src & 0xFF;
-    char g= (src>>8) & 0xFF;
-    char b= (src>>18) & 0xFF;
-    char a= (src>>24) & 0xFF;
+int convertColorUint32ToRGB(unsigned int const src, char* dest)
+{
+  char r= src & 0xFF;
+  char g= (src>>8) & 0xFF;
+  char b= (src>>18) & 0xFF;
+  char a= (src>>24) & 0xFF;
+  
+  //debugf("r%dg%db%da%d", r,g,b,a);
+  sprintf(dest,"r%dg%db%da%d", r,g,b,a);
+  return 0;
+}
 
-    //debugf("r%dg%db%da%d", r,g,b,a);
-    sprintf(dest,"r%dg%db%da%d", r,g,b,a);
-    return 0;
+int convertColorRGBFloatToString(const float r, const float g, const float b,
+                                 const float a, char* dest)
+{
+  unsigned char cr,cg,cb,ca=0;
+  cr= float2char(r);
+  cg= float2char(g);
+  cb= float2char(b);
+  ca= float2char(a);
+  dest="r255g255b255a000";
+  //debugf("r%dg%db%da%d\0",cr,cg,cb,ca);
+  exit(0);
+  return 0;
+}
+
+
+int convertColorToRGB(unsigned int const src,
+                      unsigned  char* r, unsigned char* g,unsigned  char* b)
+{
+  //debug("+ convertColorToRGB");
+  *b =  src & 0x0000FF;
+  *g = (src>>8) & 0x0000FF;
+  *r = (src>>16) & 0x0000FF;
+  //debugf("%x={%x,%x,%x};\n",src,*r,*g,*b); //check here
+  //  exit(0);
+  return 0;
+}
+
+int convertColorToRGBFloat(unsigned int const src, 
+                           float* r, float* g, float* b, float *a)
+{
+  *b = (float) ( src & 0x0000FF ) / 255.; 
+  *g = (float) ( (src>>8) & 0x0000FF ) / 255.; 
+  *r = (float) ( (src>>16) & 0x0000FF ) / 255.;
+  *a = alpha( src);
+  //debugf("%x={%f,%f,%f};\n",src,*r,*g,*b);
+  return 0;
+}
+
+int convertColorRGBFloatToAnsi(float const r, float const g, float const b,
+                               int * res) 
+{
+  //debugf("TODO");
+  *res=r+g+b;
+  exit(0);
+}
+
+
+int convertColorStringRGBAToRGBA8(char const * const p,
+                                  unsigned char *r, unsigned char* g,
+                                  unsigned char *b, unsigned char* a,
+                                  unsigned int* dest)
+{
+  //debugf("+ getColorEncoded \"%s\"\n",p);
+  int tr=-1;
+  char * pb=0, * pe =0;
+  *dest=0xFFFFFF;
+  *r = *g = *b = *a = 255;
+  assert(p);
+  //debug(".todo regexp on paterns like \"r27g88b176a0\"");
+  //sscanf("r%dg%db%d", &r, &g, &b); // &tmpr, &r, &tmpg,g &tmpb, &b, p);
+
+  if ( *p=='r' && strstr(p,"g") && strstr(p,"b") && strstr(p,"a") ) {
+    pb = strstr(p,"r") +1;
+    pe = strstr(pb,"g");
+    if ( ! pe ) return -1;
+    //assert(pe);
+    *r = atoi(pb);
+    pb = pe + 1;
+    pe = strstr(pb,"b");
+    if ( ! pe ) return -1;
+    *g = atoi(pb);
+    pb = pe + 1;
+    pe = strstr(pb,"a");
+    if ( ! pe ) return -1;
+    *b = atoi(pb);
+    pb = pe + 1;
+    *a = atoi(pb);
+    tr=1;
   }
+  *dest = toUint32(*r,*g,*b);
+  //debug("- convertColorStringRGBAToRGBA8");
+  return tr;
+}
 
-  int convertColorRGBFloatToString(const float r, const float g, const float b,
-                                   const float a, char* dest)
-  {
-    unsigned char cr,cg,cb,ca=0;
-    cr= float2char(r);
-    cg= float2char(g);
-    cb= float2char(b);
-    ca= float2char(a);
-    dest="r255g255b255a000";
-    //debugf("r%dg%db%da%d\0",cr,cg,cb,ca);
-    exit(0);
-    return 0;
-  }
-
-
-  int convertColorToRGB(unsigned int const src,
-                        unsigned  char* r, unsigned char* g,unsigned  char* b)
-  {
-    //debug("+ convertColorToRGB");
-    *b =  src & 0x0000FF;
-    *g = (src>>8) & 0x0000FF;
-    *r = (src>>16) & 0x0000FF;
-    //debugf("%x={%x,%x,%x};\n",src,*r,*g,*b); //check here
-    //  exit(0);
-    return 0;
-  }
-
-  int convertColorToRGBFloat(unsigned int const src,
-                             float* r, float* g, float* b, float *a)
-  {
-    *b = (float) ( src & 0x0000FF ) / 255.;
-    *g = (float) ( (src>>8) & 0x0000FF ) / 255.;
-    *r = (float) ( (src>>16) & 0x0000FF ) / 255.;
-    *a = alpha( src);
-    //debugf("%x={%f,%f,%f};\n",src,*r,*g,*b);
-    return 0;
-  }
-
-  int convertColorRGBFloatToAnsi(float const r, float const g, float const b,
-                                 int * res)
-  {
-    //debugf("TODO");
-    *res=r+g+b;
-    exit(0);
-  }
+int convertColorStringRGBAToRGBAFloat(char const * const p,
+                                      float *r, float* g, float* b, float* a,
+                                      unsigned int* dest)
+{
+unsigned  char cr,cg,cb,ca;
+  convertColorStringRGBAToRGBA8(p, &cr,&cg,&cb,&ca,dest);
+  *r = char2float(cr);
+  *g = char2float(cg);
+  *b = char2float(cb);
+  *a = char2float(ca);
+  //debug("+ convertColorStringRGBAToRGBAFloat");
+  return 0;
+}
 
 
 
-  int convertColorStringRGBAToRGBA8(char const * const p,
-                                    unsigned char *r, unsigned char* g,
-                                    unsigned char* b,unsigned  char* a,
-                                    unsigned int* dest)
-  {
-    //debugf("+ getColorEncoded \"%s\"\n",p);
-    char * pb=0, * pe =0;
-    *dest=0xFFFFFF;
-    *r = *g = *b = *a = 255;
-    assert(p);
-    //debug(".todo regexp on paterns like \"r27g88b176a0\"");
-    //sscanf("r%dg%db%d", &r, &g, &b); // &tmpr, &r, &tmpg,g &tmpb, &b, p);
+int getColorTable(char const * const p, unsigned int * dest)
+{
+  //debugf("+ getColorTable \"%s\"\n",p);
+  *dest = 0xFFFFFF;
+  if ( p == 0 ) return -1;
+  if ( strstr( p, "BLACK") ) {  *dest = 0x000000;  }
+  else if ( strstr( p, "WHITE") ) {  *dest = 0xFFFFFF;  }
+  else if ( strstr( p, "BLUE") ) { *dest = 0x0000FF; }
+  else if ( strstr( p, "GREEN") ) { *dest = 0x00FF00; }
+  else if ( strstr( p, "RED") ) { *dest = 0xFF0000;} 
+  else if ( strstr( p, "CYAN") ) {  *dest = 0x00FFFF;  }
+  else if ( strstr( p, "MAGENTA") ) {*dest = 0xFF00FF;  } 
+  else if ( strstr( p, "YELLOW") ) {    *dest = 0xFFFF00;  }
+  else if ( strstr( p, "GRAY") ) { *dest = 0xFFFFFF; }
+  else { return -1; }
+  // GREENBUG, COW,  etc
+  //debugf("- getColorTable (%x)\n",*dest);
+  return 0;
+}
 
-    if ( *p=='r' && strstr(p,"g") && strstr(p,"b") && strstr(p,"a") ) {
-      pb = strstr(p,"r") +1;
-      pe = strstr(pb,"g");
-      if ( ! pe ) return -1;
-      //assert(pe);
-      *r = atoi(pb);
-      pb = pe + 1;
-      pe = strstr(pb,"b");
-      if ( ! pe ) return -1;
-      *g = atoi(pb);
-      pb = pe + 1;
-      pe = strstr(pb,"a");
-      if ( ! pe ) return -1;
-      *b = atoi(pb);
-      pb = pe + 1;
-      *a = atoi(pb);
+
+int convertColorStringToRGBAFloat(char const * const p,
+                                  float *r, float* g, float* b, float* a,
+                                  unsigned int* dest)
+{
+  unsigned char cr=255,cg=255,cb=255,ca=0;
+  unsigned int ret=0xFFFFFF;
+  int t=-1;
+  
+  //debugf("+ convertColorStringToRGBAFloat \"%s\"\n",p);
+  *r = *g = *b = 1.; *a=0.; 
+  *dest = ret;
+  if ( p == 0 ) return -1;
+  t = getColorTable(p, &ret );
+  
+  if( t >= 0 ) {
+    cr=red(ret);    cg=green(ret);    cb=blue(ret);    ca=alpha(ret);
+  } else 
+    if (  ( *p=='r' && strstr(p,"g") && strstr(p,"b") && strstr(p,"a") ) ) {
+      t = convertColorStringRGBAToRGBA8(p,&cr,&cg,&cb,&ca,&ret);
     }
-    *dest = toUint32(*r,*g,*b);
-    //debug("- convertColorStringRGBAToRGBA8");
-    return 0;
+  if ( t < 0 ) { //debugf("!!! Err/ Not Found \"%s\"\n",p); 
+    return t; 
   }
+  //debugf("%s={%u,%u,%u,%u}=%x\n",p,cr,cg,cb,ca,ret);  
+  // assert(t);
 
-  int convertColorStringRGBAToRGBAFloat(char const * const p,
-                                        float *r, float* g, float* b, float* a,
-                                        unsigned int* dest)
-  {
-    unsigned  char cr,cg,cb,ca;
-    convertColorStringRGBAToRGBA8(p, &cr,&cg,&cb,&ca,dest);
-    *r = char2float(cr);
-    *g = char2float(cg);
-    *b = char2float(cb);
-    *a = char2float(ca);
-    //debug("+ convertColorStringRGBAToRGBAFloat");
-    return 0;
+  *r = char2float( cr);
+  *g = char2float( cg); 
+  *b = char2float( cb);
+  *a = char2float( ca);
+  *dest = ret;
+  
+  //debugf("%s={%f,%f,%f,%f}=%x\n",p,*r,*g,*b,*a,*dest);  
+  //debugf("- convertColorStringToRGBAFloat \"%s\"\n",p);
+  return 0;
+}
+//----------------------------------------------------------------------------
+unsigned int getColor(char const * const p)
+{ 
+  unsigned char r=0,g=0,b=0,a=0;
+  unsigned int ret=0xFFFFFF;
+  int t=0;
+  
+  //debugf("+getColor \"%s\"\n",p);
+  if ( p == 0 ) return ret;
+  r= g = b = 0;
+  if( getColorTable(p, &ret ) >= 0 ) return ret;
+  if ( *p != 'r' )  return ret;
+  t = convertColorStringRGBAToRGBA8(p,&r,&g,&b,&a,&ret);
+  if ( t < 0 ) { ; //debugf("!!! Err/ Not Found \"%s\"\n",p);  
   }
+  
+  // assert(t);
+  convertColorToRGB(ret, &r, &g, &b );
+  //debugf("%s={%u,%u,%u}=%x\n",pb,r,g,b,ret);  
+  return ret;
+}
 
 
+unsigned int getColorRGBFloat(float* r, float*g, float*b, float*a,
+                              char const * const p) 
+{
+  //debug("+getColorRGBFloat");
+  unsigned int c=0;
+  c = getColor(p);
+  convertColorToRGBFloat(c,r,g,b,a);
+  //debugf("={ %f,%f,%f};\n",*r,*g,*b);
+  return c;
+}
 
-  int getColorTable(char const * const p, unsigned int * dest)
-  {
-    //debugf("+ getColorTable \"%s\"\n",p);
-    *dest = 0xFFFFFF;
-    if ( p == 0 ) return -1;
-    if ( strstr( p, "BLACK") ) {  *dest = 0x000000;  }
-    else if ( strstr( p, "WHITE") ) {  *dest = 0xFFFFFF;  }
-    else if ( strstr( p, "BLUE") ) { *dest = 0x0000FF; }
-    else if ( strstr( p, "GREEN") ) { *dest = 0x00FF00; }
-    else if ( strstr( p, "RED") ) { *dest = 0xFF0000;}
-    else if ( strstr( p, "CYAN") ) {  *dest = 0x00FFFF;  }
-    else if ( strstr( p, "MAGENTA") ) {*dest = 0xFF00FF;  }
-    else if ( strstr( p, "YELLOW") ) {    *dest = 0xFFFF00;  }
-    else if ( strstr( p, "GRAY") ) { *dest = 0xFFFFFF; }
-    else { return -1; }
-    // GREENBUG, COW,  etc
-    //debugf("- getColorTable (%x)\n",*dest);
-    return 0;
-  }
+unsigned int getColorRGB(unsigned char* r,unsigned  char*g, unsigned  char*b ,
+                         char const * const p) 
+{ 
+  //debug("+getColorRGBFloat");
+  unsigned int c;
+  c = getColor(p);
+  convertColorToRGB(c,r,g,b);
+  //debugf("={ %f,%f,%f};\n",*r,*g,*b);
+  return c;
+}
 
-  int convertColorStringToRGBAFloat(char const * const p,
-                                    float *r, float* g, float* b, float* a,
-                                    unsigned int* dest)
-  {
-    unsigned char cr=255,cg=255,cb=255,ca=0;
-    unsigned int ret=0xFFFFFF;
-    int t=-1;
-
-    //debugf("+ convertColorStringToRGBAFloat \"%s\"\n",p);
-    *r = *g = *b = 1; *a = 0.;
-    *dest = ret;
-    if ( p == 0 ) return -1;
-    t = getColorTable(p, &ret );
-
-    if( t >= 0 ) {
-      cr=red(ret);    cg=green(ret);    cb=blue(ret);    ca=alpha(ret);
-    } else
-      if (  ( *p=='r' && strstr(p,"g") && strstr(p,"b") && strstr(p,"a") ) ) {
-        t = convertColorStringRGBAToRGBA8(p,&cr,&cg,&cb,&ca,&ret);
-      }
-    if ( t < 0 ) { //debugf("!!! Err/ Not Found \"%s\"\n",p);
-      return t;
-    }
-    //debugf("%s={%u,%u,%u,%u}=%x\n",p,cr,cg,cb,ca,ret);
-    // assert(t);
-
-    *r = char2float( cr);
-    *g = char2float( cg);
-    *b = char2float( cb);
-    *a = char2float( ca);
-    *dest = ret;
-
-    //debugf("%s={%f,%f,%f,%f}=%x\n",p,*r,*g,*b,*a,*dest);
-    //debugf("- convertColorStringToRGBAFloat \"%s\"\n",p);
-    return 0;
-  }
-  //----------------------------------------------------------------------------
-  unsigned int getColor(char const * const p)
-  {
-    unsigned char r=0,g=0,b=0,a=0;
-    unsigned int ret=0xFFFFFF;
-    int t=0;
-
-    //debugf("+getColor \"%s\"\n",p);
-    if ( p == 0 ) return ret;
-    r= g = b = 0;
-    if( getColorTable(p, &ret ) >= 0 ) return ret;
-    if ( *p != 'r' )  return ret;
-    t = convertColorStringRGBAToRGBA8(p,&r,&g,&b,&a,&ret);
-    if ( t < 0 ) { ; //debugf("!!! Err/ Not Found \"%s\"\n",p);
-    }
-
-    // assert(t);
-    convertColorToRGB(ret, &r, &g, &b );
-    //debugf("%s={%u,%u,%u}=%x\n",pb,r,g,b,ret);
-    return ret;
-
-  }
-
-
-  unsigned int getColorRGBFloat(float* r, float*g, float*b, float*a,
-                                char const * const p)
-  {
-    //debug("+getColorRGBFloat");
-    unsigned int c=0;
-    c = getColor(p);
-    convertColorToRGBFloat(c,r,g,b,a);
-    //debugf("={ %f,%f,%f};\n",*r,*g,*b);
-    return c;
-  }
-
-  unsigned int getColorRGB(unsigned char* r,unsigned  char*g, unsigned  char*b ,
-                           char const * const p)
-  {
-    //debug("+getColorRGBFloat");
-    unsigned int c;
-    c = getColor(p);
-    convertColorToRGB(c,r,g,b);
-    //debugf("={ %f,%f,%f};\n",*r,*g,*b);
-    return c;
-  }
-
-  //----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 #if 0
-  main()
-  {
-    float r,g,b,a;
-    unsigned int ui;
-    char* pstr = "GREEN METAL";
-    r = g = b = a = 0;
-    convertColorStringToRGBAFloat( pstr, &r,&g,&b,&a,&ui);
-    //debugf("%s={%f,%f,%f,%f}=%u\n",pstr,r,g,b,a,ui);
-  }
+int main(int argc,char* argv[])
+{
+  float r,g,b,a;
+  unsigned int ui;
+  char* pstr = "GREEN METAL";
+  char* ce= "r010g020b230a000";
+  
+  r = g = b = a = 0;  
+  convertColorStringToRGBAFloat( pstr, &r,&g,&b,&a,&ui);
+  debugf("%s={%f,%f,%f,%f}=%u\n",pstr,r,g,b,a,ui);
+
+  convertColorStringToRGBAFloat( ce, &r,&g,&b,&a,&ui);
+  debugf("%s={%f,%f,%f,%f}=%u\n",ce,r,g,b,a,ui);
+  return EXIT_SUCCESS;
+}
+
 #endif
 
-#endif //_h_
-  //EOF $Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $
+#endif //_h_ 
+//EOF $Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $
 
-  //-----------------------------------------------------------------------------
 #endif // 3dsview include/inline
 } // C lang
 
@@ -1310,4 +1322,4 @@ int Obj3dsUtil::write( Group  & in, char const* const filename  )
 
 #endif // RZR_PATCHES_3DS
 #endif // inclusion
-//EOF $Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $
+//EOF $Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $

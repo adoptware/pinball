@@ -1,3 +1,4 @@
+//#ident "$Id: Engine.cpp,v 1.29 2003/07/26 22:13:42 rzr Exp $"
 /***************************************************************************
                           Engine.cpp  -  description
                              -------------------
@@ -64,7 +65,7 @@ extern "C" {
     g_iMSeconds += 10;
   }
   END_OF_FUNCTION(fctCallBack)
-}
+    }
 #endif
 
 #if EM_USE_SDL
@@ -83,43 +84,43 @@ Engine::Engine(int & argc, char *argv[]) {
   Config * config = Config::getInstance();
   config->loadArgs(argc, argv);
 #ifdef RZR_PATHRELATIVE
-	Config::getInstance()->loadConfig();
+  Config::getInstance()->loadConfig();
 #endif
  
-  if (!config->useExternGL()) {
+    if (!config->useExternGL()) {
 #if EM_USE_SDL
-    SDL_Init(SDL_INIT_TIMER);
+      SDL_Init(SDL_INIT_TIMER);
 #endif
-    TextureUtil::getInstance()->initGrx();
+      TextureUtil::getInstance()->initGrx();
 #if EM_USE_ALLEGRO
-    LOCK_VARIABLE(g_iStartTime);
-    //LOCK_VARIABLE(g_iDesiredTime);
-    LOCK_VARIABLE(g_iLastRender);
-    LOCK_VARIABLE(g_iLoops);
-    LOCK_VARIABLE(g_iMSeconds);
-    LOCK_VARIABLE(g_fFps);
-    LOCK_FUNCTION(fctCallBack);
-    install_int(fctCallBack, 10); // 100 tick per sec
+      LOCK_VARIABLE(g_iStartTime);
+      //LOCK_VARIABLE(g_iDesiredTime);
+      LOCK_VARIABLE(g_iLastRender);
+      LOCK_VARIABLE(g_iLoops);
+      LOCK_VARIABLE(g_iMSeconds);
+      LOCK_VARIABLE(g_fFps);
+      LOCK_FUNCTION(fctCallBack);
+      install_int(fctCallBack, 10); // 100 tick per sec
 #endif
-  }
-	
-  SoundUtil::getInstance()->applyConfigVolume();
-  //  	if (config->getSound() != 0 || config->getMusic() != 0) {
-  //  		SoundUtil::getInstance()->initSound();
-  //  	} else {
-  //  		cerr << "**************************************************" << endl;
-  //  		cerr << "Sound turned off in init function. Sound must be" << endl;
-  //  		cerr << "turned on and the game must be restarted to enable" << endl;
-  //  		cerr << "playback." << endl;
-  //  		cerr << "**************************************************" << endl;
-  // 	}
+    }
+        
+    SoundUtil::getInstance()->applyConfigVolume();
+    //          if (config->getSound() != 0 || config->getMusic() != 0) {
+    //                  SoundUtil::getInstance()->initSound();
+    //          } else {
+    //                  cerr << "**************************************************" << endl;
+    //                  cerr << "Sound turned off in init function. Sound must be" << endl;
+    //                  cerr << "turned on and the game must be restarted to enable" << endl;
+    //                  cerr << "playback." << endl;
+    //                  cerr << "**************************************************" << endl;
+    //  }
 
-  srand((unsigned int)time((time_t *)NULL));
-	p_Engine = this;
+    srand((unsigned int)time((time_t *)NULL));
+    p_Engine = this;
 }
 
 Engine::~Engine() {
-	p_Engine = NULL;
+  p_Engine = NULL;
   this->stopEngine();
 }
 
@@ -138,8 +139,8 @@ void Engine::stopEngine() {
   cerr << "Bound-bound detections " << em_bounds_m << endl;
   cerr << "Poly-poly detections " << em_polygons_m << endl;
   Profiler::getInstance()->printProfile();
-  //	cerr << "Seconds " << ((float)g_iSeconds/FPS) <<" " << ((float)g_iLoops*FPS/g_iSeconds) 
-  //			 << " fps" << endl;
+  //    cerr << "Seconds " << ((float)g_iSeconds/FPS) <<" " << ((float)g_iLoops*FPS/g_iSeconds) 
+  //                     << " fps" << endl;
   // cerr << "Fps " << (float)(g_iLoops)*1000 / (SDL_GetTicks()-g_iStartTime) << endl;
 #endif
 }
@@ -183,15 +184,15 @@ void Engine::setLightning(float diffuse, float ambient) {
 }
 
 void Engine::drawSplash(EmTexture * tex) {
-	if (tex == NULL) return;
+  if (tex == NULL) return;
 #if EM_USE_SDL
-	int filter = Config::getInstance()->getGLFilter();
-	if (filter == -1) return;
-	glDisable(GL_DEPTH_TEST);
+  int filter = Config::getInstance()->getGLFilter();
+  if (filter == -1) return;
+  glDisable(GL_DEPTH_TEST);
   glDepthMask(GL_FALSE);
-	glDisable(GL_ALPHA_TEST);
+  glDisable(GL_ALPHA_TEST);
   glDisable(GL_BLEND);
-	glDepthMask(GL_FALSE);
+  glDepthMask(GL_FALSE);
   glEnable(GL_TEXTURE_2D);
   glBindTexture(GL_TEXTURE_2D, *(tex));
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
@@ -200,23 +201,23 @@ void Engine::drawSplash(EmTexture * tex) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3f(-EM_RIGHT, EM_UP, -1); 
-	glTexCoord2f(1, 0);
-	glVertex3f(EM_RIGHT, EM_UP, -1); 
-	glTexCoord2f(1, 1);
-	glVertex3f(EM_RIGHT, -EM_UP, -1);
-	glTexCoord2f(0, 1);
-	glVertex3f(-EM_RIGHT, -EM_UP, -1);
-	glEnd();
+  glBegin(GL_QUADS);
+  glTexCoord2f(0, 0);
+  glVertex3f(-EM_RIGHT, EM_UP, -1); 
+  glTexCoord2f(1, 0);
+  glVertex3f(EM_RIGHT, EM_UP, -1); 
+  glTexCoord2f(1, 1);
+  glVertex3f(EM_RIGHT, -EM_UP, -1);
+  glTexCoord2f(0, 1);
+  glVertex3f(-EM_RIGHT, -EM_UP, -1);
+  glEnd();
 #endif
-	// allegro todo
+  // allegro todo
 #if EM_USE_ALLEGRO
-	// TODO fix static 256x256 image size
-	stretch_blit(tex, backbuffer, 0, 0, 256, 256, 0, 0, 
-							 Config::getInstance()->getWidth(), Config::getInstance()->getHeight());
-#endif	
+  // TODO fix static 256x256 image size
+  stretch_blit(tex, backbuffer, 0, 0, 256, 256, 0, 0, 
+               Config::getInstance()->getWidth(), Config::getInstance()->getHeight());
+#endif  
 }
 
 void Engine::setEngineCamera(Group* g) {
@@ -249,8 +250,8 @@ void Engine::render() {
   StopProfile();
   // Adjust sounds.
   StartProfile(SOUND);
-  //	p_SoundVisitor->empty();
-  //	this->accept(p_SoundVisitor);
+  //    p_SoundVisitor->empty();
+  //    this->accept(p_SoundVisitor);
   StopProfile();
   this->clearScreen();
   // Draw screenr
@@ -372,9 +373,9 @@ void Engine::renderThreadSafe() {
   this->accept(AmbientLightVisitor::getInstance());
 
   // Put some light from light sources.
-//   EM_COUT("Engine::render() plight", 0);
-//   PointLightVisitor::getInstance()->empty();
-//   this->accept(PointLightVisitor::getInstance());
+  //   EM_COUT("Engine::render() plight", 0);
+  //   PointLightVisitor::getInstance()->empty();
+  //   this->accept(PointLightVisitor::getInstance());
 
   // Align vertices to view space.
   EM_COUT("Engine::render() align", 0);
@@ -383,8 +384,8 @@ void Engine::renderThreadSafe() {
 
   // Adjust sounds.
   EM_COUT("Engine::render() sound", 0);
-  //	p_SoundVisitor->empty();
-  //	this->accept(p_SoundVisitor);
+  //    p_SoundVisitor->empty();
+  //    this->accept(p_SoundVisitor);
 
   this->resumeTickThread();
   this->pauseTickThread();
@@ -409,7 +410,7 @@ void Engine::renderThreadSafe() {
   this->accept(OpenGLVisitor::getInstance());
   OpenGLVisitor::getInstance()->setMode(EM_GL_CLEAN);
   OpenGLVisitor::getInstance()->empty();
-	
+        
 
   EM_COUT("Engine::render() opengltrans", 0);
   //OpenGLTransVisitor::getInstance()->empty();
@@ -427,30 +428,30 @@ int fctThread(void * data) {
   Engine* engine = (Engine*) data;
   while (g_bThread) {
     //cerr << "tick" << endl;
-    if (SDL_mutexP(g_Mutex) == -1) 	cerr << "Error locking mutex" << endl;
+    if (SDL_mutexP(g_Mutex) == -1)      cerr << "Error locking mutex" << endl;
 
     EM_COUT("Engine::tick()", 0);
-		
+                
     // Perform signals.
     EM_COUT("Engine::tick() signal", 0);
     SignalSender::getInstance()->tick();
-	
+        
     // Perform behaviors.
     EM_COUT("Engine::tick() behavior", 0);
     BehaviorVisitor::getInstance()->empty();
     engine->accept(BehaviorVisitor::getInstance());
-		
+                
     // Calculate positions
     EM_COUT("Engine::tick() trans", 0);
     TransformVisitor::getInstance()->empty();
     engine->accept(TransformVisitor::getInstance());
-		
+                
     // Detect collision.
     EM_COUT("Engine::tick() collision", 0);
     CollisionVisitor::getInstance()->empty();
     engine->accept(CollisionVisitor::getInstance());
-		
-    if (SDL_mutexV(g_Mutex) == -1) 	cerr << "Error unlocking mutex" << endl;
+                
+    if (SDL_mutexV(g_Mutex) == -1)      cerr << "Error unlocking mutex" << endl;
     engine->limitFPS(100);
   }
   return 0;
@@ -481,13 +482,13 @@ void Engine::endTickThread() {
 
 void Engine::pauseTickThread() {
   if (g_Mutex != NULL) {
-    if (SDL_mutexP(g_Mutex) == -1) 	cerr << "Error unlocking mutex" << endl;
+    if (SDL_mutexP(g_Mutex) == -1)      cerr << "Error unlocking mutex" << endl;
   }
 }
 
 void Engine::resumeTickThread() {
   if (g_Mutex != NULL) {
-    if (SDL_mutexV(g_Mutex) == -1) 	cerr << "Error unlocking mutex" << endl;
+    if (SDL_mutexV(g_Mutex) == -1)      cerr << "Error unlocking mutex" << endl;
   }
   sched_yield();
 }
