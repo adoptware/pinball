@@ -106,10 +106,20 @@ void Score::StdOnSignal() {
   }
   ElseOnSignal( PBL_SIG_GAME_OVER ) {
     this->clearText();
-    this->setText1("game over");
-    this->setText2("press r to start new game");
 
-    this->testForHighScore();
+    if(this->testForHighScore())
+    {
+      this->setText1("New High Score!");
+      this->setText2("");
+    }
+    else
+    {
+      this->setText1("");
+      this->setText2("");
+    }
+
+    this->setText3("game over");
+    this->setText4("press r to start new game");
   }
 }
 
@@ -128,6 +138,7 @@ void Score::draw() {
   }
 
   m_Font->printRow(buffer, 0);
+
   if (Config::getInstance()->getShowFPS()) {
 #if EM_DEBUG
     sprintf(buffer, "FPS %.1f %d\n", Engine::getFps(), OpenGLVisitor::getPolys());
@@ -136,6 +147,7 @@ void Score::draw() {
 #endif
     m_Font->printRow(buffer, 1);
   }
+
   m_Font->printRowCenter(m_Text1, 6);
   m_Font->printRowCenter(m_Text2, 7);
   m_Font->printRowCenter(m_Text3, 8);
@@ -154,10 +166,12 @@ void Score::clear() {
 }
 
 // Tests for a high score, if test positive asks for the user name
-void Score::testForHighScore()
+bool Score::testForHighScore()
 {
   // If it's a high score
   if (Table::getInstance()->isItHighScore(m_iScore))
   {
+    // TODO: name of player...
+    Table::getInstance()->saveNewHighScore(m_iScore);
   }
 }
