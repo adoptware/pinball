@@ -1,17 +1,16 @@
 /***************************************************************************
-                          Engine.cpp  -  description
+                          Config.cpp  -  description
                              -------------------
     begin                : Wed Jan 26 2000
-    copyright            : (C) 2000 by 
-    email                : 
+    copyright            : (C) 2000 by Henrik Enqvist
+    email                : henqvist@excite.com
  ***************************************************************************/
 
-//#include <time.h>
-//#include <stdlib.h>
-//#include <math.h>
-//#include <string.h>
-
 #include "Config.h"
+#include "EMath.h"
+
+#include <sys/stat.h>
+#include <sys/types.h>
 
 int em_width_ = 640;
 int em_height_ = 480;
@@ -44,9 +43,26 @@ void Config::setDefault() {
 	m_iGLFilter = GL_LINEAR;
 	m_bFullScreen = false;
 	m_bExternGL = false;
+	m_sDataDir = EM_DATADIR;
 }
 
-void Config::saveConfig(const char * filename) {
+void Config::saveConfig() {
+#if HAVE_SYS_TYPES_H
+#if HAVE_SYS_STAT_H
+	char filename[256];
+	char* home = getenv("HOME");
+	if (home != NULL) {
+		// TODO unsafe
+		sprintf(filename, "%s/.emilia", home);
+		mkdir(filename, S_IRUSR | S_IWUSR |S_IXUSR);
+		sprintf(filename, "%s/.emilia/%s", home, PACKAGE);
+	} else {
+		cerr << "Could not find environment variable HOME." << endl;
+		cerr << "Not able to read or write config file" << endl;
+		return;
+	}
+
+
 	ofstream file(filename);
 	if (!file) {
 		cerr << "Couldn't open config file: " << filename << endl;
@@ -58,10 +74,34 @@ void Config::saveConfig(const char * filename) {
 	file << "bpp: " << m_iBpp << endl;
 	file << "fullscreen: " << (m_bFullScreen ? "1" : "0") << endl;
 	file << "texture_nearest: " << ((m_iGLFilter == GL_NEAREST) ? "1" : "0") << endl;
+
+#else
+	cerr << "Unable save config file because some header files were missing";
+	return;
+#endif
+#else
+	cerr << "Unable save config file because some header files were missing";
+	return;
+#endif
 }
 
-void Config::loadConfig(const char * filename) {
+void Config::loadConfig() {
 	this->setDefault();
+#if HAVE_SYS_TYPES_H
+#if HAVE_SYS_STAT_H
+
+	char filename[256];
+	char* home = getenv("HOME");
+	if (home != NULL) {
+		// TODO unsafe
+		sprintf(filename, "%s/.emilia", home);
+		mkdir(filename, S_IRUSR | S_IWUSR |S_IXUSR);
+		sprintf(filename, "%s/.emilia/%s", home, PACKAGE);
+	} else {
+		cerr << "Could not find environment variable HOME." << endl;
+		cerr << "Not able to read or write config file" << endl;
+		return;
+	}
 
 	ifstream file(filename);
 	if (!file) {
@@ -69,6 +109,7 @@ void Config::loadConfig(const char * filename) {
 		cerr << "Using default values" <<  endl;
 		return;
 	}
+
 	while (file) {
 		string str;
 		file >> str;
@@ -87,15 +128,32 @@ void Config::loadConfig(const char * filename) {
 			else m_bFullScreen = true;
 		} else if (str == "texture_nearest:") {
 			file >> str;
-			if (str == "0") 	m_iGLFilter = GL_LINEAR;
-			else 	m_iGLFilter = GL_NEAREST;
+			if (str == "0") {
+				m_iGLFilter = GL_LINEAR;
+			} else {
+				m_iGLFilter = GL_NEAREST;
+			}
 		}
 	}
+#else
+	cerr << "Unable load config file because some header files were missing";
+	return;
+#endif
+#else
+	cerr << "Unable load config file because some header files were missing";
+	return;
+#endif
 }
 
+void Config::setSize(int w, int h) { 
+	m_iWidth = EM_MIN(1600, EM_MAX(100,w)); 
+	m_iHeight = EM_MIN(1600, EM_MAX(100,h)); 
+}
 
 void Config::loadArgs(int & argc, char *argv[]) {
-	// Parse and remove arguments
+	// Parse and remove arguments, arguments are removed so the main program does not see them
+	// E.g. if a program wants to load a file the file name will always be arg 1
+	// regardless of 'emilia' arguments.
 #define REMOVEARG(a, argc, argv) if (a < argc-1) argv[a] = argv[argc-1]; argc--;
 	int a = 1;
 	while (a < argc) { 
@@ -105,24 +163,37 @@ void Config::loadArgs(int & argc, char *argv[]) {
 			EM_COUT("Using fullscreen", 1);
 			REMOVEARG(a, argc, argv);
 		} else if (strcmp(argv[a], "-size") == 0) {
-			if (argc > a+1) {
-				m_iWidth = atoi(argv[a+1]);
-				m_iHeight = atoi(argv[a+2]);
+			if (argc > a+2) {
+				int w = atoi(argv[a+1]);
+				int h = atoi(argv[a+2]);
+				this->setSize(w, h);
+				EM_COUT("Using size = " << m_iWidth <<","<< m_iHeight, 1);
+				REMOVEARG(a, argc, argv);
+				REMOVEARG(a, argc, argv);
+				REMOVEARG(a, argc, argv);
+			} else {
+				REMOVEARG(a, argc, argv);
 			}
-			EM_COUT("Using size = " << m_iWidth <<","<< m_iHeight, 1);
-			REMOVEARG(a, argc, argv);
  		} else if (strcmp(argv[a], "-bpp") == 0) {
-	 		if (argc > a) {
+	 		if (argc > a+1) {
 	    	m_iBpp = atoi(argv[a+1]);
+				REMOVEARG(a, argc, argv);
+	 		}
+			EM_COUT("Using " << m_iBpp << " bpp", 1);
+			REMOVEARG(a, argc, argv);
+ 		} else if (strcmp(argv[a], "-data") == 0) {
+	 		if (argc > a) {
+	    	this->setDataDir(argv[a+1]);
+				REMOVEARG(a, argc, argv);
 	 		}
 			EM_COUT("Using " << m_iBpp << " bpp", 1);
 			REMOVEARG(a, argc, argv);
    	} else if (strcmp(argv[a], "-nosound") == 0) {
-			m_bSound = false;
+			this->setSound(false);
 			EM_COUT("Disabling sound", 1);
 			REMOVEARG(a, argc, argv);
    	} else if (strcmp(argv[a], "-nearest") == 0) {
-			m_iGLFilter = GL_NEAREST;
+			this->setGLFilter(GL_NEAREST);
 			EM_COUT("Using nearest for texture mapping", 1);
 			REMOVEARG(a, argc, argv);
    	} else if (strcmp(argv[a], "-externgl") == 0) {

@@ -40,21 +40,12 @@
 /** Main */
 int main(int argc, char *argv[]) {
 	cout << "pinball" << endl;
+	char filename[256];
 	//	srandom(time(0));
 	
 	// Load config
-	char* home = getenv("HOME");
-	if (home != NULL) {
-		char str[256];
-		// TODO unsafe
-		strcpy(str, home);
-		strcat(str, "/");
-		strcat(str, ".emilia");
-		Config::getInstance()->loadConfig(str);
-	} else {
-		cerr << "Could not find environment variable HOME." << endl;
-		cerr << "Not able to read or write config file" << endl;
-	}
+	Config::getInstance()->loadConfig();
+
 	// Create a engine
 	Engine* engine = new Engine(argc, argv);
 	engine->setLightning(0.0f, 0.1f);
@@ -88,11 +79,17 @@ int main(int argc, char *argv[]) {
 	engine->setEngineCamera(groupCR);
 
 	// Load from file
-	loadFile("data/pinballnew.pbl", engine);
+	sprintf(filename, "%s/pinballnew.pbl", Config::getInstance()->getDataDir());
+	if (loadFile(filename, engine) != 0) {
+		cerr << "Error loading level" << endl;
+		cerr << "Try reinstalling the game or use the -data switch to specify the data directory" << endl;
+		return -1;
+	}
 
 	// Add pinball floor
 	Group* groupG = new Group();
-	EmTexture* tex = TextureUtil::loadTexture("data/floor2.jpg");
+	sprintf(filename, "%s/floor2.jpg", Config::getInstance()->getDataDir());
+	EmTexture* tex = TextureUtil::loadTexture(filename);
 	Shape3D* gs = new Grid(tex, 80.0f, 40.0f, 16, 1.0f/16.0f, 1, 1, 1, 1);
 
 	engine->add(groupG);
@@ -104,7 +101,8 @@ int main(int argc, char *argv[]) {
 #define BALL(c_r, c_g, c_b, pbl, x, group)    \
 {                                             \
   /*Shape3D* ballCyl = new BigSphere(1, 1, c_r, c_g, c_b, 1);*/    \
-  Shape3D* ballCyl = Shape3DUtil::loadShape3D("data/ball_co.emi"); \
+	sprintf(filename, "%s/ball_co.emi", Config::getInstance()->getDataDir()); \
+  Shape3D* ballCyl = Shape3DUtil::loadShape3D(filename); \
   Shape3D* ballSphere = new BigSphere(1, 2, c_r, c_g, c_b, 1);     \
   ballSphere->setProperty(EM_SHAPE3D_SPECULAR);                    \
   ballCyl->setProperty(EM_SHAPE3D_HIDDEN);                      \
@@ -206,14 +204,8 @@ int main(int argc, char *argv[]) {
 	cerr << "Skip " << skip  << " of " << all << endl;
 #endif
 
-	if (home != NULL) {
-		char str[256];
-		// TODO unsafe
-		strcpy(str, home);
-		strcat(str, "/");
-		strcat(str, ".emilia");
-		Config::getInstance()->saveConfig(str);
-	}
+	Config::getInstance()->saveConfig();
+
 	delete(engine);
 	delete(menu);
 	return 0;

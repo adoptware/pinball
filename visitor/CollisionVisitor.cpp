@@ -14,8 +14,6 @@
 #include "Polygon.h"
 #include "OctTree.h"
 
-#define EM_DEBUG_COLLISION 1
-
 int em_bounds = 0;
 int em_shapes = 0;
 int em_polygons = 0;
