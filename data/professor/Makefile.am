@@ -1,6 +1,6 @@
 AUTOMAKE_OPTIONS = gnu
 
-highscoredir = $(EM_HIGHSCORE_DIR)/professor
+highscoredir = $(EM_BUILD_ROOT)/$(EM_HIGHSCORE_DIR)/professor
 
 professorlibdir = $(EM_LIBDIR)
 professordatadir = $(datadir)/pinball/professor
