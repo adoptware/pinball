@@ -14,6 +14,7 @@
 #define EM_SHAPE3D_TRANS 2
 #define EM_SHAPE3D_ALPHATEST 4
 #define EM_SPECULAR 8
+#define EM_SHAPE3D_FLAT 16
 
 #include "Private.h"
 
