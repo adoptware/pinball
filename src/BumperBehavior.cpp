@@ -31,6 +31,6 @@ void BumperBehavior::StdOnCollision() {
 	OnCallerProperty( PBL_BALL_1 OR_CP PBL_BALL_2 OR_CP PBL_BALL_3 OR_CP PBL_BALL_4 ) {
 		m_iLightCounter = 10;
 		SetLightOn();
-		SendSignal( PBL_SIG_BUMPER, 0, this->p_Parent, NULL );
+		SendSignal( PBL_SIG_BUMPER_ON, 0, this->p_Parent, NULL );
 	}
 }

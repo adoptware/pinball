@@ -31,6 +31,8 @@
 #include "Score.h"
 #include "CollisionBounds.h"
 #include "StateMachine.h"
+#include "Shape3DUtil.h"
+#include "EyeBehavior.h"
 
 #include "Loader.h"
 
@@ -41,7 +43,7 @@ int main(int argc, char *argv[]) {
 
 	// Create a engine
 	Engine* engine = new Engine(argc, argv);
-	engine->setLightning(0.3f, 0.1f);
+	engine->setLightning(0.0f, 0.1f);
 
 	// Add a score board and a menu.
 	Meny* menu = createMenus(engine);
@@ -56,17 +58,23 @@ int main(int argc, char *argv[]) {
 	KeyBehavior* keyBeh = new KeyBehavior();
 		
 	engine->add(groupCT);
-	groupCT->addBehavior(keyBeh);
- 	groupCT->setTransform(0, 25, 25, 0, 0, 0);
+
+	//groupCT->addBehavior(keyBeh);
+ 	//groupCT->setTransform(0, 25, 25, 0, 0, 0);
 	groupCT->add(groupCR);
-	groupCR->addBehavior(keyRBeh);
- 	groupCR->setTransform(0.0f, 0.0f, 0.0f, 0.125f, 0, 0);
+	//groupCR->addBehavior(keyRBeh);
+ 	//groupCR->setTransform(0.0f, 0.0f, 0.0f, 0.175f, 0, 0);
 	groupCR->setCamera(camera);
+
+	Light* cl = new Light(1, 0.05f, 0, 1,1,1);
+	//engine->setLight(cl);
+	groupCR->setLight(cl);
+	engine->addLight(cl);
 
 	engine->setEngineCamera(groupCR);
 
 	// Load from file
-	newloadFile("data/pinballnew.pbl", engine);
+	loadFile("data/pinballnew.pbl", engine);
 
 	// Add pinball floor
 	Group* groupG = new Group();
@@ -79,16 +87,15 @@ int main(int argc, char *argv[]) {
 	groupG->setProperty(EM_GROUP_TRANSFORM_ONCE);
 
 
-#define BALL(c_r, c_g, c_b, pbl, x)    \
-{                                      \
-  Group* groupS = new Group();         \
-                                       \
-  Shape3D* ballCyl = new BigSphere(1, 2, c_r, c_g, c_b, 1);    \
-  Shape3D* ballSphere = new BigSphere(1, 2, c_r, c_g, c_b, 1); \
-  ballSphere->setProperty(EM_SHAPE3D_SPECULAR);                \
-  ballCyl->setProperty(EM_SHAPE3D_HIDDEN);                     \
+#define BALL(c_r, c_g, c_b, pbl, x, group)    \
+{                                             \
+  /*Shape3D* ballCyl = new BigSphere(1, 1, c_r, c_g, c_b, 1);*/    \
+  Shape3D* ballCyl = Shape3DUtil::loadShape3D("data/ball_co.emi"); \
+  Shape3D* ballSphere = new BigSphere(1, 2, c_r, c_g, c_b, 1);     \
+  ballSphere->setProperty(EM_SHAPE3D_SPECULAR);                    \
+  ballCyl->setProperty(EM_SHAPE3D_HIDDEN);                      \
   CollisionBounds* ballBounds = new CollisionBounds(ballCyl->getCollisionSize()); \
-  ballBounds->setShape3D(ballCyl, 1);  \
+  ballBounds->setShape3D(ballCyl, 0);  \
                                        \
   Shape3D* shadow = new Shape3D(8, 1); \
 	                                     \
@@ -101,37 +108,38 @@ int main(int argc, char *argv[]) {
   shadow->add(1,     -0.95, 0);        \
   shadow->add(0.707, -0.95, 0.707);    \
                                        \
-  shadow->add(1,-0.99,1);              \
-  shadow->add(-1,-0.99,1);             \
-  shadow->add(-1,-0.99,-1);            \
-  shadow->add(1,-0.99,-1);             \
-  shadow->add(0,-0.99,0);              \
+  shadow->add(1,-0.98,1);              \
+  shadow->add(-1,-0.98,1);             \
+  shadow->add(-1,-0.98,-1);            \
+  shadow->add(1,-0.98,-1);             \
+  shadow->add(0,-0.98,0);              \
   Polygon* poly = new Polygon(shadow, 3);   \
-  poly->add(0, 0,0, 0.5,0,0,0);        \
-  poly->add(1, 0,0, 0.5,0,0,0);        \
-  poly->add(2, 0,0, 0.5,0,0,0);        \
-  poly->add(3, 0,0, 0.5,0,0,0);        \
-  poly->add(4, 0,0, 0.5,0,0,0);        \
-  poly->add(5, 0,0, 0.5,0,0,0);        \
-  poly->add(6, 0,0, 0.5,0,0,0);        \
-  poly->add(7, 0,0, 0.5,0,0,0);        \
+  poly->add(0, 0,0, 0,0,0,0.5);        \
+  poly->add(1, 0,0, 0,0,0,0.5);        \
+  poly->add(2, 0,0, 0,0,0,0.5);        \
+  poly->add(3, 0,0, 0,0,0,0.5);        \
+  poly->add(4, 0,0, 0,0,0,0.5);        \
+  poly->add(5, 0,0, 0,0,0,0.5);        \
+  poly->add(6, 0,0, 0,0,0,0.5);        \
+  poly->add(7, 0,0, 0,0,0,0.5);        \
   shadow->add(poly);                   \
   shadow->setProperty(EM_SHAPE3D_TRANS);    \
   shadow->countNormals();              \
                                        \
   BounceBehavior* bouBeh = new BounceBehavior(pbl);  \
                                        \
-  engine->add(groupS);                 \
-  groupS->setUserProperty(pbl);             \
-  groupS->setCollisionBounds(ballBounds);   \
-  groupS->addShape3D(ballSphere);      \
-  groupS->addShape3D(ballCyl);         \
-  groupS->addShape3D(shadow);          \
-  groupS->addBehavior(bouBeh);         \
-  groupS->setTransform(x, 0, 8, 0, 0, 0);   \
+  engine->add(group);                  \
+  group->setUserProperty(pbl);         \
+  group->setCollisionBounds(ballBounds);    \
+  group->addShape3D(ballCyl);          \
+  group->addShape3D(ballSphere);       \
+  group->addShape3D(shadow);           \
+  group->addBehavior(bouBeh);          \
+  group->setTransform(x, 0, 8, 0, 0, 0);   \
 }
 
-  BALL(1, 0, 0, PBL_BALL_1, 4);
+	Group* gb1 = new Group();
+  BALL(1, 0, 0, PBL_BALL_1, 4, gb1);
 	/*
 	BALL(0, 1, 0, PBL_BALL_2, 0);
 
@@ -140,19 +148,26 @@ int main(int argc, char *argv[]) {
 	BALL(1, 0, 1, PBL_BALL_4, -8);
 	*/
 
+	groupCT->addBehavior(new EyeBehavior(gb1));
+
 	// Reset pinball
-//	SignalVisitor::add(PBL_SIG_RESET_ALL, engine);
 	SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
 		
 	// Draw to the screen.
   int exit = 0;
 	bool render = true;
+	int skip = 0;
+	int all = 0;
 	while (exit == 0) {
 		engine->tick();
 		if (render) {
 			engine->render();
+			score->draw();
 			engine->swap();
+		} else {
+			skip++;
 		}
+		all++;
 		if (Keyboard::isKeyDown(SDLK_r)) {
 			SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
 		}
@@ -163,7 +178,7 @@ int main(int argc, char *argv[]) {
 			Keyboard::waitForKey();
 			Keyboard::clear();
 		}
-		//		render = engine->limitFPS(100);
+		render = engine->limitFPS(75);
 	}
 
 	extern float em_groups_m, em_shapes_m, em_bounds_m, em_polygons_m;
@@ -173,6 +188,7 @@ int main(int argc, char *argv[]) {
 	cerr << "Bounds " << em_bounds_m << endl;
 	cerr << "Polys " << em_polygons_m << endl;
 
+	cerr << "Skip " << skip  << " of " << all << endl;
 
 	delete(engine);
 	delete(menu);

@@ -108,9 +108,9 @@ void Meny::draw() {
 	for (int a=0; menyIter != menyEnd; menyIter++, a++) {
 		if (a == m_current) {
 			char str[256];
-			strncpy(str, "*", 16);
+			strncpy(str, "* ", 16);
 			strncat(str, (*menyIter)->getName(), 64);
-			strncat(str, "*", 16);
+			strncat(str, " *", 16);
 			p_EmFont->print(str, em_width_div2_ - strlen(str)*EmFont::getInstance()->getSize()/2,
 											em_height_div2_ - 20*a);
 		} else {

@@ -15,6 +15,7 @@
 #define EM_SHAPE3D_ALPHATEST 4
 #define EM_SHAPE3D_SPECULAR 8
 #define EM_SHAPE3D_FLAT 16
+#define EM_SHAPE3D_DOUBLE 32
 
 #include "Private.h"
 
@@ -42,7 +43,8 @@ class Shape3D {
 		void setProperty(int property);
 		void unsetProperty(int property);
 		void setTexture(EmTexture * tex);
-		Vertex3D * getVertex3D(int index);
+		Vertex3D* getVertex3D(int index);
+		Polygon* getPolygon(int index); 
 		int find(float x, float y, float z, float diff);
 		float getCollisionSize();
 		void setParent(Group*);

@@ -65,7 +65,7 @@ void AmbientLightVisitor::visit(Group* g) {
 	vector<Shape3D*>::iterator shapeEnd = g->m_vShape3D.end();
 
 	for ( ; shapeIter != shapeEnd; shapeIter++) {
-		if ((*shapeIter)->m_iProperties & EM_SHAPE3D_TRANS) continue;
+		//		if ((*shapeIter)->m_iProperties & EM_SHAPE3D_TRANS) continue;
 		if ((*shapeIter)->m_iProperties & EM_SHAPE3D_HIDDEN) continue;
 
 		if ((*shapeIter)->m_iProperties & EM_SHAPE3D_FLAT) {
@@ -107,7 +107,8 @@ void AmbientLightVisitor::visit(Group* g) {
 								(*lightIter).b << endl, 0);
 				// TODO: Move if-specular outside for loop
 				// specular light
-				if ((*shapeIter)->m_iProperties & EM_SHAPE3D_SPECULAR) {
+#if EM_USE_GLOBAL_SPECULAR
+				if ((*shapeIter)->m_iProperties & EM_SHAPE3D_SPECULAR && false) {
 					Vertex3D vtxRef = {0,0,-1};
 					Vertex3D vtxDir = {0,-1,0};
 					EMath::reflection(vtxDir, (*nmlAlignIter), vtxRef, false);
@@ -120,6 +121,9 @@ void AmbientLightVisitor::visit(Group* g) {
 				} else {
 					(*specularIter).r = (*specularIter).g = (*specularIter).b = 0;
 				}
+#else
+				(*specularIter).r = (*specularIter).g = (*specularIter).b = 0;
+#endif
 			}
 		}
 	}
