@@ -71,11 +71,14 @@ int main(int argc, char *argv[]) {
 	KeyBehavior* keyBeh = new KeyBehavior();
 	groupCube->setBehavior(keyBeh);
 		
+	engine->resetTick();
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
-		engine->tick();
-		engine->render();
-		engine->swap();
-		engine->limitFPS(100);
+	  if (engine->nextTickFPS(50)) {
+	    engine->tick();
+	  } else {
+	    engine->render();
+	    engine->swap();
+	  }
 	}
 	delete(engine);
 	return 0;

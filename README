@@ -65,8 +65,3 @@ Space: Nudge
 
 Latest news and FAQ is found at http://pinball.sourceforge.net.
 
-Misc
-====
-
-If you're building from a cvs version you might have to do a 'bootstrap'
-before you do a 'configure' and 'make'.

@@ -438,7 +438,7 @@ void CollisionVisitor::countNormal(Vertex3D & vtx, vector<Polygon*> vPolygon) {
 
 
 /* TODO: */
-bool CollisionVisitor::intersect2d(Polygon * p1, Polygon * p2) {
+bool CollisionVisitor::intersect2d(Polygon *, Polygon *) {
 //	int axis = 1;
 //	float nx = ABS(p1->vtxTrNormal.x);
 //	float ny = ABS(p1->vtxTrNormal.y);

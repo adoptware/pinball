@@ -13,26 +13,24 @@
 #include "Behavior.h"
 #include "Pinball.h"
 
-/** A Behavior that lets the users move the group with A, S, D, Q, W, E keys.
- * Simply add a FakeModuleBehavior object to a group to be able to move it.  */
 class FakeModuleBehavior : public Behavior {
  public:
-	FakeModuleBehavior(const char * name) { 
-		strncpy(m_Name, name, 255);
-		this->setType(PBL_TYPE_FAKEMODULEBEH);
-	};
-	~FakeModuleBehavior() {};
-	const char * getName() {
-		return m_Name;
-	}
-	void setName(const char * name) {
-		strncpy(m_Name, name, 255);
-	}
-	void onTick() {};
-	void onCollision(const Vertex3D & vtxWall, const Vertex3D & vtxOwn, Group * g) {};
-	void onSignal(int signal, Group * sender) {};
+  FakeModuleBehavior(const char * name) { 
+    strncpy(m_Name, name, 255);
+    this->setType(PBL_TYPE_FAKEMODULEBEH);
+  };
+  ~FakeModuleBehavior() {};
+  const char * getName() {
+    return m_Name;
+  }
+  void setName(const char * name) {
+    strncpy(m_Name, name, 255);
+  }
+  void onTick() {};
+  void onCollision(const Vertex3D & vtxWall, const Vertex3D & vtxOwn, Group * g) {};
+  void onSignal(int signal, Group * sender) {};
  private:
-	char m_Name[256];
+  char m_Name[256];
 };
 
 #endif // KEYBEHAVIOR_H

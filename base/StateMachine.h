@@ -27,10 +27,10 @@
 #define OR_PR							|| p_Parent->getUserProperties() &
 #define AND_PR						&& p_Parent->getUserProperties() &
 
-#define OnState(a) 				if ( m_iState == a )
-#define OR_ST							|| m_iState ==
-//#define AND_ST						&& m_iState ==
-#define SetState(a) 			m_iState = a
+/* #define OnState(a) 				if ( m_iState == a ) */
+/* #define OR_ST							|| m_iState == */
+/* //#define AND_ST						&& m_iState == */
+/* #define SetState(a) 			m_iState = a */
 
 #define OnSignal(a) 			if ( em_signal == a )
 #define OR_SI							|| em_signal ==
