@@ -127,15 +127,16 @@ Engine::Engine(int & argc, char *argv[]) {
 #endif
 	}
 	
- 	if (config->useSound()) {
- 		SoundUtil::getInstance()->initSound();
- 	} else {
- 		cerr << "**************************************************" << endl;
- 		cerr << "Sound turned off in init function. Sound must be" << endl;
- 		cerr << "turned on and the game must be restarted to enable" << endl;
- 		cerr << "playback." << endl;
- 		cerr << "**************************************************" << endl;
-	}
+	SoundUtil::getInstance()->applyConfigVolume();
+//  	if (config->getSound() != 0 || config->getMusic() != 0) {
+//  		SoundUtil::getInstance()->initSound();
+//  	} else {
+//  		cerr << "**************************************************" << endl;
+//  		cerr << "Sound turned off in init function. Sound must be" << endl;
+//  		cerr << "turned on and the game must be restarted to enable" << endl;
+//  		cerr << "playback." << endl;
+//  		cerr << "**************************************************" << endl;
+// 	}
 
   srand((unsigned int)time((time_t *)NULL));
 }

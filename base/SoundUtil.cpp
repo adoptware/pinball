@@ -66,6 +66,18 @@ void SoundUtil::stopSound() {
 	cerr << "ok." << endl;
 }
 
+void SoundUtil::applyConfigVolume() {
+	if (Config::getInstance()->getSound() == 0 && Config::getInstance()->getMusic() == 0) {
+		if (m_bInited) this->stopSound();
+	} else {
+		if (!m_bInited) this->initSound();
+#if EM_USE_SDL
+		Mix_Volume(-1, Config::getInstance()->getSound()*8);
+		Mix_VolumeMusic(Config::getInstance()->getMusic()*8);
+#endif
+	}
+}
+
 SoundUtil* SoundUtil::getInstance() {
 	if (p_SoundUtil == NULL) {
 		p_SoundUtil = new SoundUtil();
@@ -154,7 +166,7 @@ int SoundUtil::loadMusic(const char * filename) {
 
 void SoundUtil::playSample(int sound, bool loop) {
 	if (!m_bInited) return;
-	if (!(Config::getInstance()->useSound())) return;
+	if (Config::getInstance()->getSound() == 0) return;
 	if (sound < 0 || sound >= (signed)m_vEmSample.size()) return;
 	cerr << "Play sample " << sound << endl;
 #if EM_USE_SDL
@@ -167,7 +179,7 @@ void SoundUtil::playSample(int sound, bool loop) {
 
 void SoundUtil::playMusic(int music, bool loop) {
 	if (!m_bInited) return;
-	if (!(Config::getInstance()->useSound())) return;
+	if (Config::getInstance()->getMusic() == 0) return;
 	if (music < 0 || music >= (signed)m_vEmMusic.size()) return;
 	cerr << "Play music " << music << endl;
 #if EM_USE_SDL
