@@ -1,0 +1,117 @@
+#!/usr/bin/make -f
+# $Id: rules,v 1.1 2004/01/20 15:51:08 rzr Exp $
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+# These are used for cross-compiling and for saving the configure script
+# from having to guess our platform (since we know it already)
+DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+DEB_HOST_GNU_CPU    ?= $(shell dpkg-architecture -qDEB_HOST_GNU_CPU)
+DEB_BUILD_GNU_CPU    ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_CPU)
+
+docdir = debian/tmp/usr/share/doc/$(package)
+
+export DH_OPTIONS
+
+ifneq (,$(findstring debug,$(DEB_BUILD_OPTIONS)))
+	CFLAGS += -g
+endif
+ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
+	INSTALL_PROGRAM += -s
+endif
+
+topdir=$(shell pwd)
+debdir=${topdir}/debian
+libltdldir=${topdir}/libltdl
+
+config.status: configure
+	dh_testdir
+	# Add here commands to configure the package.
+	#./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --bindir=/usr/games --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info 
+	./configure --prefix=/usr --bindir=/usr/games --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info
+#	ln -fs ChangeLog changelog #rzr's debian hack TODO: fix this
+
+
+build: build-stamp
+
+build-stamp:  config.status
+	dh_testdir
+
+	# Add here commands to compile the package.
+	$(MAKE)
+	#/usr/bin/docbook-to-man debian/pinball.sgml > pinball.1
+
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp 
+
+	# Add here commands to clean up after the build process.
+	-$(MAKE) distclean
+	-$(MAKE) -C ${libltdldir} -i distclean
+	dh_clean
+
+install: DH_OPTIONS=
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+
+	# Add here commands to install the package into debian/pinball.
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
+
+	dh_movefiles
+
+
+# Build architecture-independent files here.
+binary-indep: DH_OPTIONS= -i
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installdocs
+	dh_installchangelogs -a ChangeLog
+	dh_compress -a
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+# Build architecture-dependent files here.
+binary-arch: DH_OPTIONS= -a
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+#	dh_installdebconf	
+	dh_installdocs
+#	dh_installexamples
+	dh_installmenu
+#	dh_installlogrotate
+#	dh_installemacsen
+#	dh_installpam
+#	dh_installmime
+#	dh_installinit
+#	dh_installcron
+	dh_installman debian/pinball.6 debian/pinball-config.6
+	dh_installinfo
+#	dh_undocumented pinball.6
+#	dh_undocumented pinball-config.6
+	dh_link
+	dh_installchangelogs -a ChangeLog
+	dh_strip
+	dh_compress
+	dh_fixperms
+#	dh_makeshlibs
+	dh_installdeb
+#	dh_perl
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install

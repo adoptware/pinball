@@ -1,0 +1,25 @@
+pinball (0.3.1-1) unstable; urgency=low
+
+  * debian goes mainstream
+
+ -- Philippe COVAL <Philippe_COVAL@Yahoo.COM>  Mon, 19 Jan 2004 14:22:43 +0100
+
+pinball (0.3.0-1) unstable; urgency=low
+
+  * New version
+
+ -- Debian User <dhollan@free.fr>  Sun, 29 Jun 2003 19:30:04 +0200
+
+pinball (0.0.6-2) unstable; urgency=low
+
+  * Split data in arch-all package.
+
+ -- Yann Dirson <dirson@debian.org>  Fri,  7 Jun 2002 15:08:44 +0200
+
+pinball (0.0.6-1) unstable; urgency=low
+
+  * Initial Release.
+  * This is my second Debian Package, :)
+
+ -- Didier Dhollande <dholland@free.fr>  Fri,  7 Jun 2002 12:24:42 +0200
+

@@ -1,0 +1,6 @@
+?package(pinball):needs=X11 section=Games/Arcade\
+  title="pinball" command="/usr/games/pinball"
+
+?package(pinball):needs=vc section=Games/Arcade\
+  title="pinball" command="/usr/games/pinball"
+
