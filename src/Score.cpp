@@ -1,4 +1,4 @@
-//#ident "$Id: Score.cpp,v 1.26 2003/06/11 13:25:51 rzr Exp $"
+//#ident "$Id: Score.cpp,v 1.27 2003/06/18 10:43:44 henqvist Exp $"
 /***************************************************************************
                           Score.cpp  -  description
                              -------------------
@@ -130,15 +130,13 @@ void Score::draw() {
   char buffer[256];
   // Correct bug of ball = 4 at end of game - pnf // !rzr: hum? is it a bug?
   int nCurrentBall = Table::getInstance()->getCurrentBall() + 1;
-  if (nCurrentBall < 4) 
-  {
-    if (m_bExtraBall)
+  if (nCurrentBall < 4) {
+    if (m_bExtraBall) {
       sprintf(buffer, "SCORE %d BALL %d ExtraBall", m_iScore, nCurrentBall);
-    else
+    } else {
       sprintf(buffer, "SCORE %d BALL %d", m_iScore, nCurrentBall);
-  }
-  else
-  {
+    }
+  } else {
     sprintf(buffer, "SCORE %d", m_iScore);
   }
 
@@ -173,11 +171,9 @@ void Score::clear() {
 }
 
 // Tests for a high score, if test positive asks for the user name
-bool Score::testForHighScore()
-{
+bool Score::testForHighScore() {
   // If it's a high score
-  if (Table::getInstance()->isItHighScore(m_iScore))
-  {
+  if (Table::getInstance()->isItHighScore(m_iScore)) {
     EmAssert(Engine::getCurrentEngine() != NULL,
 	     "Score::testForHighScore Engine NULL");
     //TODO: get : env var  $USER@$HOSTNAME-$(date +%Y%m%d)
@@ -188,6 +184,5 @@ bool Score::testForHighScore()
 
     return true;
   }
-
   return false;
 }

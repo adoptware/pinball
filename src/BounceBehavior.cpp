@@ -18,6 +18,8 @@
 #include "Score.h"
 #include "BallGroup.h"
 #include "Table.h"
+#include "Loader.h"
+
 #include <string>
 
 #if EM_DEBUG
@@ -48,6 +50,7 @@ BounceBehavior::BounceBehavior(int ball) : Behavior() {
   m_iDirFactor = 0;
   m_iCollisionPrio = 0;
   m_bFire = false;
+  m_bStopped = false;
   this->setType(PBL_TYPE_BOUNCEBEH);
 }
 
@@ -74,6 +77,7 @@ void BounceBehavior::StdOnSignal() {
   EM_COUT("BounceBehavior::onSignal()", 0);
   OnSignal( PBL_SIG_RESET_ALL) {
     m_bAlive = false;
+    m_bStopped = false;
     this->getParent()->setTranslation(-4*m_iBall, 0, 40);
   }
   
@@ -88,6 +92,12 @@ void BounceBehavior::StdOnSignal() {
   } 
   ElseOnSignal( PBL_SIG_RNUDGE ) {
     m_vtxDir.x += SPEED_FCT*0.1f;
+  }
+  ElseOnSignal( Loader::getInstance()->getSignal("stop_balls") ) {
+    m_bStopped = true;
+  }
+  ElseOnSignal( Loader::getInstance()->getSignal("resume_balls") ) {
+    m_bStopped = false;
   }
 }
 
@@ -112,16 +122,28 @@ void BounceBehavior::onTick() {
   EM_COUT("BounceBehavior::onTick()", 0);
   EmAssert(this->getParent() != NULL, "BounceBehavior::onTick()");
   
-  if (m_bAlive) {
+  if (m_bAlive && !m_bStopped) {
     // reset collision
     m_iCollisionPrio = 0;
     
     // debug stuff
 #if EM_DEBUG
-    if (Keyboard::isKeyDown(SDLK_i)) m_vtxDir.z -= 0.005f;
-    if (Keyboard::isKeyDown(SDLK_k)) m_vtxDir.z += 0.005f;
-    if (Keyboard::isKeyDown(SDLK_j)) m_vtxDir.x -= 0.005f;
-    if (Keyboard::isKeyDown(SDLK_l)) m_vtxDir.x += 0.005f;
+    if (Keyboard::isKeyDown(SDLK_i)) {
+      if (m_vtxDir.z > 0.0f) m_vtxDir.z = 0.0f;
+      m_vtxDir.z += -0.005f;
+    }
+    if (Keyboard::isKeyDown(SDLK_k)) {
+      if (m_vtxDir.z < 0.0f) m_vtxDir.z = 0.0f;
+      m_vtxDir.z += 0.005f;
+    }
+    if (Keyboard::isKeyDown(SDLK_j)) {
+      if (m_vtxDir.x > 0.0f) m_vtxDir.x = 0.0f;
+      m_vtxDir.x += -0.005f;
+    }
+    if (Keyboard::isKeyDown(SDLK_l)) { 
+      if (m_vtxDir.x < 0.0f) m_vtxDir.x = 0.0f;
+      m_vtxDir.x += 0.005f;
+    }
     
     if (Keyboard::isKeyDown(SDLK_v)) return;
 #endif

@@ -1,4 +1,4 @@
-//#ident "$Id: Pinball.cpp,v 1.43 2003/06/13 13:39:48 rzr Exp $"
+//#ident "$Id: Pinball.cpp,v 1.44 2003/06/18 10:43:44 henqvist Exp $"
 /***************************************************************************
                           Pinball.cpp  -  description
                              -------------------
@@ -511,7 +511,7 @@ MenuItem* createMenus(Engine * engine) {
   menucfg->addMenuItem(menuaudio);
 
   MenuSub* menukey = new MenuSub("keyboard", engine);
-  menukey->setBottomText("shorcuts for view change F1-F4");
+  menukey->setBottomText("shorcuts for view change F5-F8");
   menucfg->addMenuItem(menukey);
 
   string filename = string(Config::getInstance()->getDataSubDir()) + "/splash.png";
@@ -705,7 +705,6 @@ int main(int argc, char *argv[]) {
   //cerr<<"+ Pinball::main"<<endl;
   try {
     // Create a engine and parse emilia arguments
-    Config::getInstance()->loadArgs(argc, argv);
     Config::getInstance()->loadConfig();
     Engine * engine = new Engine(argc, argv);
 
@@ -875,4 +874,4 @@ int WINAPI WinMain( HINSTANCE hInst,  HINSTANCE hPreInst,
   return main(argc,argv);
 }
 #endif
-// EOF $Id: Pinball.cpp,v 1.43 2003/06/13 13:39:48 rzr Exp $
+// EOF $Id: Pinball.cpp,v 1.44 2003/06/18 10:43:44 henqvist Exp $
