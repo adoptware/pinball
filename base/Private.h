@@ -17,7 +17,7 @@
 #endif
 #endif
 
-#define RZR_PATCHES // for win32 port + some upcoming stuff
+//#define RZR_PATCHES // for win32 port + some upcoming stuff
 #ifdef RZR_PATCHES  
 #include "config-rzr.h" // in a separate file until a better integration
 #endif //!-rzr 
