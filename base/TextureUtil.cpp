@@ -1,4 +1,4 @@
-//#Ident "$Id: TextureUtil.cpp,v 1.11 2003/06/11 20:20:30 pedro_nf Exp $"
+//#Ident "$Id: TextureUtil.cpp,v 1.12 2003/06/12 06:19:11 henqvist Exp $"
 /***************************************************************************
                           TextureUtil.cpp  -  description
                              -------------------
@@ -94,8 +94,8 @@ void TextureUtil::freeTextures()
         i++) { 
     // TODO ALLEGRO
 #if EM_USE_SDL
-//    glDeleteTextures (1, (GLuint)(*i).first ); //is that correct ?
-    glDeleteTextures (1, (*i).first ); // don't know if it's what you want
+    glDeleteTextures (1, (GLuint*)(*i).first ); //is that correct ?
+    //    glDeleteTextures (1, (*i).first ); // don't know if it's what you want
                                        // but it compiles like this...! pnf
 #endif
     delete (*i).first ;  // (*i).first = 0; 
