@@ -136,7 +136,13 @@ protected:
     ostrstream stm;
     stm.clear();
     string name(m_Name);
-    string key(Config::getInstance()->getKeyCommonName(Config::getInstance()->getKey(name)));
+		const char * keyname = Config::getInstance()->getKeyCommonName(Config::getInstance()->getKey(name));
+		string key;
+		if (keyname != NULL) {
+			key = string(keyname);
+		} else {
+			key = string("unknown");
+		}
     name = name + ":";
     while (name.size() < 12) {
       name = name + " ";
@@ -459,6 +465,9 @@ MenuItem* createMenus(Engine * engine) {
   menucfg->addMenuItem(menukey);
 
   string filename = string(Config::getInstance()->getDataSubDir()) + "/splash.png";
+#if EM_USE_ALLEGRO
+  filename += ".pcx";
+#endif	
   EmTexture * tex = TextureUtil::getInstance()->loadTexture(filename.c_str());
   if (tex != NULL) {
 		menu->setBackground(tex);

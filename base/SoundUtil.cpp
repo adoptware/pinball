@@ -127,7 +127,7 @@ int SoundUtil::loadSample(const char* filename) {
   //	}
   // look if the sound is already loaded
   if (m_hEmSample.find(string(filename)) != m_hEmSample.end()) {
-    EM_COUT("SoundUtil::loadSample Found sample " << filename << " in cache", 1);
+    EM_COUT("SoundUtil::loadSample Found sample " << filename << " in cache", 0);
     map<string, int>::iterator element = m_hEmSample.find(string(filename));
     return (*element).second;
   }
@@ -172,7 +172,7 @@ int SoundUtil::loadMusic(const char * filename) {
   //if (!m_bInited) return -1;
   // look if the sound is already loaded
   if (m_hEmMusic.find(string(filename)) != m_hEmMusic.end()) {
-    EM_COUT("Found music " << filename << " in cache", 1);
+    EM_COUT("Found music " << filename << " in cache", 0);
     map<string, int>::iterator element = m_hEmMusic.find(string(filename));
     return (*element).second;
   }
