@@ -41,6 +41,7 @@ void Config::setDefault() {
 	m_bSound = true;
 	m_iBpp = 16;
 	m_iGLFilter = GL_LINEAR;
+	m_iView = 0;
 	m_bFullScreen = false;
 	m_bExternGL = false;
 	m_sDataDir = EM_DATADIR;
@@ -71,6 +72,7 @@ void Config::saveConfig() {
 	}
 	file << "size: " << m_iWidth <<" "<< m_iHeight << endl;
 	file << "sound: " << (m_bSound ? "1" : "0") << endl;
+	file << "view: " << m_iView << endl;
 	file << "bpp: " << m_iBpp << endl;
 	file << "fullscreen: " << (m_bFullScreen ? "1" : "0") << endl;
 	file << "texture_nearest: " << ((m_iGLFilter == GL_NEAREST) ? "1" : "0") << endl;
@@ -120,6 +122,8 @@ void Config::loadConfig() {
 			file >> str;
 			if (str == "0") m_bSound = false;
 			else m_bSound = true;
+		} else if (str == "view:") {
+			file >> m_iView;
 		} else if (str == "bpp:") {
 			file >> m_iBpp;
 		} else if (str == "fullscreen:") {

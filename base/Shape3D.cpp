@@ -126,12 +126,12 @@ void Shape3D::add(Polygon* p) {
 }
 
 /* Sets all polygons to color c. */
-void Shape3D::setColor(float a, float r, float g, float b) {
+void Shape3D::setColor(float r, float g, float b, float a) {
 	vector<Polygon*>::iterator iter = m_vPolygon.begin();
 	vector<Polygon*>::iterator end = m_vPolygon.end();
 	
 	for ( ; iter != end; iter++) {
-		(*iter)->setColor(a,r,g,b);
+		(*iter)->setColor(r,g,b,a);
 	}
 }
 

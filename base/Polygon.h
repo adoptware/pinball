@@ -9,13 +9,14 @@
 #ifndef POLYGON_H
 #define POLYGON_H
 
-//#define EM_POLY_FLAT 1
+#define EM_POLY_FLAT 1
 //#define EM_POLY_SMOOTH 2
 //#define EM_POLY_HIDDEN 4
 #define EM_WIREFRAME 8
 #define EM_ALLWAYS_LIT 16
-//#define EM_DOUBLE_SIDED 32 // not in use (yet?)
-//#define EM_POLY_TRANS 64
+#define EM_POLY_DOUBLE 32
+#define EM_POLY_TRANS 64
+#define EM_POLY_CCW_VIEW 128
 
 #include "Private.h"
 #include "EMath.h"

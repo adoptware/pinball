@@ -103,7 +103,7 @@ void TransformVisitor::visit(Group* g) {
 			EMath::normalizeVector(*nmlTransIter);
 			// TODO: optimize - macro instead of apply-fct calls, remove normalize
 
-			EM_COUT("TransformVisitor::visit() " << srcIter <<" "<<
+			EM_COUT_D("TransformVisitor::visit() " << srcIter <<" "<<
 				(*srcIter).x <<" "<< (*srcIter).y <<" "<< (*srcIter).z <<" -> "<<
 				(*transIter).x <<" "<< (*transIter).y <<" "<< (*transIter).z, 0);
 		}

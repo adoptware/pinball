@@ -31,7 +31,8 @@ void SignalSender::addSignal(int signal, int delay, Group * sender, Group * reci
 	sig.delay = delay;
 	sig.sender = sender;
 	sig.reciever = reciever;
-	m_vSignal.push_back(sig);
+	// add the signal to the buffer 
+	m_vSignalBuffer.push_back(sig);
 }
 
 void SignalSender::addGroup(Group * g) {
@@ -41,22 +42,31 @@ void SignalSender::addGroup(Group * g) {
 }
 
 void SignalSender::clear() {
-	EM_COUT("SignalSender::empty() removed " << m_vSignal.size(), 0);
-	m_vSignal.clear();	
+	//	EM_COUT("SignalSender::empty() removed " << m_vSignal.size(), 0);
+	//	m_vSignal.clear();	
 }
 
 /* Called each engine tick. */
 void SignalSender::tick() {
 	EM_COUT("SignalSender::tick()", 0);
 
-	// TODO: the m_vSignal vector may be altered during
-	// this loop, does this affect the elements in the vector ???
-	vector<SignalStruct>::iterator sigIter = m_vSignal.begin();
-	vector<SignalStruct>::iterator sigEnd = m_vSignal.end();
+	// use a buffer to avoid changes in m_vSignal during loop
+	vector<SignalStruct>::iterator sigIter = m_vSignalBuffer.begin();
+	vector<SignalStruct>::iterator sigEnd = m_vSignalBuffer.end();
 	for (; sigIter != sigEnd; sigIter++) {
-		// check the delay
+		m_vSignal.push_back((*sigIter));
+	}
+	m_vSignalBuffer.clear();
+
+	// send signals
+	sigIter = m_vSignal.begin();
+	sigEnd = m_vSignal.end();
+	for (; sigIter != sigEnd; sigIter++) {
+		// check the delay	and readd it to the buffer
 		if ((*sigIter).delay > 0) {
 			(*sigIter).delay--;
+			m_vSignalBuffer.push_back((*sigIter));
+			continue;
 		}
 		// send to groups
 		vector<Group*>::iterator groupIter = m_vGroup.begin();
@@ -74,6 +84,5 @@ void SignalSender::tick() {
 			}
 		}
 	}
-	// TODO: remove used signals instead of clearing the whole vector
-	this->clear();
+	m_vSignal.clear();
 }

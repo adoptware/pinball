@@ -37,6 +37,7 @@ class SignalSender {
 	void tick();
  private:
 	vector<SignalStruct> m_vSignal;
+	vector<SignalStruct> m_vSignalBuffer;
 	vector<Group*> m_vGroup;
 	static SignalSender * p_SignalSender;
 };

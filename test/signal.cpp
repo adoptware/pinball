@@ -67,8 +67,8 @@ int main(int argc, char *argv[]) {
 			SendSignal(1, 0, engine, NULL);
 		}
 		if (Keyboard::isKeyDown(SDLK_2)) {
-			// multicast a signal
-			SendSignal(2, 0, engine, NULL);
+			// multicast a signal with delay
+			SendSignal(2, 50, engine, NULL);
 		}
 		engine->tick();
 		engine->render();

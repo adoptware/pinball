@@ -1,5 +1,7 @@
 /***************************************************************************
-                          BouBeh.h  -  description
+                   ation, Inc.
+#
+# This proription
                              -------------------
     begin                : Thu Mar 9 2000
     copyright            : (C) 2000 by 

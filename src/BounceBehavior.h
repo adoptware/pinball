@@ -13,9 +13,7 @@
 #include "EMath.h"
 #include "StateMachine.h"
 
-/**
- * <p>A behavior for the pinball demo.</p>
- */
+/** A behavior for the pinball demo. */
 
 class BounceBehavior : public Behavior {
 	public:
@@ -28,7 +26,7 @@ class BounceBehavior : public Behavior {
 		bool isAlive() {return m_bAlive;};
 	private:
 		bool m_bAlive;
-		bool m_bKnock;
+		int m_iKnock;
 		int m_iBall;
 		Vertex3D m_vtxDir;
 		Vertex3D m_vtxOldDir;

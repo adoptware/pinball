@@ -36,7 +36,11 @@ int main(int argc, char *argv[]) {
 	engine->setEngineCamera(groupCamera);
 
 	// Load a texture
-	EmTexture* texture = TextureUtil::loadTexture(argv[1]);
+	EmTexture* texture = TextureUtil::getInstance()->loadTexture(argv[1]);
+	if (texture == NULL) {
+		cerr << "Error loading texture" << endl;
+		return -1;
+	}
 
 	// Add a cube.
 	Cube* cube = new Cube(1.0, texture);

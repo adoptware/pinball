@@ -47,12 +47,12 @@ int main(int argc, char *argv[]) {
 	engine->setEngineCamera(groupCamera);
 
 	vector<Shape3D*> vShape3D;
-	for (int a=0; a<10; a++) {
+	for (int a=0; a<4; a++) {
 		Shape3D * shape;
 		switch (a%3) {
-		case 0: shape = new BigSphere(0.5, 2, 1.0, 1.0, 1.0, 1.0); break;
-		case 1: shape = new Cone(1.0, 1.0, 1.0, 1.0, 1.0); break;
-		default: shape = new Cube(1.0, 1.0, 1.0, 1.0, 1.0);
+		case 9: shape = new BigSphere(1.0, 2, 1.0, 1.0, 1.0, 1.0); break;
+		case 10: shape = new Cone(2.0, 1.0, 1.0, 1.0, 1.0); break;
+		default: shape = new Cube(2.0, 1.0, 1.0, 1.0, 1.0);
 		}
 		// Add the shape.
 		Group* groupShape = new Group();
@@ -65,9 +65,12 @@ int main(int argc, char *argv[]) {
 		groupShape->setCollisionBounds(cb);
 		// Add a behavior to the cube
 		CollisionTest* beh = new CollisionTest();
-		beh->add(random()%9-4, random()%9-4, random()%9-4);
-		beh->add(random()%9-4, random()%9-4, random()%9-4);
-		beh->add(random()%9-4, random()%9-4, random()%9-4);
+// 		beh->add(random()%9-4, random()%9-4, random()%9-4);
+// 		beh->add(random()%9-4, random()%9-4, random()%9-4);
+// 		beh->add(random()%9-4, random()%9-4, random()%9-4);
+		beh->add(random()%3-1, random()%3-1, random()%3-1);
+		beh->add(random()%3-1, random()%3-1, random()%3-1);
+		beh->add(random()%3-1, random()%3-1, random()%3-1);
 		beh->setEndStart();
 		groupShape->addBehavior(beh);
 		

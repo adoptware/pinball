@@ -30,11 +30,13 @@ class Config {
 	int getHeight() { return m_iHeight; };
 	int getBpp() { return m_iBpp; };
 	int getGLFilter() { return m_iGLFilter; };
+	int getView() { return m_iView; };
 	char* getDataDir() { return m_sDataDir; };
 	bool useFullScreen() { return m_bFullScreen; };
 	void setSize(int w, int h);
 	void setBpp(int bpp) { m_iBpp = bpp; };
 	void setGLFilter(int filter) { m_iGLFilter = filter; };
+	void setView(int view) { m_iView = view; };
 	void setFullScreen(bool f) { m_bFullScreen = f; };
 	void setSound(bool s) { m_bSound = s; };
 	void setDataDir(char* ch) { m_sDataDir = ch; };
@@ -46,6 +48,7 @@ class Config {
 	int m_iHeight;
 	int m_iBpp;
 	int m_iGLFilter;
+	int m_iView;
 	bool m_bExternGL;
 	bool m_bSound;
 	bool m_bFullScreen;

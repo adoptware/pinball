@@ -2,8 +2,8 @@
                           CollisionBounds.h  -  description
                              -------------------
     begin                : Sun Mar 19 2000
-    copyright            : (C) 2000 by 
-    email                : 
+    copyright            : (C) 2000 by Henrik Enqvist, GPL
+    email                : henqvist@excite.com
  ***************************************************************************/
 
 #ifndef COLLISIONBOUNDS_H
@@ -21,14 +21,15 @@ class Group;
 /** */
 class CollisionBounds {
 	public:
-		/** <p>CollisionBounds( radius, x, y, z ).
+		/** CollisionBounds( radius, x, y, z ).
 		 * radius is the size of the bounds x y z is center of the bounds
-		 * relative to the center of the group.</p>*/
+		 * relative to the center of the group. */
 		CollisionBounds(float size, float x=0.0f, float y=0.0f, float z=0.0f);
 		~CollisionBounds();
 		
-		/** <p>Add all polygons in Shape3D to bounds</p>*/
+		/** Add all polygons in Shape3D to bounds */
 		void setShape3D(Shape3D * s, int level);
+		/** Used by transform visitor */
 		void transform(const Matrix & mtx);
 		
 	private:

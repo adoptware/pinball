@@ -72,6 +72,10 @@ extern Matrix identityMatrix;
 #define EM_DEBUG 0
 #endif
 
+#ifndef EM_FULL_DEBUG
+#define EM_FULL_DEBUG 0
+#endif
+
 #ifndef EM_DEBUG_COLLISION 
 #define EM_DEBUG_COLLISION 0
 #endif
@@ -89,6 +93,19 @@ extern Matrix identityMatrix;
 #else
 	#define EM_COUT(a, level)
 #endif
+
+#if EM_FULL_DEBUG
+  #define EM_COUT_D(a, level) if (level > 0) { cerr << a << endl; };
+#else
+	#define EM_COUT_D(a, level)
+#endif
+
+#define EM_GLERROR(a) \
+	GLenum error = glGetError(); \
+	if (error != GL_NO_ERROR) {  \
+		const GLubyte* str = gluErrorString(error); \
+		cerr << "OpenGL error: " << a << str << endl;    \
+	}
 
 #if EM_DEBUG
   #define EmAssert(a, b)	\
@@ -110,7 +127,16 @@ typedef struct {
 	bool loop;
 } WaveStruct;
 
-#define EmImage SDL_Surface
+
+typedef struct {
+	unsigned int width;
+	unsigned int height;
+	unsigned int channels;
+	unsigned char* pixels;
+} struct_image;
+
+
+#define EmImage struct_image
 #define EmTexture GLuint
 #define EmSample WaveStruct
 #define EmSound int

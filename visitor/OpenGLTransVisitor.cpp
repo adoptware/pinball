@@ -39,13 +39,7 @@ void OpenGLTransVisitor::visit(Group* g) {
 	vector<Shape3D*>::iterator shapeEnd = g->m_vShape3D.end();
 	for ( ; shapeIter != shapeEnd; shapeIter++) {
 		if (EM_SHAPE3D_HIDDEN & (*shapeIter)->m_iProperties) continue;
-		if (!(EM_SHAPE3D_TRANS & (*shapeIter)->m_iProperties)) continue;
-
-		if ((*shapeIter)->m_iProperties & EM_SHAPE3D_DOUBLE) {
-			glDisable(GL_CULL_FACE);
-		} else {
-			glEnable(GL_CULL_FACE);
-		}
+		if (!(EM_SHAPE3D_USE_TRANS & (*shapeIter)->m_iProperties)) continue;
 
 		// the shape has a texture
 		if ((*shapeIter)->m_Texture != NULL) { 
@@ -71,14 +65,20 @@ void OpenGLTransVisitor::visit(Group* g) {
 			glAlphaFunc(GL_GREATER, 0.05);
 		}
 
-		EM_COUT("OpenGLTransVisitor::visit() "<< (*shapeIter)->m_vPolygon.size()
+		EM_COUT_D("OpenGLTransVisitor::visit() "<< (*shapeIter)->m_vPolygon.size()
 						<<" polygons"<< endl, 0);
 		// Clip, project and draw all polygons in Shape3D.
 		vector<Polygon*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
 		vector<Polygon*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
 		for ( ; polyIter != polyEnd; polyIter++) {
 			// if ((*polyIter)->m_iProperties & EM_POLY_HIDDEN) continue;
-			// if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
+			if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
+
+			if ((*polyIter)->m_iProperties & EM_POLY_CCW_VIEW) {
+				glFrontFace(GL_CCW);
+			} else {
+				glFrontFace(GL_CW);
+			}
 			
 			if ((*shapeIter)->m_Texture != NULL) { // textured polygon
 				// textured polygon
@@ -115,8 +115,7 @@ void OpenGLTransVisitor::visit(Group* g) {
 
 				EmAssert((*polyIter)->m_vIndex.size() == (*polyIter)->m_vColor.size(),
 								 "size miss match");
-				for ( ; indexIter != indexEnd; 
-							indexIter++, colorIter++) {
+				for ( ; indexIter != indexEnd; indexIter++, colorIter++) {
 #if OPENGL_LIGHTS
 					// stupid materials!
 					glMaterialfv(GL_FRONT, GL_AMBIENT, (GLfloat*)&(*colorIter));
@@ -128,11 +127,13 @@ void OpenGLTransVisitor::visit(Group* g) {
 										 (*shapeIter)->m_vNmlTrans[(*indexIter)].y,
 										 (*shapeIter)->m_vNmlTrans[(*indexIter)].z);
 #else
-					/* transparent polygons should not be lit */
-					glColor4f((*colorIter).r * (*shapeIter)->m_vLight[(*indexIter)].r,
-										(*colorIter).g * (*shapeIter)->m_vLight[(*indexIter)].g,
-										(*colorIter).b * (*shapeIter)->m_vLight[(*indexIter)].b,
-										(*colorIter).a);
+					/* transparent polygons should not be lit, or ? */
+  					glColor4f((*colorIter).r * (*shapeIter)->m_vLight[(*indexIter)].r,
+  										(*colorIter).g * (*shapeIter)->m_vLight[(*indexIter)].g,
+  										(*colorIter).b * (*shapeIter)->m_vLight[(*indexIter)].b,
+  										(*colorIter).a);
+// 					glColor4f((*colorIter).r,	(*colorIter).g,	(*colorIter).b, (*colorIter).a);
+					
 					
 					//glColor4f((*colorIter).r, (*colorIter).g, (*colorIter).b, (*colorIter).a);
 #endif
@@ -191,7 +192,7 @@ void OpenGLTransVisitor::visit(Group* g) {
 							 b->m_vtxAlign.z + b->m_fZOffset);
 		glEnd();
 
-		EM_COUT("OpenGLVisitor::visit() BillBoard at " << b->m_vtxAlign.x <<" "<<
+		EM_COUT_D("OpenGLVisitor::visit() BillBoard at " << b->m_vtxAlign.x <<" "<<
 						b->m_vtxAlign.y <<" "<< b->m_vtxAlign.z, 0);
 
 		glDisable(GL_TEXTURE_2D);

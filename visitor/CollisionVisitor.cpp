@@ -62,13 +62,13 @@ bool CollisionVisitor::collide(CollisionBounds * cb1, CollisionBounds * cb2) {
 	float dz = cb1->m_vtxTrans.z - cb2->m_vtxTrans.z;
 	
 	if (EMath::emSqrt(dx*dx + dy*dy + dz*dz) <= (cb1->m_fRadius + cb2->m_fRadius)) {
-		EM_COUT("CollisionVisitor::collide(CollisionBounds*, CollisionBounds*) yes " << endl <<
+		EM_COUT_D("CollisionVisitor::collide(CollisionBounds*, CollisionBounds*) yes " << endl <<
 			cb1->m_vtxTrans.x <<" "<< cb1->m_vtxTrans.y <<" "<< cb1->m_vtxTrans.z <<" "<< endl <<
 			cb2->m_vtxTrans.x <<" "<< cb2->m_vtxTrans.y <<" "<< cb2->m_vtxTrans.z <<" "<< endl <<
 			cb1->m_fRadius <<" "<< cb2->m_fRadius, 0);
 		return true;
 	}
-	EM_COUT("CollisionVisitor::collide(CollisionBounds*, CollisionBounds*) no", 0);
+	EM_COUT_D("CollisionVisitor::collide(CollisionBounds*, CollisionBounds*) no", 0);
 	return false;
 }
 
@@ -92,7 +92,7 @@ bool CollisionVisitor::collidePolygons(CollisionBounds * nb1, CollisionBounds * 
 			(*iter2)->setColor(0, 0, 1, 0.5f); // debug thing
 #endif
 			// TODO: if (this->isInArray( (*iter2) )) continue;
-			// EM_COUT("CollisionVisitor:collidePolygons() intersecting polygons " << a << "-" << b << endl, 0);
+			EM_COUT_D("CollisionVisitor:collidePolygons() intersecting polygons " << a << "-" << b << endl, 0);
 			if ( CollisionVisitor::intersect((*iter1), (*iter2)) ) {
 #if EM_DEBUG_COLLISION
 				(*iter1)->setColor(1, 0, 0, 0.5f);
@@ -101,7 +101,7 @@ bool CollisionVisitor::collidePolygons(CollisionBounds * nb1, CollisionBounds * 
 				this->addToArray((*iter1), (*iter2));
 				bCollision = true;
 			}
-			EM_COUT("CollisionVisitor:collidePolygons() intersected polygons" << endl, 0);				
+			EM_COUT_D("CollisionVisitor:collidePolygons() intersected polygons" << endl, 0);				
 		}
 	}
 	return bCollision;
@@ -109,7 +109,7 @@ bool CollisionVisitor::collidePolygons(CollisionBounds * nb1, CollisionBounds * 
 
 /* Count a median normal for all polygons */
 void CollisionVisitor::countNormal(Vertex3D & vtx, Polygon** paPolygons, int piPolygons) {
-	EM_COUT("CollisionVisitor::countNormal " << piPolygons << " polygons" << endl, 0);
+	EM_COUT_D("CollisionVisitor::countNormal " << piPolygons << " polygons" << endl, 0);
 	vtx.x = 0;
 	vtx.y = 0;
 	vtx.z = 0;
@@ -132,9 +132,9 @@ void CollisionVisitor::countNormal(Vertex3D & vtx, Polygon** paPolygons, int piP
  * If there are no shape the function returns true. */
 bool CollisionVisitor::detectCollision(CollisionBounds * cb1, CollisionBounds * cb2, 
 																			 Vertex3D & n1, Vertex3D & n2) {
-	EM_COUT("CollisionVisitor::detectCollision()", 0);
+	EM_COUT_D("CollisionVisitor::detectCollision()", 0);
 	if (this->collide(cb1, cb2)) {
-		EM_COUT("CollisionVisitor::detectCollision() bounds collide", 0);
+		EM_COUT_D("CollisionVisitor::detectCollision() bounds collide", 0);
 		// cb1 and cb2 is split up into more bounds collide all of them	
 		if (cb1->m_vCollisionBounds.size() > 0 && cb2->m_vCollisionBounds.size() > 0) {
 			bool bCollision = false;
@@ -177,13 +177,13 @@ bool CollisionVisitor::detectCollision(CollisionBounds * cb1, CollisionBounds * 
 		 	if (this->collidePolygons(cb1, cb2)) {
 				this->countNormal(n1, m_aPolygonsA, m_iPolygonsA);
 				this->countNormal(n2, m_aPolygonsB, m_iPolygonsB);
-				EM_COUT("CollisionVisitor::detectCollision() A "<< m_iPolygonsA <<" polys "<< n1.x <<" "<< n1.y <<
+				EM_COUT_D("CollisionVisitor::detectCollision() A "<< m_iPolygonsA <<" polys "<< n1.x <<" "<< n1.y <<
 								" "<< n1.z, 0);
-				EM_COUT("CollisionVisitor::detectCollision() B "<< m_iPolygonsB <<" polys "<< n2.x <<" "<< n2.y <<
+				EM_COUT_D("CollisionVisitor::detectCollision() B "<< m_iPolygonsB <<" polys "<< n2.x <<" "<< n2.y <<
 								" "<< n2.z, 0);
 				return true;
 			}
-			EM_COUT("CollisionVisitor::detectCollision() false alarm", 0);
+			EM_COUT_D("CollisionVisitor::detectCollision() false alarm", 0);
 		}
 	}
 	return false;
@@ -335,7 +335,7 @@ bool CollisionVisitor::intersect(Polygon * p1, Polygon * p2) {
 	if (p1->m_vIndex.size()<3 || p2->m_vIndex.size()<3) return false;
 	
 	em_polygons++;
-	EM_COUT("CollisionVisitor::intersect()", 0);
+	EM_COUT_D("CollisionVisitor::intersect()", 0);
 
 	int axis;
 	float D1, D2;
@@ -361,9 +361,9 @@ bool CollisionVisitor::intersect(Polygon * p1, Polygon * p2) {
 			- normalB.y * s2->m_vVtxTrans[p2->m_vIndex[0]].y
 			- normalB.z * s2->m_vVtxTrans[p2->m_vIndex[0]].z;
 
-	EM_COUT("CollisionVisitor::intersect() normalA " << normalA.x <<" "<< normalA.y <<" "<< 
+	EM_COUT_D("CollisionVisitor::intersect() normalA " << normalA.x <<" "<< normalA.y <<" "<< 
 					normalA.z <<" "<< D1, 0);
-	EM_COUT("CollisionVisitor::intersect() normalB " << normalB.x <<" "<< normalB.y <<" "<< 
+	EM_COUT_D("CollisionVisitor::intersect() normalB " << normalB.x <<" "<< normalB.y <<" "<< 
 					normalB.z <<" "<< D2, 0);
 			
 	// Check if it is a 2d collision we should do
@@ -389,7 +389,7 @@ bool CollisionVisitor::intersect(Polygon * p1, Polygon * p2) {
 	else if (normalC.y > normalC.z) axis = 2; 
 	else axis = 3;
 	
-	EM_COUT("CollisionVisitor::intersect() axis " << axis, 0);
+	EM_COUT_D("CollisionVisitor::intersect() axis " << axis, 0);
 	// Find lines in p1 intersecting p2. Intersection point between line and
 	// plane will be projected on the chosen axis, x1 is the projecton
 	// onto the axis for line 1, x2 projection for line 2.
@@ -447,7 +447,7 @@ bool CollisionVisitor::intersect(Polygon * p1, Polygon * p2) {
 	// loop=0;
 	// FINDLINE(p2, normalA.x, normalA.y, normalA.z, D1, loop, axis, x3);
 	// FINDLINE(p2, normalA.x, normalA.y, normalA.z, D1, loop, axis, x4);
-  EM_COUT(x1 <<" "<< x2 <<" "<< x3 <<" "<< x4, 0);
+  EM_COUT_D(x1 <<" "<< x2 <<" "<< x3 <<" "<< x4, 0);
 	// Polygons intersect if line x1,x2 and x3,x4 intersect.	
 	if ((EM_MAX(x1,x2) > EM_MIN(x3, x4)) && (EM_MAX(x3, x4) > EM_MIN(x1, x2))) return true;
 
@@ -509,7 +509,7 @@ void CollisionVisitor::traverse(Group * g, OctTree * octtree) {
 
 void CollisionVisitor::visit(Group * g) {	
 	if (g->p_CollisionBounds == NULL) return;
-#ifdef EM_DEBUG_COLLISION
+#if EM_DEBUG_COLLISION
 	if (g->getShape3DSize() > 0) g->getShape3D(0)->setColor(1,1,1,0.3f);
 #endif
 	// check collisions with nodes in octtree

@@ -11,14 +11,23 @@
 #define TEXTUREUTIL_H
 
 #include "Private.h"
+#include <map>
+#include <string>
 
 /**
  */
 
 class TextureUtil {
-	public:
-  	static EmTexture* loadTexture(char* file);
-	  static EmImage* loadImage(char* file);
+ public:
+	~TextureUtil();
+	static TextureUtil* getInstance();
+	EmTexture* loadTexture(char* file);
+	EmImage* loadImage(char* file);
+ protected:
+	TextureUtil();
+ private:
+	map<string, EmTexture*> m_hEmTexture;
+	static TextureUtil* p_TextureUtil;
 };
 
 #endif // TEXTUREUTIL_H
