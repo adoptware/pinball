@@ -180,213 +180,142 @@ int Table::loadLevel(Engine * engine, const char * subdir) {
   return 0;
 }
 
-string Table::getTableName()
-{
+string Table::getTableName() {
   return m_sTableName;
 }
 
-string Table::getTableDataDirName()
-{
+string Table::getTableDataDirName() {
   string datadir(Config::getInstance()->getDataSubDir());
   return datadir;
 }
 
-bool Table::isItHighScore(const int nNewScore)
-{
+bool Table::isItHighScore(const int nNewScore) {
   // The first score is the lowest
-  multimap<int, string>::iterator it = m_mapHighScores.begin();
-
-  int nScore = (*it).first;
-
-  if (nNewScore > nScore)
-    return true;
-
+  multimap<int, string>::iterator iter = m_mapHighScores.begin();
+  int nScore = (*iter).first;
+  if (nNewScore > nScore)  return true;
   return false;
 }
 
-bool Table::getHighScoresData(list<string>& listHighScores)
-{
-  int nScore = 0;
-  string sName;
-
-  char sScore[11];
-  string sRow;
-
+bool Table::getHighScoresData(list<string>& listHighScores) {
   // Sorted in ascending order, we begin by the last one and
   //  decrement iterator
-  multimap<int, string>::iterator it = m_mapHighScores.end();
-
-  while (true)
-  {
-    it--;
-
-    nScore = (*it).first;
-    sName  = (*it).second;
-
+  multimap<int, string>::reverse_iterator iter = m_mapHighScores.rbegin();
+  multimap<int, string>::reverse_iterator end = m_mapHighScores.rend();
+  for (int index=0; 
+       iter != end && index < EM_MAX_HIGHSCORES; 
+       ++iter, ++index) {
+    char sScore[11];
+    string sRow;
+    int nScore = (*iter).first;
+    string sName  = (*iter).second;
     // Max len of name is 12
     int nAdjust = 13 - sName.length();
-    if (nAdjust > 0)
+    if (nAdjust > 0) {
       sName.append(nAdjust, ' ');
-
+    }
     sprintf(sScore, "%10d", nScore);
-
-    sRow  = sName;
+    sRow = sName;
     sRow += sScore;
-
     listHighScores.push_back(sRow);
-
-    // We only want 10 scores to display
-    if (listHighScores.size() >= 10)
-      break;
-
-    // If we reached the first one then exit
-    if (it == m_mapHighScores.begin())
-      break;
   }
-
   return true;
 }
 
-void Table::saveNewHighScore(int nNewHighScore, const char * name)
-{
+void Table::saveNewHighScore(int nNewHighScore, const char * name) {
   // Remove the first element, it's the lowest score,
   // a map is by always sorted.
-  multimap<int, string>::iterator it = m_mapHighScores.begin();
+  multimap<int, string>::iterator iter = m_mapHighScores.begin();
 
   // Make shure that the new score is at least bigger then the lowest score
-  int nScore = (*it).first;
-  if (nNewHighScore > nScore)
-  {
-    m_mapHighScores.erase(it);
-
+  int nScore = (*iter).first;
+  if (nNewHighScore > nScore)  {
+    m_mapHighScores.erase(iter);
     m_mapHighScores.insert(pair<int, string>(nNewHighScore, name));
   }
 }
 
 #define HIGH_SCORES_FILENAME "/highscores"
 
-bool Table::readHighScoresFile()
-{
+bool Table::readHighScoresFile() {
   // This is the current table's name
-  if (m_sTableName.length() == 0)
-  {
+  if (m_sTableName.length() == 0) {
     cerr << "No current table name!" << endl;
     return false;
   }
-
   // Clear old high scores
   m_mapHighScores.clear();
 
-  string sFileName = string(EM_HIGHSCORE_DIR) +"/"+ m_sTableName +
-		     HIGH_SCORES_FILENAME;
-	
+  string sFileName = string(EM_HIGHSCORE_DIR) +"/"+ m_sTableName + HIGH_SCORES_FILENAME;
   ifstream file(sFileName.c_str());
-  if (!file)
-  {
+  if (!file) {
     cerr << "Couldn't open high scores file: " << sFileName << endl;
     cerr << "Using default values!" << endl;
-  
-    for (int i=0; i<10; i++)
-      m_mapHighScores.insert(pair<int, string>(0, "?"));
-
+    for (int i=0; i<EM_MAX_HIGHSCORES; i++) {
+      m_mapHighScores.insert(pair<int, string>(0, "emilia"));
+    }
     return false;
   }
 
   const int BUF_SIZE = 255;
-
   char   sBuf[BUF_SIZE];
   char*  pSpacePos      = NULL;
   int    nScore         = 0;
   string sName;
-
   // Read all lines from file, this way we can append several
   //  highscores files (from backups or other) and after being
-  //  sorted we'll only keep the top ten scores
-  while (file)
-  {
+  //  sorted we'll only keep the top X scores
+  while (file) {
     memset(sBuf, 0, BUF_SIZE);
-
     file.getline(sBuf, BUF_SIZE);
-
     pSpacePos = strchr(sBuf, ' ');
-
-    if (pSpacePos != NULL)
-    {
+    if (pSpacePos != NULL) {
       sName  = "";
       nScore = 0;
-
       *pSpacePos = '\0';
-
       nScore = atoi(sBuf);
       sName = pSpacePos + 1;
 
-      if (nScore == 0)
+      if (nScore == 0) {
         continue;
-
-      if (sName.length() == 0)
-	sName = "?";
-
+      }
+      if (sName.length() == 0) {
+        sName = "emilia";
+      }
       m_mapHighScores.insert(pair<int, string>(nScore, sName));
     }
   }
-
   // If we read less then 10 scores create the rest with default values
-  for (int i=m_mapHighScores.size(); i<10; i++)
-    m_mapHighScores.insert(pair<int, string>(0, "?"));
-
+  for (int i=m_mapHighScores.size(); i<EM_MAX_HIGHSCORES; i++) {
+    m_mapHighScores.insert(pair<int, string>(0, "emilia"));
+  }
   return true;
 }
 
 // The file must be writable by all users...
-bool Table::writeHighScoresFile()
-{
+bool Table::writeHighScoresFile() {
   // This is the current table's name
-  if (m_sTableName.length() == 0)
-  {
+  if (m_sTableName.length() == 0) {
     cerr << "No current table name! (the first time is normal...)" << endl;
     return false;
   }
 
-  //string sFileName = string(Config::getInstance()->getDataSubDir()) +
-		       HIGH_SCORES_FILENAME;
-
-  string sFileName = string(EM_HIGHSCORE_DIR) +"/"+ m_sTableName +
-		     HIGH_SCORES_FILENAME;
-
+  string sFileName = string(EM_HIGHSCORE_DIR) +"/"+ m_sTableName + HIGH_SCORES_FILENAME;
   ofstream file(sFileName.c_str());//, ios_base::out | ios_base::trunc);
-
-  if (!file)
-  {
+  if (!file) {
     cerr << "Couldn't open high scores file: " << sFileName << endl;
     cerr << "Can't save high scores!" <<  endl;
     return false;
   }
 
-  int nIndex = 1;
-  int nScore = 0;
-
-  string sName;
-
-  multimap<int, string>::iterator it = m_mapHighScores.end();
-
-  while (true)
-  {
-    it--;
-
-    nScore = (*it).first;
-    sName  = (*it).second;
-
+  multimap<int, string>::reverse_iterator iter = m_mapHighScores.rbegin();
+  multimap<int, string>::reverse_iterator begin = m_mapHighScores.rend();
+  for (int index=0; 
+       index < EM_MAX_HIGHSCORES && iter != begin; 
+       ++iter, ++index) {
+    int nScore = (*iter).first;
+    string sName  = (*iter).second;
     file << nScore << " " << sName << endl;
-
-    // We only write 10 scores to file! (for safety...)
-    if (nIndex >= 10)
-      break;
-
-    nIndex++;
-
-    // If we reached the first one then exit anyway
-    if (it == m_mapHighScores.begin())
-      break;
   }
 
   return true;
