@@ -83,6 +83,19 @@ class Config {
   void setDefault();
   /// set RELATIVE path according to current work directory of exec
   void setPaths(char const * const argv0);  //!+rzr
+
+  // Read high scores from given file - pnf
+  bool readHighScoresFile();
+  // Write high scores to a given file - pnf
+  bool writeHighScoresFile();
+  // Used to get the high scores from memory - pnf
+  void getHighScores(multimap<int, string>& mapHighScores);
+  // Used to set the high scores from memory - pnf
+  void setHighScores(multimap<int, string>& mapHighScores);
+  // Copy data betwen two high score maps - pnf
+  void copyMaps(multimap<int, string>& mapOrig,
+                multimap<int, string>& mapDest);
+
  private:
   int m_iWidth;
   int m_iHeight;
@@ -105,6 +118,9 @@ class Config {
   static Config* p_Instance;
   /// prototypes of Static Modules
   map<string, EMKey> m_hKey;
+
+  // Keep the high scores for the current table
+  multimap<int, string> m_mapHighScores;
 };
 
 #endif // CONFIG_H

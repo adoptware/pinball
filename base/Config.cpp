@@ -385,3 +385,137 @@ void Config::setPaths(char const * const argv0) {
   EM_COUT( m_sDataDir, 42);
   EM_COUT("- Config::getFullPath",0);
 } //!-rzr
+
+
+//
+// HighScores
+// pnf
+//
+
+#define HIGH_SCORES_FILENAME      "/highscores"
+
+bool Config::readHighScoresFile()
+{
+  // This is the current table's name
+  if (m_sSubDir.length() == 0)
+  {
+    cerr << "No current table name!" << endl;
+    return false;
+  }
+
+  // Clear old high scores
+  m_mapHighScores.clear();
+
+  string sFileName = m_sDataSubDir + HIGH_SCORES_FILENAME;
+
+  ifstream file(sFileName.c_str());
+
+  if (!file)
+  {
+    cerr << "Couldn't open high scores file: " << sFileName << endl;
+    cerr << "Using default values!" << endl;
+
+    for (int i=0; i<10; i++)
+      m_mapHighScores.insert(pair<int, string>(10 - i, "lia"));
+
+    return false;
+  }
+
+  int nCounter = 0;
+  int nScore   = 0;
+
+  string sName;
+
+  while (file)
+  {
+    file >> nScore;
+    file >> sName;
+
+    m_mapHighScores.insert(pair<int, string>(nScore, sName));
+
+    nCounter++;
+
+    // We only read 10 scores from the file!
+    if (nCounter > 10)
+      break;
+  }
+
+  // If we read less then 10 scores
+  for (int i=m_mapHighScores.size(); i<10; i++)
+    m_mapHighScores.insert(pair<int, string>(10 - i, "lia"));
+
+  return true;
+}
+
+bool Config::writeHighScoresFile()
+{
+  // This is the current table's name
+  if (m_sSubDir.length() == 0)
+  {
+    cerr << "No current table name!" << endl;
+    return false;
+  }
+
+  string sFileName = m_sDataSubDir + HIGH_SCORES_FILENAME;
+
+  ofstream file(sFileName.c_str(), ios_base::out | ios_base::trunc);
+
+  if (!file)
+  {
+    cerr << "Couldn't open high scores file: " << sFileName << endl;
+    cerr << "Can't save high scores!" <<  endl;
+
+    return false;
+  }
+
+  int nCounter = 0;
+  int nScore   = 0;
+
+  string sName;
+
+  for (multimap<int, string>::iterator it = m_mapHighScores.begin();
+       it != m_mapHighScores.end(); ++it)
+  {
+    nScore = (*it).first;
+    sName  = (*it).second;
+
+    file << nScore << " " << sName << endl;
+
+    nCounter++;
+
+    // We only write 10 scores to file! (for safety...)
+    if (nCounter > 10)
+      break;
+  }
+
+  return true;
+}
+
+void Config::getHighScores(multimap<int, string>& mapHighScores)
+{
+  copyMaps(m_mapHighScores, mapHighScores);
+}
+
+void Config::setHighScores(multimap<int, string>& mapHighScores)
+{
+  copyMaps(mapHighScores, m_mapHighScores);
+}
+
+void Config::copyMaps(multimap<int, string>& mapOrig,
+                      multimap<int, string>& mapDest)
+{
+  // Clear old map
+  mapDest.clear();
+
+  int nScore   = 0;
+  string sName;
+
+  for (multimap<int, string>::iterator it = mapOrig.begin();
+       it != mapOrig.end(); ++it)
+  {
+    nScore = (*it).first;
+    sName  = (*it).second;
+
+    mapDest.insert(pair<int, string>(nScore, sName));
+  }
+}

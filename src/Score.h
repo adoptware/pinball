@@ -46,6 +46,9 @@ class Score : public Behavior  {
   bool getShowFPS() { return m_bShowFPS; };
 /*   void setMultiplier(int m) { m_iFactor = m; }; */
 /*   int getMultiplier() { return m_iFactor; }; */
+
+  void testForHighScore();
+
  private:
   char m_Text1[64];
   char m_Text2[64];
