@@ -108,16 +108,25 @@ void Score::StdOnSignal() {
     this->clearText();
     this->setText1("game over");
     this->setText2("press r to start new game");
+
+    this->testForHighScore();
   }
 }
 
 void Score::draw() {
   char buffer[256];
-  if (Table::getInstance()->getCurrentBall() < 4) {
-    sprintf(buffer, "SCORE %d BALL %d\n", m_iScore, Table::getInstance()->getCurrentBall()+1);
-  } else {
+
+  // Correct bug of ball = 4 at end of game - pnf
+  int nCurrentBall = Table::getInstance()->getCurrentBall() + 1;
+  if (nCurrentBall < 4)
+  {
+    sprintf(buffer, "SCORE %d BALL %d\n", m_iScore, nCurrentBall);
+  }
+  else
+  {
     sprintf(buffer, "SCORE %d", m_iScore);
   }
+
   m_Font->printRow(buffer, 0);
   if (Config::getInstance()->getShowFPS()) {
 #if EM_DEBUG
@@ -142,4 +151,13 @@ void Score::clear() {
   Table::getInstance()->setCurrentBall(0);
   m_iInfoDelay = -1;
   m_iScore = 0;
+}
+
+// Tests for a high score, if test positive asks for the user name
+void Score::testForHighScore()
+{
+  // If it's a high score
+  if (Table::getInstance()->isItHighScore(m_iScore))
+  {
+  }
 }
