@@ -1,0 +1,153 @@
+walls
+ data/tablestd.emi
+ data/tablestd.emi
+ 0 0 0
+ 0 0 0
+ 0 0 0
+end
+bumper
+?
+?
+ 0 0 0
+ 0 0 0
+ 0 0 0
+ light
+ 0 4 0
+ 1 1 1
+end
+bumper
+?
+?
+ 10 0 -10
+ 0 0 0
+ 0 0 0
+ light
+ 0 4 0
+ 1 1 1
+end
+bumper
+?
+?
+ -10 0 -10
+ 0 0 0
+ 0 0 0
+ light
+ 0 4 0
+ 1 1 1
+end
+bumper
+?
+?
+ 5 0 -15
+ 0 0 0
+ 0 0 0
+ light
+ 0 4 0
+ 1 1 1
+end
+bumper
+? 
+?
+ -5 0 -15
+ 0 0 0
+ 0 0 0
+ light
+ 0 4 0
+ 1 1 1
+end
+bumper
+?
+?
+ -2 0 30
+ 0 0 0
+ 0 0 0
+ light
+ 0 4 0
+ 1 1 1
+end
+bumper
+?
+?
+ 2 0 30
+ 0 0 0 
+ 0 0 0 
+ light
+ 0 4 0 
+ 1 1 1
+end
+bumper
+ ?
+ ?
+ -5 0 -30
+ 0 0 0
+ 0 0 0
+ light
+ 0 4 0
+ 1 1 1
+end
+bumper
+ ?
+ ?
+ 5 0 -30
+ 0 0 0
+ 0 0 0
+ light
+ 0 4 0
+ 1 1 1
+end
+bumper
+ ?
+ ?
+ -12 0 -25
+ 0 0 0
+ 0 0 0
+ light
+ 0 4 0
+ 1 1 1
+end
+bumper
+ ?
+ ?
+ 12 0 -25
+ 0 0 0
+ 0 0 0
+ light
+ 0 4 0
+ 1 1 1
+end
+flatbumper
+ ?
+ ?
+ -11.2 0 10.5
+ 0 -0.075 0.25
+ 0 0 0
+ light
+ 0 2 0
+ 1 1 1
+end
+flatbumper
+ ?
+ ?
+ 11.2 0 10.5
+ 0 -0.425 0.25
+ 0 0 0
+ light
+ 0 2 0
+ 1 1 1
+end
+cave
+ ?
+ ?
+ -18 0 -6
+ 0 0.07 0.25
+ 0 0 0
+ light
+ 0 0 0
+ 1 1 1
+ animation
+ type_light
+ 2
+ 10
+ 1 1 0
+ 0.5 0.5 0.5
+end

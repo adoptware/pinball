@@ -1,0 +1,570 @@
+# Makefile.in generated automatically by automake 1.4 from Makefile.am
+
+# Copyright (C) 1994, 1995-8, 1999 Free Software Foundation, Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+
+SHELL = @SHELL@
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+sysconfdir = @sysconfdir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+includedir = @includedir@
+oldincludedir = /usr/include
+
+DESTDIR =
+
+pkgdatadir = $(datadir)/@PACKAGE@
+pkglibdir = $(libdir)/@PACKAGE@
+pkgincludedir = $(includedir)/@PACKAGE@
+
+top_builddir = ..
+
+ACLOCAL = @ACLOCAL@
+AUTOCONF = @AUTOCONF@
+AUTOMAKE = @AUTOMAKE@
+AUTOHEADER = @AUTOHEADER@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@ $(AM_INSTALL_PROGRAM_FLAGS)
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+transform = @program_transform_name@
+
+NORMAL_INSTALL = :
+PRE_INSTALL = :
+POST_INSTALL = :
+NORMAL_UNINSTALL = :
+PRE_UNINSTALL = :
+POST_UNINSTALL = :
+host_alias = @host_alias@
+host_triplet = @host@
+AS = @AS@
+CC = @CC@
+CXX = @CXX@
+DLLTOOL = @DLLTOOL@
+LIBTOOL = @LIBTOOL@
+LN_S = @LN_S@
+MAKEINFO = @MAKEINFO@
+OBJDUMP = @OBJDUMP@
+PACKAGE = @PACKAGE@
+RANLIB = @RANLIB@
+VERSION = @VERSION@
+
+AUTOMAKE_OPTIONS = gnu
+
+noinst_PROGRAMS = simple texture font load key big joy alpha light anim math meny sound camera billboard explode fire signal collision thread
+
+INCLUDES = -I../base -I../addon -I../visitor
+LDADD = ../base/libemilia_base.a ../addon/libemilia_addon.a ../visitor/libemilia_visitor.a 
+
+simple_SOURCES = simple.cpp
+
+texture_SOURCES = texture.cpp
+
+font_SOURCES = font.cpp
+
+load_SOURCES = load.cpp
+
+key_SOURCES = key.cpp
+
+big_SOURCES = big.cpp
+
+joy_SOURCES = joy.cpp
+
+alpha_SOURCES = alpha.cpp
+
+light_SOURCES = light.cpp
+
+anim_SOURCES = anim.cpp
+
+math_SOURCES = math.cpp
+
+meny_SOURCES = meny.cpp
+
+sound_SOURCES = sound.cpp
+
+camera_SOURCES = camera.cpp
+
+billboard_SOURCES = billboard.cpp
+
+explode_SOURCES = explode.cpp
+
+fire_SOURCES = fire.cpp
+
+signal_SOURCES = signal.cpp
+
+collision_SOURCES = collision.cpp
+
+thread_SOURCES = thread.cpp
+mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+CONFIG_CLEAN_FILES = 
+PROGRAMS =  $(noinst_PROGRAMS)
+
+
+DEFS = @DEFS@ -I. -I$(srcdir) 
+CPPFLAGS = @CPPFLAGS@
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+X_CFLAGS = @X_CFLAGS@
+X_LIBS = @X_LIBS@
+X_EXTRA_LIBS = @X_EXTRA_LIBS@
+X_PRE_LIBS = @X_PRE_LIBS@
+simple_OBJECTS =  simple.o
+simple_LDADD = $(LDADD)
+simple_DEPENDENCIES =  ../base/libemilia_base.a \
+../addon/libemilia_addon.a ../visitor/libemilia_visitor.a
+simple_LDFLAGS = 
+texture_OBJECTS =  texture.o
+texture_LDADD = $(LDADD)
+texture_DEPENDENCIES =  ../base/libemilia_base.a \
+../addon/libemilia_addon.a ../visitor/libemilia_visitor.a
+texture_LDFLAGS = 
+font_OBJECTS =  font.o
+font_LDADD = $(LDADD)
+font_DEPENDENCIES =  ../base/libemilia_base.a ../addon/libemilia_addon.a \
+../visitor/libemilia_visitor.a
+font_LDFLAGS = 
+load_OBJECTS =  load.o
+load_LDADD = $(LDADD)
+load_DEPENDENCIES =  ../base/libemilia_base.a ../addon/libemilia_addon.a \
+../visitor/libemilia_visitor.a
+load_LDFLAGS = 
+key_OBJECTS =  key.o
+key_LDADD = $(LDADD)
+key_DEPENDENCIES =  ../base/libemilia_base.a ../addon/libemilia_addon.a \
+../visitor/libemilia_visitor.a
+key_LDFLAGS = 
+big_OBJECTS =  big.o
+big_LDADD = $(LDADD)
+big_DEPENDENCIES =  ../base/libemilia_base.a ../addon/libemilia_addon.a \
+../visitor/libemilia_visitor.a
+big_LDFLAGS = 
+joy_OBJECTS =  joy.o
+joy_LDADD = $(LDADD)
+joy_DEPENDENCIES =  ../base/libemilia_base.a ../addon/libemilia_addon.a \
+../visitor/libemilia_visitor.a
+joy_LDFLAGS = 
+alpha_OBJECTS =  alpha.o
+alpha_LDADD = $(LDADD)
+alpha_DEPENDENCIES =  ../base/libemilia_base.a \
+../addon/libemilia_addon.a ../visitor/libemilia_visitor.a
+alpha_LDFLAGS = 
+light_OBJECTS =  light.o
+light_LDADD = $(LDADD)
+light_DEPENDENCIES =  ../base/libemilia_base.a \
+../addon/libemilia_addon.a ../visitor/libemilia_visitor.a
+light_LDFLAGS = 
+anim_OBJECTS =  anim.o
+anim_LDADD = $(LDADD)
+anim_DEPENDENCIES =  ../base/libemilia_base.a ../addon/libemilia_addon.a \
+../visitor/libemilia_visitor.a
+anim_LDFLAGS = 
+math_OBJECTS =  math.o
+math_LDADD = $(LDADD)
+math_DEPENDENCIES =  ../base/libemilia_base.a ../addon/libemilia_addon.a \
+../visitor/libemilia_visitor.a
+math_LDFLAGS = 
+meny_OBJECTS =  meny.o
+meny_LDADD = $(LDADD)
+meny_DEPENDENCIES =  ../base/libemilia_base.a ../addon/libemilia_addon.a \
+../visitor/libemilia_visitor.a
+meny_LDFLAGS = 
+sound_OBJECTS =  sound.o
+sound_LDADD = $(LDADD)
+sound_DEPENDENCIES =  ../base/libemilia_base.a \
+../addon/libemilia_addon.a ../visitor/libemilia_visitor.a
+sound_LDFLAGS = 
+camera_OBJECTS =  camera.o
+camera_LDADD = $(LDADD)
+camera_DEPENDENCIES =  ../base/libemilia_base.a \
+../addon/libemilia_addon.a ../visitor/libemilia_visitor.a
+camera_LDFLAGS = 
+billboard_OBJECTS =  billboard.o
+billboard_LDADD = $(LDADD)
+billboard_DEPENDENCIES =  ../base/libemilia_base.a \
+../addon/libemilia_addon.a ../visitor/libemilia_visitor.a
+billboard_LDFLAGS = 
+explode_OBJECTS =  explode.o
+explode_LDADD = $(LDADD)
+explode_DEPENDENCIES =  ../base/libemilia_base.a \
+../addon/libemilia_addon.a ../visitor/libemilia_visitor.a
+explode_LDFLAGS = 
+fire_OBJECTS =  fire.o
+fire_LDADD = $(LDADD)
+fire_DEPENDENCIES =  ../base/libemilia_base.a ../addon/libemilia_addon.a \
+../visitor/libemilia_visitor.a
+fire_LDFLAGS = 
+signal_OBJECTS =  signal.o
+signal_LDADD = $(LDADD)
+signal_DEPENDENCIES =  ../base/libemilia_base.a \
+../addon/libemilia_addon.a ../visitor/libemilia_visitor.a
+signal_LDFLAGS = 
+collision_OBJECTS =  collision.o
+collision_LDADD = $(LDADD)
+collision_DEPENDENCIES =  ../base/libemilia_base.a \
+../addon/libemilia_addon.a ../visitor/libemilia_visitor.a
+collision_LDFLAGS = 
+thread_OBJECTS =  thread.o
+thread_LDADD = $(LDADD)
+thread_DEPENDENCIES =  ../base/libemilia_base.a \
+../addon/libemilia_addon.a ../visitor/libemilia_visitor.a
+thread_LDFLAGS = 
+CXXFLAGS = @CXXFLAGS@
+CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+LTCXXCOMPILE = $(LIBTOOL) --mode=compile $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+CXXLD = $(CXX)
+CXXLINK = $(LIBTOOL) --mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@
+DIST_COMMON =  Makefile.am Makefile.in
+
+
+DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
+
+TAR = gtar
+GZIP_ENV = --best
+DEP_FILES =  .deps/alpha.P .deps/anim.P .deps/big.P .deps/billboard.P \
+.deps/camera.P .deps/collision.P .deps/explode.P .deps/fire.P \
+.deps/font.P .deps/joy.P .deps/key.P .deps/light.P .deps/load.P \
+.deps/math.P .deps/meny.P .deps/signal.P .deps/simple.P .deps/sound.P \
+.deps/texture.P .deps/thread.P
+SOURCES = $(simple_SOURCES) $(texture_SOURCES) $(font_SOURCES) $(load_SOURCES) $(key_SOURCES) $(big_SOURCES) $(joy_SOURCES) $(alpha_SOURCES) $(light_SOURCES) $(anim_SOURCES) $(math_SOURCES) $(meny_SOURCES) $(sound_SOURCES) $(camera_SOURCES) $(billboard_SOURCES) $(explode_SOURCES) $(fire_SOURCES) $(signal_SOURCES) $(collision_SOURCES) $(thread_SOURCES)
+OBJECTS = $(simple_OBJECTS) $(texture_OBJECTS) $(font_OBJECTS) $(load_OBJECTS) $(key_OBJECTS) $(big_OBJECTS) $(joy_OBJECTS) $(alpha_OBJECTS) $(light_OBJECTS) $(anim_OBJECTS) $(math_OBJECTS) $(meny_OBJECTS) $(sound_OBJECTS) $(camera_OBJECTS) $(billboard_OBJECTS) $(explode_OBJECTS) $(fire_OBJECTS) $(signal_OBJECTS) $(collision_OBJECTS) $(thread_OBJECTS)
+
+all: all-redirect
+.SUFFIXES:
+.SUFFIXES: .S .c .cpp .lo .o .s
+$(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu test/Makefile
+
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
+	cd $(top_builddir) \
+	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
+
+
+mostlyclean-noinstPROGRAMS:
+
+clean-noinstPROGRAMS:
+	-test -z "$(noinst_PROGRAMS)" || rm -f $(noinst_PROGRAMS)
+
+distclean-noinstPROGRAMS:
+
+maintainer-clean-noinstPROGRAMS:
+
+.s.o:
+	$(COMPILE) -c $<
+
+.S.o:
+	$(COMPILE) -c $<
+
+mostlyclean-compile:
+	-rm -f *.o core *.core
+
+clean-compile:
+
+distclean-compile:
+	-rm -f *.tab.c
+
+maintainer-clean-compile:
+
+.s.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+.S.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+mostlyclean-libtool:
+	-rm -f *.lo
+
+clean-libtool:
+	-rm -rf .libs _libs
+
+distclean-libtool:
+
+maintainer-clean-libtool:
+
+simple: $(simple_OBJECTS) $(simple_DEPENDENCIES)
+	@rm -f simple
+	$(CXXLINK) $(simple_LDFLAGS) $(simple_OBJECTS) $(simple_LDADD) $(LIBS)
+
+texture: $(texture_OBJECTS) $(texture_DEPENDENCIES)
+	@rm -f texture
+	$(CXXLINK) $(texture_LDFLAGS) $(texture_OBJECTS) $(texture_LDADD) $(LIBS)
+
+font: $(font_OBJECTS) $(font_DEPENDENCIES)
+	@rm -f font
+	$(CXXLINK) $(font_LDFLAGS) $(font_OBJECTS) $(font_LDADD) $(LIBS)
+
+load: $(load_OBJECTS) $(load_DEPENDENCIES)
+	@rm -f load
+	$(CXXLINK) $(load_LDFLAGS) $(load_OBJECTS) $(load_LDADD) $(LIBS)
+
+key: $(key_OBJECTS) $(key_DEPENDENCIES)
+	@rm -f key
+	$(CXXLINK) $(key_LDFLAGS) $(key_OBJECTS) $(key_LDADD) $(LIBS)
+
+big: $(big_OBJECTS) $(big_DEPENDENCIES)
+	@rm -f big
+	$(CXXLINK) $(big_LDFLAGS) $(big_OBJECTS) $(big_LDADD) $(LIBS)
+
+joy: $(joy_OBJECTS) $(joy_DEPENDENCIES)
+	@rm -f joy
+	$(CXXLINK) $(joy_LDFLAGS) $(joy_OBJECTS) $(joy_LDADD) $(LIBS)
+
+alpha: $(alpha_OBJECTS) $(alpha_DEPENDENCIES)
+	@rm -f alpha
+	$(CXXLINK) $(alpha_LDFLAGS) $(alpha_OBJECTS) $(alpha_LDADD) $(LIBS)
+
+light: $(light_OBJECTS) $(light_DEPENDENCIES)
+	@rm -f light
+	$(CXXLINK) $(light_LDFLAGS) $(light_OBJECTS) $(light_LDADD) $(LIBS)
+
+anim: $(anim_OBJECTS) $(anim_DEPENDENCIES)
+	@rm -f anim
+	$(CXXLINK) $(anim_LDFLAGS) $(anim_OBJECTS) $(anim_LDADD) $(LIBS)
+
+math: $(math_OBJECTS) $(math_DEPENDENCIES)
+	@rm -f math
+	$(CXXLINK) $(math_LDFLAGS) $(math_OBJECTS) $(math_LDADD) $(LIBS)
+
+meny: $(meny_OBJECTS) $(meny_DEPENDENCIES)
+	@rm -f meny
+	$(CXXLINK) $(meny_LDFLAGS) $(meny_OBJECTS) $(meny_LDADD) $(LIBS)
+
+sound: $(sound_OBJECTS) $(sound_DEPENDENCIES)
+	@rm -f sound
+	$(CXXLINK) $(sound_LDFLAGS) $(sound_OBJECTS) $(sound_LDADD) $(LIBS)
+
+camera: $(camera_OBJECTS) $(camera_DEPENDENCIES)
+	@rm -f camera
+	$(CXXLINK) $(camera_LDFLAGS) $(camera_OBJECTS) $(camera_LDADD) $(LIBS)
+
+billboard: $(billboard_OBJECTS) $(billboard_DEPENDENCIES)
+	@rm -f billboard
+	$(CXXLINK) $(billboard_LDFLAGS) $(billboard_OBJECTS) $(billboard_LDADD) $(LIBS)
+
+explode: $(explode_OBJECTS) $(explode_DEPENDENCIES)
+	@rm -f explode
+	$(CXXLINK) $(explode_LDFLAGS) $(explode_OBJECTS) $(explode_LDADD) $(LIBS)
+
+fire: $(fire_OBJECTS) $(fire_DEPENDENCIES)
+	@rm -f fire
+	$(CXXLINK) $(fire_LDFLAGS) $(fire_OBJECTS) $(fire_LDADD) $(LIBS)
+
+signal: $(signal_OBJECTS) $(signal_DEPENDENCIES)
+	@rm -f signal
+	$(CXXLINK) $(signal_LDFLAGS) $(signal_OBJECTS) $(signal_LDADD) $(LIBS)
+
+collision: $(collision_OBJECTS) $(collision_DEPENDENCIES)
+	@rm -f collision
+	$(CXXLINK) $(collision_LDFLAGS) $(collision_OBJECTS) $(collision_LDADD) $(LIBS)
+
+thread: $(thread_OBJECTS) $(thread_DEPENDENCIES)
+	@rm -f thread
+	$(CXXLINK) $(thread_LDFLAGS) $(thread_OBJECTS) $(thread_LDADD) $(LIBS)
+.cpp.o:
+	$(CXXCOMPILE) -c $<
+.cpp.lo:
+	$(LTCXXCOMPILE) -c $<
+
+tags: TAGS
+
+ID: $(HEADERS) $(SOURCES) $(LISP)
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	here=`pwd` && cd $(srcdir) \
+	  && mkid -f$$here/ID $$unique $(LISP)
+
+TAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) $(LISP)
+	tags=; \
+	here=`pwd`; \
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	test -z "$(ETAGS_ARGS)$$unique$(LISP)$$tags" \
+	  || (cd $(srcdir) && etags $(ETAGS_ARGS) $$tags  $$unique $(LISP) -o $$here/TAGS)
+
+mostlyclean-tags:
+
+clean-tags:
+
+distclean-tags:
+	-rm -f TAGS ID
+
+maintainer-clean-tags:
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+
+subdir = test
+
+distdir: $(DISTFILES)
+	here=`cd $(top_builddir) && pwd`; \
+	top_distdir=`cd $(top_distdir) && pwd`; \
+	distdir=`cd $(distdir) && pwd`; \
+	cd $(top_srcdir) \
+	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu test/Makefile
+	@for file in $(DISTFILES); do \
+	  d=$(srcdir); \
+	  if test -d $$d/$$file; then \
+	    cp -pr $$d/$$file $(distdir)/$$file; \
+	  else \
+	    test -f $(distdir)/$$file \
+	    || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
+	    || cp -p $$d/$$file $(distdir)/$$file || :; \
+	  fi; \
+	done
+
+DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
+
+-include $(DEP_FILES)
+
+mostlyclean-depend:
+
+clean-depend:
+
+distclean-depend:
+	-rm -rf .deps
+
+maintainer-clean-depend:
+
+%.o: %.c
+	@echo '$(COMPILE) -c $<'; \
+	$(COMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-cp .deps/$(*F).pp .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm .deps/$(*F).pp
+
+%.lo: %.c
+	@echo '$(LTCOMPILE) -c $<'; \
+	$(LTCOMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-sed -e 's/^\([^:]*\)\.o[ 	]*:/\1.lo \1.o :/' \
+	  < .deps/$(*F).pp > .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm -f .deps/$(*F).pp
+
+%.o: %.cpp
+	@echo '$(CXXCOMPILE) -c $<'; \
+	$(CXXCOMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-cp .deps/$(*F).pp .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm .deps/$(*F).pp
+
+%.lo: %.cpp
+	@echo '$(LTCXXCOMPILE) -c $<'; \
+	$(LTCXXCOMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-sed -e 's/^\([^:]*\)\.o[ 	]*:/\1.lo \1.o :/' \
+	  < .deps/$(*F).pp > .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm -f .deps/$(*F).pp
+info-am:
+info: info-am
+dvi-am:
+dvi: dvi-am
+check-am: all-am
+check: check-am
+installcheck-am:
+installcheck: installcheck-am
+install-exec-am:
+install-exec: install-exec-am
+
+install-data-am:
+install-data: install-data-am
+
+install-am: all-am
+	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+install: install-am
+uninstall-am:
+uninstall: uninstall-am
+all-am: Makefile $(PROGRAMS)
+all-redirect: all-am
+install-strip:
+	$(MAKE) $(AM_MAKEFLAGS) AM_INSTALL_PROGRAM_FLAGS=-s install
+installdirs:
+
+
+mostlyclean-generic:
+
+clean-generic:
+
+distclean-generic:
+	-rm -f Makefile $(CONFIG_CLEAN_FILES)
+	-rm -f config.cache config.log stamp-h stamp-h[0-9]*
+
+maintainer-clean-generic:
+mostlyclean-am:  mostlyclean-noinstPROGRAMS mostlyclean-compile \
+		mostlyclean-libtool mostlyclean-tags mostlyclean-depend \
+		mostlyclean-generic
+
+mostlyclean: mostlyclean-am
+
+clean-am:  clean-noinstPROGRAMS clean-compile clean-libtool clean-tags \
+		clean-depend clean-generic mostlyclean-am
+
+clean: clean-am
+
+distclean-am:  distclean-noinstPROGRAMS distclean-compile \
+		distclean-libtool distclean-tags distclean-depend \
+		distclean-generic clean-am
+	-rm -f libtool
+
+distclean: distclean-am
+
+maintainer-clean-am:  maintainer-clean-noinstPROGRAMS \
+		maintainer-clean-compile maintainer-clean-libtool \
+		maintainer-clean-tags maintainer-clean-depend \
+		maintainer-clean-generic distclean-am
+	@echo "This command is intended for maintainers to use;"
+	@echo "it deletes files that may require special tools to rebuild."
+
+maintainer-clean: maintainer-clean-am
+
+.PHONY: mostlyclean-noinstPROGRAMS distclean-noinstPROGRAMS \
+clean-noinstPROGRAMS maintainer-clean-noinstPROGRAMS \
+mostlyclean-compile distclean-compile clean-compile \
+maintainer-clean-compile mostlyclean-libtool distclean-libtool \
+clean-libtool maintainer-clean-libtool tags mostlyclean-tags \
+distclean-tags clean-tags maintainer-clean-tags distdir \
+mostlyclean-depend distclean-depend clean-depend \
+maintainer-clean-depend info-am info dvi-am dvi check check-am \
+installcheck-am installcheck install-exec-am install-exec \
+install-data-am install-data install-am install uninstall-am uninstall \
+all-redirect all-am all installdirs mostlyclean-generic \
+distclean-generic clean-generic maintainer-clean-generic clean \
+mostlyclean distclean maintainer-clean
+
+
+dnl joy_LDADD =
+
+# Tell versions [3.59,3.63) of GNU make to not export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

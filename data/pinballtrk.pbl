@@ -1,0 +1,27 @@
+walls
+ data/tbltruck.emi
+ data/tbltruck.emi
+ 0 0 0
+ 0 0 0
+ 0 0 0
+end
+flatbumper
+ ?
+ ?
+ -11.2 0 10.5
+ 0 -0.075 0.25
+ 0 0 0
+ light
+ 0 2 0
+ 1 1 1
+end
+flatbumper
+ ?
+ ?
+ 11.2 0 10.5
+ 0 -0.425 0.25
+ 0 0 0
+ light
+ 0 2 0
+ 1 1 1
+end
