@@ -176,7 +176,7 @@ public:
       // bump
     ElseOnSignal(m_sigBump) {
       score->addScore(450 * m_iMultiplier);
-      score->setInfoText("bump", 200);
+      //score->setInfoText("bump", 200);
     } 
       // LINUX
     ElseOnSignal(m_sigLinux[0]) {

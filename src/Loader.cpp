@@ -261,8 +261,8 @@ void Loader::loadProperties(ifstream & file, istringstream & ist, Group * group)
 				 for (int a=0; a<group->getShape3DSize(); a++) {
 				 Shape3D* shape = group->getShape3D(a);
 				 shape->setProperty(EM_SHAPE3D_USE_TRANS);
-				 vector<Polygon*>::iterator polyIter = shape->m_vPolygon.begin();
-				 vector<Polygon*>::iterator polyEnd = shape->m_vPolygon.end();
+				 vector<Polygon3D*>::iterator polyIter = shape->m_vPolygon.begin();
+				 vector<Polygon3D*>::iterator polyEnd = shape->m_vPolygon.end();
 				 for (; polyIter != polyEnd; polyIter++) {
 				 (*polyIter)->setProperty(EM_POLY_TRANS);
 				 }
@@ -793,7 +793,7 @@ void Loader::readUnknown(ifstream & file, istringstream & ist) {
 void Loader::readPolygon(ifstream & file, istringstream & ist, Shape3D* shape) {
   EM_COUT("Loader::readPolygon", 0);
   string str;
-  Polygon * poly = new Polygon(shape);
+  Polygon3D * poly = new Polygon3D(shape);
 
   EmReadCmp(file, ist, str, "{");
 
@@ -822,7 +822,7 @@ void Loader::readPolygon(ifstream & file, istringstream & ist, Shape3D* shape) {
   shape->add(poly);
 }
 
-void Loader::readPolygonEdge(ifstream & file, istringstream & ist, Polygon* poly) {
+void Loader::readPolygonEdge(ifstream & file, istringstream & ist, Polygon3D* poly) {
   EM_COUT("Loader::readPolygonEdge", 0);
   string str;
   int i;
