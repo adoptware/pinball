@@ -1,3 +1,4 @@
+//#ident "$Id: Cone.cpp,v 1.8 2003/05/12 12:17:58 rzr Exp $"
 /***************************************************************************
                           Cone.cpp  -  description
                              -------------------
@@ -21,13 +22,13 @@ Cone::Cone(float fSize, int sides, float fR, float fG, float fB, float fA) : Sha
 							 fR, fG, fB, fA, 0.0f, 0.0f);
 	}	
 	// The ring of polygons.
-	for (int a=1; a<sides; ++a)	{
+	{ for (int a=1; a<sides; ++a)	{
 		p = new Polygon3D(this, 3);
 		p->add(0);
 		p->add(a+1);
 		p->add(a);
 		this->add(p);
-	}
+	} }
 	// the last one
 	p = new Polygon3D(this, 3);
 	p->add(0);
@@ -36,9 +37,9 @@ Cone::Cone(float fSize, int sides, float fR, float fG, float fB, float fA) : Sha
 	this->add(p);
 	// The bottom of the cone.
 	p = new Polygon3D(this, sides);
-	for (int a=0; a<sides; ++a) {
+	{ for (int a=0; a<sides; ++a) {
 		p->add(a+1);
-	}
+	} }
 	this->add(p);
 	
 	this->countNormals();

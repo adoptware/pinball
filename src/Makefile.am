@@ -57,6 +57,6 @@ wpinball.exe:  ${pinball_OBJECTS} ${pinball_DEPENDENCIES}
  -lSDL_image -lSDLmain -lSDL \
  -lglu32 -lopengl32 -ljpeg -lpng  \
  -lwinmm -luser32 -lgdi32 -ldxguid   \
- -lmingw32 -lSDLmain -lSDL -lstdc++ -mwindows \
+ -lmingw32 -lSDLmain -lSDL  -mwindows \
  -L${GCCLOCALDIR}../lib
-# !-rzr : # have to solve it later
+# !-rzr : # have to solve it later # -lstdc++

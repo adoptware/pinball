@@ -1,3 +1,4 @@
+//#ident "$Id: Config.cpp,v 1.25 2003/05/12 12:17:58 rzr Exp $"
 /***************************************************************************
                           Config.cpp  -  description
                              -------------------
@@ -374,7 +375,9 @@ void Config::loadArgs(int & argc, char *argv[]) {
 }
 
 ///!+rzr this workaround Full path to relative ones, usefull for windows port
-bool isAbsolutePath(char const * const argv0 ) { //!+rzr
+bool isAbsolutePath(char const * const argv0 ) ; 
+bool isAbsolutePath(char const * const argv0 ) 
+{
   //EM_COUT(" check root drive c:\\ // absolute path -  check for wine ?", 42);
 #ifdef WIN32
 	// assert (strlen (argv0) > 3 );
