@@ -17,7 +17,7 @@ class Cone : public Shape3D {
  public:
 	/** Cone(size, r, g, b, a). Color given by r, g, b and a. You must enable
 	 * transparency to use the alpha color. */
-	Cone(float size, float r, float g, float b, float a);
+	Cone(float size, int sides, float r, float g, float b, float a);
 };
 
 #endif // CONE_H
