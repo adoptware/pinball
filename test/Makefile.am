@@ -1,18 +1,18 @@
 AUTOMAKE_OPTIONS = gnu
 
+testlibdir = $(EM_LIBDIR)
 testdatadir = $(pkgdatadir)
 
 noinst_PROGRAMS = simple light texture load explode collision signal billboard font thread menu joy sound trans math misc varray unittest
 dnl noinst_PROGRAMS = unittest
 
-INCLUDES = -I../base -I../addon -I../visitor -I../src @INCLTDL@
-dnl LDADD = ../src/libemilia_pin.la ../addon/libemilia_addon.la ../base/libemilia_base.la
+INCLUDES = -I../base -I../addon -I../src @INCLTDL@
 LDADD = ../src/libemilia_pin.a ../addon/libemilia_addon.a ../base/libemilia_base.a @LIBLTDL@
 
-testdata_LTLIBRARIES = libmodule_test.la
+testlib_LTLIBRARIES = libModuleTest.la
 
-libmodule_test_la_LDFLAGS = -module
-libmodule_test_la_SOURCES = moduletest.cpp
+libModuleTest_la_LDFLAGS = -module
+libModuleTest_la_SOURCES = moduletest.cpp
 
 unittest_LDFLAGS += -export-dynamic
 load_LDFLAGS += -export-dynamic

@@ -17,7 +17,7 @@ ColorBehavior::ColorBehavior() : Behavior() {
 ColorBehavior::~ColorBehavior() {
 }
 
-void ColorBehavior::onCollision(const Vertex3D & vtxWall, const Vertex3D & vtxOwn, Group * g) {
+void ColorBehavior::onCollision(const Vertex3D &, const Vertex3D &, Group *) {
 	EmAssert(this->getParent() != NULL, "ColorBehavior::onCollision parent NULL");
 	EM_COUT("ColorBehavior::onCollision()" << endl, 0);
 	if (this->getParent() != NULL) {

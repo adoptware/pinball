@@ -1,11 +1,8 @@
 AUTOMAKE_OPTIONS = gnu
 
-noinst_LIBRARIES = libemilia_addon.a
-dnl noinst_LTLIBRARIES = libemilia_addon.la
+pkglib_LIBRARIES = libemilia_addon.a
 
-dnl libemilia_addon_la_LDFLAGS = -static
-
-INCLUDES = -I../base -I../visitor
+INCLUDES = -I../base
 
 libemilia_addon_a_SOURCES = \
 BigSphere.cpp \
@@ -21,9 +18,7 @@ Sphere.cpp \
 StdAnimation.cpp \
 TexAnimation.cpp
 
-dnl libemilia_addon_la_SOURCES = $(libemilia_addon_a_SOURCES)
-
-noinst_HEADERS = \
+pkginclude_HEADERS = \
 BigSphere.h \
 ColorBehavior.h \
 Cone.h \

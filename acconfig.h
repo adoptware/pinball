@@ -5,6 +5,8 @@
 
 #undef EM_DATADIR
 
+#undef EM_LIBDIR
+
 #undef EM_USE_2D_COLLISIONBOUNDS
 
 #undef EM_OPENGL_LIGHTS

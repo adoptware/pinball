@@ -332,8 +332,8 @@ void Loader::loadArmBehavior(ifstream & file, istringstream & ist, Group * group
 	EmReadCmp(file, ist, str, "}");
 }
 
-void Loader::loadAnimation(ifstream & file, istringstream & ist, 
-													 Engine * engine, Group * group, Behavior * beh) {
+void Loader::loadAnimation(ifstream & file, istringstream & ist, Engine *, 
+													 Group * group, Behavior * beh) {
 	EM_COUT("Loader::loadAnimation", 0);
 
 	string str;
@@ -582,7 +582,7 @@ void Loader::loadStateBehavior(ifstream & file, istringstream & ist, Engine * en
  ** Script loading
  ****************************************************************/
 
-void Loader::loadScript(ifstream & file, istringstream & ist, Engine * engine, Group * group) {
+void Loader::loadScript(ifstream & file, istringstream & ist, Engine *, Group * group) {
 	EM_COUT("Loader::loadScript", 0);
 	EmAssert(group != NULL, "Group NULL in loadMisc");
 
@@ -638,37 +638,39 @@ void Loader::loadScript(ifstream & file, istringstream & ist, Engine * engine, G
  ** Module (plugin) loading
  ****************************************************************/
 
-void Loader::loadModule(ifstream & file, istringstream & ist, Engine * engine, Group * group) {
-	EM_COUT("Loader::loadModule", 1);
-	EmAssert(group != NULL, "Group NULL in loadMisc");
-
-	string str;
-
-	EmReadCmp(file, ist, str, "{");
-	this->readNextToken(file, ist, str);
-	string filename = string(Config::getInstance()->getDataSubDir()) + "/" + str;
-
-	if (m_bModules) {
-		lt_dlhandle handle = lt_dlopen(filename.c_str());
-		if (handle == NULL) {
-			throw (string("Could not open shared library: ") + string(lt_dlerror())); 
-		} else {
-			lt_ptr fct_ptr = lt_dlsym(handle, "new_object_fct");
-			if (fct_ptr == NULL) {
-				throw (string("Could not find symbol 'new_object_fct' in library") + string(lt_dlerror()));
-			} else {
-				Behavior * beh = (Behavior*) ((void * (*)(void))fct_ptr)();
-				if (beh == NULL) {
-					throw string("Could not allocate behavior object");
-				} else {
-					group->setBehavior(beh);
-				}
-			}
-		}
+void Loader::loadModule(ifstream & file, istringstream & ist, Engine *, Group * group) {
+  EM_COUT("Loader::loadModule", 1);
+  EmAssert(group != NULL, "Group NULL in loadMisc");
+  
+  string str;
+  
+  EmReadCmp(file, ist, str, "{");
+  this->readNextToken(file, ist, str);
+  //string filename = string(Config::getInstance()->getDataSubDir()) + "/" + str;
+  string filename = string(EM_LIBDIR) + "/" + str;
+  
+  if (m_bModules) {
+    lt_dlhandle handle = lt_dlopen(filename.c_str());
+    if (handle == NULL) {
+      throw (string("Could not open shared library: ") + filename + 
+	     " : " + string(lt_dlerror())); 
+    } else {
+      lt_ptr fct_ptr = lt_dlsym(handle, "new_object_fct");
+      if (fct_ptr == NULL) {
+	throw (string("Could not find symbol 'new_object_fct' in library") + string(lt_dlerror()));
+      } else {
+	Behavior * beh = (Behavior*) ((void * (*)(void))fct_ptr)();
+	if (beh == NULL) {
+	  throw string("Could not allocate behavior object");
 	} else {
-		group->setBehavior(new FakeModuleBehavior(filename.c_str()));
+					group->setBehavior(beh);
 	}
-	EmReadCmp(file, ist, str, "}");
+      }
+    }
+  } else {
+    group->setBehavior(new FakeModuleBehavior(filename.c_str()));
+  }
+  EmReadCmp(file, ist, str, "}");
 }
 
 /****************************************************************
@@ -741,7 +743,7 @@ Group * Loader::loadStdObject(ifstream & file, istringstream & ist, Engine * eng
  ** Shape specific loads
  ****************************************************************/
 
-void Loader::loadShape(ifstream & file, istringstream & ist, Engine * engine, Group * group, Behavior * beh) {
+void Loader::loadShape(ifstream & file, istringstream & ist, Engine *, Group * group, Behavior * beh) {
 	EM_COUT("Loader::loadShape", 0);
 
 	string str;

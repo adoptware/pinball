@@ -52,11 +52,14 @@ int main(int argc, char *argv[]) {
 		g->setBehavior(keyRBeh);
 	}
 		
+	engine->resetTick();
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
-		engine->tick();
-		engine->render();
-		engine->swap();
-		engine->limitFPS(50);
+	  if (engine->nextTickFPS(100)) {
+	    engine->tick();
+	  } else {
+	    engine->render();
+	    engine->swap();
+	  }
 	}
 	delete(engine);
 	return 0;

@@ -1,11 +1,8 @@
 AUTOMAKE_OPTIONS = gnu
 
-noinst_LIBRARIES = libemilia_base.a
-dnl noinst_LTLIBRARIES = libemilia_base.la
+pkglib_LIBRARIES = libemilia_base.a
 
-dnl libemilia_base_la_LDFLAGS = -static -export-dynamic
-
-INCLUDES = -I../addon -I../visitor
+INCLUDES = -I../addon
 
 libemilia_base_a_SOURCES = \
 AlignVisitor.cpp \
@@ -38,9 +35,7 @@ SoundVisitor.cpp \
 TextureUtil.cpp \
 TransformVisitor.cpp
 
-dnl libemilia_base_la_SOURCES = $(libemilia_base_a_SOURCES)
-
-noinst_HEADERS = \
+pkginclude_HEADERS = \
 AlignVisitor.h \
 AllegroVisitor.h \
 AmbientLightVisitor.h \

@@ -7498,7 +7498,7 @@ object lock1 {
       null null -1 -1 -1
       no_move
       no_light
-      sound locklock.wav
+      sound lock.wav
       no_music
       property 1
       no_texcoord
@@ -7575,7 +7575,7 @@ object lock2 {
       null null -1 -1 -1
       no_move
       no_light
-      sound locklock.wav
+      sound lock.wav
       no_music
       property 1
       no_texcoord
@@ -14016,7 +14016,7 @@ object module {
   0 0 0
   0 0 0
   module {
-    libmodule_tux.la
+    libModuleTux.la
   }
   properties {
     transform_once

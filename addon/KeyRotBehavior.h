@@ -18,8 +18,8 @@ class KeyRotBehavior : public Behavior
 	public:
 		KeyRotBehavior();
 		~KeyRotBehavior();
-		virtual void onCollision(const Vertex3D & vtxWall, const Vertex3D & vtxOwn, Group * g) {};
-		virtual void onSignal(int signal, Group * sender) {};
+		virtual void onCollision(const Vertex3D &, const Vertex3D &, Group *) {};
+		virtual void onSignal(int, Group *) {};
 		void onTick();
 };
 

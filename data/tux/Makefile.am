@@ -1,13 +1,14 @@
 AUTOMAKE_OPTIONS = gnu
 
+tuxlibdir = $(EM_LIBDIR)
 tuxdatadir = $(pkgdatadir)/tux
 
-tuxdata_LTLIBRARIES = libmodule_tux.la
+tuxlib_LTLIBRARIES = libModuleTux.la
 
-INCLUDES = -I../../base -I.../../addon -I../../visitor -I../../src
-dnl libmodule_tux_la_LDADD = ../../src/libemilia_pin.a ../../addon/libemilia_addon.a ../../base/libemilia_base.a
-libmodule_tux_la_LDFLAGS = -module
-libmodule_tux_la_SOURCES = ModuleTux.cpp
+INCLUDES = -I../../base -I.../../addon -I../../src
+
+libModuleTux_la_LDFLAGS = -module
+libModuleTux_la_SOURCES = ModuleTux.cpp
 
 tuxdata_DATA = \
 bumphard.wav \
@@ -21,7 +22,7 @@ floor2.png.pcx \
 game.mid \
 gameover.wav \
 intro.mid \
-locklock.wav \
+lock.wav \
 loop.wav \
 floor.pbl \
 intro.mid \

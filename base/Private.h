@@ -10,7 +10,7 @@
 #define PRIVATE_H
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "pinconfig.h"
 #else
 #error "Must have config.h file"
 #endif
@@ -64,9 +64,11 @@ bool operator == (const PolygonEdge & peA, const PolygonEdge & peB) {
 
 #if EM_DEBUG
 #include <iostream>
-  #define EM_COUT(a, level) if (level > 0) { cerr << a << endl; };
+#define EM_COUT(a, level) if (level > 0) { cerr << a << endl; };
+#define EM_CERR(a) cerr << a << endl
 #else
-	#define EM_COUT(a, level)
+#define EM_COUT(a, level)
+#define EM_CERR(a)
 #endif
 
 #if EM_FULL_DEBUG
