@@ -15,4 +15,20 @@
 
 #undef EM_USE_SOURCE_SPECULAR
 
+#undef EM_USE_FAST_FLOAT2INT
+
+#undef EM_USE_QUADTREE
+
 #undef EM_THREADS
+
+#undef EM_USE_SDLIMAGE
+
+#undef EM_USE_SDLMIXER
+
+#undef EM_USE_SDL
+
+#undef EM_USE_ALLEGRO
+
+#undef EM_USE_SHARED_COLOR
+
+#undef EM_UNIT_TEST

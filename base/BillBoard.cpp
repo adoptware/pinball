@@ -6,6 +6,7 @@
     email                : henqvist@excite.com
  ***************************************************************************/
 
+#include "Private.h"
 #include "BillBoard.h"
 
 BillBoard::BillBoard(EmTexture * tex, float sizex, float sizey) {

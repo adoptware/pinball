@@ -6,10 +6,14 @@
     email                : 
  ***************************************************************************/
 
+#include <cstdlib>
+
+#include "Private.h"
 #include "Light.h"
 
 Light::Light(float c, float l, float q, float r, float g, float b) {
 	m_bOn = true;
+	p_Parent = NULL;
 	m_fConstant = EM_MAX(c, 0.0);
 	m_fLinear = EM_MAX(l, 0.0);
 	m_fQuadratic = EM_MAX(q, 0.0);
@@ -21,8 +25,6 @@ Light::Light(float c, float l, float q, float r, float g, float b) {
 	m_vtxSrc.x = 0;
 	m_vtxSrc.y = 0;
 	m_vtxSrc.z = 0;
-	//	m_vtxTrans = {0,0,0};
-	//	m_vtxAlign = {0,0,0};
 }
 
 Light::~Light() {

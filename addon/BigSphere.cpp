@@ -2,10 +2,11 @@
                           BigSphere.cpp  -  description
                              -------------------
     begin                : Wed Jan 26 2000
-    copyright            : (C) 2000 by
-    email                :
+    copyright            : (C) 2000 by Henrik Enqvist
+    email                : henqvist@excite.com
  ***************************************************************************/
 
+#include "Private.h"
 #include "BigSphere.h"
 #include "Polygon.h"
 
@@ -16,18 +17,30 @@
 
 BigSphere::BigSphere(float fSize, int level, float fR, float fG, float fB, float fA) : Shape3D(1, 1) {
 	// top vertex
-	this->add(0, -1*fSize, 0);
+	this->add(0, -1*fSize, 0, 
+						fR, fG, fB, fA,
+						0.0f, 0.0f);
 
 	// front left
-	this->add(-EM_SIN_45*fSize, 0, EM_SIN_45*fSize);
+	this->add(-EM_SIN_45*fSize, 0, EM_SIN_45*fSize,
+						fR, fG, fB, fA,
+						0.0f, 0.0f);
 	// front right
-	this->add(EM_SIN_45*fSize, 0, EM_SIN_45*fSize);
+	this->add(EM_SIN_45*fSize, 0, EM_SIN_45*fSize,
+						fR, fG, fB, fA,
+						0.0f, 0.0f);
 	// back left
-	this->add(EM_SIN_45*fSize, 0, -EM_SIN_45*fSize);
+	this->add(EM_SIN_45*fSize, 0, -EM_SIN_45*fSize,
+						fR, fG, fB, fA,
+						0.0f, 0.0f);
 	// back right
-	this->add(-EM_SIN_45*fSize, 0, -EM_SIN_45*fSize);
+	this->add(-EM_SIN_45*fSize, 0, -EM_SIN_45*fSize,
+						fR, fG, fB, fA,
+						0.0f, 0.0f);
 	// bottom vertex
-	this->add(0, 1*fSize, 0);
+	this->add(0, 1*fSize, 0,
+						fR, fG, fB, fA,
+						0.0f, 0.0f);
 
 	// TODO: Check if this causes a memory leak!!!
 	vector<int> triangles;
@@ -103,13 +116,16 @@ BigSphere::BigSphere(float fSize, int level, float fR, float fG, float fB, float
 			
 			int D, E, F;
 			if ((D = this->find(vtxD.x, vtxD.y, vtxD.z, 0.001)) == -1) {
-				D = this->add(vtxD.x, vtxD.y, vtxD.z);
+				D = this->add(vtxD.x, vtxD.y, vtxD.z,
+											fR, fG, fB, fA,	0.0f, 0.0f);
 			}
 			if ((E = this->find(vtxE.x, vtxE.y, vtxE.z, 0.001)) == -1) {
-				E = this->add(vtxE.x, vtxE.y, vtxE.z);
+				E = this->add(vtxE.x, vtxE.y, vtxE.z,
+											fR, fG, fB, fA,	0.0f, 0.0f);
 			}
 			if ((F = this->find(vtxF.x, vtxF.y, vtxF.z, 0.001)) == -1) {
-				F = this->add(vtxF.x, vtxF.y, vtxF.z);
+				F = this->add(vtxF.x, vtxF.y, vtxF.z,
+											fR, fG, fB, fA,	0.0f, 0.0f);
 			}
 			
 			// push back four new triangles
@@ -138,9 +154,9 @@ BigSphere::BigSphere(float fSize, int level, float fR, float fG, float fB, float
 	for (int a = start; a < end; a +=  3) {
 		Polygon * p;
 		p = new Polygon(this, 3);
-		p->add(triangles[a],  0,0, fR, fG, fB, fA);
-		p->add(triangles[a+1],  0,0, fR, fG, fB, fA);
-		p->add(triangles[a+2],  0,0, fR, fG, fB, fA);
+		p->add(triangles[a]);
+		p->add(triangles[a+1]);
+		p->add(triangles[a+2]);
 		this->add(p);
 	}
 

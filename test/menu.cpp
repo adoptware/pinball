@@ -3,12 +3,13 @@
  The arrow keys rotates the cube.
  ***************************************************************************/
 
+#include "Private.h"
 #include "Engine.h"
 #include "Camera.h"
 #include "Cube.h"
 #include "KeyRotBehavior.h"
 #include "Keyboard.h"
-#include "Meny.h"
+#include "Menu.h"
 #include "EmFont.h"
 #include "Config.h"
 
@@ -18,6 +19,7 @@ MenuChoose* menuchoose = NULL;
 
 int fctApply(void) {
 	cerr << menuchoose->getCurrent() << endl;
+	return 0;
 }
 
 int main(int argc, char *argv[]) {
@@ -46,9 +48,14 @@ int main(int argc, char *argv[]) {
 	
 	// Load a font
 	EmFont* font = EmFont::getInstance();
+#if EM_USE_SDL
 	font->loadFont("data/font_34.png");
+#endif
+#if EM_USE_ALLEGRO
+	font->loadFont("data/font_35.pcx");
+#endif
 	
-	// Create the meny
+	// Create the menu
 	MenuSub* menumain = new MenuSub("main", engine);
 
 	MenuSub* menusub = new MenuSub("sub", engine);
@@ -90,3 +97,7 @@ int main(int argc, char *argv[]) {
 	delete(engine);
 	return 0;
 }
+
+#if EM_USE_ALLEGRO
+END_OF_MAIN();
+#endif

@@ -2,15 +2,16 @@
                           Node.cpp  -  description
                              -------------------
     begin                : Wed Jan 26 2000
-    copyright            : (C) 2000 by 
-    email                : 
+    copyright            : (C) 2000 by Henrik Enqvist
+    email                : henqvist@excite.com
  ***************************************************************************/
 
+#include "Private.h"
 #include "Node.h"
 
 Node::Node() {
-	m_mtxSrc = identityMatrix;
-	m_mtxTrans = identityMatrix;
+	m_mtxSrc = EMath::identityMatrix;
+	m_mtxTrans = EMath::identityMatrix;
 	m_vtxT.x = 0;
 	m_vtxT.y = 0;
 	m_vtxT.z = 0;

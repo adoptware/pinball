@@ -6,6 +6,7 @@
     email                : 
  ***************************************************************************/
 
+#include "Private.h"
 #include "Camera.h"
 
 Camera::Camera() { 		

@@ -2,19 +2,16 @@
                           Node.h  -  description
                              -------------------
     begin                : Wed Jan 26 2000
-    copyright            : (C) 2000 by 
-    email                : 
+    copyright            : (C) 2000 by Henrik Enqvist
+    email                : henqvist@excite.com
  ***************************************************************************/
 
 #ifndef NODE_H
 #define NODE_H
 
-#include "Private.h"
-
 #include "EMath.h"
 
-/** The Node represents the transformation of an object. Classes Camera
- * Light and Group inherits this class. */
+/** The Node represents the transformation of an object. Group inherits this class. */
 class Node {
 	public:
 		Node();

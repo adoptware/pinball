@@ -1,7 +1,5 @@
 /***************************************************************************
-                   ation, Inc.
-#
-# This proription
+                          BumperBehavior.h  -  description
                              -------------------
     begin                : Thu Mar 9 2000
     copyright            : (C) 2000 by 
@@ -16,21 +14,19 @@
 #include "Light.h"
 #include "StateMachine.h"
 
-/**
- * <p>A behavior for the pinball demo.</p>
- */
-
+/** A behavior for the pinball game. */
 class BumperBehavior : public Behavior {
-	public:
-		BumperBehavior();
-		~BumperBehavior();
-		void onTick();
-		void StdOnSignal() {};
-		void StdOnCollision();
-		void setSound(int s) { m_iSound = s; };
-	private:
-		int m_iLightCounter;
-		int m_iSound;
+ public:
+	BumperBehavior();
+	~BumperBehavior();
+	void onTick();
+	void StdOnSignal() {};
+	void StdOnCollision();
+	inline void setSound(int s) { m_iSound = s; };
+	inline int getSound() { return m_iSound; };
+ private:
+	int m_iLightCounter;
+	int m_iSound;
 };
 
 #endif // BounceBehavior

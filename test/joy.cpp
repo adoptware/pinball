@@ -2,21 +2,15 @@
  Joystick test
  ***************************************************************************/
 
+#include "Private.h"
 #include "Engine.h"
 #include "Keyboard.h"
-#include "SDL/SDL.h"
 
-/**
- * Main
- */
+/** Main */
 int main(int argc, char *argv[]) {
+#if EM_USE_SDL
 	cerr << "Joystick test" << endl;
 	Engine* engine = new Engine(argc, argv);
-	
-	if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
-		cerr << "Couldn't initialize joystick: " << SDL_GetError() << endl;
-		exit(1);
-	}
 	
 	int njoystick = SDL_NumJoysticks();
 	cerr << njoystick << " joysticks were found." << endl;
@@ -35,5 +29,12 @@ int main(int argc, char *argv[]) {
 	}	
 
 	delete(engine);
+#else
+#warning "this is sdl specific test"
+#endif
 	return 0;
 }
+
+#if EM_USE_ALLEGRO
+END_OF_MAIN();
+#endif

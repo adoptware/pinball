@@ -2,6 +2,7 @@
  Texture animation test. An explosion.
  ***************************************************************************/
 
+#include "Private.h"
 #include "Engine.h"
 #include "Camera.h"
 #include "BillBoard.h"
@@ -77,3 +78,7 @@ int main(int argc, char *argv[]) {
 	delete(engine);
 	return 0;
 }
+
+#if EM_USE_ALLEGRO
+END_OF_MAIN();
+#endif
