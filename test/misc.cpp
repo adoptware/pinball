@@ -2,6 +2,8 @@
  Triangle point distance test.
  ***************************************************************************/
 
+#include <iostream>
+
 #include "Private.h"
 #include "Engine.h"
 #include "Camera.h"

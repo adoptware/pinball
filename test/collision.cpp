@@ -2,7 +2,9 @@
  Collision test. Some shapes move around and change color if the collide.
  ***************************************************************************/
 
+#include <iostream>
 #include <cstdlib>
+
 #include "Private.h"
 #include "Engine.h"
 #include "Camera.h"

@@ -67,12 +67,11 @@ void AlignVisitor::visit(Group * g) {
 		vector<Vertex3D>::iterator transIter = (*shapeIter)->m_vVtxTrans.begin();
 		vector<Vertex3D>::iterator transEnd = (*shapeIter)->m_vVtxTrans.end();
 		vector<Vertex3D>::iterator alignIter = (*shapeIter)->m_vVtxAlign.begin();
-		vector<Vertex3D>::iterator alignEnd = (*shapeIter)->m_vVtxAlign.end();
-
+		//vector<Vertex3D>::iterator alignEnd = (*shapeIter)->m_vVtxAlign.end();
 		vector<Vertex3D>::iterator nmlTransIter = (*shapeIter)->m_vNmlTrans.begin();
-		vector<Vertex3D>::iterator nmlTransEnd = (*shapeIter)->m_vNmlTrans.end();
+		//vector<Vertex3D>::iterator nmlTransEnd = (*shapeIter)->m_vNmlTrans.end();
 		vector<Vertex3D>::iterator nmlAlignIter = (*shapeIter)->m_vNmlAlign.begin();
-		vector<Vertex3D>::iterator nmlAlignEnd = (*shapeIter)->m_vNmlAlign.end();
+		//vector<Vertex3D>::iterator nmlAlignEnd = (*shapeIter)->m_vNmlAlign.end();
 
 		EmAssert(((*shapeIter)->m_vVtxTrans.size () ==
 							(*shapeIter)->m_vVtxAlign.size ()) &&

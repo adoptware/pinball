@@ -2,6 +2,8 @@
  Joystick test
  ***************************************************************************/
 
+#include <iostream>
+
 #include "Private.h"
 #include "Engine.h"
 #include "Keyboard.h"

@@ -444,7 +444,7 @@ float CollisionVisitor::vtxPolySqrDist(const Vertex3D & vtx, Polygon * poly, Ver
 	float sqrdist = 9999.9f;
 	Vertex3D vtxTmp = {0.0f, 1.0f, 0.0f};
 	Shape3D * shape = poly->p_Shape3D;
-	vector<int>::iterator iter = &(poly->m_vIndex[2]);
+	vector<int>::iterator iter = poly->m_vIndex.begin()+2;
 	vector<int>::iterator end = poly->m_vIndex.end();
 	for (; iter != end; ++iter) {
 		float tmp = this->vtxTriSqrDist(vtx, 

@@ -314,7 +314,7 @@ bool Engine::limitFPS(int fps) {
 	int realdelay = (g_iDesiredTime - GET_TIME);
 	if (realdelay < -500) {     // really slow - render anyway
 		EM_COUT("TO SLOW", 1);
-		g_fFps = g_fFps*0.9f + 0.1f*1000.0f/(GET_TIME - g_iLastRender);
+		g_fFps = g_fFps*0.99f + 0.01f*1000.0f/(GET_TIME - g_iLastRender);
 		g_iDesiredTime = g_iLastRender =  GET_TIME;
 		StopProfile();
 		return true;
@@ -322,7 +322,7 @@ bool Engine::limitFPS(int fps) {
 		StopProfile();
 		return false;
 	} else if (realdelay < 0) { // abit slow - forgive a bit slow, gives better fps
-		g_fFps = g_fFps*0.5f + 0.5f*1000.0f/(GET_TIME - g_iLastRender);
+		g_fFps = g_fFps*0.99f + 0.01f*1000.0f/(GET_TIME - g_iLastRender);
 		g_iLastRender =  GET_TIME;
 		StopProfile();
 		return true;
@@ -334,7 +334,7 @@ bool Engine::limitFPS(int fps) {
 				this->delay(realdelay);
 			}
 		} while (realdelay > 0);
-		g_fFps = g_fFps*0.5f + 0.5f*1000.0f/(GET_TIME - g_iLastRender);
+		g_fFps = g_fFps*0.99f + 0.01f*1000.0f/(GET_TIME - g_iLastRender);
 		g_iLastRender = GET_TIME;
 		StopProfile();
 		return true;
