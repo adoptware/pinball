@@ -15,6 +15,7 @@
 #include "Polygon.h"
 #include "SoundUtil.h"
 #include "BallGroup.h"
+#include "Loader.h"
 
 StateItem::StateItem() {
   m_iActSig = -1;
@@ -252,6 +253,12 @@ void StateBehavior::StdOnSignal() {
     this->getParent()->getTranslation(m_vtxTr.x, m_vtxTr.y, m_vtxTr.z);
     this->getParent()->getRotation(m_vtxRot.x, m_vtxRot.y, m_vtxRot.z);
   }
+
+#if EM_DEBUG
+	if (Loader::getInstance()->getSignal(GetSignal()) != NULL) {
+		EM_COUT("Got signal " << Loader::getInstance()->getSignal(GetSignal()), 0);
+	}
+#endif
 
   OnSignal( PBL_SIG_RESET_ALL) {
     this->setState(m_vStateItem[0]);

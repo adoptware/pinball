@@ -94,33 +94,33 @@ public:
 				if (table->isBallDead(0) ) {
 					SendSignal( m_sigGameStart, 0, this->getParent(), NULL );
 					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-					table->activateBall(0);	
+					table->activateBall(0, 19.5f, 0.0f, 30.0f);	
 					//score->clearText();
 					break;
 				}	
       case 1 :
 				if (table->isBallDead(1)) {
 					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-					table->activateBall(1);
+					table->activateBall(1, 19.5f, 0.0f, 30.0f);
 					//score->clearText();
 					break;
 				}
       case 2 :
 				if (table->isBallDead(2)) {
 					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-					table->activateBall(2);
+					table->activateBall(2, 19.5f, 0.0f, 30.0f);
 					//score->clearText();
 					break;
 				}
 				if (table->isBallDead(0) ) {
 					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-					table->activateBall(0);	
+					table->activateBall(0, 19.5f, 0.0f, 30.0f);	
 					//score->clearText();
 					break;
 				}	
 				if (table->isBallDead(1)) {
 					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-					table->activateBall(1);
+					table->activateBall(1, 19.5f, 0.0f, 30.0f);
 					//score->clearText();
 					break;
 				}
@@ -435,7 +435,7 @@ private:
   int m_sigBoot[4];
   int m_sigBootOn[4];
   int m_sigBootOff[4];
-  int m_sigMultiplier[4];
+  int m_sigMultiplier[5];
   bool m_aLinux[5];
   bool m_aBoot[4];
   bool m_aTux[3];
