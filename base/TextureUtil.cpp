@@ -92,7 +92,10 @@ void TextureUtil::freeTextures()
   for ( i = m_hImageName.begin();
         i != m_hImageName.end();
         i++) { 
-    glDeleteTextures (1, (*i).first ); //is that correct ?
+    // TODO ALLEGRO
+#if EM_USE_SDL
+    glDeleteTextures (1, (GLuint)(*i).first ); //is that correct ?
+#endif
     delete (*i).first ;  // (*i).first = 0; 
   }
   m_hImageName.erase ( m_hImageName.begin() , m_hImageName.end() );
