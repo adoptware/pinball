@@ -46,7 +46,7 @@ void Config::setDefault() {
 	this->setMusic(4);
 	this->setBpp(16);
 	this->setGLFilter(EM_LINEAR);
-	this->setView(1);
+	this->setView(0);
 	this->setFullScreen(false);
 	m_bExternGL = false;
 	this->setDataDir(EM_DATADIR);

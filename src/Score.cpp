@@ -306,12 +306,10 @@ void Score::draw() {
 		sprintf(buffer, "SCORE %d", m_iScore);
 	}
 	m_Font->printRow(buffer, 0);
-#if EM_DEBUG
 	if (Config::getInstance()->getShowFPS()) {
-	sprintf(buffer, "FPS %f\n", g_fFps);
+	sprintf(buffer, "FPS %.1f\n", g_fFps);
 	m_Font->printRow(buffer, 1);
 	}
-#endif
 	m_Font->printRowCenter(m_Text1, 6);
 	m_Font->printRowCenter(m_Text2, 7);
 	m_Font->printRowCenter(m_Text3, 8);
