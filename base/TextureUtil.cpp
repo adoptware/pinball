@@ -13,12 +13,16 @@
 #include "Config.h"
 
 #if EM_USE_SDL
+#if defined(__APPLE__) && defined(__MACH__) // !+rzr should be in .in files 
+#include <OpenGL/gl.h>
+#else
 #include <GL/gl.h>
+#endif //!-rzr (autoconf again)
 // TODO remove glu
 #if EM_DEBUG
 #include <GL/glu.h>
 #endif
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include <SDL_image.h>
 
 extern "C" {
@@ -67,6 +71,8 @@ TextureUtil::TextureUtil() {
 }
 
 TextureUtil::~TextureUtil() {
+  //freeTextures(); //
+  //EM_COUT("TextureUtil::~TextureUtil",0);
 }
 
 TextureUtil* TextureUtil::getInstance() {
@@ -76,6 +82,19 @@ TextureUtil* TextureUtil::getInstance() {
   return p_TextureUtil;
 }
 
+//!+rzr : this workaround a WIN32 bug // TODO: check (bugs possible)
+void TextureUtil::freeTextures() 
+{ 
+  //EM_COUT("+ TextureUtil::freeTextures",1);
+  map<EmTexture*,string>::iterator i;
+  for ( i = m_hImageName.begin();
+        i != m_hImageName.end();
+        i++) { delete (*i).first ; } // (*i).first = 0; }
+  m_hImageName.erase ( m_hImageName.begin() , m_hImageName.end() );
+  /// same pointers
+  m_hEmTexture.erase ( m_hEmTexture.begin() , m_hEmTexture.end() );
+}
+//!-rzr
 
 void TextureUtil::initGrx() {
   Config * config = Config::getInstance();

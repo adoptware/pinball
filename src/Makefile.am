@@ -17,6 +17,7 @@ BallGroup.cpp \
 BounceBehavior.cpp \
 BumperBehavior.cpp \
 EyeBehavior.cpp \
+LoaderModule.cpp \
 Loader.cpp \
 PlungerBehavior.cpp \
 Score.cpp \
@@ -41,3 +42,18 @@ Script.h \
 SrcTest.h \
 StateBehavior.h \
 Table.h
+
+# !+rzr : This trick workaround a bad generated rule (under Linux mingw32)
+# src/ litool returns:  -L/usr/local//lib /usr/lib/libjpeg.so
+# make -C src  wpinball.exe (build the final programm)
+# Pinball.o \
+# libemilia_pin.a libemilia_addon.a  libemilia_base.a libltdlc.a
+wpinball.exe:  ${pinball_OBJECTS} ${pinball_DEPENDENCIES}
+	${GCCLOCALDIR}g++ -g -W -Wall -O2 -o$@ $^ \
+ -lSDL_mixer -lvorbisfile -lvorbis -logg -lsmpeg \
+ -lSDL_image -lSDLmain -lSDL \
+ -lglu32 -lopengl32 -ljpeg -lpng  \
+ -lwinmm -luser32 -lgdi32 -ldxguid   \
+ -lmingw32 -lSDLmain -lSDL -lstdc++ -mwindows \
+ -L${GCCLOCALDIR}../lib
+# !-rzr : # have to solve it later

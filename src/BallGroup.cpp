@@ -75,19 +75,19 @@ BallGroup::BallGroup(float r, float g, float b, int pbl) : Group() {
   vtxPrev.y = 0;
   vtxPrev.z = 40;
 
-  for (int a=0; a<16; ++a) {
+  { for (int a=0; a<16; ++a) {
     aFireVtx[a].x = 0;
     aFireVtx[a].y = 0;
     aFireVtx[a].z = 0;
-  }
+  } }
 
-  for (int a=0; a<8; ++a) {
+  { for (int a=0; a<8; ++a) {
     aFire[a] = new Group();
     aFireShape[a] = new BigSphere(1.2f - (float)a/10.0f, 1, 1, 1, 0, 0.3);
     aFireShape[a]->setProperty(EM_SHAPE3D_ALLWAYSLIT | EM_SHAPE3D_HIDDEN);
     aFire[a]->addShape3D(aFireShape[a]);
     this->add(aFire[a]);
-  }
+  } }
 
   m_iFireTimer = 0;
 }
@@ -102,24 +102,24 @@ void BallGroup::resetFire() {
     aFireVtx[a].y = 0.0f;
     aFireVtx[a].z = 0.0f;
   }
-  for (int a=0; a<8; ++a) {
-    aFireShape[a]->setProperty(EM_SHAPE3D_HIDDEN);
+  for (int as=0; as<8; ++as) {
+    aFireShape[as]->setProperty(EM_SHAPE3D_HIDDEN);
   }
 }
 
 void BallGroup::updateFire() {
   
-  for (int a=14; a>=0; --a) {
+	{ for (int a=14; a>=0; --a) {
     aFireVtx[a+1].x = aFireVtx[a].x;
     aFireVtx[a+1].y = aFireVtx[a].y;
     aFireVtx[a+1].z = aFireVtx[a].z;
-  }
+	} }
   
   Vertex3D vtx;
   vtx.x = 0;
   vtx.y = 0;
   vtx.z = 0;
-  for (int a=0; a<16; ++a) {
+  { for (int a=0; a<16; ++a) {
     vtx.x += aFireVtx[a].x;
     vtx.y += aFireVtx[a].y;
     vtx.z += aFireVtx[a].z;
@@ -129,7 +129,7 @@ void BallGroup::updateFire() {
       float r = (float)random()/RAND_MAX + g;
       aFire[a/2]->getShape3D(0)->setColor(r, g, 0, .3);
     }
-  }
+  } }
   
   this->getTranslation(vtx);
   aFireVtx[0].x = vtxPrev.x - vtx.x;
@@ -143,9 +143,9 @@ void BallGroup::tick() {
   if (m_iFireTimer == 0) {
     this->resetFire();
   } else {
-    for (int a=0; a<8; ++a) {
+	  { for (int a=0; a<8; ++a) {
       aFireShape[a]->unsetProperty(EM_SHAPE3D_HIDDEN);
-    }
+	  } }
     if (m_iFireTimer != 0) {
       this->updateFire();
       if (m_iFireTimer > 0) {

@@ -56,8 +56,9 @@ class TextureUtil {
   static TextureUtil* getInstance();
   void initGrx();
   void stopGrx();
-  // TODO
-  void freeTextures() {};
+  // TODO 
+  /// just unload the textures from main mem (needed w32)
+  void freeTextures(); 
   void resizeView(unsigned int w, unsigned int h);
   EmTexture* loadTexture(const char* file);
   EmImage* loadImage(const char* file);
