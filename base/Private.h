@@ -1,4 +1,4 @@
-//#ident "$Id: Private.h,v 1.17 2003/06/11 13:25:49 rzr Exp $"
+//#ident "$Id: Private.h,v 1.18 2003/07/16 20:02:04 rzr Exp $"
 /***************************************************************************
                           Private.h  -  description
                              -------------------
@@ -30,7 +30,7 @@
 #define EM_USE_SDL 0
 #endif
 
-#ifndef EM_USE_ALLEGRO
+#ifndef EM_USE_ALLEGRO //!rzr allegro may conflict when stdc++ headers
 #define EM_USE_ALLEGRO 0
 #endif
 
@@ -115,4 +115,4 @@ bool operator == (const PolygonEdge & peA, const PolygonEdge & peB) {
 
 
 #endif // PRIVATE_H
-//EOF: $Id: Private.h,v 1.17 2003/06/11 13:25:49 rzr Exp $
+//EOF: $Id: Private.h,v 1.18 2003/07/16 20:02:04 rzr Exp $

@@ -1,4 +1,4 @@
-//#ident "$Id: Table.cpp,v 1.17 2003/06/13 13:39:48 rzr Exp $"
+//#ident "$Id: Table.cpp,v 1.18 2003/07/16 20:02:04 rzr Exp $"
 /***************************************************************************
                             Table.cpp -  description
                              -------------------
@@ -14,9 +14,9 @@
 ***************************************************************************/
 
 #include "Private.h"
+#include "Config.h"
 #include "Table.h"
 #include "Engine.h"
-#include "Config.h"
 #include "Loader.h"
 #include "BallGroup.h"
 #include "Pinball.h"
@@ -336,4 +336,4 @@ bool Table::writeHighScoresFile() {
 
   return true;
 }
-//EOF: $Id: Table.cpp,v 1.17 2003/06/13 13:39:48 rzr Exp $
+//EOF: $Id: Table.cpp,v 1.18 2003/07/16 20:02:04 rzr Exp $

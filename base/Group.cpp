@@ -1,4 +1,4 @@
-//#ident "$Id: Group.cpp,v 1.10 2003/06/13 13:39:45 rzr Exp $"
+//#ident "$Id: Group.cpp,v 1.11 2003/07/16 20:02:04 rzr Exp $"
 /***************************************************************************
                           Group.cpp  -  description
                              -------------------
@@ -171,7 +171,7 @@ Shape3D * Group::getShape3D(int i) {
   return m_vShape3D[i];
 }
 
-int Group::getShape3DSize() {
+int Group::getShape3DSize() const {
   return m_vShape3D.size();
 }
 
@@ -285,4 +285,4 @@ void Group::unsetPropertyRecursive(int p) {
   }
 }
 //TODO: Compute Bounds //!rzr
-//EOF $Id: Group.cpp,v 1.10 2003/06/13 13:39:45 rzr Exp $
+//EOF $Id: Group.cpp,v 1.11 2003/07/16 20:02:04 rzr Exp $
