@@ -15662,42 +15662,6 @@ object big_tux_1 {
     vtx { 
       -1.5 -1 -1.5
       1 1 1 1
-      0.75 0.75
-    }
-    vtx { 
-      1.5 -1 -1.5
-      1 1 1 1
-      1 0.75
-    }
-    vtx { 
-      1.5 -1 1.5
-      1 1 1 1
-      1 1
-    }
-    vtx { 
-      -1.5 -1 1.5
-      1 1 1 1
-      0.75 1
-    }
-    ply {
-      pes { 4 }
-      tpt { }
-      ple { 0 }
-      ple { 1 }
-      ple { 2 }
-      ple { 3 }
-    }
-  }
-  shape {
-    vts { 4 }
-    pls { 1 }
-    lit { }
-    tex { 
-      tiles.png
-    }
-    vtx { 
-      -1.5 -1 -1.5
-      1 1 1 1
       0.5 0.75
     }
     vtx { 
@@ -15734,15 +15698,7 @@ object big_tux_1 {
       no_user_property
       no_shape_property
       no_texcoord
-      shape 8
-        1
-        0
-        0
-        0
-        0
-        0
-        0
-        0
+      no_shape
     }
     state_item {
       big_tux_1_blink null -1 2 50
@@ -15751,17 +15707,9 @@ object big_tux_1 {
       no_sound
       no_music
       no_user_property
-      no_shape_property
+      shape_property 64
       no_texcoord
-      shape 8
-        0
-        1
-        0
-        0
-        0
-        0
-        0
-        0
+      no_shape
     }
     state_item {
       null null -1 1 50
@@ -15772,15 +15720,7 @@ object big_tux_1 {
       no_user_property
       no_shape_property
       no_texcoord
-      shape 8
-        1
-        0
-        0
-        0
-        0
-        0
-        0
-        0
+      no_shape
     }
     state_item {
       big_tux_1_on null -1 -1 -1
@@ -15789,17 +15729,9 @@ object big_tux_1 {
       no_sound
       no_music
       no_user_property
-      no_shape_property
+      shape_property 64
       no_texcoord
-      shape 8
-        0
-        1
-        0
-        0
-        0
-        0
-        0
-        0
+      no_shape
     }
   }
   properties {
@@ -15813,42 +15745,6 @@ object big_tux_2 {
   shape {
     vts { 4 }
     pls { 1 }
-    tex { 
-      tiles.png
-    }
-    vtx { 
-      -1.5 -1 -1.5
-      1 1 1 1
-      0.75 0.75
-    }
-    vtx { 
-      1.5 -1 -1.5
-      1 1 1 1
-      1 0.75
-    }
-    vtx { 
-      1.5 -1 1.5
-      1 1 1 1
-      1 1
-    }
-    vtx { 
-      -1.5 -1 1.5
-      1 1 1 1
-      0.75 1
-    }
-    ply {
-      pes { 4 }
-      tpt { }
-      ple { 0 }
-      ple { 1 }
-      ple { 2 }
-      ple { 3 }
-    }
-  }
-  shape {
-    vts { 4 }
-    pls { 1 }
-    lit { }
     tex { 
       tiles.png
     }
@@ -15891,15 +15787,7 @@ object big_tux_2 {
       no_user_property
       no_shape_property
       no_texcoord
-      shape 8
-        1
-        0
-        0
-        0
-        0
-        0
-        0
-        0
+      no_shape
     }
     state_item {
       big_tux_2_blink null -1 2 50
@@ -15908,17 +15796,9 @@ object big_tux_2 {
       no_sound
       no_music
       no_user_property
-      no_shape_property
+      shape_property 64
       no_texcoord
-      shape 8
-        0
-        1
-        0
-        0
-        0
-        0
-        0
-        0
+      no_shape
     }
     state_item {
       null null -1 1 50
@@ -15929,15 +15809,7 @@ object big_tux_2 {
       no_user_property
       no_shape_property
       no_texcoord
-      shape 8
-        1
-        0
-        0
-        0
-        0
-        0
-        0
-        0
+      no_shape
     }
     state_item {
       big_tux_2_on null -1 -1 -1
@@ -15946,17 +15818,9 @@ object big_tux_2 {
       no_sound
       no_music
       no_user_property
-      no_shape_property
+      shape_property 64
       no_texcoord
-      shape 8
-        0
-        1
-        0
-        0
-        0
-        0
-        0
-        0
+      no_shape
     }
   }
   properties {
@@ -15967,41 +15831,6 @@ object big_tux_2 {
 object big_tux_3 {
   -19.2 0 -0.7
   0 -0.021 0
-  shape {
-    vts { 4 }
-    pls { 1 }
-    tex { 
-      tiles.png
-    }
-    vtx { 
-      -1.5 -1 -1.5
-      1 1 1 1
-      0.75 0.75
-    }
-    vtx { 
-      1.5 -1 -1.5
-      1 1 1 1
-      1 0.75
-    }
-    vtx { 
-      1.5 -1 1.5
-      1 1 1 1
-      1 1
-    }
-    vtx { 
-      -1.5 -1 1.5
-      1 1 1 1
-      0.75 1
-    }
-    ply {
-      pes { 4 }
-      tpt { }
-      ple { 0 }
-      ple { 1 }
-      ple { 2 }
-      ple { 3 }
-    }
-  }
   shape {
     vts { 4 }
     pls { 1 }
@@ -16091,41 +15920,6 @@ object big_tux_3 {
 object big_tux_4 {
   -19.5 0 -4.4
   0 0 0
-  shape {
-    vts { 4 }
-    pls { 1 }
-    tex { 
-      tiles.png
-    }
-    vtx { 
-      -1.5 -1 -1.5
-      1 1 1 1
-      0.75 0.75
-    }
-    vtx { 
-      1.5 -1 -1.5
-      1 1 1 1
-      1 0.75
-    }
-    vtx { 
-      1.5 -1 1.5
-      1 1 1 1
-      1 1
-    }
-    vtx { 
-      -1.5 -1 1.5
-      1 1 1 1
-      0.75 1
-    }
-    ply {
-      pes { 4 }
-      tpt { }
-      ple { 0 }
-      ple { 1 }
-      ple { 2 }
-      ple { 3 }
-    }
-  }
   shape {
     vts { 4 }
     pls { 1 }
