@@ -24,9 +24,12 @@ class BumperBehavior : public Behavior {
 	void StdOnCollision();
 	inline void setSound(int s) { m_iSound = s; };
 	inline int getSound() { return m_iSound; };
+	inline void setScore(int s) { m_iScore = s; };
+	inline int getScore() { return m_iScore; };
  private:
 	int m_iLightCounter;
 	int m_iSound;
+	int m_iScore;
 };
 
 #endif // BounceBehavior

@@ -38,8 +38,12 @@ Score* Score::getInstance() {
  	return p_Score;
 }
 
-void Score::addScore(int s) {
-	m_iScore += (s*m_iFactor);
+void Score::addScore(int s, bool multi) {
+	if (multi) {
+		m_iScore += (s*m_iFactor);
+	} else {
+		m_iScore += s;
+	}
 }
 
 bool Score::isBallActive(int ball) {
@@ -71,11 +75,12 @@ int Score::alive() {
 }
 
 int Score::locked() {
-		int locked = 0;
-		if (m_aAliveBall[0] == PBL_LOCKED) ++locked;
-		if (m_aAliveBall[1] == PBL_LOCKED) ++locked;
-		if (m_aAliveBall[2] == PBL_LOCKED) ++locked;
-		if (m_aAliveBall[3] == PBL_LOCKED) ++locked;
+	int locked = 0;
+	if (m_aAliveBall[0] == PBL_LOCKED) ++locked;
+	if (m_aAliveBall[1] == PBL_LOCKED) ++locked;
+	if (m_aAliveBall[2] == PBL_LOCKED) ++locked;
+	if (m_aAliveBall[3] == PBL_LOCKED) ++locked;
+	return locked;
 }
 
 void Score::unLockBall(int ball) {
@@ -184,7 +189,7 @@ void Score::StdOnSignal() {
 		}
  		//m_iScore += 7500;
 	}	else
-	OnSignal( PBL_SIG_EXTRA_BALL ) {
+	OnSignal( PBL_SIG_EXTRABALL ) {
 		m_bExtraBall = true;
 		//m_iScore += 50000;
 	}
