@@ -1,4 +1,4 @@
-// #ident "$Id: Loader.h,v 1.11 2003/05/20 21:15:23 pedro_nf Exp $"
+// #ident "$Id: Loader.h,v 1.12 2003/05/21 17:54:51 henqvist Exp $"
 /***************************************************************************
                             Loader.h -  description
                              -------------------
@@ -22,12 +22,12 @@ class Polygon3D;
 class Behavior;
 class LoaderModule;
 
-#undef  RZR_PATCHES_3DS
+//#undef  RZR_PATCHES_3DS
 //#define RZR_PATCHES_3DS
 
-#ifdef RZR_PATCHES_3DS
+//#ifdef RZR_PATCHES_3DS
 class Obj3dsUtil;
-#endif
+//#endif
 
 #define LOADER_FIRSTSIGNAL 10000
 #define LOADER_FIRSTVARIABLE 20000
@@ -97,13 +97,16 @@ class Loader {
   void loadScript(ifstream & file, istringstream & ist, Engine * engine, Group * group);
   void loadModule(ifstream & file, istringstream & ist, Engine * engine, Group * group);
   void loadMisc(ifstream & file, istringstream & ist, Engine * engine, Group * group, Behavior * beh);
-  //----------------------------------------------------------
-#ifdef RZR_PATCHES_3DS
-  /// load and add shape (3DS tri mesh)
+
+  // return -1 if ver < m.m.m, 0 if var == m.m.m and 1 if ver > m.m.m
+  int cmpVersion(const FileVersion & ver, const int major, const int minor, const int micro);
+
+  //#ifdef RZR_PATCHES_3DS
+  // load and add shape (3DS tri mesh)
   void loadShape3dsAscii(ifstream & file, istringstream & ist, 
-			 Engine * engine, Group * group, Behavior * beh);
-  Obj3dsUtil* m_Obj3dsUtil;
-#endif
+                         Engine * engine, Group * group, Behavior * beh);
+  //Obj3dsUtil* m_Obj3dsUtil;
+  //#endif
 
   static Loader * p_Loader;
 
@@ -115,7 +118,6 @@ class Loader {
   map<int, string> m_hSignalString;
   map<string, int> m_hVariableInt;
   map<int, string> m_hVariableString;
-  // lazy version 210 means 0.2.10
   FileVersion m_FileVersion;
   
   LoaderModule* m_LoaderModule; //!+rzr
@@ -123,4 +125,4 @@ class Loader {
 
 #endif // LOADER_H
 
-//EOF $Id: Loader.h,v 1.11 2003/05/20 21:15:23 pedro_nf Exp $
+//EOF $Id: Loader.h,v 1.12 2003/05/21 17:54:51 henqvist Exp $
