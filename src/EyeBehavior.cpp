@@ -128,12 +128,12 @@ void EyeBehavior::onTick() {
 
   if (m_iTiltTick > 210) {
     // send tilt signal
+    m_bTilt = true;
     SendSignal( PBL_SIG_TILT, 0, this->getParent(), NULL ); 
     EM_COUT("EyeBehavior::onTick() TILT", 1);
     m_iTiltTick = 0;
   } else if (m_iTiltTick > 110) {
     // send warning signal
-    m_bTilt = true;
     SendSignal( PBL_SIG_TILT_WARNING, 0, this->getParent(), NULL ); 
     EM_COUT("EyeBehavior::onTick() WARNING", 1);
   }
