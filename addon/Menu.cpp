@@ -4,7 +4,7 @@
     begin                : Tue Feb 15 2000
     copyright            : (C) 2000 by Henrik Enqvist
     email                : henqvist@excite.com
- ***************************************************************************/
+***************************************************************************/
 
 #include <cstring>
 
@@ -16,12 +16,12 @@
 
 
 MenuItem::MenuItem(Engine * e, int type) {
-	EmAssert(e != NULL, "Engine not created");
+  EmAssert(e != NULL, "Engine not created");
 
-	p_Texture = NULL;
-	p_EmFont = EmFont::getInstance();
-	p_Engine = e;
-	m_iType = type;
+  p_Texture = NULL;
+  p_EmFont = EmFont::getInstance();
+  p_Engine = e;
+  m_iType = type;
 }
 
 MenuItem::~MenuItem() {
@@ -31,16 +31,17 @@ MenuItem::~MenuItem() {
  * A menu with sub menys */
 
 MenuSub::MenuSub(const char * name, Engine* e) : MenuItem(e, EM_MENU_SUB) {
-	strncpy(m_Name, name, 63);
-	m_iCurrent = 0;
-	m_iAction = EM_MENU_NOP;
+  strncpy(m_Name, name, MAX_MENU_NAME);
+  m_iCurrent = 0;
+  m_iAction = EM_MENU_NOP;
+  strcpy(m_BottomText, "");
 }
 
 MenuSub::~MenuSub() {
 }
 
 void MenuSub::addMenuItem(MenuItem * menu) {
-	m_vMenuItem.push_back(menu);
+  m_vMenuItem.push_back(menu);
 }
 
 int MenuSub::perform() {
@@ -68,12 +69,12 @@ int MenuSub::perform() {
       switch (ret) {
       case EM_MENU_EXIT:
       case EM_MENU_RESUME:
-				Keyboard::clear();
-				return ret;
-				break;
+	Keyboard::clear();
+	return ret;
+	break;
       case EM_MENU_BACK:
-				Keyboard::clear();
-				return EM_MENU_NOP;
+	Keyboard::clear();
+	return EM_MENU_NOP;
       }
     }
     if (key == SDLK_LEFT && m_vMenuItem[m_iCurrent]->getType() == EM_MENU_CHOOSE) {
@@ -85,15 +86,32 @@ int MenuSub::perform() {
   }
 }
 
+void MenuSub::addInfoText(const char * text) {
+  char * str = (char*) malloc((MAX_MENU_NAME+1)*sizeof(char));
+  strncpy(str, text, MAX_MENU_NAME);
+  m_vInfoText.push_back(str);
+}
+
+void MenuSub::setBottomText(const char * text) {
+  strncpy(m_BottomText, text, MAX_MENU_NAME);
+}
+
 void MenuSub::draw() {
   EM_COUT("MenuSub::draw() " << this->getText(), 1);
   p_Engine->clearScreen();
 
-	if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
+  if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
   
-  float yoffset = 10 - ((float)this->size() + 2)/2;
+  int size = this->size() + m_vInfoText.size() + 2;
+  float yoffset = 10 - ((float)size)/2;
   
   p_EmFont->printRowCenter(this->getText(), 0 + yoffset);
+  vector<char*>::iterator iter = m_vInfoText.begin();
+  vector<char*>::iterator end = m_vInfoText.end();
+  for (int a=1; iter != end; ++iter, ++a) {
+    p_EmFont->printRowCenter((*iter), a + yoffset);
+  }
+  p_EmFont->printRowCenter(m_BottomText, -2);
   
   vector<MenuItem*>::iterator menuIter = m_vMenuItem.begin();
   vector<MenuItem*>::iterator menuEnd = m_vMenuItem.end();
@@ -101,11 +119,10 @@ void MenuSub::draw() {
     if (a == m_iCurrent) {
       char str[256];
       strncpy(str, "> ", 16);
-      strncat(str, (*menuIter)->getText(), 64);
+      strncat(str, (*menuIter)->getText(), MAX_MENU_NAME);
       strncat(str, " <", 16);
       p_EmFont->printRowCenter(str, a+2 + yoffset);
     } else {
-      //p_EmFont->printRowCenter((*menuIter)->getText(), a+2);
       p_EmFont->printRowCenter((*menuIter)->getText(), a+2 + yoffset);
     }
   }
@@ -142,8 +159,8 @@ const char* MenuChoose::getText() {
 
 void MenuChoose::addText(const char * text) {
   // TODO free these chars
-  char * str = (char*) malloc(64*sizeof(char));
-  strncpy(str, text, 63);
+  char * str = (char*) malloc((MAX_MENU_NAME+1)*sizeof(char));
+  strncpy(str, text, MAX_MENU_NAME);
   m_vText.push_back(str);
 }
 
@@ -179,8 +196,7 @@ int MenuChoose::prev() {
  * A menu that performs a function when choosen */
 
 MenuFct::MenuFct(const char * name, int (*fct)(void), Engine* e)
-		: MenuItem(e, EM_MENU_FCT)
-{
+  : MenuItem(e, EM_MENU_FCT) {
   strncpy(m_Name, name, MAX_MENU_NAME);
   p_Fct = fct;
 }
@@ -199,8 +215,7 @@ int MenuFct::perform() {
                                //  user can see the max input length
 #define DEFAULT_STRING  "?"    // Default name for those who don't give name
 
-MenuInput::MenuInput(const char * name, Engine* e) : MenuItem(e, EM_MENU_INPUT)
-{
+MenuInput::MenuInput(const char * name, Engine* e) : MenuItem(e, EM_MENU_INPUT) {
   strncpy(m_Name, name, MAX_MENU_NAME);
   memset(m_Input, FILL_CHAR,  MAX_INPUT_STRING);
   m_Input[MAX_INPUT_STRING] = '\0';
@@ -208,17 +223,14 @@ MenuInput::MenuInput(const char * name, Engine* e) : MenuItem(e, EM_MENU_INPUT)
   m_iAction = EM_MENU_BACK;
 }
 
-MenuInput::~MenuInput()
-{
+MenuInput::~MenuInput() {
 }
 
-const char* MenuInput::getInput()
-{
+const char* MenuInput::getInput() {
   return m_Input;
 }
 
-void MenuInput::draw()
-{
+void MenuInput::draw() {
   EM_COUT("MenuSub::draw() " << this->getText(), 1);
 
   p_Engine->clearScreen();
@@ -232,65 +244,46 @@ void MenuInput::draw()
   p_Engine->swap();
 }
 
-int MenuInput::perform()
-{
+int MenuInput::perform() {
   EM_COUT("MenuInput::perform() " << this->getText(), 1);
-
   this->draw();
 
   int iLetter = 0;
-
-  while (iLetter < MAX_INPUT_STRING)
-  {
+  while (iLetter < MAX_INPUT_STRING) {
     EMKey key = Keyboard::waitForKey();
-
+    
     // If return or escape then end input
-    if (key == SDLK_RETURN || key == SDLK_ESCAPE)
-    {
+    if (key == SDLK_RETURN || key == SDLK_ESCAPE) {
       break;
-    }
-    // Delete previous char, replacing it by the FILL_CHAR
-    else if (key == SDLK_BACKSPACE || key == SDLK_DELETE)
-    {
-      if (iLetter > 0)
-      {
+    } else if (key == SDLK_BACKSPACE || key == SDLK_DELETE) {
+      // Delete previous char, replacing it by the FILL_CHAR
+      if (iLetter > 0) {
 	iLetter--;
-
 	m_Input[iLetter] = FILL_CHAR;
       }
-    }
-    else
-    {
+    } else {
       m_Input[iLetter] = key;
-
       iLetter++;
     }
-
     EM_COUT("MenuInput::perform() input " << this->getInput(), 1);
-
     this->draw();
   }
-
-  //
+  
   // Clear the FILL_CHAR at the end of the input string, if the result is
   //  empty replace it by an '?'
-  //
-
   int i = 0;
-
-  if (strlen(m_Input) > 0)
-  {
+  if (strlen(m_Input) > 0) {
     // Stop at first FILL_CHAR
-    for (i=0; i<strlen(m_Input); i++)
-      if (m_Input[i] == FILL_CHAR)
-	break;
-
+    for (i=0; i<strlen(m_Input); i++) {
+      if (m_Input[i] == FILL_CHAR) break;
+    }
+    
     // Terminate string at first FILL_CHAR
     m_Input[i] = '\0';
   }
-
-  if (strlen(m_Input) == 0)
+  if (strlen(m_Input) == 0) {
     strcpy(m_Input, DEFAULT_STRING);
+  }
 
   return m_iAction;;
 }
