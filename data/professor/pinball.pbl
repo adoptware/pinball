@@ -1,6 +1,8 @@
+version { 0 3 0 }
 object walls {
   0 0 0
   0 0 0
+  1 1 1
   shape {
     vts { 404 }
     pls { 192 }
@@ -4701,6 +4703,7 @@ object walls {
 object left_stopper {
   -9.96667 0 -39.5667
   0 -0.252 0
+  1 1 1
   shape {
     vts { 4 }
     pls { 1 }
@@ -4742,6 +4745,7 @@ object left_stopper {
 object flat_bumper {
   -12.45 0 20.15
   0 -0.313 0
+  1 1 1
   shape {
     vts { 4 }
     pls { 1 }
@@ -4774,6 +4778,7 @@ object flat_bumper {
     }
   }
   bumper_behavior {
+0.5
     no_sound
     light {
       1 0 0
@@ -4789,6 +4794,7 @@ object flat_bumper {
 object flat_bumper {
   9.56667 0 20.1167
   0 0.32 0
+  1 1 1
   shape {
     vts { 4 }
     pls { 1 }
@@ -4821,6 +4827,7 @@ object flat_bumper {
     }
   }
   bumper_behavior {
+0.5
     no_sound
     light {
       1 0 0
@@ -4836,6 +4843,7 @@ object flat_bumper {
 object floor {
   0 0 0
   0 0 0
+  1 1 1
   shape {
     vts { 225 }
     pls { 196 }
@@ -7348,6 +7356,7 @@ object floor {
 object music {
   0 0 0
   0 0 0
+  1 1 1
   state_behavior {
     state_item {
       -1 -1 -1 -1 -1
@@ -7355,7 +7364,8 @@ object music {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -7367,6 +7377,7 @@ object music {
 object module {
   0 0 0
   0 0 0
+  1 1 1
   module {
       libModuleProfessor.la
   }
@@ -7377,6 +7388,7 @@ object module {
 object right_stopper {
   14.6667 0 -27.9333
   0 -0.999333 0
+  1 1 1
   shape {
     vts { 4 }
     pls { 1 }
@@ -7415,7 +7427,8 @@ object right_stopper {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -7425,7 +7438,8 @@ object right_stopper {
         light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -7444,6 +7458,7 @@ object right_stopper {
 object light {
   0 3 0
   0 0 0
+  1 1 1
   properties {
     group_1
   }
@@ -7451,6 +7466,7 @@ object light {
 object left_arm {
   -8.1 0 30.2
   0 0.052 0
+  1 1 1
   shape {
     vts { 8 }
     pls { 2 }
@@ -7969,6 +7985,7 @@ object left_arm {
 object right_arm {
   5.2 0 30.2
   0 -0.046 0
+  1 1 1
   shape {
     vts { 8 }
     pls { 2 }
@@ -8487,6 +8504,7 @@ object right_arm {
 object right_top_arm {
   13.65 0 -1.8
   0 -0.1545 0
+  1 1 1
   shape {
     vts { 8 }
     pls { 2 }
@@ -9005,6 +9023,7 @@ object right_top_arm {
 object wheel {
   -8.93333 0 -30
   0 0 0
+  1 1 1
   shape {
     vts { 44 }
     pls { 35 }
@@ -9483,7 +9502,8 @@ object wheel {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -9496,7 +9516,8 @@ object wheel {
         no_light
       no_sound
       no_music
-      no_property
+      no_user_property
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -9510,6 +9531,7 @@ object wheel {
 object bumper {
   3 0 -41
   0 0 0
+  1 1 1
   shape {
     vts { 24 }
     pls { 12 }
@@ -9910,6 +9932,7 @@ object bumper {
     }
   }
   bumper_behavior {
+0.5
     no_sound
     light {
       0 1 0
@@ -9925,6 +9948,7 @@ object bumper {
 object bumper {
   9 0 -40.9833
   0 0 0
+  1 1 1
   shape {
     vts { 24 }
     pls { 12 }
@@ -10325,6 +10349,7 @@ object bumper {
     }
   }
   bumper_behavior {
+0.5
     no_sound
     light {
       0 1 0
@@ -10340,6 +10365,7 @@ object bumper {
 object loops {
   0 0 0
   0 0 0
+  1 1 1
   shape {
     vts { 118 }
     pls { 105 }
@@ -11784,6 +11810,7 @@ object loops {
 object loop_cave {
   18.5 0 -37.5
   0 0 0
+  1 1 1
   shape {
     vts { 4 }
     pls { 1 }
@@ -11822,7 +11849,8 @@ object loop_cave {
         no_light
       no_sound
       no_music
-      property 65536
+      user_property 65536
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -11832,7 +11860,8 @@ object loop_cave {
         light
       no_sound
       no_music
-      property 65536
+      user_property 65536
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -11842,7 +11871,8 @@ object loop_cave {
         no_light
       no_sound
       no_music
-      property 2048
+      user_property 2048
+      no_shape_property
       no_texcoord
       no_shape
     }
@@ -11860,6 +11890,7 @@ object loop_cave {
 object light {
   0 3 0
   0 0 0
+  1 1 1
   properties {
     group_1
   }
@@ -11867,6 +11898,7 @@ object light {
 object bumper {
   5.05 0 -33
   0 0 0
+  1 1 1
   shape {
     vts { 24 }
     pls { 12 }
@@ -12267,6 +12299,7 @@ object bumper {
     }
   }
   bumper_behavior {
+0.5
     no_sound
   }
   properties {
@@ -12278,6 +12311,7 @@ object bumper {
 object plunger {
   19.5238 0 32.4762
   0 0 0
+  1 1 1
   shape {
     vts { 4 }
     pls { 1 }
