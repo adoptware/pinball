@@ -12,23 +12,17 @@
 #include "Private.h"
 
 #include "EMath.h"
-/**
- * <p>The Node represents the transformation of an object. Classes Camera
- * Light and Group inherits this class.</p>
- */
+
+/** The Node represents the transformation of an object. Classes Camera
+ * Light and Group inherits this class. */
 class Node {
 	public:
 		Node();
 		~Node();
-		/** <p>.</p> */
 		void setTransform(float tx, float ty, float tz , float rx, float ry, float rz);
-		/** <p>.</p> */
 		void setTranslation(float x, float y, float z);
-		/** <p>.</p> */
 		void getTranslation(float & tx, float & ty, float & tz);
-		/** <p>.</p> */
 		void addTranslation(float x, float y, float z);
-		/** <p>.</p> */
 		void setRotation(float x, float y, float z);
 
 		Matrix m_mtxSrc;

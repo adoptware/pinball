@@ -38,7 +38,8 @@ Meny*  createMenus(Engine * engine) {
 	
 	// Load a font
 	EmFont* font = EmFont::getInstance();
-	font->loadFont("data/font_16.pcx");
+	// TODO the font is loaded twice once in score once in meny
+	font->loadFont("data/font_16.png");
 	
 	// Create the meny
 	Meny* meny = new Meny("meny", engine);

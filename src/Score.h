@@ -28,17 +28,19 @@ class Score : public Behavior  {
 		void StdOnSignal();
 		void StdOnCollision() {};
 		int getScore() {return m_iScore;};
-		void empty();
+		void clear();
 		void draw();
 	private:
-		bool m_baAliveBalls[4];
+		EmSound m_aSample[256];
+		char* m_Text;
+		bool m_baAliveBall[4];
 		int m_iActiveBalls;
 		int m_iBallsLeft;
 		int m_iScore;
 		int m_iBumps;
 		int m_aMission[8];
-		EmSound m_aSample[256];
-		bool m_aTargets[2];
+		bool m_aTarget[2];
+		bool m_aLinux[5];
 		bool m_bExtraBall;
 		EmFont * m_Font;
 };

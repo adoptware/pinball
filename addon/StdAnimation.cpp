@@ -89,7 +89,9 @@ void StdAnimation::onTick() {
 		p_Parent->setRotation(x, y, z);
 	}	else if (m_iType & EM_LIGHT) {
 		Light* l = p_Parent->getLight();
-		//		if (l != NULL) l->setColor(x, y, z);
+		if (l != NULL) {
+			l->setColor(x, y, z);;
+		}
 	} else if (m_iType & EM_BILLBOARD_SIZE) {
 		BillBoard * b = p_Parent->getBillBoard();
 		if (b != NULL) {

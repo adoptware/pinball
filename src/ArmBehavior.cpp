@@ -27,7 +27,7 @@ void ArmBehavior::onTick() {
 		if (Keyboard::isKeyDown(key)) {                  \
 			p_Parent->setUserProperty(PBL_ACTIVE_ARM);     \
 			p_Parent->unsetUserProperty(PBL_UNACTIVE_ARM); \
-			if (m_iCount < 6) {                            \
+			if (m_iCount < 9) {                            \
 				m_iCount++;                                  \
 			} else {                                       \
 				p_Parent->setUserProperty(PBL_UNACTIVE_ARM); \
@@ -41,10 +41,10 @@ void ArmBehavior::onTick() {
 
 	if (m_bRight) {
 		DO_ARM(SDLK_RSHIFT);
-		p_Parent->setRotation(0.0f, -0.06f + 0.02f*m_iCount, 0.5f);
+		p_Parent->setRotation(0.0f, -0.06f + 0.015f*m_iCount, 0);
 	} else {
 		DO_ARM(SDLK_LSHIFT);
-		p_Parent->setRotation(0.0f, 0.06f - 0.02f*m_iCount, 0);
+		p_Parent->setRotation(0.0f, 0.06f - 0.015f*m_iCount, 0);
 	}
 #undef DO_ARM
 }

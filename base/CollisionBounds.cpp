@@ -89,12 +89,12 @@ int CollisionBounds::intersect(Polygon* poly) {
 	for ( ; iter != end; iter++) {
 		Vertex3D vtx = poly->p_Shape3D->m_vVtxSrc[(*iter)];
 
-		if ( (m_vtxSrc.x - m_fBoxSize) <= vtx.x ) bLowX = false;
-		if ( vtx.x <= (m_vtxSrc.x + m_fBoxSize) ) bHighX = false;
-		if ( (m_vtxSrc.y - m_fBoxSize) <= vtx.y ) bLowY = false;
-		if ( vtx.y <= (m_vtxSrc.y + m_fBoxSize) ) bHighY = false;
-		if ( (m_vtxSrc.z - m_fBoxSize) <= vtx.z ) bLowZ = false;
-		if ( vtx.z <= (m_vtxSrc.z + m_fBoxSize) ) bHighZ = false;
+		if ( (m_vtxSrc.x - m_fBoxSize) < vtx.x+0.01 ) bLowX = false;
+		if ( vtx.x-0.01 < (m_vtxSrc.x + m_fBoxSize) ) bHighX = false;
+		if ( (m_vtxSrc.y - m_fBoxSize) < vtx.y+0.01 ) bLowY = false;
+		if ( vtx.y-0.01 < (m_vtxSrc.y + m_fBoxSize) ) bHighY = false;
+		if ( (m_vtxSrc.z - m_fBoxSize) < vtx.z+0.01 ) bLowZ = false;
+		if ( vtx.z-0.01 < (m_vtxSrc.z + m_fBoxSize) ) bHighZ = false;
 	}
 	EM_COUT("CollisionBounds::intersect() " << bLowX <<" "<< bHighX <<" "<<
 		bLowY <<" "<< bHighY <<" "<< bLowZ <<" "<< bHighZ, 0);

@@ -46,9 +46,8 @@ void PointLightVisitor::visit(Group* g) {
 	vector<Shape3D*>::iterator iter = g->m_vShape3D.begin();
 	vector<Shape3D*>::iterator end = g->m_vShape3D.end();
 	for ( ; iter != end; iter++) {
-		if ((*iter)->m_iProperties & EM_SHAPE3D_TRANS) continue;
+		// if ((*iter)->m_iProperties & EM_SHAPE3D_TRANS) continue;
 		if ((*iter)->m_iProperties & EM_SHAPE3D_HIDDEN) continue;
-
 		this->visit((*iter), g);
 	}
 }
@@ -60,8 +59,10 @@ void PointLightVisitor::visit(Shape3D* s, Group* g) {
 	for ( ; lightIter != lightEnd; lightIter++) {
 		if (!(*lightIter)->m_bOn) continue;
 		// TODO: ugly optimization: if statements moved outside for loop		
-		vector<Vertex3D>::iterator vtxIter = s->m_vVtxTrans.begin();
-		vector<Vertex3D>::iterator vtxEnd = s->m_vVtxTrans.end();
+		vector<Vertex3D>::iterator vtxTransIter = s->m_vVtxTrans.begin();
+		vector<Vertex3D>::iterator vtxTransEnd = s->m_vVtxTrans.end();
+		vector<Vertex3D>::iterator vtxAlignIter = s->m_vVtxAlign.begin();
+		vector<Vertex3D>::iterator vtxAlignEnd = s->m_vVtxAlign.end();
 		vector<Vertex3D>::iterator nmlTransIter = s->m_vNmlTrans.begin();
 		vector<Vertex3D>::iterator nmlTransEnd = s->m_vNmlTrans.end();
 		vector<Vertex3D>::iterator nmlAlignIter = s->m_vNmlAlign.begin();
@@ -72,19 +73,20 @@ void PointLightVisitor::visit(Shape3D* s, Group* g) {
 		vector<Color>::iterator specularEnd = s->m_vSpecular.end();
 
 		EmAssert((s->m_vVtxTrans.size() == s->m_vNmlTrans.size()) &&
+						 (s->m_vVtxTrans.size() == s->m_vVtxAlign.size()) &&
 						 (s->m_vVtxTrans.size() == s->m_vNmlAlign.size()) &&
 						 (s->m_vVtxTrans.size() == s->m_vLight.size()) &&
 						 (s->m_vVtxTrans.size() == s->m_vSpecular.size()),
 						 "size missmatch");
 
-		for ( ; vtxIter != vtxEnd; 
-					vtxIter++, nmlTransIter++, nmlAlignIter++, diffuseIter++, specularIter++) {
+		for ( ; vtxTransIter != vtxTransEnd; 
+					vtxTransIter++, vtxAlignIter++, nmlTransIter++, nmlAlignIter++, diffuseIter++, specularIter++) {
 			Vertex3D vtxLight;
 		
 			// Get length from vertex to light
-			vtxLight.x = (*lightIter)->m_vtxTrans.x - (*vtxIter).x;
-			vtxLight.y = (*lightIter)->m_vtxTrans.y - (*vtxIter).y;
-			vtxLight.z = (*lightIter)->m_vtxTrans.z - (*vtxIter).z;
+			vtxLight.x = (*lightIter)->m_vtxTrans.x - (*vtxTransIter).x;
+			vtxLight.y = (*lightIter)->m_vtxTrans.y - (*vtxTransIter).y;
+			vtxLight.z = (*lightIter)->m_vtxTrans.z - (*vtxTransIter).z;
 			float length = EMath::vectorLength(vtxLight);
 			// Check bounds
 			if (((*lightIter)->m_iProperties & EM_USE_BOUNDS) && length > (*lightIter)->m_fBounds) {
@@ -115,12 +117,13 @@ void PointLightVisitor::visit(Shape3D* s, Group* g) {
 			}
 			// specular light
 			float specular;
+#if EM_USE_SOURCE_SPECULAR
 			if (s->m_iProperties & EM_SHAPE3D_SPECULAR) {
 				Vertex3D vtxRef = {0,0,-1};
 				Vertex3D vtxDir;
-				vtxDir.x = -vtxLight.x;
-				vtxDir.y = -vtxLight.y;
-				vtxDir.z = -vtxLight.z;
+				vtxDir.x = (*vtxAlignIter).x - (*lightIter)->m_vtxAlign.x;
+				vtxDir.y = (*vtxAlignIter).y - (*lightIter)->m_vtxAlign.y;
+				vtxDir.z = (*vtxAlignIter).z - (*lightIter)->m_vtxAlign.z;
 				EMath::reflection(vtxDir, (*nmlAlignIter), vtxRef, false);
 				EMath::normalizeVector(vtxRef); // TODO: optimize - remove normalize
 				//float view = EMath::dotProduct((*nmlAlignIter), vtxView); // TODO: optimize
@@ -131,6 +134,9 @@ void PointLightVisitor::visit(Shape3D* s, Group* g) {
 			} else {
 				specular = 0;
 			}
+#else
+			specular = 0;
+#endif
 
 			EM_COUT("PointLightVisitor::visit() factor " << k, 0);
 			EM_COUT("PointLightVisitor::visit() specular " << specular, 0);

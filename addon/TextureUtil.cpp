@@ -18,33 +18,6 @@ EmImage* TextureUtil::loadImage(char* fileName) {
 		cerr << "Unable to load "<< fileName <<" "<< SDL_GetError() << endl;
     return NULL;
 	}
-
-  /* GL surfaces are upsidedown and RGB not BGR* /
-  tmpbuf = (Uint8 *)malloc(image->pitch);
-  if ( tmpbuf == NULL ) {
-  	cerr << "Out of memory" << endl;
-    return(NULL);
-  }
-	
-	rowhi = (Uint8 *)image->pixels;
-  rowlo = rowhi + (image->h * image->pitch) - image->pitch;
-  for (int a=0; a<image->h/2; ++a ) {
-  	for (int b=0; b<image->w; ++b ) {
-    	tmpch = rowhi[b*3];
-      rowhi[b*3] = rowhi[b*3+2];
-      rowhi[b*3+2] = tmpch;
-      tmpch = rowlo[b*3];
-      rowlo[b*3] = rowlo[b*3+2];
-      rowlo[b*3+2] = tmpch;
-		}
-		memcpy(tmpbuf, rowhi, image->pitch);
-		memcpy(rowhi, rowlo, image->pitch);
-		memcpy(rowlo, tmpbuf, image->pitch);
-		rowhi += image->pitch;
-		rowlo -= image->pitch;
-	}
-	free(tmpbuf);
-	*/
 	return image;
 }
 
@@ -63,11 +36,6 @@ EmTexture* TextureUtil::loadTexture(char* fileName) {
 	// Create Texture
 	glGenTextures(1, texture);
 	glBindTexture(GL_TEXTURE_2D, *texture);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 	// 2d texture, level of detail 0 (normal), 3 components (red, green, blue), 
 	// x size from image, y size from image, 
