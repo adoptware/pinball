@@ -1,4 +1,4 @@
-//#ident "$Id: config-rzr.h,v 1.9 2003/06/13 13:39:46 rzr Exp $"
+//#ident "$Id: config-rzr.h,v 1.10 2003/07/16 20:02:04 rzr Exp $"
 //#warning "!+rzr: Win32 portability hacks @ www.rzr.online.fr"
 #ifndef config_rzr_h_ // !+rzr 
 #define config_rzr_h_
@@ -103,7 +103,7 @@
 #define HAVE_UNISTD_H 1
 #define RZR_LINKS_UNSUPPORTED 1
 #define RZR_MODES_UNSUPPORTED 1
-#define RZR_RANDOM_UNSUPPORTED 1
+#define RZR_RANDOM_UNSUPPORTED 1 //@ stdlib
 #define RZR_LIBSTATIC  1
 #define RZR_PATHRELATIVE 1
 #undef  EM_DATADIR //override autoconf path
@@ -135,14 +135,16 @@
 #ifdef RZR_MODES_UNSUPPORTED //!+rzr MSVC++ , mingw32 (etc not tested so far)
 #ifdef _MSC_VER
 #include <direct.h>
-#endif
 #include <io.h> // mkdir
+#else
+#include <fcntl.h> //@msvc
+#endif
 //#include <sys/stat.h>
 #define mkdir(dir,modes) mkdir(dir) // @direct.h // autoconf should do that 
 #endif 
 
 
-#ifdef RZR_RANDOM_UNSUPPORTED 
+#ifdef RZR_RANDOM_UNSUPPORTED
 #define random rand // cstdlibs random is not definied @msvc + mingw32
 #endif
 
@@ -265,4 +267,4 @@ using namespace std;
 #endif
 #endif
 #endif //!-rzr ----------------------------------------------------------------
-//EOF: $Id: config-rzr.h,v 1.9 2003/06/13 13:39:46 rzr Exp $
+//EOF: $Id: config-rzr.h,v 1.10 2003/07/16 20:02:04 rzr Exp $

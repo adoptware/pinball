@@ -1,4 +1,4 @@
-// #ident "$Id: Loader.h,v 1.14 2003/06/11 13:25:50 rzr Exp $"
+// #ident "$Id: Loader.h,v 1.15 2003/07/16 20:02:04 rzr Exp $"
 /***************************************************************************
                             Loader.h -  description
                              -------------------
@@ -95,7 +95,7 @@ class Loader {
   void loadMisc(ifstream & file, istringstream & ist, Engine * engine, Group * group, Behavior * beh);
 
   // return -1 if ver < m.m.m, 0 if var == m.m.m and 1 if ver > m.m.m
-  int cmpVersion(const FileVersion & ver, const int major, const int minor, const int micro);
+  int cmpVersion(const FileVersion & ver, const int major, const int minor, const int micro) const;
 
   static Loader * p_Loader;
 
@@ -114,10 +114,10 @@ class Loader {
 #ifdef RZR_PATCHES_3DS // #define RZR_PATCHES_3DS in pinconfig.h
   /// load and add shape (3DS tri mesh , color or single texture, and collision
   void loadShape3dsAscii(ifstream & file, istringstream & ist, 
-			 Engine * engine, Group * group, Behavior * beh);
+			 Engine * engine, Group * group, Behavior * beh=0);
   /// multi textures no collisions 
   void loadGroup3dsAscii(ifstream & file, istringstream & ist, 
-                         Engine *, Group * group, Behavior *);
+                         Engine *, Group * group, Behavior * beh=0);
 
   Obj3dsUtil* m_Obj3dsUtil;
 #endif
@@ -126,4 +126,4 @@ class Loader {
 
 #endif // LOADER_H
 
-//EOF $Id: Loader.h,v 1.14 2003/06/11 13:25:50 rzr Exp $
+//EOF $Id: Loader.h,v 1.15 2003/07/16 20:02:04 rzr Exp $

@@ -1,4 +1,4 @@
-//#Ident "$Id: TextureUtil.cpp,v 1.15 2003/06/18 10:43:45 henqvist Exp $"
+//#Ident "$Id: TextureUtil.cpp,v 1.16 2003/07/16 20:02:04 rzr Exp $"
 /***************************************************************************
                           TextureUtil.cpp  -  description
                              -------------------
@@ -333,7 +333,8 @@ int TextureUtil::genTexture( char const * const filename,
                              EmTexture * const texture)
 {
   //cout<<"+ Texture::genTexture : "<<filename<<endl;
-  *texture = 0;
+  if ( ( filename == 0 ) || ( texture == 0 ) ) return -1;
+  //*texture = 0;
 
 #if EM_USE_SDL
   // Load Texture
@@ -432,4 +433,4 @@ const char * TextureUtil::getTextureName(EmTexture * tex) {
   }
 */
 
-//EOF: $Id: TextureUtil.cpp,v 1.15 2003/06/18 10:43:45 henqvist Exp $
+//EOF: $Id: TextureUtil.cpp,v 1.16 2003/07/16 20:02:04 rzr Exp $

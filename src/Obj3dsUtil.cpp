@@ -1,4 +1,4 @@
-//#ident "$Id: Obj3dsUtil.cpp,v 1.5 2003/06/16 13:06:13 rzr Exp $"
+//#ident "$Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $"
 /**
  * @author: www.Philippe.COVAL.online.fr - rev: $Author: rzr $
  * 3ds loader wrapper 
@@ -37,7 +37,7 @@ extern "C" {
     | grep -v "#include \"" >| /tmp/inl-3ds.c
   */
   //#include "/tmp/inl-3ds.c" //C-x i
-  /* #ident "$Id: Obj3dsUtil.cpp,v 1.5 2003/06/16 13:06:13 rzr Exp $" */
+  /* #ident "$Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $" */
   /**
    * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
    * Copyright: GPL @ http://rzr.online.fr/licence.htm
@@ -176,7 +176,7 @@ extern "C" {
 #endif
 
 #endif //_h_
-  /* #ident "$Id: Obj3dsUtil.cpp,v 1.5 2003/06/16 13:06:13 rzr Exp $" */
+  /* #ident "$Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $" */
   /**
    * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
    * Copyright: GPL @ http://rzr.online.fr/licence.htm
@@ -249,7 +249,7 @@ extern "C" {
 
 
 #endif // inclusion
-  /* #ident "$Id: Obj3dsUtil.cpp,v 1.5 2003/06/16 13:06:13 rzr Exp $" */
+  /* #ident "$Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $" */
   /**
    * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
    * Copyright: GPL @ http://rzr.online.fr/licence.htm
@@ -285,7 +285,7 @@ extern "C" {
   int fgets_tag(FILE* f, char* buf, char** strarg);
 
 #endif
-  /* #ident "$Id: Obj3dsUtil.cpp,v 1.5 2003/06/16 13:06:13 rzr Exp $" */
+  /* #ident "$Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $" */
   /**
    * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
    * Copyright: GPL @ http://rzr.online.fr/licence.htm
@@ -738,7 +738,7 @@ extern "C" {
   }
 
 #endif // inclusion
-  /* #ident "$Id: Obj3dsUtil.cpp,v 1.5 2003/06/16 13:06:13 rzr Exp $" */
+  /* #ident "$Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $" */
 #ifndef color3ds_h_
 #define color3ds_h_
   /**
@@ -796,8 +796,8 @@ extern "C" {
   int getColorTable(char const * const src, unsigned int * dest);
 
 #endif //_h_ inclusion
-  //$Id: Obj3dsUtil.cpp,v 1.5 2003/06/16 13:06:13 rzr Exp $
-  /* #ident "$Id: Obj3dsUtil.cpp,v 1.5 2003/06/16 13:06:13 rzr Exp $" */
+  //$Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $
+  /* #ident "$Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $" */
   /**
    * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
    * Copyright: GPL @ http://rzr.online.fr/licence.htm
@@ -1044,7 +1044,7 @@ extern "C" {
 #endif
 
 #endif //_h_
-  //EOF $Id: Obj3dsUtil.cpp,v 1.5 2003/06/16 13:06:13 rzr Exp $
+  //EOF $Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $
 
   //-----------------------------------------------------------------------------
 #endif // 3dsview include/inline
@@ -1070,6 +1070,7 @@ static int convert( Shape3D const & shape, Object& dest);
 int convert(Scene const & s , Shape3D & shape)
 {
   //debugf("+ convert Scene2Shape (%d)\n",s.no);
+  //shape.m_sName = string("scene");
   int off=0;
   Polygon3D* poly = 0;
   float r=1,g=1,b=1,a=0; //a=1//TODO
@@ -1110,10 +1111,12 @@ int convert(Scene const & s , Shape3D & shape)
 
 int convert( Object const & o , Shape3D & shape)
 {
-  debugf("+ convert structures (%d)\n",o.nv);
+  //debugf("+ convert structures (%d)\n",o.nv);
   Polygon3D* poly = 0;
   float r=1,g=1,b=1,a=0;
   unsigned int ui32=0;
+
+  //shape.m_sName = string(o.name);
   for(unsigned int i=0;i<o.nv;i++) {
     shape.add( o.vv[i].x ,o.vv[i].y, o.vv[i].z ,
                r,g,b,a, o.vv[i].u , o.vv[i].v  );
@@ -1132,13 +1135,13 @@ int convert( Object const & o , Shape3D & shape)
     shape.setColor( o.vf[k].a  , r,g,b,a);
     shape.setColor( o.vf[k].b  , r,g,b,a);
     shape.setColor( o.vf[k].c  , r,g,b,a);
-    debugf("%s={%f,%f,%f,%f}=%u\n",o.vf[k].material,r,g,b,a,ui32);
+    //debugf("%s={%f,%f,%f,%f}=%u\n",o.vf[k].material,r,g,b,a,ui32);
     //debug("extention to Shape for post text loading");
     if ( o.vf[k].material)
       shape.m_sMaterialName = string(o.vf[k].material);
 #endif
   }
-  //debug("- convert ");
+  //debug("- Obj3dsUtil::convert( Object const & o , Shape3D & shape)");
   return 0;
 }
 
@@ -1147,6 +1150,7 @@ int convert(Shape3D const & shape, Object& dest)
 {
   //debug("+ Obj3dsUtil::convert");
   initObject(&dest);
+  //dest.name = string( shape.m_Name).c_str();
   dest.nv = shape.m_vVtxSrc.size();
   dest.vv = (Vertex*) calloc( dest.nv , sizeof( Vertex));
   vector<Vertex3D>::const_iterator i = shape.m_vVtxSrc.begin();
@@ -1196,8 +1200,8 @@ int convert(Shape3D const & shape, Object& dest)
 
 int convert( Group const & in , Scene & dest)
 {
-  //int l = in.m_vShape3D.size();
-  //in.m_vShape3D
+  dest.no = in.getShape3DSize();
+  
   exit(0); //TODO:
   return 0;
 }
@@ -1213,7 +1217,7 @@ Obj3dsUtil* Obj3dsUtil::getInstance()
 
 int Obj3dsUtil::read( Shape3D& shape,  char const * const filename )
 {
-  //EM_COUT("+ Obj3dsUtil::read",1);
+  //debug("+ Obj3dsUtil::read (Shape3d&");
   char name[BSIZE];
   strcpy(name, filename);
   //Object o; initObject(&object);
@@ -1224,7 +1228,7 @@ int Obj3dsUtil::read( Shape3D& shape,  char const * const filename )
   if ( t <= 0 ) return t;
   t = convert( scene, shape);
   freeScene( &scene);
-  //EM_COUT("- Obj3dsUtil::read",1);
+  //debug("- Obj3dsUtil::read");
   return t;
 }
 
@@ -1258,7 +1262,7 @@ int Obj3dsUtil::write( Shape3D const & shape, FILE* file)
 
 int Obj3dsUtil::read( Group& in,  char const * const filename )
 {
-  //EM_COUT("+ Obj3dsUtil::read",1);
+  //debug("+ Obj3dsUtil::read (Group&");
   char name[BSIZE];
   Shape3D*  shape = 0;
   strcpy(name, filename);
@@ -1279,8 +1283,8 @@ int Obj3dsUtil::read( Group& in,  char const * const filename )
   }
   freeScene( &s);
 
-  //EM_COUT("- Obj3dsUtil::read",1);
-  return 0;
+  //debug("- Obj3dsUtil::read");
+  return s.no;
 }
 
 int Obj3dsUtil::write( Group & in, FILE* file)
@@ -1306,4 +1310,4 @@ int Obj3dsUtil::write( Group  & in, char const* const filename  )
 
 #endif // RZR_PATCHES_3DS
 #endif // inclusion
-//EOF $Id: Obj3dsUtil.cpp,v 1.5 2003/06/16 13:06:13 rzr Exp $
+//EOF $Id: Obj3dsUtil.cpp,v 1.6 2003/07/16 20:02:04 rzr Exp $
