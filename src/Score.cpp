@@ -4,6 +4,11 @@
     begin                : Fri Jan 26 2001
     copyright            : (C) 2001 by Henrik Enqvist
     email                : henqvist@excite.com
+
+    modifs
+    20030510  pnf        : Display message ExtraBall when flag activated
+                            for current ball.
+
 ***************************************************************************/
 
 #include <cstdio>
@@ -126,7 +131,7 @@ void Score::draw() {
   if (nCurrentBall < 4)
   {
     if (m_bExtraBall)
-      sprintf(buffer, "SCORE %d BALL %d ExtraBall!", m_iScore, nCurrentBall);
+      sprintf(buffer, "SCORE %d BALL %d ExtraBall", m_iScore, nCurrentBall);
     else
       sprintf(buffer, "SCORE %d BALL %d", m_iScore, nCurrentBall);
   }
