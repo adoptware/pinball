@@ -28,9 +28,6 @@ class Shape3DUtil {
 	static void readShape3D(ifstream & file, Shape3D* shape);
 	static void readPolygon(ifstream & file, Shape3D* shape);
 	static void readPolygonEdge(ifstream & file, Polygon* poly);
-	static void readFlat(ifstream & file, Shape3D* shape);
-	static void readTrans(ifstream & file, Shape3D* shape);
-	static void readDouble(ifstream & file, Shape3D* shape);
 	static void readVertex(ifstream & file, Shape3D* shape);
 	static void readUnknown(ifstream & file);
 };

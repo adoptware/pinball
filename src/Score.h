@@ -14,36 +14,51 @@
 #include "Behavior.h"
 #include "StateMachine.h"
 
+#define PBL_DEAD 0
+#define PBL_ALIVE 1
+#define PBL_LOCKED 2
+
 class EmFont;
 
 /**
-  *@author Henrik Enqvist
-  */
+ *@author Henrik Enqvist
+ */
 
 class Score : public Behavior  {
-	public:
-		Score();
-		~Score();
-		void onTick();
-		void StdOnSignal();
-		void StdOnCollision() {};
-		int getScore() {return m_iScore;};
-		void clear();
-		void draw();
-	private:
-		EmSound m_aSample[256];
-		char* m_Text1;
-		char* m_Text2;
-		bool m_baAliveBall[4];
-		int m_iActiveBalls;
-		int m_iBallsLeft;
-		int m_iScore;
-		int m_iBumps;
-		int m_aMission[8];
-		bool m_aTarget[2];
-		bool m_aLinux[5];
-		bool m_bExtraBall;
-		EmFont * m_Font;
+ protected:
+	Score();
+ public:
+	~Score();
+	static Score* getInstance();
+	void onTick();
+	void StdOnSignal();
+	void StdOnCollision() {};
+	int getScore() { return m_iScore; };
+	void addScore(int s);
+	void playSample(int i);
+	void clear();
+	void draw();
+	void lockBall(int ball);
+	void unLockBall(int ball);
+	bool isBallActive(int ball);
+ private:
+	EmSound m_aSample[256];
+	char* m_Text1;
+	char* m_Text2;
+	int m_aAliveBall[4];
+	bool m_bLaunch;
+	int m_iBall;
+	int m_iScore;
+	int m_iBumps;
+	int m_aMission[8];
+	int m_iFactor;
+	bool m_aTarget[2];
+	bool m_aLinux[5];
+	bool m_aBoot[4];
+	bool m_bExtraBall;
+	EmFont * m_Font;
+
+	static Score* p_Score;
 };
 
 #endif // SCORE_H

@@ -12,6 +12,7 @@
 Behavior::Behavior() {
 	p_Light = NULL;
 	p_Parent = NULL;
+	m_iType = 0;
 	for (int a=0; a<256; a++) {
 		m_iState[a] = 0;
 	}

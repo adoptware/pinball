@@ -41,9 +41,12 @@ class Behavior {
 	virtual void onSignal(int signal, Group * sender) = 0;
 	/** Adds a light for subclasses to use. */
 	void setLight(Light * l) { p_Light = l; };
+	void setType(int t) { m_iType = t; };
+	int getType() { return m_iType; };
  protected:
 	Light* p_Light;
 	Group* p_Parent;
+	int m_iType;
 	int m_iState[256];
 	private:
 	friend class Group;

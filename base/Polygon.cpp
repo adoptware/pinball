@@ -106,7 +106,7 @@ bool Polygon::includes(int index) {
 	vector<unsigned int>::iterator iter = m_vIndex.begin();
 	vector<unsigned int>::iterator end = m_vIndex.end();
 	for ( ; iter != end; iter++ ) {
-		if ((*iter) == index) return true;
+		if ((*iter) == (unsigned)index) return true;
 	}
 	
 	return false;

@@ -1,0 +1,42 @@
+
+######################################################
+Emilia Pinball README
+######################################################
+
+Installing and Running
+======================
+
+Install with the usual:
+configure
+make 
+make install
+
+The make install step has to be performed as root user. The default
+locatation of the game is /usr/local/bin and /usr/local/share/pinball
+for the data files. The game is started with 'pinball'. You may leave 
+out the 'make install' but in such case you must start the game from the
+game directory by typing './src/pinball -data data'.
+
+Keys
+====
+
+Esc: Meny
+Enter: Launch Ball
+R: Reset Game
+Left Shift: Left Flipper
+Right Shift: Right Flipper
+Space: Bumps the Table
+
+Known Bugs
+==========
+
+Controls meny missing.
+Turning on sound in sound meny requires restart.
+Balls may pass through walls.
+The screen is not updated if you pause the game and switch to another
+application.
+
+Misc
+====
+
+A short description of the file formats is found at data/formats.txt

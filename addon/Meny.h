@@ -26,7 +26,7 @@ class EmFont;
 class Meny {
  public:
 	Meny(char * name, Engine * e);
-	~Meny();
+	virtual ~Meny();
 	virtual int start();
 	void addMeny(Meny * meny);
 	void setAction(int act);
