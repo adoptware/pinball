@@ -12,13 +12,13 @@
 #include "Pinball.h"
 #include "Polygon.h"
 #include "Shape3D.h"
-#include "Score.h"
 #include "SoundUtil.h"
+#include "Loader.h"
 
 BumperBehavior::BumperBehavior() : Behavior() {
 	m_iLightCounter = -1;
 	m_iSound = -1;
-	m_iScore = 0;
+	m_sigBump = Loader::getInstance()->getSignal("bump");
 	this->setType(PBL_TYPE_BUMPERBEH);
 }
 
@@ -39,8 +39,7 @@ void BumperBehavior::StdOnCollision() {
 		}
 		m_iLightCounter = 20;
 		SetLightOn(true);
-		SendSignal(PBL_SIG_BUMPER_ON, 0, this->getParent(), NULL);
-		Score::getInstance()->addScore(450, true);
+		SendSignal(m_sigBump, 0, this->getParent(), NULL);
 		SoundUtil::getInstance()->playSample(m_iSound, false);
 	}
 }

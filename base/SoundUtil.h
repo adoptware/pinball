@@ -62,11 +62,14 @@ class SoundUtil {
 	int loadMusic(const char * filename);
 	void playSample(int sound, bool loop);
 	void playMusic(int sound, bool loop);
+	void stopMusic();
+	void pauseMusic();
+	void resumeMusic();
 	const char * getSoundName(int sound);
 	const char * getMusicName(int music);
  private:
 	bool m_bInited;
-	int m_iVolume;
+	int m_iLoopingMusic;
 	vector<EmSample*> m_vEmSample;
 	vector<EmMusic*> m_vEmMusic;
  	map<string, int> m_hEmSample;

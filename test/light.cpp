@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 	
 	// Add a behavior to the light
 	KeyRotBehavior* keyRBeh = new KeyRotBehavior();
-	groupLightR1->addBehavior(keyRBeh);
+	groupLightR1->setBehavior(keyRBeh);
 		
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
 		engine->tick();

@@ -65,9 +65,9 @@ int main(int argc, char *argv[]) {
 
 	// Add behaviors to the cubes
 	KeyRotBehavior* keyRBeh = new KeyRotBehavior();
-	groupCube1->addBehavior(keyRBeh);
+	groupCube1->setBehavior(keyRBeh);
 	KeyBehavior* keyBeh = new KeyBehavior();
-	groupCube2->addBehavior(keyBeh);
+	groupCube2->setBehavior(keyBeh);
 		
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
 		engine->tick();

@@ -35,6 +35,7 @@ Profiler::Profiler() {
 }
 
 Profiler::~Profiler() {
+	p_Profiler = NULL;
 }
 
 Profiler* Profiler::getInstance() {
@@ -94,7 +95,7 @@ void Profiler::printProfile() {
 	cerr << "Function render    " << (float)m_aProfile[RENDER_OUT]*100.0f/total << endl;
 	cerr << "Function swap out  " << (float)m_aProfile[SWAP_OUT]*100.0f/total << endl;
 	cerr << "Function tick out  " << (float)m_aProfile[TICK_OUT]*100.0f/total << endl;
-	cerr << "Function waitingt  " << (float)m_aProfile[WAIT]*100.0f/total << endl;
+	cerr << "Function waiting   " << (float)m_aProfile[WAIT]*100.0f/total << endl;
 	cerr << "Unprofiled time    " << (float)(all-total)*100.0f/all << " %" << endl;
 	cerr << all <<" "<< total << endl;
 }

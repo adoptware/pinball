@@ -40,7 +40,7 @@ void ArmBehavior::onTick() {
 				m_iCount++;                                    \
 				this->getParent()->setUserProperty(PBL_ACTIVE_ARM);     \
 				this->getParent()->unsetUserProperty(PBL_UNACTIVE_ARM); \
-        if (m_iCount == 5) {                           \
+        if (m_iCount == 2) {                           \
           if (m_bRight) {                              \
 						SendSignal(PBL_SIG_RIGHTARM_ON, 0, this->getParent(), NULL); \
 					} else {                                                    \

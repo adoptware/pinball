@@ -102,9 +102,12 @@ void CollisionVisitor::traverse(Group * g, OctTree * octtree) {
 			continue;
 		}
 		// no need to check if neither have a behavior object
-		if ((*groupIter)->m_vBehavior.size() == 0 && g->m_vBehavior.size() == 0) {
-			continue;
-		}
+// 		if ((*groupIter)->m_vBehavior.size() == 0 && g->m_vBehavior.size() == 0) {
+// 			continue;
+// 		}
+ 		if ((*groupIter)->getBehavior() == NULL && g->getBehavior() == NULL) {
+ 			continue;
+ 		}
 #if EM_DEBUG
 		++em_shapes;
 #endif
@@ -158,15 +161,21 @@ void CollisionVisitor::traverse(Group * g, OctTree * octtree) {
 void CollisionVisitor::notifyBehaviors(Group * g1, Group * g2, 
 																			 const Vertex3D & nml1, const Vertex3D & nml2) {
 	// call all onCollision methods for behaviors in both groups
-	vector<Behavior*>::iterator behIter = g1->m_vBehavior.begin();
-	vector<Behavior*>::iterator behEnd = g1->m_vBehavior.end();
-	for(; behIter != behEnd; behIter++) {
-		(*behIter)->onCollision(nml2, nml1, g2);
+// 	vector<Behavior*>::iterator behIter = g1->m_vBehavior.begin();
+// 	vector<Behavior*>::iterator behEnd = g1->m_vBehavior.end();
+// 	for(; behIter != behEnd; behIter++) {
+// 		(*behIter)->onCollision(nml2, nml1, g2);
+// 	}
+// 	behIter = g2->m_vBehavior.begin();
+// 	behEnd = g2->m_vBehavior.end();
+// 	for(; behIter != behEnd; behIter++) {
+// 		(*behIter)->onCollision(nml1, nml2, g1);
+// 	} 
+	if (g1->getBehavior() != NULL) {
+		g1->getBehavior()->onCollision(nml2, nml1, g2);
 	}
-	behIter = g2->m_vBehavior.begin();
-	behEnd = g2->m_vBehavior.end();
-	for(; behIter != behEnd; behIter++) {
-		(*behIter)->onCollision(nml1, nml2, g1);
+	if (g2->getBehavior() != NULL) {
+		g2->getBehavior()->onCollision(nml1, nml2, g1);
 	}
 }
 

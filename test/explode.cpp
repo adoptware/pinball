@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
 		anim->add(0,0,0);                                        \
 		anim->add(0,0,0);                                        \
 		anim->setEnd(4, 4, 4);                                   \
-		groupBB->addBehavior(anim);                              \
+		groupBB->setBehavior(anim);                              \
 	}
 
 	BILLBOARD(0,0,0);
@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
 
 	// Add a behavior to the billboard
 	KeyBehavior* keyBeh = new KeyBehavior();
-	groupCube->addBehavior(keyBeh);
+	groupCube->setBehavior(keyBeh);
 		
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
 		engine->tick();

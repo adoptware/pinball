@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
 	
 	// Add a behavior to the cube
 	KeyRotBehavior* keyRBeh = new KeyRotBehavior();
-	groupCube->addBehavior(keyRBeh);
+	groupCube->setBehavior(keyRBeh);
 		
 	// Aquire the singleton font object.
 	EmFont* font = EmFont::getInstance();

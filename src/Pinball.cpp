@@ -105,7 +105,7 @@ Group * createBall(float r, float g, float b, int pbl, float x, Engine * engine)
   //group->addShape3D(ballCyl);
   group->addShape3D(ballSphere);
   group->addShape3D(shadow);
-  group->addBehavior(bouBeh);
+  group->setBehavior(bouBeh);
   group->setTransform(x, 0, 8, 0, 0, 0);
 
 	return group;
@@ -133,7 +133,7 @@ int loadLevel(Engine * engine, const char * subdir) {
 		return -1;
 	}
 	score = Score::getInstance();
-	engine->addBehavior(score);
+	engine->setBehavior(score);
 	// Add a camera.
 	Group* groupCR = new Group();
 	Group* groupCT = new Group();
@@ -141,10 +141,10 @@ int loadLevel(Engine * engine, const char * subdir) {
 	//	KeyRotBehavior* keyRBeh = new KeyRotBehavior();
 	//	KeyBehavior* keyBeh = new KeyBehavior();
 	engine->add(groupCT);
-	// 	groupCT->addBehavior(keyBeh);
+	// 	groupCT->setBehavior(keyBeh);
 	//	groupCT->setTransform(0, 25, 25, 0, 0, 0);
 	groupCT->add(groupCR);
-	// 	groupCR->addBehavior(keyRBeh);
+	// 	groupCR->setBehavior(keyRBeh);
 	//	groupCR->setTransform(0.0f, 0.0f, 0.0f, 0.175f, 0, 0);
 	groupCR->setCamera(camera);
 
@@ -178,7 +178,7 @@ int loadLevel(Engine * engine, const char * subdir) {
 	EyeBehavior* eyebeh = new EyeBehavior(gb1, gb2, gb3);
 	filename = datadir + string("/nudge.wav");
 	eyebeh->setSound(SoundUtil::getInstance()->loadSample(filename.c_str()));
-	groupCT->addBehavior(eyebeh);
+	groupCT->setBehavior(eyebeh);
 
 	// Reset pinball
 	SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
@@ -257,10 +257,10 @@ void get_config(void) {
 		menusize->setCurrent(0);
 	}
 	// view mode
-	if (Config::getInstance()->getView() == 0) {
-		menuview->setCurrent(0);
-	} else {
-		menuview->setCurrent(1);
+	switch(Config::getInstance()->getView()) {
+	case 1: menuview->setCurrent(1);
+	case 2: menuview->setCurrent(2);
+	default: menuview->setCurrent(0);
 	}
 	// texture filter
 	if (Config::getInstance()->getGLFilter() == EM_LINEAR) {
@@ -363,10 +363,10 @@ protected:
 		}
 		config->setSize(w, h);
 		
-		if (menuview->getCurrent() == 0) {
-			config->setView(0);
-		} else {
-			config->setView(1);
+		switch (menuview->getCurrent()) {
+		case 1: config->setView(1);
+		case 2: config->setView(2);
+		default: config->setView(0);
 		}
 		// texture filter
 		if (menufilter->getCurrent() == 0) {
@@ -477,7 +477,8 @@ MenuItem* createMenus(Engine * engine) {
 	}
 
 	menuview = new MenuChoose(engine);
-	menuview->addText(  "view:    follows ball");
+	menuview->addText(  "view:             top");
+	menuview->addText(  "view:        standard");
 	menuview->addText(  "view:          locked");
 	menugfx->addMenuItem(menuview);
 
@@ -519,26 +520,26 @@ MenuItem* createMenus(Engine * engine) {
 
 	menusnd = new MenuChoose(engine);
 	menusnd->addText(   "sound:            off");
-	menusnd->addText(   "sound:              1");
-	menusnd->addText(   "sound:              2");
-	menusnd->addText(   "sound:              3");
-	menusnd->addText(   "sound:              4");
-	menusnd->addText(   "sound:              5");
-	menusnd->addText(   "sound:              6");
-	menusnd->addText(   "sound:              7");
-	menusnd->addText(   "sound:              8");
+	menusnd->addText(   "sound:       o.......");
+	menusnd->addText(   "sound:       oo......");
+	menusnd->addText(   "sound:       ooo.....");
+	menusnd->addText(   "sound:       oooo....");
+	menusnd->addText(   "sound:       ooooo...");
+	menusnd->addText(   "sound:       oooooo..");
+	menusnd->addText(   "sound:       ooooooo.");
+	menusnd->addText(   "sound:       oooooooo");
 	menuaudio->addMenuItem(menusnd);
 
 	menumusic = new MenuChoose(engine);
 	menumusic->addText( "music:            off");
-	menumusic->addText( "music:              1");
-	menumusic->addText( "music:              2");
-	menumusic->addText( "music:              3");
-	menumusic->addText( "music:              4");
-	menumusic->addText( "music:              5");
-	menumusic->addText( "music:              6");
-	menumusic->addText( "music:              7");
-	menumusic->addText( "music:              8");
+	menumusic->addText( "music:       o.......");
+	menumusic->addText( "music:       oo......");
+	menumusic->addText( "music:       ooo.....");
+	menumusic->addText( "music:       oooo....");
+	menumusic->addText( "music:       ooooo...");
+	menumusic->addText( "music:       oooooo..");
+	menumusic->addText( "music:       ooooooo.");
+	menumusic->addText( "music:       oooooooo");
 	menuaudio->addMenuItem(menumusic);
 
 	MenuFct* menuapply = new MyMenuApply("apply", NULL, engine);
@@ -599,14 +600,18 @@ int main(int argc, char *argv[]) {
 	int all = 0;
 	while (!Keyboard::isKeyDown(SDLK_INSERT)) {
 		if (Keyboard::isKeyDown(SDLK_ESCAPE) || all == 0) {
+			SoundUtil::getInstance()->pauseMusic();
 			if (menu->perform() == EM_MENU_EXIT) {
 				break;
 			}
+			SoundUtil::getInstance()->resumeMusic();
 		}
+#if EM_DEBUG
 		if (Keyboard::isKeyDown(SDLK_p)) {
 			Keyboard::waitForKey();
 			Keyboard::clear();
 		}
+#endif
 		if (Keyboard::isKeyDown(SDLK_r)) {
 			SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
 		}
@@ -616,6 +621,12 @@ int main(int argc, char *argv[]) {
 		if (Config::getInstance()->getMaxFPS() == 40) {
 			engine->tick();
 			engine->tick();
+		}
+
+		if (Config::getInstance()->getMaxFPS() == 40) {
+			render = engine->limitFPS(40);
+		} else {	
+			render = engine->limitFPS(80);
 		}
 
 		if (render) {
@@ -632,11 +643,6 @@ int main(int argc, char *argv[]) {
 			skip++;
 		}
 		all++;
-		if (Config::getInstance()->getMaxFPS() == 40) {
-			render = engine->limitFPS(40);
-		} else {	
-			render = engine->limitFPS(80);
-		}
 		//engine->limitFPS(100);
 	}
 

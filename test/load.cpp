@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
 
 	// add a behavior to the camera
 	KeyBehavior* keyBeh = new KeyBehavior();
-	groupCamera->addBehavior(keyBeh);
+	groupCamera->setBehavior(keyBeh);
 
 	// load the file
 	if (Loader::getInstance()->loadFile(argv[1], engine) < 0) {
@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 	Group * g = engine->getGroup(1);
 	if (g != NULL) {
 		KeyRotBehavior* keyRBeh = new KeyRotBehavior();
-		g->addBehavior(keyRBeh);
+		g->setBehavior(keyRBeh);
 	}
 		
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
