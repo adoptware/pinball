@@ -1,4 +1,3 @@
-#$Id: Makefile.am,v 1.12 2003/06/16 13:06:12 rzr Exp $:
 AUTOMAKE_OPTIONS = gnu
 
 highscoredir = $(EM_BUILD_ROOT)/$(EM_HIGHSCORE_DIR)/professor
@@ -14,8 +13,13 @@ libModuleProfessor_la_LDFLAGS = -module
 libModuleProfessor_la_SOURCES = ModuleProfessor.cpp
 
 professordata_DATA = \
+bump.wav \
+bumphard.wav \
+bumpsoft.wav \
+flip.wav \
 floor.png \
 floor.png.pcx \
+nudge.wav \
 pinball.pbl \
 professor.mid \
 professor.png
