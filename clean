@@ -6,9 +6,10 @@ rm -rf `find . -name "*.a"`
 rm -rf `find . -name "*.la"`
 rm -rf `find . -name "*.al"`
 rm -rf `find . -name ".libs"`
+rm -rf `find . -name ".deps"`
+rm -rf autom4te-2.53.cache
 rm -rf config.*
 rm -rf stamp-h
-rm -rf aclocal*
 rm -rf ltmain*
 rm -rf libtool
 rm -rf libltdl
@@ -16,3 +17,5 @@ rm -rf configure
 rm -rf missing*
 rm -rf mkinstall*
 rm -rf install-sh*
+rm -rf pinconfig*
+rm -rf pinball-config
