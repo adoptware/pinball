@@ -16,24 +16,145 @@
 extern int em_width_div2_;
 extern int em_height_div2_;
 
-Meny::Meny(char * name, Engine * e) {
+MenuItem::MenuItem(Engine * e, int type) {
 	EmAssert(e != NULL, "Engine not created");
 
-	m_action = EM_MENU_EXIT;
-	m_name = name;
-	m_current = 0;
 	p_EmFont = EmFont::getInstance();
 	p_Engine = e;
-	m_function = NULL;
+	m_iType = type;
 }
 
-Meny::~Meny() {
+MenuItem::~MenuItem() {
 }
 
-void Meny::addMeny(Meny * menu) {
-	m_vMeny.push_back(menu);
+/*************************************************************************
+ * A menu with sub menys */
+
+MenuSub::MenuSub(char* name, Engine* e) : MenuItem(e, EM_MENU_SUB) {
+	m_Name = name;
+	m_iCurrent = 0;
+	m_iAction = EM_MENU_NOP;
 }
 
+MenuSub::~MenuSub() {
+}
+
+void MenuSub::addMenuItem(MenuItem * menu) {
+	m_vMenuItem.push_back(menu);
+}
+
+int MenuSub::perform() {
+  EM_COUT("MenuSub::perform() " << this->getText(), 1)
+
+	if (m_vMenuItem.size() == 0) {
+		return m_iAction;
+	}
+	
+	int ret = 0;
+
+	SDLKey key = SDLK_a;
+	while(true) {
+		if (key == SDLK_DOWN) m_iCurrent++;
+		if (key == SDLK_UP) m_iCurrent--;
+																	
+		if (m_iCurrent < 0) m_iCurrent = m_vMenuItem.size()-1;
+		if (m_iCurrent >= (signed)m_vMenuItem.size()) m_iCurrent = 0;
+
+		this->draw();
+
+		key = Keyboard::waitForKey();
+		if (key == SDLK_RETURN) {
+			ret = m_vMenuItem[m_iCurrent]->perform();
+			switch (ret) {
+			case EM_MENU_EXIT:
+			case EM_MENU_RESUME:
+				Keyboard::clear();
+				return ret;
+				break;
+			case EM_MENU_BACK:
+				Keyboard::clear();
+				return EM_MENU_NOP;
+			}
+		}
+	}
+}
+
+void MenuSub::draw() {
+	EM_COUT("MenuSub::draw() " << this->getText(), 1);
+	p_Engine->clearScreen();
+
+	p_EmFont->print(this->getText(), -(float)(strlen(this->getText()))*EM_FONTSIZE_X/2, 0.5);
+
+	vector<MenuItem*>::iterator menuIter = m_vMenuItem.begin();
+	vector<MenuItem*>::iterator menuEnd = m_vMenuItem.end();
+	for (int a=0; menuIter != menuEnd; menuIter++, a++) {
+		if (a == m_iCurrent) {
+			char str[256];
+			strncpy(str, "* ", 16);
+			strncat(str, (*menuIter)->getText(), 64);
+			strncat(str, " *", 16);
+			p_EmFont->print(str, -(float)(strlen(str))*EM_FONTSIZE_X/2, 0.5 - EM_FONTSIZE_Y*(a+2));
+		} else {
+			p_EmFont->print((*menuIter)->getText(), -(float)(strlen((*menuIter)->getText()))*EM_FONTSIZE_X/2, 
+											0.5 - EM_FONTSIZE_Y*(a+2));
+		}
+	}
+
+	p_Engine->swap();
+}
+
+/*************************************************************************'
+ * A meny where you can choose items */
+
+MenuChoose::MenuChoose(Engine* e) : MenuItem(e, EM_MENU_CHOOSE) {
+	m_iCurrent = 0;
+}
+
+MenuChoose::~MenuChoose() {
+}
+
+char* MenuChoose::getText() {
+	if (m_vText.size() == 0) {
+		return "";
+	} else {
+		return m_vText[m_iCurrent];
+	}
+}
+
+void MenuChoose::addText(char * text) {
+	m_vText.push_back(text);
+}
+
+int MenuChoose::perform() {
+  EM_COUT("MenuSub::perform() " << this->getText(), 1)
+
+	if (m_vText.size() == 0) {
+		return EM_MENU_NOP;
+	}
+	
+	m_iCurrent++;
+	if (m_iCurrent >= (signed)m_vText.size()) m_iCurrent = 0;
+
+	return EM_MENU_NOP;
+}
+
+/*************************************************************************''
+ * A menu that performs a function when choosen */
+
+MenuFct::MenuFct(char* name, int (*fct)(void), Engine* e) : MenuItem(e, EM_MENU_FCT) {
+	m_Name = name;
+	m_Fct = fct;
+}
+
+MenuFct::~MenuFct() {
+}
+
+int MenuFct::perform() {
+	return m_Fct();
+}
+
+
+/*
 void Meny::setName(char * name) {
 	m_name = name;
 }
@@ -53,19 +174,17 @@ int Meny::action() {
 	return m_action;
 }
 
-int Meny::start() {
+int MenySub::start() {
   EM_COUT("Meny::start() " << m_name, 1)
 
 	if (m_vMeny.size() == 0) {
 		return this->action();
 	}
 	
-	bool done = false;
 	int ret = 0;
 
 	SDLKey key = SDLK_a;
 	while(true) {
-		int counter = 0;
 		if (key == SDLK_DOWN) m_current++;
 		if (key == SDLK_UP) m_current--;
 																	
@@ -94,32 +213,4 @@ int Meny::start() {
 char * Meny::getName() {
 	return m_name;
 }
-
-void Meny::draw() {
-	EM_COUT("Meny::draw()", 1);
-	p_Engine->clearScreen();
-
-	p_EmFont->print(this->getName(), em_width_div2_ -
-									strlen(this->getName())*EmFont::getInstance()->getSize()/2, 
-									em_height_div2_ + 40);
-
-	vector<Meny*>::iterator menyIter = m_vMeny.begin();
-	vector<Meny*>::iterator menyEnd = m_vMeny.end();
-	for (int a=0; menyIter != menyEnd; menyIter++, a++) {
-		if (a == m_current) {
-			char str[256];
-			strncpy(str, "* ", 16);
-			strncat(str, (*menyIter)->getName(), 64);
-			strncat(str, " *", 16);
-			p_EmFont->print(str, em_width_div2_ - strlen(str)*EmFont::getInstance()->getSize()/2,
-											em_height_div2_ - 20*a);
-		} else {
-			p_EmFont->print((*menyIter)->getName(), em_width_div2_ - 
-											strlen((*menyIter)->getName())*EmFont::getInstance()->getSize()/2, 
-											em_height_div2_ - 20*a);
-		}
-	}
-
-	p_Engine->swap();
-}
- 
+*/ 

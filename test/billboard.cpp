@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 	engine->add(groupC);
 
 	// Load a texture
-	EmTexture* texture = TextureUtil::loadTexture(argv[1]);
+	EmTexture* texture = TextureUtil::getInstance()->loadTexture(argv[1]);
 
 	// Add a BillBoard
 	BillBoard* billboard = new BillBoard(texture, 1.0, 1.0);

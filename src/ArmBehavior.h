@@ -12,20 +12,20 @@
 #include "Behavior.h"
 #include "StateMachine.h"
 
-/**
- * <p>A Behavior for the pinball demo.</p>
- */
+/** A Behavior for the pinball demo. */
 class ArmBehavior : public Behavior {
-	public:
-		ArmBehavior(bool right = true);
-		~ArmBehavior();
-		void onTick();
-		void StdOnSignal() {};
-		void StdOnCollision() {};
-	private:
-		bool m_bRight;
-		int m_iCount;
-		bool m_bOn;
+ public:
+	ArmBehavior(bool right = true);
+	~ArmBehavior();
+	void onTick();
+	void StdOnSignal() {};
+	void StdOnCollision() {};
+	void setSound(int s) { m_iSound = s; };
+ private:
+	bool m_bRight;
+	int m_iCount;
+	bool m_bOn;
+	int m_iSound;
 };
 
 #endif // ARMBEHAVIOR_H

@@ -13,13 +13,18 @@
 #include "Light.h"
 #include "Shape3D.h"
 #include "Polygon.h"
+#include "SoundUtil.h"
 
 StateItem::StateItem(int asig, int csig, int delay) {
 	m_iActSig = asig;
 	m_iCollSig = csig;
-	m_iSigDelay = delay;
-	m_iProperty = PBL_NULL;
+	m_iSigDelay = 0;
 	m_bLight = false;
+	m_iProperty = PBL_NULL;
+	m_iSound = -1;
+	m_iDelay = delay;
+	m_iTick = 0;
+	p_NextStateItem = NULL;
 }
 
 StateItem::~StateItem() {
@@ -47,13 +52,14 @@ void StateItem::addTexCoord(float u, float v) {
 }
 
 
-StateBehavior::StateBehavior() {
+StateBehavior::StateBehavior() : Behavior() {
 	m_iOwnerBall = PBL_NULL;
 	m_iTick = 0;
 	m_iCollisionSafe = 0;
 	m_bProperty = false;
 	m_bTexCoord = false;
 	m_bMove = false;
+	p_Light = NULL;
 	p_CurrentStateItem = NULL;
 	this->setType(PBL_TYPE_STATEBEH);
 }
@@ -61,11 +67,17 @@ StateBehavior::StateBehavior() {
 StateBehavior::~StateBehavior(){
 }
 
-void StateBehavior::addStateItem(StateItem* s) {
-	m_vStateItem.push_back(s);
+void StateBehavior::addStateItem(StateItem* stateitem) {
+	// insert state
+	m_vStateItem.push_back(stateitem);
 	if (m_vStateItem.size() == 1) {
-		p_CurrentStateItem = s;
+		p_CurrentStateItem = stateitem;
 	}
+	// make a loop of next pointers
+	if (m_vStateItem.size() > 1) {
+		m_vStateItem[m_vStateItem.size()-2]->p_NextStateItem = stateitem;
+	}
+	stateitem->p_NextStateItem = m_vStateItem[0];
 }
 
 void StateBehavior::onTick() {
@@ -73,11 +85,20 @@ void StateBehavior::onTick() {
 	EmAssert(p_CurrentStateItem != NULL, "StateItem NULL");
 
 	m_iTick++;
+	p_CurrentStateItem->m_iTick++;
 
+	if (p_CurrentStateItem->m_iDelay != 0 && 
+			p_CurrentStateItem->m_iTick >= p_CurrentStateItem->m_iDelay &&
+			p_CurrentStateItem->p_NextStateItem != NULL) {
+		this->setState(p_CurrentStateItem->p_NextStateItem);
+	}
+
+	// the ball recently collided with this object is in a safe distance
 	if (m_iTick > m_iCollisionSafe) {
 		m_iOwnerBall = PBL_NULL;
 	}
 
+	// move the ball to toward next spot
 	if (m_bMove) {
 		float tx, ty, tz, rx, ry, rz;
 		p_Parent->getTranslation(tx, ty, tz);
@@ -100,7 +121,15 @@ void StateBehavior::onTick() {
 		
 		p_Parent->addTransform(dtx, dty, dtz, drx, dry, drz);
 	}
+}
 
+void StateBehavior::setState(StateItem* stateitem) {
+	p_Parent->unsetUserProperty(p_CurrentStateItem->m_iProperty);
+	p_CurrentStateItem = stateitem;
+
+	// set properties
+	p_Parent->setUserProperty(p_CurrentStateItem->m_iProperty);
+	// apply texcoords
 	if (m_bTexCoord) {
 		/* the second shape is the visible one*/    
 		Shape3D* shape = p_Parent->getShape3D(0);   
@@ -112,14 +141,16 @@ void StateBehavior::onTick() {
 				vector<TexCoord>::iterator end1 = p_CurrentStateItem->m_vTexCoord.end();                  
 				vector<TexCoord>::iterator iter2 = poly->m_vTexCoord.begin();  
 				vector<TexCoord>::iterator end2 = poly->m_vTexCoord.end();     
-				for (; iter1 != end1, iter2 != end2; iter1++, iter2++) {       
+				for (; iter1 != end1 && iter2 != end2; iter1++, iter2++) {       
 					(*iter2) = (*iter1);                  
 				}                                       
 			}                                         
 		}
 	}
-
-	if (p_Light != NULL) p_Light->setOn(p_CurrentStateItem->m_bLight);
+	// apply light
+	SetLightOn(p_CurrentStateItem->m_bLight);
+	// zero counter
+	p_CurrentStateItem->m_iTick = 0;
 }
 
 void StateBehavior::StdOnSignal() {
@@ -128,10 +159,8 @@ void StateBehavior::StdOnSignal() {
 	EmAssert(m_vStateItem.size() > 0, "No StateItems");
 
 	OnSignal( PBL_SIG_RESET_ALL) {
-		p_Parent->unsetUserProperty(p_CurrentStateItem->m_iProperty);
-
-		p_CurrentStateItem = m_vStateItem[0];
-		p_Parent->setUserProperty(p_CurrentStateItem->m_iProperty);
+		this->setState(m_vStateItem[0]);
+		// do a fast move
 		if (m_bMove) {
 			p_Parent->setTransform(p_CurrentStateItem->m_vtxTr.x,
 														 p_CurrentStateItem->m_vtxTr.y,
@@ -141,17 +170,12 @@ void StateBehavior::StdOnSignal() {
 														 p_CurrentStateItem->m_vtxRot.z);
 			
 		}
-		SetLightOn(p_CurrentStateItem->m_bLight);
 	} else {
 		vector<StateItem*>::iterator iter = m_vStateItem.begin();
 		vector<StateItem*>::iterator end = m_vStateItem.end();
 		for (; iter != end; iter++) {
 			OnSignal((*iter)->m_iActSig) {
-				p_Parent->unsetUserProperty(p_CurrentStateItem->m_iProperty);
-
-				p_CurrentStateItem = (*iter);
-				p_Parent->setUserProperty(p_CurrentStateItem->m_iProperty);
-				SetLightOn(p_CurrentStateItem->m_bLight);
+				this->setState(*iter);
 			}
 		}
 	}
@@ -159,6 +183,7 @@ void StateBehavior::StdOnSignal() {
 
 void StateBehavior::StdOnCollision() {
 	EmAssert(p_CurrentStateItem != NULL, "StateItem NULL");
+	EM_COUT("StateBehavior::StdOnCollision()", 0);
 
 	OnCallerProperty( (PBL_BALL_1 | PBL_BALL_2 | PBL_BALL_3 | PBL_BALL_4) ) {
 		// this is to avaid one collision to generate more than one signal
@@ -169,6 +194,7 @@ void StateBehavior::StdOnCollision() {
 		
 		m_iOwnerBall = GetCallerProperty() & (PBL_BALL_1 | PBL_BALL_2 | PBL_BALL_3 | PBL_BALL_4);
 		m_iCollisionSafe = m_iTick + 5;
+		SoundUtil::getInstance()->play(p_CurrentStateItem->m_iSound, false);
 		SendSignal(p_CurrentStateItem->m_iCollSig, p_CurrentStateItem->m_iSigDelay, this->p_Parent, NULL);
 	}
 }

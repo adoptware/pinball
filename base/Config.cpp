@@ -75,7 +75,13 @@ void Config::saveConfig() {
 	file << "view: " << m_iView << endl;
 	file << "bpp: " << m_iBpp << endl;
 	file << "fullscreen: " << (m_bFullScreen ? "1" : "0") << endl;
-	file << "texture_nearest: " << ((m_iGLFilter == GL_NEAREST) ? "1" : "0") << endl;
+	if (m_iGLFilter == GL_LINEAR) {
+		file << "texture_filter: " << "0" << endl;
+	} else if (m_iGLFilter == GL_NEAREST) {
+		file << "texture_filter: " << "1" << endl;
+	} else {
+		file << "texture_filter: " << "-1" << endl;
+	}
 
 #else
 	cerr << "Unable save config file because some header files were missing";
@@ -130,12 +136,14 @@ void Config::loadConfig() {
 			file >> str;
 			if (str == "0") m_bFullScreen = false;
 			else m_bFullScreen = true;
-		} else if (str == "texture_nearest:") {
+		} else if (str == "texture_filter:") {
 			file >> str;
 			if (str == "0") {
 				m_iGLFilter = GL_LINEAR;
-			} else {
+			} else if (str == "1") {
 				m_iGLFilter = GL_NEAREST;
+			} else {
+				m_iGLFilter = -1;
 			}
 		}
 	}
@@ -158,7 +166,8 @@ void Config::loadArgs(int & argc, char *argv[]) {
 	// Parse and remove arguments, arguments are removed so the main program does not see them
 	// E.g. if a program wants to load a file the file name will always be arg 1
 	// regardless of 'emilia' arguments.
-#define REMOVEARG(a, argc, argv) if (a < argc-1) argv[a] = argv[argc-1]; argc--;
+#define REMOVEARG(a, argc, argv) for (int aa=a ;aa < argc-1; aa++) argv[aa] = argv[aa+1]; argc--;
+
 	int a = 1;
 	while (a < argc) { 
 		//  for (int a=1; a<argc; a++) {
@@ -187,10 +196,10 @@ void Config::loadArgs(int & argc, char *argv[]) {
 			REMOVEARG(a, argc, argv);
  		} else if (strcmp(argv[a], "-data") == 0) {
 	 		if (argc > a) {
+				EM_COUT("Using datapath: " << argv[a+1], 1);
 	    	this->setDataDir(argv[a+1]);
 				REMOVEARG(a, argc, argv);
 	 		}
-			EM_COUT("Using " << m_iBpp << " bpp", 1);
 			REMOVEARG(a, argc, argv);
    	} else if (strcmp(argv[a], "-nosound") == 0) {
 			this->setSound(false);
@@ -205,6 +214,7 @@ void Config::loadArgs(int & argc, char *argv[]) {
 			EM_COUT("Using extern GL, disabling SDL", 1);
 			REMOVEARG(a, argc, argv);
 		} else {
+			EM_COUT("Unknown argument: " << argv[a], 1);
 			a++;
 		}
 	}

@@ -40,7 +40,7 @@ class OctTree;
  */
 class CollisionVisitor : public Visitor {
  protected:
-	CollisionVisitor(int);
+	CollisionVisitor();
  public:
 	~CollisionVisitor();
 	static CollisionVisitor * getInstance();
@@ -54,18 +54,19 @@ class CollisionVisitor : public Visitor {
 	bool collidePolygons(CollisionBounds*, CollisionBounds*);
 	bool intersect(Polygon*, Polygon*);
 	void traverse(Group * g, OctTree * octtree);
-	void countNormal(Vertex3D & vtx, Polygon** paPolygons, int piPolygons);
-	void addToArray(Polygon* p1, Polygon* p2);
+	void countNormal(Vertex3D & vtx, vector<Polygon*> vPolygon);
 	bool detection2d(Polygon* p1, Polygon* p2);		
 	bool findLine(int axis, float A, float B, float C, float D, float & x, Shape3D * s,
 								vector<unsigned int>::iterator & iter, vector<unsigned int>::iterator & nextIter,
 								vector<unsigned int>::iterator & end,	vector<unsigned int>::iterator & begin);
 	
 	//vector<Group*> m_vGroup;
-	Polygon* m_aPolygonsA[MAX_POLYGONS];
-	Polygon* m_aPolygonsB[MAX_POLYGONS];
-	int m_iPolygonsA;
-	int m_iPolygonsB;
+	vector<Polygon*> m_vPolygon1;
+	vector<Polygon*> m_vPolygon2;
+/* 	Polygon* m_aPolygonsA[MAX_POLYGONS]; */
+/* 	Polygon* m_aPolygonsB[MAX_POLYGONS]; */
+/* 	int m_iPolygonsA; */
+/* 	int m_iPolygonsB; */
 	OctTree * p_OctTree;
 
 	static CollisionVisitor * p_CollisionVisitor;

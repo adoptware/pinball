@@ -13,7 +13,7 @@
 /** Main */
 int main(int argc, char *argv[]) {
 	cerr << "Simple emilia test." << endl;
-
+#if EM_THREADS
 	// Create the engine.
 	Engine* engine = new Engine(argc, argv);
 	engine->setLightning(0.7f, 0.1f);
@@ -35,23 +35,17 @@ int main(int argc, char *argv[]) {
 	KeyRotBehavior* keyRBeh = new KeyRotBehavior();
 	groupCube->addBehavior(keyRBeh);
 
-	int start = SDL_GetTicks();
-	int desired = start;
+	engine->startTickThread();
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
-		engine->tick();
-		engine->render();
+		engine->renderThreadSafe();
 		engine->swap();
-
-		desired += 50; // 20 ticks per second
-		int ticks = SDL_GetTicks();
-		int delay = (desired - ticks);
-		if (delay < -1000) {
-			cerr << "TO SLOW" << endl;
-			desired = ticks;
-		}
-		SDL_Delay(EM_MAX(delay, 0));
 	}
 
 	delete(engine);
 	return 0;
+#else
+	cerr << "This version of Emilia is not compiled with threaded rendering." << endl;
+	cerr << "Add the line: AC_DEFINE(EM_THREADS) to 'configure.in' to enable threads." << endl;
+	return 0;
+#endif
 }

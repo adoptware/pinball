@@ -27,8 +27,10 @@ class BumperBehavior : public Behavior {
 		void onTick();
 		void StdOnSignal() {};
 		void StdOnCollision();
+		void setSound(int s) { m_iSound = s; };
 	private:
 		int m_iLightCounter;
+		int m_iSound;
 };
 
 #endif // BounceBehavior

@@ -3,9 +3,8 @@ File formats
 ============
 
 There are to files types (in addition to png and wav files), pbl and
-emi files. The emi files is a 3D file format and the pbl file the levels
-files. This game is still at alpha stage so do not be disappointed when
-I without notice changes the formats !!!
+emi files. The emi files are the 3D files and the pbl file is the level
+file.
 
 Emi-files.
 =========
@@ -27,40 +26,39 @@ shp {	                                <-- every file has a shape block
 
 Pbl-files
 =========
-object {                 <-- The pbl files are built by a nubmer of objects
-  grid_tex.emi           <-- First line is the name if the visible 3D shape, if non write '?'
-  collision_other        <-- Should we use collision? 'collision_same/collision_other/no_collision'
-    grid_tex_co.emi      <-- If 'collision_other' this is the name of the 3D file used for collision
-                             else it will be empty
-  -1.5 -0.98 -34         <-- x, y, z position
-  0 0 0                  <-- x, y, z rotation
-  state_behavior {       <-- An object may have one behavior, 'state_behavior' is the most usuful
-    state_item {         <-- An state_behavior may have a number of states 'state_item'
-      1102 1101 0        <-- (signal which will invoke this state, signal sent on collision,
-                              delay of the sent signal)
-      move               <-- Moves the the object to a location 'move/no_move'
-                         <-- In case of 'no_move' the next three line are excluded
-        0.0005           <-- The size of the step
-        16.5 0 -24       <-- x, y, z position of where to move
-        0 0.05 0         <-- x, y, z position of how to rotate
-      no_light           <-- 'light/no_light', lights are added separate items to the behavior
-      property           <-- 'property/no_property'
-        0                <-- A property if 'no_property' this line is excluded
-      texcoord           <-- 'texcoord/no_texcoord', Changes u, v for the polygon
-        tiles.png        <-- Name of texture
-        4                <-- Number of u,v coordinates
-        0 0              <-- First u,v in first polygon in first shape
-        0.125 0          <-- Second u,v in first polygon in first shape
-        0.125 0.125
-        0 0.125
-    }
-  }
-  properties {           <-- Properties to speed up the rendering of the object
-    alpha_test
-    no_light
-    transparent
-    transform_once
-    user_group1          <-- user_group1 means collision detection is not perfomed between this
-                        <-- this and other objects with property user_group1
-  }
+
+Objects
+-------
+
+Pbl files defines a set of objects. Each object block starts with the word 'object' 
+the name of the object and a '{'. The object is closed with a '}'. The compulsoary
+fields in a object are the visual shape field, collision shape field, translation field
+and rotation field, these must be present first in the object. Attention! The empty 
+spaces (or line breaks) before and after all '{' and '}' are imporatant. 
+
+The visual field must start with the word 'visual' or 'no_visual', if 'visual' is 
+given the next token will be the file name for the visual 3d shape. The file must 
+reside in the defualt data directory i.e. the same directory where the pbl file is in 
+(this directory can be altered with 'Config::getInstance()->setDataDir()'). If 'no_visual'
+is given the filename is omited.
+
+The collision field must start with 'collision_same', 'collision_other' or 'no_collision',
+where only 'collision_other' is follow by a file name. This field specifies wether or
+not this object should be tested for collision detection and which shape to use for collsion
+detection.
+
+Next is the translation and rotation for the object. First comes the x, y, and z coordinates 
+for translation the comes the rotation around x, y and z. Values for rotation must lie between
+0.0 and and 1.0.
+
+object <objectname> {
+  visual <filename> / no_visual
+  collision_same / collision_other <filename> / no_collision
+	tx, ty, tz
+	rx, ry, rz
 }
+
+Properties
+----------
+
+TODO....

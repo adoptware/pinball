@@ -14,7 +14,8 @@
 #include "Shape3D.h"
 #include "Polygon.h"
 
-TriggerBehavior::TriggerBehavior(int aSignal, int uSignal, int aSignalOut, int uSignalOut, bool init) {
+TriggerBehavior::TriggerBehavior(int aSignal, int uSignal, int aSignalOut, int uSignalOut, bool init) 
+	: Behavior() {
 	m_iActiveSignal = aSignal;
 	m_iUnActiveSignal = uSignal;
 	m_iActiveSignalOut = aSignalOut;
@@ -30,6 +31,7 @@ TriggerBehavior::TriggerBehavior(int aSignal, int uSignal, int aSignalOut, int u
 	m_vtxRot.x = 0;
 	m_vtxRot.y = 0;
 	m_vtxRot.z = 0;
+	this->setType(PBL_TYPE_TRIGGERBEH);
 }
 
 TriggerBehavior::~TriggerBehavior(){

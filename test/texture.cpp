@@ -43,10 +43,14 @@ int main(int argc, char *argv[]) {
 	}
 
 	// Add a cube.
-	Cube* cube = new Cube(1.0, texture);
-	Group* groupCube = new Group();
-	engine->add(groupCube);
-	groupCube->addShape3D(cube);
+	Cube* cube1 = new Cube(1.0, texture);
+	Cube* cube2 = new Cube(1.0, texture);
+	Group* groupCube1 = new Group();
+	Group* groupCube2 = new Group();
+	engine->add(groupCube1);
+	engine->add(groupCube2);
+	groupCube1->addShape3D(cube1);
+	groupCube2->addShape3D(cube2);
 	
 	// Add a light
 	Light* lightR = new Light(1, 0, 0,  1, 0, 0);
@@ -58,7 +62,7 @@ int main(int argc, char *argv[]) {
 
 	// Add a behavior to the cube
 	KeyRotBehavior* keyRBeh = new KeyRotBehavior();
-	groupCube->addBehavior(keyRBeh);
+	groupCube1->addBehavior(keyRBeh);
 		
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
 		engine->tick();
