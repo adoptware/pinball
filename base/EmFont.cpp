@@ -14,15 +14,16 @@
 #include <string>
 
 
-extern int em_width_;
-extern int em_height_;
-extern int em_width_div2_;
-extern int em_height_div2_;
+// extern int em_width_;
+// extern int em_height_;
+// extern int em_width_div2_;
+// extern int em_height_div2_;
 
 
 EmFont * EmFont::p_EmFont = NULL;
 
 EmFont::EmFont() {
+	p_Config = Config::getInstance();
 	m_Texture = NULL;
 	m_iSize = 0;
 }
@@ -82,7 +83,7 @@ void EmFont::printRow(const char * buffer, float row) {
 	this->print(buffer, -1, 1 - row*EM_FONTSIZE_Y);
 #endif
 #if EM_USE_ALLEGRO
-	this->print(buffer, 0, (int)(row*(float)em_height_*EM_FONTSIZE_Y));
+	this->print(buffer, 0, (int)(row*(float)p_Config->getHeight()*EM_FONTSIZE_Y));
 #endif
 }
 
@@ -96,9 +97,9 @@ void EmFont::printRowCenter(const char * buffer, float row) {
 	this->print(buffer, -(float)strlen(buffer)*EM_FONTSIZE_X/2, 1 - row*EM_FONTSIZE_Y);
 #endif
 #if EM_USE_ALLEGRO
-	this->print(buffer, em_width_div2_ - 
-							(int)((float)strlen(buffer)*(float)em_height_*EM_FONTSIZE_Y/2.0f), 
-							(int)(row*(float)em_height_*EM_FONTSIZE_Y));
+	this->print(buffer, p_Config->getWidthDiv2() - 
+							(int)((float)strlen(buffer)*(float)p_Config->getHeightDiv2()*EM_FONTSIZE_Y), 
+							(int)(row*(float)p_Config->getHeight()*EM_FONTSIZE_Y));
 #endif
 }
 
@@ -169,8 +170,8 @@ void EmFont::print(const char * buffer, int x, int y) {
 		cerr << "No font defined" << endl;
 		return;
 	}
-	int realsizeX = (int)((float)em_width_*EM_FONTSIZE_X);
-	int realsizeY = (int)((float)em_height_*EM_FONTSIZE_Y);
+	int realsizeX = (int)((float)p_Config->getWidth()*EM_FONTSIZE_X);
+	int realsizeY = (int)((float)p_Config->getHeight()*EM_FONTSIZE_Y);
 	for (int a=0; a<255 && buffer[a] != 0 && buffer[a] != 10; a++) {
 		int b=buffer[a];
 		int c=36;

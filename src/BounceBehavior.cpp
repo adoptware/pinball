@@ -36,7 +36,7 @@ Vertex3D g_vtxArmTable[] = {
 	{0.0f, 0.0f, -0.5f},
 	{-0.11f, 0.0f, -0.5f},
 	{-0.15f, 0.0f, -0.3f},
-	{-0.05f, 0.0f, 0.02f} };
+	{-0.08f, 0.0f, -0.02f} };
 
 
 #define CHECK_SPEED()    \

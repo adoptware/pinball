@@ -14,10 +14,10 @@
 #include <sys/types.h>
 #include <stdio.h>
 
-int em_width_ = 640;
-int em_height_ = 480;
-int em_width_div2_ = 320;
-int em_height_div2_ = 240;
+// int em_width_ = 640;
+// int em_height_ = 480;
+// int em_width_div2_ = 320;
+// int em_height_div2_ = 240;
 
 Config * Config::p_Instance = NULL;
 
@@ -52,6 +52,8 @@ void Config::setDefault() {
 	this->setDataDir(EM_DATADIR);
 	this->setLights(true);
 	this->setBrightness(0.1f);
+	this->setMaxFPS(80);
+	this->setShowFPS(false);
 }
 
 void Config::setDataDir(const char* ch) { 
@@ -99,6 +101,8 @@ void Config::saveConfig() {
 	} else {
 		file << "texture_filter: " << "-1" << endl;
 	}
+	file << "maxfps: " << m_iMaxFPS << endl;
+	file << "showfps: " << (m_bShowFPS ? "1" : "0") << endl;
 }
 
 void Config::loadConfig() {
@@ -142,10 +146,16 @@ void Config::loadConfig() {
 			file >> m_iView;
 		} else if (str == "bpp:") {
 			file >> m_iBpp;
+		} else if (str == "maxfps:") {
+			file >> m_iMaxFPS;
 		} else if (str == "fullscreen:") {
 			file >> str;
 			if (str == "0") this->setFullScreen(false);
 			else this->setFullScreen(true);
+		} else if (str == "showfps:") {
+			file >> str;
+			if (str == "0") this->setShowFPS(false);
+			else this->setShowFPS(true);
 		} else if (str == "lights:") {
 			file >> str;
 			if (str == "0") this->setLights(false);
@@ -170,10 +180,12 @@ void Config::loadConfig() {
 void Config::setSize(int w, int h) { 
 	m_iWidth = EM_MIN(1600, EM_MAX(100,w)); 
 	m_iHeight = EM_MIN(1200, EM_MAX(100,h)); 
-  em_width_ = m_iWidth;
-  em_height_ = m_iHeight;
-  em_width_div2_ = m_iWidth/2;
-  em_height_div2_ = m_iHeight/2;
+	m_iWidthDiv2 = m_iWidth/2;
+	m_iHeightDiv2 = m_iHeight/2;
+//   em_width_ = m_iWidth;
+//   em_height_ = m_iHeight;
+//   em_width_div2_ = m_iWidth/2;
+//   em_height_div2_ = m_iHeight/2;
 }
 
 void Config::loadArgs(int & argc, char *argv[]) {
@@ -238,10 +250,10 @@ void Config::loadArgs(int & argc, char *argv[]) {
 		}
 	}
 
-  em_width_ = m_iWidth;
-  em_height_ = m_iHeight;
-  em_width_div2_ = m_iWidth/2;
-  em_height_div2_ = m_iHeight/2;
+//   em_width_ = m_iWidth;
+//   em_height_ = m_iHeight;
+//   em_width_div2_ = m_iWidth/2;
+//   em_height_div2_ = m_iHeight/2;
 #undef REMOVEARG
 }
 

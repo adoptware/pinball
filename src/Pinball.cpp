@@ -156,12 +156,12 @@ int loadLevel(Engine * engine, const char * subdir) {
 	/*
 	// Add pinball floor
 	Group* groupG = new Group();
-#if EM_USE_ALLEGRO
+	#if EM_USE_ALLEGRO
 	filename = datadir + string("/floor2.pcx");
-#endif
-#if EM_USE_SDL
+	#endif
+	#if EM_USE_SDL
 	filename = datadir + string("/floor2.png");
-#endif
+	#endif
 	EmTexture* tex = TextureUtil::getInstance()->loadTexture(filename.c_str());
 	Shape3D* gs = new Grid(tex, 78.0f, 43.0f, 16, 1.0f/16.0f, 1, 1, 1, 1);
 	gs->setProperty(EM_SHAPE3D_BEHIND2);
@@ -198,6 +198,8 @@ MenuChoose* menuscreen = NULL;
 MenuChoose* menusize = NULL;
 MenuChoose* menuview = NULL;
 MenuChoose* menufilter = NULL;
+MenuChoose* menufps = NULL;
+MenuChoose* menumaxfps = NULL;
 
 /** Update the current meny with the configuration. */
 void get_config(void) {
@@ -267,6 +269,18 @@ void get_config(void) {
 		menufilter->setCurrent(1);
 	} else {
 		menufilter->setCurrent(2);
+	}
+	//
+	if (Config::getInstance()->getShowFPS()) {
+		menufps->setCurrent(1);
+	} else {
+		menufps->setCurrent(0);
+	}
+	// max fps
+	if (Config::getInstance()->getMaxFPS() == 40) {
+		menumaxfps->setCurrent(0);
+	} else {
+		menumaxfps->setCurrent(1);
 	}
 }
 
@@ -347,7 +361,7 @@ protected:
 #endif
 			textureutil->resizeView(w, h);
 		}
-		config->setSize(640, 480);
+		config->setSize(w, h);
 		
 		if (menuview->getCurrent() == 0) {
 			config->setView(0);
@@ -361,6 +375,18 @@ protected:
 			config->setGLFilter(EM_NEAREST);
 		} else {
 			config->setGLFilter(-1);
+		}
+		// fps
+		if (menufps->getCurrent() == 0) {
+			config->setShowFPS(false);
+		} else {
+			config->setShowFPS(true);
+		}
+		// max fps
+		if (menumaxfps->getCurrent() == 0) {
+			config->setMaxFPS(40); 
+		} else {
+			config->setMaxFPS(80);
 		}
 		
 		get_config();
@@ -481,6 +507,16 @@ MenuItem* createMenus(Engine * engine) {
 	menufilter->addText("texture:         none");
 	menugfx->addMenuItem(menufilter);
 
+	menufps = new MenuChoose(engine);
+	menufps->addText(   "show fps:          no");
+	menufps->addText(   "show fps:         yes");
+	menugfx->addMenuItem(menufps);
+
+	menumaxfps = new MenuChoose(engine);
+	menumaxfps->addText("max fps            40");
+	menumaxfps->addText("max fps            80");
+	menugfx->addMenuItem(menumaxfps);
+
 	menusnd = new MenuChoose(engine);
 	menusnd->addText(   "sound:            off");
 	menusnd->addText(   "sound:              1");
@@ -577,8 +613,11 @@ int main(int argc, char *argv[]) {
 
 		engine->tick();
 		engine->tick();
-		engine->tick();
-		engine->tick();
+		if (Config::getInstance()->getMaxFPS() == 40) {
+			engine->tick();
+			engine->tick();
+		}
+
 		if (render) {
 			engine->render();
 			if (score != NULL) {
@@ -593,7 +632,11 @@ int main(int argc, char *argv[]) {
 			skip++;
 		}
 		all++;
-		render = engine->limitFPS(35);
+		if (Config::getInstance()->getMaxFPS() == 40) {
+			render = engine->limitFPS(40);
+		} else {	
+			render = engine->limitFPS(80);
+		}
 		//engine->limitFPS(100);
 	}
 

@@ -147,7 +147,7 @@ void EyeBehavior::onTick() {
 			} else {
 				bx = x; by = y; bz = z;
 			}
-		balls++;
+			balls++;
 		}
 		if (p_Score->isBallActive(PBL_BALL_3)) {
 			float x, y, z;
