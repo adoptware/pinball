@@ -51,7 +51,7 @@ void LockBehavior::StdOnCollision() {
 		if (!m_bActive) return;
 		m_bLock = true;
 		SetProperty( PBL_TRAP );
-		SendSignal( m_iLockSignal );
+		SendSignal( m_iLockSignal, 0, this, NULL );
 		SetLightOff();
 	}
 }

@@ -1,6 +1,6 @@
 AUTOMAKE_OPTIONS = gnu
 
-noinst_PROGRAMS = simple texture font load key big joy alpha light anim math meny sound camera billboard explode fire
+noinst_PROGRAMS = simple texture font load key big joy alpha light anim math meny sound camera billboard explode fire signal
 
 INCLUDES = -I../core -I../addon -I../visitor
 LDADD =  ../core/libemilia_core.a ../addon/libemilia_addon.a ../visitor/libemilia_visitor.a 
@@ -40,3 +40,5 @@ billboard_SOURCES = billboard.cpp
 explode_SOURCES = explode.cpp
 
 fire_SOURCES = fire.cpp
+
+signal_SOURCES = signal.cpp

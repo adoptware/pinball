@@ -23,37 +23,28 @@ ArmBehavior::~ArmBehavior() {
 }
 
 void ArmBehavior::onTick() {
-	if (m_bRight) {
-		if (Keyboard::isKeyDown(KEY_RSHIFT)) {
-			p_Parent->setUserProperty(PBL_ACTIVE_ARM);
-			p_Parent->unsetUserProperty(PBL_UNACTIVE_ARM);
-			if (m_iCount < 6) {
-				m_iCount++;
-			} else {
-				p_Parent->setUserProperty(PBL_UNACTIVE_ARM);
-				p_Parent->unsetUserProperty(PBL_ACTIVE_ARM);
-			}
-		} else {
-			p_Parent->setUserProperty(PBL_UNACTIVE_ARM);
-			p_Parent->unsetUserProperty(PBL_ACTIVE_ARM);
-			if (m_iCount > 0) m_iCount--;
+#define DO_ARM \
+		if (Keyboard::isKeyDown(KEY_RSHIFT)) {           \
+			p_Parent->setUserProperty(PBL_ACTIVE_ARM);     \
+			p_Parent->unsetUserProperty(PBL_UNACTIVE_ARM); \
+			if (m_iCount < 6) {                            \
+				m_iCount++;                                  \
+			} else {                                       \
+				p_Parent->setUserProperty(PBL_UNACTIVE_ARM); \
+				p_Parent->unsetUserProperty(PBL_ACTIVE_ARM); \
+			}                                              \
+		} else {                                         \
+			p_Parent->setUserProperty(PBL_UNACTIVE_ARM);   \
+			p_Parent->unsetUserProperty(PBL_ACTIVE_ARM);   \
+			if (m_iCount > 0) m_iCount--;                  \
 		}
+
+	if (m_bRight) {
+		DO_ARM
 		p_Parent->setRotation(0.0f, -0.06f + 0.02f*m_iCount, 0.5f);
 	} else {
-		if (Keyboard::isKeyDown(KEY_LSHIFT)) {
-			p_Parent->setUserProperty(PBL_ACTIVE_ARM);
-			p_Parent->unsetUserProperty(PBL_UNACTIVE_ARM);
-			if (m_iCount < 6) {
-				m_iCount++;
-			} else {
-				p_Parent->setUserProperty(PBL_UNACTIVE_ARM);
-				p_Parent->unsetUserProperty(PBL_ACTIVE_ARM);
-			}
-		} else {
-			p_Parent->setUserProperty(PBL_UNACTIVE_ARM);
-			p_Parent->unsetUserProperty(PBL_ACTIVE_ARM);
-			if (m_iCount > 0) m_iCount--;
-		}
+		DO_ARM
 		p_Parent->setRotation(0.0f, 0.06f - 0.02f*m_iCount, 0);
 	}
+#undef DO_ARM
 }

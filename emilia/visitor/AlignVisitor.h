@@ -10,9 +10,7 @@
 #define ALIGNVISITOR_H
 
 #include "Private.h"
-
 #include "Visitor.h"
-
 #include "EMath.h"
 
 class CollisionBounds;
@@ -25,26 +23,25 @@ class CollisionBounds;
  */
 
 class AlignVisitor : public Visitor {
-	public:
-	  /** <p>Constructor.</p>. */
-		AlignVisitor();
-		/** <p>Destructor.</p> */
-		~AlignVisitor();
-		/** <p>Applys the camera matrix to the Shape3D and Sound objects
-		 * of the group. Checks first if the objects are NULL.</p> */
-		void visit(Group* g);
-//		void visit(CollisionBounds* cb);
-		/** <p>The empty function should allways be called before usage.</p> */
-		void empty();
-	  /** <p>The Engine object uses this function when setting the camera marix.</p> */
-		void setCamera(Group * g);
-	private:
-		Group* p_GroupCamera;
-		Matrix m_mtxInverse;
-		Vertex3D m_vtxFront;
-		Vertex3D m_vtxUp;
-		Vertex3D m_vtxTrans;
-		Vertex3D m_vtxRot;
+ protected:
+	AlignVisitor();
+ public:
+	~AlignVisitor();
+	static AlignVisitor * getInstance();
+	/** Applys the camera matrix to the Shape3D and Sound objects
+	 * of the group. Checks first if the objects are NULL. */
+	void visit(Group* g);
+	void empty();
+	/** <p>The Engine object uses this function when setting the camera marix.</p> */
+	void setCamera(Group * g);
+ private:
+	Group* p_GroupCamera;
+	Matrix m_mtxInverse;
+	Vertex3D m_vtxFront;
+	Vertex3D m_vtxUp;
+	Vertex3D m_vtxTrans;
+	Vertex3D m_vtxRot;
+	static AlignVisitor * p_AlignVisitor;
 };
 
 #endif // ALIGNVISITOR_H

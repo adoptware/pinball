@@ -31,8 +31,9 @@ class BounceBehavior : public Behavior {
 		bool m_bKnock;
 		int m_iBall;
 		Vertex3D m_vtxDir;
-		Vertex3D m_vtxNextDir;
-		int m_iCollisionType;
+		Vertex3D m_vtxOldDir;
+		int m_iDirFactor;
+		int m_iCollisionPrio;
 };
 
 #endif // BounceBehavior

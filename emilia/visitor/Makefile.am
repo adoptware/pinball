@@ -13,7 +13,7 @@ OpenGLVisitor.cpp \
 OpenGLTransVisitor.cpp \
 PNormalVisitor.cpp \
 PointLightVisitor.cpp \
-SignalVisitor.cpp \
+SignalSender.cpp \
 SoundVisitor.cpp \
 TransformVisitor.cpp
 
@@ -26,6 +26,6 @@ OpenGLVisitor.h \
 OpenGLTransVisitor.h \
 PNormalVisitor.h \
 PointLightVisitor.h \
-SignalVisitor.h \
+SignalSender.h \
 SoundVisitor.h \
 TransformVisitor.h

@@ -25,6 +25,7 @@ class LockBehavior : public Behavior {
 		~LockBehavior();
 		void StdOnSignal();
 		void StdOnCollision();
+		void onTick() {};
 	private:
 		int m_iActiveSignal;
 		int m_iUnActiveSignal;

@@ -33,9 +33,7 @@
 
 #include "Loader.h"
 
-/**
- * Main
- */
+/** Main */
 int main(int argc, char *argv[]) {
 	cout << "pinball" << endl;
 	//	srandom(time(0));
@@ -47,7 +45,7 @@ int main(int argc, char *argv[]) {
 	// Add a score board and a menu.
 	Meny* menu = createMenus(oEngine);
 	Score* oScore = new Score();
-	oEngine->setBehavior(oScore);
+	oEngine->addBehavior(oScore);
 	
 	// Add a camera.
 	Group* groupCR = new Group();
@@ -57,10 +55,10 @@ int main(int argc, char *argv[]) {
 	KeyBehavior* keyBeh = new KeyBehavior();
 		
 	oEngine->add(groupCT);
-	groupCT->setBehavior(keyBeh);
+	groupCT->addBehavior(keyBeh);
  	groupCT->setTransform(0, 25, 25, 0, 0, 0);
 	groupCT->add(groupCR);
-	//	groupCR->setBehavior(keyRBeh);
+	groupCR->addBehavior(keyRBeh);
  	groupCR->setTransform(0.0f, 0.0f, 0.0f, 0.125f, 0, 0);
 	groupCR->setCamera(camera);
 
@@ -79,18 +77,15 @@ int main(int argc, char *argv[]) {
 	groupG->setTransform(0.0f, -1.0f, 0.0f, 0.0f, 0.25f, 0.0f);
 	groupG->setProperty(EM_GROUP_TRANSFORM_ONCE);
 
-		// A shadow
-#define SHADOW(shadow) \
-  }
 
 #define BALL(c_r, c_g, c_b, pbl, x)    \
 {                                      \
   Group* groupS = new Group();         \
                                        \
-  Shape3D* ballCyl = new BigSphere(1, 0, c_r, c_g, c_b, 1);  \
+  Shape3D* ballCyl = new BigSphere(1, 1, c_r, c_g, c_b, 1);    \
   Shape3D* ballSphere = new BigSphere(1, 2, c_r, c_g, c_b, 1); \
-  ballSphere->setProperty(EM_SPECULAR);                      \
-  ballSphere->setPolygonProperty(EM_POLY_HIDDEN);            \
+  ballSphere->setProperty(EM_SPECULAR);                        \
+  ballCyl->setProperty(EM_SHAPE3D_HIDDEN);                     \
   CollisionBounds* ballBounds = new CollisionBounds(ballCyl->getCollisionSize()); \
   ballBounds->setShape3D(ballCyl, 0);  \
                                        \
@@ -111,7 +106,6 @@ int main(int argc, char *argv[]) {
   shadow->add(1,-0.99,-1);             \
   shadow->add(0,-0.99,0);              \
   Polygon* poly = new Polygon(shadow, 3);   \
-  poly->setProperty(EM_POLY_TRANS);    \
   poly->add(0, 0,0, 0.5,0,0,0);        \
   poly->add(1, 0,0, 0.5,0,0,0);        \
   poly->add(2, 0,0, 0.5,0,0,0);        \
@@ -121,33 +115,37 @@ int main(int argc, char *argv[]) {
   poly->add(6, 0,0, 0.5,0,0,0);        \
   poly->add(7, 0,0, 0.5,0,0,0);        \
   shadow->add(poly);                   \
+  shadow->setProperty(EM_SHAPE3D_TRANS);    \
   shadow->countNormals();              \
                                        \
-  BounceBehavior* bouBeh = new BounceBehavior(1);            \
+  BounceBehavior* bouBeh = new BounceBehavior(pbl);  \
                                        \
-  oEngine->add(groupS);              \
-  groupS->setUserProperty(pbl);                       \
-  groupS->setCollisionBounds(ballBounds);                    \
-  groupS->addShape3D(ballSphere);    \
-  groupS->addShape3D(ballCyl);       \
-  groupS->addShape3D(shadow);        \
-  groupS->setBehavior(bouBeh);       \
-  groupS->setTransform(x, 0, 8, 0, 0, 0);                    \
+  oEngine->add(groupS);                \
+  groupS->setUserProperty(pbl);             \
+  groupS->setCollisionBounds(ballBounds);   \
+  groupS->addShape3D(ballSphere);      \
+  groupS->addShape3D(ballCyl);         \
+  groupS->addShape3D(shadow);          \
+  groupS->addBehavior(bouBeh);         \
+  groupS->setTransform(x, 0, 8, 0, 0, 0);   \
 }
 
-	BALL(1, 0, 0, PBL_BALL_1, 4);
+  BALL(1, 0, 0, PBL_BALL_1, 4);
 
 	BALL(0, 1, 0, PBL_BALL_2, 0);
 
 	BALL(0, 0, 1, PBL_BALL_3, -4);
 
+	BALL(1, 0, 1, PBL_BALL_4, -8);
 
 	// Reset pinball
 //	SignalVisitor::add(PBL_SIG_RESET_ALL, oEngine);
 	oEngine->sendSignal(PBL_SIG_RESET_ALL, oEngine);
 		
 	// Draw to the screen.
-	int exit = 0;
+  int exit = 0;
+  int frames = 0;
+  int skiped = 0;
 	extern int iSeconds;
 	int old_sec = iSeconds;
 	int render = 0;
@@ -157,6 +155,7 @@ int main(int argc, char *argv[]) {
 		if (iSeconds - old_sec >= 1) {
 			old_sec++;
 			oEngine->tick();
+			frames++;
 			render++;		
 
 			if (Keyboard::isKeyDown(SDLK_r)) {
@@ -171,8 +170,8 @@ int main(int argc, char *argv[]) {
 				Keyboard::clear();
 				old_sec = iSeconds;
 			}
-		} else if ( render > 1) {
-			//oEngine->tick();
+		} else if ( render > 0) {
+			if (render > 1) skiped++;
 			oEngine->render();
 			oScore->draw();
 			oEngine->swap();
@@ -183,10 +182,10 @@ int main(int argc, char *argv[]) {
 			cerr << "YOUR MACHINE IS TOO SLOW, BUY NEW HARDWARE!!!" << endl;
 			render = 0;
 		}
-		
 	}
 
 	delete(oEngine);
 	delete(menu);
+	cerr << "Frames " << frames << " skiped " << skiped << endl;
 	return 0;
 }

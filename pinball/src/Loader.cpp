@@ -2,8 +2,8 @@
                             -  description
                              -------------------
     begin                : Thu Mar 9 2000
-    copyright            : (C) 2000 by 
-    email                : 
+    copyright            : (C) 2000 by henqvist
+    email                : henqvist@excite.com
  ***************************************************************************/
 
 #include <fstream>
@@ -37,11 +37,12 @@
 #include "SwitchBehavior.h"
 #include "TextureUtil.h"
 #include "Score.h"
-#include "Animation.h"
+#include "StdAnimation.h"
 #include "SignalVisitor.h"
 
-/* Normal Object
- */
+#define CHECK_EOF(file) if (!file) throw string("eof reached too soon");
+
+/* Normal Object */
 Group * loadStdObject(ifstream & file) {
 	char collision[256], shape[256];
 	float tx, ty, tz;
@@ -84,14 +85,13 @@ Group * loadStdObject(ifstream & file) {
 	if (strstr(shape, "?") == NULL) {
 		Shape3D* shape3d = Shape3DUtil::loadShape3D(shape);
 		group->addShape3D(shape3d);
-		shape3d->setPolygonProperty(EM_POLY_HIDDEN);
+		shape3d->setProperty(EM_SHAPE3D_HIDDEN);
 	}
 
 	return group;
 }
 
-/* light
- */
+/* light */
 Group * loadStdLight(ifstream & file, Engine * engine, Behavior * behavior) {
 	string str;
 	Group * group = NULL;
@@ -120,11 +120,10 @@ Group * loadStdLight(ifstream & file, Engine * engine, Behavior * behavior) {
 	return group;
 }
 
-/* Animation
- */
-Animation * loadStdAnimation(ifstream & file, Engine * engine) {
+/* Animation */
+StdAnimation * loadStdAnimation(ifstream & file, Engine * engine) {
 	string str;
-	Animation * anim = NULL;
+	StdAnimation * anim = NULL;
 	file >> str;
 	if (str == "animation" ) {
 		string str;
@@ -133,11 +132,11 @@ Animation * loadStdAnimation(ifstream & file, Engine * engine) {
 		file >> steps;
 		file >> speed;
 		if (str == "type_light") {
-			anim = new Animation(speed, EM_LIGHT);
+			anim = new StdAnimation(speed, EM_LIGHT);
 		} else if (str == "type_rot") {
-			anim = new Animation(speed, EM_ROTATION);
+			anim = new StdAnimation(speed, EM_ROTATION);
 		} else {
-			anim = new Animation(speed, EM_TRANSLATION);
+			anim = new StdAnimation(speed, EM_TRANSLATION);
 		}
 		for (int a=0; a<steps; a++) {
 			float tx, ty, tz;
@@ -150,8 +149,7 @@ Animation * loadStdAnimation(ifstream & file, Engine * engine) {
 	return anim;
 }
 
-/* Walls
- */
+/* Walls */
 void loadWalls(ifstream & file, Engine * engine) {
 	Group * group = loadStdObject(file);
 	engine->add(group);
@@ -163,32 +161,29 @@ void loadWalls(ifstream & file, Engine * engine) {
 	cerr << "loaded walls" << endl;
 }
 
-/* Left arm
- */
+/* Left arm */
 void loadLeftarm(ifstream & file, Engine * engine) {
 	Group * group = loadStdObject(file);
 	engine->add(group);
 
 	ArmBehavior* armBeh = new ArmBehavior(false);
 
-	group->setBehavior(armBeh);
+	group->addBehavior(armBeh);
 	group->setUserProperty(PBL_GROUP1);
 }
 
-/* Right arm
- */
+/* Right arm*/
 void loadRightarm(ifstream & file, Engine * engine) {
 	Group * group = loadStdObject(file);
 	engine->add(group);
 
 	ArmBehavior* armBeh = new ArmBehavior(true);
 
-	group->setBehavior(armBeh);
+	group->addBehavior(armBeh);
 	group->setUserProperty(PBL_GROUP1);
 }
 
-/* Bumper
- */
+/* Bumper */
 void loadBumper(ifstream & file, Engine * engine) {
 	Group * group = loadStdObject(file);
 	engine->add(group);
@@ -204,10 +199,10 @@ void loadBumper(ifstream & file, Engine * engine) {
 	// The visible cylinder
 	Shape3D* shape3d = new Cylinder(4.0, 1.0, 1.0, 0.0, 0.0);
 	group->addShape3D(shape3d);
-	shape3d->setPolygonProperty(EM_POLY_HIDDEN);
+	shape3d->setProperty(EM_SHAPE3D_HIDDEN);
 
 	BumperBehavior* bumperBeh = new BumperBehavior();
-	group->setBehavior(bumperBeh);
+	group->addBehavior(bumperBeh);
 	group->setUserProperty(PBL_BUMPER);
 	group->setUserProperty(PBL_GROUP1);
 	group->setProperty(EM_GROUP_TRANSFORM_ONCE);
@@ -225,7 +220,7 @@ void loadFlatbumper(ifstream & file, Engine * engine) {
 	engine->add(group);
 	// The collision grid
 	Shape3D* shape3d_c = new Grid(NULL, 4.0, 4.0, 1, 0);
-	shape3d_c->setPolygonProperty(EM_POLY_HIDDEN);
+	shape3d_c->setProperty(EM_SHAPE3D_HIDDEN);
 	group->addShape3D(shape3d_c);
 
 	CollisionBounds* bounds = new CollisionBounds(shape3d_c->getCollisionSize());
@@ -237,7 +232,7 @@ void loadFlatbumper(ifstream & file, Engine * engine) {
 	group->addShape3D(shape3d);
 
 	BumperBehavior* bumperBeh = new BumperBehavior();
-	group->setBehavior(bumperBeh);
+	group->addBehavior(bumperBeh);
 	group->setUserProperty(PBL_BUMPER);
 	group->setUserProperty(PBL_GROUP1);
 	group->setProperty(EM_GROUP_TRANSFORM_ONCE);
@@ -258,7 +253,7 @@ void loadTarget(ifstream & file, Engine * engine) {
 	engine->add(group);
 	// The collision grid
 	Shape3D* shape3d_c = new Grid(NULL, 2.0, 2.0, 1, 0);
-	shape3d_c->setPolygonProperty(EM_POLY_HIDDEN);
+	shape3d_c->setProperty(EM_SHAPE3D_HIDDEN);
 	group->addShape3D(shape3d_c);
 
 	CollisionBounds* bounds = new CollisionBounds(shape3d_c->getCollisionSize());
@@ -277,13 +272,13 @@ void loadTarget(ifstream & file, Engine * engine) {
 		triggerBeh = new TriggerBehavior( PBL_SIG_NEW_TARGET, PBL_SIG_TARGET_2, 
 																			PBL_SIG_TARGET_2, true);
 	}
-	group->setBehavior(triggerBeh);
+	group->addBehavior(triggerBeh);
 	group->setUserProperty(PBL_GROUP1);
 	group->setProperty(EM_GROUP_TRANSFORM_ONCE);
 
 	Group * groupL = loadStdLight(file, engine, triggerBeh);
-	Animation * anim = loadStdAnimation(file, engine);
-	if (groupL != NULL) groupL->setAnimation(anim);
+	StdAnimation * anim = loadStdAnimation(file, engine);
+	if (groupL != NULL) groupL->addBehavior(anim);
 	group->add(groupL);	
   		
 	cerr << "loaded target" << str<< endl;
@@ -296,7 +291,7 @@ void loadCave(ifstream & file, Engine * engine) {
 	engine->add(group);
 	// The collision grid
 	Shape3D* shape3d_c = new Grid(NULL, 2.0, 2.0, 1, 0);
-	shape3d_c->setPolygonProperty(EM_POLY_HIDDEN);
+	shape3d_c->setProperty(EM_SHAPE3D_HIDDEN);
 	group->addShape3D(shape3d_c);
 
 	CollisionBounds* bounds = new CollisionBounds(shape3d_c->getCollisionSize());
@@ -308,13 +303,13 @@ void loadCave(ifstream & file, Engine * engine) {
 	//	group->addShape3D(shape3d);
 
 	CaveBehavior* caveBeh = new CaveBehavior();
-	group->setBehavior(caveBeh);
+	group->addBehavior(caveBeh);
 	group->setUserProperty(PBL_GROUP1);
 	group->setProperty(EM_GROUP_TRANSFORM_ONCE);
 
 	Group * groupL = loadStdLight(file, engine, caveBeh);
-	Animation * anim = loadStdAnimation(file, engine);
-	if (groupL != NULL) groupL->setAnimation(anim);
+	StdAnimation * anim = loadStdAnimation(file, engine);
+	if (groupL != NULL) groupL->addBehavior(anim);
 	group->add(groupL);	
   		
 	cerr << "loaded cave" << endl;
@@ -327,7 +322,7 @@ void loadLock_target(ifstream & file, Engine * engine) {
 	engine->add(group);
 	// The collision grid
 	Shape3D* shape3d_c = new Grid(NULL, 2.0, 2.0, 1, 0);
-	shape3d_c->setPolygonProperty(EM_POLY_HIDDEN);
+	shape3d_c->setProperty(EM_SHAPE3D_HIDDEN);
 	group->addShape3D(shape3d_c);
 
 	CollisionBounds* bounds = new CollisionBounds(shape3d_c->getCollisionSize());
@@ -340,13 +335,13 @@ void loadLock_target(ifstream & file, Engine * engine) {
 
 	TriggerBehavior* triggerBeh = new TriggerBehavior( PBL_SIG_NEW_LOCK, PBL_SIG_ACTIVATE_LOCK, 
 																										 PBL_SIG_ACTIVATE_LOCK, true);
-	group->setBehavior(triggerBeh);
+	group->addBehavior(triggerBeh);
 	group->setUserProperty(PBL_GROUP1);
 	group->setProperty(EM_GROUP_TRANSFORM_ONCE);
 
 	Group * groupL = loadStdLight(file, engine, triggerBeh);
-	Animation * anim = loadStdAnimation(file, engine);
-	if (groupL != NULL) groupL->setAnimation(anim);
+	StdAnimation * anim = loadStdAnimation(file, engine);
+	if (groupL != NULL) groupL->addBehavior(anim);
 	group->add(groupL);	
   		
 	cerr << "loaded lock target" << endl;
@@ -363,7 +358,7 @@ void loadLock(ifstream & file, Engine * engine) {
 
 	// The collision grid
 	Shape3D* shape3d_c = new Grid(NULL, 2.0, 2.0, 1, 0);
-	shape3d_c->setPolygonProperty(EM_POLY_HIDDEN);
+	shape3d_c->setProperty(EM_SHAPE3D_HIDDEN);
 	group->addShape3D(shape3d_c);
 
 	CollisionBounds* bounds = new CollisionBounds(shape3d_c->getCollisionSize());
@@ -380,13 +375,13 @@ void loadLock(ifstream & file, Engine * engine) {
 	}	else {
 		lockBeh = new LockBehavior(PBL_SIG_LOCK_1, PBL_SIG_RELEASE_LOCK, PBL_SIG_LOCK_2);
 	}
-	group->setBehavior(lockBeh);
+	group->addBehavior(lockBeh);
 	group->setUserProperty(PBL_GROUP1);
 	group->setProperty(EM_GROUP_TRANSFORM_ONCE);
 
 	Group * groupL = loadStdLight(file, engine, lockBeh);
-	Animation * anim = loadStdAnimation(file, engine);
-	if (groupL != NULL) groupL->setAnimation(anim);
+	StdAnimation * anim = loadStdAnimation(file, engine);
+	if (groupL != NULL) groupL->addBehavior(anim);
 	group->add(groupL);	
   		
 	cerr << "loaded lock " << str << endl;
@@ -399,7 +394,7 @@ void loadLock_release(ifstream & file, Engine * engine) {
 	engine->add(group);
 	// The collision grid
 	Shape3D* shape3d_c = new Grid(NULL, 2.0, 2.0, 1, 0);
-	shape3d_c->setPolygonProperty(EM_POLY_HIDDEN);
+	shape3d_c->setProperty(EM_SHAPE3D_HIDDEN);
 	group->addShape3D(shape3d_c);
 
 	CollisionBounds* bounds = new CollisionBounds(shape3d_c->getCollisionSize());
@@ -412,13 +407,13 @@ void loadLock_release(ifstream & file, Engine * engine) {
 
 	TriggerBehavior* triggerBeh = new TriggerBehavior( PBL_SIG_LOCK_2, PBL_SIG_RELEASE_LOCK, 
 																										 PBL_SIG_RELEASE_LOCK);
-	group->setBehavior(triggerBeh);
+	group->addBehavior(triggerBeh);
 	group->setUserProperty(PBL_GROUP1);
 	group->setProperty(EM_GROUP_TRANSFORM_ONCE);
 
 	Group * groupL = loadStdLight(file, engine, triggerBeh);
-	Animation * anim = loadStdAnimation(file, engine);
-	if (groupL != NULL) groupL->setAnimation(anim);
+	StdAnimation * anim = loadStdAnimation(file, engine);
+	if (groupL != NULL) groupL->addBehavior(anim);
 	group->add(groupL);	
   		
 	cerr << "loaded lock release" << endl;
@@ -431,7 +426,7 @@ void loadJackpot(ifstream & file, Engine * engine) {
 	engine->add(group);
 	// The collision grid
 	Shape3D* shape3d_c = new Grid(NULL, 2.0, 2.0, 1, 0);
-	shape3d_c->setPolygonProperty(EM_POLY_HIDDEN);
+	shape3d_c->setProperty(EM_SHAPE3D_HIDDEN);
 	group->addShape3D(shape3d_c);
 
 	CollisionBounds* bounds = new CollisionBounds(shape3d_c->getCollisionSize());
@@ -444,13 +439,13 @@ void loadJackpot(ifstream & file, Engine * engine) {
 
 	TriggerBehavior* triggerBeh = new TriggerBehavior( PBL_SIG_RELEASE_LOCK, 
 																										 PBL_SIG_MULTIBALL_DEAD, PBL_SIG_JACKPOT);
-	group->setBehavior(triggerBeh);
+	group->addBehavior(triggerBeh);
 	group->setUserProperty(PBL_GROUP1);
 	group->setProperty(EM_GROUP_TRANSFORM_ONCE);
 
 	Group * groupL = loadStdLight(file, engine, triggerBeh);
-	Animation * anim = loadStdAnimation(file, engine);
-	if (groupL != NULL) groupL->setAnimation(anim);
+	StdAnimation * anim = loadStdAnimation(file, engine);
+	if (groupL != NULL) groupL->addBehavior(anim);
 	group->add(groupL);	
   		
 	cerr << "loaded jackpot" << endl;
@@ -463,7 +458,7 @@ void loadLeft_loop(ifstream & file, Engine * engine) {
 	engine->add(group);
 	// The collision grid
 	Shape3D* shape3d_c = new Grid(NULL, 2.0, 2.0, 1, 0);
-	shape3d_c->setPolygonProperty(EM_POLY_HIDDEN);
+	shape3d_c->setProperty(EM_SHAPE3D_HIDDEN);
 	group->addShape3D(shape3d_c);
 
 	CollisionBounds* bounds = new CollisionBounds(shape3d_c->getCollisionSize());
@@ -476,13 +471,13 @@ void loadLeft_loop(ifstream & file, Engine * engine) {
 
 	TriggerBehavior* triggerBeh = new TriggerBehavior( PBL_SIG_ACTIVATE_LEFT_LOOP, 
 																										 PBL_SIG_LEFT_LOOP, PBL_SIG_LEFT_LOOP);
-	group->setBehavior(triggerBeh);
+	group->addBehavior(triggerBeh);
 	group->setUserProperty(PBL_GROUP1);
 	group->setProperty(EM_GROUP_TRANSFORM_ONCE);
 
 	Group * groupL = loadStdLight(file, engine, triggerBeh);
-	Animation * anim = loadStdAnimation(file, engine);
-	if (groupL != NULL) groupL->setAnimation(anim);
+	StdAnimation * anim = loadStdAnimation(file, engine);
+	if (groupL != NULL) groupL->addBehavior(anim);
 	group->add(groupL);	
   		
 	cerr << "loaded left loop" << endl;
@@ -495,7 +490,7 @@ void loadRight_loop(ifstream & file, Engine * engine) {
 	engine->add(group);
 	// The collision grid
 	Shape3D* shape3d_c = new Grid(NULL, 2.0, 2.0, 1, 0);
-	shape3d_c->setPolygonProperty(EM_POLY_HIDDEN);
+	shape3d_c->setProperty(EM_SHAPE3D_HIDDEN);
 	group->addShape3D(shape3d_c);
 
 	CollisionBounds* bounds = new CollisionBounds(shape3d_c->getCollisionSize());
@@ -508,13 +503,13 @@ void loadRight_loop(ifstream & file, Engine * engine) {
 
 	TriggerBehavior* triggerBeh = new TriggerBehavior( PBL_SIG_ACTIVATE_RIGHT_LOOP, 
 																										 PBL_SIG_RIGHT_LOOP, PBL_SIG_RIGHT_LOOP);
-	group->setBehavior(triggerBeh);
+	group->addBehavior(triggerBeh);
 	group->setUserProperty(PBL_GROUP1);
 	group->setProperty(EM_GROUP_TRANSFORM_ONCE);
 
 	Group * groupL = loadStdLight(file, engine, triggerBeh);
-	Animation * anim = loadStdAnimation(file, engine);
-	if (groupL != NULL) groupL->setAnimation(anim);
+	StdAnimation * anim = loadStdAnimation(file, engine);
+	if (groupL != NULL) groupL->addBehavior(anim);
 	group->add(groupL);	
   		
 	cerr << "loaded right loop" << endl;
@@ -530,13 +525,13 @@ void loadExtra_light(ifstream & file, Engine * engine) {
 	TriggerBehavior* triggerBeh = new TriggerBehavior( active, unactive, signal );
 
 	Group * group = loadStdLight(file, engine, triggerBeh);
-	Animation * anim = loadStdAnimation(file, engine);
+	StdAnimation * anim = loadStdAnimation(file, engine);
 	if (group != NULL) {
-		group->setBehavior(triggerBeh);
+		group->addBehavior(triggerBeh);
 		group->setUserProperty(PBL_GROUP1);
 		group->setProperty(EM_GROUP_TRANSFORM_ONCE);
 
-		group->setAnimation(anim);
+		group->addBehavior(anim);
 		engine->add(group);	
   }
 
@@ -571,8 +566,131 @@ int loadFile(const char * fn, Engine * engine) {
 		if (str == "right_loop") loadRight_loop(file, engine);
 		if (str == "extra_light") loadExtra_light(file, engine);
 		while (file >> str && str != "end") {
-			cerr << "Ignored " << str <<endl;
+			cerr << "Ignored " << str << endl;
 		}
   }
 	return 0;
 }
+
+/******************************************************/
+
+/* Normal Object */
+Group * newloadStdObject(ifstream & file) {
+	char collision[256], shape[256];
+	float tx, ty, tz;
+	float rx, ry, rz;
+	string str;
+
+	file >> str;
+	while (str != "{") {
+		CHECK_EOF(file)
+		file >> str;
+	}
+
+	file >> collision;
+	file >> shape;
+	file >> tx; file >> ty; file >> tz;
+	file >> rx; file >> ry;	file >> rz;
+	
+	/*
+	cout << collision << endl;
+	cout << shape << endl;
+	cout << tx <<" "<< ty <<" "<< tz << endl;
+	cout << rx <<" "<< ry <<" "<< rz << endl;
+	*/
+
+	Group* group = new Group();
+	group->setTransform(tx, ty, tz, rx, ry, rz);
+
+	// load collision bounds
+	if (strstr(collision, "?") == NULL) {			
+		Shape3D* shape3d = Shape3DUtil::loadShape3D(collision);
+		if (shape3d != NULL) {
+			// TODO add this
+			//shape3d->setProperty(EM_SHAPE3D_HIDDEN);
+			group->addShape3D(shape3d);
+			
+			CollisionBounds* bounds = new CollisionBounds(shape3d->getCollisionSize());
+			if (shape3d->getCollisionSize() > 10) {
+				bounds->setShape3D(shape3d, 4); //4
+			} else {
+				bounds->setShape3D(shape3d, 0);
+			}				
+			group->setCollisionBounds(bounds);
+		}
+	}
+		
+	// load shape
+	if (strstr(shape, "?") == NULL) {
+		Shape3D* shape3d = Shape3DUtil::loadShape3D(shape);
+		group->addShape3D(shape3d);
+		// TODO remove
+		shape3d->setProperty(EM_SHAPE3D_HIDDEN);
+	}
+
+	//
+	newloadMisc(file, group);
+
+	return group;
+}
+
+void newloadProperties(iostream file, Group * g) {
+	file >> str;
+	while (str != "{") {
+		CHECK_EOF(file);
+		file >> str;
+	}
+
+	file >> str;
+	while (str != "}") {
+		CHECK_EOF(file);
+		if (str == "transform_once") {
+			g->setProperty(EM_GROUP_TRANSFORM_ONCE);
+		} else if (str == "light_once") {
+			g->setProperty(EM_GROUPLIGHT_ONCE);
+		} else if (str == "no_signal") {
+			g->setProperty(EM_GROUP_NO_SIGNAL);
+		}
+		file >> str;
+	}
+}
+
+void newloadMisc(iostream file, Group * g) {
+	string str;
+	file >> str;
+	while (str != "}") {
+		CHECK_EOF(file);
+		if (str == "properties"){
+			newloadProperties(file, g);
+		} else if (str == "arm_behavior") {
+			if (g != NULL) {
+				b = newloadArmBehavior(file);
+			}
+		}
+		file >> str;
+	}
+}
+
+int newloadFile(const char* fn, Engine * engine) {
+	ifstream file(fileName);
+	try {
+		if (!file) {
+			throw string("Shape3DUtil::load() : file not found: ");
+		}
+		string str;
+		Group * g = NULL;
+		Behavior * b = NULL;
+
+		while (file >> str) {
+			if (str == "object") {
+				g = newloadStdObject(file); 
+				engine->add(g);
+			}
+		}
+	} catch (string str) {
+		cerr << str << endl;
+	}
+	return shape;
+}
+
+#undef CHECK_EOF

@@ -12,20 +12,14 @@
 #include "Shape3D.h"
 #include "Polygon.h"
 
-/*
- */
 AmbientLightVisitor::AmbientLightVisitor() {
 	m_fStrength = (float)0.1;
 	m_fBackground = (float)0.0;
 }
 
-/*
- */
 AmbientLightVisitor::~AmbientLightVisitor() {
 }
 
-/*
- */
 void AmbientLightVisitor::setLightning(float s, float bg) {
 	m_fStrength = s;
 	m_fBackground = bg;
@@ -44,8 +38,6 @@ void AmbientLightVisitor::setLightning(float s, float bg) {
 #endif
 }
 
-/*
- */
 void AmbientLightVisitor::visit(Group* g) {
 	EM_COUT("AmbientLightVisitor::visit()" << endl, 0);
 #if OPENGL_LIGHTS
