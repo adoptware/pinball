@@ -164,3 +164,17 @@ int Table::loadLevel(Engine * engine, const char * subdir) {
 
   return 0;
 }
+
+// pnf
+string Table::getTableName()
+{
+  return m_sTableName;
+}
+
+// pnf
+string Table::getTableDataDirName()
+{
+  string datadir(Config::getInstance()->getDataSubDir());
+
+  return datadir;
+}
