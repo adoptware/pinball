@@ -120,8 +120,9 @@ void TextureUtil::initGrx() {
 	SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
 
 	/* Initialize the display */
-	SDL_Surface* screen = SDL_SetVideoMode(config->getWidth(), config->getHeight(), config->getBpp(), 
-																				 SDL_OPENGL | (config->useFullScreen() ? SDL_FULLSCREEN : 0));
+	SDL_Surface* screen = 
+		SDL_SetVideoMode(config->getWidth(), config->getHeight(), config->getBpp(), 
+										 SDL_OPENGL | (config->useFullScreen() ? SDL_FULLSCREEN : 0));
 
 	//	if (config->useFullScreen()) {
 	SDL_ShowCursor(SDL_DISABLE);

@@ -28,6 +28,8 @@
 
 #include "TextureUtil.h"
 
+class Config;
+
 /** A singleton utility for fonts. */
 class EmFont {
  public:
@@ -57,6 +59,7 @@ class EmFont {
 	//EmImage * m_Font;
 	EmTexture * m_Texture;
 	int m_iSize;
+	Config * p_Config;
 	static EmFont * p_EmFont;
 };
 

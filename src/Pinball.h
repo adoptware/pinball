@@ -65,7 +65,7 @@
 #define PBL_SIG_BALL3_OFF         3302
 #define PBL_SIG_BALL4_ON          3401
 #define PBL_SIG_BALL4_OFF         3402
-#define PBL_SIG_ALLBALLS_OFF      3109
+//#define PBL_SIG_ALLBALLS_OFF      3109
 
 #define PBL_SIG_LOCK_1            5101
 #define PBL_SIG_LOCK_2            5201
