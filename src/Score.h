@@ -30,7 +30,7 @@ class Score : public Behavior  {
 	void StdOnSignal();
 	void StdOnCollision() {};
 	int getScore() { return m_iScore; };
-	void addScore(int s);
+	void addScore(int s, bool multi = false);
 	void clear();
 	void draw();
 	void lockBall(int ball);

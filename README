@@ -34,11 +34,11 @@ Known Bugs
 
 Controls meny missing.
 Turning on sound in sound meny requires restart.
-Balls may pass through walls.
 The screen is not updated if you pause the game and switch to another
 application.
 
 Misc
 ====
 
-A short description of the file formats is found at data/formats.txt
+If you're building from a cvs version you might have to do a 'bootstrap'
+before you do a 'configure' and 'make'.
