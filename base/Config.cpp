@@ -1,4 +1,4 @@
-//#ident "$Id: Config.cpp,v 1.26 2003/05/27 11:53:25 rzr Exp $"
+//#ident "$Id: Config.cpp,v 1.27 2003/05/28 05:21:25 henqvist Exp $"
 /***************************************************************************
                           Config.cpp  -  description
                              -------------------
@@ -63,7 +63,7 @@ void Config::setDefault() {
   m_bExternGL = false;
   this->setDataDir(EM_DATADIR);
   this->setLights(true);
-  this->setBrightness(0.3f);
+  this->setBrightness(0.5f);
   this->setShowFPS(false);
   this->setFire(false);
 
@@ -322,26 +322,26 @@ void Config::loadArgs(int & argc, char *argv[]) {
       if (argc > a+2) {
         int const w= atoi(argv[a+1]);
         int const h = atoi(argv[a+2]);
-				this->setSize(w, h);
-				EM_COUT("Using size = " << m_iWidth <<","<< m_iHeight, 1);
-				REMOVEARG(a, argc, argv);
-				REMOVEARG(a, argc, argv);
-				REMOVEARG(a, argc, argv);
+	this->setSize(w, h);
+	EM_COUT("Using size = " << m_iWidth <<","<< m_iHeight, 1);
+	REMOVEARG(a, argc, argv);
+	REMOVEARG(a, argc, argv);
+	REMOVEARG(a, argc, argv);
       } else {
-				REMOVEARG(a, argc, argv);
+	REMOVEARG(a, argc, argv);
       }
     } else if (strcmp(argv[a], "-bpp") == 0) {
       if (argc > a+1) {
-				m_iBpp = atoi(argv[a+1]);
-				REMOVEARG(a, argc, argv);
+	m_iBpp = atoi(argv[a+1]);
+	REMOVEARG(a, argc, argv);
       }
       EM_COUT("Using " << m_iBpp << " bpp", 1);
       REMOVEARG(a, argc, argv);
     } else if (strcmp(argv[a], "-data") == 0) {
       if (argc > a) {
-				EM_COUT("Using datapath: " << argv[a+1], 1);
-				this->setDataDir(argv[a+1]);
-				REMOVEARG(a, argc, argv);
+	EM_COUT("Using datapath: " << argv[a+1], 1);
+	this->setDataDir(argv[a+1]);
+	REMOVEARG(a, argc, argv);
       }
       REMOVEARG(a, argc, argv);
     } else if (strcmp(argv[a], "-nosound") == 0) {
