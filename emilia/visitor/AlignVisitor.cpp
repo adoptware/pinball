@@ -14,8 +14,8 @@
 #include "BillBoard.h"
 #include "EMath.h"
 
-/*
- */
+AlignVisitor * AlignVisitor::p_AlignVisitor = NULL;
+
 AlignVisitor::AlignVisitor() {
 	p_GroupCamera = NULL;
 	m_mtxInverse = identityMatrix;
@@ -27,14 +27,17 @@ AlignVisitor::AlignVisitor() {
 	m_vtxUp.z = 0.0;
 }
 
-/*
- */
 AlignVisitor::~AlignVisitor() {
 }
 
-/*
- * Clean up camera matrix.
- */
+AlignVisitor * AlignVisitor::getInstance() {
+	if (p_AlignVisitor == NULL) {
+		p_AlignVisitor = new AlignVisitor();
+	}
+	return p_AlignVisitor;
+}
+
+/* Clean up camera matrix. */
 void AlignVisitor::empty() {
 	if (p_GroupCamera == NULL) return;
 
@@ -47,15 +50,11 @@ void AlignVisitor::empty() {
 	EMath::inverse(p_GroupCamera->m_mtxTrans, m_mtxInverse);
 }
 
-/*
- */
 void AlignVisitor::setCamera(Group * g) {
 	p_GroupCamera = g;
 }
 
-/*
- * Apply camera transform to all vertices and sounds.
- */
+/* Apply camera transform to all vertices and sounds. */
 void AlignVisitor::visit(Group * g) {
 	EM_COUT("AlignVisitor::visit() *", 0);
 	// Apply transform to vertices in oShape3D.

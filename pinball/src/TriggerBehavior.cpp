@@ -54,6 +54,6 @@ void TriggerBehavior::StdOnCollision() {
 			return;
 		}
 		m_iTick = 0;
-		SendSignal(m_iSignal);
+		SendSignal(m_iSignal, 0, this->p_Parent, NULL);
 	}
 }

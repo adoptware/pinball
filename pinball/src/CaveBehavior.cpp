@@ -34,7 +34,7 @@ void CaveBehavior::onTick() {
 	}
 	if (m_iLockCounter == 0) {
 		UnsetProperty( PBL_TRAP_BOUNCE );
-		SendSignal( PBL_SIG_CAVE_OUT );
+		SendSignal( PBL_SIG_CAVE_OUT, 0, this->p_Parent, NULL );
 		m_bLock = false;
 	}
 	if (m_iLockCounter > -1) m_iLockCounter--;
@@ -45,5 +45,5 @@ void CaveBehavior::StdOnCollision() {
 	m_bLock = true;
 	m_iLockCounter = 80;
 	SetProperty( PBL_TRAP );
-	SendSignal( PBL_SIG_CAVE );
+	SendSignal( PBL_SIG_CAVE, 0 , this->p_Parent, NULL );
 }

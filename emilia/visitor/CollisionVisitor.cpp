@@ -16,7 +16,7 @@
 int em_level_ = 1;
 int em_counter_ = 0;
 
-
+/* TODO: max not used */
 CollisionVisitor::CollisionVisitor(int max) {	
 	m_iPolygonsA = 0;
 	m_iPolygonsB = 0;
@@ -25,8 +25,7 @@ CollisionVisitor::CollisionVisitor(int max) {
 CollisionVisitor::~CollisionVisitor() {
 }
 
-/* Adds polygon to the array of polygons that intersect.
- */
+/* Adds polygon to the array of polygons that intersect. */
 void CollisionVisitor::addToArray(Polygon* p1, Polygon* p2) {
 	if (m_iPolygonsA < MAX_POLYGONS) {
 		m_aPolygonsA[m_iPolygonsA++] = p1;
@@ -36,8 +35,7 @@ void CollisionVisitor::addToArray(Polygon* p1, Polygon* p2) {
 	}
 }
 
-/* Returns true if the bounds of cb1 and cb2 intersects.
- */
+/* Returns true if the bounds of cb1 and cb2 intersects. */
 bool CollisionVisitor::collide(CollisionBounds * cb1, CollisionBounds * cb2) {
 	float dx = cb1->m_vtxTrans.x - cb2->m_vtxTrans.x;
 	float dy = cb1->m_vtxTrans.y - cb2->m_vtxTrans.y;
@@ -54,11 +52,10 @@ bool CollisionVisitor::collide(CollisionBounds * cb1, CollisionBounds * cb2) {
 	return false;
 }
 
-/* Check if s1 and s2 intersect. Use "intersect" to see if polygons in
+/* Check if bounds nb1 and nb2 intersect. Use intersect() to see if polygons in
  * shapes intersect. Use a hashtable to check that we don't make
  * the same intersection test more than once, a polygon can reside
- * in more than one collision bound.
- */
+ * in more than one collision bound. */
 bool CollisionVisitor::collidePolygons(CollisionBounds * nb1, CollisionBounds * nb2) {
 //	EM_COUT("CollisionVisitor:collidePolygons() check " << 	nb1->iPolygons << " against "
 //		<<  nb2->iPolygons << " polygons" << endl, 0);
@@ -66,14 +63,14 @@ bool CollisionVisitor::collidePolygons(CollisionBounds * nb1, CollisionBounds * 
 	vector<Polygon*>::iterator iter1 = nb1->m_vPolygon.begin();
 	vector<Polygon*>::iterator end1 = nb1->m_vPolygon.end();
 	for ( ; iter1 != end1; iter1++) {
-		(*iter1)->setColor(1.0f, 1.0f, 0.0f, 0.0f); // debug thing
-//		TODO: if (this->isInArray( (*iter1) )) continue;
+		// (*iter1)->setColor(1.0f, 1.0f, 0.0f, 0.0f); // debug thing
+		// TODO: if (this->isInArray( (*iter1) )) continue;
 		vector<Polygon*>::iterator iter2 = nb2->m_vPolygon.begin();
 		vector<Polygon*>::iterator end2 = nb2->m_vPolygon.end();
 		for ( ; iter2 != end2; iter2++) {
-			(*iter2)->setColor(1.0f, 1.0f, 0.0f, 0.0f); // debug thing
-//	 		TODO: if (this->isInArray( (*iter2) )) continue;
-//			EM_COUT("CollisionVisitor:collidePolygons() intersecting polygons " << a << "-" << b << endl, 0);				
+			// (*iter2)->setColor(1.0f, 1.0f, 0.0f, 0.0f); // debug thing
+			// TODO: if (this->isInArray( (*iter2) )) continue;
+			// EM_COUT("CollisionVisitor:collidePolygons() intersecting polygons " << a << "-" << b << endl, 0);				
 			if ( CollisionVisitor::intersect((*iter1), (*iter2)) ) {
 				this->addToArray((*iter1), (*iter2));
 				bCollision = true;
@@ -84,6 +81,7 @@ bool CollisionVisitor::collidePolygons(CollisionBounds * nb1, CollisionBounds * 
 	return bCollision;
 }
 
+/* Count a median normal for all polygons */
 void CollisionVisitor::countNormal(Vertex3D & vtx, Polygon** paPolygons, int piPolygons) {
 	EM_COUT("CollisionVisitor::countNormal " << piPolygons << " polygons" << endl, 0);
 	vtx.x = 0;
@@ -170,10 +168,10 @@ bool CollisionVisitor::counterClockWiseYZ(const Vertex3D & vtxA, const Vertex3D 
 	return (y*z1 > 0);
 }
 */
+
 /* Detects collision between two CollisionBounds objects.
  * If the boxes intersect, the shapes are detected for collision.
- * If there are no shape the function returns true.
- */
+ * If there are no shape the function returns true. */
 bool CollisionVisitor::detectCollision(CollisionBounds * cb1, CollisionBounds * cb2, Vertex3D & n1, Vertex3D & n2) {
 	EM_COUT("CollisionVisitor::detectCollision()", 0);
 	if (this->collide(cb1, cb2)) {
@@ -230,6 +228,7 @@ bool CollisionVisitor::detectCollision(CollisionBounds * cb1, CollisionBounds * 
 	return false;
 }
 
+/* TODO: */
 bool CollisionVisitor::detection2d(Polygon * p1, Polygon * p2) {
 //	int axis = 1;
 //	float nx = ABS(p1->vtxTrNormal.x);
@@ -254,8 +253,7 @@ bool CollisionVisitor::detection2d(Polygon * p1, Polygon * p2) {
 	return false;
 }
 
-/* Call this method each render loop.
- */
+/* Call this method each render loop. */
 void CollisionVisitor::empty() {
 	EM_COUT("CollisionVisitor::empty()" << endl, 0);
 	m_vGroup.clear();
@@ -266,17 +264,15 @@ void CollisionVisitor::empty() {
 	em_counter_ ++;
 }
 
-/* Polygon intersection test. Only for convex polygons.
- * Checks that the polygons has at least tre vertices.
- * Use some macros to speed things up.
- */
-
+/* Macro to project line from v1 to v2 onto a axis.
+ * Axis = 1 : x-axis. Axis = 2 : y-axis. Axis = 3 : z-axis. 
+ * TODO: move the if clause outside this macro to speed things up. */
 #define AXISPROJECTION(_axis, _v1, _v2, _dist1, _dist2, _ans)			\
 {																																	\
 	float _dx;																											\
 	float _xDd;	    			                                					\
-	_dist1 = EM_ABS(_dist1);																						\
-	_dist2 = _dist1 + EM_ABS(_dist2);		                        			\
+	_dist1 = EM_ABS(_dist1);																				\
+	_dist2 = _dist1 + EM_ABS(_dist2);		                       			\
 	_xDd = _dist1/_dist2;																						\
 	/* x axis */																										\
 	if (_axis == 1)	{		                      											\
@@ -295,6 +291,7 @@ void CollisionVisitor::empty() {
 	}                                                     					\
 }
 
+/* NOT USED: replace by the a function (a bit easier to debug) */
 #define FINDLINE(_poly, _A, _B, _C, _D, _iter, _end, _axis, _ans)	\
 {	                                                          			\
 	/* Find line in poly that intersects plane A, B, C, D */				\
@@ -329,14 +326,13 @@ bool CollisionVisitor::findLine(int axis, float A, float B, float C, float D, fl
 																vector<unsigned int>::iterator & nextIter,	
 																vector<unsigned int>::iterator & begin, 
 																vector<unsigned int>::iterator & end) {	
-	// Find first line in poly1 that intersects plane A, B, C, D
+	// Find first line in poly1 that intersects plane A, B, C, D.
+	// Project the intersection onto the plane: x.
 	for ( ; ; iter++, nextIter++ )	{
-//		EM_COUT("#1");
 		// Exit if not enough lines found
 		if (iter == end) return false;															
-//		EM_COUT("#2");
 		if (nextIter == end) nextIter = begin;										
-		// The distance from a point x, y, z is Ax + By + Cz + D / sqrt(A*A + B*B + C*C)										
+		// The distance from a point x, y, z to the plane is Ax + By + Cz + D / sqrt(A*A + B*B + C*C)										
 		// The normal is normalized, meaning that sqrt(A*A + B*B + C*C) = 1, we							            		
 		// can skip the division.
 		float dist1 = A * s->m_vVtxTrans[(*iter)].x +
@@ -345,8 +341,8 @@ bool CollisionVisitor::findLine(int axis, float A, float B, float C, float D, fl
 		float dist2 = A * s->m_vVtxTrans[(*nextIter)].x +
 									B * s->m_vVtxTrans[(*nextIter)].y +
 									C * s->m_vVtxTrans[(*nextIter)].z + D;
-//		EM_COUT("CollisionVisitor::findLine " << dist1 <<" "<< dist2, 0);
-		// Distances have diffrent signs
+		// Distances have diffrent signs meaning that the points are on different sides of the
+		// plane. The line intersect the plane.
 		if (dist1*dist2 <0)	{																						
 			Vertex3D vtxA = s->m_vVtxTrans[(*iter)];				
 			Vertex3D vtxB = s->m_vVtxTrans[(*nextIter)];		
@@ -359,6 +355,10 @@ bool CollisionVisitor::findLine(int axis, float A, float B, float C, float D, fl
 	return true;
 }
 
+/* Check if two polygons intersect. This is a tough one.
+ * Polygon intersection test. Only for convex polygons.
+ * Checks that the polygons has at least tre vertices.
+ * Use some macros to speed things up. */
 bool CollisionVisitor::intersect(Polygon * p1, Polygon * p2) {
 	if (p1->m_vIndex.size()<3 || p2->m_vIndex.size()<3) return false;
 //	return true;
@@ -418,8 +418,8 @@ bool CollisionVisitor::intersect(Polygon * p1, Polygon * p2) {
 	
 	EM_COUT("CollisionVisitor::intersect() axis " << axis, 0);
 	// Find lines in p1 intersecting p2. Intersection point between line and
-	// plane will be projected on the chosen axis, x1 is value for projecton
-	// onto acis for line 1, x2 for line 2.
+	// plane will be projected on the chosen axis, x1 is the projecton
+	// onto the axis for line 1, x2 projection for line 2.
 	// We get a projection of polygon p1 to a axis defined by x1 and x2.
 	// I.e. polygon 1 lies between points x1 and x2.
 	vector<unsigned int>::iterator begin = p1->m_vIndex.begin();
@@ -487,7 +487,7 @@ bool CollisionVisitor::intersect(Polygon * p1, Polygon * p2) {
 void CollisionVisitor::visit(Group * g) {	
 	EM_COUT("CollisionVisitor::visit() totally " << m_vGroup.size() << " groups", 0);
 	if (g->p_CollisionBounds == NULL) return;
-	if (g->getShape3D(0) != NULL) g->getShape3D(0)->setColor(1.0f, 1.0f, 1.0f, 1.0f); // debug thing
+	// if (g->getShape3D(0) != NULL) g->getShape3D(0)->setColor(1.0f, 1.0f, 1.0f, 1.0f); // debug thing
 	Vertex3D vtxNormal1;
 	Vertex3D vtxNormal2;
 	vector<Group*>::iterator iter = m_vGroup.begin();
@@ -508,12 +508,16 @@ void CollisionVisitor::visit(Group * g) {
 			// call the onCollision methods
 			vector<Behavior*>::iterator behIter = (*iter)->m_vBehavior.begin();
 			vector<Behavior*>::iterator behEnd = (*iter)->m_vBehavior.end();
+			// TODO remove this EM_COUT
+			if (behIter == behEnd) EM_COUT("CollisionVisitor::visit() no behavior 1", 0);
 			for(; behIter != behEnd; behIter++) {
 				(*behIter)->onCollision(vtxNormal2, vtxNormal1, g);
 			}
 
-			behIter = (*iter)->m_vBehavior.begin();
-			behEnd = (*iter)->m_vBehavior.end();
+			behIter = g->m_vBehavior.begin();
+			behEnd = g->m_vBehavior.end();
+			// TODO remove EM_COUT
+			if (behIter == behEnd) EM_COUT("CollisionVisitor::visit() no behavior 2", 0);
 			for(; behIter != behEnd; behIter++) {
 				(*behIter)->onCollision(vtxNormal1, vtxNormal2, (*iter));
 			}
