@@ -232,6 +232,10 @@ void StateBehavior::setState(StateItem* stateitem) {
 	if (p_CurrentStateItem->m_iMusic >= 0) {
 		SoundUtil::getInstance()->playMusic(p_CurrentStateItem->m_iMusic, true);
 	}
+	// play sound
+	if (p_CurrentStateItem->m_iSound >= 0) {
+		SoundUtil::getInstance()->playSample(p_CurrentStateItem->m_iSound, false);
+	}
 	// apply light
 	SetLightOn(p_CurrentStateItem->m_bLight);
 	// zero counter
@@ -285,9 +289,9 @@ void StateBehavior::StdOnCollision() {
 		m_iOwnerBall = GetCallerProperty() & (PBL_BALL_1 | PBL_BALL_2 | PBL_BALL_3 | PBL_BALL_4);
 		m_iCollisionSafe = m_iTick + 5;
 
-		if (p_CurrentStateItem->m_iSound >= 0) {
-			SoundUtil::getInstance()->playSample(p_CurrentStateItem->m_iSound, false);
-		}
+// 		if (p_CurrentStateItem->m_iSound >= 0) {
+// 			SoundUtil::getInstance()->playSample(p_CurrentStateItem->m_iSound, false);
+// 		}
 		if (p_CurrentStateItem->m_iCollSig >= 0) {
 			SendSignal(p_CurrentStateItem->m_iCollSig, p_CurrentStateItem->m_iSigDelay, 
 								 this->getParent(), NULL);
