@@ -27,6 +27,9 @@ version. If you have used a rpm-package write as root user 'rpm -e pinball'.
 If you have installed from source code goto the pinball source directory and 
 write as root user 'make uninstall'.
 
+NOTE: A user and group named pinball must exist before installation:
+useradd pinball (as root user)
+
 After checking that you have the necessary libraries installed you are ready
 to install. If you have an rpm-package you write as root user 
 'rpm -i pinball-x.x.x.rpm'.
