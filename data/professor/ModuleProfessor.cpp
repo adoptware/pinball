@@ -78,7 +78,7 @@ public:
 	void StdOnCollision() {};
 
 	void StdOnSignal() {
-		EM_COUT((int)em_signal, 1);
+		//EM_COUT((int)em_signal, 1);
 		
 		OnSignal( PBL_SIG_RESET_ALL ) {
 			this->clear();

@@ -39,6 +39,8 @@ class Config {
 	void loadArgs(int & argc, char* argv[]);
 	inline int getWidth() { return m_iWidth; };
 	inline int getHeight() { return m_iHeight; };
+	inline int getWidthDiv2() { return m_iWidthDiv2; };
+	inline int getHeightDiv2() { return m_iHeightDiv2; };
 	inline int getBpp() { return m_iBpp; };
 	inline int getGLFilter() { return m_iGLFilter; };
 	inline int getView() { return m_iView; };
@@ -52,6 +54,10 @@ class Config {
 	inline void setBpp(int bpp) { m_iBpp = bpp; };
 	inline void setGLFilter(int filter) { m_iGLFilter = filter; };
 	inline void setView(int view) { m_iView = view; };
+	inline void setShowFPS(bool fps) { m_bShowFPS = fps; };
+	inline bool getShowFPS() { return m_bShowFPS; };
+	inline void setMaxFPS(int fps) { m_iMaxFPS = fps; };
+	inline int getMaxFPS() { return m_iMaxFPS; };
 	/** This will NOT set the engine to full screen. You have to do
 	 * that manually. */
 	inline void setFullScreen(bool f) { m_bFullScreen = f; };
@@ -72,6 +78,8 @@ class Config {
  private:
 	int m_iWidth;
 	int m_iHeight;
+	int m_iWidthDiv2;
+	int m_iHeightDiv2;
 	int m_iBpp;
 	int m_iGLFilter;
 	int m_iView;
@@ -79,6 +87,8 @@ class Config {
 	bool m_bExternGL;
 	int m_iSound;
 	int m_iMusic;
+	int m_iMaxFPS;
+	bool m_bShowFPS;
 	bool m_bFullScreen;
 	string m_sDataDir;
 	string m_sSubDir;
