@@ -40,22 +40,22 @@ int Polygon::getProperties() {
 	return m_iProperties;
 }
 
-void Polygon::setColor(float a, float r, float g, float b) {
+void Polygon::setColor(float r, float g, float b, float a) {
 	vector<Color>::iterator iter = m_vColor.begin();
 	vector<Color>::iterator end = m_vColor.end();
 	
 	for (; iter != end; iter++) {
-		(*iter).a = a;
 		(*iter).r = r;
 		(*iter).g = g;
 		(*iter).b = b;
+		(*iter).a = a;
 	}
 }
 
 void Polygon::add(int index) {
 	this->add(index, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f);
 }
-void Polygon::add(int index, float u, float v, float a, float r, float g, float b) {
+void Polygon::add(int index, float u, float v, float r, float g, float b, float a) {
 	TexCoord tex;
 	Color color;
 	tex.u = u;

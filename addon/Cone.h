@@ -22,7 +22,7 @@ class Cone : public Shape3D {
 	public:
 		/** <p>Cone(size, r, g, b, a). Color given by r, g and b. Alpha
 		 * (a) not implemented yet.</p> */
-		Cone(float size, float a, float r, float g, float b);
+		Cone(float size, float r, float g, float b, float a);
 };
 
 #endif // CONE_H

@@ -8,7 +8,6 @@
 #include "Cube.h"
 #include "KeyRotBehavior.h"
 #include "Keyboard.h"
-#include "BigSphere.h"
 
 /** Main */
 int main(int argc, char *argv[]) {
@@ -30,15 +29,6 @@ int main(int argc, char *argv[]) {
 	Group* groupCube = new Group();
 	engine->add(groupCube);
 	groupCube->addShape3D(cube);
-	groupCube->addTranslation(-1, 0, 0);
-
-	BigSphere* sphere = new BigSphere(1.0, 4, 1.0, 1.0, 0.0, 0.0);
-	sphere->setProperty(EM_SPECULAR);
-	Group* groupSphere = new Group();
-	groupSphere->addShape3D(sphere);
-	groupSphere->addTranslation(1, 0, -1);
-	engine->add(groupSphere);
-	
 
 	// Add a behavior to the cube
 	KeyRotBehavior* keyRBeh = new KeyRotBehavior();
@@ -48,7 +38,6 @@ int main(int argc, char *argv[]) {
 		engine->tick();
 		engine->render();
 		engine->swap();
-		SDL_Delay(50);
 	}
 	delete(engine);
 	return 0;

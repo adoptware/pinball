@@ -17,8 +17,8 @@
  * @see Shape3D */
 class Cube : public Shape3D {
  public:
-	/** Cube(size, a, r, g, b) */
-	Cube(float size, float a, float r, float g, float b);
+	/** Cube(size, r, g, b, a) */
+	Cube(float size, float r, float g, float b, float a);
 	/** Cube(size, textureAppliedToEverySide). Texture size 32x32. */
 	Cube(float, EmTexture*);
 };

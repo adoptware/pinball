@@ -9,7 +9,7 @@
 #include "Cone.h"
 #include "Polygon.h"
 
-Cone::Cone(float fSize, float fA, float fR, float fG, float fB) : Shape3D(8+1, 8+1) {
+Cone::Cone(float fSize, float fR, float fG, float fB, float fA) : Shape3D(8+1, 8+1) {
 	Polygon* p;
 	// Top vertex.
 	this->add(0, fSize/2, 0);
@@ -20,27 +20,27 @@ Cone::Cone(float fSize, float fA, float fR, float fG, float fB) : Shape3D(8+1, 8
 	// The ring of polygons.
 	for (int a=1; a<8; a+=1)	{
 		p = new Polygon(this, 3);
-		p->add(0,  0, 0, fA, fR, fG, fB);
-		p->add(a+1,0, 0, fA, fR, fG, fB);
-		p->add(a,  0, 0, fA, fR, fG, fB);
+		p->add(0,  0, 0, fR, fG, fB, fA);
+		p->add(a+1,0, 0, fR, fG, fB, fA);
+		p->add(a,  0, 0, fR, fG, fB, fA);
 		this->add(p);
 	}
 	
 	p = new Polygon(this, 3);
-	p->add(0,  0, 0, fA, fR, fG, fB);
-	p->add(1,  0, 0, fA, fR, fG, fB);
-	p->add(8,  0, 0, fA, fR, fG, fB);
+	p->add(0,  0, 0, fR, fG, fB, fA);
+	p->add(1,  0, 0, fR, fG, fB, fA);
+	p->add(8,  0, 0, fR, fG, fB, fA);
 	this->add(p);
 	// The bottom of the cone.
 	p = new Polygon(this, 8);
-	p->add(1,  0, 0, fA, fR, fG, fB);
-	p->add(2,  0, 0, fA, fR, fG, fB);
-	p->add(3,  0, 0, fA, fR, fG, fB);
-	p->add(4,  0, 0, fA, fR, fG, fB);
-	p->add(5,  0, 0, fA, fR, fG, fB);
-	p->add(6,  0, 0, fA, fR, fG, fB);
-	p->add(7,  0, 0, fA, fR, fG, fB);
-	p->add(8,  0, 0, fA, fR, fG, fB);
+	p->add(1,  0, 0, fR, fG, fB, fA);
+	p->add(2,  0, 0, fR, fG, fB, fA);
+	p->add(3,  0, 0, fR, fG, fB, fA);
+	p->add(4,  0, 0, fR, fG, fB, fA);
+	p->add(5,  0, 0, fR, fG, fB, fA);
+	p->add(6,  0, 0, fR, fG, fB, fA);
+	p->add(7,  0, 0, fR, fG, fB, fA);
+	p->add(8,  0, 0, fR, fG, fB, fA);
 	this->add(p);
 	
 	this->countNormals();

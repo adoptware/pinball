@@ -18,7 +18,7 @@
  */
 class BigSphere : public Shape3D {
 	public:
-		BigSphere(float fSize, int level, float fA, float fR, float fG, float fB);
+		BigSphere(float fSize, int level, float fR, float fG, float fB, float fA);
 };
 
 #endif // SPHERE_H

@@ -32,62 +32,62 @@ Sphere::Sphere(float fSize, float fR, float fG, float fB, float fA) : Shape3D(3*
 	// First ring of polygons.
 	for (int a=2; a<9; a++) {
 		p = new Polygon(this, 3);
-		p->add(0,  0, 0, fA, fR, fG, fB);
-		p->add(a+1,0, 0, fA, fR, fG, fB);
-		p->add(a,  0, 0, fA, fR, fG, fB);
+		p->add(0,  0, 0, fR, fG, fB, fA);
+		p->add(a+1,0, 0, fR, fG, fB, fA);
+		p->add(a,  0, 0, fR, fG, fB, fA);
 		this->add(p);
 	}
 
 	p = new Polygon(this, 3);
-	p->add(0,  0, 0, fA, fR, fG, fB);
-	p->add(2,  0, 0, fA, fR, fG, fB);
-	p->add(9,  0, 0, fA, fR, fG, fB);
+	p->add(0,  0, 0, fR, fG, fB, fA);
+	p->add(2,  0, 0, fR, fG, fB, fA);
+	p->add(9,  0, 0, fR, fG, fB, fA);
 	this->add(p);
 	// Second ring.
 	for (int a=2; a<9; a++) {
 		p = new Polygon(this, 4);
-		p->add(a,  0, 0, fA, fR, fG, fB);
-		p->add(a+1,0, 0, fA, fR, fG, fB);
-		p->add(a+9,0, 0, fA, fR, fG, fB);
-		p->add(a+8,0, 0, fA, fR, fG, fB);
+		p->add(a,  0, 0, fR, fG, fB, fA);
+		p->add(a+1,0, 0, fR, fG, fB, fA);
+		p->add(a+9,0, 0, fR, fG, fB, fA);
+		p->add(a+8,0, 0, fR, fG, fB, fA);
 		this->add(p);
 	}
 
 	p = new Polygon(this, 4);
-	p->add(9, 0, 0, fA, fR, fG, fB);
-	p->add(2, 0, 0, fA, fR, fG, fB);
-	p->add(10, 0, 0, fA, fR, fG, fB);
-	p->add(17, 0, 0, fA, fR, fG, fB);
+	p->add(9, 0, 0, fR, fG, fB, fA);
+	p->add(2, 0, 0, fR, fG, fB, fA);
+	p->add(10, 0, 0, fR, fG, fB, fA);
+	p->add(17, 0, 0, fR, fG, fB, fA);
 	this->add(p);
 	// Third ring.
 	for (int a=10; a<17; a++)	{
 		p = new Polygon(this, 4);
-		p->add(a,  0, 0, fA, fR, fG, fB);
-		p->add(a+1,0, 0, fA, fR, fG, fB);
-		p->add(a+9,0, 0, fA, fR, fG, fB);
-		p->add(a+8,0, 0, fA, fR, fG, fB);
+		p->add(a,  0, 0, fR, fG, fB, fA);
+		p->add(a+1,0, 0, fR, fG, fB, fA);
+		p->add(a+9,0, 0, fR, fG, fB, fA);
+		p->add(a+8,0, 0, fR, fG, fB, fA);
 		this->add(p);
 	}
 
 	p = new Polygon(this, 4);
-	p->add(17,  0, 0, fA, fR, fG, fB);
-	p->add(10,  0, 0, fA, fR, fG, fB);
-	p->add(18,  0, 0, fA, fR, fG, fB);
-	p->add(25,  0, 0, fA, fR, fG, fB);
+	p->add(17,  0, 0, fR, fG, fB, fA);
+	p->add(10,  0, 0, fR, fG, fB, fA);
+	p->add(18,  0, 0, fR, fG, fB, fA);
+	p->add(25,  0, 0, fR, fG, fB, fA);
 	this->add(p);
 	// Fourth ring.
 	for (int a=18; a<25; a++)	{
 		p = new Polygon(this, 3);
-		p->add(a,  0, 0, fA, fR, fG, fB);
-		p->add(a+1,0, 0, fA, fR, fG, fB);
-		p->add(1,  0, 0, fA, fR, fG, fB);
+		p->add(a,  0, 0, fR, fG, fB, fA);
+		p->add(a+1,0, 0, fR, fG, fB, fA);
+		p->add(1,  0, 0, fR, fG, fB, fA);
 		this->add(p);
 	}
 
 	p = new Polygon(this, 3);
-	p->add(25,  0, 0, fA, fR, fG, fB);
-	p->add(18,  0, 0, fA, fR, fG, fB);
-	p->add(1,   0, 0, fA, fR, fG, fB);
+	p->add(25,  0, 0, fR, fG, fB, fA);
+	p->add(18,  0, 0, fR, fG, fB, fA);
+	p->add(1,   0, 0, fR, fG, fB, fA);
 	this->add(p);
 
 	this->countNormals();

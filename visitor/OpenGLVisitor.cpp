@@ -106,7 +106,7 @@ void OpenGLVisitor::visit(Group* g) {
 				vector<Color>::iterator colorEnd = (*polyIter)->m_vColor.end();
 
 				EmAssert((*polyIter)->m_vIndex.size() == (*polyIter)->m_vColor.size(),
-								 "size miss match");
+								 "size missmatch");
 				for ( ; indexIter != indexEnd; 
 							indexIter++, colorIter++) {
 					glColor3f((*colorIter).r * (*shapeIter)->m_vLight[(*indexIter)].r,
@@ -126,7 +126,7 @@ void OpenGLVisitor::visit(Group* g) {
 				vector<Color>::iterator colorEnd = (*polyIter)->m_vColor.end();
 
 				EmAssert((*polyIter)->m_vIndex.size() == (*polyIter)->m_vColor.size(),
-								 "size miss match");
+								 "size missmatch");
 				for ( ; indexIter != indexEnd; 
 							indexIter++, colorIter++) {
 					EmAssert((*indexIter) < (*shapeIter)->m_vLight.size(), 
