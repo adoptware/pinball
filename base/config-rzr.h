@@ -1,4 +1,4 @@
-//#ident "$Id: config-rzr.h,v 1.4 2003/05/19 13:48:57 rzr Exp $"
+//#ident "$Id: config-rzr.h,v 1.5 2003/05/24 10:55:06 rzr Exp $"
 //#warning "!+rzr: Win32 portability hacks @ www.rzr.online.fr"
 #ifndef config_rzr_h_ // !+rzr 
 #define config_rzr_h_
@@ -29,17 +29,17 @@
 /// default: undefined
 
 /// if the program file is copied elsewhere it still works
-#undef RZR_PATHRELATIVE  // @ base/Config.cpp
+//#undef RZR_PATHRELATIVE  // @ base/Config.cpp
 /// mingw32@Linux : Dyn loadling works, but keyboard is too slow w/ dll ???
-#undef RZR_LIBSTATIC  // @ src/Loader.cpp
+//#undef RZR_LIBSTATIC  // @ src/Loader.cpp
 /// vfat etc
-#undef RZR_LINKS_UNSUPPORTED
+//#undef RZR_LINKS_UNSUPPORTED
 ///
-#undef RZR_CONFIG_STATIC_DEFAULT
+//#undef RZR_CONFIG_STATIC_DEFAULT
 /// cstdlibs random is not definied @msvc + mingw32
-#undef RZR_RANDOM_UNSUPPORTED
+//#undef RZR_RANDOM_UNSUPPORTED
 ///
-#undef RZR_DEBUG
+//#undef RZR_DEBUG
 //--------------------------------------------------------------------------
 /// GCC @ gnu.org (everything is autoconfigured)
 #if ( (defined unix ) && ( defined __GNUC__ ) )
@@ -227,4 +227,4 @@ using namespace std;
 #define VERSION "cvs-__DATE__"
 #endif
 #endif //!-rzr ----------------------------------------------------------------
-//EOF: $Id: config-rzr.h,v 1.4 2003/05/19 13:48:57 rzr Exp $
+//EOF: $Id: config-rzr.h,v 1.5 2003/05/24 10:55:06 rzr Exp $
