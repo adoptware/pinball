@@ -24,7 +24,7 @@ class EmFont;
 #define EM_MENU             0
 #define EM_MENU_SUB         1
 #define EM_MENU_CHOOSE      2
-#define EM_MENU_INSERT      3
+#define EM_MENU_INPUT       3
 #define EM_MENU_FCT         4
 
 /** The base class for all menus. */
@@ -80,6 +80,21 @@ class MenuChoose : public MenuItem {
   int m_iPrevious;
   vector<char*> m_vText;
   char t_Str[64];
+};
+
+class MenuInput : public MenuItem {
+ public: 
+	MenuInput(const char* name, Engine * e);
+	~MenuInput();
+	int perform();
+	void draw();
+	inline const char* getText() { return m_Name; };
+  inline void setAction(int a) { m_iAction = a; };
+	const char * getInput();
+ protected:
+	int m_iAction;
+	char m_Name[64];
+	char m_Input[64];
 };
 
 /** You can create a MenuFct instance and pass i a function

@@ -38,7 +38,8 @@ class Table {
   void unLockBall(int ball);
   bool isBallLocked(int ball);
   bool isBallDead(int ball);
-  void activateBall(int ball);
+	/** starts a new balls and drops it x,y,z */
+  void activateBall(int ball, float x, float y, float z);
   void unActivateBall(int ball);
   bool isBallActive(int ball);
   int locked();
@@ -55,7 +56,7 @@ class Table {
   // Returns the high scores data in a string array
   bool getHighScoresData(list<string>& listHighScores);
   // Save new high score in high scores table
-  void saveNewHighScore(int nNewHighScore);
+  void saveNewHighScore(int nNewHighScore, const char * name);
   // Read high scores from given file - pnf
   bool readHighScoresFile();
   // Write high scores to a given file - pnf

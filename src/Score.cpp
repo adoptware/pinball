@@ -21,6 +21,7 @@
 #include "Table.h"
 #include "Engine.h"
 #include "OpenGLVisitor.h"
+#include "Menu.h"
 
 Score::Score() {
   m_Font = EmFont::getInstance();
@@ -97,17 +98,13 @@ void Score::StdOnSignal() {
   ElseOnSignal( PBL_SIG_GAME_OVER ) {
     this->clearText();
 
-    if(this->testForHighScore())
-    {
+    if(this->testForHighScore()) {
       this->setText1("New High Score!");
-      this->setText2("");
-    }
-    else
-    {
+    } else {
       this->setText1("");
-      this->setText2("");
     }
 
+    this->setText2("");
     this->setText3("game over");
     this->setText4("press r to start new game");
   }
@@ -160,6 +157,17 @@ bool Score::testForHighScore() {
   // If it's a high score
   if (Table::getInstance()->isItHighScore(m_iScore)) {
     // TODO: name of player...
-    Table::getInstance()->saveNewHighScore(m_iScore);
+
+		EmAssert(Engine::getCurrentEngine() != NULL, "Score::testForHighScore Engine NULL");
+
+		MenuInput input("enter name", Engine::getCurrentEngine());
+		input.perform();
+		
+		//p_EmFont->printRowCenter(-sHeader.c_str(), 3);
+		
+
+    Table::getInstance()->saveNewHighScore(m_iScore, input.getInput());
+		return true;
   }
+	return false;
 }
