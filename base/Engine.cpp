@@ -145,8 +145,9 @@ void Engine::initSound() {
 	/* Open the audio device, forcing the desired format */
 	if ( SDL_OpenAudio(&wanted, &obtained) < 0 ) {
 		cerr << "Couldn't open audio: " << SDL_GetError() << endl;
-		cerr << "If your're running KDE you might try to kill the artsd process" << endl;
-		cerr << "Or run pinball with the -nosound switch" << endl;
+		cerr << "Make sure that no other application has occupied audio resources."  << endl;
+		cerr << "If your're running KDE you might try to kill the 'artsd' process." << endl;
+		cerr << "Or run pinball with the '-nosound' switch." << endl;
 		exit(1);
 	}
 	
