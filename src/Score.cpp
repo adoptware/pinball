@@ -303,35 +303,35 @@ extern volatile float em_poly_m;
 #endif
 
 void Score::draw() {
-	char buffer[256];
-	if (this->getCurrentBall() < 4) {
-		sprintf(buffer, "SCORE %d BALL %d\n", m_iScore, m_iBall);
-	} else {
-		sprintf(buffer, "SCORE %d", m_iScore);
-	}
-	m_Font->printRow(buffer, 0);
-	if (Config::getInstance()->getShowFPS()) {
+  char buffer[256];
+  if (this->getCurrentBall() < 4) {
+    sprintf(buffer, "SCORE %d BALL %d\n", m_iScore, m_iBall);
+  } else {
+    sprintf(buffer, "SCORE %d", m_iScore);
+  }
+  m_Font->printRow(buffer, 0);
+  if (Config::getInstance()->getShowFPS()) {
 #if EM_DEBUG
-		sprintf(buffer, "FPS %.1f %.1f\n", g_fFps, em_poly_m);
+    sprintf(buffer, "FPS %.1f %d\n", g_fFps, (int)em_poly_m);
 #else
-		sprintf(buffer, "FPS %.1f\n", g_fFps);
+    sprintf(buffer, "FPS %.1f\n", g_fFps);
 #endif
-		m_Font->printRow(buffer, 1);
-	}
-	m_Font->printRowCenter(m_Text1, 6);
-	m_Font->printRowCenter(m_Text2, 7);
-	m_Font->printRowCenter(m_Text3, 8);
-	m_Font->printRowCenter(m_Text4, 9);
+    m_Font->printRow(buffer, 1);
+  }
+  m_Font->printRowCenter(m_Text1, 6);
+  m_Font->printRowCenter(m_Text2, 7);
+  m_Font->printRowCenter(m_Text3, 8);
+  m_Font->printRowCenter(m_Text4, 9);
 }
 
 void Score::clear() {
-	this->clearText();
-	m_iBall = 1;
-	m_aBall[0] = PBL_DEAD;
-	m_aBall[1] = PBL_DEAD;
-	m_aBall[2] = PBL_DEAD;
-	m_aBall[3] = PBL_DEAD;
-	m_iScore = 0;
-	m_iFactor = 1;
+  this->clearText();
+  m_iBall = 1;
+  m_aBall[0] = PBL_DEAD;
+  m_aBall[1] = PBL_DEAD;
+  m_aBall[2] = PBL_DEAD;
+  m_aBall[3] = PBL_DEAD;
+  m_iScore = 0;
+  m_iFactor = 1;
 }
 

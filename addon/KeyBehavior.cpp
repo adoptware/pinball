@@ -21,10 +21,6 @@ KeyBehavior::KeyBehavior() : Behavior() {
 KeyBehavior::~KeyBehavior() {
 }
 
-void KeyBehavior::onCollision(const Vertex3D & vtxWall, const Vertex3D & vtxOwn, Group* g) {
-	EM_COUT("KeyBehavior::onCollision()", 1);
-}
-
 void KeyBehavior::onTick() {
 	EmAssert(this->getParent() != NULL, "KeyBehavior::onTick parent NULL");
 	m_x = this->getParent()->m_mtxSrc.t[0];

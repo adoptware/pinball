@@ -96,7 +96,7 @@ void OpenGLVisitor::empty() {
 void OpenGLVisitor::visit(Group* g) {
 #if EM_USE_SDL
 	int filter = Config::getInstance()->getGLFilter();
-	bool lights = Config::getInstance()->useLights();
+	//bool lights = Config::getInstance()->useLights();
 
 	switch (m_iMode) {
 	case EM_GL_GCOL_TEX: {
