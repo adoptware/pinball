@@ -57,11 +57,11 @@ EmTexture* TextureUtil::loadTexture(char* fileName) {
 	}
 
 	glTexImage2D(GL_TEXTURE_2D, 0, comp, image->w, image->h, 0, comp, type, image->pixels);
-
-	cerr << "loaded texture" << endl;
-	cerr << "size " << image->w <<" "<< image->h << endl;
-	cerr << "bytes per pixel " << (int)image->format->BytesPerPixel << endl;
-	cerr << "bits per pixel " << (int)image->format->BitsPerPixel << endl;
+	
+	EM_COUT("loaded texture", 1);
+	EM_COUT("size " << image->w <<" "<< image->h, 1);
+	EM_COUT("bytes per pixel " << (int)image->format->BytesPerPixel, 1);
+	EM_COUT("bits per pixel " << (int)image->format->BitsPerPixel, 1);
 
 	return texture;
 }

@@ -47,8 +47,6 @@ void Config::setDefault() {
 }
 
 void Config::saveConfig(const char * filename) {
-	this->setDefault();
-
 	ofstream file(filename);
 	if (!file) {
 		cerr << "Couldn't open config file: " << filename << endl;
@@ -59,6 +57,7 @@ void Config::saveConfig(const char * filename) {
 	file << "sound: " << (m_bSound ? "1" : "0") << endl;
 	file << "bpp: " << m_iBpp << endl;
 	file << "fullscreen: " << (m_bFullScreen ? "1" : "0") << endl;
+	file << "texture_nearest: " << ((m_iGLFilter == GL_NEAREST) ? "1" : "0") << endl;
 }
 
 void Config::loadConfig(const char * filename) {
@@ -86,6 +85,10 @@ void Config::loadConfig(const char * filename) {
 			file >> str;
 			if (str == "0") m_bFullScreen = false;
 			else m_bFullScreen = true;
+		} else if (str == "texture_nearest:") {
+			file >> str;
+			if (str == "0") 	m_iGLFilter = GL_LINEAR;
+			else 	m_iGLFilter = GL_NEAREST;
 		}
 	}
 }
