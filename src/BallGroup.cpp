@@ -15,8 +15,10 @@
 #include "Polygon.h"
 #include "CollisionBounds.h"
 #include "BounceBehavior.h"
+#include "Config.h"
 
-BallGroup::BallGroup(float r, float g, float b, int pbl, float x) : Group() {
+BallGroup::BallGroup(float r, float g, float b, int pbl) : Group() {
+  m_iBall = pbl;
   Shape3D* ballSphere = new BigSphere(1, 2, r, g, b, 1);
   ballSphere->setProperty(EM_SHAPE3D_SPECULAR);
   CollisionBounds* ballBounds = new CollisionBounds(1.0f/EM_SQRT_3);
@@ -56,16 +58,22 @@ BallGroup::BallGroup(float r, float g, float b, int pbl, float x) : Group() {
   shadow->countNormals();
 
   BounceBehavior* bouBeh = new BounceBehavior(pbl);
+  if (Config::getInstance()->getFire()) {
+    bouBeh->setFire(true);
+  } else {
+    bouBeh->setFire(false);
+  }
 
-  this->setUserProperty(pbl);
+  this->setUserProperty(PBL_BALL);
   this->setCollisionBounds(ballBounds);
   this->addShape3D(ballSphere);
   this->addShape3D(shadow);
   this->setBehavior(bouBeh);
-  this->setTransform(x, 0, 8, 0, 0, 0);
-  vtxPrev.x = x;
+
+  this->setTransform(-4*pbl, 0, 40, 0, 0, 0);
+  vtxPrev.x = -4*pbl;
   vtxPrev.y = 0;
-  vtxPrev.z = 8;
+  vtxPrev.z = 40;
 
   for (int a=0; a<16; ++a) {
     aFireVtx[a].x = 0;
@@ -100,7 +108,6 @@ void BallGroup::resetFire() {
 }
 
 void BallGroup::updateFire() {
-  cerr << "fire" << endl;
   
   for (int a=14; a>=0; --a) {
     aFireVtx[a+1].x = aFireVtx[a].x;
@@ -131,6 +138,8 @@ void BallGroup::updateFire() {
 }
 
 void BallGroup::tick() {
+  // a fast but unsafe check
+  if (!Config::getInstance()->getFire()) return;
   if (m_iFireTimer == 0) {
     this->resetFire();
   } else {

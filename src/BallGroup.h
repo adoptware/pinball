@@ -1,7 +1,7 @@
 /***************************************************************************
-                          BigSphere.h  -  description
+                          BallGroup.h  -  description
                              -------------------
-    begin                : Wed Jan 26 2000
+    begin                : Sat Mar 8 2003
     copyright            : (C) 2000 by Henrik Enqvist
     email                : henqvist@excite.com
  ***************************************************************************/
@@ -19,7 +19,7 @@ class Shape3D;
 /** */
 class BallGroup : public Group {
  public:
-  BallGroup(float r, float g, float b, int pbl, float x);
+  BallGroup(float r, float g, float b, int pbl);
   ~BallGroup();
   /** -1 always, 0 off, >1 timer */
   inline void setFireTimer(int timer) {
@@ -28,7 +28,9 @@ class BallGroup : public Group {
   void updateFire();
   void resetFire();
   void tick();
+  inline int getBall() { return m_iBall; };
  private:
+  int m_iBall;
   int m_iFireTimer;
   Vertex3D vtxPrev;
   Group * aFire[8];
@@ -36,4 +38,4 @@ class BallGroup : public Group {
   Vertex3D aFireVtx[16];
 };
 
-#endif // SPHERE_H
+#endif // BALLGROUP_H

@@ -16,6 +16,7 @@
 #include "Loader.h"
 
 BumperBehavior::BumperBehavior() : Behavior() {
+  m_bTilt = false;
   m_iLightCounter = -1;
   m_iSound = -1;
   m_sigBump = Loader::getInstance()->getSignal("bump");
@@ -30,10 +31,23 @@ void BumperBehavior::onTick() {
   if (m_iLightCounter == 0 ) SetLightOn(false);
 }
 
-void BumperBehavior::StdOnCollision() {
-  EM_COUT("BumperBehavior::StdOnCollision()", 1);
+void BumperBehavior::StdOnSignal() {
+  OnSignal(PBL_SIG_RESET_ALL) {
+    m_bTilt = false;
+    SetLightOn(false);
+    m_iLightCounter = -1;
+  }
+  ElseOnSignal(PBL_SIG_TILT) {
+    m_bTilt = true;
+  }
+}
 
-  OnCallerProperty( PBL_BALL_1 OR_CP PBL_BALL_2 OR_CP PBL_BALL_3 OR_CP PBL_BALL_4 ) {
+void BumperBehavior::StdOnCollision() {
+  EM_COUT("BumperBehavior::StdOnCollision()", 0);
+
+  if (m_bTilt) return;
+
+  OnCallerProperty( PBL_BALL ) {
     if (m_iLightCounter > 10) {
       return;
     }

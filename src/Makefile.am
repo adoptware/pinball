@@ -21,20 +21,23 @@ Loader.cpp \
 PlungerBehavior.cpp \
 Score.cpp \
 Script.cpp \
-StateBehavior.cpp
+StateBehavior.cpp \
+Table.cpp
 
 dnl libemilia_pin_la_SOURCES = $(libemilia_pin_a_SOURCES)
 
 pkginclude_HEADERS = \
 ArmBehavior.h \
+BallGroup.h \
 BounceBehavior.h \
 BumperBehavior.h \
 EyeBehavior.h \
 FakeModuleBehavior.h \
 Loader.h \
-PlungerBehavior.h \
 Pinball.h \
+PlungerBehavior.h \
 Score.h \
 Script.h \
 SrcTest.h \
-StateBehavior.h
+StateBehavior.h \
+Table.h

@@ -193,7 +193,9 @@ void Engine::setEngineCamera(Group* g) {
 
 void Engine::render() {
   EM_COUT("Engine::render()", 0);
-  g_fFps = g_fFps*0.99f + 0.01f*1000.0f/(GET_TIME - g_iLastRender);
+  if (GET_TIME - g_iLastRender != 0.0f) {
+    g_fFps = g_fFps*0.99f + 0.01f*1000.0f/(GET_TIME - g_iLastRender);
+  }
   g_iLastRender = GET_TIME;
   // Put some overall light.
   StartProfile(GLIGHT);
@@ -202,12 +204,14 @@ void Engine::render() {
   StopProfile();
   // Put some light from light sources.
   if (Config::getInstance()->useLights()) {
+    EM_COUT("Engine::render() lights", 0);
     StartProfile(PLIGHT);
     PointLightVisitor::getInstance()->empty();
     this->accept(PointLightVisitor::getInstance());
     StopProfile();
   }
   // Align vertices to view space.
+  EM_COUT("Engine::render() align", 0);
   StartProfile(ALIGN);
   AlignVisitor::getInstance()->empty();
   this->accept(AlignVisitor::getInstance());
@@ -218,7 +222,8 @@ void Engine::render() {
   //	this->accept(p_SoundVisitor);
   StopProfile();
   this->clearScreen();
-  // Draw screen
+  // Draw screenr
+  EM_COUT("Engine::render() render", 0);
   StartProfile(RENDER);
 #if EM_USE_SDL
   OpenGLVisitor::getInstance()->setMode(EM_GL_GCOL_TEX);
@@ -261,7 +266,7 @@ void Engine::swap() {
 }
 
 void Engine::tick() {
-  EM_COUT("Engine::tick()", 0);
+  EM_COUT("Engine::tick() key", 0);
   if (!Config::getInstance()->useExternGL()) {
     StartProfile(KEY);
     // Check keyboard.
@@ -269,16 +274,19 @@ void Engine::tick() {
     StopProfile();
   }
   // Perform behaviors. Behaviors must be done before transformation and collision.
+  EM_COUT("Engine::tick() beh", 0);
   StartProfile(BEH);
   BehaviorVisitor::getInstance()->empty();
   this->accept(BehaviorVisitor::getInstance());
   StopProfile();
   // Calculate positions
+  EM_COUT("Engine::tick() trans", 0);
   StartProfile(TRANS);
   TransformVisitor::getInstance()->empty();
   this->accept(TransformVisitor::getInstance());
   StopProfile();
   // Detect collision.
+  EM_COUT("Engine::tick() coll", 0);
   StartProfile(COLLISION);
   CollisionVisitor::getInstance()->empty();
   this->accept(CollisionVisitor::getInstance());
@@ -314,49 +322,6 @@ bool Engine::nextTickFPS(int fps) {
 void Engine::resetTick() {
   g_iStartTime = GET_TIME;
 }
-
-/* ATTENTION! This function wraps after ~24 days 
-   bool Engine::limitFPS(int fps) {
-   StartProfile(WAIT);
-   int delay = 0;
-   if (fps > 0) {
-   delay = 1000/fps;
-   }
-   if (g_iStartTime == -1) {
-   g_iDesiredTime = g_iStartTime = GET_TIME;
-   }
-   g_iDesiredTime += delay;
-   int realdelay = (g_iDesiredTime - GET_TIME);
-   if (realdelay < -500) {     // really slow - render anyway
-   EM_COUT("TO SLOW", 1);
-   g_fFps = g_fFps*0.99f + 0.01f*1000.0f/(GET_TIME - g_iLastRender);
-   g_iDesiredTime = g_iLastRender =  GET_TIME;
-   StopProfile();
-   return true;
-   } else if (realdelay < -delay/2) { // slow
-   StopProfile();
-   return false;
-   } else if (realdelay < 0) { // abit slow - forgive a bit slow, gives better fps
-   g_fFps = g_fFps*0.99f + 0.01f*1000.0f/(GET_TIME - g_iLastRender);
-   g_iLastRender =  GET_TIME;
-   StopProfile();
-   return true;
-   } else {                    // to early, must delay
-   do {
-   realdelay = (g_iDesiredTime - GET_TIME);
-   if (realdelay > 10) {
-   // The delay triggers rescheduling
-   this->delay(realdelay);
-   }
-   } while (realdelay > 0);
-   g_fFps = g_fFps*0.99f + 0.01f*1000.0f/(GET_TIME - g_iLastRender);
-   g_iLastRender = GET_TIME;
-   StopProfile();
-   return true;
-   }
-   // never gets here
-   }
-*/
 
 #undef GET_TIME
 

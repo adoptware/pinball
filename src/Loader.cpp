@@ -13,8 +13,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <cstring>
-//#include <gmodule.h>
-//#include <values.h>
 
 #include <ltdl.h>
 
@@ -48,9 +46,9 @@
 #include "PlungerBehavior.h"
 
 #define EmReadCmp(file_, ist_, str_, cmp_) \
-	this->readNextToken(file_, ist_, str_);               \
- 	if (str_ != cmp_) throw string("Parse error, unexpected token \'") + str_ +  \
-										string("\' expecting \'") + cmp_ + string("\'");
+  this->readNextToken(file_, ist_, str_);               \
+  if (str_ != cmp_) throw string("Parse error, unexpected token \'") + str_ +  \
+				string("\' expecting \'") + cmp_ + string("\'");
 
 /******************************************************* 
  * Singleton suff 
@@ -58,21 +56,21 @@
 Loader * Loader::p_Loader = NULL;
 
 Loader::Loader() {
-	m_iNextSignal = LOADER_FIRSTSIGNAL;
-	m_iNextVariable = LOADER_FIRSTVARIABLE;
-	m_bModules = true;
-	lt_dlinit();
+  m_iNextSignal = LOADER_FIRSTSIGNAL;
+  m_iNextVariable = LOADER_FIRSTVARIABLE;
+  m_bModules = true;
+  lt_dlinit();
 };
 
 Loader::~Loader() {
-	lt_dlexit();
+  lt_dlexit();
 };
 
 Loader * Loader::getInstance() {
-	if (p_Loader == NULL) {
-		p_Loader = new Loader();
-	}
-	return p_Loader;
+  if (p_Loader == NULL) {
+    p_Loader = new Loader();
+  }
+  return p_Loader;
 }
 
 
@@ -81,15 +79,15 @@ Loader * Loader::getInstance() {
  * enable line counting
  ******************************************************/
 void Loader::readNextToken(ifstream & file, istringstream & ist, string & str) {
-	ist >> str;
-	while(file && !ist) {
-			string buf;
-			getline(file, buf);
-			ist.clear();
-			ist.str(buf);
-			ist >> str;
-      ++m_iLineNumber;
-	}
+  ist >> str;
+  while(file && !ist) {
+    string buf;
+    getline(file, buf);
+    ist.clear();
+    ist.str(buf);
+    ist >> str;
+    ++m_iLineNumber;
+  }
 }
 
 void Loader::readNextToken(ifstream & file, istringstream & ist, int & i) {
@@ -131,10 +129,10 @@ int Loader::getSignal(const char * signal) {
 	//if (strncmp(signal, "extraball", 63) == 0) return PBL_SIG_EXTRABALL;
 	//if (strncmp(signal, "multiball_off", 63) == 0) return PBL_SIG_MULTIBALL_OFF;
 	//if (strncmp(signal, "allballs_off", 63) == 0) return PBL_SIG_ALLBALLS_OFF;
-	if (strncmp(signal, "lock1", 63) == 0) return PBL_SIG_LOCK_1;
-	if (strncmp(signal, "lock2", 63) == 0) return PBL_SIG_LOCK_2;
-	if (strncmp(signal, "lock3", 63) == 0) return PBL_SIG_LOCK_3;
-	if (strncmp(signal, "lock4", 63) == 0) return PBL_SIG_LOCK_4;
+// 	if (strncmp(signal, "lock1", 63) == 0) return PBL_SIG_LOCK_1;
+// 	if (strncmp(signal, "lock2", 63) == 0) return PBL_SIG_LOCK_2;
+// 	if (strncmp(signal, "lock3", 63) == 0) return PBL_SIG_LOCK_3;
+// 	if (strncmp(signal, "lock4", 63) == 0) return PBL_SIG_LOCK_4;
 	// other signals
 	map<string, int>::iterator element = m_hSignalInt.find(string(signal));
 	if (element != m_hSignalInt.end()) {
@@ -172,13 +170,13 @@ const char * Loader::getSignal(int signal) {
 	case PBL_SIG_GAME_OVER : return "game_over";
 	case PBL_SIG_GAME_START : return "game_start";
 	case PBL_SIG_GAME_PAUSE : return "game_pause";
-		//case PBL_SIG_EXTRABALL : return "extraball";
-		//case PBL_SIG_MULTIBALL_OFF : return "multiball_off";
-		//case PBL_SIG_ALLBALLS_OFF : return "allballs_off";
-	case PBL_SIG_LOCK_1 : return "lock1";
-	case PBL_SIG_LOCK_2 : return "lock2";
-	case PBL_SIG_LOCK_3 : return "lock3";
-	case PBL_SIG_LOCK_4 : return "lock4";
+	  //case PBL_SIG_EXTRABALL : return "extraball";
+	  //case PBL_SIG_MULTIBALL_OFF : return "multiball_off";
+	  //case PBL_SIG_ALLBALLS_OFF : return "allballs_off";
+	  // 	case PBL_SIG_LOCK_1 : return "lock1";
+	  // 	case PBL_SIG_LOCK_2 : return "lock2";
+	  // 	case PBL_SIG_LOCK_3 : return "lock3";
+	  // 	case PBL_SIG_LOCK_4 : return "lock4";
 	}
 	// other signals
 	map<int, string>::iterator element = m_hSignalString.find(signal);
@@ -400,7 +398,7 @@ void Loader::loadBehaviorLight(ifstream & file, istringstream & ist,
 	light->setBounds(10.0);
 	
 	Group * gl = new Group();
-	gl->setName("light");
+	gl->setName("#light");
 	gl->addTranslation(x, y, z);
 	gl->setLight(light);
 	group->add(gl);
