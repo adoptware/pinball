@@ -1,3 +1,4 @@
+//#ident "$Id: varray.cpp,v 1.4 2003/08/29 23:33:10 rzr Exp $"
 /***************************************************************************
  Vertex Array test. Tests wheater vertex arrays are faster or not.
  As you can see by looking at the FPS, this is the reason why I am not using
@@ -14,7 +15,7 @@
 #include "OpenGLVisitor.h"
 
 #if EM_USE_SDL
-#include <GL/gl.h>
+#include <SDL_opengl.h> //!rzr //should fix GL portability @ MOX //@varray.cpp
 #else
 #warning This is a sdl specific test.
 #endif

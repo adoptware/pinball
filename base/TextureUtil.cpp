@@ -1,4 +1,4 @@
-//#Ident "$Id: TextureUtil.cpp,v 1.18 2003/07/26 22:13:42 rzr Exp $"
+//#Ident "$Id: TextureUtil.cpp,v 1.19 2003/08/29 23:33:03 rzr Exp $"
 /***************************************************************************
                           TextureUtil.cpp  -  description
                              -------------------
@@ -345,7 +345,8 @@ int TextureUtil::genTexture( char const * const filename,
   // load the texture
   image = loadP(filename); //!MLK ?
   if (image == NULL) {
-    cerr << "TextureUtil::loadTexture error loading file " << filename << endl;
+    cerr << "TextureUtil::loadTexture error loading file \"" << filename <<"\""
+         << string( SDL_GetError() ) <<endl;
     return -1;
   }
   //TODO : Pad texture != 2^n x 2^n //!rzr
@@ -434,4 +435,4 @@ const char * TextureUtil::getTextureName(EmTexture * tex) {
   }
 */
 
-//EOF: $Id: TextureUtil.cpp,v 1.18 2003/07/26 22:13:42 rzr Exp $
+//EOF: $Id: TextureUtil.cpp,v 1.19 2003/08/29 23:33:03 rzr Exp $
