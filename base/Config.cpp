@@ -1,4 +1,4 @@
-//#ident "$Id: Config.cpp,v 1.25 2003/05/12 12:17:58 rzr Exp $"
+//#ident "$Id: Config.cpp,v 1.26 2003/05/27 11:53:25 rzr Exp $"
 /***************************************************************************
                           Config.cpp  -  description
                              -------------------
@@ -28,7 +28,7 @@
 #ifdef WIN32
 //#include <io.h> 
 #include <direct.h>  // mkdir @ msvc+mingw32
-#define mkdir(name, modes) mkdir(name)
+//#define mkdir(name, modes) mkdir(name)
 #endif //!-rzr
 
 
@@ -321,7 +321,7 @@ void Config::loadArgs(int & argc, char *argv[]) {
     } else if (strcmp(argv[a], "-size") == 0) {
       if (argc > a+2) {
         int const w= atoi(argv[a+1]);
-				int const h = atoi(argv[a+2]);
+        int const h = atoi(argv[a+2]);
 				this->setSize(w, h);
 				EM_COUT("Using size = " << m_iWidth <<","<< m_iHeight, 1);
 				REMOVEARG(a, argc, argv);

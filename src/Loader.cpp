@@ -1,4 +1,4 @@
-//#ident "$Id: Loader.cpp,v 1.30 2003/05/26 08:47:04 henqvist Exp $"
+//#ident "$Id: Loader.cpp,v 1.31 2003/05/27 11:53:32 rzr Exp $"
 /***************************************************************************
                             Loader.cpp -  description
                              -------------------
@@ -44,16 +44,15 @@
 #include "Script.h"
 #include "FakeModuleBehavior.h"
 #include "PlungerBehavior.h"
-#include "LoaderModule.h" //!+rzr :  I put it appart
-
-//#ifdef RZR_PATCHES_3DS
-#include "Obj3dsUtil.h" //!+rzr :  I put it appart
-//#endif
+#include "LoaderModule.h"
+#ifdef RZR_PATCHES_3DS
+#include "Obj3dsUtil.h" 
+#endif
 
 #define EmReadCmp(file_, ist_, str_, cmp_) \
-  this->readNextToken(file_, ist_, str_);               \
-  if (str_ != cmp_) throw string("Parse error, unexpected token \'") + str_ +  \
-				string("\' expecting \'") + cmp_ + string("\'");
+ this->readNextToken(file_, ist_, str_); \
+ if (str_ != cmp_) throw string("Parse error, unexpected token \'") + str_ + \
+ string("\' expecting \'") + cmp_ + string("\'");
 
 /******************************************************* 
  * Singleton suff 
@@ -766,10 +765,13 @@ void Loader::loadMisc(ifstream & file, istringstream & ist, Engine * engine, Gro
     } else if (str == "sub_object") {
       Group * g = this->loadStdObject(file, ist, engine);
       group->add(g);
-      //#ifdef RZR_PATCHES_3DS
-    } else if (str == "shape_include_3ds_ascii") { // version 0.3.0 and above
+
+#ifdef RZR_PATCHES_3DS // version 0.3.0 and above 
+    } else if (str == "shape_include_3ds_ascii") {
       this->loadShape3dsAscii(file, ist, engine, group, beh);
-      //#endif
+    } else if (str == "group_include_3ds_ascii") {
+      this->loadGroup3dsAscii(file, ist, engine, group, beh);
+#endif //ok but I'd like set as option unless it get fully usable (bugless too)
     } else {
       cerr << str << endl;
       throw string("UNKNOWN in misc block");
@@ -1025,37 +1027,135 @@ int Loader::loadFile(const char* fn, Engine * engine) {
   }
   return 0;
 }
-//#ifdef RZR_PATCHES_3DS //---------------------------------------------------------
-/*
-  object cube3ds {
-  0 0 0
-  0 0 0
-  shape_include_3ds_ascii name { /home/rzr/work/3dsview/data/cube.asc }
-  ...
-  }
-*/
+
+#ifdef RZR_PATCHES_3DS //-----------------------------------------------------
+
+/// load all scene in one shape
 void Loader::loadShape3dsAscii(ifstream & file, istringstream & ist, 
 			       Engine *, Group * group, Behavior *) 
 {
-  EM_COUT("Loader::loadShape3dsAscii", 1);
+  EM_COUT("Loader::loadShape3dsAscii", 0);
   string str;
   EmReadCmp(file, ist, str, "{");
   this->readNextToken(file, ist, str);
-  Shape3D* shape = new Shape3D;
+  Shape3D* shape = 0;
   string filename = string(Config::getInstance()->getDataSubDir()) + "/" + str;
-  EM_COUT( filename , 1);
-  int t = Obj3dsUtil::read(  *shape , filename.c_str());
-  //assert(t == 0);
-  EmReadCmp(file, ist, str, "}");
-  if ( t==0 && shape != NULL) {
-    group->addShape3D(shape); 
-  } else {
-    delete shape;
-    cerr << "could not load shape" << endl;
+  //EM_COUT( filename , 1);
+  int t = 0;
+
+  shape = new Shape3D;
+  t =  Obj3dsUtil::read(  *shape , filename.c_str());
+  if ( t < 0 || shape == 0 ) { delete shape; return;}
+  shape->countNormals();
+  group->addShape3D(shape);
+
+  if ( shape->m_sMaterialName != "" ) {
+    EM_COUT( shape->m_sMaterialName , 1);
+    filename = string(Config::getInstance()->getDataSubDir())
+      + "/" + shape->m_sMaterialName;
+    EmTexture * tex =
+      TextureUtil::getInstance()->loadTexture(filename.c_str());
+    if (tex != NULL) { shape->setTexture(tex);  } 
+  } 
+  
+  this->readNextToken(file, ist, str);
+  while (str != "}") {
+    this->readNextToken(file, ist, str);
   }
-  //EM_COUT("-Loader::loadShape3dsAscii", 0);
+
+  EM_COUT("-Loader::loadShape3dsAscii", 0);
 }
-//#endif //--------------------------------------------------------------------
-//EOF $Id: Loader.cpp,v 1.30 2003/05/26 08:47:04 henqvist Exp $
 
 
+void Loader::loadGroup3dsAscii(ifstream & file, istringstream & ist, 
+			       Engine *, Group * group, Behavior *) 
+  {
+  EM_COUT("Loader::loadShape3dsAscii", 0);
+  string str;
+  EmReadCmp(file, ist, str, "{");
+  this->readNextToken(file, ist, str);
+  Group* arg = new Group;
+  Shape3D* shape = 0;
+  string filename = string(Config::getInstance()->getDataSubDir()) + "/" + str;
+  //EM_COUT( filename , 1);
+  int t = 0;
+  
+  t =  Obj3dsUtil::read(  *arg , filename.c_str());
+  if ( t < 0 ) { delete arg; return;}
+  EmReadCmp(file, ist, str, "}");
+
+  //debug("copy to current group");
+#if 1
+  group->add(arg);
+#else
+  for(int i=0;i<arg->getShape3DSize(); i++) {
+    shape = arg->getShape3D(i);
+    shape->countNormals();
+    group->addShape3D( shape);
+  }
+  //TODO delete group
+#endif
+
+#if 0
+  //debug("read aliases");
+  /*
+   material {
+   overide "Material #1" { texture "file.png" }
+   overide "Material #1" { color "rbga" }
+   overide "*"  { texture "file2.png"  }
+   }
+  */
+  string key,value;
+  map<string, string> aliases;
+  this->readNextToken(file, ist, str);
+  if (str == "material") {
+    EmReadCmp(file, ist, str, "{"); 
+    this->readNextToken(file, ist, key); 
+    this->readNextToken(file, ist, value); 
+    EmReadCmp(file, ist, str, "}");
+    //map.insert(key, value);
+  }
+  
+  //this->readNextToken(file, ist, str);
+#endif
+
+  //debug("assign textures");
+  for(int i=0; i < arg->getShape3DSize() ; i++) {
+    shape = arg->getShape3D(i);
+    if ( shape->m_sMaterialName != "" ) {
+      EM_COUT( shape->m_sMaterialName , 1);
+      filename = string(Config::getInstance()->getDataSubDir())
+        + "/" + shape->m_sMaterialName;
+      EmTexture * tex =
+        TextureUtil::getInstance()->loadTexture(filename.c_str());
+      if (tex != NULL) { shape->setTexture(tex);  } 
+    }
+  }
+
+    
+#if 0 //collision part , need some help
+  float size = group->getCollisionSize();
+  debugf(". add collision_size=%f\n",size);
+  CollisionBounds* bounds = new CollisionBounds(size);
+
+  for(int i=0;i<group->getShape3DSize(); i++) {
+    shape = arg->getShape3D(i);
+    if ( size > 16) {
+      bounds->setShape3D(shape, 4); //4
+    } else if ( size > 8) {
+      bounds->setShape3D(shape, 3); //4
+    } else if ( size > 4) {
+      bounds->setShape3D(shape, 2); //4
+    } else if ( size > 2) {
+      bounds->setShape3D(shape, 1); //4
+    } else {
+      bounds->setShape3D(shape, 1);
+    }
+  }
+  //debugf(". group collision slow\n");
+  group->setCollisionBounds(bounds);
+#endif
+  EM_COUT("-Loader::loadShape3dsAscii", 0);
+}
+#endif //--------------------------------------------------------------------
+//EOF $Id: Loader.cpp,v 1.31 2003/05/27 11:53:32 rzr Exp $

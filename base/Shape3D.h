@@ -1,3 +1,4 @@
+//#ident "$Id: Shape3D.h,v 1.14 2003/05/27 11:53:25 rzr Exp $"
 /***************************************************************************
                           Shape3D.h  -  description
                              -------------------
@@ -20,6 +21,7 @@
 //#define EM_SHAPE3D_DOUBLE 32
 
 #include <vector>
+#include <string>
 
 #include "TextureUtil.h"
 #include "EMath.h"
@@ -101,6 +103,9 @@ class Shape3D {
   EmTexture* m_Texture;
   Group* p_Parent;
   int m_iProperties;
+  /// used for importing 3ds files //!rzr
+  string m_sMaterialName;
 };
 
 #endif // SHAPE3D_H
+//EOF $Id: Shape3D.h,v 1.14 2003/05/27 11:53:25 rzr Exp $

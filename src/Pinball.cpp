@@ -1,4 +1,4 @@
-//#ident "$Id: Pinball.cpp,v 1.36 2003/05/26 08:47:04 henqvist Exp $"
+//#ident "$Id: Pinball.cpp,v 1.37 2003/05/27 11:53:32 rzr Exp $"
 /***************************************************************************
                           Pinball.cpp  -  description
                              -------------------
@@ -792,12 +792,18 @@ int main(int argc, char *argv[]) {
 END_OF_MAIN();
 #endif
 
-
-#if( (defined WIN32 ) && ( defined __MWERKS__ ) ) // w32 codewarrior
+/// entry point function (main) for w32 codewarrior
+#if( (defined WIN32 ) && ( defined __MWERKS__ ) ) 
 int WINAPI WinMain( HINSTANCE hInst,  HINSTANCE hPreInst, 
                     LPSTR lpszCmdLine,  int nCmdShow )
 {
-  // TODO: get argc argv with GetCommandLine()
-  return main(0,0); 
+//   CreateMutex(); //allows only one instance of game
+//   if ( GetLastError() == ERROR_ALLREADY_EXISTS )  return ERROR_ALLREADY_EXISTS;
+  // TODO: get argc argv with 
+//  int argc=0; char** argv=0;
+   int argc = 1;   char* argv[1] = { 0 };
+   argv[0] = GetCommandLine(); //cut on space
+  return main(argc,argv); 
 }
 #endif
+// EOF $Id: Pinball.cpp,v 1.37 2003/05/27 11:53:32 rzr Exp $

@@ -1,3 +1,4 @@
+//#ident "$Id;$"
 /***************************************************************************
                           Group.cpp  -  description
                              -------------------
@@ -22,7 +23,7 @@
 Group::Group() {
   m_iProperties = 0;
   m_iUserProperties = 0;
-	m_iCollisionGroup = 0;
+  m_iCollisionGroup = 0;
   strncpy(m_Name, "unknown", 256);
   p_BillBoard = NULL;
   p_CollisionBounds = NULL;
@@ -283,3 +284,4 @@ void Group::unsetPropertyRecursive(int p) {
     (*iter)->unsetPropertyRecursive(p);
   }
 }
+//EOF $Id: Group.cpp,v 1.9 2003/05/27 11:53:25 rzr Exp $

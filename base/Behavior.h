@@ -1,3 +1,4 @@
+//#ident "$Id: Behavior.h,v 1.7 2003/05/27 11:53:24 rzr Exp $"
 /***************************************************************************
                           Behavior.h  -  description
                              -------------------
@@ -27,7 +28,9 @@ class Behavior {
   /** Simple constructor. You are supposed to create subclasses
    * and add the subclasses to the group. */
   Behavior();
-  virtual ~Behavior() {};
+  virtual ~Behavior() {}
+  /** reset (needed for static libs) */
+  virtual void clear() { m_iType = 0; }
   /** Override this method to create behavior that occurs on each render loop. */
   virtual void onTick() = 0;
   /** Override this method to create behavior that occurs on a collision.
