@@ -1,4 +1,4 @@
-//#ident "$Id: config-rzr.h,v 1.5 2003/05/24 10:55:06 rzr Exp $"
+//#ident "$Id: config-rzr.h,v 1.6 2003/05/27 11:53:26 rzr Exp $"
 //#warning "!+rzr: Win32 portability hacks @ www.rzr.online.fr"
 #ifndef config_rzr_h_ // !+rzr 
 #define config_rzr_h_
@@ -34,12 +34,19 @@
 //#undef RZR_LIBSTATIC  // @ src/Loader.cpp
 /// vfat etc
 //#undef RZR_LINKS_UNSUPPORTED
+/// configure should check if the install fs supports modes & links
+//#undef RZR_MODES_UNSUPPORTED // w32
 ///
 //#undef RZR_CONFIG_STATIC_DEFAULT
 /// cstdlibs random is not definied @msvc + mingw32
 //#undef RZR_RANDOM_UNSUPPORTED
 ///
 //#undef RZR_DEBUG
+
+/// devel only until official release
+//#undef  RZR_PATCHES_3DS
+//#define RZR_PATCHES_3DS
+
 //--------------------------------------------------------------------------
 /// GCC @ gnu.org (everything is autoconfigured)
 #if ( (defined unix ) && ( defined __GNUC__ ) )
@@ -55,7 +62,7 @@
 #define RZR_CPP_USE_NAMESPACE_STD
 #define RZR_LIBSTATIC 1
 #define RZR_CONFIG_STATIC_DEFAULT 1
-#ifdef _DEBUG // win32 msvc debug
+#ifdef  _DEBUG // win32 msvc debug
 #define RZR_DEBUG 1
 #endif
 #define RZR_PATHRELATIVE 1
@@ -74,6 +81,8 @@
 #define RZR_CPP_USE_NAMESPACE_STD
 #define RZR_LIBSTATIC 1
 #undef  RZR_PATHRELATIVE // main(argc,argv) lost @src/Pinball.cpp 
+#define EM_DATADIR "../data/" // from ./Release/pinball.exe
+#define EM_LIBDIR "." //unused (so far)
 #define EM_HIGHSCORE_DIR EM_DATADIR
 #endif
 
@@ -81,6 +90,7 @@
 #if ( (defined WIN32 ) && ( defined __GNUC__ ) )
 #define HAVE_UNISTD_H 1
 #define RZR_LINKS_UNSUPPORTED 1
+#define RZR_MODES_UNSUPPORTED 1
 #define RZR_PATHRELATIVE 1
 #define RZR_LIBSTATIC  1
 #define RZR_RANDOM_UNSUPPORTED 1
@@ -88,7 +98,7 @@
 
 /// other compilers
 #if ( ! ( (defined __GNUC__ ) || ( defined _MSC_VER )  || (defined __MWERKS__ )))
-#warning "This compiler has never been tested (so far)"
+//#warning "This compiler has never been tested (so far) please contact me"
 #define RZR_CONFIG_STATIC_DEFAULT 1
 #define RZR_LINKS_UNSUPPORTED 1
 #undef  RZR_PATHRELATIVE
@@ -101,6 +111,13 @@
 #define lstat( name, opt)  stat(name, opt); //undef on mingw32@Linux
 #endif
 
+// Common WIN32 options tested on mingw32 + msvc6
+#ifdef RZR_MODES_UNSUPPORTED //!+rzr MSVC++ , mingw32 (etc not tested so far)
+#include <io.h> // mkdir
+//#include <sys/stat.h>
+#define mkdir(dir,modes) mkdir(dir) // @direct.h // autoconf should do that 
+#endif 
+
 
 #ifdef RZR_RANDOM_UNSUPPORTED 
 #define random rand // cstdlibs random is not definied @msvc + mingw32
@@ -108,7 +125,7 @@
 
 #ifdef RZR_CPP_USE_NAMESPACE_STD
 #include <iostream> 
-//namespace std {};
+//namespace std {}; //code warrior warn for empty namespace
 using namespace std;
 #endif
 
@@ -146,19 +163,13 @@ using namespace std;
 #ifndef EM_LIBDIR
 #define EM_LIBDIR "/pinball/lib/"  
 #endif
+#ifndef EM_HIGHSCORE_DIR
+#define EM_HIGHSCORE_DIR EM_DATADIR
+#endif
 #endif
 
 
 //--------------------------------------------------------------------------
-// Common WIN32 options tested on mingw32 + msvc6
-#ifdef WIN32 //!+rzr MSVC++ , mingw32 (etc not tested so far)
-// ----- // configure should check if the install fs supports modes & links
-//#include <io.h> // mkdir
-//#include <sys/stat.h>
-//#define mkdir(dir,modes) mkdir(dir) // @direct.h // autoconf should do that 
-
-#endif // WIN32 // !rzr-
-
 
 #ifdef _MSC_VER
 //#undef WINAPI
@@ -227,4 +238,4 @@ using namespace std;
 #define VERSION "cvs-__DATE__"
 #endif
 #endif //!-rzr ----------------------------------------------------------------
-//EOF: $Id: config-rzr.h,v 1.5 2003/05/24 10:55:06 rzr Exp $
+//EOF: $Id: config-rzr.h,v 1.6 2003/05/27 11:53:26 rzr Exp $
