@@ -42,7 +42,7 @@ void ArmBehavior::StdOnSignal() {
   }
 }
 
-void ArmBehavior::doArm(SDLKey key) {
+void ArmBehavior::doArm(EMKey key) {
   if (Keyboard::isKeyDown(key) && !m_bTilt) {
     if (m_iCount < 10) {
       m_iCount++;

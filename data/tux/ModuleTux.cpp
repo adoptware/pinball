@@ -88,45 +88,45 @@ public:
     // launch ball
     string launch("launch");
     if (table->active() == 0 && 
-	table->getCurrentBall() < MAX_BALL) {
-	//&& Keyboard::isKeyDown(Config::getInstance()->getKey(launch))) {
+				table->getCurrentBall() < MAX_BALL) {
+			//&& Keyboard::isKeyDown(Config::getInstance()->getKey(launch))) {
       switch (table->getCurrentBall()) {
       case 0 :
-	if (table->isBallDead(0) ) {
-	  SendSignal( m_sigGameStart, 0, this->getParent(), NULL );
-	  SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-	  table->activateBall(0);	
-	  //score->clearText();
-	  break;
-	}	
+				if (table->isBallDead(0) ) {
+					SendSignal( m_sigGameStart, 0, this->getParent(), NULL );
+					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
+					table->activateBall(0);	
+					//score->clearText();
+					break;
+				}	
       case 1 :
-	if (table->isBallDead(1)) {
-	  SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-	  table->activateBall(1);
-	  //score->clearText();
-	  break;
-	}
+				if (table->isBallDead(1)) {
+					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
+					table->activateBall(1);
+					//score->clearText();
+					break;
+				}
       case 2 :
-	if (table->isBallDead(2)) {
-	  SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-	  table->activateBall(2);
-	  //score->clearText();
-	  break;
-	}
-	if (table->isBallDead(0) ) {
-	  SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-	  table->activateBall(0);	
-	  //score->clearText();
-	  break;
-	}	
-	if (table->isBallDead(1)) {
-	  SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-	  table->activateBall(1);
-	  //score->clearText();
-	  break;
-	}
+				if (table->isBallDead(2)) {
+					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
+					table->activateBall(2);
+					//score->clearText();
+					break;
+				}
+				if (table->isBallDead(0) ) {
+					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
+					table->activateBall(0);	
+					//score->clearText();
+					break;
+				}	
+				if (table->isBallDead(1)) {
+					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
+					table->activateBall(1);
+					//score->clearText();
+					break;
+				}
       default:
-	throw string("TuxBehavior::onTick() all balls busy");
+				throw string("TuxBehavior::onTick() all balls busy");
       }
       EM_COUT("ModuleTux::onTick() new ball", 1);
     }
