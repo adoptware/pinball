@@ -2,8 +2,8 @@ object walls {
   0 0 0
   0 0 0
   shape {
-    vts { 460 }
-    pls { 304 }
+    vts { 476 }
+    pls { 311 }
     bhi { }
     vtx { 
       -4 1 37.1
@@ -296,12 +296,12 @@ object walls {
       0 0
     }
     vtx { 
-      12.3167 1 -37.15
+      12.25 1 -36.75
       1 1 1 1
       0 0
     }
     vtx { 
-      12.3167 -1 -37.15
+      12.25 -1 -36.75
       1 1 1 1
       0 0
     }
@@ -386,12 +386,12 @@ object walls {
       0 0
     }
     vtx { 
-      13.15 1 -41.1833
+      13.0833 1 -40.9833
       1 1 1 1
       0 0
     }
     vtx { 
-      13.15 -1 -41.1833
+      13.0833 -1 -40.9833
       1 1 1 1
       0 0
     }
@@ -441,7 +441,7 @@ object walls {
       0 0
     }
     vtx { 
-      -15.3625 3 -29.2125
+      -15.2375 3.575 -29.2125
       1 1 1 1
       0 0
     }
@@ -456,12 +456,12 @@ object walls {
       0 0
     }
     vtx { 
-      -14.65 4.9 -33.6875
+      -14.625 4.9 -33.6625
       1 1 1 1
       0 0
     }
     vtx { 
-      -13.5875 4.9 -30.675
+      -13.5375 4.9 -30.675
       1 1 1 1
       0 0
     }
@@ -526,22 +526,22 @@ object walls {
       0 0
     }
     vtx { 
-      -10.5 1 23.8
+      -10.45 1 24.5
       1 1 1 1
       0 0
     }
     vtx { 
-      -10.5 -1 23.8
+      -10.45 -1 24.5
       1 1 1 1
       0 0
     }
     vtx { 
-      -11.6 1 22.9
+      -10.45 1 23.9
       1 1 1 1
       0 0
     }
     vtx { 
-      -11.6 -1 22.9
+      -10.45 -1 23.9
       1 1 1 1
       0 0
     }
@@ -596,22 +596,22 @@ object walls {
       0 0
     }
     vtx { 
-      -14.55 2.6 -33.6875
+      -14.525 2.5 -33.6625
       1 1 1 1
       0 0
     }
     vtx { 
-      -13.4875 2.6 -30.675
+      -13.4375 2.5 -30.675
       1 1 1 1
       0 0
     }
     vtx { 
-      -12.3 2.4 -33.9
+      -12.3 2.5 -33.9
       0.2 0.2 1 0.3
       0 0
     }
     vtx { 
-      -12.2 2.4 -31
+      -12.2 2.5 -31
       0.2 0.2 1 0.3
       0 0
     }
@@ -626,22 +626,22 @@ object walls {
       0 0
     }
     vtx { 
-      -13.0667 1 -39.1333
+      -13.1334 1 -38.9333
       1 1 1 1
       0 0
     }
     vtx { 
-      -13.0667 -1 -39.1333
+      -13.1334 -1 -38.9333
       1 1 1 1
       0 0
     }
     vtx { 
-      -8.3 1 -41.3667
+      -8.36667 1 -41.1667
       1 1 1 1
       0 0
     }
     vtx { 
-      -8.3 -1 -41.3667
+      -8.36667 -1 -41.1667
       1 1 1 1
       0 0
     }
@@ -676,32 +676,32 @@ object walls {
       0 0
     }
     vtx { 
-      -11.1 1 -37
+      -11.25 1 -36.625
       1 1 1 1
       0 0
     }
     vtx { 
-      -11.1 -1 -37
+      -11.25 -1 -36.625
       1 1 1 1
       0 0
     }
     vtx { 
-      -7.6 1 -38.2667
+      -7.75 1 -37.875
       1 1 1 1
       0 0
     }
     vtx { 
-      -7.6 -1 -38.2667
+      -7.75 -1 -37.875
       1 1 1 1
       0 0
     }
     vtx { 
-      -5.96667 1 -38
+      -6.125 1 -37.625
       1 1 1 1
       0 0
     }
     vtx { 
-      -5.96667 -1 -38
+      -6.125 -1 -37.625
       1 1 1 1
       0 0
     }
@@ -736,242 +736,242 @@ object walls {
       0 0
     }
     vtx { 
-      -3.4 1 -37.5
+      -3.5 1 -37.125
       1 1 1 1
       0 0
     }
     vtx { 
-      -3.4 -1 -37.5
+      -3.5 -1 -37.125
       1 1 1 1
       0 0
     }
     vtx { 
-      -3.4 1 -34
+      -3.5 1 -34
       1 1 1 1
       0 0
     }
     vtx { 
-      -3.4 -1 -34
+      -3.5 -1 -34
       1 1 1 1
       0 0
     }
     vtx { 
-      -2.9 1 -33.5
+      -3 1 -33.5
       1 1 1 1
       0 0
     }
     vtx { 
-      -2.9 -1 -33.5
+      -3 -1 -33.5
       1 1 1 1
       0 0
     }
     vtx { 
-      -2.4 1 -34
+      -2.5 1 -34
       1 1 1 1
       0 0
     }
     vtx { 
-      -2.4 -1 -34
+      -2.5 -1 -34
       1 1 1 1
       0 0
     }
     vtx { 
-      -2.4 1 -37.5
+      -2.5 1 -37.125
       1 1 1 1
       0 0
     }
     vtx { 
-      -2.4 -1 -37.5
+      -2.5 -1 -37.125
       1 1 1 1
       0 0
     }
     vtx { 
-      -2.9 1 -38
+      -3 1 -37.625
       1 1 1 1
       0 0
     }
     vtx { 
-      -2.9 -1 -38
+      -3 -1 -37.625
       1 1 1 1
       0 0
     }
     vtx { 
-      0.0999999 1 -37.5
+      0 1 -37.125
       1 1 1 1
       0 0
     }
     vtx { 
-      0.0999999 -1 -37.5
+      0 -1 -37.125
       1 1 1 1
       0 0
     }
     vtx { 
-      0.0999999 1 -34
+      0 1 -34
       1 1 1 1
       0 0
     }
     vtx { 
-      0.0999999 -1 -34
+      0 -1 -34
       1 1 1 1
       0 0
     }
     vtx { 
-      0.6 1 -33.5
+      0.5 1 -33.5
       1 1 1 1
       0 0
     }
     vtx { 
-      0.6 -1 -33.5
+      0.5 -1 -33.5
       1 1 1 1
       0 0
     }
     vtx { 
-      1.1 1 -34
+      1 1 -34
       1 1 1 1
       0 0
     }
     vtx { 
-      1.1 -1 -34
+      1 -1 -34
       1 1 1 1
       0 0
     }
     vtx { 
-      1.1 1 -37.5
+      1 1 -37.125
       1 1 1 1
       0 0
     }
     vtx { 
-      1.1 -1 -37.5
+      1 -1 -37.125
       1 1 1 1
       0 0
     }
     vtx { 
-      0.6 1 -38
+      0.5 1 -37.625
       1 1 1 1
       0 0
     }
     vtx { 
-      0.6 -1 -38
+      0.5 -1 -37.625
       1 1 1 1
       0 0
     }
     vtx { 
-      3.6 1 -37.5
+      3.5 1 -37.125
       1 1 1 1
       0 0
     }
     vtx { 
-      3.6 -1 -37.5
+      3.5 -1 -37.125
       1 1 1 1
       0 0
     }
     vtx { 
-      3.6 1 -34
+      3.5 1 -34
       1 1 1 1
       0 0
     }
     vtx { 
-      3.6 -1 -34
+      3.5 -1 -34
       1 1 1 1
       0 0
     }
     vtx { 
-      4.1 1 -33.5
+      4 1 -33.5
       1 1 1 1
       0 0
     }
     vtx { 
-      4.1 -1 -33.5
+      4 -1 -33.5
       1 1 1 1
       0 0
     }
     vtx { 
-      4.6 1 -34
+      4.5 1 -34
       1 1 1 1
       0 0
     }
     vtx { 
-      4.6 -1 -34
+      4.5 -1 -34
       1 1 1 1
       0 0
     }
     vtx { 
-      4.6 1 -37.5
+      4.5 1 -37.125
       1 1 1 1
       0 0
     }
     vtx { 
-      4.6 -1 -37.5
+      4.5 -1 -37.125
       1 1 1 1
       0 0
     }
     vtx { 
-      4.1 1 -38
+      4 1 -37.625
       1 1 1 1
       0 0
     }
     vtx { 
-      4.1 -1 -38
+      4 -1 -37.625
       1 1 1 1
       0 0
     }
     vtx { 
-      7.1 1 -37.5
+      7 1 -37.125
       1 1 1 1
       0 0
     }
     vtx { 
-      7.1 -1 -37.5
+      7 -1 -37.125
       1 1 1 1
       0 0
     }
     vtx { 
-      7.1 1 -34
+      7 1 -34
       1 1 1 1
       0 0
     }
     vtx { 
-      7.1 -1 -34
+      7 -1 -34
       1 1 1 1
       0 0
     }
     vtx { 
-      7.6 1 -33.5
+      7.5 1 -33.5
       1 1 1 1
       0 0
     }
     vtx { 
-      7.6 -1 -33.5
+      7.5 -1 -33.5
       1 1 1 1
       0 0
     }
     vtx { 
-      8.1 1 -34
+      8 1 -34
       1 1 1 1
       0 0
     }
     vtx { 
-      8.1 -1 -34
+      8 -1 -34
       1 1 1 1
       0 0
     }
     vtx { 
-      8.1 1 -37.5
+      8 1 -37.125
       1 1 1 1
       0 0
     }
     vtx { 
-      8.1 -1 -37.5
+      8 -1 -37.125
       1 1 1 1
       0 0
     }
     vtx { 
-      7.6 1 -38
+      7.5 1 -37.625
       1 1 1 1
       0 0
     }
     vtx { 
-      7.6 -1 -38
+      7.5 -1 -37.625
       1 1 1 1
       0 0
     }
@@ -1076,12 +1076,12 @@ object walls {
       0 0
     }
     vtx { 
-      10.6667 1 -37.5
+      10.625 1 -37.125
       1 1 1 1
       0 0
     }
     vtx { 
-      10.6667 -1 -37.5
+      10.625 -1 -37.125
       1 1 1 1
       0 0
     }
@@ -1176,32 +1176,32 @@ object walls {
       0 0
     }
     vtx { 
-      7.825 1 24.8
+      7.925 1 24.75
       1 1 1 1
       0 0
     }
     vtx { 
-      7.825 -1 24.8
+      7.925 -1 24.75
       1 1 1 1
       0 0
     }
     vtx { 
-      7.34062 1 23.8
+      7.49062 1 24.45
       1 1 1 1
       0 0
     }
     vtx { 
-      7.34062 -1 23.8
+      7.49062 -1 24.45
       1 1 1 1
       0 0
     }
     vtx { 
-      8.375 1 22.8
+      7.475 1 23.85
       1 1 1 1
       0 0
     }
     vtx { 
-      8.375 -1 22.8
+      7.475 -1 23.85
       1 1 1 1
       0 0
     }
@@ -1551,7 +1551,7 @@ object walls {
       0 0
     }
     vtx { 
-      -13.85 2.4 13.375
+      -13.85 2.5 13.375
       0.2 0.2 1 0.3
       0 0
     }
@@ -1571,7 +1571,7 @@ object walls {
       0 0
     }
     vtx { 
-      -14.725 2.4 14.375
+      -14.725 2.5 14.375
       0.2 0.2 1 0.3
       0 0
     }
@@ -1976,7 +1976,7 @@ object walls {
       0 0
     }
     vtx { 
-      -15.7514 2.25 -27.525
+      -15.6014 2.875 -27.525
       1 1 1 1
       0 0
     }
@@ -2061,7 +2061,7 @@ object walls {
       0 0
     }
     vtx { 
-      -14.55 2.6 -33.6718
+      -14.55 2.5 -33.6718
       1 1 1 1
       0 0
     }
@@ -2096,17 +2096,17 @@ object walls {
       0 0
     }
     vtx { 
-      -12.3 2.4 -33.8844
+      -12.3 2.5 -33.8844
       1 1 1 1
       0 0
     }
     vtx { 
-      -12.2 2.4 -30.9844
+      -12.2 2.5 -30.9844
       1 1 1 1
       0 0
     }
     vtx { 
-      -13.4875 2.6 -30.6594
+      -13.4875 2.5 -30.6594
       1 1 1 1
       0 0
     }
@@ -2206,12 +2206,12 @@ object walls {
       0 0
     }
     vtx { 
-      17.0167 1 -38.8833
+      16.95 1 -38.6833
       1 1 1 1
       0 0
     }
     vtx { 
-      17.0167 -1 -38.8833
+      16.95 -1 -38.6833
       1 1 1 1
       0 0
     }
@@ -2226,72 +2226,72 @@ object walls {
       0 0
     }
     vtx { 
-      -11.1333 1 -40.3667
+      -11.2 1 -40.1667
       1 1 1 1
       0 0
     }
     vtx { 
-      -11.1333 -1 -40.3667
+      -11.2 -1 -40.1667
       1 1 1 1
       0 0
     }
     vtx { 
-      -10.0333 1 -37.7667
+      -10.125 1 -37.375
       1 1 1 1
       0 0
     }
     vtx { 
-      -10.0333 -1 -37.7667
+      -10.125 -1 -37.375
       1 1 1 1
       0 0
     }
     vtx { 
-      -12.3318 4.9 -33.8693
+      -12.3318 4.9 -33.8943
       1 1 1 1
       0 0
     }
     vtx { 
-      -12.2318 2.6 -33.8693
+      -12.2318 2.5 -33.8943
       1 1 1 1
       0 0
     }
     vtx { 
-      -12.2318 2.6 -33.8536
+      -12.2318 2.5 -33.8536
       1 1 1 1
       0 0
     }
     vtx { 
-      -12.2693 4.9 -30.9477
+      -12.1943 4.9 -30.9227
       1 1 1 1
       0 0
     }
     vtx { 
-      -12.1693 2.6 -30.9477
+      -12.0943 2.5 -30.9227
       1 1 1 1
       0 0
     }
     vtx { 
-      -12.1693 2.6 -30.9321
+      -12.1693 2.5 -30.9321
       1 1 1 1
       0 0
     }
     vtx { 
-      -12.2318 2.6 -33.8693
+      -12.2318 2.5 -33.8693
       1 1 1 1
       0 0
     }
     vtx { 
-      -12.0784 2.6 -30.9477
+      -12.0784 2.5 -30.9477
       1 1 1 1
       0 0
     }
     vtx { 
-      -12.2318 2.6 -33.8536
+      -12.2318 2.5 -33.8536
       1 1 1 1
       0 0
     }
     vtx { 
-      -12.0784 2.6 -30.9321
+      -12.0784 2.5 -30.9321
       1 1 1 1
       0 0
     }
@@ -2302,6 +2302,86 @@ object walls {
     }
     vtx { 
       -12.1784 4.9 -30.9477
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -14.6 4.95 -33.6625
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -12.3068 4.95 -33.8943
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -13.5125 4.95 -30.675
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -12.1693 4.95 -30.9227
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -16.7125 4.2125 -32.625
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -14.6625 4.2125 -30
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -15.2375 3.575 -29.2125
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -15.6264 2.825 -27.525
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -15.6889 2.6375 -25.65
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -19.5778 2.6375 -26.1875
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -19.1375 2.875 -29.125
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -18.1 3.6 -31.3125
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      8.975 1 23.05
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      8.975 -1 23.05
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -12 1 23.05
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -12 -1 23.05
       1 1 1 1
       0 0
     }
@@ -4541,6 +4621,55 @@ object walls {
       ple { 457  }
       ple { 420  }
     }
+    ply {
+      pes { 4 }
+      ple { 470  }
+      ple { 469  }
+      ple { 468  }
+      ple { 467  }
+    }
+    ply {
+      pes { 4 }
+      ple { 467  }
+      ple { 466  }
+      ple { 471  }
+      ple { 470  }
+    }
+    ply {
+      pes { 4 }
+      ple { 464  }
+      ple { 471  }
+      ple { 466  }
+      ple { 465  }
+    }
+    ply {
+      pes { 4 }
+      ple { 462  }
+      ple { 460  }
+      ple { 464  }
+      ple { 465  }
+    }
+    ply {
+      pes { 4 }
+      ple { 461  }
+      ple { 460  }
+      ple { 462  }
+      ple { 463  }
+    }
+    ply {
+      pes { 4 }
+      ple { 239  }
+      ple { 473  }
+      ple { 472  }
+      ple { 238  }
+    }
+    ply {
+      pes { 4 }
+      ple { 106  }
+      ple { 474  }
+      ple { 475  }
+      ple { 107  }
+    }
   }
   properties {
     collision
@@ -5602,6 +5731,7 @@ object flat_bumper {
     }
   }
   bumper_behavior {
+    450
     no_sound
     light {
       1 0 0
@@ -5649,6 +5779,7 @@ object flat_bumper {
     }
   }
   bumper_behavior {
+    450
     no_sound
     light {
       1 0 0
@@ -5769,7 +5900,7 @@ object lock1 {
   }
   state_behavior {
     state_item {
-      null null -1 -1 -1
+      releaselock null -1 -1 -1
       no_move
       no_light
       no_sound
@@ -5779,7 +5910,7 @@ object lock1 {
       no_shape
     }
     state_item {
-      head0 lock1 -1 -1 -1
+      head0 lock1 2 -1 -1
       no_move
       light
       no_sound
@@ -5789,17 +5920,17 @@ object lock1 {
       no_shape
     }
     state_item {
-      releaselock0 null -1 -1 -1
+      null null -1 -1 -1
       no_move
       no_light
       no_sound
       no_music
-      no_property
+      property 1
       no_texcoord
       no_shape
     }
     light {
-      1 0 0
+      0 1 0
       0 3 0
     }
   }
@@ -5845,7 +5976,7 @@ object lock2 {
   }
   state_behavior {
     state_item {
-      null null -1 -1 -1
+      releaselock null -1 -1 -1
       no_move
       no_light
       no_sound
@@ -5855,7 +5986,7 @@ object lock2 {
       no_shape
     }
     state_item {
-      lock1 lock2 -1 -1 -1
+      lock1 lock2 2 -1 -1
       no_move
       light
       no_sound
@@ -5865,12 +5996,12 @@ object lock2 {
       no_shape
     }
     state_item {
-      releaselock0 null -1 -1 -1
+      null null -1 -1 -1
       no_move
       no_light
       no_sound
       no_music
-      no_property
+      property 1
       no_texcoord
       no_shape
     }
@@ -5972,7 +6103,7 @@ object releaselock {
       shape 4 1 0 0 0
     }
     state_item {
-      lock2 releaselock0 0 -1 -1
+      lock2 releaselock 0 -1 -1
       no_move
       light
       no_sound
@@ -5982,7 +6113,7 @@ object releaselock {
       shape 4 0 1 0 0
     }
     light {
-      1 0 0
+      1 1 0
       0 3 0
     }
   }
@@ -6373,7 +6504,7 @@ object head {
   }
   state_behavior {
     state_item {
-      null head0 1 -1 -1
+      multiball_off head0 1 -1 -1
       move
         0
         0 0 0
@@ -6399,7 +6530,7 @@ object head {
       no_shape
     }
     state_item {
-      null null -1 -1 -1
+      releaselock null -1 -1 -1
       move
         50
         0 0 0
@@ -6824,6 +6955,7 @@ object bumper {
     }
   }
   bumper_behavior {
+    450
     no_sound
     light {
       1 0 0
@@ -7242,6 +7374,7 @@ object bumper {
     }
   }
   bumper_behavior {
+    450
     no_sound
     light {
       1 0 0
@@ -7660,6 +7793,7 @@ object bumper {
     }
   }
   bumper_behavior {
+    450
     no_sound
     light {
       1 0 0
@@ -7781,7 +7915,7 @@ object floor_lane_o {
   }
   state_behavior {
     state_item {
-      null booto 1 -1 -1
+      booto_off booto -1 -1 -1
       no_move
       no_light
       no_sound
@@ -7791,7 +7925,27 @@ object floor_lane_o {
       shape 4 0 1 0 0
     }
     state_item {
-      null booto 0 -1 -1
+      booto_on booto -1 -1 -1
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 0 1 0
+    }
+    state_item {
+      boot_all null -1 3 35
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 1 0 0
+    }
+    state_item {
+      null null -1 0 35
       no_move
       no_light
       no_sound
@@ -10428,7 +10582,7 @@ object floor_lane_b {
   }
   state_behavior {
     state_item {
-      null bootb 1 -1 -1
+      bootb_off bootb -1 -1 -1
       no_move
       no_light
       no_sound
@@ -10438,7 +10592,27 @@ object floor_lane_b {
       shape 4 0 1 0 0
     }
     state_item {
-      null bootb 0 -1 -1
+      bootb_on bootb -1 -1 -1
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 0 1 0
+    }
+    state_item {
+      boot_all null -1 3 35
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 1 0 0
+    }
+    state_item {
+      null null -1 0 35
       no_move
       no_light
       no_sound
@@ -10563,7 +10737,7 @@ object floor_lane_oo {
   }
   state_behavior {
     state_item {
-      null bootoo 1 -1 -1
+      bootoo_off bootoo -1 -1 -1
       no_move
       no_light
       no_sound
@@ -10573,7 +10747,27 @@ object floor_lane_oo {
       shape 4 0 1 0 0
     }
     state_item {
-      null bootoo 0 -1 -1
+      bootoo_on bootoo -1 -1 -1
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 0 1 0
+    }
+    state_item {
+      boot_all null -1 3 35
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 1 0 0
+    }
+    state_item {
+      null null -1 0 35
       no_move
       no_light
       no_sound
@@ -10698,7 +10892,7 @@ object floor_lane_t {
   }
   state_behavior {
     state_item {
-      null boott 1 -1 -1
+      boott_off boott -1 -1 -1
       no_move
       no_light
       no_sound
@@ -10708,7 +10902,27 @@ object floor_lane_t {
       shape 4 0 1 0 0
     }
     state_item {
-      null boott 0 -1 -1
+      boott_on boott -1 -1 -1
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 0 1 0
+    }
+    state_item {
+      boot_all null -1 3 35
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 1 0 0
+    }
+    state_item {
+      null null -1 0 35
       no_move
       no_light
       no_sound
@@ -10853,7 +11067,7 @@ object floor_top_l {
   }
   state_behavior {
     state_item {
-      null linuxl 1 -1 -1
+      linuxl_off linuxl -1 -1 -1
       no_move
       no_light
       no_sound
@@ -10863,7 +11077,27 @@ object floor_top_l {
       shape 4 0 1 0 0
     }
     state_item {
-      null linuxl 0 -1 -1
+      linuxl_on linuxl -1 -1 -1
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 0 1 0
+    }
+    state_item {
+      linux_all null -1 3 35
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 1 0 0
+    }
+    state_item {
+      null null -1 0 35
       no_move
       no_light
       no_sound
@@ -10988,7 +11222,7 @@ object floor_top_i {
   }
   state_behavior {
     state_item {
-      null linuxi 1 -1 -1
+      linuxi_off linuxi -1 -1 -1
       no_move
       no_light
       no_sound
@@ -10998,7 +11232,27 @@ object floor_top_i {
       shape 4 0 1 0 0
     }
     state_item {
-      null linuxi 0 -1 -1
+      linuxi_on linuxi -1 -1 -1
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 0 1 0
+    }
+    state_item {
+      linux_all null -1 3 35
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 1 0 0
+    }
+    state_item {
+      null null -1 0 35
       no_move
       no_light
       no_sound
@@ -11123,7 +11377,7 @@ object floor_top_n {
   }
   state_behavior {
     state_item {
-      null linuxn 1 -1 -1
+      linuxn_off linuxn -1 -1 -1
       no_move
       no_light
       no_sound
@@ -11133,7 +11387,27 @@ object floor_top_n {
       shape 4 0 1 0 0
     }
     state_item {
-      null linuxn 0 -1 -1
+      linuxn_on linuxn -1 -1 -1
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 0 1 0
+    }
+    state_item {
+      linux_all null -1 3 35
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 1 0 0
+    }
+    state_item {
+      null null -1 0 35
       no_move
       no_light
       no_sound
@@ -11258,7 +11532,7 @@ object floor_top_u {
   }
   state_behavior {
     state_item {
-      null linuxu 1 -1 -1
+      linuxu_off linuxu -1 -1 -1
       no_move
       no_light
       no_sound
@@ -11268,7 +11542,27 @@ object floor_top_u {
       shape 4 0 1 0 0
     }
     state_item {
-      null linuxu 0 -1 -1
+      linuxu_on linuxu -1 -1 -1
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 0 1 0
+    }
+    state_item {
+      linux_all null -1 3 35
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 1 0 0
+    }
+    state_item {
+      null null -1 0 35
       no_move
       no_light
       no_sound
@@ -11393,7 +11687,7 @@ object floor_top_x {
   }
   state_behavior {
     state_item {
-      null linuxx 1 -1 -1
+      linuxx_off linuxx -1 -1 -1
       no_move
       no_light
       no_sound
@@ -11403,7 +11697,27 @@ object floor_top_x {
       shape 4 0 1 0 0
     }
     state_item {
-      null linuxx 0 -1 -1
+      linuxx_on linuxx -1 -1 -1
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 0 1 0
+    }
+    state_item {
+      linux_all null -1 3 35
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 1 0 0
+    }
+    state_item {
+      null null -1 0 35
       no_move
       no_light
       no_sound
@@ -11588,7 +11902,7 @@ object floor_target_t {
   }
   state_behavior {
     state_item {
-      null tuxt 1 -1 -1
+      tuxt_off tuxt -1 -1 -1
       no_move
       no_light
       no_sound
@@ -11598,7 +11912,27 @@ object floor_target_t {
       shape 4 0 1 0 0
     }
     state_item {
-      null tuxt 0 -1 -1
+      tuxt_on tuxt -1 -1 -1
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 0 1 0
+    }
+    state_item {
+      tux_all null -1 3 35
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 1 0 0
+    }
+    state_item {
+      null null -1 0 35
       no_move
       no_light
       no_sound
@@ -11783,7 +12117,7 @@ object floor_target_u {
   }
   state_behavior {
     state_item {
-      null tuxu 1 -1 -1
+      tuxu_off tuxu -1 -1 -1
       no_move
       no_light
       no_sound
@@ -11793,7 +12127,27 @@ object floor_target_u {
       shape 4 0 1 0 0
     }
     state_item {
-      null tuxu 0 -1 -1
+      tuxu_on tuxu -1 -1 -1
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 0 1 0
+    }
+    state_item {
+      tux_all null -1 3 35
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 1 0 0
+    }
+    state_item {
+      null null -1 0 35
       no_move
       no_light
       no_sound
@@ -11978,7 +12332,7 @@ object floor_target_x {
   }
   state_behavior {
     state_item {
-      null tuxx 1 -1 -1
+      tuxx_off tuxx -1 -1 -1
       no_move
       no_light
       no_sound
@@ -11988,7 +12342,27 @@ object floor_target_x {
       shape 4 0 1 0 0
     }
     state_item {
-      null tuxx 0 -1 -1
+      tuxx_on tuxx -1 -1 -1
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 0 1 0
+    }
+    state_item {
+      tux_all null -1 3 35
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 1 0 0
+    }
+    state_item {
+      null null -1 0 35
       no_move
       no_light
       no_sound
@@ -12143,6 +12517,311 @@ object right_loop {
   properties {
     collision
     transform_once
+    group_1
+  }
+}
+object jackpot_light {
+  -15 0 -16.1
+  0 -0.089 0
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -2 -1 -1
+      1 1 1 1
+      0.75 0
+    }
+    vtx { 
+      2 -1 -1
+      1 1 1 1
+      1 0
+    }
+    vtx { 
+      2 -1 1
+      1 1 1 1
+      1 0.125
+    }
+    vtx { 
+      -2 -1 1
+      1 1 1 1
+      0.75 0.125
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0  }
+      ple { 1  }
+      ple { 2  }
+      ple { 3  }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -2 -1 -1
+      1 1 1 1
+      0.75 0.125
+    }
+    vtx { 
+      2 -1 -1
+      1 1 1 1
+      1 0.125
+    }
+    vtx { 
+      2 -1 1
+      1 1 1 1
+      1 0.25
+    }
+    vtx { 
+      -2 -1 1
+      1 1 1 1
+      0.75 0.25
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0  }
+      ple { 1  }
+      ple { 2  }
+      ple { 3  }
+    }
+  }
+  state_behavior {
+    state_item {
+      multiball_off null -1 -1 -1
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 1 0 0 0
+    }
+    state_item {
+      releaselock null -1 -1 -1
+      no_move
+      light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 1 0 0
+    }
+    light {
+      1 0 0
+      0 3 0
+    }
+  }
+  properties {
+    group_1
+  }
+}
+object extraball_light {
+  10.95 0 1.1
+  0 0.0835 0
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1
+      1 1 1 1
+      0.78125 0.25
+    }
+    vtx { 
+      1.5 -1 -1
+      1 1 1 1
+      0.96875 0.25
+    }
+    vtx { 
+      1.5 -1 1
+      1 1 1 1
+      0.96875 0.375
+    }
+    vtx { 
+      -1.5 -1 1
+      1 1 1 1
+      0.78125 0.375
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0  }
+      ple { 1  }
+      ple { 2  }
+      ple { 3  }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1
+      1 1 1 1
+      0.78125 0.375
+    }
+    vtx { 
+      1.5 -1 -1
+      1 1 1 1
+      0.96875 0.375
+    }
+    vtx { 
+      1.5 -1 1
+      1 1 1 1
+      0.96875 0.5
+    }
+    vtx { 
+      -1.5 -1 1
+      1 1 1 1
+      0.78125 0.5
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0  }
+      ple { 1  }
+      ple { 2  }
+      ple { 3  }
+    }
+  }
+  state_behavior {
+    state_item {
+      rightloop null -1 -1 -1
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 1 0 0 0
+    }
+    state_item {
+      tux_all null -1 -1 -1
+      no_move
+      light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 1 0 0
+    }
+    light {
+      1 0 0
+      0 3 0
+    }
+  }
+  properties {
+    group_1
+  }
+}
+object extraball_on {
+  -1.5 0 30.55
+  0 0 0
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1.5
+      1 1 1 1
+      0 0.625
+    }
+    vtx { 
+      1.5 -1 -1.5
+      1 1 1 1
+      0.125 0.625
+    }
+    vtx { 
+      1.5 -1 1.5
+      1 1 1 1
+      0.125 0.75
+    }
+    vtx { 
+      -1.5 -1 1.5
+      1 1 1 1
+      0 0.75
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0  }
+      ple { 1  }
+      ple { 2  }
+      ple { 3  }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1.5
+      1 1 1 1
+      0 0.75
+    }
+    vtx { 
+      1.5 -1 -1.5
+      1 1 1 1
+      0.125 0.75
+    }
+    vtx { 
+      1.5 -1 1.5
+      1 1 1 1
+      0.125 0.875
+    }
+    vtx { 
+      -1.5 -1 1.5
+      1 1 1 1
+      0 0.875
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0  }
+      ple { 1  }
+      ple { 2  }
+      ple { 3  }
+    }
+  }
+  state_behavior {
+    state_item {
+      allballs_off null -1 -1 -1
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 1 0 0 0
+    }
+    state_item {
+      extraball null -1 -1 -1
+      no_move
+      no_light
+      no_sound
+      no_music
+      no_property
+      no_texcoord
+      shape 4 0 1 0 0
+    }
+  }
+  properties {
     group_1
   }
 }

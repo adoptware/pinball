@@ -202,9 +202,6 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
 	// Undo last translation
 	//this->getParent()->addTranslation(-m_vtxDir.x, -m_vtxDir.y, -m_vtxDir.z);
 
-	// we need a wall to do the bouncing on
-
-	Score::getInstance()->unLockBall(m_iBall);
 	// change direction depending on which type the colliding object is
 	if (pGroup->getUserProperties() & (PBL_LOCK | PBL_TRAP)) {
 		// trap in
