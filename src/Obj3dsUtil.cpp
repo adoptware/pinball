@@ -1,4 +1,4 @@
-//#ident "$Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $"
+//#ident "$Id: Obj3dsUtil.cpp,v 1.8 2003/08/29 23:33:10 rzr Exp $"
 /**
  * @author: www.Philippe.COVAL.online.fr - rev: $Author: rzr $
  * 3ds loader wrapper 
@@ -34,8 +34,8 @@ extern "C" {
     | grep -v "#include \"" >| /tmp/inl-3ds.c 
 
   */
-  //#include "/tmp/inl-3ds.c" //C-x i
-/* #ident "$Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $" */
+  //#include "/tmp/inl-3ds.c" //C-x i //+++++++++++++++++++++++++++++++++++++++
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.8 2003/08/29 23:33:10 rzr Exp $" */
 /**
  * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
  * Copyright: GPL @ http://rzr.online.fr/licence.htm
@@ -48,7 +48,7 @@ extern "C" {
 #include <string.h>
 #include <math.h>
 
-#ifndef WANT_MALLOC_NO // might cause troubles on Macosx Project builder
+#ifdef WANT_MALLOC // might cause troubles on Macosx Project builder
 #include <malloc.h>
 #endif // !+Eye
 
@@ -179,7 +179,7 @@ void printFace( Face const v);
 #endif
 
 #endif //_h_
-/* #ident "$Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $" */
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.8 2003/08/29 23:33:10 rzr Exp $" */
 /**
  * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
  * Copyright: GPL @ http://rzr.online.fr/licence.htm
@@ -252,7 +252,7 @@ void printPoint(Point v)
 
 
 #endif // inclusion
-/* #ident "$Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $" */
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.8 2003/08/29 23:33:10 rzr Exp $" */
 /**
  * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
  * Copyright: GPL @ http://rzr.online.fr/licence.htm
@@ -288,7 +288,7 @@ int fgets_strcmp_token(FILE* f, char* buf) ;
 int fgets_tag(FILE* f, char* buf, char** strarg);
 
 #endif
-/* #ident "$Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $" */
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.8 2003/08/29 23:33:10 rzr Exp $" */
 /**
  * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
  * Copyright: GPL @ http://rzr.online.fr/licence.htm
@@ -299,9 +299,10 @@ int fgets_tag(FILE* f, char* buf, char** strarg);
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#ifndef WANT_MALLOC_NO // might cause troubles on Macosx Project builder
+#ifdef WANT_MALLOC // might cause troubles on Macosx Project builder
 #include <malloc.h>
 #endif
+
 #include <math.h>
 #include <assert.h>
 
@@ -343,8 +344,8 @@ char* sscanStrQuoted(char* src, char** dest)
   char* e=0;
   int n=0;
   //debugf("+ sscanStrQuotted (%s)\n",src);
-  assert( src );
-  assert( dest);
+  //assert( src );
+  //assert( dest);
   e = strchr( src, '"');
   if ( e == 0) { *dest=0; return e; }
   src = e;
@@ -395,9 +396,7 @@ int readScene3dsAscii(FILE* f, Scene* s)
   Object *o = NULL;
   
   //debug("+ readScene3dsAscii" );  
-  assert(f);
-  assert(s);
-  
+  //assert(f);  assert(s);  
   buf[0]= 0;
   str = & tmpc;
   initScene(s);
@@ -424,7 +423,7 @@ int readScene3dsAscii(FILE* f, Scene* s)
       //debug(str);
       for( i=0; i<nv; i++ ) { //Vertex 0:  X:-1.0	Y:1.0	Z:1.0
         t = fgets_tag(f,buf,&str);
-        assert ( t == VERTEX);
+        //assert ( t == VERTEX);
         str = skipafter( str, "X:"); assert(str); 
         sscanf(str,"%f",&x);
         str = skipafter( str, "Y:"); assert(str); 
@@ -743,7 +742,7 @@ int load3dsAscii(char* filename, Object* o)
 }
 
 #endif // inclusion
-/* #ident "$Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $" */
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.8 2003/08/29 23:33:10 rzr Exp $" */
 #ifndef color3ds_h_ 
 #define color3ds_h_ 
 /**
@@ -801,8 +800,8 @@ unsigned int getColorEncoded(unsigned char*r, unsigned char* g,
 int getColorTable(char const * const src, unsigned int * dest);
 
 #endif //_h_ inclusion 
-//$Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $
-/* #ident "$Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $" */
+//$Id: Obj3dsUtil.cpp,v 1.8 2003/08/29 23:33:10 rzr Exp $
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.8 2003/08/29 23:33:10 rzr Exp $" */
 /**
  * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
  * Copyright: GPL @ http://rzr.online.fr/licence.htm
@@ -887,7 +886,7 @@ int convertColorStringRGBAToRGBA8(char const * const p,
                                   unsigned int* dest)
 {
   //debugf("+ getColorEncoded \"%s\"\n",p);
-  int tr=-1;
+  int ret=-1;
   char * pb=0, * pe =0;
   *dest=0xFFFFFF;
   *r = *g = *b = *a = 255;
@@ -911,11 +910,11 @@ int convertColorStringRGBAToRGBA8(char const * const p,
     *b = atoi(pb);
     pb = pe + 1;
     *a = atoi(pb);
-    tr=1;
+    ret=1;
   }
   *dest = toUint32(*r,*g,*b);
   //debug("- convertColorStringRGBAToRGBA8");
-  return tr;
+  return ret;
 }
 
 int convertColorStringRGBAToRGBAFloat(char const * const p,
@@ -1057,9 +1056,10 @@ int main(int argc,char* argv[])
 #endif
 
 #endif //_h_ 
-//EOF $Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $
+//EOF $Id: Obj3dsUtil.cpp,v 1.8 2003/08/29 23:33:10 rzr Exp $
 
-#endif // 3dsview include/inline
+
+#endif // 3dsview include/inline //++++++++++++++++++++++++++++++++++++++++++++
 } // C lang
 
 //-----------------------------------------------------------------------------
@@ -1322,4 +1322,4 @@ int Obj3dsUtil::write( Group  & in, char const* const filename  )
 
 #endif // RZR_PATCHES_3DS
 #endif // inclusion
-//EOF $Id: Obj3dsUtil.cpp,v 1.7 2003/07/26 22:13:42 rzr Exp $
+//EOF $Id: Obj3dsUtil.cpp,v 1.8 2003/08/29 23:33:10 rzr Exp $
