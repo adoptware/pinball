@@ -1,4 +1,4 @@
-//#ident "$Id: Pinball.cpp,v 1.41 2003/06/11 13:25:50 rzr Exp $"
+//#ident "$Id: Pinball.cpp,v 1.42 2003/06/12 06:19:31 henqvist Exp $"
 /***************************************************************************
                           Pinball.cpp  -  description
                              -------------------
@@ -247,6 +247,7 @@ protected:
     case 3: w = 640; h = 480; break;
     case 4: w = 800; h = 600; break;
     case 5: w = 1024; h = 768; break;
+    case 6: w = 1280; h = 1024; break;
     default: w = 640; h = 480;
     }
     if (config->getWidth() != w) {
@@ -435,8 +436,10 @@ void get_config(void) {
     menusize->setCurrent(4);
   } else 	if (Config::getInstance()->getWidth() == 1024) {
     menusize->setCurrent(5);
+  } else 	if (Config::getInstance()->getWidth() == 1280) {
+    menusize->setCurrent(6);
   } else {
-    menusize->setCurrent(0);
+    menusize->setCurrent(3);
   }
   // view mode
   switch(Config::getInstance()->getView()) {
@@ -608,6 +611,7 @@ MenuItem* createMenus(Engine * engine) {
   menusize->addText(  "screen size:  640x480");
   menusize->addText(  "screen size:  800x600");
   menusize->addText(  "screen size: 1024x768");
+  menusize->addText(  "screen size:1280x1024");
   menugfx->addMenuItem(menusize);
 
   menufilter = new MenuChoose(engine);
@@ -873,4 +877,4 @@ int WINAPI WinMain( HINSTANCE hInst,  HINSTANCE hPreInst,
   return main(argc,argv); 
 }
 #endif
-// EOF $Id: Pinball.cpp,v 1.41 2003/06/11 13:25:50 rzr Exp $
+// EOF $Id: Pinball.cpp,v 1.42 2003/06/12 06:19:31 henqvist Exp $
