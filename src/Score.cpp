@@ -19,6 +19,8 @@
 #include "EmFont.h"
 #include "Config.h"
 #include "Table.h"
+#include "Engine.h"
+#include "OpenGLVisitor.h"
 
 // Score* Score::p_Score = NULL;
 
@@ -93,7 +95,7 @@ void Score::StdOnSignal() {
   }
   ElseOnSignal( PBL_SIG_TILT_WARNING ) {
     this->clearText();
-    this->setText1("waring");
+    this->setText1("warning");
     SendSignal( PBL_SIG_CLEAR_TEXT, 400, this->getParent(), NULL );
   }
   ElseOnSignal( PBL_SIG_CLEAR_TEXT ) {
@@ -109,12 +111,6 @@ void Score::StdOnSignal() {
   }
 }
 
-extern volatile float g_fFps;
-
-#if EM_DEBUG
-extern volatile float em_poly_m;
-#endif
-
 void Score::draw() {
   char buffer[256];
   if (Table::getInstance()->getCurrentBall() < 4) {
@@ -125,9 +121,9 @@ void Score::draw() {
   m_Font->printRow(buffer, 0);
   if (Config::getInstance()->getShowFPS()) {
 #if EM_DEBUG
-    sprintf(buffer, "FPS %.1f %d\n", g_fFps, (int)em_poly_m);
+    sprintf(buffer, "FPS %.1f %d\n", Engine::getFps(), OpenGLVisitor::getPolys());
 #else
-    sprintf(buffer, "FPS %.1f\n", g_fFps);
+    sprintf(buffer, "FPS %.1f\n", Engine::getFps());
 #endif
     m_Font->printRow(buffer, 1);
   }
