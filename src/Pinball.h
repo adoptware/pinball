@@ -44,7 +44,7 @@
 #define PBL_SIG_TNUDGE          684
 #define PBL_SIG_LEFTARM_ON      691
 #define PBL_SIG_RIGHTARM_ON     692
-#define PBL_SIG_MULTIBALL_OFF   771
+//#define PBL_SIG_MULTIBALL_OFF   771
 
 // #define PBL_SIG__grp_type_act/un    (grp)(type)(0)(1=on,2=off)
 

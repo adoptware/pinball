@@ -50,21 +50,16 @@ class Table {
   string getTableName();
   // Get the tables data directory name - pnf
   string getTableDataDirName();
-
   // Returns true if the argument value is a high score - pnf
   bool isItHighScore(const int nNewScore);
-
-  // Main method to read high scores from disk and update memory - pnf
-  void readHighScores();
-
-  // Main method to update memory and write high scores to disk - pnf
-  void writeHighScores();
-
   // Returns the high scores data in a string array
   bool getHighScoresData(list<string>& listHighScores);
-
   // Save new high score in high scores table
   void saveNewHighScore(int nNewHighScore);
+  // Read high scores from given file - pnf
+  bool readHighScoresFile();
+  // Write high scores to a given file - pnf
+  bool writeHighScoresFile();
 
  private:
   void clear(Engine * engine);

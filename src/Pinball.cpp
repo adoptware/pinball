@@ -80,18 +80,17 @@ MenuChoose* menufire = NULL;
  ***************************************************************************/
 
 // Menu item to display high scores - pnf
-class MyMenuHighScores : public MenuFct
-{
+class MyMenuHighScores : public MenuFct {
 public:
-  MyMenuHighScores(const char * name,
-                   int (*fct)(void), Engine *e) : MenuFct(name, fct, e) {};
-
+  MyMenuHighScores(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, fct, e) {};
 protected:
-  int perform()
-  {
+  int perform() {
     p_Engine->clearScreen();
+		if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
 
     p_EmFont->printRowCenter("- High Scores -", 2);
+		string sHeader = string("- for table ") + Table::getInstance()->getTableName() + " -";
+		p_EmFont->printRowCenter(sHeader.c_str(), 3);
 
     int nStartRow = 5;
     string sRow = "X";
@@ -100,28 +99,20 @@ protected:
 
     Table::getInstance()->getHighScoresData(listHighScores);
 
-    if (listHighScores.size() > 0)
-    {
+    if (listHighScores.size() > 0) {
       list<string>::iterator it = listHighScores.begin();
 
-      for (int i=0; i<10 && it!=listHighScores.end(); i++, it++)
-      {
-	sRow = (*it);
-
+      for (int i=0; i<10 && it!=listHighScores.end(); i++, it++) {
+				sRow = (*it);
         p_EmFont->printRowCenter(sRow.c_str(), nStartRow + i);
       }
-
-      p_EmFont->printRowCenter("Any key to exit...", 20);
-    }
-    else
-    {
+    } else {
       p_EmFont->printRowCenter("No Table Loaded!", 10);
     }
+		p_EmFont->printRowCenter("Any key to exit...", 20);
 
     p_Engine->swap();
-
-    EMKey key = Keyboard::waitForKey();
-
+    Keyboard::waitForKey();
     return EM_MENU_NOP;
   }
 };
@@ -133,6 +124,7 @@ public:
 protected:
   int perform () {
     p_Engine->clearScreen();
+		if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
     p_EmFont->printRowCenter("press a key", 10);
     p_Engine->swap();
     EMKey key = Keyboard::waitForKey();
@@ -271,26 +263,26 @@ protected:
     if (menufire->getCurrent() == 0) {
       config->setFire(false);
       for (int a=0; a<MAX_BALL; ++a) {
-	BallGroup * bg = Table::getInstance()->getBall(a);
-	if (bg != NULL) {
-	  Behavior * beh = bg->getBehavior();
-	  EmAssert(beh != NULL, "MyMenuApply::perform behavior NULL");
-	  EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
-		   "MyMenuApply::perform behavior not bouncebehavior");
-	  ((BounceBehavior*)beh)->setFire(false);
-	}
+				BallGroup * bg = Table::getInstance()->getBall(a);
+				if (bg != NULL) {
+					Behavior * beh = bg->getBehavior();
+					EmAssert(beh != NULL, "MyMenuApply::perform behavior NULL");
+					EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
+									 "MyMenuApply::perform behavior not bouncebehavior");
+					((BounceBehavior*)beh)->setFire(false);
+				}
       }
     } else {
       config->setFire(true);
       for (int a=0; a<MAX_BALL; ++a) {
-	BallGroup * bg = Table::getInstance()->getBall(a);
-	if (bg != NULL) {
-	  Behavior * beh = bg->getBehavior();
-	  EmAssert(beh != NULL, "MyMenuApply::perform behavior NULL");
-	  EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
-		   "MyMenuApply::perform behavior not bouncebehavior");
-	  ((BounceBehavior*)beh)->setFire(true);
-	}
+				BallGroup * bg = Table::getInstance()->getBall(a);
+				if (bg != NULL) {
+					Behavior * beh = bg->getBehavior();
+					EmAssert(beh != NULL, "MyMenuApply::perform behavior NULL");
+					EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
+									 "MyMenuApply::perform behavior not bouncebehavior");
+					((BounceBehavior*)beh)->setFire(true);
+				}
       }
     }
     get_config();
@@ -318,22 +310,25 @@ public:
 protected:
   int perform () {
     p_Engine->clearScreen();
+		if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
     p_EmFont->printRowCenter("LOADING", 10);
     p_Engine->swap();
 
     // Save the high scores of current table, if any - pnf
-    Table::getInstance()->writeHighScores();
+    Table::getInstance()->writeHighScoresFile();
 
     if (Table::getInstance()->loadLevel(p_Engine, m_Name) == 0) {
       // Load high scores for this table - pnf
-      Table::getInstance()->readHighScores();
+      Table::getInstance()->readHighScoresFile();
 
       p_Engine->clearScreen();
+			if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
       p_EmFont->printRowCenter("OK", 10);
       p_Engine->swap();
       p_Engine->delay(500);
     } else {
       p_Engine->clearScreen();
+			if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
       p_EmFont->printRowCenter("ERROR", 10);
       p_Engine->swap();
       p_Engine->delay(1000);
@@ -472,6 +467,7 @@ MenuItem* createMenus(Engine * engine) {
 		menugfx->setBackground(tex);
 		menuaudio->setBackground(tex);
 		menukey->setBackground(tex);
+		menuhighscores->setBackground(tex);
 	} else {
 		cerr << "Error loading data/splash.png" << endl;
 	}
@@ -489,8 +485,11 @@ MenuItem* createMenus(Engine * engine) {
         if ((dirFile.attrib & _A_SUBDIR) != 0) 	{
           if (strcmp(".", dirFile.name) != 0 
               && strcmp("..", dirFile.name) != 0) {
-            MenuFct* menufct = new MyMenuLoad(dirFile.name, NULL, engine);
-            menuload->addMenuItem(menufct);
+            MenuFct * menufct = new MyMenuLoad(dirFile.name, NULL, engine);
+            menuload->addMenuItem(menuloadfct);
+						if (tex != NULL) {
+							menufct->setBackground(tex);
+						}
           }
         }
       }
@@ -510,10 +509,13 @@ MenuItem* createMenus(Engine * engine) {
     while ((entry = readdir(datadir)) != NULL) {
       lstat(entry->d_name, &statbuf);
       if (S_ISDIR(statbuf.st_mode) &&
-	  strcmp(".", entry->d_name) != 0 &&
-	  strcmp("..", entry->d_name) != 0) {
-	MenuFct* menufct = new MyMenuLoad(entry->d_name, NULL, engine);
-	menuload->addMenuItem(menufct);
+					strcmp(".", entry->d_name) != 0 &&
+					strcmp("..", entry->d_name) != 0) {
+				MenuFct * menufct = new MyMenuLoad(entry->d_name, NULL, engine);
+				menuload->addMenuItem(menufct);
+				if (tex != NULL) {
+					menufct->setBackground(tex);
+				}
       }
     }
     chdir(cwd);
@@ -618,6 +620,7 @@ MenuItem* createMenus(Engine * engine) {
   menugfx->addMenuItem(menucancel);
   menuaudio->addMenuItem(menucancel);
   menuload->addMenuItem(menucancel);
+	menukey->addMenuItem(menucancel);
 
   get_config();
   return menu;
@@ -665,36 +668,36 @@ int main(int argc, char *argv[]) {
     while (!Keyboard::isKeyDown(SDLK_INSERT)) {
 #if EM_DEBUG
       if (Keyboard::isKeyDown(SDLK_p)) {
-	Keyboard::waitForKey();
-	Keyboard::clear();
-	engine->resetTick();
+				Keyboard::waitForKey();
+				Keyboard::clear();
+				engine->resetTick();
       }
 #endif
       if (Keyboard::isKeyDown(SDLK_ESCAPE) || all == 0) {
-	SoundUtil::getInstance()->pauseMusic();
-	if (menu->perform() == EM_MENU_EXIT) {
-	  break;
-	}
-	engine->resetTick();
-	SoundUtil::getInstance()->resumeMusic();
+				SoundUtil::getInstance()->pauseMusic();
+				if (menu->perform() == EM_MENU_EXIT) {
+					break;
+				}
+				engine->resetTick();
+				SoundUtil::getInstance()->resumeMusic();
       }
       
       if (Keyboard::isKeyDown(SDLK_r)) {
-	SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
+				SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
       }
       
       if (engine->nextTickFPS(200)) {
-	engine->tick(); 
+				engine->tick(); 
       } else {
-	engine->render();
-	if (Table::getInstance()->getScore() != NULL) {
-	  Table::getInstance()->getScore()->draw();
-	}
-	if (engine->getGroup(0) == NULL) {
-	  EmFont::getInstance()->printRowCenter("no table loaded", 6);
-	  EmFont::getInstance()->printRowCenter("press esc", 8);
-	}
-	engine->swap();
+				engine->render();
+				if (Table::getInstance()->getScore() != NULL) {
+					Table::getInstance()->getScore()->draw();
+				}
+				if (engine->getGroup(0) == NULL) {
+					EmFont::getInstance()->printRowCenter("no table loaded", 6);
+					EmFont::getInstance()->printRowCenter("press esc", 8);
+				}
+				engine->swap();
       }
       all++;
       //engine->limitFPS(100);
@@ -703,7 +706,7 @@ int main(int argc, char *argv[]) {
     Config::getInstance()->saveConfig();
 
     // Write high scores to disk - pnf
-    Table::getInstance()->writeHighScores();
+    Table::getInstance()->writeHighScoresFile();
     
     delete(engine);
   } catch (string str) {
