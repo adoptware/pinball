@@ -52,8 +52,6 @@
 #define PBL_SIG_BALL_OFF         3102
 //#define PBL_SIG_ALLBALLS_OFF      3109
 
-#define PBL_SIG_EXTRABALL						1013
-
 /*
 
 #define PBL_SIG_HIT_CAVE    				1002
