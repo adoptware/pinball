@@ -12,8 +12,8 @@
 #include "Pinball.h"
 #include "Keyboard.h"
 
-#define MAX_SPEED 0.5f
-#define SPEED_FCT 0.8f
+#define MAX_SPEED 0.8f
+#define SPEED_FCT 1.2f
 #define Y_GRAVITY -(SPEED_FCT*0.01) // -SPEED_FCT/100
 #define Z_GRAVITY (SPEED_FCT*0.002) //  SPEED_FCT/500
 #define BORDER 0.1f

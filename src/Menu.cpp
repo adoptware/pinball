@@ -11,7 +11,7 @@
 #include "Config.h"
 
 void sndFunc(Meny * m) {
-  if (Config::getInstance()->getSound()) {
+  if (Config::getInstance()->useSound()) {
 		Config::getInstance()->setSound(false);
 		m->setName("sound off");
 	} else {
@@ -23,7 +23,7 @@ void sndFunc(Meny * m) {
 }
 
 void grxFunc(Meny * m) {
-  if (Config::getInstance()->getFullScreen()) {
+  if (Config::getInstance()->useFullScreen()) {
 		Config::getInstance()->setFullScreen(false);
 		m->setName("graphics windowed");
 	} else {
@@ -56,7 +56,7 @@ Meny*  createMenus(Engine * engine) {
 	meny->addMeny(menyexit);
 
 	Meny* menysnd = new Meny("sound off", engine);
-	if (Config::getInstance()->getSound()) {
+	if (Config::getInstance()->useSound()) {
 		menysnd->setName("sound on");
 	}
 	menysnd->setAction(EM_MENU_SUB);
@@ -64,7 +64,7 @@ Meny*  createMenus(Engine * engine) {
 	menycfg->addMeny(menysnd);
 
 	Meny* menygrx = new Meny("graphics windowed", engine);
-	if (Config::getInstance()->getFullScreen()) {
+	if (Config::getInstance()->useFullScreen()) {
 		menygrx->setName("graphics fullscreen");
 	}
 	menygrx->setAction(EM_MENU_SUB);

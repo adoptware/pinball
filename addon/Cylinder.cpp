@@ -23,41 +23,41 @@ Cylinder::Cylinder(float fSize, float fR, float fG, float fB, float fA, bool bTo
 	// The ring of polygons.
 	for (int a=0; a<7; a++) {
 		p = new Polygon(this, 4);
-		p->add(a,   0, 0, fA, fR, fG, fB);
-		p->add(a+1, 0, 0, fA, fR, fG, fB);
-		p->add(a+9, 0, 0, fA, fR, fG, fB);
-		p->add(a+8, 0, 0, fA, fR, fG, fB);
+		p->add(a,   0, 0, fR, fG, fB, fA);
+		p->add(a+1, 0, 0, fR, fG, fB, fA);
+		p->add(a+9, 0, 0, fR, fG, fB, fA);
+		p->add(a+8, 0, 0, fR, fG, fB, fA);
 		this->add(p);
 	}
 
 	p = new Polygon(this, 4);
-	p->add(7,  0, 0, fA, fR, fG, fB);;
-	p->add(0,  0, 0, fA, fR, fG, fB);
-	p->add(8,  0, 0, fA, fR, fG, fB);
-	p->add(15, 0, 0, fA, fR, fG, fB);
+	p->add(7,  0, 0, fR, fG, fB, fA);;
+	p->add(0,  0, 0, fR, fG, fB, fA);
+	p->add(8,  0, 0, fR, fG, fB, fA);
+	p->add(15, 0, 0, fR, fG, fB, fA);
 	this->add(p);
 	// Top
 	if (bTop) {
 		p = new Polygon(this, 8);
-		p->add(7,  0, 0, fA, fR, fG, fB);
-		p->add(6,  0, 0, fA, fR, fG, fB);
-		p->add(5,  0, 0, fA, fR, fG, fB);
-		p->add(4,  0, 0, fA, fR, fG, fB);
-		p->add(3,  0, 0, fA, fR, fG, fB);
-		p->add(2,  0, 0, fA, fR, fG, fB);
-		p->add(1,  0, 0, fA, fR, fG, fB);
-		p->add(0,  0, 0, fA, fR, fG, fB);
+		p->add(7,  0, 0, fR, fG, fB, fA);
+		p->add(6,  0, 0, fR, fG, fB, fA);
+		p->add(5,  0, 0, fR, fG, fB, fA);
+		p->add(4,  0, 0, fR, fG, fB, fA);
+		p->add(3,  0, 0, fR, fG, fB, fA);
+		p->add(2,  0, 0, fR, fG, fB, fA);
+		p->add(1,  0, 0, fR, fG, fB, fA);
+		p->add(0,  0, 0, fR, fG, fB, fA);
 		this->add(p);
 		// Bottom
 		p = new Polygon(this, 8);
-		p->add(8,  0, 0, fA, fR, fG, fB);
-		p->add(9,  0, 0, fA, fR, fG, fB);
-		p->add(10, 0, 0, fA, fR, fG, fB);
-		p->add(11, 0, 0, fA, fR, fG, fB);
-		p->add(12, 0, 0, fA, fR, fG, fB);
-		p->add(13, 0, 0, fA, fR, fG, fB);
-		p->add(14, 0, 0, fA, fR, fG, fB);
-		p->add(15, 0, 0, fA, fR, fG, fB);
+		p->add(8,  0, 0, fR, fG, fB, fA);
+		p->add(9,  0, 0, fR, fG, fB, fA);
+		p->add(10, 0, 0, fR, fG, fB, fA);
+		p->add(11, 0, 0, fR, fG, fB, fA);
+		p->add(12, 0, 0, fR, fG, fB, fA);
+		p->add(13, 0, 0, fR, fG, fB, fA);
+		p->add(14, 0, 0, fR, fG, fB, fA);
+		p->add(15, 0, 0, fR, fG, fB, fA);
 		this->add(p);
 	}
 
