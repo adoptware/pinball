@@ -1,4 +1,4 @@
-//#ident "$Id: Pinball.cpp,v 1.34 2003/05/14 21:34:23 pedro_nf Exp $"
+//#ident "$Id: Pinball.cpp,v 1.35 2003/05/20 17:20:17 henqvist Exp $"
 /***************************************************************************
                           Pinball.cpp  -  description
                              -------------------
@@ -708,43 +708,43 @@ int main(int argc, char *argv[]) {
     while (!Keyboard::isKeyDown(SDLK_INSERT)) {
 #if EM_DEBUG
       if (Keyboard::isKeyDown(SDLK_p)) {
-	Keyboard::waitForKey();
-	Keyboard::clear();
-	engine->resetTick();
+        Keyboard::waitForKey();
+        Keyboard::clear();
+        engine->resetTick();
       }
 #endif
       if (Keyboard::isKeyDown(SDLK_ESCAPE) || all == 0) {
-	SoundUtil::getInstance()->pauseMusic();
-	if (menu->perform() == EM_MENU_EXIT) {
-	  break;
-	}
-	engine->resetTick();
-	SoundUtil::getInstance()->resumeMusic();
+        SoundUtil::getInstance()->pauseMusic();
+        if (menu->perform() == EM_MENU_EXIT) {
+          break;
+        }
+        engine->resetTick();
+        SoundUtil::getInstance()->resumeMusic();
       }
       
       if (Keyboard::isKeyDown(SDLK_r)) {
-	SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
+        SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
       }
       
       if (engine->nextTickFPS(200)) {
-	engine->tick(); 
+        engine->tick(); 
       } else {
-	engine->render();
-	if (Table::getInstance()->getScore() != NULL) {
-	  Table::getInstance()->getScore()->draw();
-	}
-	if (engine->getGroup(0) == NULL) {
-	  EmFont::getInstance()->printRowCenter("no table loaded", 6);
-	  EmFont::getInstance()->printRowCenter("press esc", 8);
-	}
-	engine->swap();
+        engine->render();
+        if (Table::getInstance()->getScore() != NULL) {
+          Table::getInstance()->getScore()->draw();
+        }
+        if (engine->getGroup(0) == NULL) {
+          EmFont::getInstance()->printRowCenter("no table loaded", 6);
+          EmFont::getInstance()->printRowCenter("press esc", 8);
+        }
+        engine->swap();
       }
       all++;
       //engine->limitFPS(100);
     }
     
     Config::getInstance()->saveConfig();
-
+    
     // Write high scores to disk - pnf
     Table::getInstance()->writeHighScoresFile();
     
