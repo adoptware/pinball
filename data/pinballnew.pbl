@@ -1,0 +1,93 @@
+object {
+	data/tbltruck.emi
+	data/tbltruck.emi
+	0 0 0	
+	0 0 0
+	properties {
+		user_walls
+		transform_once
+		user_group1
+	}
+}
+object {
+	data/arm.emi
+	data/arm.emi
+	6.5 0 21
+  0 0 0
+	arm_behavior {
+		right
+	}
+}
+object {
+	data/arm.emi
+	data/arm.emi
+	-6.5 0 21
+	0 0 0
+	arm_behavior {
+		left
+	}
+}
+object {
+	?
+	?
+	-18 0 -20
+	0 0 0
+	cave_behavior { 
+		light {
+			1 1 0
+			0 6 0
+		}
+	}
+	properties {
+		user_group1
+		transform_once
+	}
+}
+object {
+	data/bumper.emi
+	data/bumper.emi
+	5 0 -20
+ 	0 0 0
+	bumper_behavior {
+		light {
+			1 0 0
+			0 6 0
+		}
+	}
+	properties {
+		transform_once
+		user_group1
+	}
+}
+object {
+	data/bumper.emi
+	data/bumper.emi
+	0 0 -25
+ 	0 0 0
+	bumper_behavior {
+		light {
+			1 0 0
+			0 6 0
+		}
+	}
+	properties {
+		transform_once
+		user_group1
+	}
+}
+object {
+	data/bumper.emi
+	data/bumper.emi
+	10 0 -25
+ 	0 0 0
+	bumper_behavior {
+		light {
+			1 0 0
+			0 6 0
+		}
+	}
+	properties {
+		transform_once
+		user_group1
+	}
+}

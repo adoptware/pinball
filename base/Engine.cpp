@@ -208,7 +208,7 @@ void Engine::initGrx() {
 	SDL_GL_GetAttribute( SDL_GL_DOUBLEBUFFER, &value );
 	cerr << "SDL_GL_DOUBLEBUFFER: " << value << endl;
 	
-	resize( config->getWidth(), config->getHeight() );
+	this->resize( config->getWidth(), config->getHeight() );
 }
 
 void Engine::resize( unsigned int w, unsigned int h ) {
