@@ -44,6 +44,17 @@ object {
 	}
 }
 object {
+	data/bumper_sh.emi
+	data/bumper_sh.emi
+	5 0 -20
+ 	0 0 0
+	properties {
+		transform_once
+		user_group1
+		no_light
+	}
+}
+object {
 	data/bumper.emi
 	data/bumper.emi
 	5 0 -20
@@ -121,5 +132,26 @@ object {
 	properties {
 		transform_once
 		user_group1
+	}
+}
+object {
+	?
+	?
+	0 0 0
+	0 0 0
+	switch_behavior {
+		1012
+		1001
+		0
+		light {
+			0 0 1
+			0 6 0
+			animation {
+				translation
+				2
+				0 6 0
+				0 6 10
+			}
+		}
 	}
 }

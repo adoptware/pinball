@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
 		
 		// Add the collisionbounds
 		CollisionBounds* cb = new CollisionBounds(shape->getCollisionSize());
-		cb->setShape3D(shape, 0);
+		cb->setShape3D(shape, 1);
 		groupShape->setCollisionBounds(cb);
 		// Add a behavior to the cube
 		CollisionTest* beh = new CollisionTest();
@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
 		engine->tick();
 		engine->render();
 		engine->swap();
-		//		SDL_Delay(50);
+		engine->limitFPS(100);
 	}
 	delete(engine);
 

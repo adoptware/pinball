@@ -13,10 +13,10 @@
 #include "Keyboard.h"
 
 #define MAX_SPEED 0.8f
-#define SPEED_FCT 1.2f
-#define Y_GRAVITY -(SPEED_FCT*0.01) // -SPEED_FCT/100
-#define Z_GRAVITY (SPEED_FCT*0.002) //  SPEED_FCT/500
-#define BORDER 0.1f
+#define SPEED_FCT 2.0f
+#define Y_GRAVITY -(SPEED_FCT*0.01f) // -SPEED_FCT/100
+#define Z_GRAVITY (SPEED_FCT*0.002f) //  SPEED_FCT/500
+#define BORDER (SPEED_FCT*0.05f)
 
 
 #define CHECK_SPEED()    \
@@ -122,6 +122,8 @@ void BounceBehavior::onTick() {
 	if (Keyboard::isKeyDown(SDLK_j)) m_vtxDir.x -= 0.01f;
 	if (Keyboard::isKeyDown(SDLK_l)) m_vtxDir.x += 0.01f;
 
+	if (Keyboard::isKeyDown(SDLK_v)) return;
+
 	// TODO: better table bump
 	if (Keyboard::isKeyDown(SDLK_SPACE)) {
 		if (!m_bKnock) {
@@ -165,7 +167,7 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
 	EM_COUT("BounceBehavior::onCollision() wall " << vtxOwn.x <<" "<< vtxOwn.y <<" "<< vtxOwn.z, 0);
 
 	// Undo last translation
-	p_Parent->addTranslation(-m_vtxDir.x, -m_vtxDir.y, -m_vtxDir.z);
+	//p_Parent->addTranslation(-m_vtxDir.x, -m_vtxDir.y, -m_vtxDir.z);
 
 	Vertex3D vtxWall, vtxNew;
 	vtxWall.x = -vtxOwn.x;
@@ -210,6 +212,8 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
 		if (m_iCollisionPrio > 1) return;
 		m_iCollisionPrio = 1;
 		EMath::reflectionDamp(m_vtxOldDir, vtxWall, m_vtxDir, (float)0.5, 0, 1);
+		// move the ball slightly off the wall
+		p_Parent->addTranslation(vtxWall.x * BORDER, vtxWall.y * BORDER, vtxWall.z * BORDER);
 		EM_COUT("BounceBehavior.onCollision() walls\n" , 1);
 	} else if (pGroup->getUserProperties() & (PBL_BALL_1 | PBL_BALL_2 | PBL_BALL_3 | PBL_BALL_4)) {
 		if (m_iCollisionPrio > 0) return;

@@ -19,6 +19,10 @@ Polygon::Polygon(Shape3D* s, int size = 3) {
 	m_nmlTrans.x = 0;
 	m_nmlTrans.y = 1;
 	m_nmlTrans.z = 0;
+	m_colFlatLight.r = 0;
+	m_colFlatLight.g = 0;
+	m_colFlatLight.b = 0;
+	m_colFlatLight.a = 0;
 	m_vIndex.reserve(size);
 	m_vColor.reserve(size);
 	m_vTexCoord.reserve(size);

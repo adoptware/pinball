@@ -67,11 +67,11 @@ class EMath {
 	 * vtxIn and vtxOut is ( in this case ) allowed to be the same vector.</p> */
 	static void reflection(const Vertex3D & vtxIn, const Vertex3D & vtxWall, 
 												 Vertex3D & vtxOut, bool bBehind = false);
-	/** <p>Counts the "reflection" vector of vtxIn onto a plane with the normal vtxWall.
+	/** Counts the "reflection" vector of vtxIn onto a plane with the normal vtxWall.
 	 * vtxIn and vtxOut is ( in this case ) allowed to be the same vector. The damping
 	 * factor is 1 for normal, 0 for max damping and over 1 for extra bounce. The wall
 	 * factor is as if the wall would give a little push, 0 for normal. Scale is the
-	 * length of the vector, 1 for normal.</p> */
+	 * length of the vector, 1 for normal. */
 	static void reflectionDamp(const Vertex3D & vtxIn, const Vertex3D & vtxWall, 
 														 Vertex3D & vtxOut, float damp, float extra, 
 														 float scale, bool bBehind = false);

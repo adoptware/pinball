@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 	engine->setEngineCamera(groupCamera);
 	// Add a sphere
 	BigSphere* sphere = new BigSphere(1, 3, 1, 1, 1, 1);
-	sphere->setProperty(EM_SPECULAR);
+	sphere->setProperty(EM_SHAPE3D_SPECULAR);
 	Group* groupSphere = new Group();
 	engine->add(groupSphere);
 	groupSphere->addShape3D(sphere);

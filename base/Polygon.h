@@ -60,7 +60,7 @@ class Polygon {
 		
 		Vertex3D m_nmlSrc;
 		Vertex3D m_nmlTrans;
-		// vector<PolygonEdge> m_vPolygonEdge;
+		Color m_colFlatLight;
 		vector<unsigned int> m_vIndex;
 		vector<Color> m_vColor;
 		vector<TexCoord> m_vTexCoord;

@@ -71,13 +71,12 @@ SDL_mutex * g_mutexRender = NULL;
 SDL_Thread * g_threadRender = NULL;
 volatile bool g_bRender = true;
 
-/*
-Uint32 callBack(Uint32 interval) {
+
+Uint32 fctCallBack(Uint32 interval) {
 	g_iSeconds++;
   g_aFunction[g_iCurrentFct]++;
   return interval;
 }
-*/
 
 
 Engine::Engine(int & argc, char *argv[]) {
@@ -87,6 +86,7 @@ Engine::Engine(int & argc, char *argv[]) {
 	config->loadArgs(argc, argv);
 
 	if (!config->useExternGL()) {
+		SDL_SetTimer(100, fctCallBack); 
 		this->initGrx();
 	}
 	if (config->useSound()) {
@@ -121,7 +121,7 @@ Engine::~Engine() {
 	cerr << "Function tick out " << g_aFunction[TICK_OUT] << endl;
 	//	cerr << "Seconds " << ((float)g_iSeconds/FPS) <<" " << ((float)g_iLoops*FPS/g_iSeconds) 
 	//			 << " fps" << endl;
-	cerr << "Fps " << (float)(g_iLoops)*1000 / SDL_GetTicks() << endl;
+	cerr << "Fps " << (float)(g_iLoops)*1000 / (SDL_GetTicks()-g_iStartTime) << endl;
 }
 
 
@@ -403,21 +403,30 @@ void Engine::tick() {
 }
 
 /* ATTENTION! This function wraps after ~49 days */
-bool Engine::limitFPS(int delay) {
-	if (g_iStartTime = -1) {
+bool Engine::limitFPS(int fps) {
+	int delay = 0;
+	switch (fps) {
+	case 100: delay = 10; break;
+	case 50: delay = 20; break;
+	case 40: delay = 25; break;
+	case 33: delay = 30; break;
+	case 25: delay = 40; break;
+	case 20: delay = 50; break;
+	}
+	if (g_iStartTime == -1) {
 		g_iDesiredTime = g_iStartTime = SDL_GetTicks();
 	}
 	g_iDesiredTime += delay;
 	int time = SDL_GetTicks();
 	int realdelay = (g_iDesiredTime - time);
-	if (delay < 0) {
-		return false;
-	} else {
-		SDL_Delay(delay);
-		return true;
-	}
 	if (delay < -1000) {
 		cerr << "TO SLOW" << endl;
 		g_iDesiredTime = time;
+	} else if (delay < 0) {
+		return false;
+	} else {
+		while (SDL_GetTicks() < g_iDesiredTime);
+		//SDL_Delay(delay);
+		return true;
 	}
 }
