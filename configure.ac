@@ -50,6 +50,16 @@ eval EM_LIBPATH=`eval echo "$EM_LIBDIR"`
 AC_DEFINE_UNQUOTED(EM_LIBDIR, "$EM_LIBPATH", [The library or plugin dir /usr/local/lib/pinball])
 
 
+dnl special fix for rpmbuild, I hate rpmbuild even more than I hate autoconf
+AC_ARG_WITH(buildroot-prefix, [  --with-buildroot-prefix=PFX    Only used when building packages], buildroot_prefix="$withval", buildroot_prefix="")
+
+if test x"$buildroot_prefix" != "x"; then
+	EM_BUILD_ROOT=$buildroot_prefix
+else
+	EM_BUILD_ROOT="/"
+fi
+AC_SUBST(EM_BUILD_ROOT)
+
 AC_ARG_WITH(highscore-prefix, [  --with-highscore-prefix=PFX    Install highscore files in PFX (/var/games/pinball)], highscore_prefix="$withval", highscore_prefix="")
 
 if test x"$highscore_prefix" != "x"; then
