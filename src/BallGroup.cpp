@@ -65,6 +65,7 @@ BallGroup::BallGroup(float r, float g, float b, int pbl) : Group() {
   }
 
   this->setUserProperty(PBL_BALL);
+	this->setCollisionGroup(9000+pbl);
   this->setCollisionBounds(ballBounds);
   this->addShape3D(ballSphere);
   this->addShape3D(shadow);

@@ -37,11 +37,13 @@ int SoundUtil::initSound() {
   
   if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0) {
     cerr << "Couldn't init SDL aduio: " << SDL_GetError() << endl;
+		m_bInited = false;
     return -1;
   }
   
   if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, 1024) < 0) {
     cerr << "Couldn't open audio mixer: " << SDL_GetError() << endl;
+		m_bInited = false;
     return -1;
   }
   
@@ -93,17 +95,28 @@ void SoundUtil::applyConfigVolume() {
   if (Config::getInstance()->getSound() == 0 && Config::getInstance()->getMusic() == 0) {
     if (m_bInited) this->stopSound();
   } else {
-    if (!m_bInited) this->initSound();
-    if (Config::getInstance()->getMusic() == 0) {
+    if (!m_bInited) {
+			if (this->initSound() == 0) {
+				if (Config::getInstance()->getMusic() == 0) {
 #if EM_USE_SDL
-      Mix_HaltMusic();
-      m_iLoopingMusic = -1;
+					Mix_HaltMusic();
+					m_iLoopingMusic = -1;
 #endif
-    }
+				}
 #if EM_USE_SDL
-    Mix_Volume(-1, Config::getInstance()->getSound()*8);
-    Mix_VolumeMusic(Config::getInstance()->getMusic()*8);
+				Mix_Volume(-1, Config::getInstance()->getSound()*8);
+				Mix_VolumeMusic(Config::getInstance()->getMusic()*8);
 #endif
+			} else {
+				Config::getInstance()->setSound(0);
+				Config::getInstance()->setMusic(0);
+				cerr << "******************************************" << endl;
+				cerr << "Error opening audio device, check that" << endl;
+				cerr << "no other application is occupying audio" << endl;
+				cerr << "resources. Try to kill artsd and/or esd." << endl;
+				cerr << "******************************************" << endl;
+			}
+		}
   }
 }
 

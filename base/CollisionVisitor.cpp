@@ -98,7 +98,7 @@ void CollisionVisitor::traverse(Group * g, OctTree * octtree) {
 #endif
 		// groups in with same user properties are not collided
 		// allows user to remove unnecessary collision detection
-		if ((*groupIter)->m_iUserProperties & g->m_iUserProperties) {
+		if ((*groupIter)->m_iCollisionGroup == g->m_iCollisionGroup) {
 			continue;
 		}
 		// no need to check if neither have a behavior object

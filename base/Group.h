@@ -114,6 +114,9 @@ class Group : public Node {
   void unsetProperty(int p);
   void unsetPropertyRecursive(int p);
   void unsetUserProperty(int p);
+
+	inline int getCollisionGroup() { return m_iCollisionGroup; };
+	inline void setCollisionGroup(int c) { m_iCollisionGroup = c; };
   
  private:
   friend class BehaviorVisitor;
@@ -148,6 +151,7 @@ class Group : public Node {
   
   int m_iProperties;
   int m_iUserProperties;
+	int m_iCollisionGroup;
   
   //		void propagateSignal(int signal, Group* sender);
   void setParent(Group* g);
