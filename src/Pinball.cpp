@@ -1,4 +1,4 @@
-//#ident "$Id: Pinball.cpp,v 1.33 2003/05/12 12:17:59 rzr Exp $"
+//#ident "$Id: Pinball.cpp,v 1.34 2003/05/14 21:34:23 pedro_nf Exp $"
 /***************************************************************************
                           Pinball.cpp  -  description
                              -------------------
@@ -679,11 +679,11 @@ int main(int argc, char *argv[]) {
     }
     if (Config::getInstance()->getBrightness() < 0.15f) {
       ambient = 0.1f;
-    } else if (Config::getInstance()->getBrightness() > 0.25f) {
+    } else if (Config::getInstance()->getBrightness() < 0.25f) {
       ambient = 0.2f;
-    } else if (Config::getInstance()->getBrightness() > 0.35f) {
+    } else if (Config::getInstance()->getBrightness() < 0.35f) {
       ambient = 0.3f;
-    } else if (Config::getInstance()->getBrightness() > 0.45f) {
+    } else if (Config::getInstance()->getBrightness() < 0.45f) {
       ambient = 0.4f;
     } else {
       ambient = 0.5f;

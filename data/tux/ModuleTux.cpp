@@ -169,7 +169,7 @@ public:
 	  m_bExtraBall = false;
 	}
 	// If we don't have an extra ball then increment current ball
-	else if (table->getCurrentBall() < MAX_BALL)
+	else
 	{
 	  table->setCurrentBall(table->getCurrentBall()+1);
 

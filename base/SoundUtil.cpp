@@ -30,21 +30,26 @@ SoundUtil* SoundUtil::getInstance() {
   return p_SoundUtil;
 }
 
-int SoundUtil::initSound() {
+int SoundUtil::initSound()
+{
 #if EM_USE_SDL
-  int audio_rate = EM_AUDIO_FREQ;
+  int audio_rate      = EM_AUDIO_FREQ;
   Uint16 audio_format = EM_AUDIO_FORMAT;
-  int audio_channels = EM_AUDIO_CHANNELS;
+  int audio_channels  = EM_AUDIO_CHANNELS;
   
-  if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0) {
+  if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
+  {
     cerr << "Couldn't init SDL aduio: " << SDL_GetError() << endl;
-		m_bInited = false;
+    m_bInited = false;
+
     return -1;
   }
   
-  if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, 1024) < 0) {
+  if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, 1024) < 0)
+  {
     cerr << "Couldn't open audio mixer: " << SDL_GetError() << endl;
-		m_bInited = false;
+    m_bInited = false;
+
     return -1;
   }
   
@@ -54,6 +59,7 @@ int SoundUtil::initSound() {
        << (audio_channels > 1 ? "stereo" : "mono") << endl << endl;
   
   m_bInited = true;
+
   return 0;
 #endif
   
@@ -92,49 +98,73 @@ void SoundUtil::stopSound() {
   m_iLoopingMusic = -1;
 }
 
-void SoundUtil::applyConfigVolume() {
-  if (Config::getInstance()->getSound() == 0 && Config::getInstance()->getMusic() == 0) {
-    if (m_bInited) this->stopSound();
-  } else {
-    if (!m_bInited) {
-			if (this->initSound() == 0) {
-				if (Config::getInstance()->getMusic() == 0) {
+void SoundUtil::applyConfigVolume()
+{
+  // If no volume for sound or music then stop sound module
+  if (Config::getInstance()->getSound() == 0 &&
+      Config::getInstance()->getMusic() == 0)
+  {
+    if (m_bInited)
+      this->stopSound();
+  }
+  // We have some sound or music volume, start sound module
+  else
+  {
+    if (!m_bInited)
+    {
+      if (this->initSound() == 0)
+      {
+	if (Config::getInstance()->getMusic() == 0)
+	{
 #if EM_USE_SDL
-					Mix_HaltMusic();
-					m_iLoopingMusic = -1;
+	  Mix_HaltMusic();
+	  m_iLoopingMusic = -1;
 #endif
-				}
+	}
 #if EM_USE_SDL
-				Mix_Volume(-1, Config::getInstance()->getSound()*8);
-				Mix_VolumeMusic(Config::getInstance()->getMusic()*8);
+	Mix_Volume(-1, Config::getInstance()->getSound()*8);
+	Mix_VolumeMusic(Config::getInstance()->getMusic()*8);
 #endif
-			} else {
-				Config::getInstance()->setSound(0);
-				Config::getInstance()->setMusic(0);
-				cerr << "******************************************" << endl;
-				cerr << "Error opening audio device, check that" << endl;
-				cerr << "no other application is occupying audio" << endl;
-				cerr << "resources. Try to kill artsd and/or esd." << endl;
-				cerr << "******************************************" << endl;
-			}
-		}
+      }
+      else
+      {
+	Config::getInstance()->setSound(0);
+	Config::getInstance()->setMusic(0);
+
+	cerr << "******************************************" << endl;
+	cerr << "Error opening audio device, check that"     << endl;
+	cerr << "no other application is occupying audio"    << endl;
+	cerr << "resources. Try to kill artsd and/or esd."   << endl;
+	cerr << "******************************************" << endl;
+      }
+    }
   }
 }
 
-int SoundUtil::loadSample(const char* filename) {
-  //	if (!m_bInited) {
-  //		EM_COUT("SoundUtil::loadSample sound not initialized, not loading sample.", 1);
-  //		return -1;
-  //	}
+int SoundUtil::loadSample(const char* filename)
+{
+  // NOTE! Load samples even if the volume is off, if we change the volume
+  //  settings we don't have to reload the table
+
+  // TODO: If volume off then the samples are initialized to NULL...
+  //       The samples must be re-loaded anyway...!
+  //       Find a way to solve this...
+
   // look if the sound is already loaded
-  if (m_hEmSample.find(string(filename)) != m_hEmSample.end()) {
-    EM_COUT("SoundUtil::loadSample Found sample " << filename << " in cache", 0);
+  if (m_hEmSample.find(string(filename)) != m_hEmSample.end())
+  {
+    EM_COUT("SoundUtil::loadSample Found sample " << filename
+	    << " in cache", 0);
     map<string, int>::iterator element = m_hEmSample.find(string(filename));
+
     return (*element).second;
   }
   
 #if EM_USE_SDL
   Mix_Chunk * wave = Mix_LoadWAV(filename);
+  // Error message if we can't load wave file
+  if (wave == NULL && m_bInited)
+    cerr << "ERROR Mix_LoadWAV: " << Mix_GetError() << endl;
 #endif
 #if EM_USE_ALLEGRO
   SAMPLE* wave = load_sample(filename);
@@ -145,9 +175,12 @@ int SoundUtil::loadSample(const char* filename) {
   m_hEmSample.insert(pair<string, int>(string(filename), sound));
   m_hSoundName.insert(pair<int, string>(sound, string(filename)));
   
-  if (wave == NULL) {
-    cerr << "SoundUtil::loadSample Unable to load " << filename << " inserting a NULL wave" << endl;
+  if (wave == NULL && m_bInited)
+  {
+    cerr << "SoundUtil::loadSample Unable to load " << filename
+	 << " inserting a NULL wave" << endl;
   }
+
   return sound;
 }
 
