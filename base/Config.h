@@ -9,8 +9,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <fstream>
-#include <iostream>
 #include <string>
 #include <cstring>
 #include <map>
@@ -83,18 +81,6 @@ class Config {
   void setDefault();
   /// set RELATIVE path according to current work directory of exec
   void setPaths(char const * const argv0);  //!+rzr
-
-  // Read high scores from given file - pnf
-  bool readHighScoresFile();
-  // Write high scores to a given file - pnf
-  bool writeHighScoresFile();
-  // Used to get the high scores from memory - pnf
-  void getHighScores(multimap<int, string>& mapHighScores);
-  // Used to set the high scores from memory - pnf
-  void setHighScores(multimap<int, string>& mapHighScores);
-  // Copy data betwen two high score maps - pnf
-  void copyMaps(multimap<int, string>& mapOrig,
-                multimap<int, string>& mapDest);
 
  private:
   int m_iWidth;

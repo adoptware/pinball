@@ -27,48 +27,50 @@ public:
   void onTick() {
     Table * table = Table::getInstance();
     Score * score = table->getScore();
+    Loader * loader = Loader::getInstance();
+    // init signals
     EmAssert(score != NULL, "ProfessorBehavior::onTick socre NULL");
     // launch ball
     string launch("launch");
     if (table->active() == 0 && 
-	table->getCurrentBall() < 4 
-	&& Keyboard::isKeyDown(Config::getInstance()->getKey(launch))) {
+				table->getCurrentBall() < MAX_BALL) {
       switch (table->getCurrentBall()) {
       case 0 :
-	if (table->isBallDead(0) ) {
-	  SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-	  table->activateBall(0);	
-	  //score->clearText();
-	  break;
-	}	
+				if (table->isBallDead(0) ) {
+					SendSignal( loader->getSignal("game_start"), 0, this->getParent(), NULL );
+					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
+					table->activateBall(0);	
+					//score->clearText();
+					break;
+				}	
       case 1 :
-	if (table->isBallDead(1)) {
-	  SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-	  table->activateBall(1);
-	  //score->clearText();
-	  break;
-	}
+				if (table->isBallDead(1)) {
+					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
+					table->activateBall(1);
+					//score->clearText();
+					break;
+				}
       case 2 :
-	if (table->isBallDead(2)) {
-	  SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-	  table->activateBall(2);
-	  //score->clearText();
-	  break;
-	}
-	if (table->isBallDead(0)) {
-	  SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-	  table->activateBall(0);	
-	  //score->clearText();
-	  break;
-	}	
-	if (table->isBallDead(1)) {
-	  SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-	  table->activateBall(1);
-	  //score->clearText();
-	  break;
-	}
+				if (table->isBallDead(2)) {
+					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
+					table->activateBall(2);
+					//score->clearText();
+					break;
+				}
+				if (table->isBallDead(0)) {
+					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
+					table->activateBall(0);	
+					//score->clearText();
+					break;
+				}	
+				if (table->isBallDead(1)) {
+					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
+					table->activateBall(1);
+					//score->clearText();
+					break;
+				}
       default:
-	throw string("all balls busy");
+				throw string("all balls busy");
       }
       EM_COUT("Table::onTick() new ball", 1);
     }
@@ -79,23 +81,31 @@ public:
   void StdOnSignal() {
     //EM_COUT((int)em_signal, 1);
     Table * table = Table::getInstance();
-    
+    Score * score = table->getScore();
+    Loader * loader = Loader::getInstance();
+
     OnSignal( PBL_SIG_RESET_ALL ) {
       this->clear();
-    } else
-      // ball dead
-      OnSignal( PBL_SIG_BALL_OFF ) {
+    } 
+		// ball dead
+		ElseOnSignal( PBL_SIG_BALL_OFF ) {
       if (table->active() == 1) {
-	SendSignal( PBL_SIG_MULTIBALL_OFF, 0, this->getParent(), NULL );
+				SendSignal( loader->getSignal("multiball_off"), 0, this->getParent(), NULL );
       }
       if (table->active() == 0) {
-	if (table->getCurrentBall() < 3) {
-	  table->setCurrentBall(table->getCurrentBall()+1);
-	} else {
-	  SendSignal( PBL_SIG_GAME_OVER, 0, this->getParent(), NULL );
-	}
+				SendSignal( loader->getSignal("allballs_off"), 0, this->getParent(), NULL );
+				if (table->getCurrentBall() < MAX_BALL) {
+					table->setCurrentBall(table->getCurrentBall()+1);
+					if (table->getCurrentBall() == MAX_BALL) {
+						SendSignal( PBL_SIG_GAME_OVER, 0, this->getParent(), NULL );
+						EM_COUT("game over", 1);
+					}
+				}
       }
     }
+    ElseOnSignal(loader->getSignal("bump")) {
+      score->addScore(450);
+    } 
   }
   
   void clear() {

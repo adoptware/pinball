@@ -22,23 +22,13 @@
 #include "Engine.h"
 #include "OpenGLVisitor.h"
 
-// Score* Score::p_Score = NULL;
-
 Score::Score() {
   m_Font = EmFont::getInstance();
   this->clear();
 }
 
 Score::~Score(){
-//   p_Score = NULL;
 }
-
-// Score* Score::getInstance() {
-//   if (p_Score == NULL) {
-//     p_Score = new Score();
-//   }
-//   return p_Score;
-// }
 
 void Score::setText1(const char * text) {
   strncpy(m_Text1, text, 63);
@@ -166,11 +156,9 @@ void Score::clear() {
 }
 
 // Tests for a high score, if test positive asks for the user name
-bool Score::testForHighScore()
-{
+bool Score::testForHighScore() {
   // If it's a high score
-  if (Table::getInstance()->isItHighScore(m_iScore))
-  {
+  if (Table::getInstance()->isItHighScore(m_iScore)) {
     // TODO: name of player...
     Table::getInstance()->saveNewHighScore(m_iScore);
   }
