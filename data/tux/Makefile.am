@@ -1,4 +1,4 @@
-#$Id: Makefile.am,v 1.11 2003/06/16 13:06:12 rzr Exp $
+#$Id: Makefile.am,v 1.12 2003/06/18 10:44:19 henqvist Exp $
 AUTOMAKE_OPTIONS = gnu
 
 highscoredir = $(EM_BUILD_ROOT)/$(EM_HIGHSCORE_DIR)/tux
@@ -17,11 +17,12 @@ tuxdata_DATA = \
 bumphard.wav \
 bumpsoft.wav \
 bump.wav \
-face.png \
+face2.png \
 face.png.pcx \
 flip.wav \
 floor2.png \
 floor2.png.pcx \
+floor3.png \
 game.mid \
 gameover.wav \
 intro.mid \
