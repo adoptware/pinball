@@ -43,7 +43,7 @@ BallGroup::BallGroup(float r, float g, float b, int pbl) : Group() {
   shadow->add(0.707, -1, 0.707,
 	      0.0f, 0.0f, 0.0f, 0.5f,  0.0f, 0.0f);
 
-  Polygon* poly = new Polygon(shadow, 3);
+  Polygon3D * poly = new Polygon3D(shadow, 3);
   poly->add(0);
   poly->add(1);
   poly->add(2);
