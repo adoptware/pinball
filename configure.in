@@ -5,8 +5,8 @@ dnl AC_INIT(pinball, 0.0.8, [henqvist@excite.com])
 dnl AC_CONFIG_SRCDIR(base/Engine.cpp)
 
 dnl this is a c++ program
-CFLAGS="-g -W -Wall -O2"
-CXXFLAGS="-g -W -Wall -O2"
+CFLAGS="-g -W -Wall"
+CXXFLAGS="-g -W -Wall"
 
 SDL_VERSION=1.2.0
 ALLEGRO_VERSION=4.0.0
