@@ -25,7 +25,6 @@
 #include "PointLightVisitor.h"
 #include "PNormalVisitor.h"
 #include "SoundVisitor.h"
-//#include "SignalVisitor.h"
 #include "SignalSender.h"
 #include "TransformVisitor.h"
 #include "Config.h"
@@ -59,15 +58,18 @@ if (g_mutexRender == NULL) { \
 #define CHECK_MUTEX()
 #endif
 
-int g_iLoops = 0;
+volatile int g_iLoops = 0;
 volatile int g_iSeconds = 0;
 
-int g_aFunction[20] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-int g_iCurrentFct = 0;
+volatile int g_aFunction[20] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+volatile int g_iCurrentFct = 0;
+
+volatile int g_iStartTime = -1;
+volatile int g_iDesiredTime = -1;
 
 SDL_mutex * g_mutexRender = NULL;
 SDL_Thread * g_threadRender = NULL;
-bool g_bRender = true;
+volatile bool g_bRender = true;
 
 /*
 Uint32 callBack(Uint32 interval) {
@@ -84,22 +86,21 @@ Engine::Engine(int & argc, char *argv[]) {
 	Config * config = Config::getInstance();
 	config->loadArgs(argc, argv);
 
+	if (!config->useExternGL()) {
+		this->initGrx();
+	}
+	if (config->useSound()) {
+		this->initSound();
+	}
+
   srand((unsigned int)time((time_t *)NULL));
 
-  // Init grx, sound
-	if (!config->getExternGL()) {
-		this->initGrx();
-		g_mutexRender = SDL_CreateMutex();
-		//		SDL_SetTimer((int)(1000/FPS), callBack);
-		if (config->getSound()) this->initSound();
-	}
+	g_mutexRender = SDL_CreateMutex();
 }
 
 Engine::~Engine() {
-	if (!Config::getInstance()->getExternGL()) {
-		SDL_DestroyMutex(g_mutexRender);
-		SDL_Quit();
-	}
+	SDL_DestroyMutex(g_mutexRender);
+	SDL_Quit();
 	
 	cerr << "Function null " << g_aFunction[0] << endl;
 	cerr << "Function align " << g_aFunction[ALIGN] << endl;
@@ -120,7 +121,7 @@ Engine::~Engine() {
 	cerr << "Function tick out " << g_aFunction[TICK_OUT] << endl;
 	//	cerr << "Seconds " << ((float)g_iSeconds/FPS) <<" " << ((float)g_iLoops*FPS/g_iSeconds) 
 	//			 << " fps" << endl;
-	cerr << "Fps " << g_iLoops*1000 / SDL_GetTicks() << endl;
+	cerr << "Fps " << (float)(g_iLoops)*1000 / SDL_GetTicks() << endl;
 }
 
 
@@ -139,6 +140,8 @@ void Engine::initSound() {
 	/* Open the audio device, forcing the desired format */
 	if ( SDL_OpenAudio(&wanted, &obtained) < 0 ) {
 		cerr << "Couldn't open audio: " << SDL_GetError() << endl;
+		cerr << "If your're running KDE you might try to kill the artsd process" << endl;
+		cerr << "Or run pinball with the -nosound switch" << endl;
 		exit(1);
 	}
 	
@@ -180,7 +183,7 @@ void Engine::initGrx() {
 	SDL_Surface* screen = SDL_SetVideoMode(config->getWidth(), config->getHeight(), 
 																				 config->getBpp(), 
 																				 SDL_OPENGL | 
-																				 (config->getFullScreen() ? SDL_FULLSCREEN : 0));
+																				 (config->useFullScreen() ? SDL_FULLSCREEN : 0));
 	if (screen == NULL) {
 		cerr << "Couldn't set video mode: " << SDL_GetError() << endl;
 		exit(1);
@@ -262,50 +265,20 @@ void Engine::setEngineCamera(Group* g) {
 
 /* The startRenderThread starts this function as a thread */
 int fctRender(void * data) {
+	Engine * engine = (Engine *) data;
+
+	engine->initGrx();
+
 	while (g_bRender) {
 		SDL_mutexP(g_mutexRender);
-		Engine * engine = (Engine *) data;
 		
-		EM_COUT("Engine::render()", 0);
-		// Put some overall light.
-		EM_COUT("Engine::render() glight", 0);
-		g_iCurrentFct = GLIGHT;
-		AmbientLightVisitor::getInstance()->empty();
-		engine->accept(AmbientLightVisitor::getInstance());
-		
-		// Put some light from light sources.
-		EM_COUT("Engine::render() plight", 0);
-		g_iCurrentFct = PLIGHT;
-		PointLightVisitor::getInstance()->empty();
-		engine->accept(PointLightVisitor::getInstance());
-		
-		// Align vertices to view space.
-		EM_COUT("Engine::render() align", 0);
-		g_iCurrentFct = ALIGN;
-		AlignVisitor::getInstance()->empty();
-		engine->accept(AlignVisitor::getInstance());
-		
-		// Adjust sounds.
-		EM_COUT("Engine::render() sound", 0);
-		g_iCurrentFct = SOUND;
-		//	p_SoundVisitor->empty();
-		//	engine->accept(p_SoundVisitor);
-		
-		// Draw screen
-		EM_COUT("Engine::render() opengl", 0);
-		g_iCurrentFct = RENDER;
-		engine->clearScreen();
-		OpenGLVisitor::getInstance()->empty();
-		engine->accept(OpenGLVisitor::getInstance());
-		
-		EM_COUT("Engine::render() opengltrans", 0);
-		OpenGLTransVisitor::getInstance()->empty();
-		engine->accept(OpenGLTransVisitor::getInstance());
-
+		engine->render();
 		engine->swap();
 		
-		g_iCurrentFct = RENDER_OUT;
 		SDL_mutexV(g_mutexRender);
+
+		EM_COUT("render", 1);
+		SDL_Delay(10);
 	}
 	return 0;
 }
@@ -327,10 +300,10 @@ void Engine::resumeRenderThread() {
 }
 
 void Engine::stopRenderThread() {
+	CHECK_MUTEX();
 	int status;
-	SDL_mutexP(g_mutexRender);
 	g_bRender = false;
-	SDL_mutexV(g_mutexRender);
+	EM_COUT("waiting for render thread", 1);
 	SDL_WaitThread(g_threadRender, &status);
 }
 
@@ -379,9 +352,7 @@ void Engine::swap() {
 	g_iCurrentFct = SWAP;
 	g_iLoops++;
 	// Draw to screen.
-	if (!Config::getInstance()->getExternGL()) {
-		SDL_GL_SwapBuffers();
-	}
+	SDL_GL_SwapBuffers();
 
 	GLenum error = glGetError();
 	if( error != GL_NO_ERROR ) {
@@ -431,3 +402,22 @@ void Engine::tick() {
 	g_iCurrentFct = TICK_OUT;
 }
 
+/* ATTENTION! This function wraps after ~49 days */
+bool Engine::limitFPS(int delay) {
+	if (g_iStartTime = -1) {
+		g_iDesiredTime = g_iStartTime = SDL_GetTicks();
+	}
+	g_iDesiredTime += delay;
+	int time = SDL_GetTicks();
+	int realdelay = (g_iDesiredTime - time);
+	if (delay < 0) {
+		return false;
+	} else {
+		SDL_Delay(delay);
+		return true;
+	}
+	if (delay < -1000) {
+		cerr << "TO SLOW" << endl;
+		g_iDesiredTime = time;
+	}
+}

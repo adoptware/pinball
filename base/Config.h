@@ -24,12 +24,12 @@ class Config {
 	~Config();
 	static Config * getInstance();
 	void loadArgs(int & argc, char* argv[]);
-	bool getSound() { return m_bSound; };
-	bool getExternGL() { return m_bExternGL; };
+	bool useSound() { return m_bSound; };
+	bool useExternGL() { return m_bExternGL; };
 	int getWidth() { return m_iWidth; };
 	int getHeight() { return m_iHeight; };
 	int getBpp() { return m_iBpp; };
-	bool getFullScreen() { return m_bFullScreen; };
+	bool useFullScreen() { return m_bFullScreen; };
 	void setSize(int w, int h) { m_iWidth = w; m_iHeight = h; };
 	void setBpp(int bpp) { m_iBpp = bpp; };
 	void setFullScreen(bool f) { m_bFullScreen = f; };

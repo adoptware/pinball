@@ -14,7 +14,7 @@
   vo.y = v1.y + (v2.y - v1.y)/2; \
   vo.z = v1.z + (v2.z - v1.z)/2;
 
-BigSphere::BigSphere(float fSize, int level, float fA, float fR, float fG, float fB) : Shape3D(1, 1) {
+BigSphere::BigSphere(float fSize, int level, float fR, float fG, float fB, float fA) : Shape3D(1, 1) {
 	// top vertex
 	this->add(0, -1*fSize, 0);
 
@@ -138,9 +138,9 @@ BigSphere::BigSphere(float fSize, int level, float fA, float fR, float fG, float
 	for (int a = start; a < end; a +=  3) {
 		Polygon * p;
 		p = new Polygon(this, 3);
-		p->add(triangles[a],  0,0, fA, fR, fG, fB);
-		p->add(triangles[a+1],  0,0, fA, fR, fG, fB);
-		p->add(triangles[a+2],  0,0, fA, fR, fG, fB);
+		p->add(triangles[a],  0,0, fR, fG, fB, fA);
+		p->add(triangles[a+1],  0,0, fR, fG, fB, fA);
+		p->add(triangles[a+2],  0,0, fR, fG, fB, fA);
 		this->add(p);
 	}
 

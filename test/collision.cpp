@@ -26,7 +26,7 @@ public:
 void CollisionTest::StdOnCollision() {
 	EmAssert(p_Parent != NULL, "CollisionTest::StdOnCollision() parent null");
 	for (int a=0; a<p_Parent->getShape3DSize(); a++) {
-		p_Parent->getShape3D(a)->setColor(1,1,0,0);
+		p_Parent->getShape3D(a)->setColor(1,0,0,1);
 	}
 }
 
@@ -50,9 +50,9 @@ int main(int argc, char *argv[]) {
 	for (int a=0; a<10; a++) {
 		Shape3D * shape;
 		switch (a%3) {
-		case 0: shape = new BigSphere(0.5, 2, 1.0, 1.0, 1.0, 0.0); break;
-		case 1: shape = new Cone(1.0, 1.0, 1.0, 1.0, 0.0); break;
-		default: shape = new Cube(1.0, 1.0, 1.0, 1.0, 0.0);
+		case 0: shape = new BigSphere(0.5, 2, 1.0, 1.0, 1.0, 1.0); break;
+		case 1: shape = new Cone(1.0, 1.0, 1.0, 1.0, 1.0); break;
+		default: shape = new Cube(1.0, 1.0, 1.0, 1.0, 1.0);
 		}
 		// Add the shape.
 		Group* groupShape = new Group();
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
 		vector<Shape3D*>::iterator iter = vShape3D.begin();
 		vector<Shape3D*>::iterator end = vShape3D.end();
 		for (; iter != end; iter++) {
-			(*iter)->setColor(1, 1, 1, 0);
+			(*iter)->setColor(0, 0, 1, 1);
 		}
 		engine->tick();
 		engine->render();

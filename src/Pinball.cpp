@@ -2,8 +2,8 @@
                             -  description
                              -------------------
     begin                : Thu Mar 9 2000
-    copyright            : (C) 2000 by 
-    email                : 
+    copyright            : (C) 2000 by Henrik Enqvist
+    email                : henqvist@excite.com
  ***************************************************************************/
 
 #include <fstream>
@@ -83,10 +83,10 @@ int main(int argc, char *argv[]) {
 {                                      \
   Group* groupS = new Group();         \
                                        \
-  Shape3D* ballCyl = new BigSphere(1, 1, 1, c_r, c_g, c_b);    \
-  Shape3D* ballSphere = new BigSphere(1, 2, 1, c_r, c_g, c_b); \
+  Shape3D* ballCyl = new BigSphere(1, 1, c_r, c_g, c_b, 1);    \
+  Shape3D* ballSphere = new BigSphere(1, 2, c_r, c_g, c_b, 1); \
   ballSphere->setProperty(EM_SPECULAR);                        \
-  ballSphere->setProperty(EM_SHAPE3D_HIDDEN);                     \
+  ballCyl->setProperty(EM_SHAPE3D_HIDDEN);                     \
   CollisionBounds* ballBounds = new CollisionBounds(ballCyl->getCollisionSize()); \
   ballBounds->setShape3D(ballCyl, 1);  \
                                        \
@@ -147,10 +147,11 @@ int main(int argc, char *argv[]) {
 	// Draw to the screen.
   int exit = 0;
 	
-	engine->startRenderThread();
 	while (exit == 0) {
 		engine->tick();
-		
+		engine->tick();
+		engine->render();
+		engine->swap();
 		if (Keyboard::isKeyDown(SDLK_r)) {
 			SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
 		}
@@ -163,9 +164,8 @@ int main(int argc, char *argv[]) {
 			Keyboard::waitForKey();
 			Keyboard::clear();
 		}
-		//		SDL_Delay(10);
+		engine->limitFPS(25);
 	}
-	engine->stopRenderThread();
 
 	extern float em_groups_m, em_shapes_m, em_bounds_m, em_polygons_m;
 

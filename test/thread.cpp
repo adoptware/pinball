@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
 
 	// Create the engine.
 	Engine* engine = new Engine(argc, argv);
-	engine->setLightning(0.5f, 0.1f);
+	engine->setLightning(0.7f, 0.1f);
 
 	// Add a camera. Move a bit.
 	Camera* camera = new Camera();
@@ -30,27 +30,27 @@ int main(int argc, char *argv[]) {
 	Group* groupCube = new Group();
 	engine->add(groupCube);
 	groupCube->addShape3D(cube);
-	
+
 	// Add a behavior to the cube
 	KeyRotBehavior* keyRBeh = new KeyRotBehavior();
 	groupCube->addBehavior(keyRBeh);
-		
-	engine->startRenderThread();
 
 	int start = SDL_GetTicks();
 	int desired = start;
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
 		engine->tick();
-		desired += 50
+		engine->render();
+		engine->swap();
 
+		desired += 50; // 20 ticks per second
 		int ticks = SDL_GetTicks();
-		int old_tick = ticks;
-		ticks = SDL_GetTicks();
-		int delay = 50 + old_tick - ticks;
+		int delay = (desired - ticks);
+		if (delay < -1000) {
+			cerr << "TO SLOW" << endl;
+			desired = ticks;
+		}
 		SDL_Delay(EM_MAX(delay, 0));
-		
 	}
-	engine->stopRenderThread();
 
 	delete(engine);
 	return 0;
