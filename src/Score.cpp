@@ -26,6 +26,8 @@
 Score::Score() {
   m_Font = EmFont::getInstance();
   this->clear();
+
+  m_bExtraBall = false;
 }
 
 Score::~Score(){
@@ -95,11 +97,17 @@ void Score::StdOnSignal() {
   ElseOnSignal( PBL_SIG_BALL_ON ) {
     //this->clearText();
   }
+  ElseOnSignal( PBL_SIG_BALL_OFF ) {
+    this->m_bExtraBall = false;
+  }
+  ElseOnSignal( PBL_SIG_EXTRABALL ) {
+    this->m_bExtraBall = true;
+  }
   ElseOnSignal( PBL_SIG_GAME_OVER ) {
     this->clearText();
 
     if(this->testForHighScore()) {
-      this->setText1("New High Score!");
+      this->setText1("last score was a High Score!");
     } else {
       this->setText1("");
     }
@@ -117,7 +125,10 @@ void Score::draw() {
   int nCurrentBall = Table::getInstance()->getCurrentBall() + 1;
   if (nCurrentBall < 4)
   {
-    sprintf(buffer, "SCORE %d BALL %d\n", m_iScore, nCurrentBall);
+    if (m_bExtraBall)
+      sprintf(buffer, "SCORE %d BALL %d ExtraBall!", m_iScore, nCurrentBall);
+    else
+      sprintf(buffer, "SCORE %d BALL %d", m_iScore, nCurrentBall);
   }
   else
   {
@@ -153,21 +164,21 @@ void Score::clear() {
 }
 
 // Tests for a high score, if test positive asks for the user name
-bool Score::testForHighScore() {
+bool Score::testForHighScore()
+{
   // If it's a high score
-  if (Table::getInstance()->isItHighScore(m_iScore)) {
-    // TODO: name of player...
+  if (Table::getInstance()->isItHighScore(m_iScore))
+  {
+    EmAssert(Engine::getCurrentEngine() != NULL,
+	     "Score::testForHighScore Engine NULL");
 
-		EmAssert(Engine::getCurrentEngine() != NULL, "Score::testForHighScore Engine NULL");
-
-		MenuInput input("new highscore enter name", Engine::getCurrentEngine());
-		input.perform();
-		
-		//p_EmFont->printRowCenter(-sHeader.c_str(), 3);
-		
+    MenuInput input("new highscore! enter name:", Engine::getCurrentEngine());
+    input.perform();
 
     Table::getInstance()->saveNewHighScore(m_iScore, input.getInput());
-		return true;
+
+    return true;
   }
-	return false;
+
+  return false;
 }
