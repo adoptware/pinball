@@ -1,4 +1,4 @@
-//#ident "$Id;$"
+//#ident "$Id: Group.cpp,v 1.10 2003/06/13 13:39:45 rzr Exp $"
 /***************************************************************************
                           Group.cpp  -  description
                              -------------------
@@ -92,11 +92,11 @@ void Group::accept(Visitor * v) {
 
 void Group::setName(const char * name) { 
   strncpy(m_Name, name, 256); 
-};
+}
 
 const char * Group::getName() { 
   return m_Name; 
-};
+}
 
 void Group::add(Group * g) {
   if (g == NULL) return;
@@ -284,4 +284,5 @@ void Group::unsetPropertyRecursive(int p) {
     (*iter)->unsetPropertyRecursive(p);
   }
 }
-//EOF $Id: Group.cpp,v 1.9 2003/05/27 11:53:25 rzr Exp $
+//TODO: Compute Bounds //!rzr
+//EOF $Id: Group.cpp,v 1.10 2003/06/13 13:39:45 rzr Exp $

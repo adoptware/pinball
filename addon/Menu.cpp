@@ -1,4 +1,4 @@
-//#ident "$Id: Menu.cpp,v 1.12 2003/06/11 13:25:41 rzr Exp $"
+//#ident "$Id: Menu.cpp,v 1.13 2003/06/13 13:39:34 rzr Exp $"
 /***************************************************************************
                           Menu.cpp  -  description
                              -------------------
@@ -100,7 +100,6 @@ void MenuSub::setBottomText(const char * text) {
 void MenuSub::draw() {
   EM_COUT("MenuSub::draw() " << this->getText(), 1);
   p_Engine->clearScreen();
-
   if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
   
   int size = this->size() + m_vInfoText.size() + 2;
@@ -288,4 +287,4 @@ int MenuInput::perform() {
 
   return m_iAction;;
 }
-//EOF: $Id: Menu.cpp,v 1.12 2003/06/11 13:25:41 rzr Exp $
+//EOF: $Id: Menu.cpp,v 1.13 2003/06/13 13:39:34 rzr Exp $
