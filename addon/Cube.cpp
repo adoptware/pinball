@@ -11,7 +11,7 @@
 #include "Polygon.h"
 
 Cube::Cube(float fSize, EmTexture* tex) : Shape3D(8, 6) {
-	Polygon* p;
+	Polygon3D* p;
 	float fA = 1.0f;
 	float fR = 1.0f;
 	float fG = 1.0f;
@@ -36,42 +36,42 @@ Cube::Cube(float fSize, EmTexture* tex) : Shape3D(8, 6) {
 
 	this->setTexture(tex);
 
-	p = new Polygon(this, 4);
+	p = new Polygon3D(this, 4);
 	p->add(0);
 	p->add(1);
 	p->add(3);
 	p->add(2);
 	this->add(p);
 
-	p = new Polygon(this, 4);
+	p = new Polygon3D(this, 4);
 	p->add(4);
 	p->add(0);
 	p->add(2);
 	p->add(6);
 	this->add(p);
 
-	p = new Polygon(this, 4);
+	p = new Polygon3D(this, 4);
 	p->add(5);
 	p->add(4);
 	p->add(6);
 	p->add(7);
 	this->add(p);
 
-	p = new Polygon(this, 4);
+	p = new Polygon3D(this, 4);
 	p->add(1);
 	p->add(5);
 	p->add(7);
 	p->add(3);
 	this->add(p);
 
-	p = new Polygon(this, 4);
+	p = new Polygon3D(this, 4);
 	p->add(0);
 	p->add(4);
 	p->add(5);
 	p->add(1);
 	this->add(p);
 
-	p = new Polygon(this, 4);
+	p = new Polygon3D(this, 4);
 	p->add(2);
 	p->add(3);
 	p->add(7);
@@ -82,7 +82,7 @@ Cube::Cube(float fSize, EmTexture* tex) : Shape3D(8, 6) {
 }
 
 Cube::Cube(float fSize, float fR, float fG, float fB, float fA) : Shape3D(8, 6) {
-	Polygon* p;
+	Polygon3D * p;
 
 	this->add( fSize/2,  fSize/2, -fSize/2,
 						fR, fG, fB, fA,	0.0f, 0.0f);
@@ -101,42 +101,42 @@ Cube::Cube(float fSize, float fR, float fG, float fB, float fA) : Shape3D(8, 6) 
 	this->add(-fSize/2, -fSize/2,  fSize/2,
 						fR, fG, fB, fA,	0.0f, 0.0f);
 
-	p = new Polygon(this, 4);
+	p = new Polygon3D(this, 4);
 	p->add(0);
 	p->add(1);
 	p->add(3);
 	p->add(2);
 	this->add(p);
 
-	p = new Polygon(this, 4);
+	p = new Polygon3D(this, 4);
 	p->add(4);
 	p->add(0);
 	p->add(2);
 	p->add(6);
 	this->add(p);
 
-	p = new Polygon(this, 4);
+	p = new Polygon3D(this, 4);
 	p->add(5);
 	p->add(4);
 	p->add(6);
 	p->add(7);
 	this->add(p);
 
-	p = new Polygon(this, 4);
+	p = new Polygon3D(this, 4);
 	p->add(1);
 	p->add(5);
 	p->add(7);
 	p->add(3);
 	this->add(p);
 
-	p = new Polygon(this, 4);
+	p = new Polygon3D(this, 4);
 	p->add(0);
 	p->add(4);
 	p->add(5);
 	p->add(1);
 	this->add(p);
 
-	p = new Polygon(this, 4);
+	p = new Polygon3D(this, 4);
 	p->add(2);
 	p->add(3);
 	p->add(7);

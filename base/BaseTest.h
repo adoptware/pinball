@@ -50,7 +50,7 @@ class EMathTest : public CppUnit::TestFixture {
 class ShapeTest : public CppUnit::TestFixture {
  private:
 	Shape3D * shape;
-	Polygon * poly;
+	Polygon3D * poly;
  public:
   void setUp() {
 		shape = new Shape3D();
@@ -60,7 +60,7 @@ class ShapeTest : public CppUnit::TestFixture {
 		shape->add(0,0,0, 0,0,0,0, 0,0);
 		shape->add(0,0,0, 0,0,0,0, 0,0);
 		shape->add(0,0,0, 0,0,0,0, 0,0);
-		poly = new Polygon(shape);
+		poly = new Polygon3D(shape);
 		poly->add(1);
 		poly->add(2);
 		poly->add(4);

@@ -23,19 +23,21 @@ class Shape3D;
 
 class OpenGLVisitor : public Visitor  {
  protected:
-	OpenGLVisitor();
+  OpenGLVisitor();
  public:
-	~OpenGLVisitor();
-	static OpenGLVisitor * getInstance();
-	void visit(Group* g);
-	void empty();
-	int getMode() { return m_iMode; };
-	void setMode(int m) { m_iMode = m; };
+  ~OpenGLVisitor();
+  static OpenGLVisitor * getInstance();
+  void visit(Group* g);
+  void empty();
+  int getMode() { return m_iMode; };
+  void setMode(int m) { m_iMode = m; };
+  static int getPolys() { return m_iPoly; };
  private:
-	int m_iMode;
-	bool m_bOffset;
-	void visit(Shape3D* s, Group* g);
-	static OpenGLVisitor * p_OpenGLVisitor;
+  int m_iMode;
+  bool m_bOffset;
+  void visit(Shape3D* s, Group* g);
+  static OpenGLVisitor * p_OpenGLVisitor;
+  static int m_iPoly;
 };
 
 #endif // OPENGLVISITOR_H

@@ -158,7 +158,7 @@ int MenuChoose::next() {
     return EM_MENU_NOP;
   }
   ++m_iCurrent;
-  if (m_iCurrent >= (signed)m_vText.size()) m_iCurrent = 0;
+  if (m_iCurrent >= (signed)m_vText.size()-1) m_iCurrent = 0;
 
   return EM_MENU_NOP;
 }

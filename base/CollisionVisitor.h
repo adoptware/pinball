@@ -20,7 +20,7 @@
 class Group;
 class CollisionBounds;
 class Shape3D;
-class Polygon;
+class Polygon3D;
 class OctTree;
 
 /**
@@ -56,19 +56,19 @@ class CollisionVisitor : public Visitor {
 	 * Observe, only leaf-collision bounds have polygons. */
 	bool collidePolygons(CollisionBounds* cb1, CollisionBounds* cb2);
 	/** Poly-poly intersection test. */
-	bool intersect(Polygon*, Polygon*);
+	bool intersect(Polygon3D*, Polygon3D*);
 	/** Not yet implemented. */
-	bool intersect2d(Polygon* p1, Polygon* p2);		
+	bool intersect2d(Polygon3D* p1, Polygon3D* p2);		
 	void traverse(Group * g, OctTree * octtree);
 	void notifyBehaviors(Group * g1, Group * g2, const Vertex3D & nml1, const Vertex3D & nml2);
-	void countNormal(Vertex3D & vtx, vector<Polygon*> vPolygon);
-	float vtxPolySqrDist(const Vertex3D & vtx, Polygon * poly, Vertex3D & vtxDist);
+	void countNormal(Vertex3D & vtx, vector<Polygon3D*> vPolygon);
+	float vtxPolySqrDist(const Vertex3D & vtx, Polygon3D * poly, Vertex3D & vtxDist);
 	float vtxTriSqrDist(const Vertex3D & vtx, const Vertex3D & vtxTri0,
 											const Vertex3D & vtxTri1, const Vertex3D & vtxTri2,
 											Vertex3D & vtxOut);
 
-	vector<Polygon*> m_vPolygon1;
-	vector<Polygon*> m_vPolygon2;
+	vector<Polygon3D*> m_vPolygon1;
+	vector<Polygon3D*> m_vPolygon2;
 	OctTree * p_OctTree;
 
 	static CollisionVisitor * p_CollisionVisitor;
