@@ -1,10 +1,11 @@
+//#ident "$Id: Node.h,v 1.8 2003/05/27 11:53:25 rzr Exp $"
 /***************************************************************************
                           Node.h  -  description
                              -------------------
     begin                : Wed Jan 26 2000
     copyright            : (C) 2000 by Henrik Enqvist
     email                : henqvist@excite.com
- ***************************************************************************/
+***************************************************************************/
 
 #ifndef NODE_H
 #define NODE_H
@@ -13,7 +14,7 @@
 
 /** The Node represents the transformation of an object. Group inherits this class. */
 class Node {
- public:
+public:
   Node();
   ~Node();
   void setTransform(float tx, float ty, float tz , float rx, float ry, float rz);
@@ -40,11 +41,11 @@ class Node {
   void addRotation(float x, float y, float z);
   void setScale(float x, float y, float z);
   void getScale(float & x, float & y, float & z);
-  void addScale(float x, float z, float z);
+  void addScale(float x, float y, float z);
   
   Matrix m_mtxSrc;
   Matrix m_mtxTrans;
- private:
+private:
   Vertex3D m_vtxT;
   Vertex3D m_vtxR;
   Vertex3D m_vtxS;
