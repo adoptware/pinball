@@ -16,6 +16,10 @@
 #include "Score.h"
 #include <string>
 
+#if EM_DEBUG
+#include <iomanip>
+#endif
+
 #define MAX_SPEED 0.5f
 #define MAX_SPEED_Y_DOWN (MAX_SPEED*0.5f)
 #define SPEED_FCT 0.6f
@@ -64,9 +68,12 @@ BounceBehavior::BounceBehavior(int ball) : Behavior() {
 	m_iDirFactor = 0;
 	m_iCollisionPrio = 0;
 	switch (m_iBall) {
-	case PBL_BALL_1: if (this->getParent() != NULL) this->getParent()->setTranslation(-4,0,34); break;
-	case PBL_BALL_2: if (this->getParent() != NULL) this->getParent()->setTranslation(-8, 0, 34); break;
-	case PBL_BALL_3: if (this->getParent() != NULL) this->getParent()->setTranslation(-12, 0, 34); break;
+	case PBL_BALL_1: if (this->getParent() != NULL) this->getParent()->setTranslation(-4,0,34); 
+		break;
+	case PBL_BALL_2: if (this->getParent() != NULL) this->getParent()->setTranslation(-8, 0, 34); 
+		break;
+	case PBL_BALL_3: if (this->getParent() != NULL) this->getParent()->setTranslation(-12, 0, 34); 
+		break;
 	default: if (this->getParent() != NULL) this->getParent()->setTranslation(-16, 0, 34);
 	}
 	this->setType(PBL_TYPE_BOUNCEBEH);
@@ -201,7 +208,10 @@ void BounceBehavior::onTick() {
 void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn, Group * pGroup) {
 	EmAssert(this->getParent() != NULL && pGroup != NULL, "BounceBehavior::onCollision()");
 	if (!m_bAlive) return;
-	EM_COUT("BounceBehavior::onCollision() wall " << vtxOwn.x <<" "<< vtxOwn.y <<" "<< vtxOwn.z, 0);
+	EM_COUT("BounceBehavior::onCollision() wall " 
+					<< setprecision ( 4 ) << vtxW.x <<" "<< vtxW.y <<" "<< vtxW.z, 0);
+	EM_COUT("BounceBehavior::onCollision() own  " 
+					<< vtxOwn.x <<" "<< vtxOwn.y <<" "<< vtxOwn.z, 0);
 
 	// Undo last translation
 	//this->getParent()->addTranslation(-m_vtxDir.x, -m_vtxDir.y, -m_vtxDir.z);

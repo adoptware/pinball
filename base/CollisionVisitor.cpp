@@ -40,7 +40,7 @@ CollisionVisitor::CollisionVisitor() {
 	//m_iPolygonsA = 0;
 	//m_iPolygonsB = 0;
 	// TODO: Some way to control the global octtree
-	p_OctTree = new OctTree(2, 100);
+	p_OctTree = new OctTree(1, 100);
 }
 
 CollisionVisitor::~CollisionVisitor() {
@@ -114,27 +114,31 @@ void CollisionVisitor::traverse(Group * g, OctTree * octtree) {
 		Vertex3D vtxNml1 = { 0.0f, 0.0f, 0.0f };
 		Vertex3D vtxNml2 = { 0.0f, 0.0f, 0.0f };
 		// check collision
-		if (!((*groupIter)->p_CollisionBounds->hasShape3D()) && !(g->p_CollisionBounds->hasShape3D())) {
+		if (!((*groupIter)->p_CollisionBounds->hasShape3D()) && 
+				!(g->p_CollisionBounds->hasShape3D())) {
 			// use fast sphere-sphere collision for bounds without polygons
-			if (this->intersect((*groupIter)->p_CollisionBounds, g->p_CollisionBounds, vtxNml1, vtxNml2)) {
+			if (this->intersect((*groupIter)->p_CollisionBounds, g->p_CollisionBounds, 
+													vtxNml1, vtxNml2)) {
 				EMath::normalizeVector(vtxNml1);
 				EMath::normalizeVector(vtxNml2);
 				this->notifyBehaviors((*groupIter), g, vtxNml1, vtxNml2);
 			}
 		} else if (!((*groupIter)->p_CollisionBounds->hasShape3D())) {
 			// use fast sphere-poly collision for bounds without polygons
-			m_vPolygon2.clear();
-			if (this->detectCollisionEmpty((*groupIter)->p_CollisionBounds, g->p_CollisionBounds, vtxNml1)) {
+			m_vPolygon1.clear();
+			if (this->detectCollisionEmpty((*groupIter)->p_CollisionBounds, 
+																		 g->p_CollisionBounds, vtxNml1)) {
 				EMath::normalizeVector(vtxNml1);
-				this->countNormal(vtxNml2, m_vPolygon2);
+				this->countNormal(vtxNml2, m_vPolygon1);
 				this->notifyBehaviors((*groupIter), g, vtxNml1, vtxNml2);
 			}
 		} else if (!(g->p_CollisionBounds->hasShape3D())) {
 			// use fast sphere-poly collision for bounds without polygons
-			m_vPolygon2.clear();
-			if (this->detectCollisionEmpty(g->p_CollisionBounds, (*groupIter)->p_CollisionBounds, vtxNml2)) {
+			m_vPolygon1.clear();
+			if (this->detectCollisionEmpty(g->p_CollisionBounds, 
+																		 (*groupIter)->p_CollisionBounds, vtxNml2)) {
 				EMath::normalizeVector(vtxNml2);
-				this->countNormal(vtxNml1, m_vPolygon2);
+				this->countNormal(vtxNml1, m_vPolygon1);
 				this->notifyBehaviors((*groupIter), g, vtxNml1, vtxNml2);
 			}
 		} else {
@@ -284,8 +288,18 @@ bool CollisionVisitor::detectCollision(CollisionBounds * cb1, CollisionBounds * 
 	return false;
 }
 
-/* The first bounds does not have a shape, use sphere-polygon detection */
-bool CollisionVisitor::detectCollisionEmpty(CollisionBounds * cb1, CollisionBounds * cb2,	Vertex3D & nml1) {
+/* Top level function. */
+bool CollisionVisitor::detectCollisionEmpty(CollisionBounds * cb1, CollisionBounds * cb2,	
+																						Vertex3D & nml1) {
+	float distsqr = -1.0f;
+	return this->detectCollisionEmpty(cb1, cb2, nml1, distsqr);
+}
+
+/* The first bounds does not have a shape, uses sphere-polygon detection.
+ * The 'distsqr' gives the distance to the nearest polygon found so far,
+ * (distsqr < 0) if nothing found yet. */
+bool CollisionVisitor::detectCollisionEmpty(CollisionBounds * cb1, CollisionBounds * cb2,	
+																						Vertex3D & nml1, float & distsqr) {
 	EM_COUT_D("CollisionVisitor::detectCollisionEmpty", 0);
 	if (this->intersect(cb1, cb2)) {
 		// cb1 is a leaf and cb2 is split up
@@ -294,7 +308,7 @@ bool CollisionVisitor::detectCollisionEmpty(CollisionBounds * cb1, CollisionBoun
 			vector<CollisionBounds*>::iterator iter = cb2->m_vCollisionBounds.begin();
 			vector<CollisionBounds*>::iterator end = cb2->m_vCollisionBounds.end();
 			for ( ; iter != end; iter++) {
-				if (this->detectCollisionEmpty(cb1, (*iter), nml1)) {
+				if (this->detectCollisionEmpty(cb1, (*iter), nml1, distsqr)) {
 					collision = true;
 				}
 			}
@@ -304,7 +318,7 @@ bool CollisionVisitor::detectCollisionEmpty(CollisionBounds * cb1, CollisionBoun
 			// sphere-poly collision
 			bool collision = false;
 			float radiussqr = cb1->m_fRadius*cb1->m_fRadius;
-			float distsqr = 9999.9f;
+			//float distsqr = 9999.9f; // TODO MaxFloat
 			vector<Polygon *>::iterator iter =  cb2->m_vPolygon.begin();
 			vector<Polygon *>::iterator end = cb2->m_vPolygon.end();
 			Vertex3D vtxDist;
@@ -312,9 +326,24 @@ bool CollisionVisitor::detectCollisionEmpty(CollisionBounds * cb1, CollisionBoun
 				float d = this->vtxPolySqrDist(cb1->m_vtxTrans, (*iter), vtxDist);
 				if (d <= radiussqr) {
 					collision = true;
-					m_vPolygon2.push_back(*iter);
+					// skip if polygon already in vector
+					{
+						bool isin = false;
+						vector<Polygon*>::iterator vectIter = m_vPolygon1.begin();
+						vector<Polygon*>::iterator vectEnd = m_vPolygon1.end();
+						isin = false;
+						for (; vectIter != vectEnd; vectIter++) {
+							if ((*vectIter) == (*iter)) {
+								isin = true;
+								break;
+							}
+						}
+						if (!isin) {
+							m_vPolygon1.push_back(*iter);
+						}
+					}
 					// use only the closest polygon
-					if (d < distsqr) {
+					if (d < distsqr || distsqr < 0.0f) {
 						distsqr = d;
 						nml1.x = vtxDist.x;
 						nml1.y = vtxDist.y;
@@ -357,8 +386,8 @@ bool CollisionVisitor::collidePolygons(CollisionBounds * nb1, CollisionBounds * 
 		vector<Polygon*>::iterator end2 = nb2->m_vPolygon.end();
 		for ( ; iter2 != end2; ++iter2) {
 			// skip if polygon already in vector
-			vectIter = m_vPolygon1.begin();
-			vectEnd = m_vPolygon1.end();
+			vectIter = m_vPolygon2.begin();
+			vectEnd = m_vPolygon2.end();
 			isin = false;
 			for (; vectIter != vectEnd; vectIter++) {
 				if ((*vectIter) == (*iter2)) {
@@ -371,8 +400,6 @@ bool CollisionVisitor::collidePolygons(CollisionBounds * nb1, CollisionBounds * 
 			(*iter1)->setColor(0, 0, 1, 0.5f);
 			(*iter2)->setColor(0, 0, 1, 0.5f);
 #endif
-			// TODO: if (this->isInArray( (*iter2) )) continue;
-			EM_COUT_D("CollisionVisitor:collidePolygons() intersecting polygons", 0);
 			if ( CollisionVisitor::intersect((*iter1), (*iter2)) ) {
 #if EM_DEBUG_COLLISION
 				(*iter1)->setColor(1, 0, 0, 0.5f);
@@ -382,7 +409,6 @@ bool CollisionVisitor::collidePolygons(CollisionBounds * nb1, CollisionBounds * 
 				m_vPolygon2.push_back(*iter2);
 				collision = true;
 			}
-			EM_COUT_D("CollisionVisitor:collidePolygons() intersected polygons" << endl, 0);				
 		}
 	}
 	return collision;
@@ -444,13 +470,12 @@ float CollisionVisitor::vtxPolySqrDist(const Vertex3D & vtx, Polygon * poly, Ver
 	float sqrdist = 9999.9f;
 	Vertex3D vtxTmp = {0.0f, 1.0f, 0.0f};
 	Shape3D * shape = poly->p_Shape3D;
-	vector<int>::iterator iter = poly->m_vIndex.begin()+2;
-	vector<int>::iterator end = poly->m_vIndex.end();
-	for (; iter != end; ++iter) {
+	int aa = poly->m_vIndex.size()-2;
+	for (int a=0; a < aa; ++a) {
 		float tmp = this->vtxTriSqrDist(vtx, 
 																		shape->m_vVtxTrans[poly->m_vIndex[0]], 
-																		shape->m_vVtxTrans[poly->m_vIndex[1]], 
-																		shape->m_vVtxTrans[(*iter)],
+																		shape->m_vVtxTrans[poly->m_vIndex[a+1]], 
+																		shape->m_vVtxTrans[poly->m_vIndex[a+2]],
 																		vtxTmp);
 		if (tmp < sqrdist) {
 			sqrdist = tmp;
@@ -642,7 +667,7 @@ float CollisionVisitor::vtxTriSqrDist(const Vertex3D & vtx, const Vertex3D & vtx
 					t = 0.0f;
 					sqrdist = a00 + 2.0f*b0 + c;
 				} else {
-					// numer is greater than zero denom is greater than denom => denom > 0.0f
+					// numer is greater than zero, denom is greater than denom => denom > 0.0f
 					s = numer/denom;
 					t = 1.0f - s;
 					sqrdist = s*(a00*s + a01*t + 2.0f*b0) + t*(a01*s + a11*t + 2.0f*b1) + c;

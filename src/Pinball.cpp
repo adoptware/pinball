@@ -560,9 +560,6 @@ MenuItem* createMenus(Engine * engine) {
 
 /** Main */
 int main(int argc, char *argv[]) {
-	cout << "pinball" << endl;
-	//	srandom(time(0));
-
 	// Create a engine and parse emilia arguments
 	Config::getInstance()->loadConfig();
 	Engine * engine = new Engine(argc, argv);

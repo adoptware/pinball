@@ -298,6 +298,10 @@ void Score::StdOnSignal() {
 
 extern volatile float g_fFps;
 
+#if EM_DEBUG
+extern volatile float em_poly_m;
+#endif
+
 void Score::draw() {
 	char buffer[256];
 	if (this->getCurrentBall() < 4) {
@@ -307,8 +311,12 @@ void Score::draw() {
 	}
 	m_Font->printRow(buffer, 0);
 	if (Config::getInstance()->getShowFPS()) {
-	sprintf(buffer, "FPS %.1f\n", g_fFps);
-	m_Font->printRow(buffer, 1);
+#if EM_DEBUG
+		sprintf(buffer, "FPS %.1f %.1f\n", g_fFps, em_poly_m);
+#else
+		sprintf(buffer, "FPS %.1f\n", g_fFps);
+#endif
+		m_Font->printRow(buffer, 1);
 	}
 	m_Font->printRowCenter(m_Text1, 6);
 	m_Font->printRowCenter(m_Text2, 7);
