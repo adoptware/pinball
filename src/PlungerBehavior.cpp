@@ -81,8 +81,8 @@ void PlungerBehavior::onTick()
 	  m_fPower = 5;
 	  m_bDoublePress = false;
 	}
-
-	m_bDoublePress = true;
+	else
+	  m_bDoublePress = true;
       }
       else
 	m_bDoublePress = false;
