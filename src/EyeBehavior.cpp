@@ -189,9 +189,9 @@ void EyeBehavior::onTick() {
 		
     this->getParent()->getTranslation(ex, ey, ez);
 		
-    sx = (TX1+bx*0.4+m_fXNudge*2) - ex;
+    sx = (TX1+bx*0.3+m_fXNudge*2) - ex;
     sy = (TY1+by*0.4) - ey;
-    sz = (TZ1+bz*0.4+m_fZNudge*2) - ez;
+    sz = (TZ1+bz*0.6+m_fZNudge*2) - ez;
 		
     this->getParent()->addTranslation(sx*0.1f, sy*0.1, sz*0.1f);
     this->getParent()->setRotation(RX1, RY1, RZ1);
@@ -210,11 +210,11 @@ void EyeBehavior::onTick() {
       float x, y, z;
       table->getBall(1)->getTranslation(x, y, z);
       if (balls > 0) {
-				bx += x; 
-				by = EM_MAX(by, y); 
-				bz = EM_MAX(bz, z);
+	bx += x; 
+	by = EM_MAX(by, y); 
+	bz = EM_MAX(bz, z);
       } else {
-				bx = x; by = y; bz = z;
+	bx = x; by = y; bz = z;
       }
       balls++;
     }
@@ -222,11 +222,11 @@ void EyeBehavior::onTick() {
       float x, y, z;
       table->getBall(2)->getTranslation(x, y, z);
       if (balls > 0) {
-				bx += x; 
-				by = EM_MAX(by, y); 
-				bz = EM_MAX(bz, z);
+	bx += x; 
+	by = EM_MAX(by, y); 
+	bz = EM_MAX(bz, z);
       } else {
-				bx = x; by = y; bz = z;
+	bx = x; by = y; bz = z;
       }
       balls++;
     }
@@ -236,7 +236,7 @@ void EyeBehavior::onTick() {
 		
     this->getParent()->getTranslation(ex, ey, ez);
 		
-    sx = (TX2+bx*0.2+m_fXNudge*2) - ex;
+    sx = (TX2+bx*0.1+m_fXNudge*2) - ex;
     sy = (TY2+by*0.4) - ey;
     sz = (TZ2+bz*0.1+m_fZNudge*2) - ez;
 		

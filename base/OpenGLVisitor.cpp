@@ -124,7 +124,7 @@ void OpenGLVisitor::visit(Group* g) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALLWAYSLIT) {
+	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) {
 	  for ( ; polyIter != polyEnd; ++polyIter) {
 	    if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
 #if EM_DEBUG
@@ -145,7 +145,7 @@ void OpenGLVisitor::visit(Group* g) {
 	    }
 	    glEnd();
 	  }
-	} else { // EM_SHAPE3D_ALLWAYSLIT
+	} else { // EM_SHAPE3D_ALWAYSLIT
 	  for ( ; polyIter != polyEnd; ++polyIter) {
 	    if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
 #if EM_DEBUG
@@ -172,7 +172,7 @@ void OpenGLVisitor::visit(Group* g) {
 	// color polygons
 	glDisable(GL_TEXTURE_2D);
 	// if statement moved outside for loop for performance
-	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALLWAYSLIT) {
+	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) {
 	  for ( ; polyIter != polyEnd; ++polyIter) {
 	    if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
 #if EM_DEBUG
@@ -191,7 +191,7 @@ void OpenGLVisitor::visit(Group* g) {
 	    }
 	    glEnd();
 	  }
-	} else { // EM_SHAPE3D_ALLWAYSLIT
+	} else { // EM_SHAPE3D_ALWAYSLIT
 	  for ( ; polyIter != polyEnd; ++polyIter) {
 	    if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
 #if EM_DEBUG
@@ -281,7 +281,7 @@ void OpenGLVisitor::visit(Group* g) {
 				
 	vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
 	vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
-	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALLWAYSLIT) {
+	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) {
 	  for ( ; polyIter != polyEnd; polyIter++) {
 	    if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
 #if EM_DEBUG
@@ -304,7 +304,7 @@ void OpenGLVisitor::visit(Group* g) {
 	    }
 	    glEnd();
 	  }
-	} else { // EM_SHAPE3D_ALLWAYSLIT
+	} else { // EM_SHAPE3D_ALWAYSLIT
 	  for ( ; polyIter != polyEnd; polyIter++) {
 	    if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
 #if EM_DEBUG
@@ -331,7 +331,7 @@ void OpenGLVisitor::visit(Group* g) {
       } else {
 	// color polygon
 	glDisable(GL_TEXTURE_2D);
-	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALLWAYSLIT) {
+	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) {
 	  for ( ; polyIter != polyEnd; polyIter++) {
 	    if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
 #if EM_DEBUG
@@ -352,7 +352,7 @@ void OpenGLVisitor::visit(Group* g) {
 	    }
 	    glEnd();
 	  }
-	} else { // EM_SHAPE3D_ALLWAYSLIT
+	} else { // EM_SHAPE3D_ALWAYSLIT
 	  for ( ; polyIter != polyEnd; polyIter++) {
 	    if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
 #if EM_DEBUG

@@ -66,7 +66,7 @@ void AmbientLightVisitor::visit(Group* g) {
 
 	for ( ; shapeIter != shapeEnd; shapeIter++) {
 		//		if ((*shapeIter)->m_iProperties & EM_SHAPE3D_TRANS) continue;
-		if ((*shapeIter)->m_iProperties & (EM_SHAPE3D_HIDDEN | EM_SHAPE3D_ALLWAYSLIT)) continue;
+		if ((*shapeIter)->m_iProperties & (EM_SHAPE3D_HIDDEN | EM_SHAPE3D_ALWAYSLIT)) continue;
 
 		//TODO Flat polygons - who cares about flat polygons anyway
 		EM_COUT_D("AmbientLightVisitor::visit() shape lights " << 

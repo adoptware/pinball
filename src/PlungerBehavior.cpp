@@ -46,7 +46,7 @@ void PlungerBehavior::onTick() {
     m_iCounter = -1;
     m_iLaunchState = 1;
     m_fPower += 0.01f;
-    EM_COUT("PlungerBehavior::onTick " << m_fPower, 1);
+    EM_COUT("PlungerBehavior::onTick " << m_fPower, 0);
   } else {
     if (m_iLaunchState == 1) {
       // return released, fire ball
