@@ -43,16 +43,16 @@ int main(int argc, char *argv[]) {
 	char filename[256];
 	//	srandom(time(0));
 	
-	// Load config
+	// Load config from .emilia/pinball
 	Config::getInstance()->loadConfig();
 
-	// Create a engine
+	// Create a engine and remove emilia arguments
 	Engine* engine = new Engine(argc, argv);
 	engine->setLightning(0.0f, 0.1f);
 
 	// Add a score board and a menu.
 	Meny* menu = createMenus(engine);
-	Score* score = new Score();
+	Score* score = Score::getInstance();
 	engine->addBehavior(score);
 	
 	// Add a camera.
@@ -64,11 +64,11 @@ int main(int argc, char *argv[]) {
 		
 	engine->add(groupCT);
 
-	//groupCT->addBehavior(keyBeh);
- 	//groupCT->setTransform(0, 25, 25, 0, 0, 0);
+	// 	groupCT->addBehavior(keyBeh);
+	//	groupCT->setTransform(0, 25, 25, 0, 0, 0);
 	groupCT->add(groupCR);
-	//groupCR->addBehavior(keyRBeh);
- 	//groupCR->setTransform(0.0f, 0.0f, 0.0f, 0.175f, 0, 0);
+	// 	groupCR->addBehavior(keyRBeh);
+	//	groupCR->setTransform(0.0f, 0.0f, 0.0f, 0.175f, 0, 0);
 	groupCR->setCamera(camera);
 
 	Light* cl = new Light(1, 0.05f, 0, 1,1,1);
@@ -88,8 +88,8 @@ int main(int argc, char *argv[]) {
 
 	// Add pinball floor
 	Group* groupG = new Group();
-	sprintf(filename, "%s/floor2.jpg", Config::getInstance()->getDataDir());
-	EmTexture* tex = TextureUtil::loadTexture(filename);
+	sprintf(filename, "%s/floor2.png", Config::getInstance()->getDataDir());
+	EmTexture* tex = TextureUtil::getInstance()->loadTexture(filename);
 	Shape3D* gs = new Grid(tex, 80.0f, 40.0f, 16, 1.0f/16.0f, 1, 1, 1, 1);
 
 	engine->add(groupG);
@@ -134,8 +134,9 @@ int main(int argc, char *argv[]) {
   poly->add(5, 0,0, 0,0,0,0.5);        \
   poly->add(6, 0,0, 0,0,0,0.5);        \
   poly->add(7, 0,0, 0,0,0,0.5);        \
+  poly->setProperty(EM_POLY_TRANS);    \
   shadow->add(poly);                   \
-  shadow->setProperty(EM_SHAPE3D_TRANS);    \
+  shadow->setProperty(EM_SHAPE3D_USE_TRANS);         \
   shadow->countNormals();              \
                                        \
   BounceBehavior* bouBeh = new BounceBehavior(pbl);  \
@@ -152,15 +153,17 @@ int main(int argc, char *argv[]) {
 
 	Group* gb1 = new Group();
   BALL(1, 0, 0, PBL_BALL_1, 4, gb1);
+
+	Group* gb2 = new Group();
+	BALL(0, 1, 0, PBL_BALL_2, 0, gb2);
+
+	Group* gb3 = new Group();
+	BALL(0, 0, 1, PBL_BALL_3, -4, gb3);
 	/*
-	BALL(0, 1, 0, PBL_BALL_2, 0);
-
-	BALL(0, 0, 1, PBL_BALL_3, -4);
-
 	BALL(1, 0, 1, PBL_BALL_4, -8);
 	*/
 
-	groupCT->addBehavior(new EyeBehavior(gb1));
+	groupCT->addBehavior(new EyeBehavior(gb1, gb2, gb3));
 
 	// Reset pinball
 	SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
@@ -172,6 +175,8 @@ int main(int argc, char *argv[]) {
 	int all = 0;
 	while (exit == 0) {
 		engine->tick();
+		engine->tick();
+		//		engine->tick();
 		if (render) {
 			engine->render();
 			score->draw();
@@ -190,7 +195,7 @@ int main(int argc, char *argv[]) {
 			Keyboard::waitForKey();
 			Keyboard::clear();
 		}
-		render = engine->limitFPS(75);
+		render = engine->limitFPS(60);
 	}
 
 	extern float em_groups_m, em_shapes_m, em_bounds_m, em_polygons_m;

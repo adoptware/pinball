@@ -46,6 +46,16 @@ void fctTexture(Meny * m) {
 	EM_COUT("texture", 1);
 }	
 
+void fctView(Meny * m) {
+	if (Config::getInstance()->getView() == 0) {
+		Config::getInstance()->setView(1);
+		m->setName("view locked");
+	} else {
+		Config::getInstance()->setView(0);
+		m->setName("view follows ball");
+	}
+}
+
 Meny* createMenus(Engine * engine) {
 	char filename[256];
 	// Load a font
@@ -84,6 +94,14 @@ Meny* createMenus(Engine * engine) {
 	menygrx->setAction(EM_MENU_SUB);
 	menygrx->setFunction(fctGrx);
 	menycfg->addMeny(menygrx);
+
+	Meny* menyview = new Meny("view follows ball", engine);
+	if (Config::getInstance()->getView() == 1) {
+		menyview->setName("view locked");
+	}
+	menyview->setAction(EM_MENU_SUB);
+	menyview->setFunction(fctView);
+	menycfg->addMeny(menyview);
 
 	Meny* menytex = new Meny("texture filter nearest", engine);
 	if (Config::getInstance()->getGLFilter() == GL_LINEAR) {

@@ -1,0 +1,66 @@
+
+File formats
+============
+
+There are to files types (in addition to png and wav files), pbl and
+emi files. The emi files is a 3D file format and the pbl file the levels
+files. This game is still at alpha stage so do not be disappointed when
+I without notice changes the formats !!!
+
+Emi-files.
+=========
+shp {	                                <-- every file has a shape block
+  vts { 4 }                             <-- the number of vertices
+  pls { 1 }                           	<-- the number of polygons
+  vtx { -2.04 75144 -0.5503924 0.0 }    <-- vertex index 0 at x,y,z
+  vtx { 2.0475144 -0.5503924 0.0 }      <-- vertex index 1
+  vtx { 2.0475144 0.5503924 0.0 }
+  vtx { -2.0475144 0.5503924 0.0 }
+  ply {                                 <-- polygon index 0
+    pes { 4 }                           <-- number of edges in polygon
+    ple { 3 0.0 1.0 1.0 0.0 0.0 1.0 }   <-- (vertex index, r, g, b, a, u, v)
+    ple { 2 1.0 1.0 1.0 0.0 0.0 1.0 }
+    ple { 1 1.0 0.0 1.0 0.0 0.0 1.0 }
+    ple { 0 0.0 0.0 1.0 0.0 0.0 1.0 }
+  }
+}
+
+Pbl-files
+=========
+object {                 <-- The pbl files are built by a nubmer of objects
+  grid_tex.emi           <-- First line is the name if the visible 3D shape, if non write '?'
+  collision_other        <-- Should we use collision? 'collision_same/collision_other/no_collision'
+    grid_tex_co.emi      <-- If 'collision_other' this is the name of the 3D file used for collision
+                             else it will be empty
+  -1.5 -0.98 -34         <-- x, y, z position
+  0 0 0                  <-- x, y, z rotation
+  state_behavior {       <-- An object may have one behavior, 'state_behavior' is the most usuful
+    state_item {         <-- An state_behavior may have a number of states 'state_item'
+      1102 1101 0        <-- (signal which will invoke this state, signal sent on collision,
+                              delay of the sent signal)
+      move               <-- Moves the the object to a location 'move/no_move'
+                         <-- In case of 'no_move' the next three line are excluded
+        0.0005           <-- The size of the step
+        16.5 0 -24       <-- x, y, z position of where to move
+        0 0.05 0         <-- x, y, z position of how to rotate
+      no_light           <-- 'light/no_light', lights are added separate items to the behavior
+      property           <-- 'property/no_property'
+        0                <-- A property if 'no_property' this line is excluded
+      texcoord           <-- 'texcoord/no_texcoord', Changes u, v for the polygon
+        tiles.png        <-- Name of texture
+        4                <-- Number of u,v coordinates
+        0 0              <-- First u,v in first polygon in first shape
+        0.125 0          <-- Second u,v in first polygon in first shape
+        0.125 0.125
+        0 0.125
+    }
+  }
+  properties {           <-- Properties to speed up the rendering of the object
+    alpha_test
+    no_light
+    transparent
+    transform_once
+    user_group1          <-- user_group1 means collision detection is not perfomed between this
+                        <-- this and other objects with property user_group1
+  }
+}

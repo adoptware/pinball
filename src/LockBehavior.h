@@ -26,11 +26,11 @@ class LockBehavior : public Behavior {
 		void StdOnSignal();
 		void StdOnCollision();
 		void onTick() {};
+		int m_iBall;
 	private:
 		int m_iActiveSignal;
 		int m_iUnActiveSignal;
 		int m_iLockSignal;
-		bool m_bLock;
 		bool m_bActive;
 };
 

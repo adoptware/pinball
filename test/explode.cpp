@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 	engine->setEngineCamera(groupCamera);
 
 	// Load a texture
-	EmTexture* texture = TextureUtil::loadTexture(argv[1]);
+	EmTexture* texture = TextureUtil::getInstance()->loadTexture(argv[1]);
 
 	// Add a cube
 	Group* groupCube = new Group();

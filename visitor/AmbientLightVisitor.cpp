@@ -68,18 +68,21 @@ void AmbientLightVisitor::visit(Group* g) {
 		//		if ((*shapeIter)->m_iProperties & EM_SHAPE3D_TRANS) continue;
 		if ((*shapeIter)->m_iProperties & EM_SHAPE3D_HIDDEN) continue;
 
-		if ((*shapeIter)->m_iProperties & EM_SHAPE3D_FLAT) {
-			vector<Polygon*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
-			vector<Polygon*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
-			for (; polyIter != polyEnd; polyIter++) {
-				float fAngle = (*polyIter)->m_nmlTrans.y;
-				float fLight = fAngle/2 + 0.5;
-				//			float fLight = 0.5;
-				(*polyIter)->m_colFlatLight.r = fLight * m_fStrength + m_fBackground;
-				(*polyIter)->m_colFlatLight.r = EM_MIN(1.0, (*polyIter)->m_colFlatLight.r);
-				(*polyIter)->m_colFlatLight.b = (*polyIter)->m_colFlatLight.g = (*polyIter)->m_colFlatLight.r;
-			}
-		} else {
+		//TODO Flat polygons
+
+// 		if ((*shapeIter)->m_iProperties & EM_SHAPE3D_FLAT) {
+// 			vector<Polygon*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
+// 			vector<Polygon*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
+// 			for (; polyIter != polyEnd; polyIter++) {
+// 				float fAngle = (*polyIter)->m_nmlTrans.y;
+// 				float fLight = fAngle/2 + 0.5;
+// 				//			float fLight = 0.5;
+// 				(*polyIter)->m_colFlatLight.r = fLight * m_fStrength + m_fBackground;
+// 				(*polyIter)->m_colFlatLight.r = EM_MIN(1.0, (*polyIter)->m_colFlatLight.r);
+// 				(*polyIter)->m_colFlatLight.b = (*polyIter)->m_colFlatLight.g = (*polyIter)->m_colFlatLight.r;
+// 			}
+// 		} else 
+		{
 
 			EM_COUT("AmbientLightVisitor::visit() shape lights " << 
 							(*shapeIter)->m_vLight.size() << " normal " << 
@@ -88,11 +91,11 @@ void AmbientLightVisitor::visit(Group* g) {
 			vector<Color>::iterator lightIter = (*shapeIter)->m_vLight.begin();
 			vector<Color>::iterator lightEnd = (*shapeIter)->m_vLight.end();
 			vector<Color>::iterator specularIter = (*shapeIter)->m_vSpecular.begin();
-			vector<Color>::iterator speculartEnd = (*shapeIter)->m_vSpecular.end();
+			//vector<Color>::iterator specularEnd = (*shapeIter)->m_vSpecular.end();
 			vector<Vertex3D>::iterator nmlTransIter = (*shapeIter)->m_vNmlTrans.begin();
-			vector<Vertex3D>::iterator nmlTransEnd = (*shapeIter)->m_vNmlTrans.end();
+			//vector<Vertex3D>::iterator nmlTransEnd = (*shapeIter)->m_vNmlTrans.end();
 			vector<Vertex3D>::iterator nmlAlignIter = (*shapeIter)->m_vNmlAlign.begin();
-			vector<Vertex3D>::iterator nmlAlignEnd = (*shapeIter)->m_vNmlAlign.end();
+			//vector<Vertex3D>::iterator nmlAlignEnd = (*shapeIter)->m_vNmlAlign.end();
 			
 			for ( ; lightIter != lightEnd; 
 						lightIter++, nmlTransIter++, nmlAlignIter++, specularIter++) {

@@ -25,8 +25,6 @@ class KeyRotBehavior : public Behavior
 		virtual void onCollision(const Vertex3D & vtxWall, const Vertex3D & vtxOwn, Group * g) {};
 		virtual void onSignal(int signal, Group * sender) {};
 		void onTick();
-	private:
-		float m_x, m_y, m_z;
 };
 
 #endif // KEYROTBEHAVIOR_H
