@@ -10,8 +10,6 @@
 #ifndef KEYBOARD_H
 #define KEYBOARD_H
 
-#define KEY_MAX 512
-
 #ifndef PRIVATE_H
 #error Must include Private.h before Keyboard.h
 #endif
@@ -86,6 +84,10 @@
 #define SDLK_COMPOSE KEY_ALTGR
 
 #endif // EM_USE_ALLEGRO
+
+#ifndef KEY_MAX
+#define KEY_MAX 512
+#endif
 
 /** @author Henrik Enqvist */
 

@@ -24,7 +24,7 @@ class ArmBehavior : public Behavior {
   void onTick();
   void StdOnSignal();
   void StdEmptyOnCollision() {};
-  void doArm(SDLKey key);
+  void doArm(EMKey key);
   inline void setSound(int s) { m_iSound = s; };
   inline int getSound() { return m_iSound; };
   inline void setIsRight(bool r) { m_bRight = r; };
