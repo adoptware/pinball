@@ -110,7 +110,8 @@ protected:
     {
       list<string>::iterator it = listHighScores.begin();
 
-      for (int i=0; i<10 && it!=listHighScores.end(); i++, it++) {
+      for (int i=0; i<10 && it!=listHighScores.end(); i++, it++)
+      {
 	sRow = (*it);
         p_EmFont->printRowCenter(sRow.c_str(), nStartRow + i);
       }
