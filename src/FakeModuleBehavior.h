@@ -27,8 +27,8 @@ class FakeModuleBehavior : public Behavior {
     strncpy(m_Name, name, 255);
   }
   void onTick() {};
-  void onCollision(const Vertex3D & vtxWall, const Vertex3D & vtxOwn, Group * g) {};
-  void onSignal(int signal, Group * sender) {};
+  void onCollision(const Vertex3D &, const Vertex3D &, Group *) {};
+  void onSignal(int, Group *) {};
  private:
   char m_Name[256];
 };

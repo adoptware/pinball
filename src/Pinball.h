@@ -1,21 +1,22 @@
-#define PBL_NULL						0x0
-#define PBL_LOCK						0x1
-#define PBL_BALL_1					0x2
-#define PBL_BALL_2					0x4
-#define PBL_BALL_3					0x8
-#define PBL_BALL_4					0x10
-#define PBL_WALLS						0x20	
-#define PBL_WALLS_ONE				0x40
+#define PBL_NULL			0x0
+#define PBL_LOCK			0x1
+#define PBL_BALL_1	                0x2
+#define PBL_BALL_2			0x4
+#define PBL_BALL_3			0x8
+#define PBL_BALL_4			0x10
+#define PBL_WALLS			0x20	
+#define PBL_WALLS_ONE			0x40
 #define PBL_UNACTIVE_ARM		0x80
 #define PBL_ACTIVE_ARM			0x100
 
-#define PBL_BUMPER					0x400
+#define PBL_BUMPER			0x400
 #define PBL_TRAP_BOUNCE			0x800
-#define PBL_GROUP1					0x1000
-#define PBL_GROUP2					0x2000
-#define PBL_GROUP3					0x4000
-#define PBL_GROUP4					0x8000
-#define PBL_TRAP            0x10000
+#define PBL_GROUP1			0x1000
+#define PBL_GROUP2			0x2000
+#define PBL_GROUP3			0x4000
+#define PBL_GROUP4			0x8000
+#define PBL_TRAP                        0x10000
+#define PBL_PLUNGER                     0x20000
 
 #define PBL_TYPE_ARMBEH      1
 #define PBL_TYPE_BOUNCEBEH   2
@@ -28,22 +29,24 @@
 #define PBL_TYPE_TRIGGERBEH  9
 #define PBL_TYPE_SCRIPTBEH   10
 #define PBL_TYPE_FAKEMODULEBEH  11
+#define PBL_TYPE_PLUNGERBEH  12
 
 #define PBL_SIG_NULL            -1
 
-#define PBL_SIG_RESET_ALL				666
+#define PBL_SIG_RESET_ALL	666
 #define PBL_SIG_TILT            667
-#define PBL_SIG_GAME_OVER        668
-#define PBL_SIG_GAME_START       669
-#define PBL_SIG_GAME_PAUSE       670
+#define PBL_SIG_GAME_OVER       668
+#define PBL_SIG_GAME_START      669
+#define PBL_SIG_GAME_PAUSE      670
+#define PBL_SIG_TILT_WARNING    671
 
-#define PBL_SIG_LNUDGE          671
-#define PBL_SIG_RNUDGE          672
-#define PBL_SIG_BNUDGE          673
-#define PBL_SIG_TNUDGE          674
-#define PBL_SIG_LEFTARM_ON      681
-#define PBL_SIG_RIGHTARM_ON     682
-#define PBL_SIG_MULTIBALL_OFF   691
+#define PBL_SIG_LNUDGE          681
+#define PBL_SIG_RNUDGE          682
+#define PBL_SIG_BNUDGE          683
+#define PBL_SIG_TNUDGE          684
+#define PBL_SIG_LEFTARM_ON      691
+#define PBL_SIG_RIGHTARM_ON     692
+#define PBL_SIG_MULTIBALL_OFF   771
 //#define PBL_SIG_EXTRABALL       692
 
 // #define PBL_SIG__grp_type_act/un    (grp)(type)(0)(1=on,2=off)

@@ -21,6 +21,12 @@ class Node {
   void setTranslation(float x, float y, float z);
   void getTranslation(float & x, float & y, float & z);
   void addTranslation(float x, float y, float z);
+  void getTranslation(Vertex3D & vtx) {
+    this->getTranslation(vtx.x, vtx.y, vtx.z);
+  };
+  void setTranslation(Vertex3D & vtx) {
+    this->setTranslation(vtx.x, vtx.y, vtx.z);
+  };
   inline void addTranslation(Vertex3D & vtx) {
     m_vtxT.x += vtx.x;
     m_vtxT.y += vtx.y;

@@ -45,6 +45,7 @@
 #include "StateBehavior.h"
 #include "Script.h"
 #include "FakeModuleBehavior.h"
+#include "PlungerBehavior.h"
 
 #define EmReadCmp(file_, ist_, str_, cmp_) \
 	this->readNextToken(file_, ist_, str_);               \
@@ -411,171 +412,196 @@ void Loader::loadBehaviorLight(ifstream & file, istringstream & ist,
 }
 
 void Loader::loadBumperBehavior(ifstream & file, istringstream & ist, Engine * engine, Group * group) {
-	EM_COUT("Loader::loadBumperBehavior", 0);
+  EM_COUT("Loader::loadBumperBehavior", 0);
+  
+  string str;
+  
+  EmReadCmp(file, ist, str, "{");
+  
+  BumperBehavior* beh = new BumperBehavior();
+  group->setBehavior(beh);
+  
+  this->readNextToken(file, ist, str);
+  if (str == "sound") {
+    string soundname;
+    this->readNextToken(file, ist, soundname);
+    string filename = string(Config::getInstance()->getDataSubDir()) + "/" + soundname; 
+    int sound = SoundUtil::getInstance()->loadSample(filename.c_str());
+    beh->setSound(sound);
+  } else if (str == "no_sound"){
+  } else {
+    throw string("No sound field in BumperBehavior");
+  }
+  group->setUserProperty(PBL_BUMPER);
+  
+  this->loadMisc(file, ist, engine, group, beh);
+}
 
-	string str;
-
-	EmReadCmp(file, ist, str, "{");
-
-	BumperBehavior* beh = new BumperBehavior();
-	group->setBehavior(beh);
-
-	this->readNextToken(file, ist, str);
-	if (str == "sound") {
-		string soundname;
-		this->readNextToken(file, ist, soundname);
-		string filename = string(Config::getInstance()->getDataSubDir()) + "/" + soundname; 
-		int sound = SoundUtil::getInstance()->loadSample(filename.c_str());
-		beh->setSound(sound);
-	} else if (str == "no_sound"){
-	} else {
-		throw string("No sound field in BumperBehavior");
-	}
-	group->setUserProperty(PBL_BUMPER);
-
-	this->loadMisc(file, ist, engine, group, beh);
+void Loader::loadPlungerBehavior(ifstream & file, istringstream & ist, Engine * engine, Group * group) {
+  EM_COUT("Loader::loadPlungerBehavior", 0);
+  
+  string str;
+  
+  EmReadCmp(file, ist, str, "{");
+  
+  PlungerBehavior* beh = new PlungerBehavior();
+  group->setBehavior(beh);
+  
+  this->readNextToken(file, ist, str);
+  if (str == "sound") {
+    string soundname;
+    this->readNextToken(file, ist, soundname);
+    string filename = string(Config::getInstance()->getDataSubDir()) + "/" + soundname; 
+    int sound = SoundUtil::getInstance()->loadSample(filename.c_str());
+    beh->setSound(sound);
+  } else if (str == "no_sound"){
+  } else {
+    throw string("No sound field in PlungerBehavior");
+  }
+  group->setUserProperty(PBL_PLUNGER);
+  
+  this->loadMisc(file, ist, engine, group, beh);
 }
 
 void Loader::loadStateItem(ifstream & file, istringstream & ist, Engine * engine, Group * group, Behavior * beh) {
-	EM_COUT("Loader::loadStateItem", 0);
-
-	string str;
+  EM_COUT("Loader::loadStateItem", 0);
+  
+  string str;
+  
+  EmAssert(beh != NULL, "Behavior NULL in loadBehaviorLight");
+  EmAssert(beh->getType() == PBL_TYPE_STATEBEH, "Not StateBehavior");
+  
+  EmReadCmp(file, ist, str, "{");
+  
+  string asig;
+  string csig;
+  int cstate, delay, dstate;
+  this->readNextToken(file, ist, asig); 
+  this->readNextToken(file, ist, csig);
+  this->readNextToken(file, ist, cstate);
+  this->readNextToken(file, ist, dstate);
+  this->readNextToken(file, ist, delay);
+  StateItem* stateitem = new StateItem();
+  stateitem->setActSig(this->getSignal(asig.c_str()));
+  stateitem->setCollSig(this->getSignal(csig.c_str()));
+  stateitem->setCollState(cstate);
+  stateitem->setDelayState(dstate, delay);
+  ((StateBehavior*)beh)->addStateItem(stateitem);
+  
+  this->readNextToken(file, ist, str);
+  if (str == "move") {
+    ((StateBehavior*)beh)->useMove(true);
+    float tx, ty, tz, rx, ry, rz;
+    int steps;
+    this->readNextToken(file, ist, steps);
+    this->readNextToken(file, ist, tx); 
+    this->readNextToken(file, ist, ty); 
+    this->readNextToken(file, ist, tz);
+    this->readNextToken(file, ist, rx); 
+    this->readNextToken(file, ist, ry); 
+    this->readNextToken(file, ist, rz);
+    stateitem->setMoveSteps(steps);
+    stateitem->setTr(tx, ty, tz);
+    stateitem->setRot(rx, ry, rz);
+  } else if (str == "no_move") {
+  } else {
+    throw string("No move field in StateItem");
+  }
+  
+  this->readNextToken(file, ist, str);
+  if (str == "light") {
+    stateitem->setLight(true);
+  } else if (str == "no_light"){
+    stateitem->setLight(false);
+  } else {
+    throw string("No light field in StateItem");
+  }
+  
+  this->readNextToken(file, ist, str);
+  if (str == "sound") {
+    string soundname;
+    this->readNextToken(file, ist, soundname);
+    string filename = string(Config::getInstance()->getDataSubDir()) + "/" + soundname; 
+    int sound = SoundUtil::getInstance()->loadSample(filename.c_str());
+    stateitem->setSound(sound);
+  } else if (str == "no_sound"){
+  } else {
+    throw string("No sound field in StateItem");
+  }
+  
+  this->readNextToken(file, ist, str);
+  if (str == "music") {
+    string musicname;
+    this->readNextToken(file, ist, musicname);
+    string filename = string(Config::getInstance()->getDataSubDir()) + "/" + musicname; 
+    int music = SoundUtil::getInstance()->loadMusic(filename.c_str());
+    stateitem->setMusic(music);
+  } else if (str == "no_music"){
+  } else {
+    throw string("No music field in StateItem");
+  }
+  
+  this->readNextToken(file, ist, str);
+  if (str == "property") {
+    int p;
+    this->readNextToken(file, ist, p);
+    stateitem->setProperty(p);
+  } else if (str == "no_property") {
+  } else {
+    throw string("No property field in StateItem");
+  }
+  
+  this->readNextToken(file, ist, str);
+  if (str == "texcoord") {
+    ((StateBehavior*)beh)->useTexCoord(true);
+    int count;
+    this->readNextToken(file, ist, count);
+    for (int a=0; a<count; ++a) {
+      float u, v;
+      this->readNextToken(file, ist, u); 
+      this->readNextToken(file, ist, v);
+      stateitem->addTexCoord(u, v);
+    }
+  } else if (str == "no_texcoord") {
+    ((StateBehavior*)beh)->useTexCoord(false);
+  } else {
+    throw string("No texcoord field in StateItem");
+  }
+  // shape
+  this->readNextToken(file, ist, str);
+  if (str == "shape") {
+    ((StateBehavior*)beh)->useShape(true);
+    int count;
+    this->readNextToken(file, ist, count);
+    for (int a=0; a<count; ++a) {
+      int s;
+      this->readNextToken(file, ist, s);
+      if (s == 1) {
+	stateitem->addShapeEnable(a, true);
+      } else {
+	stateitem->addShapeEnable(a, false);
+      }
+    }
+  } else if (str == "no_shape") {
+    ((StateBehavior*)beh)->useShape(false);
+  } else {
+    throw string("No shape field in StateItem");
+  }
 	
-	EmAssert(beh != NULL, "Behavior NULL in loadBehaviorLight");
-	EmAssert(beh->getType() == PBL_TYPE_STATEBEH, "Not StateBehavior");
-
-	EmReadCmp(file, ist, str, "{");
-
-	string asig;
-	string csig;
-	int cstate, delay, dstate;
-	this->readNextToken(file, ist, asig); 
-	this->readNextToken(file, ist, csig);
-	this->readNextToken(file, ist, cstate);
-	this->readNextToken(file, ist, dstate);
-	this->readNextToken(file, ist, delay);
-	StateItem* stateitem = new StateItem();
-	stateitem->setActSig(this->getSignal(asig.c_str()));
-	stateitem->setCollSig(this->getSignal(csig.c_str()));
-	stateitem->setCollState(cstate);
-	stateitem->setDelayState(dstate, delay);
-	((StateBehavior*)beh)->addStateItem(stateitem);
-
-	this->readNextToken(file, ist, str);
-	if (str == "move") {
-		((StateBehavior*)beh)->useMove(true);
-		float tx, ty, tz, rx, ry, rz;
-		int steps;
-		this->readNextToken(file, ist, steps);
-		this->readNextToken(file, ist, tx); 
-		this->readNextToken(file, ist, ty); 
-		this->readNextToken(file, ist, tz);
-		this->readNextToken(file, ist, rx); 
-		this->readNextToken(file, ist, ry); 
-		this->readNextToken(file, ist, rz);
-		stateitem->setMoveSteps(steps);
-		stateitem->setTr(tx, ty, tz);
-		stateitem->setRot(rx, ry, rz);
-	} else if (str == "no_move") {
-	} else {
-		throw string("No move field in StateItem");
-	}
-
-	this->readNextToken(file, ist, str);
-	if (str == "light") {
-		stateitem->setLight(true);
-	} else if (str == "no_light"){
-		stateitem->setLight(false);
-	} else {
-		throw string("No light field in StateItem");
-	}
-
-	this->readNextToken(file, ist, str);
-	if (str == "sound") {
-		string soundname;
-		this->readNextToken(file, ist, soundname);
-		string filename = string(Config::getInstance()->getDataSubDir()) + "/" + soundname; 
-		int sound = SoundUtil::getInstance()->loadSample(filename.c_str());
-		stateitem->setSound(sound);
-	} else if (str == "no_sound"){
-	} else {
-		throw string("No sound field in StateItem");
-	}
-
-	this->readNextToken(file, ist, str);
-	if (str == "music") {
-		string musicname;
-		this->readNextToken(file, ist, musicname);
-		string filename = string(Config::getInstance()->getDataSubDir()) + "/" + musicname; 
-		int music = SoundUtil::getInstance()->loadMusic(filename.c_str());
-		stateitem->setMusic(music);
-	} else if (str == "no_music"){
-	} else {
-		throw string("No music field in StateItem");
-	}
-
-	this->readNextToken(file, ist, str);
-	if (str == "property") {
-		int p;
-		this->readNextToken(file, ist, p);
-		stateitem->setProperty(p);
-	} else if (str == "no_property") {
-	} else {
-		throw string("No property field in StateItem");
-	}
-
-
-	this->readNextToken(file, ist, str);
-	if (str == "texcoord") {
-		((StateBehavior*)beh)->useTexCoord(true);
-		int count;
- 		this->readNextToken(file, ist, count);
-		for (int a=0; a<count; ++a) {
-			float u, v;
-			this->readNextToken(file, ist, u); 
-			this->readNextToken(file, ist, v);
-			stateitem->addTexCoord(u, v);
-		}
-	} else if (str == "no_texcoord") {
-		((StateBehavior*)beh)->useTexCoord(false);
-	} else {
-		throw string("No texcoord field in StateItem");
-	}
-	// shape
-	this->readNextToken(file, ist, str);
-	if (str == "shape") {
-		((StateBehavior*)beh)->useShape(true);
-		int count;
-		this->readNextToken(file, ist, count);
-		for (int a=0; a<count; ++a) {
-			int s;
-			this->readNextToken(file, ist, s);
-			if (s == 1) {
-				stateitem->addShapeEnable(a, true);
-			} else {
-				stateitem->addShapeEnable(a, false);
-			}
-		}
-	} else if (str == "no_shape") {
-		((StateBehavior*)beh)->useShape(false);
-	} else {
-		throw string("No shape field in StateItem");
-	}
-	
-	this->loadMisc(file, ist, engine, group, beh);
+  this->loadMisc(file, ist, engine, group, beh);
 }
 
 void Loader::loadStateBehavior(ifstream & file, istringstream & ist, Engine * engine, Group * group) {
-	EM_COUT("state", 0);
+  EM_COUT("state", 0);
 	
-	string str;
+  string str;
 
-	EmReadCmp(file, ist, str, "{");
+  EmReadCmp(file, ist, str, "{");
 		
-	StateBehavior* b = new StateBehavior();
-	group->setBehavior(b);
+  StateBehavior* b = new StateBehavior();
+  group->setBehavior(b);
 
-	this->loadMisc(file, ist, engine, group, b);
+  this->loadMisc(file, ist, engine, group, b);
 }
 
 /****************************************************************
@@ -583,55 +609,55 @@ void Loader::loadStateBehavior(ifstream & file, istringstream & ist, Engine * en
  ****************************************************************/
 
 void Loader::loadScript(ifstream & file, istringstream & ist, Engine *, Group * group) {
-	EM_COUT("Loader::loadScript", 0);
-	EmAssert(group != NULL, "Group NULL in loadMisc");
+  EM_COUT("Loader::loadScript", 0);
+  EmAssert(group != NULL, "Group NULL in loadMisc");
 
-	string str;
-	this->clearSignalVariable();
-	Script * script = new Script();
+  string str;
+  this->clearSignalVariable();
+  Script * script = new Script();
 
-	EmReadCmp(file, ist, str, "{");
+  EmReadCmp(file, ist, str, "{");
 
-	this->readNextToken(file, ist, str);
-	while (str != "}") {
-		QueryItem * qi = new QueryItem();
-		// read query
-		if (str == "onsignal") {
-			qi->setQuery(EM_SCRIPT_ONSIGNAL);
-			int isig;
-			this->readNextToken(file, ist, isig);
-			for (; isig > 0; --isig) {
-				int sig;
-				this->readNextToken(file, ist, sig);
-				qi->addQueryParm(sig);
-			}
-		} else {
-			throw string("UNKNOWN in script query block ") + str;
-		}
-		// read action
-		this->readNextToken(file, ist, str);
-		if (str == "sendsignal") {
-			qi->setAction(EM_SCRIPT_SENDSIGNAL);
-			int sig, delay;
-			this->readNextToken(file, ist, sig);
-			this->readNextToken(file, ist, delay);
-			qi->addActionParm(sig);
-			qi->addActionParm(delay);
-		} else if (str == "setvar") {
-			qi->setAction(EM_SCRIPT_SETVAR);
-			int id, val;
-			this->readNextToken(file, ist, id);
-			this->readNextToken(file, ist, val);
-			qi->addActionParm(id);
-			qi->addActionParm(val);
-		} else {
-			throw string("UNKNOWN in script action block ") + str;
-		}
-		// done
-		script->addQueryItem(qi);
-		this->readNextToken(file, ist, str);
-	}
-	group->setBehavior(script);
+  this->readNextToken(file, ist, str);
+  while (str != "}") {
+    QueryItem * qi = new QueryItem();
+    // read query
+    if (str == "onsignal") {
+      qi->setQuery(EM_SCRIPT_ONSIGNAL);
+      int isig;
+      this->readNextToken(file, ist, isig);
+      for (; isig > 0; --isig) {
+	int sig;
+	this->readNextToken(file, ist, sig);
+	qi->addQueryParm(sig);
+      }
+    } else {
+      throw string("UNKNOWN in script query block ") + str;
+    }
+    // read action
+    this->readNextToken(file, ist, str);
+    if (str == "sendsignal") {
+      qi->setAction(EM_SCRIPT_SENDSIGNAL);
+      int sig, delay;
+      this->readNextToken(file, ist, sig);
+      this->readNextToken(file, ist, delay);
+      qi->addActionParm(sig);
+      qi->addActionParm(delay);
+    } else if (str == "setvar") {
+      qi->setAction(EM_SCRIPT_SETVAR);
+      int id, val;
+      this->readNextToken(file, ist, id);
+      this->readNextToken(file, ist, val);
+      qi->addActionParm(id);
+      qi->addActionParm(val);
+    } else {
+      throw string("UNKNOWN in script action block ") + str;
+    }
+    // done
+    script->addQueryItem(qi);
+    this->readNextToken(file, ist, str);
+  }
+  group->setBehavior(script);
 }
 
 /****************************************************************
@@ -679,64 +705,66 @@ void Loader::loadModule(ifstream & file, istringstream & ist, Engine *, Group * 
 
 /* Things added to objects, e.g. lights, animation, behavior*/
 void Loader::loadMisc(ifstream & file, istringstream & ist, Engine * engine, Group * group, Behavior * beh) {
-	EM_COUT("Loader::loadMisc", 0);
-	EmAssert(engine != NULL && group != NULL, "Engine or group NULL in loadMisc");
+  EM_COUT("Loader::loadMisc", 0);
+  EmAssert(engine != NULL && group != NULL, "Engine or group NULL in loadMisc");
 
-	string str;
+  string str;
 
-	this->readNextToken(file, ist, str);
-	while (str != "}") {
-		if (str == "properties"){
-			this->loadProperties(file, ist, group);
-		} else if (str == "arm_behavior") {
-			this->loadArmBehavior(file, ist, group);
-		} else if (str == "state_behavior") {
-			this->loadStateBehavior(file, ist, engine, group);
-		} else if (str == "bumper_behavior") {
-			this->loadBumperBehavior(file, ist, engine, group);
-		} else if (str == "light") {
-			this->loadBehaviorLight(file, ist, engine, group, beh);
-		} else if (str == "state_item") {
-			this->loadStateItem(file, ist, engine, group, beh);
-		} else if (str == "animation") {
-			this->loadAnimation(file, ist, engine, group, beh);
-		} else if (str == "shape") {
-			this->loadShape(file, ist, engine, group, beh);
-		} else if (str == "script") {
-			this->loadScript(file, ist, engine, group);
-		} else if (str == "module") {
-			this->loadModule(file, ist, engine, group);
-		} else {
-			cerr << str << endl;
-			throw string("UNKNOWN in misc block");
-		}
-		this->readNextToken(file, ist, str);
-	}
+  this->readNextToken(file, ist, str);
+  while (str != "}") {
+    if (str == "properties"){
+      this->loadProperties(file, ist, group);
+    } else if (str == "arm_behavior") {
+      this->loadArmBehavior(file, ist, group);
+    } else if (str == "state_behavior") {
+      this->loadStateBehavior(file, ist, engine, group);
+    } else if (str == "bumper_behavior") {
+      this->loadBumperBehavior(file, ist, engine, group);
+    } else if (str == "plunger_behavior") {
+      this->loadPlungerBehavior(file, ist, engine, group);
+    } else if (str == "light") {
+      this->loadBehaviorLight(file, ist, engine, group, beh);
+    } else if (str == "state_item") {
+      this->loadStateItem(file, ist, engine, group, beh);
+    } else if (str == "animation") {
+      this->loadAnimation(file, ist, engine, group, beh);
+    } else if (str == "shape") {
+      this->loadShape(file, ist, engine, group, beh);
+    } else if (str == "script") {
+      this->loadScript(file, ist, engine, group);
+    } else if (str == "module") {
+      this->loadModule(file, ist, engine, group);
+    } else {
+      cerr << str << endl;
+      throw string("UNKNOWN in misc block");
+    }
+    this->readNextToken(file, ist, str);
+  }
 }
 
 /* Top level object */
 Group * Loader::loadStdObject(ifstream & file, istringstream & ist, Engine * engine) {
-	string str;
+  string str;
 
-	this->readNextToken(file, ist, str);
-	Group * group = new Group();
-	group->setName(str.c_str());
-	EM_COUT("Loader::loadStdObject " << str, 0);
+  this->readNextToken(file, ist, str);
+  Group * group = new Group();
+  group->setName(str.c_str());
+  EM_COUT("Loader::loadStdObject " << str, 0);
 
-	EmReadCmp(file, ist, str, "{");
+  EmReadCmp(file, ist, str, "{");
 
-	float tx, ty, tz, rx, ry, rz;
-	this->readNextToken(file, ist, tx); 
-	this->readNextToken(file, ist, ty); 
-	this->readNextToken(file, ist, tz);
-	this->readNextToken(file, ist, rx); 
-	this->readNextToken(file, ist, ry);	
-	this->readNextToken(file, ist, rz);
+  float tx, ty, tz, rx, ry, rz;
+  this->readNextToken(file, ist, tx); 
+  this->readNextToken(file, ist, ty); 
+  this->readNextToken(file, ist, tz);
+  this->readNextToken(file, ist, rx); 
+  this->readNextToken(file, ist, ry);	
+  this->readNextToken(file, ist, rz);
 	
-	group->setTransform(tx, ty, tz, rx, ry, rz);
+  group->setTransform(tx, ty, tz, rx, ry, rz);
 
-	this->loadMisc(file, ist, engine, group, NULL);
-	return group;
+  this->loadMisc(file, ist, engine, group, NULL);
+  return group;
 }
 
 /****************************************************************
@@ -744,172 +772,172 @@ Group * Loader::loadStdObject(ifstream & file, istringstream & ist, Engine * eng
  ****************************************************************/
 
 void Loader::loadShape(ifstream & file, istringstream & ist, Engine *, Group * group, Behavior * beh) {
-	EM_COUT("Loader::loadShape", 0);
-
-	string str;
-
-	Shape3D * s = this->loadShape3DChunk(file, ist);
-	if (s != NULL) {
-		group->addShape3D(s); 
-	} else {
-		cerr << "could not load shape" << endl;
-	}
+  EM_COUT("Loader::loadShape", 0);
+  
+  string str;
+  
+  Shape3D * s = this->loadShape3DChunk(file, ist);
+  if (s != NULL) {
+    group->addShape3D(s); 
+  } else {
+    cerr << "could not load shape" << endl;
+  }
 }
 
 void Loader::readUnknown(ifstream & file, istringstream & ist) {
-	EM_COUT("Loader::readUnknown", 0);
-	string str;
-	EmReadCmp(file, ist, str, "{");
+  EM_COUT("Loader::readUnknown", 0);
+  string str;
+  EmReadCmp(file, ist, str, "{");
 
-	int brackets = 1;
-	while (brackets > 0) {
-		this->readNextToken(file, ist, str);
-		if (str == "{") brackets++;
-		if (str == "}") brackets--;
-	}
+  int brackets = 1;
+  while (brackets > 0) {
+    this->readNextToken(file, ist, str);
+    if (str == "{") brackets++;
+    if (str == "}") brackets--;
+  }
 }
 
 void Loader::readPolygon(ifstream & file, istringstream & ist, Shape3D* shape) {
-	EM_COUT("Loader::readPolygon", 0);
-	string str;
-	Polygon * poly = new Polygon(shape);
+  EM_COUT("Loader::readPolygon", 0);
+  string str;
+  Polygon * poly = new Polygon(shape);
 
-	EmReadCmp(file, ist, str, "{");
+  EmReadCmp(file, ist, str, "{");
 
-	this->readNextToken(file, ist, str);
-	while (str != "}") {
-		if (str == "pes") {
-			// TODO reserce space for 
-			this->readUnknown(file, ist);
-		} else if (str == "tpt") {
-			this->readUnknown(file, ist);
-			poly->setProperty(EM_POLY_TRANS);
-			shape->setProperty(EM_SHAPE3D_USE_TRANS);
-// 		} else if (str == "dbl") {
-// 			this->readUnknown(file, ist);
-// 			poly->setProperty(EM_POLY_DOUBLE);
-// 		} else if (str == "flt") {
-// 			this->readUnknown(file, ist);
-// 			poly->setProperty(EM_POLY_FLAT);
-		} else if (str == "ple") {
-			this->readPolygonEdge(file, ist, poly);
-		} else {
-			this->readUnknown(file, ist);
-		}
-		this->readNextToken(file, ist, str);
-	}
-	shape->add(poly);
+  this->readNextToken(file, ist, str);
+  while (str != "}") {
+    if (str == "pes") {
+      // TODO reserce space for 
+      this->readUnknown(file, ist);
+    } else if (str == "tpt") {
+      this->readUnknown(file, ist);
+      poly->setProperty(EM_POLY_TRANS);
+      shape->setProperty(EM_SHAPE3D_USE_TRANS);
+      // 		} else if (str == "dbl") {
+      // 			this->readUnknown(file, ist);
+      // 			poly->setProperty(EM_POLY_DOUBLE);
+      // 		} else if (str == "flt") {
+      // 			this->readUnknown(file, ist);
+      // 			poly->setProperty(EM_POLY_FLAT);
+    } else if (str == "ple") {
+      this->readPolygonEdge(file, ist, poly);
+    } else {
+      this->readUnknown(file, ist);
+    }
+    this->readNextToken(file, ist, str);
+  }
+  shape->add(poly);
 }
 
 void Loader::readPolygonEdge(ifstream & file, istringstream & ist, Polygon* poly) {
-	EM_COUT("Loader::readPolygonEdge", 0);
-	string str;
-	int i;
+  EM_COUT("Loader::readPolygonEdge", 0);
+  string str;
+  int i;
 
-	EmReadCmp(file, ist, str, "{");
+  EmReadCmp(file, ist, str, "{");
 
-	this->readNextToken(file, ist, i);
+  this->readNextToken(file, ist, i);
 #if EM_USE_SHARED_COLOR
-	poly->add(i);
+  poly->add(i);
 #else
-	float u, v, a, r, g, b;
-	this->readNextToken(file, ist, u);
-	this->readNextToken(file, ist, v);
-	this->readNextToken(file, ist, r);
-	this->readNextToken(file, ist, g);
-	this->readNextToken(file, ist, b);
-	this->readNextToken(file, ist, a);
-	poly->add(i, u, v, r, g, b, a);
+  float u, v, a, r, g, b;
+  this->readNextToken(file, ist, u);
+  this->readNextToken(file, ist, v);
+  this->readNextToken(file, ist, r);
+  this->readNextToken(file, ist, g);
+  this->readNextToken(file, ist, b);
+  this->readNextToken(file, ist, a);
+  poly->add(i, u, v, r, g, b, a);
 #endif
 
-	EmReadCmp(file, ist, str, "}");
+  EmReadCmp(file, ist, str, "}");
 
 }
 
 void Loader::readVertex(ifstream & file, istringstream & ist, Shape3D* shape) {
-	EM_COUT("Loader::readVertex", 0);
-	float x, y, z, r, g, b, a, u, v;
-	string str;
+  EM_COUT("Loader::readVertex", 0);
+  float x, y, z, r, g, b, a, u, v;
+  string str;
 
-	EmReadCmp(file, ist, str, "{");
+  EmReadCmp(file, ist, str, "{");
 
-	this->readNextToken(file, ist, x);
-	this->readNextToken(file, ist, y);
-	this->readNextToken(file, ist, z);
+  this->readNextToken(file, ist, x);
+  this->readNextToken(file, ist, y);
+  this->readNextToken(file, ist, z);
 #if EM_USE_SHARED_COLOR
-	this->readNextToken(file, ist, r);
-	this->readNextToken(file, ist, g);
-	this->readNextToken(file, ist, b);
-	this->readNextToken(file, ist, a);
-	this->readNextToken(file, ist, u);
-	this->readNextToken(file, ist, v);
+  this->readNextToken(file, ist, r);
+  this->readNextToken(file, ist, g);
+  this->readNextToken(file, ist, b);
+  this->readNextToken(file, ist, a);
+  this->readNextToken(file, ist, u);
+  this->readNextToken(file, ist, v);
 #endif
 
-	EmReadCmp(file, ist, str, "}");
+  EmReadCmp(file, ist, str, "}");
 
-	shape->add(x, y, z, r, g, b, a, u, v);
+  shape->add(x, y, z, r, g, b, a, u, v);
 }
 
 void Loader::readTexture(ifstream & file, istringstream & ist, Shape3D* shape) {
-	EM_COUT("Loader::readTexture", 0);
-	string str;
+  EM_COUT("Loader::readTexture", 0);
+  string str;
 
-	EmReadCmp(file, ist, str, "{");
-	this->readNextToken(file, ist, str);
+  EmReadCmp(file, ist, str, "{");
+  this->readNextToken(file, ist, str);
 
-	// hack to load pcx files instead of png files for allegro
+  // hack to load pcx files instead of png files for allegro
 #if EM_USE_ALLEGRO
-	str += ".pcx";
+  str += ".pcx";
 #endif	
 
-	string filename = string(Config::getInstance()->getDataSubDir()) + "/" + str;
-	EmTexture * tex = TextureUtil::getInstance()->loadTexture(filename.c_str());
-	if (tex != NULL) {
-		shape->setTexture(tex);
-	} else {
-		throw string("Loader::readTexture error loading: ") + filename;
-	}
+  string filename = string(Config::getInstance()->getDataSubDir()) + "/" + str;
+  EmTexture * tex = TextureUtil::getInstance()->loadTexture(filename.c_str());
+  if (tex != NULL) {
+    shape->setTexture(tex);
+  } else {
+    throw string("Loader::readTexture error loading: ") + filename;
+  }
 
-	EmReadCmp(file, ist, str, "}");
+  EmReadCmp(file, ist, str, "}");
 }
 
 /* Assumes that the word 'shape' is already read and that we wish read stuff
  * between { and } */
 Shape3D* Loader::loadShape3DChunk(ifstream & file, istringstream & ist) {
-	EM_COUT("Loader::loadShape3DChunk loading shape", 0);
+  EM_COUT("Loader::loadShape3DChunk loading shape", 0);
 
-	Shape3D* shape = new Shape3D();
+  Shape3D* shape = new Shape3D();
 
-	string str;
-	EmReadCmp(file, ist, str, "{");
+  string str;
+  EmReadCmp(file, ist, str, "{");
 
-	this->readNextToken(file, ist, str);
-	while (str != "}") {
-		if (str == "vtx") {
-			this->readVertex(file, ist, shape);
-		} else if (str == "ply") {
-			this->readPolygon(file, ist, shape);
-		} else if (str == "tex") {
-			this->readTexture(file, ist, shape);
-		} else if (str == "hid") {
-			shape->setProperty(EM_SHAPE3D_HIDDEN);
-			this->readUnknown(file, ist);
-		} else if (str == "bhi") {
-			shape->setProperty(EM_SHAPE3D_BEHIND);
-			this->readUnknown(file, ist);
-		} else if (str == "bh2") {
-			shape->setProperty(EM_SHAPE3D_BEHIND2);
-			this->readUnknown(file, ist);
-		} else if (str == "lit") {
-			shape->setProperty(EM_SHAPE3D_ALLWAYSLIT);
-			this->readUnknown(file, ist);
-		} else {
-			this->readUnknown(file, ist);
-		}
-		this->readNextToken(file, ist, str);
-	}
-	shape->countNormals();
-	return shape;
+  this->readNextToken(file, ist, str);
+  while (str != "}") {
+    if (str == "vtx") {
+      this->readVertex(file, ist, shape);
+    } else if (str == "ply") {
+      this->readPolygon(file, ist, shape);
+    } else if (str == "tex") {
+      this->readTexture(file, ist, shape);
+    } else if (str == "hid") {
+      shape->setProperty(EM_SHAPE3D_HIDDEN);
+      this->readUnknown(file, ist);
+    } else if (str == "bhi") {
+      shape->setProperty(EM_SHAPE3D_BEHIND);
+      this->readUnknown(file, ist);
+    } else if (str == "bh2") {
+      shape->setProperty(EM_SHAPE3D_BEHIND2);
+      this->readUnknown(file, ist);
+    } else if (str == "lit") {
+      shape->setProperty(EM_SHAPE3D_ALLWAYSLIT);
+      this->readUnknown(file, ist);
+    } else {
+      this->readUnknown(file, ist);
+    }
+    this->readNextToken(file, ist, str);
+  }
+  shape->countNormals();
+  return shape;
 }
 
 /****************************************************************
@@ -917,33 +945,33 @@ Shape3D* Loader::loadShape3DChunk(ifstream & file, istringstream & ist) {
  ****************************************************************/
 
 int Loader::loadFile(const char* fn, Engine * engine) {
-	ifstream file(fn);
-	try {
-		if (!file) {
-			throw string("Loader::loadFile file not found: ") + string(fn);
-		}
-		if (engine == NULL) {
-			throw string("Engine NULL");
-		}
-		string str("");
-		istringstream ist("");
-		m_iLineNumber = 0;
-		this->readNextToken(file, ist, str);
-		while (file) {
-			if (str == "object") {
-				Group * group = this->loadStdObject(file, ist, engine); 
-				engine->add(group);
-			}
-			this->readNextToken(file, ist, str);
-			//cerr << str << endl;
-		}
-	} catch (string str) {
-		cerr << "Loader::loadFile caught exception ************" << endl;
-		cerr << str << endl;
-		cerr << "When loading file: " << fn << endl;
-		cerr << "At line: " << m_iLineNumber << endl;
-		cerr << "Loader::loadFile *****************************" << endl;
-		return -1;
-	}
-	return 0;
+  ifstream file(fn);
+  try {
+    if (!file) {
+      throw string("Loader::loadFile file not found: ") + string(fn);
+    }
+    if (engine == NULL) {
+      throw string("Engine NULL");
+    }
+    string str("");
+    istringstream ist("");
+    m_iLineNumber = 0;
+    this->readNextToken(file, ist, str);
+    while (file) {
+      if (str == "object") {
+	Group * group = this->loadStdObject(file, ist, engine); 
+	engine->add(group);
+      }
+      this->readNextToken(file, ist, str);
+      //cerr << str << endl;
+    }
+  } catch (string str) {
+    cerr << "Loader::loadFile caught exception ************" << endl;
+    cerr << str << endl;
+    cerr << "When loading file: " << fn << endl;
+    cerr << "At line: " << m_iLineNumber << endl;
+    cerr << "Loader::loadFile *****************************" << endl;
+    return -1;
+  }
+  return 0;
 }

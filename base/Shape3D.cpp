@@ -192,20 +192,20 @@ int Shape3D::getVertex3DIndex(TexCoord * tex) {
 }
 
 Color * Shape3D::getColor(int index) {
-	if (index < 0 || index >= (signed)m_vColor.size()) {
-		return NULL;
-	}
-	return &(m_vColor[index]);
+  if (index < 0 || index >= (signed)m_vColor.size()) {
+    return NULL;
+  }
+  return &(m_vColor[index]);
 }
 
 void Shape3D::setColor(int index, float r, float g, float b, float a) {
-	if (index < 0 || index >= (signed)m_vColor.size()) {
-		return;
-	}
-	m_vColor[index].r = r;
-	m_vColor[index].g = g;
-	m_vColor[index].b = b;
-	m_vColor[index].a = a;
+  if (index < 0 || index >= (signed)m_vColor.size()) {
+    return;
+  }
+  m_vColor[index].r = EM_MAX(EM_MIN(r, 1.0f), 0.0f);
+  m_vColor[index].g = EM_MAX(EM_MIN(g, 1.0f), 0.0f);
+  m_vColor[index].b = EM_MAX(EM_MIN(b, 1.0f), 0.0f);
+  m_vColor[index].a = EM_MAX(EM_MIN(a, 1.0f), 0.0f);
 }
 
 TexCoord * Shape3D::getTexCoord(int index) {

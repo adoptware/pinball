@@ -69,88 +69,88 @@ class BillBoard;
  ** </pre> */
 class Group : public Node {
  public:
-	Group();
-	virtual ~Group();
-	void setName(const char * name);
-	const char * getName();
-	void accept(Visitor * v);
-	void add(Group * g);
-	/** Removes the group from the tree. You must call 'delete group' after 
-	 * this function if you wish to deallocate the group. */
-	void removeGroup(Group * g);
-	//	void addBehavior(Behavior * b, bool signal=true);
-	void setBehavior(Behavior * b, bool signal = true);
-	//	void removeBehavior(Behavior * b);
-	void addShape3D(Shape3D * s);
-	/** Removes the shape from the tree. You must call 'delete shape' after 
-	 * this function if you wish to deallocate the shape. */
-	void removeShape3D(Shape3D * s);
-	void setBillBoard(BillBoard * b);
-	void setCamera(Camera * c);
-	void setLight(Light * l);
-	void setCollisionBounds(CollisionBounds * cb);
-	void setSound(Sound * s);
-	//	int getBehaviorSize();
-	int getShape3DSize();
-	//	Behavior * getBehavior(int i);
-	Behavior * getBehavior();
-	Group * getGroup(int i);
-	Shape3D * getShape3D(int i);
-	BillBoard * getBillBoard();
-	Camera * getCamera();
-	Light * getLight();
-	CollisionBounds * getCollisionBounds();
-	Group * getParent();
-	Sound * getSound();
-	/** Deletes every object added to this group. Dealloctes also the objects. */
-	void freeObjects();
-
-	int getProperties();
-	void setProperty(int p);
-	void setPropertyRecursive(int p);
-	void setUserProperty(int p);
-	int getUserProperties();
-	
-	void unsetProperty(int p);
-	void unsetPropertyRecursive(int p);
-	void unsetUserProperty(int p);
-	
+  Group();
+  virtual ~Group();
+  void setName(const char * name);
+  const char * getName();
+  void accept(Visitor * v);
+  void add(Group * g);
+  /** Removes the group from the tree. You must call 'delete group' after 
+   * this function if you wish to deallocate the group. */
+  void removeGroup(Group * g);
+  //	void addBehavior(Behavior * b, bool signal=true);
+  void setBehavior(Behavior * b, bool signal = true);
+  //	void removeBehavior(Behavior * b);
+  void addShape3D(Shape3D * s);
+  /** Removes the shape from the tree. You must call 'delete shape' after 
+   * this function if you wish to deallocate the shape. */
+  void removeShape3D(Shape3D * s);
+  void setBillBoard(BillBoard * b);
+  void setCamera(Camera * c);
+  void setLight(Light * l);
+  void setCollisionBounds(CollisionBounds * cb);
+  void setSound(Sound * s);
+  //	int getBehaviorSize();
+  int getShape3DSize();
+  //	Behavior * getBehavior(int i);
+  Behavior * getBehavior();
+  Group * getGroup(int i);
+  Shape3D * getShape3D(int i);
+  BillBoard * getBillBoard();
+  Camera * getCamera();
+  Light * getLight();
+  CollisionBounds * getCollisionBounds();
+  Group * getParent();
+  Sound * getSound();
+  /** Deletes every object added to this group. Dealloctes also the objects. */
+  void freeObjects();
+  
+  int getProperties();
+  void setProperty(int p);
+  void setPropertyRecursive(int p);
+  void setUserProperty(int p);
+  int getUserProperties();
+  
+  void unsetProperty(int p);
+  void unsetPropertyRecursive(int p);
+  void unsetUserProperty(int p);
+  
  private:
-	friend class BehaviorVisitor;
-	friend class AlignVisitor;
-	friend class AllegroVisitor;
-	friend class PNormalVisitor;
-	friend class TransformVisitor;
-	friend class SoundVisitor;
-	friend class OctTree;
-	friend class RendererVisitor;
-	friend class PointLightVisitor;
-	friend class CollisionBounds;
-	friend class CollisionVisitor;
-	friend class AmbientLightVisitor;
-	friend class OpenGLVisitor;
-	friend class OpenGLTransVisitor;
-	friend class SignalSender;
-	
-	BillBoard* p_BillBoard;
-	Camera* p_Camera;
-	Light* p_Light;
-	Sound* p_Sound;
-	CollisionBounds* p_CollisionBounds;
-	
-	Group* p_Parent;
-	vector<Group*> m_vChildren;
-	vector<Shape3D*> m_vShape3D;
-	//	vector<Behavior*> m_vBehavior;
-	Behavior * p_Behavior;
-	
-	char m_Name[256];
-
-	int m_iProperties;
-	int m_iUserProperties;
-	
-	//		void propagateSignal(int signal, Group* sender);
-	void setParent(Group* g);
+  friend class BehaviorVisitor;
+  friend class AlignVisitor;
+  friend class AllegroVisitor;
+  friend class PNormalVisitor;
+  friend class TransformVisitor;
+  friend class SoundVisitor;
+  friend class OctTree;
+  friend class RendererVisitor;
+  friend class PointLightVisitor;
+  friend class CollisionBounds;
+  friend class CollisionVisitor;
+  friend class AmbientLightVisitor;
+  friend class OpenGLVisitor;
+  friend class OpenGLTransVisitor;
+  friend class SignalSender;
+  
+  BillBoard* p_BillBoard;
+  Camera* p_Camera;
+  Light* p_Light;
+  Sound* p_Sound;
+  CollisionBounds* p_CollisionBounds;
+  
+  Group* p_Parent;
+  vector<Group*> m_vChildren;
+  vector<Shape3D*> m_vShape3D;
+  //	vector<Behavior*> m_vBehavior;
+  Behavior * p_Behavior;
+  
+  char m_Name[256];
+  
+  int m_iProperties;
+  int m_iUserProperties;
+  
+  //		void propagateSignal(int signal, Group* sender);
+  void setParent(Group* g);
 };
 
 #endif // GROUP_H
