@@ -153,6 +153,10 @@ SOURCE=Node.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Obj3dsUtil.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=OctTree.cpp
 # End Source File
 # Begin Source File

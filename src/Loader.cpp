@@ -1,10 +1,11 @@
+//#ident "$Id: Loader.cpp,v 1.27 2003/05/19 13:49:01 rzr Exp $"
 /***************************************************************************
                             Loader.cpp -  description
                              -------------------
     begin                : Thu Mar 9 2000
     copyright            : (C) 2000 by Henrik Enqvist
     email                : henqvist@excite.com
- ***************************************************************************/
+***************************************************************************/
 
 #include <fstream>
 #include <string>
@@ -44,7 +45,9 @@
 #include "FakeModuleBehavior.h"
 #include "PlungerBehavior.h"
 #include "LoaderModule.h" //!+rzr :  I put it appart
-
+#ifdef RZR_PATCHES_3DS
+#include "Obj3dsUtil.h" //!+rzr :  I put it appart
+#endif
 #define EmReadCmp(file_, ist_, str_, cmp_) \
   this->readNextToken(file_, ist_, str_);               \
   if (str_ != cmp_) throw string("Parse error, unexpected token \'") + str_ +  \
@@ -59,12 +62,15 @@ Loader::Loader() {
   m_iNextSignal = LOADER_FIRSTSIGNAL;
   m_iNextVariable = LOADER_FIRSTVARIABLE;
   m_bModules = true;
-  m_loaderModule = 0;
-  //!+-rzr
-};
+  m_LoaderModule = 0;
+#ifdef RZR_PATCHES_RZR
+  m_Obj3dsUtil = 0;
+#endif
+}
 
 Loader::~Loader() {
-  //!+-rzr
+  delete m_LoaderModule;
+  delete m_Obj3dsUtil;
 };
 
 Loader * Loader::getInstance() {
@@ -92,105 +98,105 @@ void Loader::readNextToken(ifstream & file, istringstream & ist, string & str) {
 }
 
 void Loader::readNextToken(ifstream & file, istringstream & ist, int & i) {
-	ist >> i;
-	while(file && !ist) {
-			string buf;
-			getline(file, buf);
-			ist.clear();
-			ist.str(buf);
-			ist >> i;
-      ++m_iLineNumber;
-	}
+  ist >> i;
+  while(file && !ist) {
+    string buf;
+    getline(file, buf);
+    ist.clear();
+    ist.str(buf);
+    ist >> i;
+    ++m_iLineNumber;
+  }
 }
 
 void Loader::readNextToken(ifstream & file, istringstream & ist, float & f) {
-	ist >> f;
-	while(file && !ist) {
-			string buf;
-			getline(file, buf);
-			ist.clear();
-			ist.str(buf);
-			ist >> f;
-      ++m_iLineNumber;
-	}
+  ist >> f;
+  while(file && !ist) {
+    string buf;
+    getline(file, buf);
+    ist.clear();
+    ist.str(buf);
+    ist >> f;
+    ++m_iLineNumber;
+  }
 }
 
 /******************************************************* 
  * Signal and variable to string conv 
  ******************************************************/
 int Loader::getSignal(const char * signal) {
-	// some defualt signals
-	if (signal == NULL) return PBL_SIG_NULL;
-	if (strncmp(signal, "null", 63) == 0) return PBL_SIG_NULL;
-	if (strncmp(signal, "reset", 63) == 0) return PBL_SIG_RESET_ALL;
-	if (strncmp(signal, "tilt", 63) == 0) return PBL_SIG_TILT;
-	if (strncmp(signal, "game_over", 63) == 0) return PBL_SIG_GAME_OVER;
-	if (strncmp(signal, "game_start", 63) == 0) return PBL_SIG_GAME_START;
-	if (strncmp(signal, "game_pause", 63) == 0) return PBL_SIG_GAME_PAUSE;
-	// other signals
-	map<string, int>::iterator element = m_hSignalInt.find(string(signal));
-	if (element != m_hSignalInt.end()) {
-		return (*element).second;
-	} else {
-		//cerr << "*** insert signal " << signal << " " << m_iNextSignal << endl;
-		m_hSignalInt.insert(pair<string, int>(string(signal), m_iNextSignal));
-		m_hSignalString.insert(pair<int, string>(m_iNextSignal, string(signal)));
-		++m_iNextSignal;
-		return m_iNextSignal-1;
-	}	
+  // some defualt signals
+  if (signal == NULL) return PBL_SIG_NULL;
+  if (strncmp(signal, "null", 63) == 0) return PBL_SIG_NULL;
+  if (strncmp(signal, "reset", 63) == 0) return PBL_SIG_RESET_ALL;
+  if (strncmp(signal, "tilt", 63) == 0) return PBL_SIG_TILT;
+  if (strncmp(signal, "game_over", 63) == 0) return PBL_SIG_GAME_OVER;
+  if (strncmp(signal, "game_start", 63) == 0) return PBL_SIG_GAME_START;
+  if (strncmp(signal, "game_pause", 63) == 0) return PBL_SIG_GAME_PAUSE;
+  // other signals
+  map<string, int>::iterator element = m_hSignalInt.find(string(signal));
+  if (element != m_hSignalInt.end()) {
+    return (*element).second;
+  } else {
+    //cerr << "*** insert signal " << signal << " " << m_iNextSignal << endl;
+    m_hSignalInt.insert(pair<string, int>(string(signal), m_iNextSignal));
+    m_hSignalString.insert(pair<int, string>(m_iNextSignal, string(signal)));
+    ++m_iNextSignal;
+    return m_iNextSignal-1;
+  }	
 }
 
 int Loader::getVariable(const char * var) {
-	if (var == NULL) return -1;
-	map<string, int>::iterator element = m_hVariableInt.find(string(var));
-	if (element != m_hVariableInt.end()) {
-		return (*element).second;
-	} else {
-		//cerr << "*** insert variable " << var << " " << m_iNextVariable << endl;
-		m_hVariableInt.insert(pair<string, int>(string(var), m_iNextVariable));
-		m_hVariableString.insert(pair<int, string>(m_iNextVariable, string(var)));
-		++m_iNextVariable;
-		return m_iNextVariable-1;
-	}	
+  if (var == NULL) return -1;
+  map<string, int>::iterator element = m_hVariableInt.find(string(var));
+  if (element != m_hVariableInt.end()) {
+    return (*element).second;
+  } else {
+    //cerr << "*** insert variable " << var << " " << m_iNextVariable << endl;
+    m_hVariableInt.insert(pair<string, int>(string(var), m_iNextVariable));
+    m_hVariableString.insert(pair<int, string>(m_iNextVariable, string(var)));
+    ++m_iNextVariable;
+    return m_iNextVariable-1;
+  }	
 }
 
 const char * Loader::getSignal(int signal) {
-	// default signals
-	if (signal < 0) return "null";
-	switch (signal) {
-	case PBL_SIG_NULL : return "null";
-	case PBL_SIG_RESET_ALL : return "reset";
-	case PBL_SIG_TILT : return "tilt";
-	case PBL_SIG_GAME_OVER : return "game_over";
-	case PBL_SIG_GAME_START : return "game_start";
-	case PBL_SIG_GAME_PAUSE : return "game_pause";
-	}
-	// other signals
-	map<int, string>::iterator element = m_hSignalString.find(signal);
-	if (element != m_hSignalString.end()) {
-		return (*element).second.c_str();
-	} else {
-		return NULL;
-	}
+  // default signals
+  if (signal < 0) return "null";
+  switch (signal) {
+  case PBL_SIG_NULL : return "null";
+  case PBL_SIG_RESET_ALL : return "reset";
+  case PBL_SIG_TILT : return "tilt";
+  case PBL_SIG_GAME_OVER : return "game_over";
+  case PBL_SIG_GAME_START : return "game_start";
+  case PBL_SIG_GAME_PAUSE : return "game_pause";
+  }
+  // other signals
+  map<int, string>::iterator element = m_hSignalString.find(signal);
+  if (element != m_hSignalString.end()) {
+    return (*element).second.c_str();
+  } else {
+    return NULL;
+  }
 }
 
 const char * Loader::getVariable(int var) {
-	map<int, string>::iterator element = m_hVariableString.find(var);
-	if (element != m_hVariableString.end()) {
-		return (*element).second.c_str();
-	} else {
-		return NULL;
-	}
+  map<int, string>::iterator element = m_hVariableString.find(var);
+  if (element != m_hVariableString.end()) {
+    return (*element).second.c_str();
+  } else {
+    return NULL;
+  }
 }
 
 /* This on must be called each time we load a new level */
 void Loader::clearSignalVariable() {
-	m_iNextSignal = LOADER_FIRSTSIGNAL;
-	m_iNextVariable = LOADER_FIRSTVARIABLE;
-	m_hSignalInt.clear();
-	m_hSignalString.clear();
-	m_hVariableInt.clear();
-	m_hVariableString.clear();
+  m_iNextSignal = LOADER_FIRSTSIGNAL;
+  m_iNextVariable = LOADER_FIRSTVARIABLE;
+  m_hSignalInt.clear();
+  m_hSignalString.clear();
+  m_hVariableInt.clear();
+  m_hVariableString.clear();
 };
 
 /******************************************************* 
@@ -289,112 +295,112 @@ void Loader::loadProperties(ifstream & file, istringstream & ist, Group * group)
  **************************************************************/
 
 void Loader::loadArmBehavior(ifstream & file, istringstream & ist, Group * group) {
-	EM_COUT("Loader::loadArmBehavior", 0);
+  EM_COUT("Loader::loadArmBehavior", 0);
 
-	string str;
-	ArmBehavior* beh = NULL;
+  string str;
+  ArmBehavior* beh = NULL;
 	
-	EmReadCmp(file, ist, str, "{");
+  EmReadCmp(file, ist, str, "{");
 	
-	this->readNextToken(file, ist, str);
-	if (str == "right") {
-		beh = new ArmBehavior(true);
-	} else {
-		beh = new ArmBehavior(false);
-	}
-	group->setBehavior(beh);	
+  this->readNextToken(file, ist, str);
+  if (str == "right") {
+    beh = new ArmBehavior(true);
+  } else {
+    beh = new ArmBehavior(false);
+  }
+  group->setBehavior(beh);	
 
-	this->readNextToken(file, ist, str);
-	if (str == "sound") {
-		string soundname;
-		this->readNextToken(file, ist, soundname);
-		string filename = string(Config::getInstance()->getDataSubDir()) + "/" + soundname; 
-		int sound = SoundUtil::getInstance()->loadSample(filename.c_str());
-		beh->setSound(sound);
-	} else if (str == "no_sound"){
-	} else {
-		throw string("No sound field in ArmBehavior");
-	}
+  this->readNextToken(file, ist, str);
+  if (str == "sound") {
+    string soundname;
+    this->readNextToken(file, ist, soundname);
+    string filename = string(Config::getInstance()->getDataSubDir()) + "/" + soundname; 
+    int sound = SoundUtil::getInstance()->loadSample(filename.c_str());
+    beh->setSound(sound);
+  } else if (str == "no_sound"){
+  } else {
+    throw string("No sound field in ArmBehavior");
+  }
 
-	EmReadCmp(file, ist, str, "}");
+  EmReadCmp(file, ist, str, "}");
 }
 
 void Loader::loadAnimation(ifstream & file, istringstream & ist, Engine *, 
-													 Group * group, Behavior * beh) {
-	EM_COUT("Loader::loadAnimation", 0);
+                           Group * group, Behavior * beh) {
+  EM_COUT("Loader::loadAnimation", 0);
 
-	string str;
+  string str;
 
-	EmAssert(beh != NULL, "Behavior NULL in loadAnimation");
-	EmReadCmp(file, ist, str, "{");
+  EmAssert(beh != NULL, "Behavior NULL in loadAnimation");
+  EmReadCmp(file, ist, str, "{");
 
-	int type = EM_LIGHT;
-	this->readNextToken(file, ist, str);
-	if (str == "rotation") {
-		type = EM_ROTATION;
-	} else if (str == "translation") {
-		type = EM_TRANSLATION;
-	} else if (str == "light") {
-		type = EM_LIGHT;
-	} else {
-		throw string("Expecting rotation, translation or light in anim field");
-	}
-	int count, step;
-	this->readNextToken(file, ist, step);
-	this->readNextToken(file, ist, count);
-	StdAnimation* anim = new StdAnimation(step, type);
+  int type = EM_LIGHT;
+  this->readNextToken(file, ist, str);
+  if (str == "rotation") {
+    type = EM_ROTATION;
+  } else if (str == "translation") {
+    type = EM_TRANSLATION;
+  } else if (str == "light") {
+    type = EM_LIGHT;
+  } else {
+    throw string("Expecting rotation, translation or light in anim field");
+  }
+  int count, step;
+  this->readNextToken(file, ist, step);
+  this->readNextToken(file, ist, count);
+  StdAnimation* anim = new StdAnimation(step, type);
 
-	for (; count > 0; count--) {
-		float a, b, c;
-		this->readNextToken(file, ist, a); 
-		this->readNextToken(file, ist, b); 
-		this->readNextToken(file, ist, c);
-		cerr << "****** " << a <<" "<< b <<" "<< c << endl;
-		if (count == 1) {
-			anim->setEnd(a, b, c);
-		} else {
-			anim->add(a, b, c);
-		}
-	}
-	group->setBehavior(anim);
+  for (; count > 0; count--) {
+    float a, b, c;
+    this->readNextToken(file, ist, a); 
+    this->readNextToken(file, ist, b); 
+    this->readNextToken(file, ist, c);
+    cerr << "****** " << a <<" "<< b <<" "<< c << endl;
+    if (count == 1) {
+      anim->setEnd(a, b, c);
+    } else {
+      anim->add(a, b, c);
+    }
+  }
+  group->setBehavior(anim);
 
-	EmReadCmp(file, ist, str, "}");
+  EmReadCmp(file, ist, str, "}");
 }
 
 void Loader::loadBehaviorLight(ifstream & file, istringstream & ist, 
-															 Engine * engine, Group * group, Behavior * beh) {
-	EM_COUT("Loader::loadBehaviorLight", 0);
+                               Engine * engine, Group * group, Behavior * beh) {
+  EM_COUT("Loader::loadBehaviorLight", 0);
 
-	string str;
+  string str;
 	
-	EmAssert(beh != NULL, "Behavior NULL in loadBehaviorLight");
-	EmReadCmp(file, ist, str, "{");
+  EmAssert(beh != NULL, "Behavior NULL in loadBehaviorLight");
+  EmReadCmp(file, ist, str, "{");
 
-	float r, g, b, x, y, z;
-	this->readNextToken(file, ist, r); 
-	this->readNextToken(file, ist, g); 
-	this->readNextToken(file, ist, b);
-	this->readNextToken(file, ist, x); 
-	this->readNextToken(file, ist, y); 
-	this->readNextToken(file, ist, z);
+  float r, g, b, x, y, z;
+  this->readNextToken(file, ist, r); 
+  this->readNextToken(file, ist, g); 
+  this->readNextToken(file, ist, b);
+  this->readNextToken(file, ist, x); 
+  this->readNextToken(file, ist, y); 
+  this->readNextToken(file, ist, z);
 
-	Light * light = new Light(1.0f, 0.0f, 0.1f, r, g, b);
-	light->setOn(false);
-	light->setProperty(EM_IGNORE_ANGLE_FULL);
-	//light->setProperty(EM_IGNORE_DISTANCE);
-	light->setProperty(EM_USE_BOUNDS);
-	light->setBounds(10.0);
+  Light * light = new Light(1.0f, 0.0f, 0.1f, r, g, b);
+  light->setOn(false);
+  light->setProperty(EM_IGNORE_ANGLE_FULL);
+  //light->setProperty(EM_IGNORE_DISTANCE);
+  light->setProperty(EM_USE_BOUNDS);
+  light->setBounds(10.0);
 	
-	Group * gl = new Group();
-	gl->setName("#light");
-	gl->addTranslation(x, y, z);
-	gl->setLight(light);
-	group->add(gl);
-	engine->addLight(light);
+  Group * gl = new Group();
+  gl->setName("#light");
+  gl->addTranslation(x, y, z);
+  gl->setLight(light);
+  group->add(gl);
+  engine->addLight(light);
 	
-	beh->setLight(light);
+  beh->setLight(light);
 
-	this->loadMisc(file, ist, engine, gl, beh);
+  this->loadMisc(file, ist, engine, gl, beh);
 }
 
 void Loader::loadBumperBehavior(ifstream & file, istringstream & ist, Engine * engine, Group * group) {
@@ -676,7 +682,7 @@ void Loader::loadScript(ifstream & file, istringstream & ist, Engine *, Group * 
 void Loader::loadModule(ifstream & file, istringstream & ist, Engine *, Group * group) {
   EM_COUT("+Loader::loadModule", 1);
   EmAssert(group != NULL, "Group NULL in loadMisc");
-  m_loaderModule = LoaderModule::getInstance();
+  m_LoaderModule = LoaderModule::getInstance();
   string str;
   
   EmReadCmp(file, ist, str, "{");
@@ -685,7 +691,7 @@ void Loader::loadModule(ifstream & file, istringstream & ist, Engine *, Group * 
   string filename = string(EM_LIBDIR) + "/" + str;
   Behavior *beh=0;
   if (m_bModules) {
-    beh = m_loaderModule->read(filename); //!+-rzr
+    beh = m_LoaderModule->read(filename); 
     if (beh == NULL) {
       throw string("Could not allocate behavior object");
     } else {
@@ -733,9 +739,13 @@ void Loader::loadMisc(ifstream & file, istringstream & ist, Engine * engine, Gro
       this->loadScript(file, ist, engine, group);
     } else if (str == "module") {
       this->loadModule(file, ist, engine, group);
-		} else if (str == "sub_object") {
-			Group * g = this->loadStdObject(file, ist, engine);
-			group->add(g);
+    } else if (str == "sub_object") {
+      Group * g = this->loadStdObject(file, ist, engine);
+      group->add(g);
+#ifdef RZR_PATCHES_3DS
+    } else if (str == "shape_include_3ds_ascii") {
+      this->loadShape3dsAscii(file, ist, engine, group, beh);
+#endif
     } else {
       cerr << str << endl;
       throw string("UNKNOWN in misc block");
@@ -774,7 +784,7 @@ Group * Loader::loadStdObject(ifstream & file, istringstream & ist, Engine * eng
  ****************************************************************/
 
 void Loader::loadShape(ifstream & file, istringstream & ist, Engine *, 
-											 Group * group, Behavior *) {
+                       Group * group, Behavior *) {
   EM_COUT("Loader::loadShape", 0);
   
   string str;
@@ -997,3 +1007,37 @@ int Loader::loadFile(const char* fn, Engine * engine) {
   }
   return 0;
 }
+#ifdef RZR_PATCHES_3DS //---------------------------------------------------------
+/*
+  object cube3ds {
+  0 0 0
+  0 0 0
+  shape_include_3ds_ascii name { /home/rzr/work/3dsview/data/cube.asc }
+  ...
+  }
+*/
+void Loader::loadShape3dsAscii(ifstream & file, istringstream & ist, 
+			       Engine *, Group * group, Behavior *) 
+{
+  EM_COUT("Loader::loadShape3dsAscii", 1);
+  string str;
+  EmReadCmp(file, ist, str, "{");
+  this->readNextToken(file, ist, str);
+  Shape3D* shape = new Shape3D;
+  string filename = string(Config::getInstance()->getDataSubDir()) + "/" + str;
+  EM_COUT( filename , 1);
+  int t = Obj3dsUtil::read(  *shape , filename.c_str());
+  //assert(t == 0);
+  EmReadCmp(file, ist, str, "}");
+  if ( t==0 && shape != NULL) {
+    group->addShape3D(shape); 
+  } else {
+    delete shape;
+    cerr << "could not load shape" << endl;
+  }
+  //EM_COUT("-Loader::loadShape3dsAscii", 0);
+}
+#endif //--------------------------------------------------------------------
+//EOF $Id: Loader.cpp,v 1.27 2003/05/19 13:49:01 rzr Exp $
+
+
