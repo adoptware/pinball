@@ -14,6 +14,7 @@ professordata_DATA = \
 floor.png \
 floor.png.pcx \
 pinball.pbl \
-professor.mid
+professor.mid \
+professor.png
 
 EXTRA_DIST = $(professordata_DATA)

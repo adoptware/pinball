@@ -13,24 +13,32 @@
 
 /** The Node represents the transformation of an object. Group inherits this class. */
 class Node {
-	public:
-		Node();
-		~Node();
-		void setTransform(float tx, float ty, float tz , float rx, float ry, float rz);
-		void addTransform(float tx, float ty, float tz , float rx, float ry, float rz);
-		void setTranslation(float x, float y, float z);
-		void getTranslation(float & x, float & y, float & z);
-		void addTranslation(float x, float y, float z);
-		void setRotation(float x, float y, float z);
-		void getRotation(float & x, float & y, float & z);
-		void addRotation(float x, float y, float z);
-
-		Matrix m_mtxSrc;
-		Matrix m_mtxTrans;
-	private:
-		Vertex3D m_vtxT;
-		Vertex3D m_vtxR;
-
+ public:
+  Node();
+  ~Node();
+  void setTransform(float tx, float ty, float tz , float rx, float ry, float rz);
+  void addTransform(float tx, float ty, float tz , float rx, float ry, float rz);
+  void setTranslation(float x, float y, float z);
+  void getTranslation(float & x, float & y, float & z);
+  void addTranslation(float x, float y, float z);
+  inline void addTranslation(Vertex3D & vtx) {
+    m_vtxT.x += vtx.x;
+    m_vtxT.y += vtx.y;
+    m_vtxT.z += vtx.z;
+    m_mtxSrc.t[0] = m_vtxT.x;
+    m_mtxSrc.t[1] = m_vtxT.y;
+    m_mtxSrc.t[2] = m_vtxT.z;
+  };			     
+  void setRotation(float x, float y, float z);
+  void getRotation(float & x, float & y, float & z);
+  void addRotation(float x, float y, float z);
+  
+  Matrix m_mtxSrc;
+  Matrix m_mtxTrans;
+ private:
+  Vertex3D m_vtxT;
+  Vertex3D m_vtxR;
+  
 };
 
 #endif // NODE_H
