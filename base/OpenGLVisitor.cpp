@@ -114,8 +114,7 @@ void OpenGLVisitor::visit(Group* g) {
       vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
       vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
 
-      if ((*shapeIter)->m_Texture != NULL && filter != -1) {
-	// textured polygons	
+      if ((*shapeIter)->m_Texture != NULL && filter != -1) { // textured polygons	
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, *((*shapeIter)->m_Texture));
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
@@ -124,7 +123,7 @@ void OpenGLVisitor::visit(Group* g) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) {
+	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) { // EM_SHAPE3D_ALWAYSLIT
 	  for ( ; polyIter != polyEnd; ++polyIter) {
 	    if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
 #if EM_DEBUG
@@ -145,7 +144,7 @@ void OpenGLVisitor::visit(Group* g) {
 	    }
 	    glEnd();
 	  }
-	} else { // EM_SHAPE3D_ALWAYSLIT
+	} else { // ! EM_SHAPE3D_ALWAYSLIT
 	  for ( ; polyIter != polyEnd; ++polyIter) {
 	    if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
 #if EM_DEBUG
@@ -168,11 +167,10 @@ void OpenGLVisitor::visit(Group* g) {
 	    glEnd();
 	  }
 	}
-      } else { // if ((*shapeIter)->m_Texture...
-	// color polygons
+      } else { // if ((*shapeIter)->m_Texture... // color polygons
 	glDisable(GL_TEXTURE_2D);
 	// if statement moved outside for loop for performance
-	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) {
+	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) { // EM_SHAPE3D_ALWAYSLIT
 	  for ( ; polyIter != polyEnd; ++polyIter) {
 	    if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
 #if EM_DEBUG
@@ -191,7 +189,7 @@ void OpenGLVisitor::visit(Group* g) {
 	    }
 	    glEnd();
 	  }
-	} else { // EM_SHAPE3D_ALWAYSLIT
+	} else { // ! EM_SHAPE3D_ALWAYSLIT
 	  for ( ; polyIter != polyEnd; ++polyIter) {
 	    if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
 #if EM_DEBUG
@@ -269,8 +267,7 @@ void OpenGLVisitor::visit(Group* g) {
 
       vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
       vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
-      if ((*shapeIter)->m_Texture != NULL && filter != -1) {
-	// textured polygon
+      if ((*shapeIter)->m_Texture != NULL && filter != -1) { // textured polygon
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, *((*shapeIter)->m_Texture));
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
@@ -281,7 +278,7 @@ void OpenGLVisitor::visit(Group* g) {
 				
 	vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
 	vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
-	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) {
+	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) { // EM_SHAPE3D_ALWAYSLIT
 	  for ( ; polyIter != polyEnd; polyIter++) {
 	    if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
 #if EM_DEBUG
@@ -304,7 +301,7 @@ void OpenGLVisitor::visit(Group* g) {
 	    }
 	    glEnd();
 	  }
-	} else { // EM_SHAPE3D_ALWAYSLIT
+	} else { // ! EM_SHAPE3D_ALWAYSLIT
 	  for ( ; polyIter != polyEnd; polyIter++) {
 	    if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
 #if EM_DEBUG
@@ -328,8 +325,7 @@ void OpenGLVisitor::visit(Group* g) {
 	    glEnd();
 	  }
 	}
-      } else {
-	// color polygon
+      } else { // color polygon
 	glDisable(GL_TEXTURE_2D);
 	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) {
 	  for ( ; polyIter != polyEnd; polyIter++) {
@@ -341,7 +337,7 @@ void OpenGLVisitor::visit(Group* g) {
 	    vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
 	    glBegin(GL_POLYGON);
 	    for ( ; indexIter != indexEnd; indexIter++) {
-	      /* transparent polygons should not be lit, or ? */
+	      // transparent polygons should not be lit, or ?
 	      glColor4f((*shapeIter)->m_vColor[(*indexIter)].r,
 			(*shapeIter)->m_vColor[(*indexIter)].g,
 			(*shapeIter)->m_vColor[(*indexIter)].b,
@@ -362,7 +358,7 @@ void OpenGLVisitor::visit(Group* g) {
 	    vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
 	    glBegin(GL_POLYGON);
 	    for ( ; indexIter != indexEnd; indexIter++) {
-	      /* transparent polygons should not be lit, or ? */
+	      // transparent polygons should not be lit, or ?
 	      glColor4f((*shapeIter)->m_vLitColor[(*indexIter)].r,
 			(*shapeIter)->m_vLitColor[(*indexIter)].g,
 			(*shapeIter)->m_vLitColor[(*indexIter)].b,
