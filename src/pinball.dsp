@@ -8,12 +8,12 @@ CFG=Pinball - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "Pinball.mak".
+!MESSAGE NMAKE /f "pinball.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Pinball.mak" CFG="Pinball - Win32 Debug"
+!MESSAGE NMAKE /f "pinball.mak" CFG="Pinball - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\base\\" /I "..\..\addon\\" /I ".\\" /I "..\\" /I "..\base\\" /I "..\addon\\" /I "..\libltdl\\" /D "NDEBUG" /D "_CONSOLE" /D "WIN32" /D "_MBCS" /D "HAVE_CONFIG_H" /FR /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\base\\" /I "..\..\addon\\" /I ".\\" /I "..\\" /I "..\base\\" /I "..\addon\\" /I "..\libltdl\\" /D "NDEBUG" /D "_CONSOLE" /D "WIN32" /D "_MBCS" /FR /YX /FD /c
 # ADD BASE RSC /l 0x40c /d "NDEBUG"
 # ADD RSC /l 0x40c /d "NDEBUG"
 BSC32=bscmake.exe
@@ -67,7 +67,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\\" /I "..\base\\" /I "..\addon\\" /I "..\libltdl\\" /I ".\\" /D "_DEBUG" /D "_CONSOLE" /D "WIN32" /D "_MBCS" /D "HAVE_CONFIG_H" /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\\" /I "..\base\\" /I "..\addon\\" /I "..\libltdl\\" /I ".\\" /D "_DEBUG" /D "_CONSOLE" /D "WIN32" /D "_MBCS" /YX /FD /GZ /c
 # ADD BASE RSC /l 0x40c /d "_DEBUG"
 # ADD RSC /l 0x40c /d "_DEBUG"
 BSC32=bscmake.exe
