@@ -91,3 +91,35 @@ object {
 		user_group1
 	}
 }
+object {
+	data/grid.emi
+	data/grid.emi
+	11.5 0 10.5
+ 	0 0.32 0
+	bumper_behavior {
+		light {
+			1 0 0
+			0 6 0
+		}
+	}
+	properties {
+		transform_once
+		user_group1
+	}
+}
+object {
+	data/grid.emi
+	data/grid.emi
+	-11.5 0 10.5
+ 	0 -0.32 0
+	bumper_behavior {
+		light {
+			1 0 0
+			0 6 0
+		}
+	}
+	properties {
+		transform_once
+		user_group1
+	}
+}
