@@ -39,10 +39,9 @@
 #include <GL/glu.h>
 #endif
 
-#define FPS 50 // req 100 50 33 25 20
-
 volatile int g_iStartTime = -1;
 volatile int g_iDesiredTime = -1;
+volatile int g_iLastRender = 0;
 
 volatile unsigned int g_iLoops = 0;
 volatile unsigned int g_iMSeconds = 0;
@@ -325,54 +324,50 @@ bool Engine::limitFPS(int fps) {
 	if (fps > 0) {
 		delay = 1000/fps;
 	}
-#if EM_USE_SDL
 	if (g_iStartTime == -1) {
+#if EM_USE_SDL
 		g_iDesiredTime = g_iStartTime = SDL_GetTicks();
-	}
-	g_iDesiredTime += delay;
-	int time = SDL_GetTicks();
-	int realdelay = (g_iDesiredTime - time);
-	if (realdelay < -500) {     // really slow
-		EM_COUT("TO SLOW", 1);
-		g_iDesiredTime = time;
-		return true;
-	} else if (realdelay < 0) { // slow
-		return false;
-	} else {                    // to early, must delay
-		do {
-			realdelay = (g_iDesiredTime - (signed)SDL_GetTicks());
-			if (realdelay > 10) {
-			// The delay triggers rescheduling
-				SDL_Delay(realdelay);
-			}
-		} while (realdelay > 0);
-		return true;
-	}
 #endif
 #if EM_USE_ALLEGRO
-	if (g_iStartTime == -1) {
 		g_iDesiredTime = g_iStartTime = g_iMSeconds;
+#endif
 	}
 	g_iDesiredTime += delay;
+#if EM_USE_SDL
+	int time = SDL_GetTicks();
+	int realdelay = (g_iDesiredTime - time);
+#endif
+#if EM_USE_ALLEGRO
 	int realdelay = (g_iDesiredTime - g_iMSeconds);
-	if (realdelay < -500) {      // really slow
+#endif
+	if (realdelay < -500) {     // really slow - render anyway
 		EM_COUT("TO SLOW", 1);
-		g_iDesiredTime = g_iMSeconds;
+		g_iDesiredTime = time;
+		StopProfile();
 		return true;
-		
-	} else if (realdelay < 0) {  // slow
+	} else if (realdelay < -delay/2) { // slow
+		StopProfile();
 		return false;
-	} else {                     // to early, must delay
+	} else if (realdelay < 0) { // abit slow - forgive a bit slow, gives better fps
+		StopProfile();
+		return true;
+	} else {                    // to early, must delay
 		do {
+#if EM_USE_SDL
+			realdelay = (g_iDesiredTime - (signed)SDL_GetTicks());
+#endif
+#if EM_USE_ALLEGRO
 			realdelay = (g_iDesiredTime - g_iMSeconds);
+#endif
 			if (realdelay > 10) {
 			// The delay triggers rescheduling
-				rest(realdelay);
+				this->delay(realdelay);
 			}
+			g_iLastRender = g_iDesiredTime;
 		} while (realdelay > 0);
+		StopProfile();
 		return true;
 	}
-#endif
 	StopProfile();
 }
 

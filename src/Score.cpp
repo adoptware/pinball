@@ -155,6 +155,14 @@ int Score::locked() {
 
 
 void Score::onTick() {
+	if (this->active() == 0 && this->getCurrentBall() < 4) {
+		strcpy(m_Text1, "   press enter to launch ball");
+	} else if (this->getCurrentBall() > 3) {
+		strcpy(m_Text1, "   press r to start new game");
+	} else {
+		strcpy(m_Text1, "");
+	}
+
 // 	if (m_bLaunch && m_iBall < 4 && Keyboard::isKeyDown(SDLK_RETURN)) {
 // 		m_bLaunch = false;
 // 		switch (m_iBall) {
@@ -292,7 +300,11 @@ extern volatile float g_fFps;
 
 void Score::draw() {
 	char buffer[256];
-	sprintf(buffer, "SCORE %d BALL %d\n", m_iScore, m_iBall);
+	if (this->getCurrentBall() < 4) {
+		sprintf(buffer, "SCORE %d BALL %d\n", m_iScore, m_iBall);
+	} else {
+		sprintf(buffer, "SCORE %d", m_iScore);
+	}
 	m_Font->printRow(buffer, 0);
 #if EM_DEBUG
 	if (Config::getInstance()->getShowFPS()) {

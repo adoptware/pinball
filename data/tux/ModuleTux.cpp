@@ -20,10 +20,14 @@ public:
 	TuxBehavior() : Behavior() {
 		Loader * loader = Loader::getInstance();
 		// init signals
+		m_sigGameStart = loader->getSignal("game_start");
+		m_sigBump = loader->getSignal("bump");
+		m_sigJackpot = loader->getSignal("jackpot");
 		m_sigExtraBall = loader->getSignal("extraball");
 		m_sigAllBallsOff = loader->getSignal("allballs_off");
 		m_sigMultiballOff = loader->getSignal("multiball_off");
 		m_sigReleaseLock = loader->getSignal("releaselock");
+		m_sigLeftLoop = loader->getSignal("leftloop");
 		m_sigRightLoop = loader->getSignal("rightloop");
 		m_sigLinuxAll = loader->getSignal("linux_all");
 		m_sigLinux[0] = loader->getSignal("linuxl");
@@ -75,10 +79,6 @@ public:
 	~TuxBehavior() {};
 
 	void onTick() {
-		if (Keyboard::isKeyDown(SDLK_RETURN)) {
-			cerr << "active "<< Score::getInstance()->active() << 
-				" locked " << Score::getInstance()->locked() << endl;
-		}
 		// launch ball
 		if (Score::getInstance()->active() == 0 && 
 				Score::getInstance()->getCurrentBall() < 4 
@@ -86,6 +86,7 @@ public:
 			switch (Score::getInstance()->getCurrentBall()) {
 			case 1 :
 				if (Score::getInstance()->isBallDead(PBL_BALL_1) ) {
+					SendSignal( m_sigGameStart, 0, this->getParent(), NULL );
 					SendSignal( PBL_SIG_BALL1_ON, 0, this->getParent(), NULL );
 					Score::getInstance()->activateBall(PBL_BALL_1);	
 					Score::getInstance()->clearText();
@@ -120,13 +121,14 @@ public:
 			default:
 				throw string("all balls busy");
 			}
-			EM_COUT("Score::onTick() new ball", 1);
+			EM_COUT("ModuleTux::onTick() new ball", 1);
 		}
 	};
 
 	void StdOnCollision() {};
 
 	void StdOnSignal() {
+		Score * score = Score::getInstance();
 		//EM_COUT((int)em_signal, 1);
 		
 		OnSignal( PBL_SIG_RESET_ALL ) {
@@ -137,27 +139,36 @@ public:
 							PBL_SIG_BALL2_OFF OR_SI	
 							PBL_SIG_BALL3_OFF OR_SI 
 							PBL_SIG_BALL4_OFF ) {
-			if (Score::getInstance()->active() == 1) {
+			if (score->active() == 1) {
+				// multiball is dead
 				SendSignal( m_sigMultiballOff, 0, this->getParent(), NULL );
+				m_bMultiBallOn = false;
 			}
-			if (Score::getInstance()->active() == 0) {
+			if (score->active() == 0) {
+				// no active ball
 				SendSignal( m_sigAllBallsOff, 0, this->getParent(), NULL );
-				if (Score::getInstance()->getCurrentBall() < 3 || !m_bExtraBall) {
-					if (m_bExtraBall) {
-						m_bExtraBall = false;
-					} else {
-						Score::getInstance()->setCurrentBall(Score::getInstance()->getCurrentBall()+1);
+				if (m_bExtraBall) {
+					m_bExtraBall = false;
+				} else if (score->getCurrentBall() < 4) {
+					score->setCurrentBall(score->getCurrentBall()+1);
+					if (score->getCurrentBall() == 4) {
+						SendSignal( PBL_SIG_GAME_OVER, 0, this->getParent(), NULL );
+						EM_COUT("game over", 1);
 					}
-				} else {
-					SendSignal( PBL_SIG_GAMEOVER, 0, this->getParent(), NULL );
 				}
 			}
 		} else
 		// multiball
 		OnSignal( m_sigReleaseLock ) {
-			Score::getInstance()->unLockBall(PBL_BALL_1);
-			Score::getInstance()->unLockBall(PBL_BALL_2);
-			Score::getInstance()->unLockBall(PBL_BALL_3);
+			score->unLockBall(PBL_BALL_1);
+			score->unLockBall(PBL_BALL_2);
+			score->unLockBall(PBL_BALL_3);
+			m_bMultiBallOn = false;
+			score->addScore(10000, false);
+		} else
+		// bump
+		OnSignal(m_sigBump) {
+			score->addScore(450, true);
 		} else
 		// LINUX
 		OnSignal(m_sigLinux[0]) {
@@ -313,6 +324,12 @@ public:
 				m_bExtraBall = true;
 				m_bExtraBallWaiting = false;
 			}
+		} else
+		OnSignal(m_sigLeftLoop) {
+			if (m_bMultiBallOn) {
+				SendSignal( m_sigJackpot, 0, this->getParent(), NULL );
+				score->addScore(100000, false);
+			}
 		}
 			
 		// TUX all
@@ -320,37 +337,39 @@ public:
 			SendSignal(m_sigTuxAll, 0, this->getParent(), NULL);
 			m_aTux[0] = m_aTux[1] = m_aTux[2] = false;
 			m_bExtraBallWaiting = true;
+			score->addScore(5000, false);
 		}
 
 		// LINUX all
 		if (m_aLinux[0] && m_aLinux[1] && m_aLinux[2] && m_aLinux[3] && m_aLinux[4]) {
 			SendSignal(m_sigLinuxAll, 0, this->getParent(), NULL);
 			m_aLinux[0] = m_aLinux[1] = m_aLinux[2] = m_aLinux[3] = m_aLinux[4] = false;
-			switch (Score::getInstance()->getMultiplier()) {
+			switch (score->getMultiplier()) {
 			case 1: 
-				Score::getInstance()->setMultiplier(2);
+				score->setMultiplier(2);
 				SendSignal(m_sigMultiplier[1], 0, this->getParent(), NULL);
 				break;
 			case 2: 
-				Score::getInstance()->setMultiplier(3);
+				score->setMultiplier(3);
 				SendSignal(m_sigMultiplier[2], 0, this->getParent(), NULL);
 				break;
 			case 3: 
-				Score::getInstance()->setMultiplier(4);
+				score->setMultiplier(4);
 				SendSignal(m_sigMultiplier[3], 0, this->getParent(), NULL);
 				break;
 			case 4: 
-				cerr << "555555" << endl;
-				Score::getInstance()->setMultiplier(5);
+				score->setMultiplier(5);
 				SendSignal(m_sigMultiplier[4], 0, this->getParent(), NULL);
 				break;
 			}
+			score->addScore(5000, false);
 		}
 
 		// BOOT all
 		if (m_aBoot[0] && m_aBoot[1] && m_aBoot[2] && m_aBoot[3]) {
 			SendSignal(m_sigBootAll, 0, this->getParent(), NULL);
 			m_aBoot[0] = m_aBoot[1] = m_aBoot[2] = m_aBoot[3] = false;
+			score->addScore(5000, false);
 		}
 	}
 
@@ -369,13 +388,18 @@ public:
 		m_aTux[2] = false;
 		m_bExtraBall = false;
 		m_bExtraBallWaiting = false;
+		m_bMultiBallOn = false;
 	};
 
 private:
+	int m_sigGameStart;
+	int m_sigBump;
+	int m_sigJackpot;
 	int m_sigAllBallsOff;
 	int m_sigExtraBall;
 	int m_sigMultiballOff;
 	int m_sigReleaseLock;
+	int m_sigLeftLoop;
 	int m_sigRightLoop;
 	int m_sigLinuxAll;
 	int m_sigLinux[5];
@@ -395,6 +419,7 @@ private:
 	bool m_aTux[3];
 	bool m_bExtraBall;
 	bool m_bExtraBallWaiting;
+	bool m_bMultiBallOn;
 };
 
 extern "C"  void * new_object_fct(void) {

@@ -95,7 +95,7 @@ public:
 				if (Score::getInstance()->getCurrentBall() < 3) {
 					Score::getInstance()->setCurrentBall(Score::getInstance()->getCurrentBall()+1);
 				} else {
-					SendSignal( PBL_SIG_GAMEOVER, 0, this->getParent(), NULL );
+					SendSignal( PBL_SIG_GAME_OVER, 0, this->getParent(), NULL );
 				}
 			}
 		}

@@ -211,7 +211,8 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
 	// change direction depending on which type the colliding object is
 	if (pGroup->getUserProperties() & (PBL_LOCK | PBL_TRAP)) {
 		// trap in
-		Behavior* beh = pGroup->getBehavior(0);
+		// 		Behavior* beh = pGroup->getBehavior(0);
+		Behavior* beh = pGroup->getBehavior();
 		EmAssert(beh != NULL, "No behavior");
 		
 		if (beh->getType() == PBL_TYPE_STATEBEH) {
@@ -252,7 +253,8 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
 		if (m_iCollisionPrio > 3) return;
 		m_iCollisionPrio = 3;
 		// get the behavior
-		Behavior* beh = pGroup->getBehavior(0);
+		//		Behavior* beh = pGroup->getBehavior(0);
+		Behavior* beh = pGroup->getBehavior();
 		EmAssert(beh != NULL, "No behavior");
 		if (beh->getType() != PBL_TYPE_ARMBEH) {
 			throw string("ArmBehavior expected in BounceBehavior.cpp");
@@ -383,7 +385,7 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
 		vtxWall.y = 0;
 		vtxWall.z = -vtxOwn.z;
 
-		Behavior* beh = pGroup->getBehavior(0);
+		Behavior* beh = pGroup->getBehavior();
 		EmAssert(beh != NULL && beh->getType() == PBL_TYPE_BOUNCEBEH, 
 						 "The behavior is not a BounceBeavior");
 

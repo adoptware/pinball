@@ -33,7 +33,9 @@
 
 #define PBL_SIG_RESET_ALL				666
 #define PBL_SIG_TILT            667
-#define PBL_SIG_GAMEOVER        668
+#define PBL_SIG_GAME_OVER        668
+#define PBL_SIG_GAME_START       669
+#define PBL_SIG_GAME_PAUSE       670
 
 #define PBL_SIG_LNUDGE          671
 #define PBL_SIG_RNUDGE          672

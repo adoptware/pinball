@@ -82,10 +82,14 @@ void SignalSender::tick() {
 			// call onSignal function i behaviors
 			// TODO: should use a hashtable for groups
 			//cerr << "size " << (*groupIter)->m_vBehavior.size() << endl;
-			vector<Behavior*>::iterator behIter = (*groupIter)->m_vBehavior.begin();
-			vector<Behavior*>::iterator behEnd = (*groupIter)->m_vBehavior.end();
-			for (; behIter != behEnd; ++behIter) {
-				(*behIter)->onSignal((*sigIter).signal, (*sigIter).sender);
+
+// 			vector<Behavior*>::iterator behIter = (*groupIter)->m_vBehavior.begin();
+// 			vector<Behavior*>::iterator behEnd = (*groupIter)->m_vBehavior.end();
+// 			for (; behIter != behEnd; ++behIter) {
+// 				(*behIter)->onSignal((*sigIter).signal, (*sigIter).sender);
+// 			}
+			if ((*groupIter)->getBehavior() != NULL) {
+				(*groupIter)->getBehavior()->onSignal((*sigIter).signal, (*sigIter).sender);
 			}
 		}
 	}

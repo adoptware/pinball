@@ -55,7 +55,7 @@ class ScriptTest : public CppUnit::TestFixture {
 	void testScript() {
 		Group * group = new Group();
 		Script * script = new Script();
-		group->addBehavior(script);
+		group->setBehavior(script);
 
 		CPPUNIT_ASSERT(script->getVariable(101) == 0);
 		CPPUNIT_ASSERT(script->getVariable(102) == 0);
@@ -86,14 +86,10 @@ class ScriptTest : public CppUnit::TestFixture {
 		delete(group);
 	}
 
-	void testModule () {
-	}
-
 	CPPUNIT_TEST_SUITE(ScriptTest);
 
 	CPPUNIT_TEST(testVariable);
 	CPPUNIT_TEST(testScript);
-	CPPUNIT_TEST(testModule);
 	
 	CPPUNIT_TEST_SUITE_END();
 };
@@ -166,7 +162,7 @@ class LoaderTest : public CppUnit::TestFixture {
 			istringstream ist("");
 			Group * group = new Group();
 			loader->loadScript(file, ist, NULL, group);
-			Script * script = (Script*) group->getBehavior(0);
+			Script * script = (Script*) group->getBehavior();
 			
 			CPPUNIT_ASSERT(script->getVariable(101) == 0);
 			CPPUNIT_ASSERT(script->getVariable(102) == 0);

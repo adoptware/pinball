@@ -76,8 +76,9 @@ class Group : public Node {
 	/** Removes the group from the tree. You must call 'delete group' after 
 	 * this function if you wish to deallocate the group. */
 	void removeGroup(Group * g);
-	void addBehavior(Behavior * b, bool signal=true);
-	void removeBehavior(Behavior * b);
+	//	void addBehavior(Behavior * b, bool signal=true);
+	void setBehavior(Behavior * b, bool signal=true);
+	//	void removeBehavior(Behavior * b);
 	void addShape3D(Shape3D * s);
 	/** Removes the shape from the tree. You must call 'delete shape' after 
 	 * this function if you wish to deallocate the shape. */
@@ -87,9 +88,10 @@ class Group : public Node {
 	void setLight(Light * l);
 	void setCollisionBounds(CollisionBounds * cb);
 	void setSound(Sound * s);
-	int getBehaviorSize();
+	//	int getBehaviorSize();
 	int getShape3DSize();
-	Behavior * getBehavior(int i);
+	//	Behavior * getBehavior(int i);
+	Behavior * getBehavior();
 	Group * getGroup(int i);
 	Shape3D * getShape3D(int i);
 	BillBoard * getBillBoard();
@@ -137,7 +139,8 @@ class Group : public Node {
 	Group* p_Parent;
 	vector<Group*> m_vChildren;
 	vector<Shape3D*> m_vShape3D;
-	vector<Behavior*> m_vBehavior;
+	//	vector<Behavior*> m_vBehavior;
+	Behavior * p_Behavior;
 	
 	char m_Name[256];
 

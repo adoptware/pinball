@@ -58,10 +58,10 @@ int main(int argc, char *argv[]) {
 
 	Group * gt = new Group();
 	engine->add(gt);
-	gt->addBehavior(new KeyBehavior());
+	gt->setBehavior(new KeyBehavior());
 	Group * gr = new Group();
 	gt->add(gr);
-	gr->addBehavior(new KeyRotBehavior());
+	gr->setBehavior(new KeyRotBehavior());
 	TriClass * tri = new TriClass();
 	gr->addShape3D(tri);
 		
