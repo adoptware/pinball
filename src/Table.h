@@ -23,7 +23,7 @@ class BallGroup;
 
 #define MAX_BALL 3
 
-#define EM_MAX_HIGHSCORES 5
+#define EM_MAX_HIGHSCORES 5  // !?! isn't it better 10 ...?
 
 class Table {
  protected:
