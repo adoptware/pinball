@@ -14,24 +14,19 @@
 #define EM_IGNORE_DISTANCE 4
 #define EM_USE_BOUNDS 8
 
-#include "Private.h"
+class Group;
 
 #include "Node.h"
-/**
- * <p>Light objects will light up its enviroment. As any other node subclass
- * it can be added to a group and moved around in the universe. Remember
- * that lights must also be added to the engine with the 'addLight'
- * function.</p>
- * <p>Example:<br><blockquote>
- * Group* groupL = new group;<br>
- * Light* l = new Light(1.0, 10.0);<br>
- * <br>
- * groupL->add(l);<br>
- * engine->add(groupL);<br>
- * <br>
- * engine->addLight(l);</blockquote>
- * </p>
- */
+/** Example:
+ * <pre>
+ * Group* groupL = new group;
+ * Light* l = new Light(1.0, 10.0);
+ * 
+ * groupL->setLight(l);
+ * engine->add(groupL);
+ * 
+ * engine->addLight(l);
+ * </pre> */
 class Light {
  public:
 	/** Light(constant, linear, quadratic, r, g, b). */
@@ -39,15 +34,20 @@ class Light {
 	~Light();
 	void setOn(bool on=true) { m_bOn = on;};
 	bool getOn() { return m_bOn;};
+	// TODO fast clamp
 	void setColor(float r, float g, float b) {
 		m_fR = EM_MAX(EM_MIN(1.0, r), 0.0);
 		m_fG = EM_MAX(EM_MIN(1.0, g), 0.0);	
 		m_fB = EM_MAX(EM_MIN(1.0, b), 0.0);	
 	};
+	void getColor(float & r, float & g, float & b) { r = m_fR; g = m_fG; b = m_fB; };
 	void setProperty(int);
 	void unsetProperty(int);
 	void setBounds(float b) { m_fBounds = b; };
 	void setIndex(int i);
+	Group * getParent() {
+		return p_Parent;
+	};
 	
 	Vertex3D m_vtxSrc;
 	Vertex3D m_vtxTrans;
@@ -55,6 +55,12 @@ class Light {
  private:
 	friend class PointLightVisitor;
 	friend class TransformVisitor;
+	friend class Group;
+	
+	void setParent(Group * p) {
+		p_Parent = p;
+	};
+	Group * p_Parent;
 	float m_fConstant;
 	float m_fLinear;
 	float m_fQuadratic;

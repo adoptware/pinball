@@ -3,6 +3,7 @@
  The arrow keys rotates the cube.
  ***************************************************************************/
 
+#include "Private.h"
 #include "Engine.h"
 #include "Camera.h"
 #include "Cube.h"
@@ -22,15 +23,15 @@ public:
 void SignalTest::StdOnSignal() {
 	OnSignal(1) {
 		cerr << "Got signal 1" << endl;
-		if (p_Parent != NULL) {
-			Shape3D* shape = p_Parent->getShape3D(0);
+		if (this->getParent() != NULL) {
+			Shape3D* shape = this->getParent()->getShape3D(0);
 			if (shape != NULL) shape->setColor(1,1,1,1);
 		}
 	}
 	OnSignal(2) {
 		cerr << "Got signal 2" << endl;
-		if (p_Parent != NULL) {
-			Shape3D* shape = p_Parent->getShape3D(0);
+		if (this->getParent() != NULL) {
+			Shape3D* shape = this->getParent()->getShape3D(0);
 			if (shape != NULL) shape->setColor(1,0,1,1);
 		}
 	}
@@ -73,8 +74,13 @@ int main(int argc, char *argv[]) {
 		engine->tick();
 		engine->render();
 		engine->swap();
-		SDL_Delay(50);
+		engine->limitFPS(50);
 	}
 	delete(engine);
 	return 0;
 }
+
+#if EM_USE_ALLEGRO
+END_OF_MAIN();
+#endif
+

@@ -1,12 +1,12 @@
 /***************************************************************************
-                          KeyBeh.cpp  -  description
+                          EyeBehavior.cpp  -  description
                              -------------------
     begin                : Wed Jan 26 2000
-    copyright            : (C) 2000 by 
-    email                : 
+    copyright            : (C) 2000 by Henrik Enqvist
+    email                : henqvist@excite.com
  ***************************************************************************/
 
-
+#include "Private.h"
 #include "EyeBehavior.h"
 #include "Group.h"
 #include "Pinball.h"
@@ -15,7 +15,7 @@
 #include "Keyboard.h"
 #include "SoundUtil.h"
 
-#define TX 0 
+#define TX -1.5f 
 #define TY 30
 #define TZ 6
 #define RX 0.23f
@@ -53,7 +53,7 @@ void EyeBehavior::onTick() {
 	EmAssert(p_gBall1 != NULL, "Ball1 group NULL");
 	EmAssert(p_gBall2 != NULL, "Ball2 group NULL");
 	EmAssert(p_gBall3 != NULL, "Ball3 group NULL");
-	EmAssert(p_Parent != NULL, "Parent group NULL");
+	EmAssert(this->getParent() != NULL, "Parent group NULL");
 
 	// the nudge code is here
 	if (m_iNudgeTick < 1) {
@@ -63,35 +63,35 @@ void EyeBehavior::onTick() {
 			m_iTiltTick += 100;
 			m_iNudgeTick = 50;
 			m_iNudgeType = PBL_SIG_BNUDGE;
-			SendSignal(PBL_SIG_BNUDGE, 0, this->p_Parent, NULL ); 
-			SoundUtil::getInstance()->play(m_iSound, false);
+			SendSignal(PBL_SIG_BNUDGE, 0, this->getParent(), NULL ); 
+			SoundUtil::getInstance()->playSample(m_iSound, false);
 		} else if (Keyboard::isKeyDown(SDLK_LCTRL)) {
 			m_fXNudge = -1.0f;
 			m_iTiltTick += 100;
 			m_iNudgeTick = 50;
 			m_iNudgeType = PBL_SIG_LNUDGE;
-			SendSignal(PBL_SIG_LNUDGE, 0, this->p_Parent, NULL ); 
-			SoundUtil::getInstance()->play(m_iSound, false);
+			SendSignal(PBL_SIG_LNUDGE, 0, this->getParent(), NULL ); 
+			SoundUtil::getInstance()->playSample(m_iSound, false);
 		} else if (Keyboard::isKeyDown(SDLK_RCTRL)) {
 			m_fXNudge = 1.0f;
 			m_iTiltTick += 100;
 			m_iNudgeTick = 50;
 			m_iNudgeType = PBL_SIG_RNUDGE;
-			SendSignal(PBL_SIG_RNUDGE, 0, this->p_Parent, NULL ); 
-			SoundUtil::getInstance()->play(m_iSound, false);
+			SendSignal(PBL_SIG_RNUDGE, 0, this->getParent(), NULL ); 
+			SoundUtil::getInstance()->playSample(m_iSound, false);
 		}
 	} else if (m_iNudgeTick == 40) {
 		// after you nudged the table moves back to it's original position which
 		// makes the ball go back in the other direction
 		switch (m_iNudgeType) {
 		case PBL_SIG_BNUDGE: 
-			SendSignal(PBL_SIG_TNUDGE, 0, this->p_Parent, NULL ); 
+			SendSignal(PBL_SIG_TNUDGE, 0, this->getParent(), NULL ); 
 			break;
 		case PBL_SIG_LNUDGE: 
-			SendSignal(PBL_SIG_RNUDGE, 0, this->p_Parent, NULL ); 
+			SendSignal(PBL_SIG_RNUDGE, 0, this->getParent(), NULL ); 
 			break;
 		case PBL_SIG_RNUDGE: 
-			SendSignal(PBL_SIG_LNUDGE, 0, this->p_Parent, NULL ); 
+			SendSignal(PBL_SIG_LNUDGE, 0, this->getParent(), NULL ); 
 			break;
 		}
 		m_fXNudge = 0.0f;
@@ -104,7 +104,7 @@ void EyeBehavior::onTick() {
 
 	if (m_iTiltTick > 110) {
 		// send tilt signal
-		SendSignal( PBL_SIG_TILT, 0, this->p_Parent, NULL ); 
+		SendSignal( PBL_SIG_TILT, 0, this->getParent(), NULL ); 
 		cerr << "TILT" << endl;
 		m_iTiltTick = 0;
 	}
@@ -116,16 +116,16 @@ void EyeBehavior::onTick() {
 	
 	if (Config::getInstance()->getView() == 1) {
 		// locked view
-		p_Parent->getTranslation(ex, ey, ez);
+		this->getParent()->getTranslation(ex, ey, ez);
 		
 		sx = (TX+m_fXNudge*2) - ex;
 		sy = (TY) - ey;
 		sz = (TZ+m_fZNudge*2) - ez;
 		
-		p_Parent->addTranslation(sx*0.1f, sy*0.1, sz*0.1f);
-		p_Parent->setRotation(RX, RY, RZ);
+		this->getParent()->addTranslation(sx*0.1f, sy*0.1, sz*0.1f);
+		this->getParent()->setRotation(RX, RY, RZ);
 
-		p_Parent->setTransform(0+m_fXNudge, 35, 12+m_fZNudge, 0.21f, 0, 0);
+		this->getParent()->setTransform(0+m_fXNudge, 35, 12+m_fZNudge, 0.21f, 0, 0);
 	} else { 
 		// follow view
 		float bx=0, by=0, bz=0;
@@ -165,14 +165,14 @@ void EyeBehavior::onTick() {
 			bx /= balls;
 		}
 		
-		p_Parent->getTranslation(ex, ey, ez);
+		this->getParent()->getTranslation(ex, ey, ez);
 		
 		sx = (TX+bx*0.4+m_fXNudge*2) - ex;
 		sy = (TY+by*0.4) - ey;
 		sz = (TZ+bz*0.4+m_fZNudge*2) - ez;
 		
-		p_Parent->addTranslation(sx*0.1f, sy*0.1, sz*0.1f);
-		p_Parent->setRotation(RX, RY, RZ);
+		this->getParent()->addTranslation(sx*0.1f, sy*0.1, sz*0.1f);
+		this->getParent()->setRotation(RX, RY, RZ);
 	}
 }
 

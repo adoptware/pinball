@@ -12,14 +12,14 @@
 #define EM_BILLBOARD_TRANS 1
 #define EM_BILLBOARD_ALPHATEST 2
 
-#include "Private.h"
-
+#include "TextureUtil.h"
 #include "EMath.h"
 
 class Group;
 
-/**
- */
+/** A billboard is a flat polygon that always will face the viewer.
+ * An easy speed hack is to use a billboards instead of a complex 
+ * shapes, e.g. the monsters in Doom. */
 class BillBoard {
  public:
 	BillBoard(EmTexture * tex, float sizex, float sizey);
@@ -37,7 +37,7 @@ class BillBoard {
 	Vertex3D m_vtxAlign;
  private:
 	friend class OpenGLVisitor;
-	friend class OpenGLTransVisitor;
+	friend class AllegroVisitor;
 	
 	EmTexture* m_Texture;
 	Group* p_Parent;

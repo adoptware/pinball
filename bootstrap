@@ -1,5 +1,6 @@
+libtoolize --ltdl
+autoheader
 automake --add-missing
 aclocal
 autoconf
-configure
-make
+autoheader

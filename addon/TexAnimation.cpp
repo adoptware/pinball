@@ -2,32 +2,27 @@
                           TexAnimation.cpp  -  description
                              -------------------
     begin                : Wed Jan 26 2000
-    copyright            : (C) 2000 by 
-    email                : 
+    copyright            : (C) 2000 by Henrik Enqvist
+    email                : henqvist@excite.com
  ***************************************************************************/
 
+#include "Private.h"
 #include "TexAnimation.h"
 #include "Group.h"
 #include "math.h"
 #include "Light.h"
 #include "BillBoard.h"
 
-/*
- */
-TexAnimation::TexAnimation(int step, int nvtx, int type) {
-	m_iType = type;
+TexAnimation::TexAnimation(int step, int nvtx) : Behavior() {
+	EmAssert(nvtx > 0, "TexAnimation::TexAnimation nvtx less than 1");
 	m_iStep = step;
 	m_iTick = 0;
 	m_iTexCoord = nvtx;
 }
 
-/*
- */
 TexAnimation::~TexAnimation() {
 }
 
-/*
- */
 void TexAnimation::add(float u, float v) {
 	TexCoord tex;
 	tex.u = u;
@@ -35,10 +30,8 @@ void TexAnimation::add(float u, float v) {
 	m_vTexCoord.push_back(tex);
 }
 
-/*
- */
 void TexAnimation::onTick() {
-	EmAssert(p_Parent != NULL, "Parent not allowed to be null");
+	EmAssert(this->getParent() != NULL, "Parent not allowed to be null");
 	
 	float sU, sV, eU, eV, u, v;
   int size = (int)(m_vTexCoord.size()/m_iTexCoord);
@@ -49,6 +42,7 @@ void TexAnimation::onTick() {
 	
 	int index = (int)(m_iTick/m_iStep);
 
+	// TODO this mtherfcker will crash !!!
 	for (int a=0; a<m_iTexCoord && a<4; a++) {
 		sU = m_vTexCoord[index*m_iTexCoord + a].u;
 		sV = m_vTexCoord[index*m_iTexCoord + a].v;
@@ -69,7 +63,7 @@ void TexAnimation::onTick() {
 		u = sU;
 		v = sV;
 		
-		BillBoard * b = p_Parent->getBillBoard();
+		BillBoard * b = this->getParent()->getBillBoard();
 		if (b != NULL) {
 			b->setUV(u, v, a);
 			EM_COUT("TexAnimation::onTick() " << u <<" "<< v <<" size "<< size <<" index "<< 

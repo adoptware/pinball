@@ -3,6 +3,7 @@
  The arrow keys rotates the cube.
  ***************************************************************************/
 
+#include "Private.h"
 #include "Engine.h"
 #include "Camera.h"
 #include "BigSphere.h"
@@ -35,7 +36,7 @@ int main(int argc, char *argv[]) {
 	groupSphere->addShape3D(sphere);
 	// Add a light
 	BigSphere* li = new BigSphere(1, 0, 1, 1, 1, 1);
-	li->setPolygonProperty(EM_ALLWAYS_LIT);
+	li->setProperty(EM_SHAPE3D_ALLWAYSLIT);
 	Light* lightR = new Light(2, 0, 0,  1, 0, 0);
 	Group* groupLightR1 = new Group();
 	Group* groupLightR2 = new Group();
@@ -57,6 +58,10 @@ int main(int argc, char *argv[]) {
 		engine->swap();
 		//		SDL_Delay(50);
 	}
-	delete(engine);
+	engine->stopEngine();
 	return 0;
 }
+
+#if EM_USE_ALLEGRO
+END_OF_MAIN();
+#endif
