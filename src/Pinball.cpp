@@ -163,7 +163,7 @@ int main(int argc, char *argv[]) {
 			Keyboard::waitForKey();
 			Keyboard::clear();
 		}
-		render = engine->limitFPS(100);
+		//		render = engine->limitFPS(100);
 	}
 
 	extern float em_groups_m, em_shapes_m, em_bounds_m, em_polygons_m;

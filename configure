@@ -1709,8 +1709,8 @@ ac_link='${CXX-g++} -o conftest${ac_exeext} $CXXFLAGS $CPPFLAGS $LDFLAGS conftes
 cross_compiling=$ac_cv_prog_cxx_cross
  
 
-CXXFLAGS="-g -D_REENTRANT"
-CFLAGS="-g -D_REENTRANT"
+CXXFLAGS="-O2 -D_REENTRANT -DEM_DEBUG=0"
+CFLAGS="-O2 -D_REENTRANT -DEM_DEBUG=0"
 
 echo $ac_n "checking how to run the C++ preprocessor""... $ac_c" 1>&6
 echo "configure:1717: checking how to run the C++ preprocessor" >&5
