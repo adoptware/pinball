@@ -302,7 +302,7 @@ EmTexture* TextureUtil::loadTexture(const char* filename) {
 
   // look if the texture is already loaded
   if (m_hEmTexture.find(string(filename)) != m_hEmTexture.end()) {
-    EM_COUT("TextureUtil::loadTexture found texture " << filename << " in cache", 1);
+    EM_COUT("TextureUtil::loadTexture found texture " << filename << " in cache", 0);
     map<string, EmTexture*>::iterator element = m_hEmTexture.find(string(filename));
     return (*element).second;
   }
