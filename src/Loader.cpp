@@ -14,7 +14,6 @@
 #include <ctime>
 #include <cstring>
 
-#include <ltdl.h>
 
 #include "Private.h"
 #include "Loader.h"
@@ -44,6 +43,7 @@
 #include "Script.h"
 #include "FakeModuleBehavior.h"
 #include "PlungerBehavior.h"
+#include "LoaderModule.h" //!+rzr :  I put it appart
 
 #define EmReadCmp(file_, ist_, str_, cmp_) \
   this->readNextToken(file_, ist_, str_);               \
@@ -59,11 +59,12 @@ Loader::Loader() {
   m_iNextSignal = LOADER_FIRSTSIGNAL;
   m_iNextVariable = LOADER_FIRSTVARIABLE;
   m_bModules = true;
-  lt_dlinit();
+  m_loaderModule = 0;
+  //!+-rzr
 };
 
 Loader::~Loader() {
-  lt_dlexit();
+  //!+-rzr
 };
 
 Loader * Loader::getInstance() {
@@ -663,38 +664,28 @@ void Loader::loadScript(ifstream & file, istringstream & ist, Engine *, Group * 
  ****************************************************************/
 
 void Loader::loadModule(ifstream & file, istringstream & ist, Engine *, Group * group) {
-  EM_COUT("Loader::loadModule", 1);
+  EM_COUT("+Loader::loadModule", 1);
   EmAssert(group != NULL, "Group NULL in loadMisc");
-  
+  m_loaderModule = LoaderModule::getInstance();
   string str;
   
   EmReadCmp(file, ist, str, "{");
   this->readNextToken(file, ist, str);
   //string filename = string(Config::getInstance()->getDataSubDir()) + "/" + str;
   string filename = string(EM_LIBDIR) + "/" + str;
-  
+  Behavior *beh=0;
   if (m_bModules) {
-    lt_dlhandle handle = lt_dlopen(filename.c_str());
-    if (handle == NULL) {
-      throw (string("Could not open shared library: ") + filename + 
-	     " : " + string(lt_dlerror())); 
+    beh = m_loaderModule->read(filename); //!+-rzr
+    if (beh == NULL) {
+      throw string("Could not allocate behavior object");
     } else {
-      lt_ptr fct_ptr = lt_dlsym(handle, "new_object_fct");
-      if (fct_ptr == NULL) {
-	throw (string("Could not find symbol 'new_object_fct' in library") + string(lt_dlerror()));
-      } else {
-	Behavior * beh = (Behavior*) ((void * (*)(void))fct_ptr)();
-	if (beh == NULL) {
-	  throw string("Could not allocate behavior object");
-	} else {
-					group->setBehavior(beh);
-	}
-      }
+      group->setBehavior(beh);
     }
   } else {
     group->setBehavior(new FakeModuleBehavior(filename.c_str()));
   }
   EmReadCmp(file, ist, str, "}");
+  EM_COUT("-Loader::loadModule", 1);
 }
 
 /****************************************************************

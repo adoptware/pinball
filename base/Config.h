@@ -101,6 +101,7 @@ class Config {
   string m_sDataSubDir;
   float m_fBrightness;
   static Config* p_Instance;
+  /// prototypes of Static Modules
   map<string, EMKey> m_hKey;
 };
 
