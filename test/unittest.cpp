@@ -22,8 +22,10 @@ int main(int argc, char *argv[]) {
 	runner.addTest(StateBehaviorTest::suite());
 	runner.addTest(ShapeTest::suite());
   runner.run();
+#else
+  cerr << "Unittest support not found, install cppunit and reconfigure!" << endl;
 #endif
-	return 0;
+  return 0;
 }
 
 #if EM_USE_ALLEGRO
