@@ -2,9 +2,9 @@ object walls {
   0 0 0
   0 0 0
   shape {
-    vts { 476 }
-    pls { 311 }
-    bh2 { }
+    vts { 480 }
+    pls { 313 }
+    bhi { }
     vtx { 
       -4 1 37.1
       1 1 1 1
@@ -2116,12 +2116,12 @@ object walls {
       0 0
     }
     vtx { 
-      21 1 42
+      21.05 1 32.05
       1 1 1 1
       0 0
     }
     vtx { 
-      21 -1 42
+      21.05 -1 32.05
       1 1 1 1
       0 0
     }
@@ -2385,2295 +2385,2329 @@ object walls {
       1 1 1 1
       0 0
     }
+    vtx { 
+      18.05 1 32.05
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      18.05 -1 32.05
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      18.05 1 31.05
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      18.05 -1 31.05
+      1 1 1 1
+      0 0
+    }
     ply {
       pes { 4 }
-      ple { 3  }
-      ple { 5  }
-      ple { 4  }
-      ple { 2  }
+      ple { 3 }
+      ple { 5 }
+      ple { 4 }
+      ple { 2 }
     }
     ply {
       pes { 4 }
-      ple { 5  }
-      ple { 7  }
-      ple { 6  }
-      ple { 4  }
+      ple { 5 }
+      ple { 7 }
+      ple { 6 }
+      ple { 4 }
     }
     ply {
       pes { 4 }
-      ple { 11  }
-      ple { 13  }
-      ple { 12  }
-      ple { 10  }
+      ple { 11 }
+      ple { 13 }
+      ple { 12 }
+      ple { 10 }
     }
     ply {
       pes { 4 }
-      ple { 13  }
-      ple { 15  }
-      ple { 14  }
-      ple { 12  }
+      ple { 13 }
+      ple { 15 }
+      ple { 14 }
+      ple { 12 }
     }
     ply {
       pes { 4 }
-      ple { 15  }
-      ple { 1  }
-      ple { 0  }
-      ple { 14  }
+      ple { 15 }
+      ple { 1 }
+      ple { 0 }
+      ple { 14 }
     }
     ply {
       pes { 4 }
-      ple { 17  }
-      ple { 19  }
-      ple { 18  }
-      ple { 16  }
+      ple { 17 }
+      ple { 19 }
+      ple { 18 }
+      ple { 16 }
     }
     ply {
       pes { 4 }
-      ple { 19  }
-      ple { 21  }
-      ple { 20  }
-      ple { 18  }
+      ple { 19 }
+      ple { 21 }
+      ple { 20 }
+      ple { 18 }
     }
     ply {
       pes { 4 }
-      ple { 23  }
-      ple { 25  }
-      ple { 24  }
-      ple { 22  }
+      ple { 23 }
+      ple { 25 }
+      ple { 24 }
+      ple { 22 }
     }
     ply {
       pes { 4 }
-      ple { 25  }
-      ple { 27  }
-      ple { 26  }
-      ple { 24  }
+      ple { 25 }
+      ple { 27 }
+      ple { 26 }
+      ple { 24 }
     }
     ply {
       pes { 4 }
-      ple { 29  }
-      ple { 31  }
-      ple { 30  }
-      ple { 28  }
+      ple { 29 }
+      ple { 31 }
+      ple { 30 }
+      ple { 28 }
     }
     ply {
       pes { 4 }
-      ple { 31  }
-      ple { 33  }
-      ple { 32  }
-      ple { 30  }
+      ple { 31 }
+      ple { 33 }
+      ple { 32 }
+      ple { 30 }
     }
     ply {
       pes { 4 }
-      ple { 35  }
-      ple { 37  }
-      ple { 36  }
-      ple { 34  }
+      ple { 35 }
+      ple { 37 }
+      ple { 36 }
+      ple { 34 }
     }
     ply {
       pes { 4 }
-      ple { 37  }
-      ple { 39  }
-      ple { 38  }
-      ple { 36  }
+      ple { 37 }
+      ple { 39 }
+      ple { 38 }
+      ple { 36 }
     }
     ply {
       pes { 4 }
-      ple { 43  }
-      ple { 29  }
-      ple { 28  }
-      ple { 42  }
+      ple { 43 }
+      ple { 29 }
+      ple { 28 }
+      ple { 42 }
     }
     ply {
       pes { 4 }
-      ple { 41  }
-      ple { 40  }
-      ple { 26  }
-      ple { 27  }
+      ple { 41 }
+      ple { 40 }
+      ple { 26 }
+      ple { 27 }
     }
     ply {
       pes { 4 }
-      ple { 9  }
-      ple { 45  }
-      ple { 44  }
-      ple { 8  }
+      ple { 9 }
+      ple { 45 }
+      ple { 44 }
+      ple { 8 }
     }
     ply {
       pes { 4 }
-      ple { 46  }
-      ple { 47  }
-      ple { 11  }
-      ple { 10  }
+      ple { 46 }
+      ple { 47 }
+      ple { 11 }
+      ple { 10 }
     }
     ply {
       pes { 4 }
-      ple { 49  }
-      ple { 3  }
-      ple { 2  }
-      ple { 48  }
+      ple { 49 }
+      ple { 3 }
+      ple { 2 }
+      ple { 48 }
     }
     ply {
       pes { 4 }
-      ple { 57  }
-      ple { 55  }
-      ple { 54  }
-      ple { 56  }
+      ple { 57 }
+      ple { 55 }
+      ple { 54 }
+      ple { 56 }
     }
     ply {
       pes { 4 }
-      ple { 65  }
-      ple { 51  }
-      ple { 50  }
-      ple { 64  }
+      ple { 65 }
+      ple { 51 }
+      ple { 50 }
+      ple { 64 }
     }
     ply {
       pes { 4 }
-      ple { 67  }
-      ple { 69  }
-      ple { 68  }
-      ple { 66  }
+      ple { 67 }
+      ple { 69 }
+      ple { 68 }
+      ple { 66 }
     }
     ply {
       pes { 4 }
-      ple { 69  }
-      ple { 71  }
-      ple { 70  }
-      ple { 68  }
+      ple { 69 }
+      ple { 71 }
+      ple { 70 }
+      ple { 68 }
     }
     ply {
       pes { 4 }
-      ple { 71  }
-      ple { 73  }
-      ple { 72  }
-      ple { 70  }
+      ple { 71 }
+      ple { 73 }
+      ple { 72 }
+      ple { 70 }
     }
     ply {
       pes { 4 }
-      ple { 73  }
-      ple { 75  }
-      ple { 74  }
-      ple { 72  }
+      ple { 73 }
+      ple { 75 }
+      ple { 74 }
+      ple { 72 }
     }
     ply {
       pes { 4 }
-      ple { 74  }
-      ple { 75  }
-      ple { 65  }
-      ple { 64  }
+      ple { 74 }
+      ple { 75 }
+      ple { 65 }
+      ple { 64 }
     }
     ply {
       pes { 4 }
-      ple { 83  }
-      ple { 81  }
-      ple { 80  }
-      ple { 82  }
+      ple { 83 }
+      ple { 81 }
+      ple { 80 }
+      ple { 82 }
     }
     ply {
       pes { 4 }
-      ple { 112  }
-      ple { 86  }
-      ple { 85  }
-      ple { 84  }
+      ple { 112 }
+      ple { 86 }
+      ple { 85 }
+      ple { 84 }
     }
     ply {
       pes { 4 }
-      ple { 67  }
-      ple { 66  }
-      ple { 52  }
-      ple { 113  }
+      ple { 67 }
+      ple { 66 }
+      ple { 52 }
+      ple { 113 }
     }
     ply {
       pes { 4 }
-      ple { 116  }
-      ple { 114  }
-      ple { 53  }
-      ple { 88  }
+      ple { 116 }
+      ple { 114 }
+      ple { 53 }
+      ple { 88 }
     }
     ply {
       pes { 4 }
-      ple { 89  }
-      ple { 87  }
-      ple { 115  }
-      ple { 117  }
+      ple { 89 }
+      ple { 87 }
+      ple { 115 }
+      ple { 117 }
     }
     ply {
       pes { 4 }
-      ple { 118  }
-      ple { 116  }
-      ple { 88  }
-      ple { 90  }
+      ple { 118 }
+      ple { 116 }
+      ple { 88 }
+      ple { 90 }
     }
     ply {
       pes { 4 }
-      ple { 91  }
-      ple { 89  }
-      ple { 117  }
-      ple { 119  }
+      ple { 91 }
+      ple { 89 }
+      ple { 117 }
+      ple { 119 }
     }
     ply {
       pes { 4 }
-      ple { 94  }
-      ple { 96  }
-      ple { 97  }
-      ple { 95  }
+      ple { 94 }
+      ple { 96 }
+      ple { 97 }
+      ple { 95 }
     }
     ply {
       pes { 4 }
-      ple { 100  }
-      ple { 101  }
-      ple { 99  }
-      ple { 98  }
+      ple { 100 }
+      ple { 101 }
+      ple { 99 }
+      ple { 98 }
     }
     ply {
       pes { 4 }
-      ple { 102  }
-      ple { 103  }
-      ple { 101  }
-      ple { 100  }
+      ple { 102 }
+      ple { 103 }
+      ple { 101 }
+      ple { 100 }
     }
     ply {
       pes { 4 }
-      ple { 106  }
-      ple { 107  }
-      ple { 105  }
-      ple { 104  }
+      ple { 106 }
+      ple { 107 }
+      ple { 105 }
+      ple { 104 }
     }
     ply {
       pes { 4 }
-      ple { 109  }
-      ple { 111  }
-      ple { 110  }
-      ple { 108  }
+      ple { 109 }
+      ple { 111 }
+      ple { 110 }
+      ple { 108 }
     }
     ply {
       pes { 4 }
-      ple { 108  }
-      ple { 122  }
-      ple { 123  }
-      ple { 109  }
+      ple { 108 }
+      ple { 122 }
+      ple { 123 }
+      ple { 109 }
     }
     ply {
       pes { 4 }
-      ple { 122  }
-      ple { 124  }
-      ple { 125  }
-      ple { 123  }
+      ple { 122 }
+      ple { 124 }
+      ple { 125 }
+      ple { 123 }
     }
     ply {
       pes { 4 }
-      ple { 54  }
-      ple { 55  }
-      ple { 127  }
-      ple { 126  }
+      ple { 54 }
+      ple { 55 }
+      ple { 127 }
+      ple { 126 }
     }
     ply {
       pes { 4 }
-      ple { 129  }
-      ple { 131  }
-      ple { 130  }
-      ple { 128  }
+      ple { 129 }
+      ple { 131 }
+      ple { 130 }
+      ple { 128 }
     }
     ply {
       pes { 4 }
-      ple { 131  }
-      ple { 133  }
-      ple { 132  }
-      ple { 130  }
+      ple { 131 }
+      ple { 133 }
+      ple { 132 }
+      ple { 130 }
     }
     ply {
       pes { 4 }
-      ple { 133  }
-      ple { 135  }
-      ple { 134  }
-      ple { 132  }
+      ple { 133 }
+      ple { 135 }
+      ple { 134 }
+      ple { 132 }
     }
     ply {
       pes { 4 }
-      ple { 137  }
-      ple { 139  }
-      ple { 138  }
-      ple { 136  }
+      ple { 137 }
+      ple { 139 }
+      ple { 138 }
+      ple { 136 }
     }
     ply {
       pes { 4 }
-      ple { 139  }
-      ple { 141  }
-      ple { 140  }
-      ple { 138  }
+      ple { 139 }
+      ple { 141 }
+      ple { 140 }
+      ple { 138 }
     }
     ply {
       pes { 4 }
-      ple { 128  }
-      ple { 142  }
-      ple { 143  }
-      ple { 129  }
+      ple { 128 }
+      ple { 142 }
+      ple { 143 }
+      ple { 129 }
     }
     ply {
       pes { 4 }
-      ple { 142  }
-      ple { 144  }
-      ple { 145  }
-      ple { 143  }
+      ple { 142 }
+      ple { 144 }
+      ple { 145 }
+      ple { 143 }
     }
     ply {
       pes { 4 }
-      ple { 156  }
-      ple { 146  }
-      ple { 147  }
-      ple { 157  }
+      ple { 156 }
+      ple { 146 }
+      ple { 147 }
+      ple { 157 }
     }
     ply {
       pes { 4 }
-      ple { 156  }
-      ple { 146  }
-      ple { 147  }
-      ple { 157  }
+      ple { 156 }
+      ple { 146 }
+      ple { 147 }
+      ple { 157 }
     }
     ply {
       pes { 4 }
-      ple { 146  }
-      ple { 148  }
-      ple { 149  }
-      ple { 147  }
+      ple { 146 }
+      ple { 148 }
+      ple { 149 }
+      ple { 147 }
     }
     ply {
       pes { 4 }
-      ple { 146  }
-      ple { 148  }
-      ple { 149  }
-      ple { 147  }
+      ple { 146 }
+      ple { 148 }
+      ple { 149 }
+      ple { 147 }
     }
     ply {
       pes { 4 }
-      ple { 148  }
-      ple { 150  }
-      ple { 151  }
-      ple { 149  }
+      ple { 148 }
+      ple { 150 }
+      ple { 151 }
+      ple { 149 }
     }
     ply {
       pes { 4 }
-      ple { 148  }
-      ple { 150  }
-      ple { 151  }
-      ple { 149  }
+      ple { 148 }
+      ple { 150 }
+      ple { 151 }
+      ple { 149 }
     }
     ply {
       pes { 4 }
-      ple { 150  }
-      ple { 152  }
-      ple { 153  }
-      ple { 151  }
+      ple { 150 }
+      ple { 152 }
+      ple { 153 }
+      ple { 151 }
     }
     ply {
       pes { 4 }
-      ple { 150  }
-      ple { 152  }
-      ple { 153  }
-      ple { 151  }
+      ple { 150 }
+      ple { 152 }
+      ple { 153 }
+      ple { 151 }
     }
     ply {
       pes { 4 }
-      ple { 152  }
-      ple { 154  }
-      ple { 155  }
-      ple { 153  }
+      ple { 152 }
+      ple { 154 }
+      ple { 155 }
+      ple { 153 }
     }
     ply {
       pes { 4 }
-      ple { 152  }
-      ple { 154  }
-      ple { 155  }
-      ple { 153  }
+      ple { 152 }
+      ple { 154 }
+      ple { 155 }
+      ple { 153 }
     }
     ply {
       pes { 4 }
-      ple { 154  }
-      ple { 156  }
-      ple { 157  }
-      ple { 155  }
+      ple { 154 }
+      ple { 156 }
+      ple { 157 }
+      ple { 155 }
     }
     ply {
       pes { 4 }
-      ple { 154  }
-      ple { 156  }
-      ple { 157  }
-      ple { 155  }
+      ple { 154 }
+      ple { 156 }
+      ple { 157 }
+      ple { 155 }
     }
     ply {
       pes { 4 }
-      ple { 168  }
-      ple { 158  }
-      ple { 159  }
-      ple { 169  }
+      ple { 168 }
+      ple { 158 }
+      ple { 159 }
+      ple { 169 }
     }
     ply {
       pes { 4 }
-      ple { 168  }
-      ple { 158  }
-      ple { 159  }
-      ple { 169  }
+      ple { 168 }
+      ple { 158 }
+      ple { 159 }
+      ple { 169 }
     }
     ply {
       pes { 4 }
-      ple { 158  }
-      ple { 160  }
-      ple { 161  }
-      ple { 159  }
+      ple { 158 }
+      ple { 160 }
+      ple { 161 }
+      ple { 159 }
     }
     ply {
       pes { 4 }
-      ple { 158  }
-      ple { 160  }
-      ple { 161  }
-      ple { 159  }
+      ple { 158 }
+      ple { 160 }
+      ple { 161 }
+      ple { 159 }
     }
     ply {
       pes { 4 }
-      ple { 160  }
-      ple { 162  }
-      ple { 163  }
-      ple { 161  }
+      ple { 160 }
+      ple { 162 }
+      ple { 163 }
+      ple { 161 }
     }
     ply {
       pes { 4 }
-      ple { 160  }
-      ple { 162  }
-      ple { 163  }
-      ple { 161  }
+      ple { 160 }
+      ple { 162 }
+      ple { 163 }
+      ple { 161 }
     }
     ply {
       pes { 4 }
-      ple { 162  }
-      ple { 164  }
-      ple { 165  }
-      ple { 163  }
+      ple { 162 }
+      ple { 164 }
+      ple { 165 }
+      ple { 163 }
     }
     ply {
       pes { 4 }
-      ple { 162  }
-      ple { 164  }
-      ple { 165  }
-      ple { 163  }
+      ple { 162 }
+      ple { 164 }
+      ple { 165 }
+      ple { 163 }
     }
     ply {
       pes { 4 }
-      ple { 164  }
-      ple { 166  }
-      ple { 167  }
-      ple { 165  }
+      ple { 164 }
+      ple { 166 }
+      ple { 167 }
+      ple { 165 }
     }
     ply {
       pes { 4 }
-      ple { 164  }
-      ple { 166  }
-      ple { 167  }
-      ple { 165  }
+      ple { 164 }
+      ple { 166 }
+      ple { 167 }
+      ple { 165 }
     }
     ply {
       pes { 4 }
-      ple { 166  }
-      ple { 168  }
-      ple { 169  }
-      ple { 167  }
+      ple { 166 }
+      ple { 168 }
+      ple { 169 }
+      ple { 167 }
     }
     ply {
       pes { 4 }
-      ple { 166  }
-      ple { 168  }
-      ple { 169  }
-      ple { 167  }
+      ple { 166 }
+      ple { 168 }
+      ple { 169 }
+      ple { 167 }
     }
     ply {
       pes { 4 }
-      ple { 180  }
-      ple { 170  }
-      ple { 171  }
-      ple { 181  }
+      ple { 180 }
+      ple { 170 }
+      ple { 171 }
+      ple { 181 }
     }
     ply {
       pes { 4 }
-      ple { 180  }
-      ple { 170  }
-      ple { 171  }
-      ple { 181  }
+      ple { 180 }
+      ple { 170 }
+      ple { 171 }
+      ple { 181 }
     }
     ply {
       pes { 4 }
-      ple { 170  }
-      ple { 172  }
-      ple { 173  }
-      ple { 171  }
+      ple { 170 }
+      ple { 172 }
+      ple { 173 }
+      ple { 171 }
     }
     ply {
       pes { 4 }
-      ple { 170  }
-      ple { 172  }
-      ple { 173  }
-      ple { 171  }
+      ple { 170 }
+      ple { 172 }
+      ple { 173 }
+      ple { 171 }
     }
     ply {
       pes { 4 }
-      ple { 172  }
-      ple { 174  }
-      ple { 175  }
-      ple { 173  }
+      ple { 172 }
+      ple { 174 }
+      ple { 175 }
+      ple { 173 }
     }
     ply {
       pes { 4 }
-      ple { 172  }
-      ple { 174  }
-      ple { 175  }
-      ple { 173  }
+      ple { 172 }
+      ple { 174 }
+      ple { 175 }
+      ple { 173 }
     }
     ply {
       pes { 4 }
-      ple { 174  }
-      ple { 176  }
-      ple { 177  }
-      ple { 175  }
+      ple { 174 }
+      ple { 176 }
+      ple { 177 }
+      ple { 175 }
     }
     ply {
       pes { 4 }
-      ple { 174  }
-      ple { 176  }
-      ple { 177  }
-      ple { 175  }
+      ple { 174 }
+      ple { 176 }
+      ple { 177 }
+      ple { 175 }
     }
     ply {
       pes { 4 }
-      ple { 176  }
-      ple { 178  }
-      ple { 179  }
-      ple { 177  }
+      ple { 176 }
+      ple { 178 }
+      ple { 179 }
+      ple { 177 }
     }
     ply {
       pes { 4 }
-      ple { 176  }
-      ple { 178  }
-      ple { 179  }
-      ple { 177  }
+      ple { 176 }
+      ple { 178 }
+      ple { 179 }
+      ple { 177 }
     }
     ply {
       pes { 4 }
-      ple { 178  }
-      ple { 180  }
-      ple { 181  }
-      ple { 179  }
+      ple { 178 }
+      ple { 180 }
+      ple { 181 }
+      ple { 179 }
     }
     ply {
       pes { 4 }
-      ple { 178  }
-      ple { 180  }
-      ple { 181  }
-      ple { 179  }
+      ple { 178 }
+      ple { 180 }
+      ple { 181 }
+      ple { 179 }
     }
     ply {
       pes { 4 }
-      ple { 192  }
-      ple { 182  }
-      ple { 183  }
-      ple { 193  }
+      ple { 192 }
+      ple { 182 }
+      ple { 183 }
+      ple { 193 }
     }
     ply {
       pes { 4 }
-      ple { 192  }
-      ple { 182  }
-      ple { 183  }
-      ple { 193  }
+      ple { 192 }
+      ple { 182 }
+      ple { 183 }
+      ple { 193 }
     }
     ply {
       pes { 4 }
-      ple { 182  }
-      ple { 184  }
-      ple { 185  }
-      ple { 183  }
+      ple { 182 }
+      ple { 184 }
+      ple { 185 }
+      ple { 183 }
     }
     ply {
       pes { 4 }
-      ple { 182  }
-      ple { 184  }
-      ple { 185  }
-      ple { 183  }
+      ple { 182 }
+      ple { 184 }
+      ple { 185 }
+      ple { 183 }
     }
     ply {
       pes { 4 }
-      ple { 184  }
-      ple { 186  }
-      ple { 187  }
-      ple { 185  }
+      ple { 184 }
+      ple { 186 }
+      ple { 187 }
+      ple { 185 }
     }
     ply {
       pes { 4 }
-      ple { 184  }
-      ple { 186  }
-      ple { 187  }
-      ple { 185  }
+      ple { 184 }
+      ple { 186 }
+      ple { 187 }
+      ple { 185 }
     }
     ply {
       pes { 4 }
-      ple { 186  }
-      ple { 188  }
-      ple { 189  }
-      ple { 187  }
+      ple { 186 }
+      ple { 188 }
+      ple { 189 }
+      ple { 187 }
     }
     ply {
       pes { 4 }
-      ple { 186  }
-      ple { 188  }
-      ple { 189  }
-      ple { 187  }
+      ple { 186 }
+      ple { 188 }
+      ple { 189 }
+      ple { 187 }
     }
     ply {
       pes { 4 }
-      ple { 188  }
-      ple { 190  }
-      ple { 191  }
-      ple { 189  }
+      ple { 188 }
+      ple { 190 }
+      ple { 191 }
+      ple { 189 }
     }
     ply {
       pes { 4 }
-      ple { 188  }
-      ple { 190  }
-      ple { 191  }
-      ple { 189  }
+      ple { 188 }
+      ple { 190 }
+      ple { 191 }
+      ple { 189 }
     }
     ply {
       pes { 4 }
-      ple { 190  }
-      ple { 192  }
-      ple { 193  }
-      ple { 191  }
+      ple { 190 }
+      ple { 192 }
+      ple { 193 }
+      ple { 191 }
     }
     ply {
       pes { 4 }
-      ple { 190  }
-      ple { 192  }
-      ple { 193  }
-      ple { 191  }
+      ple { 190 }
+      ple { 192 }
+      ple { 193 }
+      ple { 191 }
     }
     ply {
       pes { 4 }
-      ple { 200  }
-      ple { 194  }
-      ple { 195  }
-      ple { 201  }
+      ple { 200 }
+      ple { 194 }
+      ple { 195 }
+      ple { 201 }
     }
     ply {
       pes { 4 }
-      ple { 194  }
-      ple { 196  }
-      ple { 197  }
-      ple { 195  }
+      ple { 194 }
+      ple { 196 }
+      ple { 197 }
+      ple { 195 }
     }
     ply {
       pes { 4 }
-      ple { 196  }
-      ple { 198  }
-      ple { 199  }
-      ple { 197  }
+      ple { 196 }
+      ple { 198 }
+      ple { 199 }
+      ple { 197 }
     }
     ply {
       pes { 4 }
-      ple { 198  }
-      ple { 200  }
-      ple { 201  }
-      ple { 199  }
+      ple { 198 }
+      ple { 200 }
+      ple { 201 }
+      ple { 199 }
     }
     ply {
       pes { 4 }
-      ple { 202  }
-      ple { 204  }
-      ple { 205  }
-      ple { 203  }
+      ple { 202 }
+      ple { 204 }
+      ple { 205 }
+      ple { 203 }
     }
     ply {
       pes { 4 }
-      ple { 204  }
-      ple { 206  }
-      ple { 207  }
-      ple { 205  }
+      ple { 204 }
+      ple { 206 }
+      ple { 207 }
+      ple { 205 }
     }
     ply {
       pes { 4 }
-      ple { 206  }
-      ple { 208  }
-      ple { 209  }
-      ple { 207  }
+      ple { 206 }
+      ple { 208 }
+      ple { 209 }
+      ple { 207 }
     }
     ply {
       pes { 4 }
-      ple { 208  }
-      ple { 210  }
-      ple { 211  }
-      ple { 209  }
+      ple { 208 }
+      ple { 210 }
+      ple { 211 }
+      ple { 209 }
     }
     ply {
       pes { 4 }
-      ple { 210  }
-      ple { 212  }
-      ple { 213  }
-      ple { 211  }
+      ple { 210 }
+      ple { 212 }
+      ple { 213 }
+      ple { 211 }
     }
     ply {
       pes { 4 }
-      ple { 214  }
-      ple { 216  }
-      ple { 217  }
-      ple { 215  }
+      ple { 214 }
+      ple { 216 }
+      ple { 217 }
+      ple { 215 }
     }
     ply {
       pes { 4 }
-      ple { 216  }
-      ple { 218  }
-      ple { 219  }
-      ple { 217  }
+      ple { 216 }
+      ple { 218 }
+      ple { 219 }
+      ple { 217 }
     }
     ply {
       pes { 4 }
-      ple { 202  }
-      ple { 203  }
-      ple { 219  }
-      ple { 218  }
+      ple { 202 }
+      ple { 203 }
+      ple { 219 }
+      ple { 218 }
     }
     ply {
       pes { 4 }
-      ple { 21  }
-      ple { 221  }
-      ple { 220  }
-      ple { 20  }
+      ple { 21 }
+      ple { 221 }
+      ple { 220 }
+      ple { 20 }
     }
     ply {
       pes { 4 }
-      ple { 220  }
-      ple { 221  }
-      ple { 23  }
-      ple { 22  }
+      ple { 220 }
+      ple { 221 }
+      ple { 23 }
+      ple { 22 }
     }
     ply {
       pes { 4 }
-      ple { 34  }
-      ple { 222  }
-      ple { 223  }
-      ple { 35  }
+      ple { 34 }
+      ple { 222 }
+      ple { 223 }
+      ple { 35 }
     }
     ply {
       pes { 4 }
-      ple { 33  }
-      ple { 223  }
-      ple { 222  }
-      ple { 32  }
+      ple { 33 }
+      ple { 223 }
+      ple { 222 }
+      ple { 32 }
     }
     ply {
       pes { 4 }
-      ple { 99  }
-      ple { 225  }
-      ple { 224  }
-      ple { 98  }
+      ple { 99 }
+      ple { 225 }
+      ple { 224 }
+      ple { 98 }
     }
     ply {
       pes { 4 }
-      ple { 224  }
-      ple { 225  }
-      ple { 97  }
-      ple { 96  }
+      ple { 224 }
+      ple { 225 }
+      ple { 97 }
+      ple { 96 }
     }
     ply {
       pes { 4 }
-      ple { 103  }
-      ple { 102  }
-      ple { 104  }
-      ple { 105  }
+      ple { 103 }
+      ple { 102 }
+      ple { 104 }
+      ple { 105 }
     }
     ply {
       pes { 4 }
-      ple { 226  }
-      ple { 227  }
-      ple { 229  }
-      ple { 228  }
+      ple { 226 }
+      ple { 227 }
+      ple { 229 }
+      ple { 228 }
     }
     ply {
       pes { 4 }
-      ple { 230  }
-      ple { 231  }
-      ple { 233  }
-      ple { 232  }
+      ple { 230 }
+      ple { 231 }
+      ple { 233 }
+      ple { 232 }
     }
     ply {
       pes { 4 }
-      ple { 232  }
-      ple { 233  }
-      ple { 235  }
-      ple { 234  }
+      ple { 232 }
+      ple { 233 }
+      ple { 235 }
+      ple { 234 }
     }
     ply {
       pes { 4 }
-      ple { 236  }
-      ple { 237  }
-      ple { 239  }
-      ple { 238  }
+      ple { 236 }
+      ple { 237 }
+      ple { 239 }
+      ple { 238 }
     }
     ply {
       pes { 4 }
-      ple { 240  }
-      ple { 241  }
-      ple { 231  }
-      ple { 230  }
+      ple { 240 }
+      ple { 241 }
+      ple { 231 }
+      ple { 230 }
     }
     ply {
       pes { 4 }
-      ple { 228  }
-      ple { 229  }
-      ple { 241  }
-      ple { 240  }
+      ple { 228 }
+      ple { 229 }
+      ple { 241 }
+      ple { 240 }
     }
     ply {
       pes { 4 }
-      ple { 234  }
-      ple { 235  }
-      ple { 237  }
-      ple { 236  }
+      ple { 234 }
+      ple { 235 }
+      ple { 237 }
+      ple { 236 }
     }
     ply {
       pes { 4 }
-      ple { 84  }
-      ple { 85  }
-      ple { 110  }
-      ple { 111  }
+      ple { 84 }
+      ple { 85 }
+      ple { 110 }
+      ple { 111 }
     }
     ply {
       pes { 4 }
-      ple { 248  }
-      ple { 249  }
-      ple { 243  }
-      ple { 242  }
+      ple { 248 }
+      ple { 249 }
+      ple { 243 }
+      ple { 242 }
     }
     ply {
       pes { 4 }
-      ple { 246  }
-      ple { 247  }
-      ple { 249  }
-      ple { 248  }
+      ple { 246 }
+      ple { 247 }
+      ple { 249 }
+      ple { 248 }
     }
     ply {
       pes { 4 }
-      ple { 242  }
-      ple { 243  }
-      ple { 245  }
-      ple { 244  }
+      ple { 242 }
+      ple { 243 }
+      ple { 245 }
+      ple { 244 }
     }
     ply {
       pes { 4 }
-      ple { 246  }
-      ple { 244  }
-      ple { 245  }
-      ple { 247  }
+      ple { 246 }
+      ple { 244 }
+      ple { 245 }
+      ple { 247 }
     }
     ply {
       pes { 4 }
-      ple { 51  }
-      ple { 251  }
-      ple { 250  }
-      ple { 50  }
+      ple { 51 }
+      ple { 251 }
+      ple { 250 }
+      ple { 50 }
     }
     ply {
       pes { 4 }
-      ple { 47  }
-      ple { 46  }
-      ple { 250  }
-      ple { 251  }
+      ple { 47 }
+      ple { 46 }
+      ple { 250 }
+      ple { 251 }
     }
     ply {
       pes { 4 }
-      ple { 8  }
-      ple { 252  }
-      ple { 253  }
-      ple { 9  }
+      ple { 8 }
+      ple { 252 }
+      ple { 253 }
+      ple { 9 }
     }
     ply {
       pes { 4 }
-      ple { 6  }
-      ple { 7  }
-      ple { 253  }
-      ple { 252  }
+      ple { 6 }
+      ple { 7 }
+      ple { 253 }
+      ple { 252 }
     }
     ply {
       pes { 4 }
-      ple { 254  }
-      ple { 256  }
-      ple { 257  }
-      ple { 255  }
+      ple { 254 }
+      ple { 256 }
+      ple { 257 }
+      ple { 255 }
     }
     ply {
       pes { 4 }
-      ple { 254  }
-      ple { 256  }
-      ple { 257  }
-      ple { 255  }
+      ple { 254 }
+      ple { 256 }
+      ple { 257 }
+      ple { 255 }
     }
     ply {
       pes { 4 }
-      ple { 256  }
-      ple { 258  }
-      ple { 259  }
-      ple { 257  }
+      ple { 256 }
+      ple { 258 }
+      ple { 259 }
+      ple { 257 }
     }
     ply {
       pes { 4 }
-      ple { 256  }
-      ple { 258  }
-      ple { 259  }
-      ple { 257  }
+      ple { 256 }
+      ple { 258 }
+      ple { 259 }
+      ple { 257 }
     }
     ply {
       pes { 4 }
-      ple { 258  }
-      ple { 260  }
-      ple { 261  }
-      ple { 259  }
+      ple { 258 }
+      ple { 260 }
+      ple { 261 }
+      ple { 259 }
     }
     ply {
       pes { 4 }
-      ple { 258  }
-      ple { 260  }
-      ple { 261  }
-      ple { 259  }
+      ple { 258 }
+      ple { 260 }
+      ple { 261 }
+      ple { 259 }
     }
     ply {
       pes { 4 }
-      ple { 260  }
-      ple { 262  }
-      ple { 263  }
-      ple { 261  }
+      ple { 260 }
+      ple { 262 }
+      ple { 263 }
+      ple { 261 }
     }
     ply {
       pes { 4 }
-      ple { 260  }
-      ple { 262  }
-      ple { 263  }
-      ple { 261  }
+      ple { 260 }
+      ple { 262 }
+      ple { 263 }
+      ple { 261 }
     }
     ply {
       pes { 4 }
-      ple { 262  }
-      ple { 264  }
-      ple { 265  }
-      ple { 263  }
+      ple { 262 }
+      ple { 264 }
+      ple { 265 }
+      ple { 263 }
     }
     ply {
       pes { 4 }
-      ple { 262  }
-      ple { 264  }
-      ple { 265  }
-      ple { 263  }
+      ple { 262 }
+      ple { 264 }
+      ple { 265 }
+      ple { 263 }
     }
     ply {
       pes { 4 }
-      ple { 264  }
-      ple { 266  }
-      ple { 267  }
-      ple { 265  }
+      ple { 264 }
+      ple { 266 }
+      ple { 267 }
+      ple { 265 }
     }
     ply {
       pes { 4 }
-      ple { 264  }
-      ple { 266  }
-      ple { 267  }
-      ple { 265  }
+      ple { 264 }
+      ple { 266 }
+      ple { 267 }
+      ple { 265 }
     }
     ply {
       pes { 4 }
-      ple { 266  }
-      ple { 268  }
-      ple { 269  }
-      ple { 267  }
+      ple { 266 }
+      ple { 268 }
+      ple { 269 }
+      ple { 267 }
     }
     ply {
       pes { 4 }
-      ple { 266  }
-      ple { 268  }
-      ple { 269  }
-      ple { 267  }
+      ple { 266 }
+      ple { 268 }
+      ple { 269 }
+      ple { 267 }
     }
     ply {
       pes { 4 }
-      ple { 268  }
-      ple { 270  }
-      ple { 271  }
-      ple { 269  }
+      ple { 268 }
+      ple { 270 }
+      ple { 271 }
+      ple { 269 }
     }
     ply {
       pes { 4 }
-      ple { 268  }
-      ple { 270  }
-      ple { 271  }
-      ple { 269  }
+      ple { 268 }
+      ple { 270 }
+      ple { 271 }
+      ple { 269 }
     }
     ply {
       pes { 4 }
-      ple { 270  }
-      ple { 272  }
-      ple { 273  }
-      ple { 271  }
+      ple { 270 }
+      ple { 272 }
+      ple { 273 }
+      ple { 271 }
     }
     ply {
       pes { 4 }
-      ple { 270  }
-      ple { 272  }
-      ple { 273  }
-      ple { 271  }
+      ple { 270 }
+      ple { 272 }
+      ple { 273 }
+      ple { 271 }
     }
     ply {
       pes { 4 }
-      ple { 272  }
-      ple { 274  }
-      ple { 275  }
-      ple { 273  }
+      ple { 272 }
+      ple { 274 }
+      ple { 275 }
+      ple { 273 }
     }
     ply {
       pes { 4 }
-      ple { 272  }
-      ple { 274  }
-      ple { 275  }
-      ple { 273  }
+      ple { 272 }
+      ple { 274 }
+      ple { 275 }
+      ple { 273 }
     }
     ply {
       pes { 4 }
-      ple { 274  }
-      ple { 276  }
-      ple { 277  }
-      ple { 275  }
+      ple { 274 }
+      ple { 276 }
+      ple { 277 }
+      ple { 275 }
     }
     ply {
       pes { 4 }
-      ple { 274  }
-      ple { 276  }
-      ple { 277  }
-      ple { 275  }
+      ple { 274 }
+      ple { 276 }
+      ple { 277 }
+      ple { 275 }
     }
     ply {
       pes { 4 }
-      ple { 276  }
-      ple { 278  }
-      ple { 279  }
-      ple { 277  }
+      ple { 276 }
+      ple { 278 }
+      ple { 279 }
+      ple { 277 }
     }
     ply {
       pes { 4 }
-      ple { 276  }
-      ple { 278  }
-      ple { 279  }
-      ple { 277  }
+      ple { 276 }
+      ple { 278 }
+      ple { 279 }
+      ple { 277 }
     }
     ply {
       pes { 4 }
-      ple { 278  }
-      ple { 280  }
-      ple { 281  }
-      ple { 279  }
+      ple { 278 }
+      ple { 280 }
+      ple { 281 }
+      ple { 279 }
     }
     ply {
       pes { 4 }
-      ple { 278  }
-      ple { 280  }
-      ple { 281  }
-      ple { 279  }
+      ple { 278 }
+      ple { 280 }
+      ple { 281 }
+      ple { 279 }
     }
     ply {
       pes { 4 }
-      ple { 254  }
-      ple { 255  }
-      ple { 281  }
-      ple { 280  }
+      ple { 254 }
+      ple { 255 }
+      ple { 281 }
+      ple { 280 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 282  }
-      ple { 286  }
-      ple { 287  }
-      ple { 283  }
+      ple { 282 }
+      ple { 286 }
+      ple { 287 }
+      ple { 283 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 285  }
-      ple { 289  }
-      ple { 286  }
-      ple { 282  }
+      ple { 285 }
+      ple { 289 }
+      ple { 286 }
+      ple { 282 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 283  }
-      ple { 287  }
-      ple { 288  }
-      ple { 284  }
+      ple { 283 }
+      ple { 287 }
+      ple { 288 }
+      ple { 284 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 284  }
-      ple { 288  }
-      ple { 289  }
-      ple { 285  }
+      ple { 284 }
+      ple { 288 }
+      ple { 289 }
+      ple { 285 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 286  }
-      ple { 290  }
-      ple { 291  }
-      ple { 287  }
+      ple { 286 }
+      ple { 290 }
+      ple { 291 }
+      ple { 287 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 289  }
-      ple { 293  }
-      ple { 290  }
-      ple { 286  }
+      ple { 289 }
+      ple { 293 }
+      ple { 290 }
+      ple { 286 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 287  }
-      ple { 291  }
-      ple { 292  }
-      ple { 288  }
+      ple { 287 }
+      ple { 291 }
+      ple { 292 }
+      ple { 288 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 288  }
-      ple { 292  }
-      ple { 293  }
-      ple { 289  }
+      ple { 288 }
+      ple { 292 }
+      ple { 293 }
+      ple { 289 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 290  }
-      ple { 294  }
-      ple { 295  }
-      ple { 291  }
+      ple { 290 }
+      ple { 294 }
+      ple { 295 }
+      ple { 291 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 293  }
-      ple { 297  }
-      ple { 294  }
-      ple { 290  }
+      ple { 293 }
+      ple { 297 }
+      ple { 294 }
+      ple { 290 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 291  }
-      ple { 295  }
-      ple { 296  }
-      ple { 292  }
+      ple { 291 }
+      ple { 295 }
+      ple { 296 }
+      ple { 292 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 292  }
-      ple { 296  }
-      ple { 297  }
-      ple { 293  }
+      ple { 292 }
+      ple { 296 }
+      ple { 297 }
+      ple { 293 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 294  }
-      ple { 298  }
-      ple { 299  }
-      ple { 295  }
+      ple { 294 }
+      ple { 298 }
+      ple { 299 }
+      ple { 295 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 297  }
-      ple { 301  }
-      ple { 298  }
-      ple { 294  }
+      ple { 297 }
+      ple { 301 }
+      ple { 298 }
+      ple { 294 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 295  }
-      ple { 299  }
-      ple { 300  }
-      ple { 296  }
+      ple { 295 }
+      ple { 299 }
+      ple { 300 }
+      ple { 296 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 296  }
-      ple { 300  }
-      ple { 301  }
-      ple { 297  }
+      ple { 296 }
+      ple { 300 }
+      ple { 301 }
+      ple { 297 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 298  }
-      ple { 302  }
-      ple { 303  }
-      ple { 299  }
+      ple { 298 }
+      ple { 302 }
+      ple { 303 }
+      ple { 299 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 301  }
-      ple { 305  }
-      ple { 302  }
-      ple { 298  }
+      ple { 301 }
+      ple { 305 }
+      ple { 302 }
+      ple { 298 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 299  }
-      ple { 303  }
-      ple { 304  }
-      ple { 300  }
+      ple { 299 }
+      ple { 303 }
+      ple { 304 }
+      ple { 300 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 300  }
-      ple { 304  }
-      ple { 305  }
-      ple { 301  }
+      ple { 300 }
+      ple { 304 }
+      ple { 305 }
+      ple { 301 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 302  }
-      ple { 306  }
-      ple { 307  }
-      ple { 303  }
+      ple { 302 }
+      ple { 306 }
+      ple { 307 }
+      ple { 303 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 305  }
-      ple { 309  }
-      ple { 306  }
-      ple { 302  }
+      ple { 305 }
+      ple { 309 }
+      ple { 306 }
+      ple { 302 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 303  }
-      ple { 307  }
-      ple { 308  }
-      ple { 304  }
+      ple { 303 }
+      ple { 307 }
+      ple { 308 }
+      ple { 304 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 304  }
-      ple { 308  }
-      ple { 309  }
-      ple { 305  }
+      ple { 304 }
+      ple { 308 }
+      ple { 309 }
+      ple { 305 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 306  }
-      ple { 310  }
-      ple { 311  }
-      ple { 307  }
+      ple { 306 }
+      ple { 310 }
+      ple { 311 }
+      ple { 307 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 309  }
-      ple { 313  }
-      ple { 310  }
-      ple { 306  }
+      ple { 309 }
+      ple { 313 }
+      ple { 310 }
+      ple { 306 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 307  }
-      ple { 311  }
-      ple { 312  }
-      ple { 308  }
+      ple { 307 }
+      ple { 311 }
+      ple { 312 }
+      ple { 308 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 308  }
-      ple { 312  }
-      ple { 313  }
-      ple { 309  }
+      ple { 308 }
+      ple { 312 }
+      ple { 313 }
+      ple { 309 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 310  }
-      ple { 314  }
-      ple { 315  }
-      ple { 311  }
+      ple { 310 }
+      ple { 314 }
+      ple { 315 }
+      ple { 311 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 313  }
-      ple { 317  }
-      ple { 314  }
-      ple { 310  }
+      ple { 313 }
+      ple { 317 }
+      ple { 314 }
+      ple { 310 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 311  }
-      ple { 315  }
-      ple { 316  }
-      ple { 312  }
+      ple { 311 }
+      ple { 315 }
+      ple { 316 }
+      ple { 312 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 312  }
-      ple { 316  }
-      ple { 317  }
-      ple { 313  }
+      ple { 312 }
+      ple { 316 }
+      ple { 317 }
+      ple { 313 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 314  }
-      ple { 318  }
-      ple { 319  }
-      ple { 315  }
+      ple { 314 }
+      ple { 318 }
+      ple { 319 }
+      ple { 315 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 317  }
-      ple { 321  }
-      ple { 318  }
-      ple { 314  }
+      ple { 317 }
+      ple { 321 }
+      ple { 318 }
+      ple { 314 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 315  }
-      ple { 319  }
-      ple { 320  }
-      ple { 316  }
+      ple { 315 }
+      ple { 319 }
+      ple { 320 }
+      ple { 316 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 316  }
-      ple { 320  }
-      ple { 321  }
-      ple { 317  }
+      ple { 316 }
+      ple { 320 }
+      ple { 321 }
+      ple { 317 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 318  }
-      ple { 322  }
-      ple { 323  }
-      ple { 319  }
+      ple { 318 }
+      ple { 322 }
+      ple { 323 }
+      ple { 319 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 319  }
-      ple { 323  }
-      ple { 324  }
-      ple { 320  }
+      ple { 319 }
+      ple { 323 }
+      ple { 324 }
+      ple { 320 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 320  }
-      ple { 324  }
-      ple { 325  }
-      ple { 321  }
+      ple { 320 }
+      ple { 324 }
+      ple { 325 }
+      ple { 321 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 325  }
-      ple { 324  }
-      ple { 323  }
-      ple { 322  }
+      ple { 325 }
+      ple { 324 }
+      ple { 323 }
+      ple { 322 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 93  }
-      ple { 327  }
-      ple { 326  }
-      ple { 92  }
+      ple { 93 }
+      ple { 327 }
+      ple { 326 }
+      ple { 92 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 92  }
-      ple { 326  }
-      ple { 328  }
-      ple { 120  }
+      ple { 92 }
+      ple { 326 }
+      ple { 328 }
+      ple { 120 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 121  }
-      ple { 329  }
-      ple { 327  }
-      ple { 93  }
+      ple { 121 }
+      ple { 329 }
+      ple { 327 }
+      ple { 93 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 120  }
-      ple { 328  }
-      ple { 329  }
-      ple { 121  }
+      ple { 120 }
+      ple { 328 }
+      ple { 329 }
+      ple { 121 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 327  }
-      ple { 331  }
-      ple { 330  }
-      ple { 326  }
+      ple { 327 }
+      ple { 331 }
+      ple { 330 }
+      ple { 326 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 326  }
-      ple { 330  }
-      ple { 332  }
-      ple { 328  }
+      ple { 326 }
+      ple { 330 }
+      ple { 332 }
+      ple { 328 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 329  }
-      ple { 333  }
-      ple { 331  }
-      ple { 327  }
+      ple { 329 }
+      ple { 333 }
+      ple { 331 }
+      ple { 327 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 328  }
-      ple { 332  }
-      ple { 333  }
-      ple { 329  }
+      ple { 328 }
+      ple { 332 }
+      ple { 333 }
+      ple { 329 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 331  }
-      ple { 335  }
-      ple { 334  }
-      ple { 330  }
+      ple { 331 }
+      ple { 335 }
+      ple { 334 }
+      ple { 330 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 330  }
-      ple { 334  }
-      ple { 336  }
-      ple { 332  }
+      ple { 330 }
+      ple { 334 }
+      ple { 336 }
+      ple { 332 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 333  }
-      ple { 337  }
-      ple { 335  }
-      ple { 331  }
+      ple { 333 }
+      ple { 337 }
+      ple { 335 }
+      ple { 331 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 332  }
-      ple { 336  }
-      ple { 337  }
-      ple { 333  }
+      ple { 332 }
+      ple { 336 }
+      ple { 337 }
+      ple { 333 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 335  }
-      ple { 339  }
-      ple { 338  }
-      ple { 334  }
+      ple { 335 }
+      ple { 339 }
+      ple { 338 }
+      ple { 334 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 334  }
-      ple { 338  }
-      ple { 340  }
-      ple { 336  }
+      ple { 334 }
+      ple { 338 }
+      ple { 340 }
+      ple { 336 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 337  }
-      ple { 341  }
-      ple { 339  }
-      ple { 335  }
+      ple { 337 }
+      ple { 341 }
+      ple { 339 }
+      ple { 335 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 336  }
-      ple { 340  }
-      ple { 341  }
-      ple { 337  }
+      ple { 336 }
+      ple { 340 }
+      ple { 341 }
+      ple { 337 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 343  }
-      ple { 347  }
-      ple { 346  }
-      ple { 342  }
+      ple { 343 }
+      ple { 347 }
+      ple { 346 }
+      ple { 342 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 342  }
-      ple { 346  }
-      ple { 348  }
-      ple { 344  }
+      ple { 342 }
+      ple { 346 }
+      ple { 348 }
+      ple { 344 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 345  }
-      ple { 349  }
-      ple { 347  }
-      ple { 343  }
+      ple { 345 }
+      ple { 349 }
+      ple { 347 }
+      ple { 343 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 344  }
-      ple { 348  }
-      ple { 349  }
-      ple { 345  }
+      ple { 344 }
+      ple { 348 }
+      ple { 349 }
+      ple { 345 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 347  }
-      ple { 351  }
-      ple { 350  }
-      ple { 346  }
+      ple { 347 }
+      ple { 351 }
+      ple { 350 }
+      ple { 346 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 346  }
-      ple { 350  }
-      ple { 352  }
-      ple { 348  }
+      ple { 346 }
+      ple { 350 }
+      ple { 352 }
+      ple { 348 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 349  }
-      ple { 353  }
-      ple { 351  }
-      ple { 347  }
+      ple { 349 }
+      ple { 353 }
+      ple { 351 }
+      ple { 347 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 348  }
-      ple { 352  }
-      ple { 353  }
-      ple { 349  }
+      ple { 348 }
+      ple { 352 }
+      ple { 353 }
+      ple { 349 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 351  }
-      ple { 355  }
-      ple { 354  }
-      ple { 350  }
+      ple { 351 }
+      ple { 355 }
+      ple { 354 }
+      ple { 350 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 350  }
-      ple { 354  }
-      ple { 356  }
-      ple { 352  }
+      ple { 350 }
+      ple { 354 }
+      ple { 356 }
+      ple { 352 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 353  }
-      ple { 357  }
-      ple { 355  }
-      ple { 351  }
+      ple { 353 }
+      ple { 357 }
+      ple { 355 }
+      ple { 351 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 352  }
-      ple { 356  }
-      ple { 357  }
-      ple { 353  }
+      ple { 352 }
+      ple { 356 }
+      ple { 357 }
+      ple { 353 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 355  }
-      ple { 359  }
-      ple { 358  }
-      ple { 354  }
+      ple { 355 }
+      ple { 359 }
+      ple { 358 }
+      ple { 354 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 354  }
-      ple { 358  }
-      ple { 360  }
-      ple { 356  }
+      ple { 354 }
+      ple { 358 }
+      ple { 360 }
+      ple { 356 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 357  }
-      ple { 361  }
-      ple { 359  }
-      ple { 355  }
+      ple { 357 }
+      ple { 361 }
+      ple { 359 }
+      ple { 355 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 356  }
-      ple { 360  }
-      ple { 361  }
-      ple { 357  }
+      ple { 356 }
+      ple { 360 }
+      ple { 361 }
+      ple { 357 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 359  }
-      ple { 363  }
-      ple { 362  }
-      ple { 358  }
+      ple { 359 }
+      ple { 363 }
+      ple { 362 }
+      ple { 358 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 358  }
-      ple { 362  }
-      ple { 364  }
-      ple { 360  }
+      ple { 358 }
+      ple { 362 }
+      ple { 364 }
+      ple { 360 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 361  }
-      ple { 365  }
-      ple { 363  }
-      ple { 359  }
+      ple { 361 }
+      ple { 365 }
+      ple { 363 }
+      ple { 359 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 360  }
-      ple { 364  }
-      ple { 365  }
-      ple { 361  }
+      ple { 360 }
+      ple { 364 }
+      ple { 365 }
+      ple { 361 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 363  }
-      ple { 367  }
-      ple { 366  }
-      ple { 362  }
+      ple { 363 }
+      ple { 367 }
+      ple { 366 }
+      ple { 362 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 362  }
-      ple { 366  }
-      ple { 368  }
-      ple { 364  }
+      ple { 362 }
+      ple { 366 }
+      ple { 368 }
+      ple { 364 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 365  }
-      ple { 369  }
-      ple { 367  }
-      ple { 363  }
+      ple { 365 }
+      ple { 369 }
+      ple { 367 }
+      ple { 363 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 364  }
-      ple { 368  }
-      ple { 369  }
-      ple { 365  }
+      ple { 364 }
+      ple { 368 }
+      ple { 369 }
+      ple { 365 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 367  }
-      ple { 371  }
-      ple { 370  }
-      ple { 366  }
+      ple { 367 }
+      ple { 371 }
+      ple { 370 }
+      ple { 366 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 366  }
-      ple { 370  }
-      ple { 372  }
-      ple { 368  }
+      ple { 366 }
+      ple { 370 }
+      ple { 372 }
+      ple { 368 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 369  }
-      ple { 373  }
-      ple { 371  }
-      ple { 367  }
+      ple { 369 }
+      ple { 373 }
+      ple { 371 }
+      ple { 367 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 368  }
-      ple { 372  }
-      ple { 373  }
-      ple { 369  }
+      ple { 368 }
+      ple { 372 }
+      ple { 373 }
+      ple { 369 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 371  }
-      ple { 375  }
-      ple { 374  }
-      ple { 370  }
+      ple { 371 }
+      ple { 375 }
+      ple { 374 }
+      ple { 370 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 370  }
-      ple { 374  }
-      ple { 376  }
-      ple { 372  }
+      ple { 370 }
+      ple { 374 }
+      ple { 376 }
+      ple { 372 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 373  }
-      ple { 377  }
-      ple { 375  }
-      ple { 371  }
+      ple { 373 }
+      ple { 377 }
+      ple { 375 }
+      ple { 371 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 372  }
-      ple { 376  }
-      ple { 377  }
-      ple { 373  }
+      ple { 372 }
+      ple { 376 }
+      ple { 377 }
+      ple { 373 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 375  }
-      ple { 379  }
-      ple { 378  }
-      ple { 374  }
+      ple { 375 }
+      ple { 379 }
+      ple { 378 }
+      ple { 374 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 374  }
-      ple { 378  }
-      ple { 380  }
-      ple { 376  }
+      ple { 374 }
+      ple { 378 }
+      ple { 380 }
+      ple { 376 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 377  }
-      ple { 381  }
-      ple { 379  }
-      ple { 375  }
+      ple { 377 }
+      ple { 381 }
+      ple { 379 }
+      ple { 375 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 376  }
-      ple { 380  }
-      ple { 381  }
-      ple { 377  }
+      ple { 376 }
+      ple { 380 }
+      ple { 381 }
+      ple { 377 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 379  }
-      ple { 383  }
-      ple { 382  }
-      ple { 378  }
+      ple { 379 }
+      ple { 383 }
+      ple { 382 }
+      ple { 378 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 378  }
-      ple { 382  }
-      ple { 384  }
-      ple { 380  }
+      ple { 378 }
+      ple { 382 }
+      ple { 384 }
+      ple { 380 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 381  }
-      ple { 385  }
-      ple { 383  }
-      ple { 379  }
+      ple { 381 }
+      ple { 385 }
+      ple { 383 }
+      ple { 379 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 380  }
-      ple { 384  }
-      ple { 385  }
-      ple { 381  }
+      ple { 380 }
+      ple { 384 }
+      ple { 385 }
+      ple { 381 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 383  }
-      ple { 387  }
-      ple { 386  }
-      ple { 382  }
+      ple { 383 }
+      ple { 387 }
+      ple { 386 }
+      ple { 382 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 382  }
-      ple { 386  }
-      ple { 388  }
-      ple { 384  }
+      ple { 382 }
+      ple { 386 }
+      ple { 388 }
+      ple { 384 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 385  }
-      ple { 389  }
-      ple { 387  }
-      ple { 383  }
+      ple { 385 }
+      ple { 389 }
+      ple { 387 }
+      ple { 383 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 386  }
-      ple { 387  }
-      ple { 389  }
-      ple { 388  }
+      ple { 386 }
+      ple { 387 }
+      ple { 389 }
+      ple { 388 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 339  }
-      ple { 391  }
-      ple { 390  }
-      ple { 338  }
+      ple { 339 }
+      ple { 391 }
+      ple { 390 }
+      ple { 338 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 338  }
-      ple { 390  }
-      ple { 392  }
-      ple { 340  }
+      ple { 338 }
+      ple { 390 }
+      ple { 392 }
+      ple { 340 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 341  }
-      ple { 393  }
-      ple { 391  }
-      ple { 339  }
+      ple { 341 }
+      ple { 393 }
+      ple { 391 }
+      ple { 339 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 340  }
-      ple { 392  }
-      ple { 393  }
-      ple { 341  }
+      ple { 340 }
+      ple { 392 }
+      ple { 393 }
+      ple { 341 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 345  }
-      ple { 343  }
-      ple { 391  }
-      ple { 393  }
+      ple { 345 }
+      ple { 343 }
+      ple { 391 }
+      ple { 393 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 342  }
-      ple { 344  }
-      ple { 392  }
-      ple { 390  }
+      ple { 342 }
+      ple { 344 }
+      ple { 392 }
+      ple { 390 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 344  }
-      ple { 345  }
-      ple { 393  }
-      ple { 392  }
+      ple { 344 }
+      ple { 345 }
+      ple { 393 }
+      ple { 392 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 390  }
-      ple { 391  }
-      ple { 343  }
-      ple { 342  }
+      ple { 390 }
+      ple { 391 }
+      ple { 343 }
+      ple { 342 }
+    }
+    ply {
+      pes { 4 }
+      ple { 87 }
+      ple { 394 }
+      ple { 395 }
+      ple { 115 }
+    }
+    ply {
+      pes { 4 }
+      ple { 394 }
+      ple { 396 }
+      ple { 397 }
+      ple { 395 }
     }
     ply {
       pes { 4 }
-      ple { 87  }
-      ple { 394  }
-      ple { 395  }
-      ple { 115  }
+      ple { 396 }
+      ple { 398 }
+      ple { 399 }
+      ple { 397 }
     }
     ply {
       pes { 4 }
-      ple { 394  }
-      ple { 396  }
-      ple { 397  }
-      ple { 395  }
+      ple { 114 }
+      ple { 401 }
+      ple { 400 }
+      ple { 53 }
     }
     ply {
       pes { 4 }
-      ple { 396  }
-      ple { 398  }
-      ple { 399  }
-      ple { 397  }
+      ple { 401 }
+      ple { 403 }
+      ple { 402 }
+      ple { 400 }
     }
     ply {
       pes { 4 }
-      ple { 114  }
-      ple { 401  }
-      ple { 400  }
-      ple { 53  }
+      ple { 403 }
+      ple { 405 }
+      ple { 404 }
+      ple { 402 }
     }
     ply {
       pes { 4 }
-      ple { 401  }
-      ple { 403  }
-      ple { 402  }
-      ple { 400  }
+      ple { 113 }
+      ple { 52 }
+      ple { 404 }
+      ple { 405 }
     }
     ply {
       pes { 4 }
-      ple { 403  }
-      ple { 405  }
-      ple { 404  }
-      ple { 402  }
+      ple { 86 }
+      ple { 112 }
+      ple { 399 }
+      ple { 398 }
     }
     ply {
       pes { 4 }
-      ple { 113  }
-      ple { 52  }
-      ple { 404  }
-      ple { 405  }
+      ple { 410 }
+      ple { 409 }
+      ple { 411 }
+      ple { 420 }
     }
     ply {
       pes { 4 }
-      ple { 86  }
-      ple { 112  }
-      ple { 399  }
-      ple { 398  }
+      ple { 408 }
+      ple { 407 }
+      ple { 409 }
+      ple { 410 }
     }
     ply {
       pes { 4 }
-      ple { 410  }
-      ple { 409  }
-      ple { 411  }
-      ple { 420  }
+      ple { 407 }
+      ple { 408 }
+      ple { 412 }
+      ple { 415 }
     }
     ply {
       pes { 4 }
-      ple { 408  }
-      ple { 407  }
-      ple { 409  }
-      ple { 410  }
+      ple { 412 }
+      ple { 413 }
+      ple { 416 }
+      ple { 415 }
     }
     ply {
       pes { 4 }
-      ple { 407  }
-      ple { 408  }
-      ple { 412  }
-      ple { 415  }
+      ple { 413 }
+      ple { 414 }
+      ple { 417 }
+      ple { 416 }
     }
     ply {
       pes { 4 }
-      ple { 412  }
-      ple { 413  }
-      ple { 416  }
-      ple { 415  }
+      ple { 421 }
+      ple { 417 }
+      ple { 414 }
+      ple { 406 }
     }
     ply {
       pes { 4 }
-      ple { 413  }
-      ple { 414  }
-      ple { 417  }
-      ple { 416  }
+      ple { 82 }
+      ple { 422 }
+      ple { 423 }
+      ple { 83 }
     }
     ply {
       pes { 4 }
-      ple { 421  }
-      ple { 417  }
-      ple { 414  }
-      ple { 406  }
+      ple { 57 }
+      ple { 56 }
+      ple { 76 }
+      ple { 77 }
     }
     ply {
       pes { 4 }
-      ple { 82  }
-      ple { 422  }
-      ple { 423  }
-      ple { 83  }
+      ple { 59 }
+      ple { 58 }
+      ple { 214 }
+      ple { 215 }
     }
     ply {
       pes { 4 }
-      ple { 57  }
-      ple { 56  }
-      ple { 76  }
-      ple { 77  }
+      ple { 62 }
+      ple { 424 }
+      ple { 425 }
+      ple { 63 }
     }
     ply {
       pes { 4 }
-      ple { 59  }
-      ple { 58  }
-      ple { 214  }
-      ple { 215  }
+      ple { 81 }
+      ple { 427 }
+      ple { 426 }
+      ple { 80 }
     }
     ply {
       pes { 4 }
-      ple { 62  }
-      ple { 424  }
-      ple { 425  }
-      ple { 63  }
+      ple { 425 }
+      ple { 424 }
+      ple { 60 }
+      ple { 61 }
     }
     ply {
       pes { 4 }
-      ple { 81  }
-      ple { 427  }
-      ple { 426  }
-      ple { 80  }
+      ple { 79 }
+      ple { 78 }
+      ple { 426 }
+      ple { 427 }
     }
     ply {
       pes { 4 }
-      ple { 425  }
-      ple { 424  }
-      ple { 60  }
-      ple { 61  }
+      ple { 212 }
+      ple { 428 }
+      ple { 429 }
+      ple { 213 }
     }
     ply {
       pes { 4 }
-      ple { 79  }
-      ple { 78  }
-      ple { 426  }
-      ple { 427  }
+      ple { 428 }
+      ple { 430 }
+      ple { 431 }
+      ple { 429 }
     }
     ply {
       pes { 4 }
-      ple { 212  }
-      ple { 428  }
-      ple { 429  }
-      ple { 213  }
+      ple { 430 }
+      ple { 432 }
+      ple { 433 }
+      ple { 431 }
     }
     ply {
       pes { 4 }
-      ple { 428  }
-      ple { 430  }
-      ple { 431  }
-      ple { 429  }
+      ple { 63 }
+      ple { 435 }
+      ple { 434 }
+      ple { 62 }
     }
     ply {
       pes { 4 }
-      ple { 430  }
-      ple { 432  }
-      ple { 433  }
-      ple { 431  }
+      ple { 45 }
+      ple { 437 }
+      ple { 436 }
+      ple { 44 }
     }
     ply {
       pes { 4 }
-      ple { 63  }
-      ple { 435  }
-      ple { 434  }
-      ple { 62  }
+      ple { 437 }
+      ple { 439 }
+      ple { 438 }
+      ple { 436 }
     }
     ply {
       pes { 4 }
-      ple { 45  }
-      ple { 437  }
-      ple { 436  }
-      ple { 44  }
+      ple { 433 }
+      ple { 432 }
+      ple { 438 }
+      ple { 439 }
     }
     ply {
       pes { 4 }
-      ple { 437  }
-      ple { 439  }
-      ple { 438  }
-      ple { 436  }
+      ple { 76 }
+      ple { 440 }
+      ple { 441 }
+      ple { 77 }
     }
     ply {
       pes { 4 }
-      ple { 433  }
-      ple { 432  }
-      ple { 438  }
-      ple { 439  }
+      ple { 59 }
+      ple { 443 }
+      ple { 442 }
+      ple { 58 }
     }
     ply {
       pes { 4 }
-      ple { 76  }
-      ple { 440  }
-      ple { 441  }
-      ple { 77  }
+      ple { 441 }
+      ple { 440 }
+      ple { 78 }
+      ple { 79 }
     }
     ply {
       pes { 4 }
-      ple { 59  }
-      ple { 443  }
-      ple { 442  }
-      ple { 58  }
+      ple { 61 }
+      ple { 60 }
+      ple { 442 }
+      ple { 443 }
     }
     ply {
       pes { 4 }
-      ple { 441  }
-      ple { 440  }
-      ple { 78  }
-      ple { 79  }
+      ple { 127 }
+      ple { 445 }
+      ple { 444 }
+      ple { 126 }
     }
     ply {
       pes { 4 }
-      ple { 61  }
-      ple { 60  }
-      ple { 442  }
-      ple { 443  }
+      ple { 136 }
+      ple { 446 }
+      ple { 447 }
+      ple { 137 }
     }
     ply {
       pes { 4 }
-      ple { 127  }
-      ple { 445  }
-      ple { 444  }
-      ple { 126  }
+      ple { 125 }
+      ple { 124 }
+      ple { 444 }
+      ple { 445 }
     }
     ply {
       pes { 4 }
-      ple { 136  }
-      ple { 446  }
-      ple { 447  }
-      ple { 137  }
+      ple { 447 }
+      ple { 446 }
+      ple { 134 }
+      ple { 135 }
     }
     ply {
       pes { 4 }
-      ple { 125  }
-      ple { 124  }
-      ple { 444  }
-      ple { 445  }
+      ple { 90 }
+      ple { 448 }
+      ple { 449 }
+      ple { 118 }
     }
     ply {
       pes { 4 }
-      ple { 447  }
-      ple { 446  }
-      ple { 134  }
-      ple { 135  }
+      ple { 119 }
+      ple { 452 }
+      ple { 451 }
+      ple { 91 }
     }
     ply {
       pes { 4 }
-      ple { 90  }
-      ple { 448  }
-      ple { 449  }
-      ple { 118  }
+      ple { 411 }
+      ple { 456 }
+      ple { 457 }
+      ple { 420 }
     }
     ply {
       pes { 4 }
-      ple { 119  }
-      ple { 452  }
-      ple { 451  }
-      ple { 91  }
+      ple { 470 }
+      ple { 469 }
+      ple { 468 }
+      ple { 467 }
     }
     ply {
       pes { 4 }
-      ple { 411  }
-      ple { 456  }
-      ple { 457  }
-      ple { 420  }
+      ple { 467 }
+      ple { 466 }
+      ple { 471 }
+      ple { 470 }
     }
     ply {
       pes { 4 }
-      ple { 470  }
-      ple { 469  }
-      ple { 468  }
-      ple { 467  }
+      ple { 464 }
+      ple { 471 }
+      ple { 466 }
+      ple { 465 }
     }
     ply {
       pes { 4 }
-      ple { 467  }
-      ple { 466  }
-      ple { 471  }
-      ple { 470  }
+      ple { 462 }
+      ple { 460 }
+      ple { 464 }
+      ple { 465 }
     }
     ply {
       pes { 4 }
-      ple { 464  }
-      ple { 471  }
-      ple { 466  }
-      ple { 465  }
+      ple { 461 }
+      ple { 460 }
+      ple { 462 }
+      ple { 463 }
     }
     ply {
       pes { 4 }
-      ple { 462  }
-      ple { 460  }
-      ple { 464  }
-      ple { 465  }
+      ple { 239 }
+      ple { 473 }
+      ple { 472 }
+      ple { 238 }
     }
     ply {
       pes { 4 }
-      ple { 461  }
-      ple { 460  }
-      ple { 462  }
-      ple { 463  }
+      ple { 106 }
+      ple { 474 }
+      ple { 475 }
+      ple { 107 }
     }
     ply {
       pes { 4 }
-      ple { 239  }
-      ple { 473  }
-      ple { 472  }
-      ple { 238  }
+      ple { 422 }
+      ple { 476 }
+      ple { 477 }
+      ple { 423 }
     }
     ply {
       pes { 4 }
-      ple { 106  }
-      ple { 474  }
-      ple { 475  }
-      ple { 107  }
+      ple { 476 }
+      ple { 478 }
+      ple { 479 }
+      ple { 477 }
     }
   }
   shape {
-    vts { 163 }
-    pls { 79 }
+    vts { 175 }
+    pls { 85 }
     vtx { 
       5.9 1 -42
       1 1 1 1
@@ -5480,537 +5514,639 @@ object walls {
       0 0
     }
     vtx { 
-      21 0.900001 29.5
+      21 1 38
       1 1 1 1
       0 0
     }
     vtx { 
-      21 0.900001 42
+      21 1 42
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      18 1 38
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -21 -1 42
+      1 1 1 1
+      0 1
+    }
+    vtx { 
+      -4 -1 42
+      1 1 1 1
+      0.404762 1
+    }
+    vtx { 
+      18 -1 42
+      1 1 1 1
+      0.928571 1
+    }
+    vtx { 
+      1 -1 42
+      1 1 1 1
+      0.52381 1
+    }
+    vtx { 
+      21 -1 42
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      18 1 32
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      19 1 32
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      19 1 38
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      20 1 38
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      20 1 32
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      21 1 32
       1 1 1 1
       0 0
     }
     ply {
       pes { 3 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
     }
     ply {
       pes { 3 }
-      ple { 3  }
-      ple { 2  }
-      ple { 1  }
+      ple { 3 }
+      ple { 2 }
+      ple { 1 }
     }
     ply {
       pes { 3 }
-      ple { 4  }
-      ple { 3  }
-      ple { 1  }
+      ple { 4 }
+      ple { 3 }
+      ple { 1 }
     }
     ply {
       pes { 3 }
-      ple { 5  }
-      ple { 4  }
-      ple { 1  }
+      ple { 5 }
+      ple { 4 }
+      ple { 1 }
     }
     ply {
       pes { 3 }
-      ple { 6  }
-      ple { 5  }
-      ple { 1  }
+      ple { 6 }
+      ple { 5 }
+      ple { 1 }
     }
     ply {
       pes { 5 }
-      ple { 7  }
-      ple { 8  }
-      ple { 9  }
-      ple { 10  }
-      ple { 11  }
+      ple { 7 }
+      ple { 8 }
+      ple { 9 }
+      ple { 10 }
+      ple { 11 }
     }
     ply {
       pes { 4 }
-      ple { 8  }
-      ple { 7  }
-      ple { 12  }
-      ple { 13  }
+      ple { 8 }
+      ple { 7 }
+      ple { 12 }
+      ple { 13 }
     }
     ply {
       pes { 4 }
-      ple { 8  }
-      ple { 13  }
-      ple { 14  }
-      ple { 16  }
+      ple { 8 }
+      ple { 13 }
+      ple { 14 }
+      ple { 16 }
     }
     ply {
       pes { 3 }
-      ple { 14  }
-      ple { 15  }
-      ple { 16  }
+      ple { 14 }
+      ple { 15 }
+      ple { 16 }
     }
     ply {
       pes { 4 }
-      ple { 16  }
-      ple { 15  }
-      ple { 17  }
-      ple { 18  }
+      ple { 16 }
+      ple { 15 }
+      ple { 17 }
+      ple { 18 }
     }
     ply {
       pes { 4 }
-      ple { 20  }
-      ple { 19  }
-      ple { 18  }
-      ple { 17  }
+      ple { 20 }
+      ple { 19 }
+      ple { 18 }
+      ple { 17 }
     }
     ply {
       pes { 4 }
-      ple { 22  }
-      ple { 21  }
-      ple { 19  }
-      ple { 20  }
+      ple { 22 }
+      ple { 21 }
+      ple { 19 }
+      ple { 20 }
     }
     ply {
       pes { 4 }
-      ple { 24  }
-      ple { 23  }
-      ple { 21  }
-      ple { 22  }
+      ple { 24 }
+      ple { 23 }
+      ple { 21 }
+      ple { 22 }
     }
     ply {
       pes { 3 }
-      ple { 25  }
-      ple { 24  }
-      ple { 22  }
+      ple { 25 }
+      ple { 24 }
+      ple { 22 }
     }
     ply {
       pes { 3 }
-      ple { 26  }
-      ple { 25  }
-      ple { 22  }
+      ple { 26 }
+      ple { 25 }
+      ple { 22 }
     }
     ply {
       pes { 3 }
-      ple { 27  }
-      ple { 26  }
-      ple { 22  }
+      ple { 27 }
+      ple { 26 }
+      ple { 22 }
     }
     ply {
       pes { 3 }
-      ple { 29  }
-      ple { 28  }
-      ple { 27  }
+      ple { 29 }
+      ple { 28 }
+      ple { 27 }
     }
     ply {
       pes { 3 }
-      ple { 28  }
-      ple { 29  }
-      ple { 30  }
+      ple { 28 }
+      ple { 29 }
+      ple { 30 }
     }
     ply {
       pes { 3 }
-      ple { 31  }
-      ple { 30  }
-      ple { 29  }
+      ple { 31 }
+      ple { 30 }
+      ple { 29 }
     }
     ply {
       pes { 3 }
-      ple { 32  }
-      ple { 33  }
-      ple { 34  }
+      ple { 32 }
+      ple { 33 }
+      ple { 34 }
     }
     ply {
       pes { 3 }
-      ple { 35  }
-      ple { 36  }
-      ple { 37  }
+      ple { 35 }
+      ple { 36 }
+      ple { 37 }
     }
     ply {
       pes { 5 }
-      ple { 32  }
-      ple { 34  }
-      ple { 35  }
-      ple { 37  }
-      ple { 38  }
+      ple { 32 }
+      ple { 34 }
+      ple { 35 }
+      ple { 37 }
+      ple { 38 }
     }
     ply {
       pes { 3 }
-      ple { 39  }
-      ple { 40  }
-      ple { 41  }
+      ple { 39 }
+      ple { 40 }
+      ple { 41 }
     }
     ply {
       pes { 3 }
-      ple { 42  }
-      ple { 43  }
-      ple { 44  }
+      ple { 42 }
+      ple { 43 }
+      ple { 44 }
     }
     ply {
       pes { 5 }
-      ple { 45  }
-      ple { 42  }
-      ple { 44  }
-      ple { 39  }
-      ple { 41  }
+      ple { 45 }
+      ple { 42 }
+      ple { 44 }
+      ple { 39 }
+      ple { 41 }
     }
     ply {
       pes { 3 }
-      ple { 46  }
-      ple { 47  }
-      ple { 48  }
+      ple { 46 }
+      ple { 47 }
+      ple { 48 }
     }
     ply {
       pes { 3 }
-      ple { 49  }
-      ple { 50  }
-      ple { 51  }
+      ple { 49 }
+      ple { 50 }
+      ple { 51 }
     }
     ply {
       pes { 4 }
-      ple { 48  }
-      ple { 47  }
-      ple { 49  }
-      ple { 51  }
+      ple { 48 }
+      ple { 47 }
+      ple { 49 }
+      ple { 51 }
     }
     ply {
       pes { 4 }
-      ple { 50  }
-      ple { 49  }
-      ple { 52  }
-      ple { 53  }
+      ple { 50 }
+      ple { 49 }
+      ple { 52 }
+      ple { 53 }
     }
     ply {
       pes { 3 }
-      ple { 54  }
-      ple { 55  }
-      ple { 56  }
+      ple { 54 }
+      ple { 55 }
+      ple { 56 }
     }
     ply {
       pes { 3 }
-      ple { 57  }
-      ple { 58  }
-      ple { 59  }
+      ple { 57 }
+      ple { 58 }
+      ple { 59 }
     }
     ply {
       pes { 4 }
-      ple { 54  }
-      ple { 56  }
-      ple { 58  }
-      ple { 57  }
+      ple { 54 }
+      ple { 56 }
+      ple { 58 }
+      ple { 57 }
     }
     ply {
       pes { 4 }
-      ple { 61  }
-      ple { 60  }
-      ple { 57  }
-      ple { 59  }
+      ple { 61 }
+      ple { 60 }
+      ple { 57 }
+      ple { 59 }
     }
     ply {
       pes { 4 }
-      ple { 65  }
-      ple { 64  }
-      ple { 62  }
-      ple { 63  }
+      ple { 65 }
+      ple { 64 }
+      ple { 62 }
+      ple { 63 }
     }
     ply {
       pes { 4 }
-      ple { 69  }
-      ple { 66  }
-      ple { 67  }
-      ple { 68  }
+      ple { 69 }
+      ple { 66 }
+      ple { 67 }
+      ple { 68 }
     }
     ply {
       pes { 4 }
-      ple { 65  }
-      ple { 63  }
-      ple { 66  }
-      ple { 69  }
+      ple { 65 }
+      ple { 63 }
+      ple { 66 }
+      ple { 69 }
     }
     ply {
       pes { 3 }
-      ple { 70  }
-      ple { 71  }
-      ple { 72  }
+      ple { 70 }
+      ple { 71 }
+      ple { 72 }
     }
     ply {
       pes { 3 }
-      ple { 73  }
-      ple { 74  }
-      ple { 75  }
+      ple { 73 }
+      ple { 74 }
+      ple { 75 }
     }
     ply {
       pes { 3 }
-      ple { 76  }
-      ple { 77  }
-      ple { 78  }
+      ple { 76 }
+      ple { 77 }
+      ple { 78 }
     }
     ply {
       pes { 3 }
-      ple { 79  }
-      ple { 80  }
-      ple { 81  }
+      ple { 79 }
+      ple { 80 }
+      ple { 81 }
     }
     ply {
       pes { 4 }
-      ple { 70  }
-      ple { 72  }
-      ple { 73  }
-      ple { 75  }
+      ple { 70 }
+      ple { 72 }
+      ple { 73 }
+      ple { 75 }
     }
     ply {
       pes { 4 }
-      ple { 78  }
-      ple { 77  }
-      ple { 79  }
-      ple { 81  }
+      ple { 78 }
+      ple { 77 }
+      ple { 79 }
+      ple { 81 }
     }
     ply {
       pes { 4 }
-      ple { 82  }
-      ple { 83  }
-      ple { 84  }
-      ple { 85  }
+      ple { 82 }
+      ple { 83 }
+      ple { 84 }
+      ple { 85 }
     }
     ply {
       pes { 4 }
-      ple { 86  }
-      ple { 87  }
-      ple { 88  }
-      ple { 89  }
+      ple { 86 }
+      ple { 87 }
+      ple { 88 }
+      ple { 89 }
     }
     ply {
       pes { 3 }
-      ple { 90  }
-      ple { 83  }
-      ple { 82  }
+      ple { 90 }
+      ple { 83 }
+      ple { 82 }
     }
     ply {
       pes { 3 }
-      ple { 91  }
-      ple { 85  }
-      ple { 84  }
+      ple { 91 }
+      ple { 85 }
+      ple { 84 }
     }
     ply {
       pes { 3 }
-      ple { 92  }
-      ple { 87  }
-      ple { 86  }
+      ple { 92 }
+      ple { 87 }
+      ple { 86 }
     }
     ply {
       pes { 3 }
-      ple { 93  }
-      ple { 89  }
-      ple { 88  }
+      ple { 93 }
+      ple { 89 }
+      ple { 88 }
     }
     ply {
       pes { 6 }
-      ple { 94  }
-      ple { 95  }
-      ple { 96  }
-      ple { 97  }
-      ple { 98  }
-      ple { 99  }
+      ple { 94 }
+      ple { 95 }
+      ple { 96 }
+      ple { 97 }
+      ple { 98 }
+      ple { 99 }
     }
     ply {
       pes { 6 }
-      ple { 103  }
-      ple { 102  }
-      ple { 101  }
-      ple { 100  }
-      ple { 94  }
-      ple { 99  }
+      ple { 103 }
+      ple { 102 }
+      ple { 101 }
+      ple { 100 }
+      ple { 94 }
+      ple { 99 }
     }
     ply {
       pes { 3 }
-      ple { 106  }
-      ple { 107  }
-      ple { 108  }
+      ple { 106 }
+      ple { 107 }
+      ple { 108 }
     }
     ply {
       pes { 3 }
-      ple { 105  }
-      ple { 106  }
-      ple { 108  }
+      ple { 105 }
+      ple { 106 }
+      ple { 108 }
     }
     ply {
       pes { 3 }
-      ple { 104  }
-      ple { 105  }
-      ple { 108  }
+      ple { 104 }
+      ple { 105 }
+      ple { 108 }
     }
     ply {
       pes { 5 }
-      ple { 109  }
-      ple { 110  }
-      ple { 111  }
-      ple { 112  }
-      ple { 113  }
+      ple { 109 }
+      ple { 110 }
+      ple { 111 }
+      ple { 112 }
+      ple { 113 }
     }
     ply {
       pes { 3 }
-      ple { 109  }
-      ple { 113  }
-      ple { 114  }
+      ple { 109 }
+      ple { 113 }
+      ple { 114 }
     }
     ply {
       pes { 4 }
-      ple { 114  }
-      ple { 115  }
-      ple { 116  }
-      ple { 117  }
+      ple { 114 }
+      ple { 115 }
+      ple { 116 }
+      ple { 117 }
     }
     ply {
       pes { 3 }
-      ple { 115  }
-      ple { 114  }
-      ple { 113  }
+      ple { 115 }
+      ple { 114 }
+      ple { 113 }
     }
     ply {
       pes { 4 }
-      ple { 117  }
-      ple { 116  }
-      ple { 118  }
-      ple { 119  }
+      ple { 117 }
+      ple { 116 }
+      ple { 118 }
+      ple { 119 }
     }
     ply {
       pes { 4 }
-      ple { 121  }
-      ple { 120  }
-      ple { 119  }
-      ple { 118  }
+      ple { 121 }
+      ple { 120 }
+      ple { 119 }
+      ple { 118 }
     }
     ply {
       pes { 4 }
-      ple { 123  }
-      ple { 122  }
-      ple { 120  }
-      ple { 121  }
+      ple { 123 }
+      ple { 122 }
+      ple { 120 }
+      ple { 121 }
     }
     ply {
       pes { 8 }
-      ple { 124  }
-      ple { 125  }
-      ple { 126  }
-      ple { 127  }
-      ple { 128  }
-      ple { 129  }
-      ple { 130  }
-      ple { 131  }
+      ple { 124 }
+      ple { 125 }
+      ple { 126 }
+      ple { 127 }
+      ple { 128 }
+      ple { 129 }
+      ple { 130 }
+      ple { 131 }
     }
     ply {
       pes { 3 }
-      ple { 124  }
-      ple { 131  }
-      ple { 132  }
+      ple { 124 }
+      ple { 131 }
+      ple { 132 }
     }
     ply {
       pes { 3 }
-      ple { 132  }
-      ple { 131  }
-      ple { 122  }
+      ple { 132 }
+      ple { 131 }
+      ple { 122 }
     }
     ply {
       pes { 3 }
-      ple { 138  }
-      ple { 137  }
-      ple { 136  }
+      ple { 138 }
+      ple { 137 }
+      ple { 136 }
     }
     ply {
       pes { 3 }
-      ple { 138  }
-      ple { 136  }
-      ple { 135  }
+      ple { 138 }
+      ple { 136 }
+      ple { 135 }
     }
     ply {
       pes { 3 }
-      ple { 138  }
-      ple { 135  }
-      ple { 134  }
+      ple { 138 }
+      ple { 135 }
+      ple { 134 }
     }
     ply {
       pes { 3 }
-      ple { 138  }
-      ple { 134  }
-      ple { 133  }
+      ple { 138 }
+      ple { 134 }
+      ple { 133 }
     }
     ply {
       pes { 3 }
-      ple { 138  }
-      ple { 133  }
-      ple { 132  }
+      ple { 138 }
+      ple { 133 }
+      ple { 132 }
     }
     ply {
       pes { 3 }
-      ple { 132  }
-      ple { 122  }
-      ple { 138  }
+      ple { 132 }
+      ple { 122 }
+      ple { 138 }
     }
     ply {
       pes { 3 }
-      ple { 122  }
-      ple { 123  }
-      ple { 138  }
+      ple { 122 }
+      ple { 123 }
+      ple { 138 }
     }
     ply {
       pes { 4 }
-      ple { 139  }
-      ple { 140  }
-      ple { 141  }
-      ple { 142  }
+      ple { 139 }
+      ple { 140 }
+      ple { 141 }
+      ple { 142 }
     }
     ply {
       pes { 4 }
-      ple { 143  }
-      ple { 144  }
-      ple { 145  }
-      ple { 146  }
+      ple { 143 }
+      ple { 144 }
+      ple { 145 }
+      ple { 146 }
     }
     ply {
       pes { 4 }
-      ple { 147  }
-      ple { 148  }
-      ple { 149  }
-      ple { 150  }
+      ple { 147 }
+      ple { 148 }
+      ple { 149 }
+      ple { 150 }
     }
     ply {
       pes { 4 }
-      ple { 152  }
-      ple { 151  }
-      ple { 148  }
-      ple { 147  }
+      ple { 152 }
+      ple { 151 }
+      ple { 148 }
+      ple { 147 }
     }
     ply {
       pes { 4 }
-      ple { 151  }
-      ple { 152  }
-      ple { 153  }
-      ple { 154  }
+      ple { 151 }
+      ple { 152 }
+      ple { 153 }
+      ple { 154 }
     }
     ply {
       pes { 4 }
-      ple { 156  }
-      ple { 155  }
-      ple { 154  }
-      ple { 153  }
+      ple { 156 }
+      ple { 155 }
+      ple { 154 }
+      ple { 153 }
     }
     ply {
       pes { 4 }
-      ple { 155  }
-      ple { 156  }
-      ple { 157  }
-      ple { 158  }
+      ple { 155 }
+      ple { 156 }
+      ple { 157 }
+      ple { 158 }
     }
     ply {
       pes { 4 }
-      ple { 160  }
-      ple { 159  }
-      ple { 158  }
-      ple { 157  }
+      ple { 160 }
+      ple { 159 }
+      ple { 158 }
+      ple { 157 }
     }
     ply {
       pes { 4 }
-      ple { 68  }
-      ple { 67  }
-      ple { 161  }
-      ple { 162  }
+      ple { 161 }
+      ple { 162 }
+      ple { 68 }
+      ple { 163 }
+    }
+    ply {
+      pes { 4 }
+      ple { 65 }
+      ple { 165 }
+      ple { 164 }
+      ple { 64 }
+    }
+    ply {
+      pes { 4 }
+      ple { 69 }
+      ple { 167 }
+      ple { 165 }
+      ple { 65 }
+    }
+    ply {
+      pes { 4 }
+      ple { 68 }
+      ple { 166 }
+      ple { 167 }
+      ple { 69 }
+    }
+    ply {
+      pes { 4 }
+      ple { 162 }
+      ple { 168 }
+      ple { 166 }
+      ple { 68 }
+    }
+    ply {
+      pes { 4 }
+      ple { 163 }
+      ple { 169 }
+      ple { 170 }
+      ple { 171 }
+    }
+    ply {
+      pes { 4 }
+      ple { 161 }
+      ple { 172 }
+      ple { 173 }
+      ple { 174 }
     }
   }
   properties {
@@ -6069,17 +6205,17 @@ object left_arm {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
     ply {
       pes { 4 }
-      ple { 4  }
-      ple { 5  }
-      ple { 6  }
-      ple { 7  }
+      ple { 4 }
+      ple { 5 }
+      ple { 6 }
+      ple { 7 }
     }
   }
   shape {
@@ -6362,171 +6498,171 @@ object left_arm {
     }
     ply {
       pes { 4 }
-      ple { 1  }
-      ple { 3  }
-      ple { 22  }
-      ple { 29  }
+      ple { 1 }
+      ple { 3 }
+      ple { 22 }
+      ple { 29 }
     }
     ply {
       pes { 4 }
-      ple { 3  }
-      ple { 5  }
-      ple { 30  }
-      ple { 22  }
+      ple { 3 }
+      ple { 5 }
+      ple { 30 }
+      ple { 22 }
     }
     ply {
       pes { 4 }
-      ple { 5  }
-      ple { 7  }
-      ple { 23  }
-      ple { 30  }
+      ple { 5 }
+      ple { 7 }
+      ple { 23 }
+      ple { 30 }
     }
     ply {
       pes { 4 }
-      ple { 29  }
-      ple { 28  }
-      ple { 21  }
-      ple { 1  }
+      ple { 29 }
+      ple { 28 }
+      ple { 21 }
+      ple { 1 }
     }
     ply {
       pes { 4 }
-      ple { 19  }
-      ple { 21  }
-      ple { 28  }
-      ple { 27  }
+      ple { 19 }
+      ple { 21 }
+      ple { 28 }
+      ple { 27 }
     }
     ply {
       pes { 4 }
-      ple { 9  }
-      ple { 11  }
-      ple { 25  }
-      ple { 24  }
+      ple { 9 }
+      ple { 11 }
+      ple { 25 }
+      ple { 24 }
     }
     ply {
       pes { 4 }
-      ple { 11  }
-      ple { 13  }
-      ple { 31  }
-      ple { 25  }
+      ple { 11 }
+      ple { 13 }
+      ple { 31 }
+      ple { 25 }
     }
     ply {
       pes { 4 }
-      ple { 13  }
-      ple { 15  }
-      ple { 32  }
-      ple { 31  }
+      ple { 13 }
+      ple { 15 }
+      ple { 32 }
+      ple { 31 }
     }
     ply {
       pes { 4 }
-      ple { 15  }
-      ple { 17  }
-      ple { 26  }
-      ple { 32  }
+      ple { 15 }
+      ple { 17 }
+      ple { 26 }
+      ple { 32 }
     }
     ply {
       pes { 4 }
-      ple { 7  }
-      ple { 9  }
-      ple { 24  }
-      ple { 23  }
+      ple { 7 }
+      ple { 9 }
+      ple { 24 }
+      ple { 23 }
     }
     ply {
       pes { 4 }
-      ple { 17  }
-      ple { 19  }
-      ple { 27  }
-      ple { 26  }
+      ple { 17 }
+      ple { 19 }
+      ple { 27 }
+      ple { 26 }
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 33  }
-      ple { 34  }
-      ple { 2  }
+      ple { 0 }
+      ple { 33 }
+      ple { 34 }
+      ple { 2 }
     }
     ply {
       pes { 4 }
-      ple { 20  }
-      ple { 43  }
-      ple { 33  }
-      ple { 0  }
+      ple { 20 }
+      ple { 43 }
+      ple { 33 }
+      ple { 0 }
     }
     ply {
       pes { 4 }
-      ple { 2  }
-      ple { 34  }
-      ple { 35  }
-      ple { 4  }
+      ple { 2 }
+      ple { 34 }
+      ple { 35 }
+      ple { 4 }
     }
     ply {
       pes { 4 }
-      ple { 4  }
-      ple { 35  }
-      ple { 36  }
-      ple { 6  }
+      ple { 4 }
+      ple { 35 }
+      ple { 36 }
+      ple { 6 }
     }
     ply {
       pes { 4 }
-      ple { 6  }
-      ple { 36  }
-      ple { 37  }
-      ple { 8  }
+      ple { 6 }
+      ple { 36 }
+      ple { 37 }
+      ple { 8 }
     }
     ply {
       pes { 4 }
-      ple { 8  }
-      ple { 37  }
-      ple { 38  }
-      ple { 10  }
+      ple { 8 }
+      ple { 37 }
+      ple { 38 }
+      ple { 10 }
     }
     ply {
       pes { 4 }
-      ple { 10  }
-      ple { 38  }
-      ple { 39  }
-      ple { 12  }
+      ple { 10 }
+      ple { 38 }
+      ple { 39 }
+      ple { 12 }
     }
     ply {
       pes { 4 }
-      ple { 12  }
-      ple { 39  }
-      ple { 40  }
-      ple { 14  }
+      ple { 12 }
+      ple { 39 }
+      ple { 40 }
+      ple { 14 }
     }
     ply {
       pes { 4 }
-      ple { 14  }
-      ple { 40  }
-      ple { 41  }
-      ple { 16  }
+      ple { 14 }
+      ple { 40 }
+      ple { 41 }
+      ple { 16 }
     }
     ply {
       pes { 4 }
-      ple { 16  }
-      ple { 41  }
-      ple { 42  }
-      ple { 18  }
+      ple { 16 }
+      ple { 41 }
+      ple { 42 }
+      ple { 18 }
     }
     ply {
       pes { 4 }
-      ple { 18  }
-      ple { 42  }
-      ple { 43  }
-      ple { 20  }
+      ple { 18 }
+      ple { 42 }
+      ple { 43 }
+      ple { 20 }
     }
     ply {
       pes { 11 }
-      ple { 44  }
-      ple { 45  }
-      ple { 46  }
-      ple { 47  }
-      ple { 48  }
-      ple { 49  }
-      ple { 50  }
-      ple { 51  }
-      ple { 52  }
-      ple { 53  }
-      ple { 54  }
+      ple { 44 }
+      ple { 45 }
+      ple { 46 }
+      ple { 47 }
+      ple { 48 }
+      ple { 49 }
+      ple { 50 }
+      ple { 51 }
+      ple { 52 }
+      ple { 53 }
+      ple { 54 }
     }
   }
   arm_behavior {
@@ -6587,17 +6723,17 @@ object right_arm {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
     ply {
       pes { 4 }
-      ple { 7  }
-      ple { 6  }
-      ple { 5  }
-      ple { 4  }
+      ple { 7 }
+      ple { 6 }
+      ple { 5 }
+      ple { 4 }
     }
   }
   shape {
@@ -6880,171 +7016,171 @@ object right_arm {
     }
     ply {
       pes { 4 }
-      ple { 29  }
-      ple { 22  }
-      ple { 3  }
-      ple { 1  }
+      ple { 29 }
+      ple { 22 }
+      ple { 3 }
+      ple { 1 }
     }
     ply {
       pes { 4 }
-      ple { 22  }
-      ple { 30  }
-      ple { 5  }
-      ple { 3  }
+      ple { 22 }
+      ple { 30 }
+      ple { 5 }
+      ple { 3 }
     }
     ply {
       pes { 4 }
-      ple { 30  }
-      ple { 23  }
-      ple { 7  }
-      ple { 5  }
+      ple { 30 }
+      ple { 23 }
+      ple { 7 }
+      ple { 5 }
     }
     ply {
       pes { 4 }
-      ple { 1  }
-      ple { 21  }
-      ple { 28  }
-      ple { 29  }
+      ple { 1 }
+      ple { 21 }
+      ple { 28 }
+      ple { 29 }
     }
     ply {
       pes { 4 }
-      ple { 27  }
-      ple { 28  }
-      ple { 21  }
-      ple { 19  }
+      ple { 27 }
+      ple { 28 }
+      ple { 21 }
+      ple { 19 }
     }
     ply {
       pes { 4 }
-      ple { 24  }
-      ple { 25  }
-      ple { 11  }
-      ple { 9  }
+      ple { 24 }
+      ple { 25 }
+      ple { 11 }
+      ple { 9 }
     }
     ply {
       pes { 4 }
-      ple { 25  }
-      ple { 31  }
-      ple { 13  }
-      ple { 11  }
+      ple { 25 }
+      ple { 31 }
+      ple { 13 }
+      ple { 11 }
     }
     ply {
       pes { 4 }
-      ple { 31  }
-      ple { 32  }
-      ple { 15  }
-      ple { 13  }
+      ple { 31 }
+      ple { 32 }
+      ple { 15 }
+      ple { 13 }
     }
     ply {
       pes { 4 }
-      ple { 32  }
-      ple { 26  }
-      ple { 17  }
-      ple { 15  }
+      ple { 32 }
+      ple { 26 }
+      ple { 17 }
+      ple { 15 }
     }
     ply {
       pes { 4 }
-      ple { 23  }
-      ple { 24  }
-      ple { 9  }
-      ple { 7  }
+      ple { 23 }
+      ple { 24 }
+      ple { 9 }
+      ple { 7 }
     }
     ply {
       pes { 4 }
-      ple { 26  }
-      ple { 27  }
-      ple { 19  }
-      ple { 17  }
+      ple { 26 }
+      ple { 27 }
+      ple { 19 }
+      ple { 17 }
     }
     ply {
       pes { 4 }
-      ple { 2  }
-      ple { 34  }
-      ple { 33  }
-      ple { 0  }
+      ple { 2 }
+      ple { 34 }
+      ple { 33 }
+      ple { 0 }
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 33  }
-      ple { 43  }
-      ple { 20  }
+      ple { 0 }
+      ple { 33 }
+      ple { 43 }
+      ple { 20 }
     }
     ply {
       pes { 4 }
-      ple { 4  }
-      ple { 35  }
-      ple { 34  }
-      ple { 2  }
+      ple { 4 }
+      ple { 35 }
+      ple { 34 }
+      ple { 2 }
     }
     ply {
       pes { 4 }
-      ple { 6  }
-      ple { 36  }
-      ple { 35  }
-      ple { 4  }
+      ple { 6 }
+      ple { 36 }
+      ple { 35 }
+      ple { 4 }
     }
     ply {
       pes { 4 }
-      ple { 8  }
-      ple { 37  }
-      ple { 36  }
-      ple { 6  }
+      ple { 8 }
+      ple { 37 }
+      ple { 36 }
+      ple { 6 }
     }
     ply {
       pes { 4 }
-      ple { 10  }
-      ple { 38  }
-      ple { 37  }
-      ple { 8  }
+      ple { 10 }
+      ple { 38 }
+      ple { 37 }
+      ple { 8 }
     }
     ply {
       pes { 4 }
-      ple { 12  }
-      ple { 39  }
-      ple { 38  }
-      ple { 10  }
+      ple { 12 }
+      ple { 39 }
+      ple { 38 }
+      ple { 10 }
     }
     ply {
       pes { 4 }
-      ple { 14  }
-      ple { 40  }
-      ple { 39  }
-      ple { 12  }
+      ple { 14 }
+      ple { 40 }
+      ple { 39 }
+      ple { 12 }
     }
     ply {
       pes { 4 }
-      ple { 16  }
-      ple { 41  }
-      ple { 40  }
-      ple { 14  }
+      ple { 16 }
+      ple { 41 }
+      ple { 40 }
+      ple { 14 }
     }
     ply {
       pes { 4 }
-      ple { 18  }
-      ple { 42  }
-      ple { 41  }
-      ple { 16  }
+      ple { 18 }
+      ple { 42 }
+      ple { 41 }
+      ple { 16 }
     }
     ply {
       pes { 4 }
-      ple { 20  }
-      ple { 43  }
-      ple { 42  }
-      ple { 18  }
+      ple { 20 }
+      ple { 43 }
+      ple { 42 }
+      ple { 18 }
     }
     ply {
       pes { 11 }
-      ple { 44  }
-      ple { 45  }
-      ple { 46  }
-      ple { 47  }
-      ple { 48  }
-      ple { 49  }
-      ple { 50  }
-      ple { 51  }
-      ple { 52  }
-      ple { 53  }
-      ple { 54  }
+      ple { 44 }
+      ple { 45 }
+      ple { 46 }
+      ple { 47 }
+      ple { 48 }
+      ple { 49 }
+      ple { 50 }
+      ple { 51 }
+      ple { 52 }
+      ple { 53 }
+      ple { 54 }
     }
   }
   arm_behavior {
@@ -7084,17 +7220,17 @@ object left_stopper {
     }
     ply {
       pes { 4 }
-      ple { 3  }
-      ple { 2  }
-      ple { 1  }
-      ple { 0  }
+      ple { 3 }
+      ple { 2 }
+      ple { 1 }
+      ple { 0 }
     }
   }
   state_behavior {
     state_item {
       null null 1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
@@ -7104,7 +7240,7 @@ object left_stopper {
     state_item {
       null null -1 0 50
       no_move
-      light
+        light
       no_sound
       no_music
       no_property
@@ -7151,17 +7287,17 @@ object right_stopper {
     }
     ply {
       pes { 4 }
-      ple { 3  }
-      ple { 2  }
-      ple { 1  }
-      ple { 0  }
+      ple { 3 }
+      ple { 2 }
+      ple { 1 }
+      ple { 0 }
     }
   }
   state_behavior {
     state_item {
       null null 1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
@@ -7171,7 +7307,7 @@ object right_stopper {
     state_item {
       null null -1 0 50
       no_move
-      light
+        light
       no_sound
       no_music
       no_property
@@ -7219,17 +7355,17 @@ object right_loop_cave {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       null null 1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       property 65536
@@ -7239,7 +7375,7 @@ object right_loop_cave {
     state_item {
       null null -1 2 50
       no_move
-      light
+        light
       no_sound
       no_music
       property 65536
@@ -7249,7 +7385,7 @@ object right_loop_cave {
     state_item {
       null null -1 0 50
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       property 2048
@@ -7295,10 +7431,10 @@ object flat_bumper {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   bumper_behavior {
@@ -7342,10 +7478,10 @@ object flat_bumper {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   bumper_behavior {
@@ -7390,17 +7526,17 @@ object cave {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       null null 1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       property 65536
@@ -7410,7 +7546,7 @@ object cave {
     state_item {
       null null -1 2 50
       no_move
-      light
+        light
       sound shoot.wav
       no_music
       property 65536
@@ -7420,7 +7556,7 @@ object cave {
     state_item {
       null null -1 0 50
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       property 2048
@@ -7467,17 +7603,17 @@ object lock1 {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       releaselock null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
@@ -7487,7 +7623,7 @@ object lock1 {
     state_item {
       head0 lock1 2 -1 -1
       no_move
-      light
+        light
       no_sound
       no_music
       property 1
@@ -7497,7 +7633,7 @@ object lock1 {
     state_item {
       null null -1 -1 -1
       no_move
-      no_light
+        no_light
       sound lock.wav
       no_music
       property 1
@@ -7544,17 +7680,17 @@ object lock2 {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       releaselock null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
@@ -7564,7 +7700,7 @@ object lock2 {
     state_item {
       lock1 lock2 2 -1 -1
       no_move
-      light
+        light
       no_sound
       no_music
       property 1
@@ -7574,7 +7710,7 @@ object lock2 {
     state_item {
       null null -1 -1 -1
       no_move
-      no_light
+        no_light
       sound lock.wav
       no_music
       property 1
@@ -7625,10 +7761,10 @@ object releaselock {
     ply {
       pes { 4 }
       tpt { }
-      ple { 3  }
-      ple { 2  }
-      ple { 1  }
-      ple { 0  }
+      ple { 3 }
+      ple { 2 }
+      ple { 1 }
+      ple { 0 }
     }
   }
   shape {
@@ -7661,32 +7797,40 @@ object releaselock {
     ply {
       pes { 4 }
       tpt { }
-      ple { 3  }
-      ple { 2  }
-      ple { 1  }
-      ple { 0  }
+      ple { 3 }
+      ple { 2 }
+      ple { 1 }
+      ple { 0 }
     }
   }
   state_behavior {
     state_item {
       null null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 1 0 0 0
+      shape 4
+        1
+        0
+        0
+        0
     }
     state_item {
       lock2 releaselock 0 -1 -1
       no_move
-      light
+        light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     light {
       0 1 0
@@ -7748,24 +7892,24 @@ object head {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 3  }
-      ple { 2  }
+      ple { 0 }
+      ple { 1 }
+      ple { 3 }
+      ple { 2 }
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 4  }
-      ple { 5  }
-      ple { 1  }
+      ple { 0 }
+      ple { 4 }
+      ple { 5 }
+      ple { 1 }
     }
     ply {
       pes { 4 }
-      ple { 4  }
-      ple { 6  }
-      ple { 7  }
-      ple { 5  }
+      ple { 4 }
+      ple { 6 }
+      ple { 7 }
+      ple { 5 }
     }
   }
   shape {
@@ -7921,161 +8065,161 @@ object head {
     }
     ply {
       pes { 3 }
-      ple { 2  }
-      ple { 1  }
-      ple { 0  }
+      ple { 2 }
+      ple { 1 }
+      ple { 0 }
     }
     ply {
       pes { 3 }
-      ple { 0  }
-      ple { 1  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 3 }
     }
     ply {
       pes { 3 }
-      ple { 0  }
-      ple { 3  }
-      ple { 4  }
+      ple { 0 }
+      ple { 3 }
+      ple { 4 }
     }
     ply {
       pes { 3 }
-      ple { 3  }
-      ple { 1  }
-      ple { 5  }
+      ple { 3 }
+      ple { 1 }
+      ple { 5 }
     }
     ply {
       pes { 3 }
-      ple { 1  }
-      ple { 2  }
-      ple { 6  }
+      ple { 1 }
+      ple { 2 }
+      ple { 6 }
     }
     ply {
       pes { 3 }
-      ple { 7  }
-      ple { 4  }
-      ple { 3  }
+      ple { 7 }
+      ple { 4 }
+      ple { 3 }
     }
     ply {
       pes { 4 }
-      ple { 7  }
-      ple { 11  }
-      ple { 10  }
-      ple { 4  }
+      ple { 7 }
+      ple { 11 }
+      ple { 10 }
+      ple { 4 }
     }
     ply {
       pes { 4 }
-      ple { 9  }
-      ple { 12  }
-      ple { 11  }
-      ple { 7  }
+      ple { 9 }
+      ple { 12 }
+      ple { 11 }
+      ple { 7 }
     }
     ply {
       pes { 4 }
-      ple { 2  }
-      ple { 13  }
-      ple { 14  }
-      ple { 6  }
+      ple { 2 }
+      ple { 13 }
+      ple { 14 }
+      ple { 6 }
     }
     ply {
       pes { 4 }
-      ple { 6  }
-      ple { 14  }
-      ple { 15  }
-      ple { 8  }
+      ple { 6 }
+      ple { 14 }
+      ple { 15 }
+      ple { 8 }
     }
     ply {
       pes { 4 }
-      ple { 5  }
-      ple { 1  }
-      ple { 6  }
-      ple { 8  }
+      ple { 5 }
+      ple { 1 }
+      ple { 6 }
+      ple { 8 }
     }
     ply {
       pes { 4 }
-      ple { 9  }
-      ple { 7  }
-      ple { 3  }
-      ple { 5  }
+      ple { 9 }
+      ple { 7 }
+      ple { 3 }
+      ple { 5 }
     }
     ply {
       pes { 4 }
-      ple { 8  }
-      ple { 15  }
-      ple { 16  }
-      ple { 17  }
+      ple { 8 }
+      ple { 15 }
+      ple { 16 }
+      ple { 17 }
     }
     ply {
       pes { 4 }
-      ple { 17  }
-      ple { 18  }
-      ple { 5  }
-      ple { 8  }
+      ple { 17 }
+      ple { 18 }
+      ple { 5 }
+      ple { 8 }
     }
     ply {
       pes { 4 }
-      ple { 9  }
-      ple { 5  }
-      ple { 18  }
-      ple { 19  }
+      ple { 9 }
+      ple { 5 }
+      ple { 18 }
+      ple { 19 }
     }
     ply {
       pes { 4 }
-      ple { 12  }
-      ple { 9  }
-      ple { 19  }
-      ple { 20  }
+      ple { 12 }
+      ple { 9 }
+      ple { 19 }
+      ple { 20 }
     }
     ply {
       pes { 4 }
-      ple { 13  }
-      ple { 21  }
-      ple { 22  }
-      ple { 14  }
+      ple { 13 }
+      ple { 21 }
+      ple { 22 }
+      ple { 14 }
     }
     ply {
       pes { 4 }
-      ple { 14  }
-      ple { 22  }
-      ple { 23  }
-      ple { 15  }
+      ple { 14 }
+      ple { 22 }
+      ple { 23 }
+      ple { 15 }
     }
     ply {
       pes { 4 }
-      ple { 15  }
-      ple { 23  }
-      ple { 24  }
-      ple { 16  }
+      ple { 15 }
+      ple { 23 }
+      ple { 24 }
+      ple { 16 }
     }
     ply {
       pes { 4 }
-      ple { 11  }
-      ple { 26  }
-      ple { 25  }
-      ple { 10  }
+      ple { 11 }
+      ple { 26 }
+      ple { 25 }
+      ple { 10 }
     }
     ply {
       pes { 4 }
-      ple { 12  }
-      ple { 27  }
-      ple { 26  }
-      ple { 11  }
+      ple { 12 }
+      ple { 27 }
+      ple { 26 }
+      ple { 11 }
     }
     ply {
       pes { 4 }
-      ple { 20  }
-      ple { 28  }
-      ple { 27  }
-      ple { 12  }
+      ple { 20 }
+      ple { 28 }
+      ple { 27 }
+      ple { 12 }
     }
     ply {
       pes { 7 }
-      ple { 24  }
-      ple { 28  }
-      ple { 20  }
-      ple { 19  }
-      ple { 18  }
-      ple { 17  }
-      ple { 16  }
+      ple { 24 }
+      ple { 28 }
+      ple { 20 }
+      ple { 19 }
+      ple { 18 }
+      ple { 17 }
+      ple { 16 }
     }
   }
   state_behavior {
@@ -8085,7 +8229,7 @@ object head {
         0
         0 0 0
         0 0 0
-      no_light
+        no_light
       no_sound
       no_music
       no_property
@@ -8098,7 +8242,7 @@ object head {
         280
         0 0 0
         0.1 0 0
-      no_light
+        no_light
       sound opentux.wav
       no_music
       no_property
@@ -8111,7 +8255,7 @@ object head {
         280
         0 0 0
         0 0 0
-      no_light
+        no_light
       sound opentux.wav
       no_music
       no_property
@@ -8253,87 +8397,87 @@ object bumper {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 12  }
-      ple { 13  }
-      ple { 1  }
+      ple { 0 }
+      ple { 12 }
+      ple { 13 }
+      ple { 1 }
     }
     ply {
       pes { 4 }
-      ple { 11  }
-      ple { 23  }
-      ple { 12  }
-      ple { 0  }
+      ple { 11 }
+      ple { 23 }
+      ple { 12 }
+      ple { 0 }
     }
     ply {
       pes { 4 }
-      ple { 1  }
-      ple { 13  }
-      ple { 14  }
-      ple { 2  }
+      ple { 1 }
+      ple { 13 }
+      ple { 14 }
+      ple { 2 }
     }
     ply {
       pes { 4 }
-      ple { 2  }
-      ple { 14  }
-      ple { 15  }
-      ple { 3  }
+      ple { 2 }
+      ple { 14 }
+      ple { 15 }
+      ple { 3 }
     }
     ply {
       pes { 4 }
-      ple { 3  }
-      ple { 15  }
-      ple { 16  }
-      ple { 4  }
+      ple { 3 }
+      ple { 15 }
+      ple { 16 }
+      ple { 4 }
     }
     ply {
       pes { 4 }
-      ple { 4  }
-      ple { 16  }
-      ple { 17  }
-      ple { 5  }
+      ple { 4 }
+      ple { 16 }
+      ple { 17 }
+      ple { 5 }
     }
     ply {
       pes { 4 }
-      ple { 5  }
-      ple { 17  }
-      ple { 18  }
-      ple { 6  }
+      ple { 5 }
+      ple { 17 }
+      ple { 18 }
+      ple { 6 }
     }
     ply {
       pes { 4 }
-      ple { 6  }
-      ple { 18  }
-      ple { 19  }
-      ple { 7  }
+      ple { 6 }
+      ple { 18 }
+      ple { 19 }
+      ple { 7 }
     }
     ply {
       pes { 4 }
-      ple { 7  }
-      ple { 19  }
-      ple { 20  }
-      ple { 8  }
+      ple { 7 }
+      ple { 19 }
+      ple { 20 }
+      ple { 8 }
     }
     ply {
       pes { 4 }
-      ple { 8  }
-      ple { 20  }
-      ple { 21  }
-      ple { 9  }
+      ple { 8 }
+      ple { 20 }
+      ple { 21 }
+      ple { 9 }
     }
     ply {
       pes { 4 }
-      ple { 9  }
-      ple { 21  }
-      ple { 22  }
-      ple { 10  }
+      ple { 9 }
+      ple { 21 }
+      ple { 22 }
+      ple { 10 }
     }
     ply {
       pes { 4 }
-      ple { 10  }
-      ple { 22  }
-      ple { 23  }
-      ple { 11  }
+      ple { 10 }
+      ple { 22 }
+      ple { 23 }
+      ple { 11 }
     }
   }
   shape {
@@ -8424,110 +8568,110 @@ object bumper {
     }
     ply {
       pes { 3 }
-      ple { 0  }
-      ple { 15  }
-      ple { 1  }
+      ple { 0 }
+      ple { 15 }
+      ple { 1 }
     }
     ply {
       pes { 3 }
-      ple { 2  }
-      ple { 0  }
-      ple { 1  }
+      ple { 2 }
+      ple { 0 }
+      ple { 1 }
     }
     ply {
       pes { 3 }
-      ple { 2  }
-      ple { 1  }
-      ple { 3  }
+      ple { 2 }
+      ple { 1 }
+      ple { 3 }
     }
     ply {
       pes { 3 }
-      ple { 4  }
-      ple { 2  }
-      ple { 3  }
+      ple { 4 }
+      ple { 2 }
+      ple { 3 }
     }
     ply {
       pes { 3 }
-      ple { 4  }
-      ple { 3  }
-      ple { 5  }
+      ple { 4 }
+      ple { 3 }
+      ple { 5 }
     }
     ply {
       pes { 3 }
-      ple { 4  }
-      ple { 5  }
-      ple { 6  }
+      ple { 4 }
+      ple { 5 }
+      ple { 6 }
     }
     ply {
       pes { 3 }
-      ple { 6  }
-      ple { 5  }
-      ple { 7  }
+      ple { 6 }
+      ple { 5 }
+      ple { 7 }
     }
     ply {
       pes { 3 }
-      ple { 6  }
-      ple { 7  }
-      ple { 8  }
+      ple { 6 }
+      ple { 7 }
+      ple { 8 }
     }
     ply {
       pes { 3 }
-      ple { 8  }
-      ple { 7  }
-      ple { 9  }
+      ple { 8 }
+      ple { 7 }
+      ple { 9 }
     }
     ply {
       pes { 3 }
-      ple { 8  }
-      ple { 9  }
-      ple { 10  }
+      ple { 8 }
+      ple { 9 }
+      ple { 10 }
     }
     ply {
       pes { 3 }
-      ple { 10  }
-      ple { 9  }
-      ple { 11  }
+      ple { 10 }
+      ple { 9 }
+      ple { 11 }
     }
     ply {
       pes { 3 }
-      ple { 10  }
-      ple { 11  }
-      ple { 12  }
+      ple { 10 }
+      ple { 11 }
+      ple { 12 }
     }
     ply {
       pes { 3 }
-      ple { 12  }
-      ple { 11  }
-      ple { 13  }
+      ple { 12 }
+      ple { 11 }
+      ple { 13 }
     }
     ply {
       pes { 3 }
-      ple { 12  }
-      ple { 13  }
-      ple { 14  }
+      ple { 12 }
+      ple { 13 }
+      ple { 14 }
     }
     ply {
       pes { 3 }
-      ple { 14  }
-      ple { 13  }
-      ple { 15  }
+      ple { 14 }
+      ple { 13 }
+      ple { 15 }
     }
     ply {
       pes { 3 }
-      ple { 0  }
-      ple { 14  }
-      ple { 15  }
+      ple { 0 }
+      ple { 14 }
+      ple { 15 }
     }
     ply {
       pes { 8 }
-      ple { 0  }
-      ple { 2  }
-      ple { 4  }
-      ple { 6  }
-      ple { 8  }
-      ple { 10  }
-      ple { 12  }
-      ple { 14  }
+      ple { 0 }
+      ple { 2 }
+      ple { 4 }
+      ple { 6 }
+      ple { 8 }
+      ple { 10 }
+      ple { 12 }
+      ple { 14 }
     }
   }
   bumper_behavior {
@@ -8671,87 +8815,87 @@ object bumper {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 12  }
-      ple { 13  }
-      ple { 1  }
+      ple { 0 }
+      ple { 12 }
+      ple { 13 }
+      ple { 1 }
     }
     ply {
       pes { 4 }
-      ple { 11  }
-      ple { 23  }
-      ple { 12  }
-      ple { 0  }
+      ple { 11 }
+      ple { 23 }
+      ple { 12 }
+      ple { 0 }
     }
     ply {
       pes { 4 }
-      ple { 1  }
-      ple { 13  }
-      ple { 14  }
-      ple { 2  }
+      ple { 1 }
+      ple { 13 }
+      ple { 14 }
+      ple { 2 }
     }
     ply {
       pes { 4 }
-      ple { 2  }
-      ple { 14  }
-      ple { 15  }
-      ple { 3  }
+      ple { 2 }
+      ple { 14 }
+      ple { 15 }
+      ple { 3 }
     }
     ply {
       pes { 4 }
-      ple { 3  }
-      ple { 15  }
-      ple { 16  }
-      ple { 4  }
+      ple { 3 }
+      ple { 15 }
+      ple { 16 }
+      ple { 4 }
     }
     ply {
       pes { 4 }
-      ple { 4  }
-      ple { 16  }
-      ple { 17  }
-      ple { 5  }
+      ple { 4 }
+      ple { 16 }
+      ple { 17 }
+      ple { 5 }
     }
     ply {
       pes { 4 }
-      ple { 5  }
-      ple { 17  }
-      ple { 18  }
-      ple { 6  }
+      ple { 5 }
+      ple { 17 }
+      ple { 18 }
+      ple { 6 }
     }
     ply {
       pes { 4 }
-      ple { 6  }
-      ple { 18  }
-      ple { 19  }
-      ple { 7  }
+      ple { 6 }
+      ple { 18 }
+      ple { 19 }
+      ple { 7 }
     }
     ply {
       pes { 4 }
-      ple { 7  }
-      ple { 19  }
-      ple { 20  }
-      ple { 8  }
+      ple { 7 }
+      ple { 19 }
+      ple { 20 }
+      ple { 8 }
     }
     ply {
       pes { 4 }
-      ple { 8  }
-      ple { 20  }
-      ple { 21  }
-      ple { 9  }
+      ple { 8 }
+      ple { 20 }
+      ple { 21 }
+      ple { 9 }
     }
     ply {
       pes { 4 }
-      ple { 9  }
-      ple { 21  }
-      ple { 22  }
-      ple { 10  }
+      ple { 9 }
+      ple { 21 }
+      ple { 22 }
+      ple { 10 }
     }
     ply {
       pes { 4 }
-      ple { 10  }
-      ple { 22  }
-      ple { 23  }
-      ple { 11  }
+      ple { 10 }
+      ple { 22 }
+      ple { 23 }
+      ple { 11 }
     }
   }
   shape {
@@ -8842,110 +8986,110 @@ object bumper {
     }
     ply {
       pes { 3 }
-      ple { 0  }
-      ple { 15  }
-      ple { 1  }
+      ple { 0 }
+      ple { 15 }
+      ple { 1 }
     }
     ply {
       pes { 3 }
-      ple { 2  }
-      ple { 0  }
-      ple { 1  }
+      ple { 2 }
+      ple { 0 }
+      ple { 1 }
     }
     ply {
       pes { 3 }
-      ple { 2  }
-      ple { 1  }
-      ple { 3  }
+      ple { 2 }
+      ple { 1 }
+      ple { 3 }
     }
     ply {
       pes { 3 }
-      ple { 4  }
-      ple { 2  }
-      ple { 3  }
+      ple { 4 }
+      ple { 2 }
+      ple { 3 }
     }
     ply {
       pes { 3 }
-      ple { 4  }
-      ple { 3  }
-      ple { 5  }
+      ple { 4 }
+      ple { 3 }
+      ple { 5 }
     }
     ply {
       pes { 3 }
-      ple { 4  }
-      ple { 5  }
-      ple { 6  }
+      ple { 4 }
+      ple { 5 }
+      ple { 6 }
     }
     ply {
       pes { 3 }
-      ple { 6  }
-      ple { 5  }
-      ple { 7  }
+      ple { 6 }
+      ple { 5 }
+      ple { 7 }
     }
     ply {
       pes { 3 }
-      ple { 6  }
-      ple { 7  }
-      ple { 8  }
+      ple { 6 }
+      ple { 7 }
+      ple { 8 }
     }
     ply {
       pes { 3 }
-      ple { 8  }
-      ple { 7  }
-      ple { 9  }
+      ple { 8 }
+      ple { 7 }
+      ple { 9 }
     }
     ply {
       pes { 3 }
-      ple { 8  }
-      ple { 9  }
-      ple { 10  }
+      ple { 8 }
+      ple { 9 }
+      ple { 10 }
     }
     ply {
       pes { 3 }
-      ple { 10  }
-      ple { 9  }
-      ple { 11  }
+      ple { 10 }
+      ple { 9 }
+      ple { 11 }
     }
     ply {
       pes { 3 }
-      ple { 10  }
-      ple { 11  }
-      ple { 12  }
+      ple { 10 }
+      ple { 11 }
+      ple { 12 }
     }
     ply {
       pes { 3 }
-      ple { 12  }
-      ple { 11  }
-      ple { 13  }
+      ple { 12 }
+      ple { 11 }
+      ple { 13 }
     }
     ply {
       pes { 3 }
-      ple { 12  }
-      ple { 13  }
-      ple { 14  }
+      ple { 12 }
+      ple { 13 }
+      ple { 14 }
     }
     ply {
       pes { 3 }
-      ple { 14  }
-      ple { 13  }
-      ple { 15  }
+      ple { 14 }
+      ple { 13 }
+      ple { 15 }
     }
     ply {
       pes { 3 }
-      ple { 0  }
-      ple { 14  }
-      ple { 15  }
+      ple { 0 }
+      ple { 14 }
+      ple { 15 }
     }
     ply {
       pes { 8 }
-      ple { 0  }
-      ple { 2  }
-      ple { 4  }
-      ple { 6  }
-      ple { 8  }
-      ple { 10  }
-      ple { 12  }
-      ple { 14  }
+      ple { 0 }
+      ple { 2 }
+      ple { 4 }
+      ple { 6 }
+      ple { 8 }
+      ple { 10 }
+      ple { 12 }
+      ple { 14 }
     }
   }
   bumper_behavior {
@@ -9089,87 +9233,87 @@ object bumper {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 12  }
-      ple { 13  }
-      ple { 1  }
+      ple { 0 }
+      ple { 12 }
+      ple { 13 }
+      ple { 1 }
     }
     ply {
       pes { 4 }
-      ple { 11  }
-      ple { 23  }
-      ple { 12  }
-      ple { 0  }
+      ple { 11 }
+      ple { 23 }
+      ple { 12 }
+      ple { 0 }
     }
     ply {
       pes { 4 }
-      ple { 1  }
-      ple { 13  }
-      ple { 14  }
-      ple { 2  }
+      ple { 1 }
+      ple { 13 }
+      ple { 14 }
+      ple { 2 }
     }
     ply {
       pes { 4 }
-      ple { 2  }
-      ple { 14  }
-      ple { 15  }
-      ple { 3  }
+      ple { 2 }
+      ple { 14 }
+      ple { 15 }
+      ple { 3 }
     }
     ply {
       pes { 4 }
-      ple { 3  }
-      ple { 15  }
-      ple { 16  }
-      ple { 4  }
+      ple { 3 }
+      ple { 15 }
+      ple { 16 }
+      ple { 4 }
     }
     ply {
       pes { 4 }
-      ple { 4  }
-      ple { 16  }
-      ple { 17  }
-      ple { 5  }
+      ple { 4 }
+      ple { 16 }
+      ple { 17 }
+      ple { 5 }
     }
     ply {
       pes { 4 }
-      ple { 5  }
-      ple { 17  }
-      ple { 18  }
-      ple { 6  }
+      ple { 5 }
+      ple { 17 }
+      ple { 18 }
+      ple { 6 }
     }
     ply {
       pes { 4 }
-      ple { 6  }
-      ple { 18  }
-      ple { 19  }
-      ple { 7  }
+      ple { 6 }
+      ple { 18 }
+      ple { 19 }
+      ple { 7 }
     }
     ply {
       pes { 4 }
-      ple { 7  }
-      ple { 19  }
-      ple { 20  }
-      ple { 8  }
+      ple { 7 }
+      ple { 19 }
+      ple { 20 }
+      ple { 8 }
     }
     ply {
       pes { 4 }
-      ple { 8  }
-      ple { 20  }
-      ple { 21  }
-      ple { 9  }
+      ple { 8 }
+      ple { 20 }
+      ple { 21 }
+      ple { 9 }
     }
     ply {
       pes { 4 }
-      ple { 9  }
-      ple { 21  }
-      ple { 22  }
-      ple { 10  }
+      ple { 9 }
+      ple { 21 }
+      ple { 22 }
+      ple { 10 }
     }
     ply {
       pes { 4 }
-      ple { 10  }
-      ple { 22  }
-      ple { 23  }
-      ple { 11  }
+      ple { 10 }
+      ple { 22 }
+      ple { 23 }
+      ple { 11 }
     }
   }
   shape {
@@ -9260,110 +9404,110 @@ object bumper {
     }
     ply {
       pes { 3 }
-      ple { 0  }
-      ple { 15  }
-      ple { 1  }
+      ple { 0 }
+      ple { 15 }
+      ple { 1 }
     }
     ply {
       pes { 3 }
-      ple { 2  }
-      ple { 0  }
-      ple { 1  }
+      ple { 2 }
+      ple { 0 }
+      ple { 1 }
     }
     ply {
       pes { 3 }
-      ple { 2  }
-      ple { 1  }
-      ple { 3  }
+      ple { 2 }
+      ple { 1 }
+      ple { 3 }
     }
     ply {
       pes { 3 }
-      ple { 4  }
-      ple { 2  }
-      ple { 3  }
+      ple { 4 }
+      ple { 2 }
+      ple { 3 }
     }
     ply {
       pes { 3 }
-      ple { 4  }
-      ple { 3  }
-      ple { 5  }
+      ple { 4 }
+      ple { 3 }
+      ple { 5 }
     }
     ply {
       pes { 3 }
-      ple { 4  }
-      ple { 5  }
-      ple { 6  }
+      ple { 4 }
+      ple { 5 }
+      ple { 6 }
     }
     ply {
       pes { 3 }
-      ple { 6  }
-      ple { 5  }
-      ple { 7  }
+      ple { 6 }
+      ple { 5 }
+      ple { 7 }
     }
     ply {
       pes { 3 }
-      ple { 6  }
-      ple { 7  }
-      ple { 8  }
+      ple { 6 }
+      ple { 7 }
+      ple { 8 }
     }
     ply {
       pes { 3 }
-      ple { 8  }
-      ple { 7  }
-      ple { 9  }
+      ple { 8 }
+      ple { 7 }
+      ple { 9 }
     }
     ply {
       pes { 3 }
-      ple { 8  }
-      ple { 9  }
-      ple { 10  }
+      ple { 8 }
+      ple { 9 }
+      ple { 10 }
     }
     ply {
       pes { 3 }
-      ple { 10  }
-      ple { 9  }
-      ple { 11  }
+      ple { 10 }
+      ple { 9 }
+      ple { 11 }
     }
     ply {
       pes { 3 }
-      ple { 10  }
-      ple { 11  }
-      ple { 12  }
+      ple { 10 }
+      ple { 11 }
+      ple { 12 }
     }
     ply {
       pes { 3 }
-      ple { 12  }
-      ple { 11  }
-      ple { 13  }
+      ple { 12 }
+      ple { 11 }
+      ple { 13 }
     }
     ply {
       pes { 3 }
-      ple { 12  }
-      ple { 13  }
-      ple { 14  }
+      ple { 12 }
+      ple { 13 }
+      ple { 14 }
     }
     ply {
       pes { 3 }
-      ple { 14  }
-      ple { 13  }
-      ple { 15  }
+      ple { 14 }
+      ple { 13 }
+      ple { 15 }
     }
     ply {
       pes { 3 }
-      ple { 0  }
-      ple { 14  }
-      ple { 15  }
+      ple { 0 }
+      ple { 14 }
+      ple { 15 }
     }
     ply {
       pes { 8 }
-      ple { 0  }
-      ple { 2  }
-      ple { 4  }
-      ple { 6  }
-      ple { 8  }
-      ple { 10  }
-      ple { 12  }
-      ple { 14  }
+      ple { 0 }
+      ple { 2 }
+      ple { 4 }
+      ple { 6 }
+      ple { 8 }
+      ple { 10 }
+      ple { 12 }
+      ple { 14 }
     }
   }
   bumper_behavior {
@@ -9408,10 +9552,10 @@ object floor_lane_o {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -9444,10 +9588,10 @@ object floor_lane_o {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -9480,52 +9624,68 @@ object floor_lane_o {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       booto_off booto -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       booto_on booto -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
     state_item {
       boot_all null -1 3 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       null null -1 0 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
   }
   properties {
@@ -10671,1375 +10831,1375 @@ object floor {
     }
     ply {
       pes { 4 }
-      ple { 13  }
-      ple { 14  }
-      ple { 15  }
-      ple { 16  }
+      ple { 13 }
+      ple { 14 }
+      ple { 15 }
+      ple { 16 }
     }
     ply {
       pes { 4 }
-      ple { 12  }
-      ple { 13  }
-      ple { 16  }
-      ple { 17  }
+      ple { 12 }
+      ple { 13 }
+      ple { 16 }
+      ple { 17 }
     }
     ply {
       pes { 4 }
-      ple { 11  }
-      ple { 12  }
-      ple { 17  }
-      ple { 18  }
+      ple { 11 }
+      ple { 12 }
+      ple { 17 }
+      ple { 18 }
     }
     ply {
       pes { 4 }
-      ple { 10  }
-      ple { 11  }
-      ple { 18  }
-      ple { 19  }
+      ple { 10 }
+      ple { 11 }
+      ple { 18 }
+      ple { 19 }
     }
     ply {
       pes { 4 }
-      ple { 9  }
-      ple { 10  }
-      ple { 19  }
-      ple { 20  }
+      ple { 9 }
+      ple { 10 }
+      ple { 19 }
+      ple { 20 }
     }
     ply {
       pes { 4 }
-      ple { 8  }
-      ple { 9  }
-      ple { 20  }
-      ple { 21  }
+      ple { 8 }
+      ple { 9 }
+      ple { 20 }
+      ple { 21 }
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 8  }
-      ple { 21  }
-      ple { 22  }
+      ple { 0 }
+      ple { 8 }
+      ple { 21 }
+      ple { 22 }
     }
     ply {
       pes { 4 }
-      ple { 1  }
-      ple { 0  }
-      ple { 22  }
-      ple { 23  }
+      ple { 1 }
+      ple { 0 }
+      ple { 22 }
+      ple { 23 }
     }
     ply {
       pes { 4 }
-      ple { 2  }
-      ple { 1  }
-      ple { 23  }
-      ple { 24  }
+      ple { 2 }
+      ple { 1 }
+      ple { 23 }
+      ple { 24 }
     }
     ply {
       pes { 4 }
-      ple { 3  }
-      ple { 2  }
-      ple { 24  }
-      ple { 25  }
+      ple { 3 }
+      ple { 2 }
+      ple { 24 }
+      ple { 25 }
     }
     ply {
       pes { 4 }
-      ple { 4  }
-      ple { 3  }
-      ple { 25  }
-      ple { 26  }
+      ple { 4 }
+      ple { 3 }
+      ple { 25 }
+      ple { 26 }
     }
     ply {
       pes { 4 }
-      ple { 5  }
-      ple { 4  }
-      ple { 26  }
-      ple { 27  }
+      ple { 5 }
+      ple { 4 }
+      ple { 26 }
+      ple { 27 }
     }
     ply {
       pes { 4 }
-      ple { 6  }
-      ple { 5  }
-      ple { 27  }
-      ple { 28  }
+      ple { 6 }
+      ple { 5 }
+      ple { 27 }
+      ple { 28 }
     }
     ply {
       pes { 4 }
-      ple { 7  }
-      ple { 6  }
-      ple { 28  }
-      ple { 29  }
+      ple { 7 }
+      ple { 6 }
+      ple { 28 }
+      ple { 29 }
     }
     ply {
       pes { 4 }
-      ple { 15  }
-      ple { 30  }
-      ple { 31  }
-      ple { 16  }
+      ple { 15 }
+      ple { 30 }
+      ple { 31 }
+      ple { 16 }
     }
     ply {
       pes { 4 }
-      ple { 16  }
-      ple { 31  }
-      ple { 32  }
-      ple { 17  }
+      ple { 16 }
+      ple { 31 }
+      ple { 32 }
+      ple { 17 }
     }
     ply {
       pes { 4 }
-      ple { 17  }
-      ple { 32  }
-      ple { 33  }
-      ple { 18  }
+      ple { 17 }
+      ple { 32 }
+      ple { 33 }
+      ple { 18 }
     }
     ply {
       pes { 4 }
-      ple { 18  }
-      ple { 33  }
-      ple { 34  }
-      ple { 19  }
+      ple { 18 }
+      ple { 33 }
+      ple { 34 }
+      ple { 19 }
     }
     ply {
       pes { 4 }
-      ple { 19  }
-      ple { 34  }
-      ple { 35  }
-      ple { 20  }
+      ple { 19 }
+      ple { 34 }
+      ple { 35 }
+      ple { 20 }
     }
     ply {
       pes { 4 }
-      ple { 20  }
-      ple { 35  }
-      ple { 36  }
-      ple { 21  }
+      ple { 20 }
+      ple { 35 }
+      ple { 36 }
+      ple { 21 }
     }
     ply {
       pes { 4 }
-      ple { 21  }
-      ple { 36  }
-      ple { 37  }
-      ple { 22  }
+      ple { 21 }
+      ple { 36 }
+      ple { 37 }
+      ple { 22 }
     }
     ply {
       pes { 4 }
-      ple { 22  }
-      ple { 37  }
-      ple { 38  }
-      ple { 23  }
+      ple { 22 }
+      ple { 37 }
+      ple { 38 }
+      ple { 23 }
     }
     ply {
       pes { 4 }
-      ple { 23  }
-      ple { 38  }
-      ple { 39  }
-      ple { 24  }
+      ple { 23 }
+      ple { 38 }
+      ple { 39 }
+      ple { 24 }
     }
     ply {
       pes { 4 }
-      ple { 24  }
-      ple { 39  }
-      ple { 40  }
-      ple { 25  }
+      ple { 24 }
+      ple { 39 }
+      ple { 40 }
+      ple { 25 }
     }
     ply {
       pes { 4 }
-      ple { 25  }
-      ple { 40  }
-      ple { 41  }
-      ple { 26  }
+      ple { 25 }
+      ple { 40 }
+      ple { 41 }
+      ple { 26 }
     }
     ply {
       pes { 4 }
-      ple { 26  }
-      ple { 41  }
-      ple { 42  }
-      ple { 27  }
+      ple { 26 }
+      ple { 41 }
+      ple { 42 }
+      ple { 27 }
     }
     ply {
       pes { 4 }
-      ple { 27  }
-      ple { 42  }
-      ple { 43  }
-      ple { 28  }
+      ple { 27 }
+      ple { 42 }
+      ple { 43 }
+      ple { 28 }
     }
     ply {
       pes { 4 }
-      ple { 28  }
-      ple { 43  }
-      ple { 44  }
-      ple { 29  }
+      ple { 28 }
+      ple { 43 }
+      ple { 44 }
+      ple { 29 }
     }
     ply {
       pes { 4 }
-      ple { 30  }
-      ple { 45  }
-      ple { 46  }
-      ple { 31  }
+      ple { 30 }
+      ple { 45 }
+      ple { 46 }
+      ple { 31 }
     }
     ply {
       pes { 4 }
-      ple { 31  }
-      ple { 46  }
-      ple { 47  }
-      ple { 32  }
+      ple { 31 }
+      ple { 46 }
+      ple { 47 }
+      ple { 32 }
     }
     ply {
       pes { 4 }
-      ple { 32  }
-      ple { 47  }
-      ple { 48  }
-      ple { 33  }
+      ple { 32 }
+      ple { 47 }
+      ple { 48 }
+      ple { 33 }
     }
     ply {
       pes { 4 }
-      ple { 33  }
-      ple { 48  }
-      ple { 49  }
-      ple { 34  }
+      ple { 33 }
+      ple { 48 }
+      ple { 49 }
+      ple { 34 }
     }
     ply {
       pes { 4 }
-      ple { 34  }
-      ple { 49  }
-      ple { 50  }
-      ple { 35  }
+      ple { 34 }
+      ple { 49 }
+      ple { 50 }
+      ple { 35 }
     }
     ply {
       pes { 4 }
-      ple { 35  }
-      ple { 50  }
-      ple { 51  }
-      ple { 36  }
+      ple { 35 }
+      ple { 50 }
+      ple { 51 }
+      ple { 36 }
     }
     ply {
       pes { 4 }
-      ple { 36  }
-      ple { 51  }
-      ple { 52  }
-      ple { 37  }
+      ple { 36 }
+      ple { 51 }
+      ple { 52 }
+      ple { 37 }
     }
     ply {
       pes { 4 }
-      ple { 37  }
-      ple { 52  }
-      ple { 53  }
-      ple { 38  }
+      ple { 37 }
+      ple { 52 }
+      ple { 53 }
+      ple { 38 }
     }
     ply {
       pes { 4 }
-      ple { 38  }
-      ple { 53  }
-      ple { 54  }
-      ple { 39  }
+      ple { 38 }
+      ple { 53 }
+      ple { 54 }
+      ple { 39 }
     }
     ply {
       pes { 4 }
-      ple { 39  }
-      ple { 54  }
-      ple { 55  }
-      ple { 40  }
+      ple { 39 }
+      ple { 54 }
+      ple { 55 }
+      ple { 40 }
     }
     ply {
       pes { 4 }
-      ple { 40  }
-      ple { 55  }
-      ple { 56  }
-      ple { 41  }
+      ple { 40 }
+      ple { 55 }
+      ple { 56 }
+      ple { 41 }
     }
     ply {
       pes { 4 }
-      ple { 41  }
-      ple { 56  }
-      ple { 57  }
-      ple { 42  }
+      ple { 41 }
+      ple { 56 }
+      ple { 57 }
+      ple { 42 }
     }
     ply {
       pes { 4 }
-      ple { 42  }
-      ple { 57  }
-      ple { 58  }
-      ple { 43  }
+      ple { 42 }
+      ple { 57 }
+      ple { 58 }
+      ple { 43 }
     }
     ply {
       pes { 4 }
-      ple { 43  }
-      ple { 58  }
-      ple { 59  }
-      ple { 44  }
+      ple { 43 }
+      ple { 58 }
+      ple { 59 }
+      ple { 44 }
     }
     ply {
       pes { 4 }
-      ple { 45  }
-      ple { 60  }
-      ple { 61  }
-      ple { 46  }
+      ple { 45 }
+      ple { 60 }
+      ple { 61 }
+      ple { 46 }
     }
     ply {
       pes { 4 }
-      ple { 46  }
-      ple { 61  }
-      ple { 62  }
-      ple { 47  }
+      ple { 46 }
+      ple { 61 }
+      ple { 62 }
+      ple { 47 }
     }
     ply {
       pes { 4 }
-      ple { 47  }
-      ple { 62  }
-      ple { 63  }
-      ple { 48  }
+      ple { 47 }
+      ple { 62 }
+      ple { 63 }
+      ple { 48 }
     }
     ply {
       pes { 4 }
-      ple { 48  }
-      ple { 63  }
-      ple { 64  }
-      ple { 49  }
+      ple { 48 }
+      ple { 63 }
+      ple { 64 }
+      ple { 49 }
     }
     ply {
       pes { 4 }
-      ple { 49  }
-      ple { 64  }
-      ple { 65  }
-      ple { 50  }
+      ple { 49 }
+      ple { 64 }
+      ple { 65 }
+      ple { 50 }
     }
     ply {
       pes { 4 }
-      ple { 50  }
-      ple { 65  }
-      ple { 66  }
-      ple { 51  }
+      ple { 50 }
+      ple { 65 }
+      ple { 66 }
+      ple { 51 }
     }
     ply {
       pes { 4 }
-      ple { 51  }
-      ple { 66  }
-      ple { 67  }
-      ple { 52  }
+      ple { 51 }
+      ple { 66 }
+      ple { 67 }
+      ple { 52 }
     }
     ply {
       pes { 4 }
-      ple { 52  }
-      ple { 67  }
-      ple { 68  }
-      ple { 53  }
+      ple { 52 }
+      ple { 67 }
+      ple { 68 }
+      ple { 53 }
     }
     ply {
       pes { 4 }
-      ple { 53  }
-      ple { 68  }
-      ple { 69  }
-      ple { 54  }
+      ple { 53 }
+      ple { 68 }
+      ple { 69 }
+      ple { 54 }
     }
     ply {
       pes { 4 }
-      ple { 54  }
-      ple { 69  }
-      ple { 70  }
-      ple { 55  }
+      ple { 54 }
+      ple { 69 }
+      ple { 70 }
+      ple { 55 }
     }
     ply {
       pes { 4 }
-      ple { 55  }
-      ple { 70  }
-      ple { 71  }
-      ple { 56  }
+      ple { 55 }
+      ple { 70 }
+      ple { 71 }
+      ple { 56 }
     }
     ply {
       pes { 4 }
-      ple { 56  }
-      ple { 71  }
-      ple { 72  }
-      ple { 57  }
+      ple { 56 }
+      ple { 71 }
+      ple { 72 }
+      ple { 57 }
     }
     ply {
       pes { 4 }
-      ple { 57  }
-      ple { 72  }
-      ple { 73  }
-      ple { 58  }
+      ple { 57 }
+      ple { 72 }
+      ple { 73 }
+      ple { 58 }
     }
     ply {
       pes { 4 }
-      ple { 58  }
-      ple { 73  }
-      ple { 74  }
-      ple { 59  }
+      ple { 58 }
+      ple { 73 }
+      ple { 74 }
+      ple { 59 }
     }
     ply {
       pes { 4 }
-      ple { 60  }
-      ple { 75  }
-      ple { 76  }
-      ple { 61  }
+      ple { 60 }
+      ple { 75 }
+      ple { 76 }
+      ple { 61 }
     }
     ply {
       pes { 4 }
-      ple { 61  }
-      ple { 76  }
-      ple { 77  }
-      ple { 62  }
+      ple { 61 }
+      ple { 76 }
+      ple { 77 }
+      ple { 62 }
     }
     ply {
       pes { 4 }
-      ple { 62  }
-      ple { 77  }
-      ple { 78  }
-      ple { 63  }
+      ple { 62 }
+      ple { 77 }
+      ple { 78 }
+      ple { 63 }
     }
     ply {
       pes { 4 }
-      ple { 63  }
-      ple { 78  }
-      ple { 79  }
-      ple { 64  }
+      ple { 63 }
+      ple { 78 }
+      ple { 79 }
+      ple { 64 }
     }
     ply {
       pes { 4 }
-      ple { 64  }
-      ple { 79  }
-      ple { 80  }
-      ple { 65  }
+      ple { 64 }
+      ple { 79 }
+      ple { 80 }
+      ple { 65 }
     }
     ply {
       pes { 4 }
-      ple { 65  }
-      ple { 80  }
-      ple { 81  }
-      ple { 66  }
+      ple { 65 }
+      ple { 80 }
+      ple { 81 }
+      ple { 66 }
     }
     ply {
       pes { 4 }
-      ple { 66  }
-      ple { 81  }
-      ple { 82  }
-      ple { 67  }
+      ple { 66 }
+      ple { 81 }
+      ple { 82 }
+      ple { 67 }
     }
     ply {
       pes { 4 }
-      ple { 67  }
-      ple { 82  }
-      ple { 83  }
-      ple { 68  }
+      ple { 67 }
+      ple { 82 }
+      ple { 83 }
+      ple { 68 }
     }
     ply {
       pes { 4 }
-      ple { 68  }
-      ple { 83  }
-      ple { 84  }
-      ple { 69  }
+      ple { 68 }
+      ple { 83 }
+      ple { 84 }
+      ple { 69 }
     }
     ply {
       pes { 4 }
-      ple { 69  }
-      ple { 84  }
-      ple { 85  }
-      ple { 70  }
+      ple { 69 }
+      ple { 84 }
+      ple { 85 }
+      ple { 70 }
     }
     ply {
       pes { 4 }
-      ple { 70  }
-      ple { 85  }
-      ple { 86  }
-      ple { 71  }
+      ple { 70 }
+      ple { 85 }
+      ple { 86 }
+      ple { 71 }
     }
     ply {
       pes { 4 }
-      ple { 71  }
-      ple { 86  }
-      ple { 87  }
-      ple { 72  }
+      ple { 71 }
+      ple { 86 }
+      ple { 87 }
+      ple { 72 }
     }
     ply {
       pes { 4 }
-      ple { 72  }
-      ple { 87  }
-      ple { 88  }
-      ple { 73  }
+      ple { 72 }
+      ple { 87 }
+      ple { 88 }
+      ple { 73 }
     }
     ply {
       pes { 4 }
-      ple { 73  }
-      ple { 88  }
-      ple { 89  }
-      ple { 74  }
+      ple { 73 }
+      ple { 88 }
+      ple { 89 }
+      ple { 74 }
     }
     ply {
       pes { 4 }
-      ple { 75  }
-      ple { 90  }
-      ple { 91  }
-      ple { 76  }
+      ple { 75 }
+      ple { 90 }
+      ple { 91 }
+      ple { 76 }
     }
     ply {
       pes { 4 }
-      ple { 76  }
-      ple { 91  }
-      ple { 92  }
-      ple { 77  }
+      ple { 76 }
+      ple { 91 }
+      ple { 92 }
+      ple { 77 }
     }
     ply {
       pes { 4 }
-      ple { 77  }
-      ple { 92  }
-      ple { 93  }
-      ple { 78  }
+      ple { 77 }
+      ple { 92 }
+      ple { 93 }
+      ple { 78 }
     }
     ply {
       pes { 4 }
-      ple { 78  }
-      ple { 93  }
-      ple { 94  }
-      ple { 79  }
+      ple { 78 }
+      ple { 93 }
+      ple { 94 }
+      ple { 79 }
     }
     ply {
       pes { 4 }
-      ple { 79  }
-      ple { 94  }
-      ple { 95  }
-      ple { 80  }
+      ple { 79 }
+      ple { 94 }
+      ple { 95 }
+      ple { 80 }
     }
     ply {
       pes { 4 }
-      ple { 80  }
-      ple { 95  }
-      ple { 96  }
-      ple { 81  }
+      ple { 80 }
+      ple { 95 }
+      ple { 96 }
+      ple { 81 }
     }
     ply {
       pes { 4 }
-      ple { 81  }
-      ple { 96  }
-      ple { 97  }
-      ple { 82  }
+      ple { 81 }
+      ple { 96 }
+      ple { 97 }
+      ple { 82 }
     }
     ply {
       pes { 4 }
-      ple { 82  }
-      ple { 97  }
-      ple { 98  }
-      ple { 83  }
+      ple { 82 }
+      ple { 97 }
+      ple { 98 }
+      ple { 83 }
     }
     ply {
       pes { 4 }
-      ple { 83  }
-      ple { 98  }
-      ple { 99  }
-      ple { 84  }
+      ple { 83 }
+      ple { 98 }
+      ple { 99 }
+      ple { 84 }
     }
     ply {
       pes { 4 }
-      ple { 84  }
-      ple { 99  }
-      ple { 100  }
-      ple { 85  }
+      ple { 84 }
+      ple { 99 }
+      ple { 100 }
+      ple { 85 }
     }
     ply {
       pes { 4 }
-      ple { 85  }
-      ple { 100  }
-      ple { 101  }
-      ple { 86  }
+      ple { 85 }
+      ple { 100 }
+      ple { 101 }
+      ple { 86 }
     }
     ply {
       pes { 4 }
-      ple { 86  }
-      ple { 101  }
-      ple { 102  }
-      ple { 87  }
+      ple { 86 }
+      ple { 101 }
+      ple { 102 }
+      ple { 87 }
     }
     ply {
       pes { 4 }
-      ple { 87  }
-      ple { 102  }
-      ple { 103  }
-      ple { 88  }
+      ple { 87 }
+      ple { 102 }
+      ple { 103 }
+      ple { 88 }
     }
     ply {
       pes { 4 }
-      ple { 88  }
-      ple { 103  }
-      ple { 104  }
-      ple { 89  }
+      ple { 88 }
+      ple { 103 }
+      ple { 104 }
+      ple { 89 }
     }
     ply {
       pes { 4 }
-      ple { 90  }
-      ple { 105  }
-      ple { 106  }
-      ple { 91  }
+      ple { 90 }
+      ple { 105 }
+      ple { 106 }
+      ple { 91 }
     }
     ply {
       pes { 4 }
-      ple { 91  }
-      ple { 106  }
-      ple { 107  }
-      ple { 92  }
+      ple { 91 }
+      ple { 106 }
+      ple { 107 }
+      ple { 92 }
     }
     ply {
       pes { 4 }
-      ple { 92  }
-      ple { 107  }
-      ple { 108  }
-      ple { 93  }
+      ple { 92 }
+      ple { 107 }
+      ple { 108 }
+      ple { 93 }
     }
     ply {
       pes { 4 }
-      ple { 93  }
-      ple { 108  }
-      ple { 109  }
-      ple { 94  }
+      ple { 93 }
+      ple { 108 }
+      ple { 109 }
+      ple { 94 }
     }
     ply {
       pes { 4 }
-      ple { 94  }
-      ple { 109  }
-      ple { 110  }
-      ple { 95  }
+      ple { 94 }
+      ple { 109 }
+      ple { 110 }
+      ple { 95 }
     }
     ply {
       pes { 4 }
-      ple { 95  }
-      ple { 110  }
-      ple { 111  }
-      ple { 96  }
+      ple { 95 }
+      ple { 110 }
+      ple { 111 }
+      ple { 96 }
     }
     ply {
       pes { 4 }
-      ple { 96  }
-      ple { 111  }
-      ple { 112  }
-      ple { 97  }
+      ple { 96 }
+      ple { 111 }
+      ple { 112 }
+      ple { 97 }
     }
     ply {
       pes { 4 }
-      ple { 97  }
-      ple { 112  }
-      ple { 113  }
-      ple { 98  }
+      ple { 97 }
+      ple { 112 }
+      ple { 113 }
+      ple { 98 }
     }
     ply {
       pes { 4 }
-      ple { 98  }
-      ple { 113  }
-      ple { 114  }
-      ple { 99  }
+      ple { 98 }
+      ple { 113 }
+      ple { 114 }
+      ple { 99 }
     }
     ply {
       pes { 4 }
-      ple { 99  }
-      ple { 114  }
-      ple { 115  }
-      ple { 100  }
+      ple { 99 }
+      ple { 114 }
+      ple { 115 }
+      ple { 100 }
     }
     ply {
       pes { 4 }
-      ple { 100  }
-      ple { 115  }
-      ple { 116  }
-      ple { 101  }
+      ple { 100 }
+      ple { 115 }
+      ple { 116 }
+      ple { 101 }
     }
     ply {
       pes { 4 }
-      ple { 101  }
-      ple { 116  }
-      ple { 117  }
-      ple { 102  }
+      ple { 101 }
+      ple { 116 }
+      ple { 117 }
+      ple { 102 }
     }
     ply {
       pes { 4 }
-      ple { 102  }
-      ple { 117  }
-      ple { 118  }
-      ple { 103  }
+      ple { 102 }
+      ple { 117 }
+      ple { 118 }
+      ple { 103 }
     }
     ply {
       pes { 4 }
-      ple { 103  }
-      ple { 118  }
-      ple { 119  }
-      ple { 104  }
+      ple { 103 }
+      ple { 118 }
+      ple { 119 }
+      ple { 104 }
     }
     ply {
       pes { 4 }
-      ple { 1  }
-      ple { 121  }
-      ple { 120  }
-      ple { 0  }
+      ple { 1 }
+      ple { 121 }
+      ple { 120 }
+      ple { 0 }
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 120  }
-      ple { 128  }
-      ple { 8  }
+      ple { 0 }
+      ple { 120 }
+      ple { 128 }
+      ple { 8 }
     }
     ply {
       pes { 4 }
-      ple { 2  }
-      ple { 122  }
-      ple { 121  }
-      ple { 1  }
+      ple { 2 }
+      ple { 122 }
+      ple { 121 }
+      ple { 1 }
     }
     ply {
       pes { 4 }
-      ple { 3  }
-      ple { 123  }
-      ple { 122  }
-      ple { 2  }
+      ple { 3 }
+      ple { 123 }
+      ple { 122 }
+      ple { 2 }
     }
     ply {
       pes { 4 }
-      ple { 4  }
-      ple { 124  }
-      ple { 123  }
-      ple { 3  }
+      ple { 4 }
+      ple { 124 }
+      ple { 123 }
+      ple { 3 }
     }
     ply {
       pes { 4 }
-      ple { 5  }
-      ple { 125  }
-      ple { 124  }
-      ple { 4  }
+      ple { 5 }
+      ple { 125 }
+      ple { 124 }
+      ple { 4 }
     }
     ply {
       pes { 4 }
-      ple { 6  }
-      ple { 126  }
-      ple { 125  }
-      ple { 5  }
+      ple { 6 }
+      ple { 126 }
+      ple { 125 }
+      ple { 5 }
     }
     ply {
       pes { 4 }
-      ple { 7  }
-      ple { 127  }
-      ple { 126  }
-      ple { 6  }
+      ple { 7 }
+      ple { 127 }
+      ple { 126 }
+      ple { 6 }
     }
     ply {
       pes { 4 }
-      ple { 8  }
-      ple { 128  }
-      ple { 129  }
-      ple { 9  }
+      ple { 8 }
+      ple { 128 }
+      ple { 129 }
+      ple { 9 }
     }
     ply {
       pes { 4 }
-      ple { 9  }
-      ple { 129  }
-      ple { 130  }
-      ple { 10  }
+      ple { 9 }
+      ple { 129 }
+      ple { 130 }
+      ple { 10 }
     }
     ply {
       pes { 4 }
-      ple { 10  }
-      ple { 130  }
-      ple { 131  }
-      ple { 11  }
+      ple { 10 }
+      ple { 130 }
+      ple { 131 }
+      ple { 11 }
     }
     ply {
       pes { 4 }
-      ple { 11  }
-      ple { 131  }
-      ple { 132  }
-      ple { 12  }
+      ple { 11 }
+      ple { 131 }
+      ple { 132 }
+      ple { 12 }
     }
     ply {
       pes { 4 }
-      ple { 12  }
-      ple { 132  }
-      ple { 133  }
-      ple { 13  }
+      ple { 12 }
+      ple { 132 }
+      ple { 133 }
+      ple { 13 }
     }
     ply {
       pes { 4 }
-      ple { 13  }
-      ple { 133  }
-      ple { 134  }
-      ple { 14  }
+      ple { 13 }
+      ple { 133 }
+      ple { 134 }
+      ple { 14 }
     }
     ply {
       pes { 4 }
-      ple { 121  }
-      ple { 136  }
-      ple { 135  }
-      ple { 120  }
+      ple { 121 }
+      ple { 136 }
+      ple { 135 }
+      ple { 120 }
     }
     ply {
       pes { 4 }
-      ple { 120  }
-      ple { 135  }
-      ple { 143  }
-      ple { 128  }
+      ple { 120 }
+      ple { 135 }
+      ple { 143 }
+      ple { 128 }
     }
     ply {
       pes { 4 }
-      ple { 122  }
-      ple { 137  }
-      ple { 136  }
-      ple { 121  }
+      ple { 122 }
+      ple { 137 }
+      ple { 136 }
+      ple { 121 }
     }
     ply {
       pes { 4 }
-      ple { 123  }
-      ple { 138  }
-      ple { 137  }
-      ple { 122  }
+      ple { 123 }
+      ple { 138 }
+      ple { 137 }
+      ple { 122 }
     }
     ply {
       pes { 4 }
-      ple { 124  }
-      ple { 139  }
-      ple { 138  }
-      ple { 123  }
+      ple { 124 }
+      ple { 139 }
+      ple { 138 }
+      ple { 123 }
     }
     ply {
       pes { 4 }
-      ple { 125  }
-      ple { 140  }
-      ple { 139  }
-      ple { 124  }
+      ple { 125 }
+      ple { 140 }
+      ple { 139 }
+      ple { 124 }
     }
     ply {
       pes { 4 }
-      ple { 126  }
-      ple { 141  }
-      ple { 140  }
-      ple { 125  }
+      ple { 126 }
+      ple { 141 }
+      ple { 140 }
+      ple { 125 }
     }
     ply {
       pes { 4 }
-      ple { 127  }
-      ple { 142  }
-      ple { 141  }
-      ple { 126  }
+      ple { 127 }
+      ple { 142 }
+      ple { 141 }
+      ple { 126 }
     }
     ply {
       pes { 4 }
-      ple { 128  }
-      ple { 143  }
-      ple { 144  }
-      ple { 129  }
+      ple { 128 }
+      ple { 143 }
+      ple { 144 }
+      ple { 129 }
     }
     ply {
       pes { 4 }
-      ple { 129  }
-      ple { 144  }
-      ple { 145  }
-      ple { 130  }
+      ple { 129 }
+      ple { 144 }
+      ple { 145 }
+      ple { 130 }
     }
     ply {
       pes { 4 }
-      ple { 130  }
-      ple { 145  }
-      ple { 146  }
-      ple { 131  }
+      ple { 130 }
+      ple { 145 }
+      ple { 146 }
+      ple { 131 }
     }
     ply {
       pes { 4 }
-      ple { 131  }
-      ple { 146  }
-      ple { 147  }
-      ple { 132  }
+      ple { 131 }
+      ple { 146 }
+      ple { 147 }
+      ple { 132 }
     }
     ply {
       pes { 4 }
-      ple { 132  }
-      ple { 147  }
-      ple { 148  }
-      ple { 133  }
+      ple { 132 }
+      ple { 147 }
+      ple { 148 }
+      ple { 133 }
     }
     ply {
       pes { 4 }
-      ple { 133  }
-      ple { 148  }
-      ple { 149  }
-      ple { 134  }
+      ple { 133 }
+      ple { 148 }
+      ple { 149 }
+      ple { 134 }
     }
     ply {
       pes { 4 }
-      ple { 136  }
-      ple { 151  }
-      ple { 150  }
-      ple { 135  }
+      ple { 136 }
+      ple { 151 }
+      ple { 150 }
+      ple { 135 }
     }
     ply {
       pes { 4 }
-      ple { 135  }
-      ple { 150  }
-      ple { 158  }
-      ple { 143  }
+      ple { 135 }
+      ple { 150 }
+      ple { 158 }
+      ple { 143 }
     }
     ply {
       pes { 4 }
-      ple { 137  }
-      ple { 152  }
-      ple { 151  }
-      ple { 136  }
+      ple { 137 }
+      ple { 152 }
+      ple { 151 }
+      ple { 136 }
     }
     ply {
       pes { 4 }
-      ple { 138  }
-      ple { 153  }
-      ple { 152  }
-      ple { 137  }
+      ple { 138 }
+      ple { 153 }
+      ple { 152 }
+      ple { 137 }
     }
     ply {
       pes { 4 }
-      ple { 139  }
-      ple { 154  }
-      ple { 153  }
-      ple { 138  }
+      ple { 139 }
+      ple { 154 }
+      ple { 153 }
+      ple { 138 }
     }
     ply {
       pes { 4 }
-      ple { 140  }
-      ple { 155  }
-      ple { 154  }
-      ple { 139  }
+      ple { 140 }
+      ple { 155 }
+      ple { 154 }
+      ple { 139 }
     }
     ply {
       pes { 4 }
-      ple { 141  }
-      ple { 156  }
-      ple { 155  }
-      ple { 140  }
+      ple { 141 }
+      ple { 156 }
+      ple { 155 }
+      ple { 140 }
     }
     ply {
       pes { 4 }
-      ple { 142  }
-      ple { 157  }
-      ple { 156  }
-      ple { 141  }
+      ple { 142 }
+      ple { 157 }
+      ple { 156 }
+      ple { 141 }
     }
     ply {
       pes { 4 }
-      ple { 143  }
-      ple { 158  }
-      ple { 159  }
-      ple { 144  }
+      ple { 143 }
+      ple { 158 }
+      ple { 159 }
+      ple { 144 }
     }
     ply {
       pes { 4 }
-      ple { 144  }
-      ple { 159  }
-      ple { 160  }
-      ple { 145  }
+      ple { 144 }
+      ple { 159 }
+      ple { 160 }
+      ple { 145 }
     }
     ply {
       pes { 4 }
-      ple { 145  }
-      ple { 160  }
-      ple { 161  }
-      ple { 146  }
+      ple { 145 }
+      ple { 160 }
+      ple { 161 }
+      ple { 146 }
     }
     ply {
       pes { 4 }
-      ple { 146  }
-      ple { 161  }
-      ple { 162  }
-      ple { 147  }
+      ple { 146 }
+      ple { 161 }
+      ple { 162 }
+      ple { 147 }
     }
     ply {
       pes { 4 }
-      ple { 147  }
-      ple { 162  }
-      ple { 163  }
-      ple { 148  }
+      ple { 147 }
+      ple { 162 }
+      ple { 163 }
+      ple { 148 }
     }
     ply {
       pes { 4 }
-      ple { 148  }
-      ple { 163  }
-      ple { 164  }
-      ple { 149  }
+      ple { 148 }
+      ple { 163 }
+      ple { 164 }
+      ple { 149 }
     }
     ply {
       pes { 4 }
-      ple { 151  }
-      ple { 166  }
-      ple { 165  }
-      ple { 150  }
+      ple { 151 }
+      ple { 166 }
+      ple { 165 }
+      ple { 150 }
     }
     ply {
       pes { 4 }
-      ple { 150  }
-      ple { 165  }
-      ple { 173  }
-      ple { 158  }
+      ple { 150 }
+      ple { 165 }
+      ple { 173 }
+      ple { 158 }
     }
     ply {
       pes { 4 }
-      ple { 152  }
-      ple { 167  }
-      ple { 166  }
-      ple { 151  }
+      ple { 152 }
+      ple { 167 }
+      ple { 166 }
+      ple { 151 }
     }
     ply {
       pes { 4 }
-      ple { 153  }
-      ple { 168  }
-      ple { 167  }
-      ple { 152  }
+      ple { 153 }
+      ple { 168 }
+      ple { 167 }
+      ple { 152 }
     }
     ply {
       pes { 4 }
-      ple { 154  }
-      ple { 169  }
-      ple { 168  }
-      ple { 153  }
+      ple { 154 }
+      ple { 169 }
+      ple { 168 }
+      ple { 153 }
     }
     ply {
       pes { 4 }
-      ple { 155  }
-      ple { 170  }
-      ple { 169  }
-      ple { 154  }
+      ple { 155 }
+      ple { 170 }
+      ple { 169 }
+      ple { 154 }
     }
     ply {
       pes { 4 }
-      ple { 156  }
-      ple { 171  }
-      ple { 170  }
-      ple { 155  }
+      ple { 156 }
+      ple { 171 }
+      ple { 170 }
+      ple { 155 }
     }
     ply {
       pes { 4 }
-      ple { 157  }
-      ple { 172  }
-      ple { 171  }
-      ple { 156  }
+      ple { 157 }
+      ple { 172 }
+      ple { 171 }
+      ple { 156 }
     }
     ply {
       pes { 4 }
-      ple { 158  }
-      ple { 173  }
-      ple { 174  }
-      ple { 159  }
+      ple { 158 }
+      ple { 173 }
+      ple { 174 }
+      ple { 159 }
     }
     ply {
       pes { 4 }
-      ple { 159  }
-      ple { 174  }
-      ple { 175  }
-      ple { 160  }
+      ple { 159 }
+      ple { 174 }
+      ple { 175 }
+      ple { 160 }
     }
     ply {
       pes { 4 }
-      ple { 160  }
-      ple { 175  }
-      ple { 176  }
-      ple { 161  }
+      ple { 160 }
+      ple { 175 }
+      ple { 176 }
+      ple { 161 }
     }
     ply {
       pes { 4 }
-      ple { 161  }
-      ple { 176  }
-      ple { 177  }
-      ple { 162  }
+      ple { 161 }
+      ple { 176 }
+      ple { 177 }
+      ple { 162 }
     }
     ply {
       pes { 4 }
-      ple { 162  }
-      ple { 177  }
-      ple { 178  }
-      ple { 163  }
+      ple { 162 }
+      ple { 177 }
+      ple { 178 }
+      ple { 163 }
     }
     ply {
       pes { 4 }
-      ple { 163  }
-      ple { 178  }
-      ple { 179  }
-      ple { 164  }
+      ple { 163 }
+      ple { 178 }
+      ple { 179 }
+      ple { 164 }
     }
     ply {
       pes { 4 }
-      ple { 166  }
-      ple { 181  }
-      ple { 180  }
-      ple { 165  }
+      ple { 166 }
+      ple { 181 }
+      ple { 180 }
+      ple { 165 }
     }
     ply {
       pes { 4 }
-      ple { 165  }
-      ple { 180  }
-      ple { 188  }
-      ple { 173  }
+      ple { 165 }
+      ple { 180 }
+      ple { 188 }
+      ple { 173 }
     }
     ply {
       pes { 4 }
-      ple { 167  }
-      ple { 182  }
-      ple { 181  }
-      ple { 166  }
+      ple { 167 }
+      ple { 182 }
+      ple { 181 }
+      ple { 166 }
     }
     ply {
       pes { 4 }
-      ple { 168  }
-      ple { 183  }
-      ple { 182  }
-      ple { 167  }
+      ple { 168 }
+      ple { 183 }
+      ple { 182 }
+      ple { 167 }
     }
     ply {
       pes { 4 }
-      ple { 169  }
-      ple { 184  }
-      ple { 183  }
-      ple { 168  }
+      ple { 169 }
+      ple { 184 }
+      ple { 183 }
+      ple { 168 }
     }
     ply {
       pes { 4 }
-      ple { 170  }
-      ple { 185  }
-      ple { 184  }
-      ple { 169  }
+      ple { 170 }
+      ple { 185 }
+      ple { 184 }
+      ple { 169 }
     }
     ply {
       pes { 4 }
-      ple { 171  }
-      ple { 186  }
-      ple { 185  }
-      ple { 170  }
+      ple { 171 }
+      ple { 186 }
+      ple { 185 }
+      ple { 170 }
     }
     ply {
       pes { 4 }
-      ple { 172  }
-      ple { 187  }
-      ple { 186  }
-      ple { 171  }
+      ple { 172 }
+      ple { 187 }
+      ple { 186 }
+      ple { 171 }
     }
     ply {
       pes { 4 }
-      ple { 173  }
-      ple { 188  }
-      ple { 189  }
-      ple { 174  }
+      ple { 173 }
+      ple { 188 }
+      ple { 189 }
+      ple { 174 }
     }
     ply {
       pes { 4 }
-      ple { 174  }
-      ple { 189  }
-      ple { 190  }
-      ple { 175  }
+      ple { 174 }
+      ple { 189 }
+      ple { 190 }
+      ple { 175 }
     }
     ply {
       pes { 4 }
-      ple { 175  }
-      ple { 190  }
-      ple { 191  }
-      ple { 176  }
+      ple { 175 }
+      ple { 190 }
+      ple { 191 }
+      ple { 176 }
     }
     ply {
       pes { 4 }
-      ple { 176  }
-      ple { 191  }
-      ple { 192  }
-      ple { 177  }
+      ple { 176 }
+      ple { 191 }
+      ple { 192 }
+      ple { 177 }
     }
     ply {
       pes { 4 }
-      ple { 177  }
-      ple { 192  }
-      ple { 193  }
-      ple { 178  }
+      ple { 177 }
+      ple { 192 }
+      ple { 193 }
+      ple { 178 }
     }
     ply {
       pes { 4 }
-      ple { 178  }
-      ple { 193  }
-      ple { 194  }
-      ple { 179  }
+      ple { 178 }
+      ple { 193 }
+      ple { 194 }
+      ple { 179 }
     }
     ply {
       pes { 4 }
-      ple { 181  }
-      ple { 196  }
-      ple { 195  }
-      ple { 180  }
+      ple { 181 }
+      ple { 196 }
+      ple { 195 }
+      ple { 180 }
     }
     ply {
       pes { 4 }
-      ple { 180  }
-      ple { 195  }
-      ple { 203  }
-      ple { 188  }
+      ple { 180 }
+      ple { 195 }
+      ple { 203 }
+      ple { 188 }
     }
     ply {
       pes { 4 }
-      ple { 182  }
-      ple { 197  }
-      ple { 196  }
-      ple { 181  }
+      ple { 182 }
+      ple { 197 }
+      ple { 196 }
+      ple { 181 }
     }
     ply {
       pes { 4 }
-      ple { 183  }
-      ple { 198  }
-      ple { 197  }
-      ple { 182  }
+      ple { 183 }
+      ple { 198 }
+      ple { 197 }
+      ple { 182 }
     }
     ply {
       pes { 4 }
-      ple { 184  }
-      ple { 199  }
-      ple { 198  }
-      ple { 183  }
+      ple { 184 }
+      ple { 199 }
+      ple { 198 }
+      ple { 183 }
     }
     ply {
       pes { 4 }
-      ple { 185  }
-      ple { 200  }
-      ple { 199  }
-      ple { 184  }
+      ple { 185 }
+      ple { 200 }
+      ple { 199 }
+      ple { 184 }
     }
     ply {
       pes { 4 }
-      ple { 186  }
-      ple { 201  }
-      ple { 200  }
-      ple { 185  }
+      ple { 186 }
+      ple { 201 }
+      ple { 200 }
+      ple { 185 }
     }
     ply {
       pes { 4 }
-      ple { 187  }
-      ple { 202  }
-      ple { 201  }
-      ple { 186  }
+      ple { 187 }
+      ple { 202 }
+      ple { 201 }
+      ple { 186 }
     }
     ply {
       pes { 4 }
-      ple { 188  }
-      ple { 203  }
-      ple { 204  }
-      ple { 189  }
+      ple { 188 }
+      ple { 203 }
+      ple { 204 }
+      ple { 189 }
     }
     ply {
       pes { 4 }
-      ple { 189  }
-      ple { 204  }
-      ple { 205  }
-      ple { 190  }
+      ple { 189 }
+      ple { 204 }
+      ple { 205 }
+      ple { 190 }
     }
     ply {
       pes { 4 }
-      ple { 190  }
-      ple { 205  }
-      ple { 206  }
-      ple { 191  }
+      ple { 190 }
+      ple { 205 }
+      ple { 206 }
+      ple { 191 }
     }
     ply {
       pes { 4 }
-      ple { 191  }
-      ple { 206  }
-      ple { 207  }
-      ple { 192  }
+      ple { 191 }
+      ple { 206 }
+      ple { 207 }
+      ple { 192 }
     }
     ply {
       pes { 4 }
-      ple { 192  }
-      ple { 207  }
-      ple { 208  }
-      ple { 193  }
+      ple { 192 }
+      ple { 207 }
+      ple { 208 }
+      ple { 193 }
     }
     ply {
       pes { 4 }
-      ple { 193  }
-      ple { 208  }
-      ple { 209  }
-      ple { 194  }
+      ple { 193 }
+      ple { 208 }
+      ple { 209 }
+      ple { 194 }
     }
     ply {
       pes { 4 }
-      ple { 196  }
-      ple { 211  }
-      ple { 210  }
-      ple { 195  }
+      ple { 196 }
+      ple { 211 }
+      ple { 210 }
+      ple { 195 }
     }
     ply {
       pes { 4 }
-      ple { 195  }
-      ple { 210  }
-      ple { 218  }
-      ple { 203  }
+      ple { 195 }
+      ple { 210 }
+      ple { 218 }
+      ple { 203 }
     }
     ply {
       pes { 4 }
-      ple { 197  }
-      ple { 212  }
-      ple { 211  }
-      ple { 196  }
+      ple { 197 }
+      ple { 212 }
+      ple { 211 }
+      ple { 196 }
     }
     ply {
       pes { 4 }
-      ple { 198  }
-      ple { 213  }
-      ple { 212  }
-      ple { 197  }
+      ple { 198 }
+      ple { 213 }
+      ple { 212 }
+      ple { 197 }
     }
     ply {
       pes { 4 }
-      ple { 199  }
-      ple { 214  }
-      ple { 213  }
-      ple { 198  }
+      ple { 199 }
+      ple { 214 }
+      ple { 213 }
+      ple { 198 }
     }
     ply {
       pes { 4 }
-      ple { 200  }
-      ple { 215  }
-      ple { 214  }
-      ple { 199  }
+      ple { 200 }
+      ple { 215 }
+      ple { 214 }
+      ple { 199 }
     }
     ply {
       pes { 4 }
-      ple { 201  }
-      ple { 216  }
-      ple { 215  }
-      ple { 200  }
+      ple { 201 }
+      ple { 216 }
+      ple { 215 }
+      ple { 200 }
     }
     ply {
       pes { 4 }
-      ple { 202  }
-      ple { 217  }
-      ple { 216  }
-      ple { 201  }
+      ple { 202 }
+      ple { 217 }
+      ple { 216 }
+      ple { 201 }
     }
     ply {
       pes { 4 }
-      ple { 203  }
-      ple { 218  }
-      ple { 219  }
-      ple { 204  }
+      ple { 203 }
+      ple { 218 }
+      ple { 219 }
+      ple { 204 }
     }
     ply {
       pes { 4 }
-      ple { 204  }
-      ple { 219  }
-      ple { 220  }
-      ple { 205  }
+      ple { 204 }
+      ple { 219 }
+      ple { 220 }
+      ple { 205 }
     }
     ply {
       pes { 4 }
-      ple { 205  }
-      ple { 220  }
-      ple { 221  }
-      ple { 206  }
+      ple { 205 }
+      ple { 220 }
+      ple { 221 }
+      ple { 206 }
     }
     ply {
       pes { 4 }
-      ple { 206  }
-      ple { 221  }
-      ple { 222  }
-      ple { 207  }
+      ple { 206 }
+      ple { 221 }
+      ple { 222 }
+      ple { 207 }
     }
     ply {
       pes { 4 }
-      ple { 207  }
-      ple { 222  }
-      ple { 223  }
-      ple { 208  }
+      ple { 207 }
+      ple { 222 }
+      ple { 223 }
+      ple { 208 }
     }
     ply {
       pes { 4 }
-      ple { 208  }
-      ple { 223  }
-      ple { 224  }
-      ple { 209  }
+      ple { 208 }
+      ple { 223 }
+      ple { 224 }
+      ple { 209 }
     }
   }
   properties {
@@ -12076,10 +12236,10 @@ object floor_lane_b {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -12112,10 +12272,10 @@ object floor_lane_b {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -12148,52 +12308,68 @@ object floor_lane_b {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       bootb_off bootb -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       bootb_on bootb -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
     state_item {
       boot_all null -1 3 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       null null -1 0 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
   }
   properties {
@@ -12231,10 +12407,10 @@ object floor_lane_oo {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -12267,10 +12443,10 @@ object floor_lane_oo {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -12303,52 +12479,68 @@ object floor_lane_oo {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       bootoo_off bootoo -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       bootoo_on bootoo -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
     state_item {
       boot_all null -1 3 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       null null -1 0 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
   }
   properties {
@@ -12386,10 +12578,10 @@ object floor_lane_t {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -12422,10 +12614,10 @@ object floor_lane_t {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -12458,52 +12650,68 @@ object floor_lane_t {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       boott_off boott -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       boott_on boott -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
     state_item {
       boot_all null -1 3 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       null null -1 0 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
   }
   properties {
@@ -12519,7 +12727,7 @@ object music {
     state_item {
       null null -1 1 1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
@@ -12529,7 +12737,7 @@ object music {
     state_item {
       table_start null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       music intro.mid
       no_property
@@ -12539,7 +12747,7 @@ object music {
     state_item {
       game_start null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       music game.mid
       no_property
@@ -12549,7 +12757,7 @@ object music {
     state_item {
       releaselock null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       music multiball.mid
       no_property
@@ -12559,7 +12767,7 @@ object music {
     state_item {
       multiball_off null -1 2 1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
@@ -12569,7 +12777,7 @@ object music {
     state_item {
       table_pause null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
@@ -12579,7 +12787,7 @@ object music {
     state_item {
       game_over null -1 1 80
       no_move
-      no_light
+        no_light
       sound gameover.wav
       no_music
       no_property
@@ -12621,10 +12829,10 @@ object floor_top_l {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -12657,10 +12865,10 @@ object floor_top_l {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -12693,52 +12901,68 @@ object floor_top_l {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       linuxl_off linuxl -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       linuxl_on linuxl -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
     state_item {
       linux_all null -1 3 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       null null -1 0 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
   }
   properties {
@@ -12776,10 +13000,10 @@ object floor_top_i {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -12812,10 +13036,10 @@ object floor_top_i {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -12848,52 +13072,68 @@ object floor_top_i {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       linuxi_off linuxi -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       linuxi_on linuxi -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
     state_item {
       linux_all null -1 3 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       null null -1 0 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
   }
   properties {
@@ -12931,10 +13171,10 @@ object floor_top_n {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -12967,10 +13207,10 @@ object floor_top_n {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -13003,52 +13243,68 @@ object floor_top_n {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       linuxn_off linuxn -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       linuxn_on linuxn -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
     state_item {
       linux_all null -1 3 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       null null -1 0 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
   }
   properties {
@@ -13086,10 +13342,10 @@ object floor_top_u {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -13122,10 +13378,10 @@ object floor_top_u {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -13158,52 +13414,68 @@ object floor_top_u {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       linuxu_off linuxu -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       linuxu_on linuxu -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
     state_item {
       linux_all null -1 3 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       null null -1 0 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
   }
   properties {
@@ -13241,10 +13513,10 @@ object floor_top_x {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -13277,10 +13549,10 @@ object floor_top_x {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -13313,52 +13585,68 @@ object floor_top_x {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       linuxx_off linuxx -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       linuxx_on linuxx -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
     state_item {
       linux_all null -1 3 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       null null -1 0 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
   }
   properties {
@@ -13400,10 +13688,10 @@ object floor_target_t {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -13456,18 +13744,18 @@ object floor_target_t {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 4  }
-      ple { 5  }
-      ple { 6  }
-      ple { 7  }
+      ple { 4 }
+      ple { 5 }
+      ple { 6 }
+      ple { 7 }
     }
   }
   shape {
@@ -13520,60 +13808,80 @@ object floor_target_t {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 4  }
-      ple { 5  }
-      ple { 6  }
-      ple { 7  }
+      ple { 4 }
+      ple { 5 }
+      ple { 6 }
+      ple { 7 }
     }
   }
   state_behavior {
     state_item {
       tuxt_off tuxt -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       tuxt_on tuxt -1 -1 -1
       no_move
-      no_light
+        no_light
       sound bumphard.wav
       no_music
       no_property
       no_texcoord
-      shape 8 0 0 1 0 0 0 0 0
+      shape 8
+        0
+        0
+        1
+        0
+        0
+        0
+        0
+        0
     }
     state_item {
       tux_all null -1 3 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       null null -1 0 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
   }
   properties {
@@ -13615,10 +13923,10 @@ object floor_target_u {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -13671,18 +13979,18 @@ object floor_target_u {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 4  }
-      ple { 5  }
-      ple { 6  }
-      ple { 7  }
+      ple { 4 }
+      ple { 5 }
+      ple { 6 }
+      ple { 7 }
     }
   }
   shape {
@@ -13735,60 +14043,80 @@ object floor_target_u {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 4  }
-      ple { 5  }
-      ple { 6  }
-      ple { 7  }
+      ple { 4 }
+      ple { 5 }
+      ple { 6 }
+      ple { 7 }
     }
   }
   state_behavior {
     state_item {
       tuxu_off tuxu -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       tuxu_on tuxu -1 -1 -1
       no_move
-      no_light
+        no_light
       sound bumphard.wav
       no_music
       no_property
       no_texcoord
-      shape 8 0 0 1 0 0 0 0 0
+      shape 8
+        0
+        0
+        1
+        0
+        0
+        0
+        0
+        0
     }
     state_item {
       tux_all null -1 3 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       null null -1 0 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
   }
   properties {
@@ -13830,10 +14158,10 @@ object floor_target_x {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -13886,18 +14214,18 @@ object floor_target_x {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 4  }
-      ple { 5  }
-      ple { 6  }
-      ple { 7  }
+      ple { 4 }
+      ple { 5 }
+      ple { 6 }
+      ple { 7 }
     }
   }
   shape {
@@ -13950,60 +14278,80 @@ object floor_target_x {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
     ply {
       pes { 4 }
       tpt { }
-      ple { 4  }
-      ple { 5  }
-      ple { 6  }
-      ple { 7  }
+      ple { 4 }
+      ple { 5 }
+      ple { 6 }
+      ple { 7 }
     }
   }
   state_behavior {
     state_item {
       tuxx_off tuxx -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       tuxx_on tuxx -1 -1 -1
       no_move
-      no_light
+        no_light
       sound bumphard.wav
       no_music
       no_property
       no_texcoord
-      shape 8 0 0 1 0 0 0 0 0
+      shape 8
+        0
+        0
+        1
+        0
+        0
+        0
+        0
+        0
     }
     state_item {
       tux_all null -1 3 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     state_item {
       null null -1 0 35
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 0 1 0
+      shape 4
+        0
+        0
+        1
+        0
     }
   }
   properties {
@@ -14016,7 +14364,7 @@ object module {
   0 0 0
   0 0 0
   module {
-    libModuleTux.la
+      libModuleTux.la
   }
   properties {
     transform_once
@@ -14052,17 +14400,17 @@ object left_loop {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       null leftloop 1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
@@ -14072,7 +14420,7 @@ object left_loop {
     state_item {
       null leftloop 1 0 100
       no_move
-      light
+        light
       sound up.wav
       no_music
       no_property
@@ -14119,17 +14467,17 @@ object right_loop {
     }
     ply {
       pes { 4 }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       null rightloop 1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
@@ -14139,7 +14487,7 @@ object right_loop {
     state_item {
       null rightloop 1 0 100
       no_move
-      no_light
+        no_light
       sound shoot.wav
       no_music
       no_property
@@ -14185,10 +14533,10 @@ object jackpot_light {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -14220,32 +14568,40 @@ object jackpot_light {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       multiball_off null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 1 0 0 0
+      shape 4
+        1
+        0
+        0
+        0
     }
     state_item {
       releaselock null -1 -1 -1
       no_move
-      light
+        light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     light {
       1 0 0
@@ -14289,10 +14645,10 @@ object extraball_light {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -14324,32 +14680,40 @@ object extraball_light {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       rightloop null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 1 0 0 0
+      shape 4
+        1
+        0
+        0
+        0
     }
     state_item {
       tux_all null -1 -1 -1
       no_move
-      light
+        light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
     light {
       1 0 0
@@ -14393,10 +14757,10 @@ object extraball_on {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -14428,32 +14792,40 @@ object extraball_on {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       allballs_off null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 1 0 0 0
+      shape 4
+        1
+        0
+        0
+        0
     }
     state_item {
       extraball null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 4 0 1 0 0
+      shape 4
+        0
+        1
+        0
+        0
     }
   }
   properties {
@@ -14494,10 +14866,10 @@ object multiplier {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -14530,10 +14902,10 @@ object multiplier {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -14566,10 +14938,10 @@ object multiplier {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -14602,10 +14974,10 @@ object multiplier {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -14638,62 +15010,102 @@ object multiplier {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       null null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 8 1 0 0 0 0 0 0 0
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
     }
     state_item {
       multiplier2 null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 8 0 1 0 0 0 0 0 0
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
     }
     state_item {
       multiplier3 null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 8 0 0 1 0 0 0 0 0
+      shape 8
+        0
+        0
+        1
+        0
+        0
+        0
+        0
+        0
     }
     state_item {
       multiplier4 null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 8 0 0 0 1 0 0 0 0
+      shape 8
+        0
+        0
+        0
+        1
+        0
+        0
+        0
+        0
     }
     state_item {
       multiplier5 null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 8 0 0 0 0 1 0 0 0
+      shape 8
+        0
+        0
+        0
+        0
+        1
+        0
+        0
+        0
     }
   }
   properties {
@@ -14730,10 +15142,10 @@ object left_shoot {
     }
     ply {
       pes { 4 }
-      ple { 3  }
-      ple { 2  }
-      ple { 1  }
-      ple { 0  }
+      ple { 3 }
+      ple { 2 }
+      ple { 1 }
+      ple { 0 }
     }
   }
   shape {
@@ -14766,10 +15178,10 @@ object left_shoot {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -14802,42 +15214,66 @@ object left_shoot {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       null null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 8 0 1 0 0 0 0 0 0
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
     }
     state_item {
       boot_all null 2 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 8 0 0 1 0 0 0 0 0
+      shape 8
+        0
+        0
+        1
+        0
+        0
+        0
+        0
+        0
     }
     state_item {
       null null -1 0 50
       no_move
-      light
+        light
       sound shoot.wav
       no_music
       property 2048
       no_texcoord
-      shape 8 0 0 1 0 0 0 0 0
+      shape 8
+        0
+        0
+        1
+        0
+        0
+        0
+        0
+        0
     }
     light {
       1 1 1
@@ -14879,10 +15315,10 @@ object right_shoot {
     }
     ply {
       pes { 4 }
-      ple { 3  }
-      ple { 2  }
-      ple { 1  }
-      ple { 0  }
+      ple { 3 }
+      ple { 2 }
+      ple { 1 }
+      ple { 0 }
     }
   }
   shape {
@@ -14915,10 +15351,10 @@ object right_shoot {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   shape {
@@ -14951,42 +15387,66 @@ object right_shoot {
     ply {
       pes { 4 }
       tpt { }
-      ple { 0  }
-      ple { 1  }
-      ple { 2  }
-      ple { 3  }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
     }
   }
   state_behavior {
     state_item {
       null null -1 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 8 0 1 0 0 0 0 0 0
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
     }
     state_item {
       boot_all null 2 -1 -1
       no_move
-      no_light
+        no_light
       no_sound
       no_music
       no_property
       no_texcoord
-      shape 8 0 0 1 0 0 0 0 0
+      shape 8
+        0
+        0
+        1
+        0
+        0
+        0
+        0
+        0
     }
     state_item {
       null null -1 0 50
       no_move
-      light
+        light
       sound shoot.wav
       no_music
       property 2048
       no_texcoord
-      shape 8 0 0 1 0 0 0 0 0
+      shape 8
+        0
+        0
+        1
+        0
+        0
+        0
+        0
+        0
     }
     light {
       1 1 1
@@ -14996,6 +15456,139 @@ object right_shoot {
   properties {
     collision
     transform_once
+    group_1
+  }
+}
+object plunger {
+  19.55 0 31.5
+  0 0 0
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 -1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 -1 0
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 3 }
+      ple { 2 }
+      ple { 1 }
+      ple { 0 }
+    }
+  }
+  shape {
+    vts { 10 }
+    pls { 5 }
+    vtx { 
+      -0.632264 0 0.35
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -0.442584 0.402696 0.35
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -0.0632263 0.637602 0.35
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      0.316132 0.50337 0.35
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      0.569037 0.033558 0.35
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -0.64065 0 7.98
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -0.450971 0.402696 7.98
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -0.0716131 0.637602 7.98
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      0.307745 0.50337 7.98
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      0.560651 0.033558 7.98
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 5 }
+      ple { 4 }
+      ple { 3 }
+      ple { 2 }
+      ple { 1 }
+      ple { 0 }
+    }
+    ply {
+      pes { 4 }
+      ple { 1 }
+      ple { 6 }
+      ple { 5 }
+      ple { 0 }
+    }
+    ply {
+      pes { 4 }
+      ple { 2 }
+      ple { 7 }
+      ple { 6 }
+      ple { 1 }
+    }
+    ply {
+      pes { 4 }
+      ple { 3 }
+      ple { 8 }
+      ple { 7 }
+      ple { 2 }
+    }
+    ply {
+      pes { 4 }
+      ple { 4 }
+      ple { 9 }
+      ple { 8 }
+      ple { 3 }
+    }
+  }
+  plunger_behavior {
+    no_sound
+  }
+  properties {
+    collision
     group_1
   }
 }
