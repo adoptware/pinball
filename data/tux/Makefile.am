@@ -1,3 +1,4 @@
+#$Id: Makefile.am,v 1.11 2003/06/16 13:06:12 rzr Exp $
 AUTOMAKE_OPTIONS = gnu
 
 highscoredir = $(EM_BUILD_ROOT)/$(EM_HIGHSCORE_DIR)/tux
@@ -40,10 +41,10 @@ up.wav
 # This will create a new empty highscores file
 # NOTE! The user games must exist!
 install-data-hook:
-	mkdir -p $(highscoredir)
-	touch $(highscoredir)/highscores
-	if test `whoami` = root; then chown games $(highscoredir)/highscores; fi
-	if test `whoami` = root; then chgrp games $(highscoredir)/highscores; fi
-	chmod 666 $(highscoredir)/highscores
+	-mkdir -p $(highscoredir) # - if not root #!rzr
+	-touch $(highscoredir)/highscores
+	-if test `whoami` = root; then chown games $(highscoredir)/highscores; fi
+	-if test `whoami` = root; then chgrp games $(highscoredir)/highscores; fi
+	-chmod 666 $(highscoredir)/highscores
 
 EXTRA_DIST = $(tuxdata_DATA)
