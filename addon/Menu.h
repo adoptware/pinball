@@ -88,7 +88,7 @@ class MenuChoose : public MenuItem {
 /***************************************************************************
  * A menu that performs a function when choosen */
 
-#define MAX_INPUT_STRING     15
+#define MAX_INPUT_STRING     12
 
 class MenuInput : public MenuItem
 {
