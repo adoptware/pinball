@@ -1,8 +1,11 @@
 AUTOMAKE_OPTIONS = gnu
 
+pinlibdir = $(libdir)/pinball
+pinincludedir = $(includedir)/pinball
+
 bin_PROGRAMS = pinball
 
-pkglib_LIBRARIES = libemilia_pin.a
+pinlib_LIBRARIES = libemilia_pin.a
 
 INCLUDES = -I../base -I../addon @INCLTDL@
 
@@ -27,7 +30,7 @@ Table.cpp
 
 dnl libemilia_pin_la_SOURCES = $(libemilia_pin_a_SOURCES)
 
-pkginclude_HEADERS = \
+pininclude_HEADERS = \
 ArmBehavior.h \
 BallGroup.h \
 BounceBehavior.h \
