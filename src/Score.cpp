@@ -160,7 +160,7 @@ bool Score::testForHighScore() {
 
 		EmAssert(Engine::getCurrentEngine() != NULL, "Score::testForHighScore Engine NULL");
 
-		MenuInput input("enter name", Engine::getCurrentEngine());
+		MenuInput input("new highscore enter name", Engine::getCurrentEngine());
 		input.perform();
 		
 		//p_EmFont->printRowCenter(-sHeader.c_str(), 3);
