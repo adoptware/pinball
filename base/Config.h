@@ -1,4 +1,4 @@
-//#ident "$Id: Config.h,v 1.16 2003/05/12 12:17:58 rzr Exp $"
+//#ident "$Id: Config.h,v 1.17 2003/06/11 13:25:49 rzr Exp $"
 /***************************************************************************
                           Config.h  -  description
                              -------------------
@@ -82,6 +82,7 @@ class Config {
   void setSubDir(const char * ch);
   inline const char * getDataDir() { return m_sDataDir.c_str(); };
   inline const char * getDataSubDir() { return m_sDataSubDir.c_str(); };
+  inline const char * getExeDir() { return m_sExeDir.c_str(); };
   void saveConfig();
   void loadConfig();
   void setDefault();
@@ -103,6 +104,8 @@ class Config {
   int m_iMusic;
   bool m_bShowFPS;
   bool m_bFullScreen;
+  /// executable dir (maindir on w32)
+  string m_sExeDir;
   string m_sDataDir;
   string m_sSubDir;
   string m_sDataSubDir;

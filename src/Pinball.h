@@ -1,3 +1,7 @@
+//#ident "$Id: Pinball.h,v 1.16 2003/06/11 13:25:51 rzr Exp $"
+#ifndef Pinball_h_
+#define Pinball_h_
+
 #define PBL_NULL			0x0
 #define PBL_LOCK			0x1
 #define PBL_BALL	                0x2
@@ -89,3 +93,4 @@
 #define PBL_LINUX_L_ON              6001
 
 */
+#endif //inclusion
