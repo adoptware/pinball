@@ -287,11 +287,7 @@ void Engine::tick() {
 		Keyboard::poll();
 		StopProfile();
 	}
-	// Perform signals.
-	StartProfile(SIG);
-	SignalSender::getInstance()->tick();
-	StopProfile();
-	// Perform behaviors.
+	// Perform behaviors. Behaviors must be done before transformation and collision.
 	StartProfile(BEH);
 	BehaviorVisitor::getInstance()->empty();
 	this->accept(BehaviorVisitor::getInstance());
@@ -305,6 +301,10 @@ void Engine::tick() {
 	StartProfile(COLLISION);
 	CollisionVisitor::getInstance()->empty();
 	this->accept(CollisionVisitor::getInstance());
+	StopProfile();
+	// Perform signals. Signals must be done last.
+	StartProfile(SIG);
+	SignalSender::getInstance()->tick();
 	StopProfile();
 }
 
