@@ -34,8 +34,9 @@ class Engine : public Group {
   void clearScreen();
   /** Deallocate all objects in engine. */
   void clear();
-  /** Adds a static background that will be rendered before the 3D shapes. UNIMPLEMENTED. */
-  void setBackground(EmImage*);
+	/** Draws a background to the screen. Do not use inside render loop, it
+			might put OpenGL in a weird state. */
+	void drawSplash(EmTexture * tex);
   /** Aligns vertices, calculates light, clears the screen and draws the polygons to 
    * the GL buffer. */
   void render();
@@ -64,9 +65,6 @@ class Engine : public Group {
   void resumeTickThread();
   void endTickThread();
 #endif
- private:
-  EmImage* m_Background;
-
 };
 
 #endif // ENGINE_H
