@@ -18,7 +18,7 @@ BounceBehavior.cpp \
 BumperBehavior.cpp \
 EyeBehavior.cpp \
 Loader.cpp \
-PlungerBehaivior.cpp \
+PlungerBehavior.cpp \
 Score.cpp \
 Script.cpp \
 StateBehavior.cpp
