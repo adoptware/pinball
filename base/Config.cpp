@@ -197,7 +197,10 @@ void Config::loadArgs(int & argc, char *argv[]) {
 	int a = 1;
 	while (a < argc) { 
 		//  for (int a=1; a<argc; a++) {
-		if (strcmp(argv[a], "-fullscreen") == 0) {
+		if (strcmp(argv[a], "-dir") == 0) {
+			cerr << EM_DATADIR << endl;
+			exit(0);
+		} else if (strcmp(argv[a], "-fullscreen") == 0) {
 			m_bFullScreen = true;
 			EM_COUT("Using fullscreen", 1);
 			REMOVEARG(a, argc, argv);

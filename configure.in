@@ -36,7 +36,7 @@ AC_SUBST(LIBLTDL)
 
 dnl *******************************************
 dnl PATHS AND DIRS ****************************
-dnl data dirs, fuck I hate autoconf, spent 4 hours getting this right had to steal it from 
+dnl data dirs, fuck I hate autoconf, spent 4 hours getting this right, had to steal it from 
 dnl xine and even that took a couple of hours
 if test "x$prefix" = xNONE; then
   prefix="${ac_default_prefix}"
@@ -159,6 +159,8 @@ CPPFLAGS="$CPPFLAGS $ALLEGRO_CFLAGS"
 LIBS="$LIBS $ALLEGRO_LIBS"
 
 fi 
+dnl End Allegro or SDL *************************
+
 
 dnl ********************************************
 dnl CPP_UNIT ***********************************
@@ -178,7 +180,7 @@ AC_CHECK_HEADERS(sys/types.h, : ,AC_MSG_ERROR([*** Header sys/types.h not found.
 
 dnl ********************************************
 dnl Debug and Config ***************************
-dnl AC_DEFINE(EM_DEBUG)
+AC_DEFINE(EM_DEBUG)
 AC_DEFINE(EM_USE_SOURCE_SPECULAR)
 dnl AC_DEFINE(EM_USE_FAST_FLOAT2INT)
 dnl AC_DEFINE(EM_DEBUG_COLLISION)

@@ -65,6 +65,7 @@ class Shape3D {
 	Vertex3D * getVertex3D(int index);
 	/** Warning, this function is slow. */
 	int getVertex3DIndex(Vertex3D * vtx);
+	int getVertex3DIndex(TexCoord * tex);
 	int getVertex3DSize();
 	/** To be able to remove vertices they polygons first using them must be
 	 * removed. This function removes the vertex only if it is not used

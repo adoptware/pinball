@@ -46,6 +46,8 @@ class CollisionVisitor : public Visitor {
 	 * 'nml1' to the distance from center of 'cb1' to closest point in closest polygon in 'cb2'.
 	 * If no intersection can be found it returns false and 'nml1' is undefined. */
 	bool detectCollisionEmpty(CollisionBounds * cb1, CollisionBounds * cb2, Vertex3D & nml1);
+	bool detectCollisionEmpty(CollisionBounds * cb1, CollisionBounds * cb2, 
+														Vertex3D & nml1, float & distsqr);
 	/** Performs an intersection test between the sphere defined by the collision bounds 'cb1'
 	 * and the sphere defined by 'cb2'. Returns true on intersection. */
 	bool intersect(CollisionBounds * cb1, CollisionBounds * cb2);
@@ -53,7 +55,9 @@ class CollisionVisitor : public Visitor {
 	/** Tests intersection on all polygons referenced by collisionbounds 'cb1' and 'cb2'.
 	 * Observe, only leaf-collision bounds have polygons. */
 	bool collidePolygons(CollisionBounds* cb1, CollisionBounds* cb2);
+	/** Poly-poly intersection test. */
 	bool intersect(Polygon*, Polygon*);
+	/** Not yet implemented. */
 	bool intersect2d(Polygon* p1, Polygon* p2);		
 	void traverse(Group * g, OctTree * octtree);
 	void notifyBehaviors(Group * g1, Group * g2, const Vertex3D & nml1, const Vertex3D & nml2);
