@@ -8,6 +8,7 @@
 
 #include <fstream>
 #include <string>
+//#include <sstream>
 #include <strstream>
 
 #include <sys/stat.h>
@@ -86,11 +87,11 @@ public:
 protected:
   int perform() {
     p_Engine->clearScreen();
-		if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
+    if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
 
     p_EmFont->printRowCenter("- High Scores -", 2);
-		string sHeader = string("- for table ") + Table::getInstance()->getTableName() + " -";
-		p_EmFont->printRowCenter(sHeader.c_str(), 3);
+    string sHeader = string("- for table ") + Table::getInstance()->getTableName() + " -";
+    p_EmFont->printRowCenter(sHeader.c_str(), 3);
 
     int nStartRow = 5;
     string sRow = "X";
@@ -103,13 +104,13 @@ protected:
       list<string>::iterator it = listHighScores.begin();
 
       for (int i=0; i<10 && it!=listHighScores.end(); i++, it++) {
-				sRow = (*it);
+	sRow = (*it);
         p_EmFont->printRowCenter(sRow.c_str(), nStartRow + i);
       }
     } else {
       p_EmFont->printRowCenter("No Table Loaded!", 10);
     }
-		p_EmFont->printRowCenter("Any key to exit...", 20);
+    p_EmFont->printRowCenter("Any key to exit...", 20);
 
     p_Engine->swap();
     Keyboard::waitForKey();
@@ -124,7 +125,7 @@ public:
 protected:
   int perform () {
     p_Engine->clearScreen();
-		if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
+    if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
     p_EmFont->printRowCenter("press a key", 10);
     p_Engine->swap();
     EMKey key = Keyboard::waitForKey();
@@ -136,13 +137,13 @@ protected:
     ostrstream stm;
     stm.clear();
     string name(m_Name);
-		const char * keyname = Config::getInstance()->getKeyCommonName(Config::getInstance()->getKey(name));
-		string key;
-		if (keyname != NULL) {
-			key = string(keyname);
-		} else {
-			key = string("unknown");
-		}
+    const char * keyname = Config::getInstance()->getKeyCommonName(Config::getInstance()->getKey(name));
+    string key;
+    if (keyname != NULL) {
+      key = string(keyname);
+    } else {
+      key = string("unknown");
+    }
     name = name + ":";
     while (name.size() < 12) {
       name = name + " ";
@@ -208,13 +209,17 @@ protected:
     // brightness
     switch (menubright->getCurrent()) {
     case 0: menubright->getEngine()->setLightning(0, 0.1f); 
-      Config::getInstance()->setBrightness(0); break;
+      Config::getInstance()->setBrightness(0.1); break;
     case 1: menubright->getEngine()->setLightning(0, 0.2f);
       Config::getInstance()->setBrightness(0.2f); break;
-    case 2: menubright->getEngine()->setLightning(0, 0.4f);
+    case 2: menubright->getEngine()->setLightning(0, 0.3f);
+      Config::getInstance()->setBrightness(0.3f); break;
+    case 3: menubright->getEngine()->setLightning(0, 0.4f);
       Config::getInstance()->setBrightness(0.4f); break;
-    default: menubright->getEngine()->setLightning(0, 0.2f);
-      Config::getInstance()->setBrightness(0.2f); break;
+    case 4: menubright->getEngine()->setLightning(0, 0.5f);
+      Config::getInstance()->setBrightness(0.5f); break;
+    default: menubright->getEngine()->setLightning(0, 0.3f);
+      Config::getInstance()->setBrightness(0.3f); break;
     }
     // screen size
     int w, h;
@@ -269,26 +274,26 @@ protected:
     if (menufire->getCurrent() == 0) {
       config->setFire(false);
       for (int a=0; a<MAX_BALL; ++a) {
-				BallGroup * bg = Table::getInstance()->getBall(a);
-				if (bg != NULL) {
-					Behavior * beh = bg->getBehavior();
-					EmAssert(beh != NULL, "MyMenuApply::perform behavior NULL");
-					EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
-									 "MyMenuApply::perform behavior not bouncebehavior");
-					((BounceBehavior*)beh)->setFire(false);
-				}
+	BallGroup * bg = Table::getInstance()->getBall(a);
+	if (bg != NULL) {
+	  Behavior * beh = bg->getBehavior();
+	  EmAssert(beh != NULL, "MyMenuApply::perform behavior NULL");
+	  EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
+		   "MyMenuApply::perform behavior not bouncebehavior");
+	  ((BounceBehavior*)beh)->setFire(false);
+	}
       }
     } else {
       config->setFire(true);
       for (int a=0; a<MAX_BALL; ++a) {
-				BallGroup * bg = Table::getInstance()->getBall(a);
-				if (bg != NULL) {
-					Behavior * beh = bg->getBehavior();
-					EmAssert(beh != NULL, "MyMenuApply::perform behavior NULL");
-					EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
-									 "MyMenuApply::perform behavior not bouncebehavior");
-					((BounceBehavior*)beh)->setFire(true);
-				}
+	BallGroup * bg = Table::getInstance()->getBall(a);
+	if (bg != NULL) {
+	  Behavior * beh = bg->getBehavior();
+	  EmAssert(beh != NULL, "MyMenuApply::perform behavior NULL");
+	  EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
+		   "MyMenuApply::perform behavior not bouncebehavior");
+	  ((BounceBehavior*)beh)->setFire(true);
+	}
       }
     }
     get_config();
@@ -316,7 +321,7 @@ public:
 protected:
   int perform () {
     p_Engine->clearScreen();
-		if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
+    if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
     p_EmFont->printRowCenter("LOADING", 10);
     p_Engine->swap();
 
@@ -328,13 +333,13 @@ protected:
       Table::getInstance()->readHighScoresFile();
 
       p_Engine->clearScreen();
-			if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
+      if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
       p_EmFont->printRowCenter("OK", 10);
       p_Engine->swap();
       p_Engine->delay(500);
     } else {
       p_Engine->clearScreen();
-			if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
+      if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
       p_EmFont->printRowCenter("ERROR", 10);
       p_Engine->swap();
       p_Engine->delay(1000);
@@ -380,12 +385,16 @@ void get_config(void) {
     menuscreen->setCurrent(1);
   }
   // brightness
-  if (Config::getInstance()->getBrightness() < 0.19f) {
+  if (Config::getInstance()->getBrightness() < 0.15f) {
     menubright->setCurrent(0);
-  } else 	if (Config::getInstance()->getBrightness() > 0.21f) {
-    menubright->setCurrent(2);
-  } else {
+  } else if (Config::getInstance()->getBrightness() < 0.25f) {
     menubright->setCurrent(1);
+  } else if (Config::getInstance()->getBrightness() < 0.35f) {
+    menubright->setCurrent(2);
+  } else if (Config::getInstance()->getBrightness() < 0.45f) {
+    menubright->setCurrent(3);
+  } else {
+    menubright->setCurrent(4);
   }
   // screen size
   if (Config::getInstance()->getWidth() == 320) {
@@ -470,16 +479,16 @@ MenuItem* createMenus(Engine * engine) {
 #endif	
   EmTexture * tex = TextureUtil::getInstance()->loadTexture(filename.c_str());
   if (tex != NULL) {
-		menu->setBackground(tex);
-		menuload->setBackground(tex);
-		menucfg->setBackground(tex);
-		menugfx->setBackground(tex);
-		menuaudio->setBackground(tex);
-		menukey->setBackground(tex);
-		menuhighscores->setBackground(tex);
-	} else {
-		cerr << "Error loading data/splash.png" << endl;
-	}
+    menu->setBackground(tex);
+    menuload->setBackground(tex);
+    menucfg->setBackground(tex);
+    menugfx->setBackground(tex);
+    menuaudio->setBackground(tex);
+    menukey->setBackground(tex);
+    menuhighscores->setBackground(tex);
+  } else {
+    cerr << "Error loading data/splash.png" << endl;
+  }
 
   // create one entry for each directory
   // TODO scrolling text if to many tables
@@ -496,9 +505,9 @@ MenuItem* createMenus(Engine * engine) {
               && strcmp("..", dirFile.name) != 0) {
             MenuFct * menufct = new MyMenuLoad(dirFile.name, NULL, engine);
             menuload->addMenuItem(menuloadfct);
-						if (tex != NULL) {
-							menufct->setBackground(tex);
-						}
+	    if (tex != NULL) {
+	      menufct->setBackground(tex);
+	    }
           }
         }
       }
@@ -518,13 +527,13 @@ MenuItem* createMenus(Engine * engine) {
     while ((entry = readdir(datadir)) != NULL) {
       lstat(entry->d_name, &statbuf);
       if (S_ISDIR(statbuf.st_mode) &&
-					strcmp(".", entry->d_name) != 0 &&
-					strcmp("..", entry->d_name) != 0) {
-				MenuFct * menufct = new MyMenuLoad(entry->d_name, NULL, engine);
-				menuload->addMenuItem(menufct);
-				if (tex != NULL) {
-					menufct->setBackground(tex);
-				}
+	  strcmp(".", entry->d_name) != 0 &&
+	  strcmp("..", entry->d_name) != 0) {
+	MenuFct * menufct = new MyMenuLoad(entry->d_name, NULL, engine);
+	menuload->addMenuItem(menufct);
+	if (tex != NULL) {
+	  menufct->setBackground(tex);
+	}
       }
     }
     chdir(cwd);
@@ -544,9 +553,11 @@ MenuItem* createMenus(Engine * engine) {
   menugfx->addMenuItem(menuscreen);
 
   menubright = new MenuChoose(engine);
-  menubright->addText("brightness:       low");
-  menubright->addText("brightness:    medium");
-  menubright->addText("brightness:      high");
+  menubright->addText("brightness:     =....");
+  menubright->addText("brightness:     ==...");
+  menubright->addText("brightness:     ===..");
+  menubright->addText("brightness:     ====.");
+  menubright->addText("brightness:     =====");
   menugfx->addMenuItem(menubright);
 
   menusize = new MenuChoose(engine);
@@ -629,7 +640,7 @@ MenuItem* createMenus(Engine * engine) {
   menugfx->addMenuItem(menucancel);
   menuaudio->addMenuItem(menucancel);
   menuload->addMenuItem(menucancel);
-	menukey->addMenuItem(menucancel);
+  menukey->addMenuItem(menucancel);
 
   get_config();
   return menu;
@@ -650,12 +661,16 @@ int main(int argc, char *argv[]) {
     } else {
       direct = 0.5f;
     }
-    if (Config::getInstance()->getBrightness() < 0.19f) {
+    if (Config::getInstance()->getBrightness() < 0.15f) {
       ambient = 0.1f;
-    } else if (Config::getInstance()->getBrightness() > 0.21f) {
+    } else if (Config::getInstance()->getBrightness() > 0.25f) {
+      ambient = 0.2f;
+    } else if (Config::getInstance()->getBrightness() > 0.35f) {
+      ambient = 0.3f;
+    } else if (Config::getInstance()->getBrightness() > 0.45f) {
       ambient = 0.4f;
     } else {
-      ambient = 0.2f;
+      ambient = 0.5f;
     }
     engine->setLightning(direct, ambient);
     
@@ -677,36 +692,36 @@ int main(int argc, char *argv[]) {
     while (!Keyboard::isKeyDown(SDLK_INSERT)) {
 #if EM_DEBUG
       if (Keyboard::isKeyDown(SDLK_p)) {
-				Keyboard::waitForKey();
-				Keyboard::clear();
-				engine->resetTick();
+	Keyboard::waitForKey();
+	Keyboard::clear();
+	engine->resetTick();
       }
 #endif
       if (Keyboard::isKeyDown(SDLK_ESCAPE) || all == 0) {
-				SoundUtil::getInstance()->pauseMusic();
-				if (menu->perform() == EM_MENU_EXIT) {
-					break;
-				}
-				engine->resetTick();
-				SoundUtil::getInstance()->resumeMusic();
+	SoundUtil::getInstance()->pauseMusic();
+	if (menu->perform() == EM_MENU_EXIT) {
+	  break;
+	}
+	engine->resetTick();
+	SoundUtil::getInstance()->resumeMusic();
       }
       
       if (Keyboard::isKeyDown(SDLK_r)) {
-				SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
+	SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
       }
       
       if (engine->nextTickFPS(200)) {
-				engine->tick(); 
+	engine->tick(); 
       } else {
-				engine->render();
-				if (Table::getInstance()->getScore() != NULL) {
-					Table::getInstance()->getScore()->draw();
-				}
-				if (engine->getGroup(0) == NULL) {
-					EmFont::getInstance()->printRowCenter("no table loaded", 6);
-					EmFont::getInstance()->printRowCenter("press esc", 8);
-				}
-				engine->swap();
+	engine->render();
+	if (Table::getInstance()->getScore() != NULL) {
+	  Table::getInstance()->getScore()->draw();
+	}
+	if (engine->getGroup(0) == NULL) {
+	  EmFont::getInstance()->printRowCenter("no table loaded", 6);
+	  EmFont::getInstance()->printRowCenter("press esc", 8);
+	}
+	engine->swap();
       }
       all++;
       //engine->limitFPS(100);
