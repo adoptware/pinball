@@ -16,6 +16,7 @@
 #include "Loader.h"
 
 BumperBehavior::BumperBehavior() : Behavior() {
+  m_fPower = 0.5f;
   m_bTilt = false;
   m_iLightCounter = -1;
   m_iSound = -1;

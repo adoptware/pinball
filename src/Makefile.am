@@ -37,6 +37,7 @@ BounceBehavior.h \
 BumperBehavior.h \
 EyeBehavior.h \
 FakeModuleBehavior.h \
+LoaderModule.h \
 Loader.h \
 Pinball.h \
 PlungerBehavior.h \

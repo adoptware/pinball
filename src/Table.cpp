@@ -155,6 +155,7 @@ int Table::loadLevel(Engine * engine, const char * subdir) {
   groupCR->setCamera(camera);
 
   Light* cl = new Light(1, 0.05f, 0, 1,1,1);
+  cl->unsetProperty(EM_USE_DIFFUSE);
   groupCR->setLight(cl);
   engine->addLight(cl);
 
@@ -171,6 +172,7 @@ int Table::loadLevel(Engine * engine, const char * subdir) {
   filename = datadir + string("/nudge.wav");
   eyebeh->setSound(SoundUtil::getInstance()->loadSample(filename.c_str()));
   groupCT->setBehavior(eyebeh);
+  groupCT->setTransform(TX2, TY2, TZ2, RX2, RY2, RZ2);
 
   // Reset pinball
   SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);

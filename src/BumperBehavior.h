@@ -22,12 +22,15 @@ class BumperBehavior : public Behavior {
   void onTick();
   void StdOnSignal();
   void StdOnCollision();
+  inline void setPower(float p) { m_fPower = p; };
+  inline float getPower() { return m_fPower; };
   inline void setSound(int s) { m_iSound = s; };
   inline int getSound() { return m_iSound; };
  private:
   int m_sigBump;
   int m_iLightCounter;
   int m_iSound;
+  float m_fPower;
   bool m_bTilt;
 };
 
