@@ -177,7 +177,7 @@ AC_CHECK_HEADERS(sys/types.h, : ,AC_MSG_ERROR([*** Header sys/types.h not found.
 
 dnl ********************************************
 dnl Debug and Config ***************************
-dnl AC_DEFINE(EM_DEBUG)
+AC_DEFINE(EM_DEBUG)
 AC_DEFINE(EM_USE_SOURCE_SPECULAR)
 dnl AC_DEFINE(EM_USE_FAST_FLOAT2INT)
 dnl AC_DEFINE(EM_DEBUG_COLLISION)

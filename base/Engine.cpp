@@ -9,7 +9,6 @@
 #include <cstdlib>
 #include <cmath>
 #include <cstring>
-#include <ctime>
 
 #if EM_THREADS
 #include <sched.h>
