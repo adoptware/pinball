@@ -13,21 +13,27 @@
 #include "SoundUtil.h"
 #include "TextureUtil.h"
 #include "EmFont.h"
+#include "Config.h"
 
 extern int em_width_;
 extern int em_height_;
 
 Score::Score() {
-	m_aSample[0] = SoundUtil::loadSample("data/boing.wav");
-	m_aSample[1] = SoundUtil::loadSample("data/fjong.wav");
-	m_aSample[2] = SoundUtil::loadSample("data/lock.wav");
-	m_aSample[3] = SoundUtil::loadSample("data/balldead.wav");
-	m_aSample[4] = SoundUtil::loadSample("data/crash.wav");
-	m_aSample[5] = SoundUtil::loadSample("data/caveout.wav");
-	m_aSample[6] = SoundUtil::loadSample("data/activatelock.wav");
+	char filename[256];
+	sprintf(filename, "%s/bump.wav", Config::getInstance()->getDataDir());
+	m_aSample[0] = SoundUtil::loadSample(filename);
+	sprintf(filename, "%s/fjong.wav", Config::getInstance()->getDataDir());
+	m_aSample[1] = SoundUtil::loadSample(filename);
+	sprintf(filename, "%s/lock.wav", Config::getInstance()->getDataDir());
+	m_aSample[2] = SoundUtil::loadSample(filename);
+	sprintf(filename, "%s/fart.wav", Config::getInstance()->getDataDir());
+	m_aSample[3] = SoundUtil::loadSample(filename);
+	sprintf(filename, "%s/flush.wav", Config::getInstance()->getDataDir());
+	m_aSample[4] = SoundUtil::loadSample(filename);
 
 	m_Font = EmFont::getInstance();
-	m_Font->loadFont("data/font_16.png");
+	sprintf(filename, "%s/font_16.png", Config::getInstance()->getDataDir());
+	m_Font->loadFont(filename);
 
 	this->clear();
 }
@@ -42,27 +48,31 @@ void Score::onTick() {
 		if (!m_baAliveBall[0]) {
 			SendSignal( PBL_SIG_BALL1_ON, 0, this->p_Parent, NULL );
 			m_baAliveBall[0] = true;
-			m_Text="";
+			m_Text1="";
+			m_Text2="";
 		}	
 		else if (!m_baAliveBall[1]) {
 			SendSignal( PBL_SIG_BALL2_ON, 0, this->p_Parent, NULL );
 			m_baAliveBall[1] = true;
-			m_Text="";
+			m_Text1="";
+			m_Text2="";
 		}
 		else	if (!m_baAliveBall[2]) {
 			SendSignal( PBL_SIG_BALL3_ON, 0, this->p_Parent, NULL );
 			m_baAliveBall[2] = true;
-			m_Text="";
+			m_Text1="";
+			m_Text2="";
 		}
 		else if (!m_baAliveBall[3]) {
 			SendSignal( PBL_SIG_BALL4_ON, 0, this->p_Parent, NULL );
 			m_baAliveBall[3] = true;
-			m_Text="";
+			m_Text1="";
+			m_Text2="";
 		}
 		EM_COUT("Score::onTick() new ball", 1);
 	}
 	if (m_iBallsLeft == 0) {
-		m_Text = "press r to start new game";
+		m_Text1 = "press r to start new game";
 	}
 }
 
@@ -98,10 +108,14 @@ void Score::StdOnSignal() {
 		if (m_iActiveBalls == 0) {
 			if (!m_bExtraBall) {
 				m_iBallsLeft--;
-				SoundUtil::play(m_aSample[3], false);
 			} else {
 				m_bExtraBall = false;
 			}
+				if (m_iBallsLeft == 0) {
+					SoundUtil::play(m_aSample[4], false);
+				} else {
+					SoundUtil::play(m_aSample[3], false);
+				}
 		}
 	}	
 
@@ -124,11 +138,11 @@ void Score::StdOnSignal() {
 		if (m_aMission[1] == 1) {
 			m_aMission[1] = -1;
 			m_iScore += 50000;
-			SoundUtil::play(m_aSample[4], false);
+			SoundUtil::play(m_aSample[1], false);
 		}
 	}	else
 	OnSignal( PBL_SIG_CAVE_OFF ) {
-		SoundUtil::play(m_aSample[5], false);
+		SoundUtil::play(m_aSample[2], false);
 	}
 // 	}	else
 // 	OnSignal( PBL_SIG_LEFT_LOOP ) {
@@ -199,13 +213,17 @@ void Score::draw() {
 	char buffer[256];
 	sprintf(buffer, "Score %d\n", m_iScore);
 	m_Font->print(buffer, 10, em_height_ - 20);
-	m_Font->print(m_Text, 
-								em_width_div2_ - strlen(m_Text)*EmFont::getInstance()->getSize()/2, 
-								em_height_div2_);
+	m_Font->print(m_Text1, 
+								em_width_div2_ - strlen(m_Text1)*EmFont::getInstance()->getSize()/2, 
+								em_height_div2_ + EmFont::getInstance()->getSize()/2+2);
+	m_Font->print(m_Text2, 
+								em_width_div2_ - strlen(m_Text2)*EmFont::getInstance()->getSize()/2, 
+								em_height_div2_ - EmFont::getInstance()->getSize()/2-2);
 }
 
 void Score::clear() {
-	m_Text="press enter to launch ball";
+	m_Text1="press enter to launch ball";
+	m_Text2="left and right shift activates flippers";
 	m_iActiveBalls = 0;
 	m_iBallsLeft = 3;
 	m_iScore = 0;

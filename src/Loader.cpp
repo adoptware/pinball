@@ -38,6 +38,7 @@
 #include "TextureUtil.h"
 #include "Score.h"
 #include "StdAnimation.h"
+#include "Config.h"
 
 #define CHECK_EOF(file) if (!file) throw string("!!! EOF reached too soon");
 
@@ -247,12 +248,13 @@ void loadTriggerBehavior(ifstream & file, Engine * engine, Group * group) {
 	file >> str;
 	if (str == "texcoord") {
 		b->useTexCoord(true);
-		char fn[256];
-		file >> fn;
+		char texname[256], filename[256];
+		file >> texname;
 		Shape3D * shape = group->getShape3D(1);
 		if (shape != NULL) {
-				EmTexture* tex = TextureUtil::loadTexture(fn);
-				shape->setTexture(tex);
+			sprintf(filename, "%s/%s", Config::getInstance()->getDataDir(), texname);
+			EmTexture* tex = TextureUtil::loadTexture(filename);
+			shape->setTexture(tex);
 		} else {
 			EM_COUT("NO SHAPE in loadTriggerBehavior", 1);
 		}
@@ -349,7 +351,7 @@ void loadMisc(ifstream & file, Engine * engine, Group * group, Behavior * beh) {
 Group * loadStdObject(ifstream & file, Engine * engine) {
 	EM_COUT("object", 1);
 
-	char collision[256], shape[256];
+	char collision[256], shape[256], filename[256];
 	float tx, ty, tz;
 	float rx, ry, rz;
 	string str;
@@ -368,8 +370,9 @@ Group * loadStdObject(ifstream & file, Engine * engine) {
 	group->setTransform(tx, ty, tz, rx, ry, rz);
 
 	// load collision bounds
-	if (strstr(collision, "?") == NULL) {			
-		Shape3D* shape3d = Shape3DUtil::loadShape3D(collision);
+	if (strstr(collision, "?") == NULL) {
+		sprintf(filename, "%s/%s", Config::getInstance()->getDataDir(), collision);
+		Shape3D* shape3d = Shape3DUtil::loadShape3D(filename);
 		if (shape3d == NULL) {
 			throw string("File not found");
 		}
@@ -394,7 +397,8 @@ Group * loadStdObject(ifstream & file, Engine * engine) {
 		
 	// load shape
 	if (strstr(shape, "?") == NULL) {
-		Shape3D* shape3d = Shape3DUtil::loadShape3D(shape);
+		sprintf(filename, "%s/%s", Config::getInstance()->getDataDir(), shape);
+		Shape3D* shape3d = Shape3DUtil::loadShape3D(filename);
 		if (shape3d == NULL) {
 			throw string("File not found");
 		}
@@ -426,6 +430,8 @@ int loadFile(const char* fn, Engine * engine) {
 		}
 	} catch (string str) {
 		cerr << str << endl;
+		cerr << "When loading file: " << fn << endl;
+		return -1;
 	}
 	return 0;
 }

@@ -26,9 +26,11 @@ void fctGrx(Meny * m) {
   if (Config::getInstance()->useFullScreen()) {
 		Config::getInstance()->setFullScreen(false);
 		m->setName("graphics windowed");
+		SDL_WM_ToggleFullScreen(SDL_GetVideoSurface());
 	} else {
 		Config::getInstance()->setFullScreen(true);
 		m->setName("graphics fullscreen");
+		SDL_WM_ToggleFullScreen(SDL_GetVideoSurface());
 	}
 	EM_COUT("graphics", 1);
 }	
@@ -45,11 +47,12 @@ void fctTexture(Meny * m) {
 }	
 
 Meny* createMenus(Engine * engine) {
-	
+	char filename[256];
 	// Load a font
 	EmFont* font = EmFont::getInstance();
 	// TODO the font is loaded twice once in score once in meny
-	font->loadFont("data/font_16.png");
+	sprintf(filename, "%s/font_16.png", Config::getInstance()->getDataDir());
+	font->loadFont(filename);
 	
 	// Create the meny
 	Meny* meny = new Meny("meny", engine);

@@ -32,7 +32,8 @@ class Score : public Behavior  {
 		void draw();
 	private:
 		EmSound m_aSample[256];
-		char* m_Text;
+		char* m_Text1;
+		char* m_Text2;
 		bool m_baAliveBall[4];
 		int m_iActiveBalls;
 		int m_iBallsLeft;

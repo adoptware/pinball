@@ -16,7 +16,7 @@
 
 
 void Shape3DUtil::readUnknown(ifstream & file) {
-	EM_COUT("loading unknown", 1);
+	EM_COUT("loading unknown", 0);
 	string str;
 	file >> str; if (str != "{") throw string("parse error");
 
@@ -144,13 +144,13 @@ void Shape3DUtil::readShape3D(ifstream & file, Shape3D* shape) {
 	}
 }
 
-Shape3D* Shape3DUtil::loadShape3D(const char* fileName) {
+Shape3D* Shape3DUtil::loadShape3D(const char* filename) {
 	int a;
 	Shape3D * shape = NULL;
-	ifstream file(fileName);
+	ifstream file(filename);
 	try {
 		if (!file) {
-			throw string("Shape3DUtil::load() : file not found: ");
+			throw string("Shape3DUtil::load() : file not found");
 		}
 		EM_COUT("Shape3DUtil::load() : file found", 1);
 		
@@ -167,125 +167,7 @@ Shape3D* Shape3DUtil::loadShape3D(const char* fileName) {
 		}
 	} catch (string str) {
 		cerr << str << endl;
+		cerr << "When loading file: " << filename << endl;
 	}
 	return shape;
-}
-
-Shape3D* Shape3DUtil::loadShape3Dold(const char* fileName) {
-	int a;
-	ifstream file(fileName);
-	if (!file) {
-		cerr << "Shape3DUtil::loadShape3D() file not found: \"" << fileName << "\"" << endl;
-		return NULL;
-	}
-	EM_COUT("Shape3DUtil::loadShape3D() file found", 1);
-	
-	string str1;
-	string str2;
-	
-	file >> str1;
-	file >> str2;
-	if (str1 != "emilia" || str2 != "shape3d") {
-		EM_COUT("Shape3DUtil::loadShape3D() : 'emilia shape3d' missing", 10);
-		return NULL;
-	}
-		
-	file >> str1;
-	if (str1 != "vertices") {
-		EM_COUT("Shape3DUtil::loadShape3D() : 'vertices' missing", 10);
-		return NULL;
-	}
-	
-	int tiVertices;
-	if (! (file >> tiVertices)) {
-		EM_COUT("Shape3DUtil::loadShape3D() : vertices count missing", 10);
-		return NULL;
-	}
-	
-	file >> str1;
-	if (str1 != "polygons") {
-		EM_COUT("Shape3DUtil::loadShape3D() : 'polygons' missing", 10);
-		return NULL;
-	}
-	
-	int tiPolygons;
-	if (! (file >> tiPolygons)) {
-		EM_COUT("Shape3DUtil::loadShape3D() : polygon count missing", 10);
-		return NULL;
-	}
-	
-	Shape3D* toShape3D = new Shape3D(tiVertices, tiPolygons);
-	EM_COUT("Shape3DUtil::loadShape3D() new Shape3D(" << tiVertices <<", "<< tiPolygons <<")"
-					, 10);
-	
-	file >> str1;
-	file >> str2;
-	if (str1 != "start" || str2 != "vertices") {
-		EM_COUT("Shape3DUtil::loadShape3D() : 'start vertices' missing", 10);
-		return NULL;
-	}
-	
-	for (a=0; a<tiVertices; a++) {
-		float x, y, z;
-		file >> x;
-		file >> y;
-		file >> z;
-		toShape3D->add(x, y, z);
-	}
-	
-	file >> str1;
-	file >> str2;
-	if (str1 != "end" || str2 != "vertices") {
-		EM_COUT("Shape3DUtil::loadShape3D() : 'end vertices' missing", 10);
-		return NULL;
-	}
-	
-	file >> str1;
-	file >> str2;
-	if (str1 != "start" || str2 != "polygons") {
-		EM_COUT("Shape3DUtil::loadShape3D() : 'start polygons' missing", 10);
-		return NULL;
-	}
-	
-  for (a=0; a<tiPolygons; a++) {
-   	int tiEdges;
-   	file >> tiEdges;
-   	Polygon * toPoly = new Polygon(toShape3D, tiEdges);
-   	
-   	file >> str1;
- 		file >> str2;
-   	if (str1 != "texture") {
-		EM_COUT("Shape3DUtil::loadShape3D() : 'texture' missing", 10);
-		return NULL;
-   	}
-  		// TODO: textures.
-   	EM_COUT("added polygon ", 0);
-   	for (int b=0; b<tiEdges; b++) {
-   		int i;
-			float u, v;
-   		float a, r, g, b;
-   		file >> i;
-   		file >> u;
-   		file >> v;
-   		file >> a;
-   		file >> r;
-   		file >> g;
-   		file >> b;
-			toPoly->add(i, u, v, a, r, g, b);
-			EM_COUT(i << " ", 0);
-   	}
-   	toShape3D->add(toPoly);
-  	EM_COUT(endl, 0);
-  }
-	
-	file >> str1;
-	file >> str2;
-	if (str1 != "end" || str2 != "polygons") {
-		EM_COUT("Shape3DUtil::loadShape3D() : 'end polygons' missing", 10);
-		return NULL;
-	}
-	
-	toShape3D->countNormals();
-	EM_COUT("Shape3DUtil::loadShape3D() Done." << endl, 0);
-	return toShape3D;
 }

@@ -23,7 +23,6 @@ class Shape3DUtil {
  public:
 	/** <p>loadShape3D( filename ). Creates a new Shape3D object.</p> */
 	static Shape3D* loadShape3D(const char *);
-	static Shape3D* loadShape3Dold(const char *);
 
  private:
 	static void readShape3D(ifstream & file, Shape3D* shape);
