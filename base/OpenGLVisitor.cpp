@@ -235,20 +235,20 @@ void OpenGLVisitor::visit(Group* g) {
       glBegin(GL_POLYGON);
       glTexCoord2f(0, 0);
       glVertex3f(b->m_vtxAlign.x - b->m_fSizexD2, 
-		 b->m_vtxAlign.y + b->m_fSizeyD2, 
-		 b->m_vtxAlign.z);
+								 b->m_vtxAlign.y + b->m_fSizeyD2, 
+								 b->m_vtxAlign.z);
       glTexCoord2f(1, 0);
       glVertex3f(b->m_vtxAlign.x + b->m_fSizexD2, 
-		 b->m_vtxAlign.y + b->m_fSizeyD2, 
-		 b->m_vtxAlign.z);
+								 b->m_vtxAlign.y + b->m_fSizeyD2, 
+								 b->m_vtxAlign.z);
       glTexCoord2f(1, 1);
       glVertex3f(b->m_vtxAlign.x + b->m_fSizexD2, 
-		 b->m_vtxAlign.y - b->m_fSizeyD2, 
-		 b->m_vtxAlign.z);
+								 b->m_vtxAlign.y - b->m_fSizeyD2, 
+								 b->m_vtxAlign.z);
       glTexCoord2f(0, 1);
       glVertex3f(b->m_vtxAlign.x - b->m_fSizexD2, 
-		 b->m_vtxAlign.y - b->m_fSizeyD2, 
-		 b->m_vtxAlign.z);
+								 b->m_vtxAlign.y - b->m_fSizeyD2, 
+								 b->m_vtxAlign.z);
       glEnd();
 			
       EM_COUT_D("OpenGLVisitor::visit() BillBoard at " << b->m_vtxAlign.x <<" "<<

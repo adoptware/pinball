@@ -33,6 +33,7 @@ MenuSub::MenuSub(const char * name, Engine* e) : MenuItem(e, EM_MENU_SUB) {
 	strncpy(m_Name, name, 63);
 	m_iCurrent = 0;
 	m_iAction = EM_MENU_NOP;
+	p_Texture = NULL;
 }
 
 MenuSub::~MenuSub() {
@@ -67,12 +68,12 @@ int MenuSub::perform() {
       switch (ret) {
       case EM_MENU_EXIT:
       case EM_MENU_RESUME:
-	Keyboard::clear();
-	return ret;
-	break;
+				Keyboard::clear();
+				return ret;
+				break;
       case EM_MENU_BACK:
-	Keyboard::clear();
-	return EM_MENU_NOP;
+				Keyboard::clear();
+				return EM_MENU_NOP;
       }
     }
     if (key == SDLK_LEFT && m_vMenuItem[m_iCurrent]->getType() == EM_MENU_CHOOSE) {
@@ -87,6 +88,8 @@ int MenuSub::perform() {
 void MenuSub::draw() {
   EM_COUT("MenuSub::draw() " << this->getText(), 1);
   p_Engine->clearScreen();
+
+	if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
   
   float yoffset = 10 - ((float)this->size() + 2)/2;
   

@@ -11,6 +11,8 @@
 
 #include <vector>
 
+#include "TextureUtil.h"
+
 class Engine;
 class EmFont;
 
@@ -48,6 +50,7 @@ class MenuSub : public MenuItem {
   void addMenuItem(MenuItem* m);
   int perform();
   void draw();
+	inline void setBackground(EmTexture * tex) { p_Texture = tex; };
   /** Gives the number of submenus */
   inline int size() { return m_vMenuItem.size(); };
   inline void setAction(int a) { m_iAction = a; };
@@ -56,6 +59,7 @@ class MenuSub : public MenuItem {
   char m_Name[64];
   int m_iCurrent;
   int m_iAction;
+	EmTexture * p_Texture;
   vector<MenuItem*> m_vMenuItem;
 };
 
