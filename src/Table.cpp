@@ -202,18 +202,24 @@ bool Table::getHighScoresData(list<string>& listHighScores)
   string sName;
 
   char sScore[11];
+  string sRow;
 
   for (multimap<int, string>::iterator it = m_mapHighScores.begin();
        it != m_mapHighScores.end(); it++) {
     nScore = (*it).first;
     sName  = (*it).second;
 
-    string sRow(25, ' ');
+    // Max len of name is 12
+    int nAdjust = 13 - sName.length();
+    if (nAdjust > 0)
+      sName.append(nAdjust, ' ');
 
     sprintf(sScore, "%10d", nScore);
 
-    sRow.replace(0, 10, sName);
-    sRow.replace(12, 21, sScore);
+    sRow  = sName;
+    sRow += sScore;
+
+cerr << "sRow=" << sRow << "X" << endl;
 
     listHighScores.push_front(sRow);
   }
