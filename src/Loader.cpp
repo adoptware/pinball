@@ -13,7 +13,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <cstring>
-
+#include <iostream>
 
 #include "Private.h"
 #include "Loader.h"
@@ -127,7 +127,7 @@ int Loader::getSignal(const char * signal) {
 	if (strncmp(signal, "game_over", 63) == 0) return PBL_SIG_GAME_OVER;
 	if (strncmp(signal, "game_start", 63) == 0) return PBL_SIG_GAME_START;
 	if (strncmp(signal, "game_pause", 63) == 0) return PBL_SIG_GAME_PAUSE;
-	//if (strncmp(signal, "extraball", 63) == 0) return PBL_SIG_EXTRABALL;
+	if (strncmp(signal, "extraball", 63) == 0) return PBL_SIG_EXTRABALL;
 	//if (strncmp(signal, "multiball_off", 63) == 0) return PBL_SIG_MULTIBALL_OFF;
 	//if (strncmp(signal, "allballs_off", 63) == 0) return PBL_SIG_ALLBALLS_OFF;
 // 	if (strncmp(signal, "lock1", 63) == 0) return PBL_SIG_LOCK_1;
@@ -171,7 +171,7 @@ const char * Loader::getSignal(int signal) {
 	case PBL_SIG_GAME_OVER : return "game_over";
 	case PBL_SIG_GAME_START : return "game_start";
 	case PBL_SIG_GAME_PAUSE : return "game_pause";
-	  //case PBL_SIG_EXTRABALL : return "extraball";
+	case PBL_SIG_EXTRABALL : return "extraball";
 	  //case PBL_SIG_MULTIBALL_OFF : return "multiball_off";
 	  //case PBL_SIG_ALLBALLS_OFF : return "allballs_off";
 	  // 	case PBL_SIG_LOCK_1 : return "lock1";

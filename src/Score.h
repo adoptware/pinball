@@ -60,6 +60,8 @@ class Score : public Behavior  {
   int m_iScore;
   EmFont * m_Font;
   //static Score* p_Score;
+
+  bool m_bExtraBall;
 };
 
 #endif // SCORE_H

@@ -27,6 +27,8 @@ class EmFont;
 #define EM_MENU_INPUT       3
 #define EM_MENU_FCT         4
 
+#define MAX_MENU_NAME       63
+
 /** The base class for all menus. */
 class MenuItem {
  public:
@@ -57,7 +59,7 @@ class MenuSub : public MenuItem {
   inline void setAction(int a) { m_iAction = a; };
   inline const char* getText() { return m_Name; };
  protected:
-  char m_Name[64];
+  char m_Name[MAX_MENU_NAME + 1];
   int m_iCurrent;
   int m_iAction;
   vector<MenuItem*> m_vMenuItem;
@@ -79,10 +81,17 @@ class MenuChoose : public MenuItem {
   /** Previous is the currently active alternative in the engine. */
   int m_iPrevious;
   vector<char*> m_vText;
-  char t_Str[64];
+  char t_Str[MAX_MENU_NAME + 1];
 };
 
-class MenuInput : public MenuItem {
+
+/***************************************************************************
+ * A menu that performs a function when choosen */
+
+#define MAX_INPUT_STRING     15
+
+class MenuInput : public MenuItem
+{
  public: 
 	MenuInput(const char* name, Engine * e);
 	~MenuInput();
@@ -93,8 +102,8 @@ class MenuInput : public MenuItem {
 	const char * getInput();
  protected:
 	int m_iAction;
-	char m_Name[64];
-	char m_Input[64];
+	char m_Name[MAX_MENU_NAME + 1];
+	char m_Input[MAX_INPUT_STRING + 1];
 };
 
 /** You can create a MenuFct instance and pass i a function
@@ -107,7 +116,7 @@ class MenuFct : public MenuItem {
   int perform();
   virtual const char* getText() { return m_Name; };
  protected:
-  char m_Name[64];
+  char m_Name[MAX_MENU_NAME + 1];
   int (*p_Fct)(void);
 };
 

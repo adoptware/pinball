@@ -33,6 +33,8 @@ class PlungerBehavior : public Behavior {
   int m_iSound;
   bool m_bFirst;
   Vertex3D m_vtxTr;
+
+  bool m_bDoublePress;
 };
 
 #endif // ARMBEHAVIOR_H
