@@ -1,5 +1,5 @@
-//#ident "$Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $" 
-/** 
+//#ident "$Id: Obj3dsUtil.cpp,v 1.4 2003/06/13 13:39:48 rzr Exp $"
+/**
  * @author: www.Philippe.COVAL.online.fr - rev: $Author: rzr $
  * 3ds loader wrapper
  **/
@@ -8,18 +8,18 @@
 
 */
 
-#ifndef Obj3dsUtil_cpp_ 
-#define Obj3dsUtil_cpp_ 
+#ifndef Obj3dsUtil_cpp_
+#define Obj3dsUtil_cpp_
 #include "Private.h"
 
 #ifdef RZR_PATCHES_3DS //unstable
 #include <math.h>
 //----------------------------------------------------------------
 extern "C" {
-  /** 
+  /**
    * @author: www.Philippe.COVAL.online.fr - rev: $Author: rzr $
    * C code excrapt from 3ds mini library  (GPL)
-   * Modifying code here is not a good idea, 
+   * Modifying code here is not a good idea,
    * please contact the author before, I may release something cleaner
    **/
   //#define RZR_LOCAL
@@ -36,9 +36,9 @@ extern "C" {
     | grep -v "#include \"" >| /tmp/inl-3ds.c
   */
   //#include "/tmp/inl-3ds.c" //C-x i
-/* #ident "$Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $" */
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.4 2003/06/13 13:39:48 rzr Exp $" */
 /**
- * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+ * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
  * Copyright: GPL @ http://rzr.online.fr/licence.htm
  **/
 
@@ -69,7 +69,10 @@ extern "C" {
 #define assertneg(x) { assert2gt(0,x) }
 #define assertz(x) { assert2eq(0,x) }
 
-//#define abs(x) ( ( (x)>0) ? (x) : (-x) )// @stdlib
+#ifndef abs
+#define abs(x) ( ( (x)>0) ? (x) : (-x) )// @stdlib
+#endif
+
 #define min2(x,y) ( ((y)>(x)) ? (x) : (y) )
 #define max2(x,y) ( ((y)<(x)) ? (x) : (y) )
 
@@ -79,14 +82,16 @@ extern "C" {
 #define min6(a,b,c,d,e,f) min2( min3(a,b,c) , min3(d,e,f) )
 #define max6(a,b,c,d,e,f) max2( max3(a,b,c) , max3(d,e,f) )
 
-#define SQRT2 1.4142135f 
+#define float2int(x) ( (int) ( x + .5 ) )
+
+#define SQRT2 1.4142135f
 #ifndef Uint32
 #define Uint32 unsigned int
 #endif
 #endif //_h_
 /* #ident "$Id: */
 /**
- * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+ * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
  * Copyright: GPL @ http://rzr.online.fr/licence.htm
  **/
 
@@ -96,6 +101,8 @@ extern "C" {
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+
 
 typedef struct
 {
@@ -134,15 +141,7 @@ typedef struct
   char * name;
 } Object; //TriMesh
 
-/*
-typedef struct
-{
-  char* name;
-} Object;
 
-  //Light* vl;
-  //TriMesh* vm;
-*/
 
 /*
 Ambient light color: Red=0.2 Green=0.2 Blue=0.2
@@ -150,7 +149,7 @@ Ambient light color: Red=0.2 Green=0.2 Blue=0.2
 
 typedef struct
 {
-  Vertex lightambiantcolor;
+  Vertex lightColorAmbiant;
   Object* vo;
   unsigned int no;
 } Scene;
@@ -169,13 +168,16 @@ void reset(Vertex* v);
 
 void printV( Vertex const v);
 
+void printFace( Face const v);
+
 #ifdef __cplusplus
 }
 #endif
 
 #endif //_h_
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.4 2003/06/13 13:39:48 rzr Exp $" */
 /**
- * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+ * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
  * Copyright: GPL @ http://rzr.online.fr/licence.htm
  **/
 #ifndef types3d_c_
@@ -197,8 +199,8 @@ void freeObject(Object* o)
 
 void initObject(Object* a)
 {
-  a->nv = 0; 
-  a->nf = 0;  
+  a->nv = 0;
+  a->nf = 0;
   a->name = 0;
 }
 
@@ -229,6 +231,11 @@ void reset(Vertex* v)
 {
   v->x=0; v->y=0; v->z=0;
 }
+void printFace( Face const v)
+{
+  printf("{ { %d, %d, %d}; \n",v.a,v.b,v.c);
+}
+
 void printV( Vertex const v)
 {
   printf("{ { %f, %f, %f} , { %f, %f} }; \n",v.x,v.y,v.z,v.u,v.v);
@@ -237,17 +244,20 @@ void printPoint(Point v)
 {
   printf("{ %d, %d }; \n",v.x,v.y);
 }
+
+
+
 #endif // inclusion
-/* #ident "$Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $" */
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.4 2003/06/13 13:39:48 rzr Exp $" */
 /**
- * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+ * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
  * Copyright: GPL @ http://rzr.online.fr/licence.htm
  **/
 #ifndef parse3ds_h_
 #define parse3ds_h_
 #include <stdio.h>
 
-int errorIO(FILE* f,int const t,char const * const msg);
+int errorIO(FILE* f,int const t, const char *  msg);
 
 char* skipafter(char* src, char* pat);
 
@@ -274,9 +284,9 @@ int fgets_strcmp_token(FILE* f, char* buf) ;
 int fgets_tag(FILE* f, char* buf, char** strarg);
 
 #endif
-/* #ident "$Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $" */
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.4 2003/06/13 13:39:48 rzr Exp $" */
 /**
- * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+ * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
  * Copyright: GPL @ http://rzr.online.fr/licence.htm
  **/
 #ifndef parse3ds_c_
@@ -307,12 +317,24 @@ char* keyword[] = { "Tri-mesh,", "Vertex list", "Face list",
 #define MATERIAL 5
 #define SMOOTHING 6
 
-int nkey= 7; //sizeof(keyword); 
+int nkey= 7; //sizeof(keyword);
+
+int errorIO(FILE* f,int const t,  const char * msg)
+{
+  //debug("+ errorIO");
+  const char * s = "!!! Err/IO/(exiting)";
+  if ( f ) fclose( f );
+  if ( msg != 0  ) perror(msg);
+  else perror(s);
+  //debug("- errorIO");
+  exit(t);
+  return(t);
+}
 
 
 char* sscanStrQuoted(char* src, char** dest)
 {
-  char* e;
+  char* e=0;
   int n=0;
   //debugf("+ sscanStrQuotted (%s)\n",src);
   assert( src );
@@ -321,37 +343,36 @@ char* sscanStrQuoted(char* src, char** dest)
   if ( e == 0) { *dest=0; return e; }
   src = e;
   //debugf("find 2d quote (%s)\n",e);
-  
+
   do {
     e = strchr( e+1, '"');
   } while ( e && (*(e-1) == '\\') );
   if ( e ==0 ) { *dest=0; return e; }
   n = e - src;
-  //debugf("alloc %d \n",n);  
+  //debugf("alloc %d \n",n);
   *dest = (char*)  malloc( n );
-  strncpy( *dest , src + 1 , n );  
+  strncpy( *dest , src + 1 , n );
   *((*dest)+(n-1)) = 0;
   //debugf("- sscanStrQuotted \"%s\"\n",*dest);
   return e+1;
 }
 
 
-int loadScene3dsAscii(char* filename, Scene* s) 
+int loadScene3dsAscii(char* filename, Scene* s)
 {
   FILE *f = 0;
   int t=0;
+  //assert( filename); assert(s);
   //debugf("+loadScene3dsAscii \"%s\"\n",filename);
-  initScene(s);
-  
   if( !(f=fopen(filename, "ra")) ) {
-    return errorIO(f,-1,"Err/IO/ Need a 3DS ascii file \n");
+    return errorIO(f,-1,"Err/IO/ Need a 3DS ascii file");
   }
   t = readScene3dsAscii( f, s);
   assert(t>0);
   fclose( f );
   //debugf("-loadScene3dsAscii (%d)\n",t);
   return t;
-  
+
 }
 
 int readScene3dsAscii(FILE* f, Scene* s)
@@ -366,29 +387,29 @@ int readScene3dsAscii(FILE* f, Scene* s)
   unsigned int nv = 0;
   unsigned int nf =0;
   Object *o = NULL;
-  
-  //debug("+ readScene3dsAscii" );  
+
+  //debug("+ readScene3dsAscii" );
   assert(f);
   assert(s);
-  
+
   buf[0]= 0;
   str = & tmpc;
   initScene(s);
-  t = fgets_tag(f,buf,&str);  
+  t = fgets_tag(f,buf,&str);
   while ( t >=0 ) {
     //debug(buf);
     switch(t) {
     case TRIMESH:
       //debugf(".read trimesh %d\n",s->no);
       s->vo =(Object*)  realloc( s->vo, ++(s->no) * sizeof(Object) );
-      
+
       o = & (s->vo)[ (s->no) - 1];
       sscanf( str, "%s %d %s %d", buf, &nv, buf, &nf );
       //debugf( "Vertices=%d; Faces=%d;\n",  nv , nf );
-      
+
       o->vv  = (Vertex *) calloc( nv ,sizeof(Vertex) );
       o->vf = (Face *) calloc( nf, sizeof(Face) );
-      o->nv = nv; 
+      o->nv = nv;
       o->nf = nf;
       //debugf("read vertexes (%d)\n", o->nv);
       t = fgets_tag(f,buf,&str);
@@ -398,19 +419,19 @@ int readScene3dsAscii(FILE* f, Scene* s)
       for( i=0; i<nv; i++ ) { //Vertex 0:  X:-1.0	Y:1.0	Z:1.0
         t = fgets_tag(f,buf,&str);
         assert ( t == VERTEX);
-        str = skipafter( str, "X:"); assert(str); 
+        str = skipafter( str, "X:"); assert(str);
         sscanf(str,"%f",&x);
-        str = skipafter( str, "Y:"); assert(str); 
+        str = skipafter( str, "Y:"); assert(str);
         sscanf(str,"%f",&y);
         str = skipafter( str, "Z:"); assert(str);
         sscanf(str,"%f",&z);
         //debug(".texture");
         u = v = 0;
-        str = skipafter( str, "U:"); 
+        str = skipafter( str, "U:");
         if (str) sscanf(str,"%f",&u);
-        str = skipafter( str, "V:"); 
+        str = skipafter( str, "V:");
         if (str) sscanf(str,"%f",&v);
-                
+
         //assert3gl( x , -BOUND , +BOUND );
         //assert3gl( y , -BOUND , +BOUND );
         //assert3gl( z , -BOUND , +BOUND );
@@ -420,21 +441,21 @@ int readScene3dsAscii(FILE* f, Scene* s)
         o->vv[i].u = u; o->vv[i].v = v;
         //printV( o->vv[i] );
       }
-      t = fgets_tag(f,buf,&str);  
+      t = fgets_tag(f,buf,&str);
     case FACELIST:
       //debugf("read faces %d\n",nf);
       t = fgets_tag(f,buf,&str);
-      for( i=0; i<nf; i++ ) { 
+      for( i=0; i<nf; i++ ) {
         //debugf("face[%d]=%s\n",i,buf);
          //str= skipafter( str, ":");
         //debug(str);
         //assert ( t == FACE);
         //assert(str);
-        str = skipafter( str, "A:"); assert(str); 
+        str = skipafter( str, "A:"); assert(str);
         sscanf(str,"%d",&a);
-        str = skipafter( str, "B:"); assert(str); 
+        str = skipafter( str, "B:"); assert(str);
         sscanf(str,"%d",&b);
-        str = skipafter( str, "C:"); assert(str); 
+        str = skipafter( str, "C:"); assert(str);
         sscanf(str,"%d",&c);
         //debugf("face[%d]={ %d, %d, %d }; \n",i,a,b,c);
         o->vf[i].a = a; o->vf[i].b = b; o->vf[i].c = c;
@@ -445,7 +466,7 @@ int readScene3dsAscii(FILE* f, Scene* s)
 
         t = fgets_tag(f,buf,&str);
         //debug(str);
-        
+
         switch ( t ) {
         case MATERIAL :
           str= skipafter( str, ":");
@@ -454,8 +475,8 @@ int readScene3dsAscii(FILE* f, Scene* s)
           t = fgets_tag(f,buf,&str);
           //debugf("%d=%s\n",t,buf);
         case SMOOTHING:
-          //assert( t == SMOOTHING); // ??? I dont understand 
-          
+          //assert( t == SMOOTHING); // ??? I dont understand
+
           //debugf("%d=%s\n",t,buf);
           switch ( t ) {
             case SMOOTHING:
@@ -467,30 +488,22 @@ int readScene3dsAscii(FILE* f, Scene* s)
               t = fgets_tag(f,buf,&str);
               //debug(buf);
           }
-          
+
         }
       }
     }
   }
   //debugf( "no=%d\n",s->no);
   //debugf("read v=(%d) f=(%d)\n", o->nv, o->nf);
-  
+
   //printObject(o);
   //fprintObject(stdout, o);
-  //debugf("- readScene3dsAscii (%d)\n",s->no);  
+  //debugf("- readScene3dsAscii (%d)\n",s->no);
   return s->no;
 }
 
-int errorIO(FILE* f,int const t,char const * const msg)
-{
-  fclose( f );
-  printf("%s\n", msg);
-  perror("!!! Err/IO/");
-  return( t );
-  exit(t);
-}
 
-char* skipafter(char* src, char* pat) 
+char* skipafter(char* src, char* pat)
 {
   char* str=0;
   //debugf("+ skipafter [%s]@[%s]\n",pat,src);
@@ -501,9 +514,9 @@ char* skipafter(char* src, char* pat)
   //debug(str);
   return str;
 }
-  
 
-int fgets_strcmp_token(FILE* f, char* buf) 
+
+int fgets_strcmp_token(FILE* f, char* buf)
 {
   char* str=0;
   int i=0;
@@ -514,7 +527,7 @@ int fgets_strcmp_token(FILE* f, char* buf)
   do {
     str = fgets(buf, BSIZE,f);
     //debug(buf);
-    //assert(str); 
+    //assert(str);
     if ( str == 0 ) return -1;
     //buf [ strlen(buf) - 2 ] = 0;
     //debugf("+ [%s]\n",buf);
@@ -529,11 +542,11 @@ int fgets_strcmp_token(FILE* f, char* buf)
   return -2;
 }
 
-int fgets_tag(FILE* f, char* buf, char** strarg) 
+int fgets_tag(FILE* f, char* buf, char** strarg)
 {
   int t=0;
   char * str = 0;
-  
+
   //debug("+fgets_tag");
   assert(f);
   assert(buf);
@@ -554,11 +567,10 @@ int saveScene(Scene const * const in, char const * const filename)
 {
   int t=0;
   unsigned int i=0; FILE* f=0;
-  
+
   f=fopen( filename, "wt");
   if ( ! f ) return (int) f;
   for(i=0; i < in->no; i++) {
-    fprintf(f,"Named object : \"RzR_%dof%d\"\r",i+1,in->no);
     t = fprintObject( f, & (in->vo[i]) );
   }
   fclose(f);
@@ -577,18 +589,22 @@ int saveObject(Object const * const o, char const * const filename)
   fclose(f);
   //debug("-saveObject");
   return t;
-  
-  
+
+
 }
 
 int fprintObject(FILE* f, Object const * const  o)
 {
   unsigned int i=0;
+  fprintf(f,"Named object: \"");
+  if ( o->name) fprintf(f,"%s",o->name);
+  else
+    fprintf(f,"%dV_%dF_@_www.rzr.online.fr", o->nv, o->nf);
 
-  fprintf(f,"\r\nNamed object: \"rzr_%dv%df\"\r\n",o->nv, o->nf);
+  fprintf(f,"\"\r\n");
   fprintf(f,"\r\nTri-mesh, Vertices: %d Faces: %d\r\n",o->nv, o->nf);
   fprintf(f,"\r\nVertex list\r\n");
-  
+
   for(i=0;i<o->nv;i++) {
     fprintf( f,"Vertex %d: X: %f Y: %f Z: %f ",i,
 	     o->vv[i].x,  o->vv[i].y, o->vv[i].z);
@@ -599,9 +615,11 @@ int fprintObject(FILE* f, Object const * const  o)
     fprintf( f,"Face %d: A:%d B:%d C:%d",i,
 	     o->vf[i].a,  o->vf[i].b, o->vf[i].c);
     fprintf(f,"\t AB:1 BC:1 CA:1 \r\n"); //!!!
-    if( o->vf[i].material)
+    if( o->vf[i].material) {
       fprintf(f, "Material: \"%s\"\r\n",o->vf[i].material);
-    fprintf(f, "Smoothing:1\r\n");
+      fprintf(f, "Smoothing:1\r\n");
+    }
+
     //fprintf( f, "Smoothing: \"%d\"\r\n",o->vf[i].smoothing);
   }
   return 1;
@@ -609,7 +627,7 @@ int fprintObject(FILE* f, Object const * const  o)
 
 
 
-int parse3dsAscii(FILE* f, Object* o) 
+int parse3dsAscii(FILE* f, Object* o)
 {
   char buf[BSIZE];
   int a,b,c=0;
@@ -620,23 +638,23 @@ int parse3dsAscii(FILE* f, Object* o)
   int nv = 0;
   int nf =0;
   char * str = NULL;
-  //debug("+ parse3dsAscii");  
+  //debug("+ parse3dsAscii");
   exit(0);
-  
+
   buf[0]= 0;
   str = & tmpc;
   //debug("skip to 1st object");
-  t = fgets_tag(f,buf,&str);  
+  t = fgets_tag(f,buf,&str);
   while ( t >=0 ) {
     switch(t) {
     case TRIMESH:
       //debug("read trimesh");
       sscanf( str, "%s %d %s %d", buf, &nv, buf, &nf );
       //debugf( "Vertices=%d; Faces=%d;\n",  nv , nf );
-      
+
       o->vv  = (Vertex *) calloc( nv ,sizeof(Vertex) );
       o->vf = (Face *) calloc( nf, sizeof(Face) );
-      o->nv = nv; 
+      o->nv = nv;
       o->nf = nf;
       //debugf("read vertexes (%d)\n", o->nv);
       t = fgets_tag(f,buf,&str);
@@ -646,11 +664,11 @@ int parse3dsAscii(FILE* f, Object* o)
       for( i=0; i<nv; i++ ) { //Vertex 0:  X:-1.0	Y:1.0	Z:1.0
         t = fgets_tag(f,buf,&str);
         assert ( t == VERTEX);
-        str = skipafter( str, "X:"); assert(str); 
+        str = skipafter( str, "X:"); assert(str);
         sscanf(str,"%f",&x);
-        str = skipafter( str, "Y:"); assert(str); 
+        str = skipafter( str, "Y:"); assert(str);
         sscanf(str,"%f",&y);
-        str = skipafter( str, "Z:"); assert(str); 
+        str = skipafter( str, "Z:"); assert(str);
         sscanf(str,"%f",&z);
         //debugf("vertex[%d]={ %f, %f, %f };\n",i,x,y,z);
         //assert3gl( x , -BOUND , +BOUND );
@@ -658,7 +676,7 @@ int parse3dsAscii(FILE* f, Object* o)
         o->vv[i].x = x; o->vv[i].y = y; o->vv[i].z = z;
         //exit(0);
       }
-      t = fgets_tag(f,buf,&str);  
+      t = fgets_tag(f,buf,&str);
     case FACELIST:
       //debugf("read faces %d\n",nf);
       t = fgets_tag(f,buf,&str);
@@ -667,11 +685,11 @@ int parse3dsAscii(FILE* f, Object* o)
         //debug(str);
         //assert ( t == FACE);
         //assert(str);
-        str = skipafter( str, "A:"); assert(str); 
+        str = skipafter( str, "A:"); assert(str);
         sscanf(str,"%d",&a);
-        str = skipafter( str, "B:"); assert(str); 
+        str = skipafter( str, "B:"); assert(str);
         sscanf(str,"%d",&b);
-        str = skipafter( str, "C:"); assert(str); 
+        str = skipafter( str, "C:"); assert(str);
         sscanf(str,"%d",&c);
         //debugf("face[%d]={ %d, %d, %d }; \n",i,a,b,c);
         o->vf[i].a = a; o->vf[i].b = b; o->vf[i].c = c;
@@ -695,16 +713,16 @@ int parse3dsAscii(FILE* f, Object* o)
           t = fgets_strcmp_token(f,buf); str = buf;
         }
       }
-      
+
     }
   }
   //debugf("read v=(%d) f=(%d)\n", o->nv, o->nf);
-  //debug("- parse3dsAscii");  
+  //debug("- parse3dsAscii");
   return 0;
 }
 
 int load3dsAscii(char* filename, Object* o)
-{ 
+{
   FILE *f = 0;
   int t=0;
   //debugf("+read parse3ds %s\n",filename );
@@ -719,12 +737,12 @@ int load3dsAscii(char* filename, Object* o)
 }
 
 #endif // inclusion
-/* #ident "$Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $" */
-#ifndef color3ds_h_ 
-#define color3ds_h_ 
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.4 2003/06/13 13:39:48 rzr Exp $" */
+#ifndef color3ds_h_
+#define color3ds_h_
 /**
- * Unstable 
- * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+ * Unstable
+ * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
  * Copyright: GPL @ http://rzr.online.fr/licence.htm
  **/
 
@@ -734,13 +752,13 @@ int convertColorRGBFloatToString(float const r, float const g, float const b,
                                  const float a, char* dest);
 
 int convertColorRGBFloatToRGB8(float const r, float const g, float const b,
-                               unsigned char * dr, 
+                               unsigned char * dr,
                                unsigned char * dg,unsigned char * db);
 
 int convertColorRGBFloatToAnsi(float const r, float const g, float const b,
                                int * res);
 
-int convertColorToRGB8(unsigned int const src, 
+int convertColorToRGB8(unsigned int const src,
                        unsigned  char* r, unsigned  char* g, unsigned  char* b,
                        unsigned  char* a);
 
@@ -748,7 +766,7 @@ int convertColorToRGBFloat(unsigned int const src,
                            float* r, float* g, float* b , float *a);
 
 int convertColorStringRGBAToRGBA8(char const * const p,
-                                  unsigned char *r, unsigned char* g, 
+                                  unsigned char *r, unsigned char* g,
                                   unsigned char* b,unsigned char* a,
                                   unsigned int* dest);
 
@@ -762,7 +780,7 @@ int convertColorStringToRGBAFloat(char const * const p,
 ///
 unsigned int getColor(char const * const p);
 ///
-unsigned int getColorRGB(unsigned char* r, unsigned char*g, unsigned char*b , 
+unsigned int getColorRGB(unsigned char* r, unsigned char*g, unsigned char*b ,
                          char const * const p) ;
 ///
 unsigned int getColorRGBFloat(float* r, float*g, float*b , float *a,
@@ -770,22 +788,22 @@ unsigned int getColorRGBFloat(float* r, float*g, float*b , float *a,
 /// r010g256b0a0
 int getColorEncodedUint32(unsigned int const src, char* dest);
 
-unsigned int getColorEncoded(unsigned char*r, unsigned char* g, 
+unsigned int getColorEncoded(unsigned char*r, unsigned char* g,
                              unsigned char* b, unsigned char* a,
                              char const * const p);
 
 int getColorTable(char const * const src, unsigned int * dest);
 
-#endif //_h_ inclusion 
-//$Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $
-/* #ident "$Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $" */
+#endif //_h_ inclusion
+//$Id: Obj3dsUtil.cpp,v 1.4 2003/06/13 13:39:48 rzr Exp $
+/* #ident "$Id: Obj3dsUtil.cpp,v 1.4 2003/06/13 13:39:48 rzr Exp $" */
 /**
- * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+ * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $
  * Copyright: GPL @ http://rzr.online.fr/licence.htm
  **/
 
-#ifndef color3ds_c_ 
-#define color3ds_c_ 
+#ifndef color3ds_c_
+#define color3ds_c_
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -804,7 +822,7 @@ int convertColorUint32ToRGB(unsigned int const src, char* dest)
   char g= (src>>8) & 0xFF;
   char b= (src>>18) & 0xFF;
   char a= (src>>24) & 0xFF;
-  
+
   //debugf("r%dg%db%da%d", r,g,b,a);
   sprintf(dest,"r%dg%db%da%d", r,g,b,a);
   return 0;
@@ -837,11 +855,11 @@ int convertColorToRGB(unsigned int const src,
   return 0;
 }
 
-int convertColorToRGBFloat(unsigned int const src, 
+int convertColorToRGBFloat(unsigned int const src,
                            float* r, float* g, float* b, float *a)
 {
-  *b = (float) ( src & 0x0000FF ) / 255.; 
-  *g = (float) ( (src>>8) & 0x0000FF ) / 255.; 
+  *b = (float) ( src & 0x0000FF ) / 255.;
+  *g = (float) ( (src>>8) & 0x0000FF ) / 255.;
   *r = (float) ( (src>>16) & 0x0000FF ) / 255.;
   *a = alpha( src);
   //debugf("%x={%f,%f,%f};\n",src,*r,*g,*b);
@@ -849,10 +867,10 @@ int convertColorToRGBFloat(unsigned int const src,
 }
 
 int convertColorRGBFloatToAnsi(float const r, float const g, float const b,
-                               int * res) 
+                               int * res)
 {
   //debugf("TODO");
-  *res=1; 
+  *res=r+g+b;
   exit(0);
 }
 
@@ -918,9 +936,9 @@ int getColorTable(char const * const p, unsigned int * dest)
   else if ( strstr( p, "WHITE") ) {  *dest = 0xFFFFFF;  }
   else if ( strstr( p, "BLUE") ) { *dest = 0x0000FF; }
   else if ( strstr( p, "GREEN") ) { *dest = 0x00FF00; }
-  else if ( strstr( p, "RED") ) { *dest = 0xFF0000;} 
+  else if ( strstr( p, "RED") ) { *dest = 0xFF0000;}
   else if ( strstr( p, "CYAN") ) {  *dest = 0x00FFFF;  }
-  else if ( strstr( p, "MAGENTA") ) {*dest = 0xFF00FF;  } 
+  else if ( strstr( p, "MAGENTA") ) {*dest = 0xFF00FF;  }
   else if ( strstr( p, "YELLOW") ) {    *dest = 0xFFFF00;  }
   else if ( strstr( p, "GRAY") ) { *dest = 0xFFFFFF; }
   else { return -1; }
@@ -936,61 +954,61 @@ int convertColorStringToRGBAFloat(char const * const p,
  unsigned char cr=255,cg=255,cb=255,ca=0;
   unsigned int ret=0xFFFFFF;
   int t=-1;
-  
+
   //debugf("+ convertColorStringToRGBAFloat \"%s\"\n",p);
-  *r = *g = *b = 1.; *a=0.; 
+  *r = *g = *b = 1.; *a=0.;
   *dest = ret;
   if ( p == 0 ) return -1;
   t = getColorTable(p, &ret );
-  
+
   if( t >= 0 ) {
     cr=red(ret);    cg=green(ret);    cb=blue(ret);    ca=alpha(ret);
-  } else 
+  } else
     if (  ( *p=='r' && strstr(p,"g") && strstr(p,"b") && strstr(p,"a") ) ) {
       t = convertColorStringRGBAToRGBA8(p,&cr,&cg,&cb,&ca,&ret);
     }
-  if ( t < 0 ) { //debugf("!!! Err/ Not Found \"%s\"\n",p); 
-    return t; 
+  if ( t < 0 ) { //debugf("!!! Err/ Not Found \"%s\"\n",p);
+    return t;
   }
-  //debugf("%s={%u,%u,%u,%u}=%x\n",p,cr,cg,cb,ca,ret);  
+  //debugf("%s={%u,%u,%u,%u}=%x\n",p,cr,cg,cb,ca,ret);
   // assert(t);
 
   *r = char2float( cr);
-  *g = char2float( cg); 
+  *g = char2float( cg);
   *b = char2float( cb);
   *a = char2float( ca);
   *dest = ret;
-  
-  //debugf("%s={%f,%f,%f,%f}=%x\n",p,*r,*g,*b,*a,*dest);  
+
+  //debugf("%s={%f,%f,%f,%f}=%x\n",p,*r,*g,*b,*a,*dest);
   //debugf("- convertColorStringToRGBAFloat \"%s\"\n",p);
   return 0;
 }
 //----------------------------------------------------------------------------
 unsigned int getColor(char const * const p)
-{ 
+{
   unsigned char r=0,g=0,b=0,a=0;
   unsigned int ret=0xFFFFFF;
   int t=0;
-  
+
   //debugf("+getColor \"%s\"\n",p);
   if ( p == 0 ) return ret;
   r= g = b = 0;
   if( getColorTable(p, &ret ) >= 0 ) return ret;
   if ( *p != 'r' )  return ret;
   t = convertColorStringRGBAToRGBA8(p,&r,&g,&b,&a,&ret);
-  if ( t < 0 ) { ; //debugf("!!! Err/ Not Found \"%s\"\n",p);  
+  if ( t < 0 ) { ; //debugf("!!! Err/ Not Found \"%s\"\n",p);
   }
-  
+
   // assert(t);
   convertColorToRGB(ret, &r, &g, &b );
-  //debugf("%s={%u,%u,%u}=%x\n",pb,r,g,b,ret);  
+  //debugf("%s={%u,%u,%u}=%x\n",pb,r,g,b,ret);
   return ret;
-  
+
 }
 
 
 unsigned int getColorRGBFloat(float* r, float*g, float*b, float*a,
-                              char const * const p) 
+                              char const * const p)
 {
   //debug("+getColorRGBFloat");
   unsigned int c=0;
@@ -1001,8 +1019,8 @@ unsigned int getColorRGBFloat(float* r, float*g, float*b, float*a,
 }
 
 unsigned int getColorRGB(unsigned char* r,unsigned  char*g, unsigned  char*b ,
-                         char const * const p) 
-{ 
+                         char const * const p)
+{
   //debug("+getColorRGBFloat");
   unsigned int c;
   c = getColor(p);
@@ -1018,15 +1036,14 @@ main()
   float r,g,b,a;
   unsigned int ui;
   char* pstr = "GREEN METAL";
-  r = g = b = a = 0;  
+  r = g = b = a = 0;
   convertColorStringToRGBAFloat( pstr, &r,&g,&b,&a,&ui);
   //debugf("%s={%f,%f,%f,%f}=%u\n",pstr,r,g,b,a,ui);
 }
 #endif
 
-#endif //_h_ 
-//EOF $Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $
-
+#endif //_h_
+//EOF $Id: Obj3dsUtil.cpp,v 1.4 2003/06/13 13:39:48 rzr Exp $
 
 //-----------------------------------------------------------------------------
 #endif // 3dsview include/inline
@@ -1057,7 +1074,7 @@ int convert(Scene const & s , Shape3D & shape)
   for (unsigned int j=0; j < s.no ; j++) {
     Object o = s.vo[j];
     for(unsigned int i=0;i<o.nv;i++) {
-      shape.add( o.vv[i].x ,o.vv[i].y, o.vv[i].z , 
+      shape.add( o.vv[i].x ,o.vv[i].y, o.vv[i].z ,
                  1,1,1,0, o.vv[i].u , o.vv[i].v  );
     }
     //debugf(".add triangles (%d)\n",o.nf);
@@ -1071,14 +1088,14 @@ int convert(Scene const & s , Shape3D & shape)
 #if 1
       convertColorStringToRGBAFloat(o.vf[k].material , &r, &g, &b, &a, &ui32);
       shape.setColor( o.vf[k].a + off , r,g,b,a);
-      shape.setColor( o.vf[k].b + off , r,g,b,a); 
+      shape.setColor( o.vf[k].b + off , r,g,b,a);
       shape.setColor( o.vf[k].c + off , r,g,b,a);
       if ( o.vf[k].material)
         shape.m_sMaterialName = string(o.vf[k].material);
 #endif
     }
     //debugf(".offset, serveral trimesh in one shape (%d)\n",off);
-    off += o.nv; 
+    off += o.nv;
   }
   return off;
   //debug("- convert ");
@@ -1105,7 +1122,7 @@ int convert( Object const & o , Shape3D & shape)
 #if 1
     convertColorStringToRGBAFloat(o.vf[k].material , &r, &g, &b, &a, &ui32);
     shape.setColor( o.vf[k].a  , r,g,b,a);
-    shape.setColor( o.vf[k].b  , r,g,b,a); 
+    shape.setColor( o.vf[k].b  , r,g,b,a);
     shape.setColor( o.vf[k].c  , r,g,b,a);
     //debug("extention to Shape for post text loading");
     if ( o.vf[k].material)
@@ -1133,30 +1150,30 @@ int convert(Shape3D const & shape, Object& dest)
     //printV( dest.vv[j] );
   }
   dest.nf = 0;
-  
+
   vector<Polygon3D*>::const_iterator k;
   for ( k = shape.m_vPolygon.begin() ; k != shape.m_vPolygon.end(); k++)
     dest.nf  += (*k)->m_vIndex.size() - 2;
 
   dest.vf = (Face*) calloc ( dest.nf, sizeof(Face));
-  
+
   j=0; int n=0;
   for ( k = shape.m_vPolygon.begin(); k != shape.m_vPolygon.end(); k++) {
     n = (*k)->m_vIndex.size();
     for(int l=0;l< n-2; l++) { //!!! check this
       dest.vf[j].a = (*k)->m_vIndex[0];
       dest.vf[j].b = (*k)->m_vIndex[l+2]; //order mixed!!
-      dest.vf[j].c = (*k)->m_vIndex[l+1];      
-      
+      dest.vf[j].c = (*k)->m_vIndex[l+1];
+
       //debug("WARNING may be loosy on multicolor neighbour triangles");
       Color color =  shape.m_vColor[ (*k)->m_vIndex[0] ] ;
       dest.vf[j].material = (char*) calloc( 1024 , 1); // rXXXgXXXbXXXaXXX
-      sprintf( dest.vf[j].material , "r%dg%db%da%d" 
-               ,  float2char(color.r), float2char(color.g) 
+      sprintf( dest.vf[j].material , "r%dg%db%da%d"
+               ,  float2char(color.r), float2char(color.g)
                , float2char(color.b), float2char(color.a) );
-      
+
       //debugf( ".TODO, check vert of tri %d=%s\n",j, dest.vf[j].material);
-      /// 
+      ///
       dest.vf[j].smoothing = 1 ;
       j++;
     }
@@ -1249,10 +1266,10 @@ int Obj3dsUtil::read( Group& in,  char const * const filename )
     Object o = s.vo[j];
     shape = new Shape3D;
     convert(o,*shape);
-    in.addShape3D(shape);    
+    in.addShape3D(shape);
   }
   freeScene( &s);
-  
+
   //EM_COUT("- Obj3dsUtil::read",1);
   return 0;
 }
@@ -1278,6 +1295,6 @@ int Obj3dsUtil::write( Group  & in, char const* const filename  )
   return t;
 }
 
-#endif // RZR_PATCHES_3DS 
-#endif // inclusion 
-//EOF $Id: Obj3dsUtil.cpp,v 1.3 2003/06/11 13:25:50 rzr Exp $
+#endif // RZR_PATCHES_3DS
+#endif // inclusion
+//EOF $Id: Obj3dsUtil.cpp,v 1.4 2003/06/13 13:39:48 rzr Exp $

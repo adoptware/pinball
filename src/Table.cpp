@@ -1,4 +1,4 @@
-//#ident "$Id: Table.cpp,v 1.16 2003/06/11 13:25:51 rzr Exp $"
+//#ident "$Id: Table.cpp,v 1.17 2003/06/13 13:39:48 rzr Exp $"
 /***************************************************************************
                             Table.cpp -  description
                              -------------------
@@ -32,8 +32,8 @@
 
 #include <cstdio>
 
-/******************************************************* 
- * Singleton suff 
+/*******************************************************
+ * Singleton suff
  ******************************************************/
 Table * Table::p_Table = NULL;
 
@@ -74,8 +74,8 @@ void Table::activateBall(int ball, float x, float y, float z) {
   if (p_Ball[ball] != NULL) {
     Behavior * beh = p_Ball[ball]->getBehavior();
     EmAssert(beh != NULL, "Table::activateBall behavior NULL");
-    EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
-	     "Table::activateBall behavior not bouncebehavior");
+    EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH,
+             "Table::activateBall behavior not bouncebehavior");
     ((BounceBehavior*)beh)->activateBall(x, y, z);
   }
 }
@@ -131,7 +131,7 @@ int Table::locked() {
 int Table::loadLevel(Engine * engine, const char * subdir) {
   // Clear old engine objects
   this->clear(engine);
-  m_sTableName = string(subdir); 
+  m_sTableName = string(subdir);
 
   // Load from file
   Config::getInstance()->setSubDir(subdir);
@@ -140,8 +140,8 @@ int Table::loadLevel(Engine * engine, const char * subdir) {
   Loader::getInstance()->clearSignalVariable();
   if (Loader::getInstance()->loadFile(filename.c_str(), engine) != 0) {
     cerr << "Error loading level: " << m_sTableName << endl;
-    cerr << "Try reinstalling the game or use the -data switch to specify the data directory" 
-	 << endl;
+    cerr << "Try reinstalling the game or use the -data switch to specify the data directory"
+         << endl;
     this->clear(engine);
     return -1;
   }
@@ -168,7 +168,7 @@ int Table::loadLevel(Engine * engine, const char * subdir) {
   engine->add(p_Ball[0]);
   engine->add(p_Ball[1]);
   engine->add(p_Ball[2]);
-  
+
   EyeBehavior* eyebeh = new EyeBehavior();
   filename = datadir + string("/nudge.wav");
   eyebeh->setSound(SoundUtil::getInstance()->loadSample(filename.c_str()));
@@ -181,30 +181,30 @@ int Table::loadLevel(Engine * engine, const char * subdir) {
   return 0;
 }
 
-string Table::getTableName() {
+string Table::getTableName() const {
   return m_sTableName;
 }
 
-string Table::getTableDataDirName() {
+string Table::getTableDataDirName() const {
   string datadir(Config::getInstance()->getDataSubDir());
   return datadir;
 }
 
-bool Table::isItHighScore(const int nNewScore) {
+bool Table::isItHighScore(const int nNewScore) const {
   // The first score is the lowest
-  multimap<int, string>::iterator iter = m_mapHighScores.begin();
+  multimap<int, string>::const_iterator iter = m_mapHighScores.begin();
   int nScore = (*iter).first;
   if (nNewScore > nScore)  return true;
   return false;
 }
 
-bool Table::getHighScoresData(list<string>& listHighScores) {
+bool Table::getHighScoresData(list<string>& listHighScores) const {
   // Sorted in ascending order, we begin by the last one and
   //  decrement iterator
-  multimap<int, string>::reverse_iterator iter = m_mapHighScores.rbegin();
-  multimap<int, string>::reverse_iterator end = m_mapHighScores.rend();
-  for (int index=0; 
-       iter != end && index < EM_MAX_HIGHSCORES; 
+  multimap<int, string>::const_reverse_iterator iter = m_mapHighScores.rbegin();
+  multimap<int, string>::const_reverse_iterator end = m_mapHighScores.rend();
+  for (int index=0;
+       iter != end && index < EM_MAX_HIGHSCORES;
        ++iter, ++index) {
     char sScore[11];
     string sRow;
@@ -248,9 +248,9 @@ bool Table::readHighScoresFile() {
   m_mapHighScores.clear();
 
   //!rzr+ : fix w32
-  string sFileName =  m_sTableName + "/" + HIGH_SCORES_FILENAME; 
+  string sFileName =  m_sTableName + "/" + HIGH_SCORES_FILENAME;
 #ifdef RZR_PATHRELATIVE
-  sFileName = string( Config::getInstance()->getExeDir() ) 
+  sFileName = string( Config::getInstance()->getExeDir() )
     +"/"+ m_sTableName +".cfg";
 #else
   sFileName = string(EM_HIGHSCORE_DIR) + "/" + sFileName;
@@ -309,9 +309,9 @@ bool Table::writeHighScoresFile() {
     return false;
   }
   //!rzr+ : fix w32
-  string sFileName =  m_sTableName + "/" + HIGH_SCORES_FILENAME; 
+  string sFileName =  m_sTableName + "/" + HIGH_SCORES_FILENAME;
 #ifdef RZR_PATHRELATIVE
-  sFileName = string( Config::getInstance()->getExeDir() ) 
+  sFileName = string( Config::getInstance()->getExeDir() )
     +"/"+ m_sTableName +".cfg";
 #else
   sFileName = string(EM_HIGHSCORE_DIR) + "/" + sFileName;
@@ -326,8 +326,8 @@ bool Table::writeHighScoresFile() {
 
   multimap<int, string>::reverse_iterator iter = m_mapHighScores.rbegin();
   multimap<int, string>::reverse_iterator begin = m_mapHighScores.rend();
-  for (int index=0; 
-       index < EM_MAX_HIGHSCORES && iter != begin; 
+  for (int index=0;
+       index < EM_MAX_HIGHSCORES && iter != begin;
        ++iter, ++index) {
     int nScore = (*iter).first;
     string sName  = (*iter).second;
@@ -336,3 +336,4 @@ bool Table::writeHighScoresFile() {
 
   return true;
 }
+//EOF: $Id: Table.cpp,v 1.17 2003/06/13 13:39:48 rzr Exp $
