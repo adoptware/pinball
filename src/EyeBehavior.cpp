@@ -79,7 +79,7 @@ void EyeBehavior::onTick() {
 			m_iNudgeType = PBL_SIG_LNUDGE;
 			SendSignal(PBL_SIG_LNUDGE, 0, this->getParent(), NULL ); 
 			SoundUtil::getInstance()->playSample(m_iSound, false);
-		} else if (Keyboard::isKeyDown(SDLK_RCTRL)) {
+		} else if (Keyboard::isKeyDown(SDLK_RCTRL) || Keyboard::isKeyDown(SDLK_COMPOSE)) {
 			m_fXNudge = 1.0f;
 			m_iTiltTick += 100;
 			m_iNudgeTick = 50;
@@ -134,7 +134,7 @@ void EyeBehavior::onTick() {
 
 		this->getParent()->setTransform(0+m_fXNudge, 35, 12+m_fZNudge, 0.21f, 0, 0);
 	} else if (Config::getInstance()->getView() == 1) {
-		// dynamic view
+		// top view
 		float bx=0, by=0, bz=0;
 		int balls = 0;
 		
@@ -181,7 +181,7 @@ void EyeBehavior::onTick() {
 		this->getParent()->addTranslation(sx*0.1f, sy*0.1, sz*0.1f);
 		this->getParent()->setRotation(RX1, RY1, RZ1);
 	} else { 
-		// top view
+		// standard view
 		float bx=0, by=0, bz=0;
 		int balls = 0;
 		
@@ -222,8 +222,8 @@ void EyeBehavior::onTick() {
 		this->getParent()->getTranslation(ex, ey, ez);
 		
 		sx = (TX2+bx*0.4+m_fXNudge*2) - ex;
-		sy = (TY2+by*0.1) - ey;
-		sz = (TZ2+bz*0.4+m_fZNudge*2) - ez;
+		sy = (TY2+by*0.4) - ey;
+		sz = (TZ2+bz*0.1+m_fZNudge*2) - ez;
 		
 		this->getParent()->addTranslation(sx*0.1f, sy*0.1, sz*0.1f);
 		this->getParent()->setRotation(RX2, RY2, RZ2);

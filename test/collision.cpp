@@ -151,10 +151,12 @@ int main(int argc, char *argv[]) {
 
 	extern float em_groups_m, em_shapes_m, em_bounds_m, em_polygons_m;
 
+#if EM_DEBUG
 	cerr << "Groups " << em_groups_m << endl;
 	cerr << "Shapes " << em_shapes_m << endl;
 	cerr << "Bounds " << em_bounds_m << endl;
 	cerr << "Polys " << em_polygons_m << endl;
+#endif
 
 	delete(engine);
 	return 0;

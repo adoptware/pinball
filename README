@@ -3,19 +3,53 @@
 Emilia Pinball README
 ######################################################
 
-Installing and Running
-======================
+Emilia Pinball is a open source pinball game for linux.
 
-Install with the usual:
+Requirements
+============
+
+Hardware rendering:
+  300 Mhz cpu.
+  OpenGL compatible gfx card.
+  SDL 1.2.x, SDL_image and SDL_mixer libraries.
+
+Software rendering:
+  450 Mhz cpu (software rendering requires a faster cpu).
+  Allegro 4.0.x library.
+
+Recommended:
+	450 Mhz PIII.
+  Decent graphics card, voodoo3, tnt2, geforce, matrox g450 (you 
+	do not need anything superfast).
+	Latest SDL libaries, old libraries may have bugs.
+
+Installing and building
+=======================
+
+It is best to remove any previous version of pinball before installing a new 
+version. If you have used a rpm-package write as root user 'rpm -e pinball'. 
+If you have installed from source code goto the pinball source directory and 
+write as root user 'make uninstall'.
+
+After checking that you have the necessary libraries installed you are ready
+to install. If you have an rpm-package you write as root user 
+'rpm -i pinball-x.x.x.rpm'.
+
+If you compile from a source package check that you also have the have the 
+development libraries installed. They usually have a name like 
+sdl-devel.x.x.x.rpm. Then install with the usual:
+
 configure
 make 
-make install
+make install (as root user)
 
-The make install step has to be performed as root user. The default
-locatation of the game is /usr/local/bin and /usr/local/share/pinball
-for the data files. The game is started with 'pinball'. You may leave 
-out the 'make install' but in such case you must start the game from the
-game directory by typing './src/pinball -data data'.
+or if you want to build a software version (Allegro)
+
+configure --with-allegro
+make
+make install (as root user)
+
+The game is startet with 'pinball'.
 
 Keys
 ====
@@ -29,13 +63,7 @@ Right Shift: Right Flipper
 Right Ctrl: Nudge from right
 Space: Nudge
 
-Known Bugs
-==========
-
-Controls meny missing.
-Turning on sound in sound meny requires restart.
-The screen is not updated if you pause the game and switch to another
-application.
+Latest news and FAQ is found at http://pinball.sourceforge.net.
 
 Misc
 ====
