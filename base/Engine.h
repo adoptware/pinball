@@ -57,8 +57,8 @@ class Engine : public Group {
 		void addLight(Light*);
 		/** Use this function to limit the main loop to a desired frame rate.
 		 * Returns false if the thread is behind schedule else true. 
-		 * E.g. delay = 100 -> 10FPS; 50 -> 20FPS; 40 -> 25FPS; 30 -> 33FPS; 25 -> 50FPS. */
-		bool limitFPS(int delay);
+		 * Available FSP 100, 50, 40, 33, 25, 20 */
+		bool limitFPS(int fps);
 	private:
 		EmImage* m_Background;
 

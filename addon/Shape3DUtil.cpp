@@ -161,6 +161,7 @@ Shape3D* Shape3DUtil::loadShape3D(const char* fileName) {
 				EM_COUT("Shape3DUtil::load() : loading shape", 0);
 				shape = new Shape3D();
 				Shape3DUtil::readShape3D(file, shape);
+				shape->countNormals();
 			}
 			if (file) file >> str;
 		}

@@ -46,6 +46,9 @@ void PointLightVisitor::visit(Group* g) {
 	vector<Shape3D*>::iterator iter = g->m_vShape3D.begin();
 	vector<Shape3D*>::iterator end = g->m_vShape3D.end();
 	for ( ; iter != end; iter++) {
+		if ((*iter)->m_iProperties & EM_SHAPE3D_TRANS) continue;
+		if ((*iter)->m_iProperties & EM_SHAPE3D_HIDDEN) continue;
+
 		this->visit((*iter), g);
 	}
 }
@@ -112,7 +115,7 @@ void PointLightVisitor::visit(Shape3D* s, Group* g) {
 			}
 			// specular light
 			float specular;
-			if ((s->m_iProperties & EM_SPECULAR) == EM_SPECULAR || true) {
+			if (s->m_iProperties & EM_SHAPE3D_SPECULAR) {
 				Vertex3D vtxRef = {0,0,-1};
 				Vertex3D vtxDir;
 				vtxDir.x = -vtxLight.x;
