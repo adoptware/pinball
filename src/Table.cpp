@@ -4,6 +4,12 @@
     begin                : Thu Mar 9 2000
     copyright            : (C) 2000 by Henrik Enqvist
     email                : henqvist@excite.com
+
+    modifs
+    24-05-2003           : pnf - Solved problem while reading highscore
+                                  table when a name with more then one
+                                  word exists.
+
  ***************************************************************************/
 
 #include "Private.h"
@@ -204,8 +210,14 @@ bool Table::getHighScoresData(list<string>& listHighScores)
   char sScore[11];
   string sRow;
 
-  for (multimap<int, string>::iterator it = m_mapHighScores.begin();
-       it != m_mapHighScores.end(); it++) {
+  // Sorted in ascending order, we begin by the last one and
+  //  decrement iterator
+  multimap<int, string>::iterator it = m_mapHighScores.end();
+
+  while (true)
+  {
+    it--;
+
     nScore = (*it).first;
     sName  = (*it).second;
 
@@ -219,7 +231,17 @@ bool Table::getHighScoresData(list<string>& listHighScores)
     sRow  = sName;
     sRow += sScore;
 
-    listHighScores.push_front(sRow);
+cerr << "sRow=" << sRow << endl;
+
+    listHighScores.push_back(sRow);
+
+    // We only want 10 scores to display
+    if (listHighScores.size() >= 10)
+      break;
+
+    // If we reached the first one then exit
+    if (it == m_mapHighScores.begin())
+      break;
   }
 
   return true;
@@ -255,9 +277,6 @@ bool Table::readHighScoresFile()
   // Clear old high scores
   m_mapHighScores.clear();
 
-  //string sFileName = string(Config::getInstance()->getDataSubDir()) +
-		       HIGH_SCORES_FILENAME;
-
   string sFileName = string(EM_HIGHSCORE_DIR) +"/"+ m_sTableName +
 		     HIGH_SCORES_FILENAME;
 	
@@ -273,52 +292,54 @@ bool Table::readHighScoresFile()
     return false;
   }
 
-  cerr << "read HS file..." << endl;
-	
-  int nScore = 0;
+  const int BUF_SIZE = 255;
+
+  char   sBuf[BUF_SIZE];
+  char*  pSpacePos      = NULL;
+  int    nScore         = 0;
   string sName;
 
+  // Read all lines from file, this way we can append several
+  //  highscores files (from backups or other) and after being
+  //  sorted we'll only keep the top ten scores
   while (file)
   {
-    file >> nScore;
-    file >> sName;
+    memset(sBuf, 0, BUF_SIZE);
 
-    if (nScore == 0)
-      continue;
+    file.getline(sBuf, BUF_SIZE);
 
-    m_mapHighScores.insert(pair<int, string>(nScore, sName));
+    pSpacePos = strchr(sBuf, ' ');
 
-    // We only read 10 scores from the file!
-    if (m_mapHighScores.size() >= 10)
-      break;
+    if (pSpacePos != NULL)
+    {
+      sName  = "";
+      nScore = 0;
+
+      *pSpacePos = '\0';
+
+      nScore = atoi(sBuf);
+      sName = pSpacePos + 1;
+
+      if (nScore == 0)
+        continue;
+
+      if (sName.length() == 0)
+	sName = "?";
+
+cerr << "score=" << nScore << " - " << "Name=" << sName << endl;
+
+      m_mapHighScores.insert(pair<int, string>(nScore, sName));
+    }
   }
 
-  // If we read less then 10 scores
+  // If we read less then 10 scores create the rest with default values
   for (int i=m_mapHighScores.size(); i<10; i++)
-    m_mapHighScores.insert(pair<int, string>(10 - i, "lia"));
+    m_mapHighScores.insert(pair<int, string>(0, "?"));
 
   return true;
 }
 
-// NOTE!!!
-// For now the high scores are saved in a file that is in directory
-//  /usr/local/share/pinball/tux (for table tux, last dir is table's name)
-// Problem: this file must be owned by user pinball with write access
-//  to all (don't create a root file with write access to all...!).
-// For now please create this file by hand if you want to save your scores:
-// # su <- give root password
-// # adduser pinball
-// # cd /usr/local/share/pinball/tux
-// # touch highscores
-// # chown pinball:pinball highscores
-// # chmod a+w highscores
-// TODO: Find a way to safely write in a common file all high scores, this
-//  method also should be FHS friendly...
-//
-//
-// LAST CHANGES! Henrik changed this to dir EM_HIGHSCORE_DIR defined during
-//                compilation...
-//
+// The file must be writable by all users...
 bool Table::writeHighScoresFile()
 {
   // This is the current table's name
@@ -348,9 +369,12 @@ bool Table::writeHighScoresFile()
 
   string sName;
 
-  for (multimap<int, string>::iterator it = m_mapHighScores.begin();
-       it != m_mapHighScores.end(); it++)
+  multimap<int, string>::iterator it = m_mapHighScores.end();
+
+  while (true)
   {
+    it--;
+
     nScore = (*it).first;
     sName  = (*it).second;
 
@@ -361,6 +385,10 @@ bool Table::writeHighScoresFile()
       break;
 
     nIndex++;
+
+    // If we reached the first one then exit anyway
+    if (it == m_mapHighScores.begin())
+      break;
   }
 
   return true;

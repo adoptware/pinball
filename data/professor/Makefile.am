@@ -19,12 +19,12 @@ pinball.pbl \
 professor.mid \
 professor.png
 
-highscore_DATA = \
-highscores
-
+# This will create a new empty highscores file
+# NOTE! The user pinball must exist!
 install-data-hook:
-#	chown games $(highscoredir)/highscores
-#	chgrp users $(highscoredir)/highscores
+	touch $(highscoredir)/highscores
+	chown pinball $(highscoredir)/highscores
+	chgrp pinball $(highscoredir)/highscores
 	chmod 666 $(highscoredir)/highscores
 
-EXTRA_DIST = $(professordata_DATA) $(highscore_DATA)
+EXTRA_DIST = $(professordata_DATA)
