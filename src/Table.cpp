@@ -59,7 +59,7 @@ void Table::clear(Engine * engine) {
   }
 }
 
-void Table::activateBall(int ball) {
+void Table::activateBall(int ball, float x, float y, float z) {
   if (ball < 0 || ball >= MAX_BALL) return;
   m_aBall[ball] = PBL_ACTIVE;
   if (p_Ball[ball] != NULL) {
@@ -67,7 +67,7 @@ void Table::activateBall(int ball) {
     EmAssert(beh != NULL, "Table::activateBall behavior NULL");
     EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
 	     "Table::activateBall behavior not bouncebehavior");
-    ((BounceBehavior*)beh)->activateBall();
+    ((BounceBehavior*)beh)->activateBall(x, y, z);
   }
 }
 
@@ -217,12 +217,12 @@ bool Table::getHighScoresData(list<string>& listHighScores) {
   return true;
 }
 
-void Table::saveNewHighScore(int nNewHighScore) {
+void Table::saveNewHighScore(int nNewHighScore, const char * name) {
   // Remove the first element, it's the lowest score
   multimap<int, string>::iterator it = m_mapHighScores.begin();
   m_mapHighScores.erase(it);
 
-  m_mapHighScores.insert(it, pair<int, string>(nNewHighScore, "new"));
+  m_mapHighScores.insert(it, pair<int, string>(nNewHighScore, name));
 }
 
 //
