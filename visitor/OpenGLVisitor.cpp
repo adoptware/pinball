@@ -63,7 +63,7 @@ void OpenGLVisitor::visit(Group* g) {
 			glAlphaFunc(GL_GREATER, 0.05);
 		}
 
-		if (EM_SHAPE3D_FLAT & (*shapeIter)->m_iProperties) {
+		if ((*shapeIter)->m_iProperties & EM_SHAPE3D_FLAT) {
 			glShadeModel(GL_FLAT);
 		} else {
 			glShadeModel(GL_SMOOTH);
@@ -131,19 +131,7 @@ void OpenGLVisitor::visit(Group* g) {
 				vector<Color>::iterator colorIter = (*polyIter)->m_vColor.begin();
 				vector<Color>::iterator colorEnd = (*polyIter)->m_vColor.end();
 
-				EmAssert((*polyIter)->m_vIndex.size() == (*polyIter)->m_vColor.size(),
-								 "size missmatch");
-				for ( ; indexIter != indexEnd; 
-							indexIter++, colorIter++) {
-					EmAssert((*indexIter) < (*shapeIter)->m_vLight.size(), 
-									 "Array out of bounds");
-					EmAssert((*indexIter) < (*shapeIter)->m_vNmlTrans.size(), 
-									 "Array out of bounds");
-					EmAssert((*indexIter) < (*shapeIter)->m_vVtxAlign.size(), 
-									 "Array out of bounds");
-					EmAssert((*indexIter) < (*shapeIter)->m_vSpecular.size(), 
-									 "Array out of bounds");
-
+				for ( ; indexIter != indexEnd; indexIter++, colorIter++) {
 #if OPENGL_LIGHTS
 					// stupid materials!
 					glMaterialfv(GL_FRONT, GL_AMBIENT, (GLfloat*)&(*colorIter));
@@ -155,12 +143,18 @@ void OpenGLVisitor::visit(Group* g) {
 										 (*shapeIter)->m_vNmlTrans[(*indexIter)].y,
 										 (*shapeIter)->m_vNmlTrans[(*indexIter)].z);
 #else
-					glColor3f((*colorIter).r * (*shapeIter)->m_vLight[(*indexIter)].r +
-										(*shapeIter)->m_vSpecular[(*indexIter)].r,
-										(*colorIter).g * (*shapeIter)->m_vLight[(*indexIter)].g +
-										(*shapeIter)->m_vSpecular[(*indexIter)].g,
-										(*colorIter).b * (*shapeIter)->m_vLight[(*indexIter)].b + 
-										(*shapeIter)->m_vSpecular[(*indexIter)].b);
+					if ((*shapeIter)->m_iProperties & EM_SHAPE3D_FLAT) {
+						glColor3f((*colorIter).r * (*polyIter)->m_colFlatLight.r, 
+											(*colorIter).g * (*polyIter)->m_colFlatLight.g,
+											(*colorIter).b * (*polyIter)->m_colFlatLight.b);
+					} else {
+						glColor3f((*colorIter).r * (*shapeIter)->m_vLight[(*indexIter)].r +	
+											(*shapeIter)->m_vSpecular[(*indexIter)].r,
+											(*colorIter).g * (*shapeIter)->m_vLight[(*indexIter)].g +
+											(*shapeIter)->m_vSpecular[(*indexIter)].g,
+											(*colorIter).b * (*shapeIter)->m_vLight[(*indexIter)].b + 
+											(*shapeIter)->m_vSpecular[(*indexIter)].b);
+					}
 #endif
 
 					glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,

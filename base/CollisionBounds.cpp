@@ -1,5 +1,5 @@
 /***************************************************************************
-                          NestedBo.cpp  -  description
+                          CollisionBounds.cpp  -  description
                              -------------------
     begin                : Sun Mar 19 2000
     copyright            : (C) 2000 by 
@@ -199,7 +199,7 @@ void CollisionBounds::removeEmpty() {
 
 void CollisionBounds::split(int level) {
 	int a, b, c;
-	if (level < 1) return;
+	if (level <= 1) return;
 	EM_COUT("CollisionBounds::split() "<< level << endl, 0);
 
 	for (a=-1; a<2; a+=2) {

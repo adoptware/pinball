@@ -13,7 +13,7 @@
 #define EM_SHAPE3D_HIDDEN 1
 #define EM_SHAPE3D_TRANS 2
 #define EM_SHAPE3D_ALPHATEST 4
-#define EM_SPECULAR 8
+#define EM_SHAPE3D_SPECULAR 8
 #define EM_SHAPE3D_FLAT 16
 
 #include "Private.h"
@@ -23,14 +23,12 @@
 class Group;
 class Polygon;
 
-/**
- * <p>A Shape3D represents the visual part of a object.</p>
- * <p>First vertices are added the the shape with the
+/** A Shape3D represents the visual part of a object.
+ * First vertices are added the the shape with the
  * 'add(x, y, z)' method. Then polygons separately created and added
- * with the 'add(Polygon*)' method. The Shape3D is finished by calling
- * countNormals.</p>
- * @see Polygon
- */
+ * with the 'add(Polygon*)' method. The Shape3D is finished off by calling
+ * countNormals().
+ * @see Polygon */
 class Shape3D {
 	public:
 		Shape3D(int v = 6, int p = 2);
@@ -63,6 +61,5 @@ class Shape3D {
 		Group* p_Parent;
 		int m_iProperties;
 };
-
 
 #endif // SHAPE3D_H

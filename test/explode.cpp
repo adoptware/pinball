@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
 		engine->tick();
 		engine->render();
 		engine->swap();
-		SDL_Delay(20);
+		engine->limitFPS(100);
 	}
 	delete(engine);
 	return 0;

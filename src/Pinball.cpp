@@ -83,9 +83,9 @@ int main(int argc, char *argv[]) {
 {                                      \
   Group* groupS = new Group();         \
                                        \
-  Shape3D* ballCyl = new BigSphere(1, 1, c_r, c_g, c_b, 1);    \
+  Shape3D* ballCyl = new BigSphere(1, 2, c_r, c_g, c_b, 1);    \
   Shape3D* ballSphere = new BigSphere(1, 2, c_r, c_g, c_b, 1); \
-  ballSphere->setProperty(EM_SPECULAR);                        \
+  ballSphere->setProperty(EM_SHAPE3D_SPECULAR);                \
   ballCyl->setProperty(EM_SHAPE3D_HIDDEN);                     \
   CollisionBounds* ballBounds = new CollisionBounds(ballCyl->getCollisionSize()); \
   ballBounds->setShape3D(ballCyl, 1);  \
@@ -121,7 +121,7 @@ int main(int argc, char *argv[]) {
                                        \
   BounceBehavior* bouBeh = new BounceBehavior(pbl);  \
                                        \
-  engine->add(groupS);                \
+  engine->add(groupS);                 \
   groupS->setUserProperty(pbl);             \
   groupS->setCollisionBounds(ballBounds);   \
   groupS->addShape3D(ballSphere);      \
@@ -146,25 +146,24 @@ int main(int argc, char *argv[]) {
 		
 	// Draw to the screen.
   int exit = 0;
-	
+	bool render = true;
 	while (exit == 0) {
 		engine->tick();
-		engine->tick();
-		engine->render();
-		engine->swap();
+		if (render) {
+			engine->render();
+			engine->swap();
+		}
 		if (Keyboard::isKeyDown(SDLK_r)) {
 			SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
 		}
 		if (Keyboard::isKeyDown(SDLK_ESCAPE)) {
-			engine->pauseRenderThread();
 			if (menu->start() == EM_MENU_EXIT) exit = 1;
-			engine->resumeRenderThread();
 		}
 		if (Keyboard::isKeyDown(SDLK_p)) {
 			Keyboard::waitForKey();
 			Keyboard::clear();
 		}
-		engine->limitFPS(20);
+		render = engine->limitFPS(100);
 	}
 
 	extern float em_groups_m, em_shapes_m, em_bounds_m, em_polygons_m;
