@@ -6485,7 +6485,7 @@ object flat_bumper {
     }
   }
   bumper_behavior {
-    0.1
+    0.2
     sound bumpsoft.wav
     light {
       1 0 0
@@ -6534,7 +6534,7 @@ object flat_bumper {
     }
   }
   bumper_behavior {
-    0.1
+    0.2
     sound bumpsoft.wav
     light {
       1 0 0
