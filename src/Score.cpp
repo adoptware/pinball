@@ -1,3 +1,4 @@
+//#ident "$Id: Score.cpp,v 1.26 2003/06/11 13:25:51 rzr Exp $"
 /***************************************************************************
                           Score.cpp  -  description
                              -------------------
@@ -24,6 +25,7 @@
 #include "EmFont.h"
 #include "Config.h"
 #include "Table.h"
+#include "Loader.h"
 #include "Engine.h"
 #include "OpenGLVisitor.h"
 #include "Menu.h"
@@ -32,8 +34,6 @@
 Score::Score() {
   m_Font = EmFont::getInstance();
   this->clear();
-
-  m_bExtraBall = false;
 }
 
 Score::~Score(){
@@ -112,6 +112,8 @@ void Score::StdOnSignal() {
   ElseOnSignal( PBL_SIG_GAME_OVER ) {
     this->clearText();
 
+    //cout<<" TODO:give (only) one extra ball if high score"<<endl; //!rzr
+    
     if(this->testForHighScore()) {
       this->setText1("last score was a High Score!");
     } else {
@@ -126,10 +128,9 @@ void Score::StdOnSignal() {
 
 void Score::draw() {
   char buffer[256];
-
-  // Correct bug of ball = 4 at end of game - pnf
+  // Correct bug of ball = 4 at end of game - pnf // !rzr: hum? is it a bug?
   int nCurrentBall = Table::getInstance()->getCurrentBall() + 1;
-  if (nCurrentBall < 4)
+  if (nCurrentBall < 4) 
   {
     if (m_bExtraBall)
       sprintf(buffer, "SCORE %d BALL %d ExtraBall", m_iScore, nCurrentBall);
@@ -167,7 +168,8 @@ void Score::clear() {
   Table::getInstance()->setCurrentBall(0);
   m_iInfoDelay = -1;
   m_iScore = 0;
-	m_bExtraBall = false;
+  m_iHiScore = 0;
+  m_bExtraBall = false;
 }
 
 // Tests for a high score, if test positive asks for the user name
@@ -178,7 +180,7 @@ bool Score::testForHighScore()
   {
     EmAssert(Engine::getCurrentEngine() != NULL,
 	     "Score::testForHighScore Engine NULL");
-
+    //TODO: get : env var  $USER@$HOSTNAME-$(date +%Y%m%d)
     MenuInput input("new highscore! enter name:", Engine::getCurrentEngine());
     input.perform();
 

@@ -1,4 +1,4 @@
-//#ident "$Id: Private.h,v 1.16 2003/05/19 13:48:57 rzr Exp $"
+//#ident "$Id: Private.h,v 1.17 2003/06/11 13:25:49 rzr Exp $"
 /***************************************************************************
                           Private.h  -  description
                              -------------------
@@ -47,11 +47,10 @@
 #error "Must specify allegro or sdl."
 #endif
 #endif
-#ifndef _MSC_VER
+#ifndef  WIN32 // not for msvc, codewarrior // can't be empty for codewarrior
 namespace std {}; // !+-rzr: must be definied before used  (msvc)
-// can't be empty for codewarrior
-using namespace std;
 #endif
+using namespace std;
 
 // Dummy operator to make MSVC carp work ??
 /*
@@ -116,4 +115,4 @@ bool operator == (const PolygonEdge & peA, const PolygonEdge & peB) {
 
 
 #endif // PRIVATE_H
-//EOF: $Id: Private.h,v 1.16 2003/05/19 13:48:57 rzr Exp $
+//EOF: $Id: Private.h,v 1.17 2003/06/11 13:25:49 rzr Exp $
