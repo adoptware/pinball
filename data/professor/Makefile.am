@@ -1,7 +1,7 @@
 AUTOMAKE_OPTIONS = gnu
 
 professorlibdir = $(EM_LIBDIR)
-professordatadir = $(pkgdatadir)/professor
+professordatadir = $(datadir)/pinball/professor
 
 professorlib_LTLIBRARIES = libModuleProfessor.la
 

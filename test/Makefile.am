@@ -14,8 +14,8 @@ testlib_LTLIBRARIES = libModuleTest.la
 libModuleTest_la_LDFLAGS = -module
 libModuleTest_la_SOURCES = moduletest.cpp
 
-unittest_LDFLAGS += -export-dynamic
-load_LDFLAGS += -export-dynamic
+unittest_LDFLAGS = -export-dynamic
+load_LDFLAGS = -export-dynamic
 
 billboard_SOURCES = billboard.cpp
 collision_SOURCES = collision.cpp

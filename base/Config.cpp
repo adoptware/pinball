@@ -125,7 +125,7 @@ void Config::saveConfig() {
     // TODO unsafe
     filename = string(home) + string("/.emilia");
     mkdir(filename.c_str(), S_IRUSR | S_IWUSR |S_IXUSR);
-    filename = string(home) + string("/.emilia/") + string(PACKAGE); 
+    filename = string(home) + string("/.emilia/") + string(PACKAGE_NAME); 
   } else {
     cerr << "Could not find environment variable HOME." << endl;
     cerr << "Not able to read or write config file" << endl;
@@ -174,7 +174,7 @@ void Config::loadConfig() {
     // TODO unsafe
     filename = string(home) + string("/.emilia");
     mkdir(filename.c_str(), S_IRUSR | S_IWUSR | S_IXUSR);
-    filename = string(home) + string("/.emilia/") + string(PACKAGE);
+    filename = string(home) + string("/.emilia/") + string(PACKAGE_NAME);
   } else {
     cerr << "Could not find environment variable HOME." << endl;
     cerr << "Not able to read or write config file" << endl;
