@@ -84,6 +84,7 @@ void Loader::readNextToken(ifstream & file, istringstream & ist, string & str) {
 	while(file && !ist) {
 			string buf;
 			getline(file, buf);
+			ist.clear();
 			ist.str(buf);
 			ist >> str;
       ++m_iLineNumber;
@@ -95,6 +96,7 @@ void Loader::readNextToken(ifstream & file, istringstream & ist, int & i) {
 	while(file && !ist) {
 			string buf;
 			getline(file, buf);
+			ist.clear();
 			ist.str(buf);
 			ist >> i;
       ++m_iLineNumber;
@@ -106,6 +108,7 @@ void Loader::readNextToken(ifstream & file, istringstream & ist, float & f) {
 	while(file && !ist) {
 			string buf;
 			getline(file, buf);
+			ist.clear();
 			ist.str(buf);
 			ist >> f;
       ++m_iLineNumber;

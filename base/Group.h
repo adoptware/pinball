@@ -17,6 +17,8 @@
 #define EM_GROUP_NO_SIGNAL       0x10
 #define EM_GROUP_NO_BEHAVIOR     0x20
 
+using namespace std;
+
 #include <vector>
 
 #include "Node.h"
@@ -77,7 +79,7 @@ class Group : public Node {
 	 * this function if you wish to deallocate the group. */
 	void removeGroup(Group * g);
 	//	void addBehavior(Behavior * b, bool signal=true);
-	void setBehavior(Behavior * b, bool signal=true);
+	void setBehavior(Behavior * b, bool signal = true);
 	//	void removeBehavior(Behavior * b);
 	void addShape3D(Shape3D * s);
 	/** Removes the shape from the tree. You must call 'delete shape' after 

@@ -9,6 +9,8 @@
 #ifndef OCTTREE_H
 #define OCTTREE_H
 
+using namespace std;
+
 #include <vector>
 
 #include "EMath.h"
