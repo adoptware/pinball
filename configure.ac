@@ -115,6 +115,10 @@ AC_SUBST(MATHLIB)
 dnl Check for OpenGL
 AC_MSG_CHECKING(for OpenGL support)
 AC_TRY_COMPILE([
+#ifdef WIN32
+#define WINAPI
+#endif
+
  #if defined(__APPLE__) && defined(__MACH__)
  #include <OpenGL/gl.h>
   #else
