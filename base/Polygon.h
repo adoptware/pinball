@@ -37,12 +37,12 @@ class Polygon {
 		~Polygon();
 		/** <p>add(index).</p> */
 		void add(int index);
-		void add(int index,  float u, float v, float a, float r, float g, float b );
+		void add(int index,  float u, float v, float r, float g, float b, float a);
 		bool includes(int index);
 		void setProperty(int);
 		void unsetProperty(int);
 		int getProperties();
-		void setColor(float a, float r, float g, float b);
+		void setColor(float r, float g, float b, float a);
 
 		void countNormal();
 

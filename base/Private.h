@@ -64,6 +64,8 @@ bool operator == (const PolygonEdge & peA, const PolygonEdge & peB) {
 
 extern Matrix identityMatrix;
 
+#define EM_DEBUG 0
+
 #ifndef EM_DEBUG
 #define EM_DEBUG 1
 #endif
