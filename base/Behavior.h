@@ -16,7 +16,12 @@ class Light;
 
 /** You add behavior to your objects by creating a subclass to
  * the Behavior class and adding it to a group. All your AI-code, 
- * keyboard-logic should be in a behavior object (or be called from).*/
+ * keyboard-logic should be in a behavior object (or be called from).
+ * Important! On each engine tick the 'onTick' function is called first,
+ * then the eventual 'onCollision' functions are called. And at last
+ * the signals in the signal queue is sent to the 'onSignal' function.
+ * Remember the order in which these functions are called when you debug
+ * your behaviors. */
 class Behavior {
  public:
 	/** Simple constructor. You are supposed to create subclasses

@@ -48,10 +48,10 @@ void Score::addScore(int s, bool multi) {
 
 bool Score::isBallActive(int ball) {
 	switch (ball) {
-	case PBL_BALL_1: return m_aAliveBall[0] == PBL_ALIVE;
-	case PBL_BALL_2: return m_aAliveBall[1] == PBL_ALIVE;
-	case PBL_BALL_3: return m_aAliveBall[2] == PBL_ALIVE;
-	default: return m_aAliveBall[3] == PBL_ALIVE;
+	case PBL_BALL_1: return (m_aAliveBall[0] == PBL_ALIVE);
+	case PBL_BALL_2: return (m_aAliveBall[1] == PBL_ALIVE);
+	case PBL_BALL_3: return (m_aAliveBall[2] == PBL_ALIVE);
+	default: return (m_aAliveBall[3] == PBL_ALIVE);
 	}
 }
 
@@ -67,10 +67,19 @@ void Score::lockBall(int ball) {
 
 int Score::alive() {
 	int alive = 0;
-	if (m_aAliveBall[0] == PBL_ALIVE) ++alive;
-	if (m_aAliveBall[1] == PBL_ALIVE)	++alive;
-	if (m_aAliveBall[2] == PBL_ALIVE) ++alive;
-	if (m_aAliveBall[3] == PBL_ALIVE) ++alive;
+	if (m_aAliveBall[0] == PBL_ALIVE) {
+		++alive;
+	}
+	if (m_aAliveBall[1] == PBL_ALIVE)	{
+		++alive;
+	}
+	if (m_aAliveBall[2] == PBL_ALIVE) {
+		++alive;
+	}
+	if (m_aAliveBall[3] == PBL_ALIVE) {
+		++alive;
+	}
+	EM_COUT("Score::alive " << alive, 1);
 	return alive;
 }
 
@@ -161,7 +170,7 @@ void Score::onTick() {
 }
 
 void Score::StdOnSignal() {
-	EM_COUT((int)em_signal, 1);
+	EM_COUT("Score::StdOnSignal " << (int)em_signal, 1);
 
 	OnSignal( PBL_SIG_RESET_ALL ) {
 		this->clear();
@@ -182,7 +191,7 @@ void Score::StdOnSignal() {
 		//m_iScore += 450;
 		m_iBumps++;
  	}	else 
- 		OnSignal( PBL_SIG_LOCK_1 OR_SI PBL_SIG_LOCK_2 OR_SI PBL_SIG_LOCK_3 OR_SI PBL_SIG_LOCK_4) {
+ 	OnSignal( PBL_SIG_LOCK_1 OR_SI PBL_SIG_LOCK_2 OR_SI PBL_SIG_LOCK_3 OR_SI PBL_SIG_LOCK_4) {
 		if (this->alive() == 0) {
 			m_Text1 = "   press enter to launch ball";
 			m_bLaunch = true;
@@ -202,9 +211,10 @@ void Score::StdOnSignal() {
 		//SendSignal( PBL_SIG_MULTIBALL_OFF, 0, this->getParent(), NULL );
 		//SendSignal( PBL_SIG_LOCK_ON, 0, this->getParent(), NULL );
 		//}
+		EM_COUT("ball dead, locked " << this->locked() <<" alive "<< this->alive(), 1);
 		if (this->locked() == 0 && this->alive() == 1) {
 			SendSignal(PBL_SIG_MULTIBALL_OFF, 0, this->getParent(), NULL);
-			EM_COUT("multiball off", 0);
+			EM_COUT("multiball off", 1);
 		}
 
 		if (this->alive() == 0) {
@@ -218,7 +228,7 @@ void Score::StdOnSignal() {
 			} else {
 				m_bLaunch = true;
 				m_Text1 = "   press enter to launch ball";
-				SendSignal(PBL_SIG_BALL_ALL_OFF, 0, this->getParent(), NULL);
+				SendSignal(PBL_SIG_ALLBALLS_OFF, 0, this->getParent(), NULL);
 			}
 		}
 	}	
