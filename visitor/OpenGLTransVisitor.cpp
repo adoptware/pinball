@@ -115,10 +115,13 @@ void OpenGLTransVisitor::visit(Group* g) {
 										 (*shapeIter)->m_vNmlTrans[(*indexIter)].y,
 										 (*shapeIter)->m_vNmlTrans[(*indexIter)].z);
 #else
+					/* transparent polygons should not be lit 
 					glColor4f((*colorIter).r * (*shapeIter)->m_vLight[(*indexIter)].r,
 										(*colorIter).g * (*shapeIter)->m_vLight[(*indexIter)].g,
 										(*colorIter).b * (*shapeIter)->m_vLight[(*indexIter)].b,
 										(*colorIter).a);
+					*/
+					glColor4f((*colorIter).r, (*colorIter).g, (*colorIter).b, (*colorIter).a);
 #endif
 					glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
 										 (*shapeIter)->m_vVtxAlign[(*indexIter)].y,

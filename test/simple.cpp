@@ -38,6 +38,7 @@ int main(int argc, char *argv[]) {
 		engine->tick();
 		engine->render();
 		engine->swap();
+		engine->limitFPS(50); // 33 FPS
 	}
 	delete(engine);
 	return 0;

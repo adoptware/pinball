@@ -573,6 +573,8 @@ int loadFile(const char * fn, Engine * engine) {
 
 /******************************************************/
 
+void newloadMisc(ifstream & file, Engine * engine, Group * group, Behavior * beh);
+
 /* set properties for a group */
 void newloadProperties(ifstream & file, Group * g) {
 	cerr << "properties" << endl;
@@ -589,6 +591,8 @@ void newloadProperties(ifstream & file, Group * g) {
 		CHECK_EOF(file);
 		if (str == "transform_once") {
 			g->setProperty(EM_GROUP_TRANSFORM_ONCE);
+		} else if (str == "no_light") {
+			g->setProperty(EM_GROUP_NO_LIGHT);
 		} else if (str == "light_once") {
 			g->setProperty(EM_GROUP_LIGHT_ONCE);
 		} else if (str == "no_signal") {
@@ -604,11 +608,10 @@ void newloadProperties(ifstream & file, Group * g) {
 	}
 }
 
-Behavior* newloadArmBehavior(ifstream & file) {
+void newloadArmBehavior(ifstream & file, Group * group) {
 	cerr << "arm" << endl;
 
 	string str;
-	Behavior* b;
 
 	file >> str;
 	if (str != "{") {
@@ -617,62 +620,88 @@ Behavior* newloadArmBehavior(ifstream & file) {
 
 	file >> str;
 	if (str == "right") {
-		b = new ArmBehavior(true);
+		group->addBehavior(new ArmBehavior(true));
 	} else {
-		b =  new ArmBehavior(false);
+		group->addBehavior(new ArmBehavior(false));
 	}
 
 	file >> str;
 	if (str != "}") {
 		throw string("Parse error \"}\" missing");
 	}
-	return b;
 }
+
+void newloadAnimation(ifstream & file, Engine * engine, Group * group, Behavior * beh) {
+	cerr << "anim" << endl;
+
+	string str;
+
+	EmAssert(beh != NULL, "Behavior NULL in newloadAnimation");
+	file >> str;
+	if (str != "{") {
+		throw string("Parse error \"{\" missing");
+	}
+
+	int type = EM_LIGHT;
+	file >> str;
+	if (str == "rotation") {
+		type = EM_ROTATION;
+	} else if (str == "translation") {
+		type = EM_TRANSLATION;
+	}
+	StdAnimation* anim = new StdAnimation(20, type);
+
+	int count;
+	file >> count;
+	for (; count > 0; count--) {
+		float a, b, c;
+		file >> a; file >> b; file >> c;
+		if (count == 1) {
+			anim->setEnd(a, b, c);
+		} else {
+			anim->add(a, b, c);
+		}
+	}
+	group->addBehavior(anim);
+
+	newloadMisc(file, engine, group, anim);
+}
+
 
 void newloadBehaviorLight(ifstream & file, Engine * engine, Group * group, Behavior * beh) {
 	cerr << "light" << endl;
 
 	string str;
 	
+	EmAssert(beh != NULL, "Behavior NULL in newloadBehaviorLight");
 	file >> str;
-	while (str != "}") {
-		if (str == "light") {
-			file >> str;
-			if (str != "{") {
-				throw string("Parse error \"{\" missing");
-			}
-
-			float r, g, b, x, y, z;
-			file >> r; file >> g; file >> b;
-			file >> x; file >> y; file >> z;
-
-			file >> str;
-			if (str != "}") {
-				throw string("Parse error \"}\" missing");
-			}
-
-			Light * light = new Light(1.3f, 0.5f, 0.0f, r, g, b);
-			light->setOn(false);
-			light->setProperty(EM_IGNORE_ANGLE_FULL);
-			//light->setProperty(EM_IGNORE_DISTANCE);
-			light->setProperty(EM_USE_BOUNDS);
-			light->setBounds(10.0);
-
-			Group * gl = new Group();
-			gl->addTranslation(x, y, z);
-			gl->setLight(light);
-			group->add(gl);
-			engine->addLight(light);
-			
-			beh->setLight(light);
-		} else {
-			throw string("Parse error");
-		}
+	if (str != "{") {
+		throw string("Parse error \"{\" missing");
 	}
+
+	float r, g, b, x, y, z;
+	file >> r; file >> g; file >> b;
+	file >> x; file >> y; file >> z;
+
+	Light * light = new Light(1.3f, 0.5f, 0.0f, r, g, b);
+	light->setOn(false);
+	light->setProperty(EM_IGNORE_ANGLE_FULL);
+	//light->setProperty(EM_IGNORE_DISTANCE);
+	light->setProperty(EM_USE_BOUNDS);
+	light->setBounds(10.0);
+	
+	Group * gl = new Group();
+	gl->addTranslation(x, y, z);
+	gl->setLight(light);
+	group->add(gl);
+	engine->addLight(light);
+	
+	beh->setLight(light);
+
+	newloadMisc(file, engine, gl, beh);
 }
 
-
-void newloadCaveBehavior(ifstream & file, Engine * engine, Group* g) {
+void newloadCaveBehavior(ifstream & file, Engine * engine, Group* group) {
 	cerr << "cave" << endl;
 
 	string str;
@@ -683,19 +712,18 @@ void newloadCaveBehavior(ifstream & file, Engine * engine, Group* g) {
 	}
 
 	Behavior* b = new CaveBehavior();
-	g->addBehavior(b);
+	group->addBehavior(b);
 
-	newloadBehaviorLight(file, engine, g, b);
-	
 	Shape3D* shape = new Cube(1, 0, 1, 0, 1);
-	g->addShape3D(shape);
+	group->addShape3D(shape);
 	CollisionBounds* bounds = new CollisionBounds(shape->getCollisionSize());
 	bounds->setShape3D(shape, 0); 
-	g->setCollisionBounds(bounds);
-	
+	group->setCollisionBounds(bounds);
+
+	newloadMisc(file, engine, group, b);
 }
 
-void newloadBumperBehavior(ifstream & file, Engine * e, Group * g) {
+void newloadBumperBehavior(ifstream & file, Engine * engine, Group * group) {
 	cerr << "bumper" << endl;
 
 	string str;
@@ -706,33 +734,56 @@ void newloadBumperBehavior(ifstream & file, Engine * e, Group * g) {
 	}
 
 	Behavior* b = new BumperBehavior();
-	g->addBehavior(b);
+	group->addBehavior(b);
 
-	newloadBehaviorLight(file, e, g, b);
+	newloadMisc(file, engine, group, b);
+}
+
+void newloadSwitchBehavior(ifstream & file, Engine * engine, Group * group) {
+	cerr << "switch" << endl;
+
+	string str;
+
+	file >> str;
+	if (str != "{") {
+		throw string("Parse error \"{\" missing");
+	}
+
+	int asig, usig, init;
+	file >> asig;	file >> usig;	file >> init;
+
+	Behavior* b = new SwitchBehavior(asig, usig, (init==1));
+	group->addBehavior(b);
+
+	newloadMisc(file, engine, group, b);
 }
 
 /* thins added to object, e.g. lights, animation, behavior*/
-void newloadMisc(ifstream & file, Engine * e, Group * g) {
+void newloadMisc(ifstream & file, Engine * engine, Group * group, Behavior * beh) {
 	cerr << "misc" << endl;
 
 	string str;
 
-	if (g == NULL) {
-		throw string("Group NULL in loadMisc");
-	}
+	EmAssert(engine != NULL && group != NULL, "Engine or group NULL in newloadMisc");
 
 	file >> str;
 	while (str != "}") {
 		CHECK_EOF(file);
 		if (str == "properties"){
-			newloadProperties(file, g);
+			newloadProperties(file, group);
 		} else if (str == "arm_behavior") {
-			g->addBehavior(newloadArmBehavior(file));
+			newloadArmBehavior(file, group);
+		} else if (str == "switch_behavior") {
+			newloadSwitchBehavior(file, engine, group);
 		} else if (str == "cave_behavior") {
-			newloadCaveBehavior(file, e, g);
+			newloadCaveBehavior(file, engine, group);
 		} else if (str == "bumper_behavior") {
-			newloadBumperBehavior(file, e, g);
-			g->setUserProperty(PBL_BUMPER);
+			newloadBumperBehavior(file, engine, group);
+			group->setUserProperty(PBL_BUMPER);
+		} else if (str == "light") {
+			newloadBehaviorLight(file, engine, group, beh);
+		} else if (str == "animation") {
+			newloadAnimation(file, engine, group, beh);
 		} else {
 			throw string("Unkown in misc block");
 		}
@@ -770,8 +821,6 @@ Group * newloadStdObject(ifstream & file, Engine * engine) {
 		}
 		// TODO add this
 		//shape3d->setProperty(EM_SHAPE3D_HIDDEN);
-		// TODO remove this
-		shape3d->setProperty(EM_SPECULAR);
 		group->addShape3D(shape3d);
 		
 		CollisionBounds* bounds = new CollisionBounds(shape3d->getCollisionSize());
@@ -795,7 +844,7 @@ Group * newloadStdObject(ifstream & file, Engine * engine) {
 	}
 
 	//
-	newloadMisc(file, engine, group);
+	newloadMisc(file, engine, group, NULL);
 
 	return group;
 }
