@@ -18,10 +18,10 @@
 #include <GL/gl.h>
 
 typedef struct {
-	unsigned int width;
-	unsigned int height;
-	unsigned int channels;
-	unsigned char* pixels;
+  unsigned int width;
+  unsigned int height;
+  unsigned int channels;
+  unsigned char* pixels;
 } struct_image;
 
 #define EmImage struct_image
@@ -37,6 +37,11 @@ extern BITMAP * backbuffer;
 extern ZBUFFER * zbuffer;
 #endif // EM_USE_ALLEGRO
 
+#define EM_RIGHT 0.8f
+#define EM_UP    0.6f
+#define EM_NEAR  1.0f
+#define EM_FAR   1000.0f
+
 #include <map>
 #include <string>
 
@@ -45,24 +50,24 @@ extern ZBUFFER * zbuffer;
 /** Singleton class for initializing graphics and loading textures. */
 class TextureUtil {
  protected:
-	TextureUtil();
+  TextureUtil();
  public:
-	~TextureUtil();
-	static TextureUtil* getInstance();
-	void initGrx();
-	void stopGrx();
-	// TODO
-	void freeTextures() {};
-	void resizeView(unsigned int w, unsigned int h);
-	EmTexture* loadTexture(const char* file);
-	EmImage* loadImage(const char* file);
-	const char * getTextureName(EmTexture * tex);
-	void setClearColor(float r, float g, float b, float a);
+  ~TextureUtil();
+  static TextureUtil* getInstance();
+  void initGrx();
+  void stopGrx();
+  // TODO
+  void freeTextures() {};
+  void resizeView(unsigned int w, unsigned int h);
+  EmTexture* loadTexture(const char* file);
+  EmImage* loadImage(const char* file);
+  const char * getTextureName(EmTexture * tex);
+  void setClearColor(float r, float g, float b, float a);
  private:
-	map<EmTexture*, string> m_hImageName;
-	map<string, EmTexture*> m_hEmTexture;
-	static TextureUtil* p_TextureUtil;
-	Color m_colClear;
+  map<EmTexture*, string> m_hImageName;
+  map<string, EmTexture*> m_hEmTexture;
+  static TextureUtil* p_TextureUtil;
+  Color m_colClear;
 };
 
 #endif // TEXTUREUTIL_H

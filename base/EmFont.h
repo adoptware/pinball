@@ -17,8 +17,8 @@
 #endif
 
 #if EM_USE_SDL
-#define EM_FONTSIZE_X 0.06f
-#define EM_FONTSIZE_Y 0.08f
+#define EM_FONTSIZE_X 0.06f*EM_RIGHT
+#define EM_FONTSIZE_Y 0.08f*EM_UP
 #endif
 
 #if EM_USE_ALLEGRO
@@ -33,34 +33,32 @@ class Config;
 /** A singleton utility for fonts. */
 class EmFont {
  public:
-	~EmFont();
-	/** Get singleton object. */
-	static EmFont * getInstance();
-	void loadFont(const char * fileName);
-	void printRow(const char * buffer, float row);
-	void printRowCenter(const char * buffer, float row);
-	/*		
-			int getSizeX() { return m_iSize; };
-			int getSizeY() { return m_iSize; };
-			float getRelativeSizeX();
-			float getRelativeSizeY();
-	*/
+  ~EmFont();
+  /** Get singleton object. */
+  static EmFont * getInstance();
+  void loadFont(const char * fileName);
+  /** If row is negative the row will be counted from bottom of screen. */
+  void printRow(const char * buffer, float row);
+  /** If row is negative the row will be counted from bottom of screen. */
+  void printRowCenter(const char * buffer, float row);
  protected:
 #if EM_USE_SDL
-	/** With OpenGL -1,1 is upper left. 1,-1 is lower right. */
-	void print(const char * buffer, float x, float y);
+  /** With OpenGL -1,1 is upper left. 1,-1 is lower right. */
+  void print(const char * buffer, float x, float y);
 #endif
 #if EM_USE_ALLEGRO
-	/** With allegro 0,0 is upper lefter. The screen size determines the lower right. */
-	void print(const char * buffer, int x, int y);
+  /** With allegro 0,0 is upper lefter. The screen size determines the lower right. */
+  void print(const char * buffer, int x, int y);
 #endif
-	EmFont();
+  EmFont();
  private:
-	//EmImage * m_Font;
-	EmTexture * m_Texture;
-	int m_iSize;
-	Config * p_Config;
-	static EmFont * p_EmFont;
+  //EmImage * m_Font;
+  EmTexture * m_Texture;
+  int m_iSize;
+  float m_fFontSizeX;
+  float m_fFontSizeY;
+  Config * p_Config;
+  static EmFont * p_EmFont;
 };
 
 #endif // EMFONT_H

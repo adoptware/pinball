@@ -23,6 +23,8 @@ class Behavior;
 #define LOADER_FIRSTSIGNAL 10000
 #define LOADER_FIRSTVARIABLE 20000
 
+#define SignalByName(name) Loader::getInstance()->getSignal(name)
+
 class Loader {
  protected:
   Loader();

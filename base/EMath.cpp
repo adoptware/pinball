@@ -125,6 +125,42 @@ void EMath::getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT, const V
   mtx.t[2] = vtxT.z;
 }
 
+void EMath::getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT, const Quaternion & qRot) {
+  // a lean function for filling m[16] with
+  // a 4x4 transformation matrix based on 
+  // translation v and rotation q
+  // This routine would likely be used by an opengl
+  // programmer calling glmultmatrix()
+  mtx.v[0][0] = 1 - 2*(qRot.y*qRot.y + qRot.z*qRot.z);
+  mtx.v[0][1] = 2*(qRot.x*qRot.y + qRot.w*qRot.z);
+  mtx.v[0][2] = 2*(qRot.x*qRot.z - qRot.w*qRot.y);
+
+  mtx.v[1][0] = 2*(qRot.x*qRot.y - qRot.w*qRot.z);	
+  mtx.v[1][1] = 1 - 2*(qRot.x*qRot.x + qRot.z*qRot.z);
+  mtx.v[1][2] = 2*(qRot.y*qRot.z + qRot.w*qRot.x);
+
+  mtx.v[2][0] = 2*(qRot.x*qRot.z + qRot.w*qRot.y); 
+  mtx.v[2][1] = 2*(qRot.y*qRot.z - qRot.w*qRot.x); 
+  mtx.v[2][2] = 1-2*(qRot.x*qRot.x + qRot.y*qRot.y);
+  /*
+  mtx.v[0][0] = 1 - 2*(qRot.y*qRot.y + qRot.z*qRot.z);
+  mtx.v[1][0] = 2*(qRot.x*qRot.y + qRot.w*qRot.z);
+  mtx.v[2][0] = 2*(qRot.x*qRot.z - qRot.w*qRot.y);
+
+  mtx.v[0][1] = 2*(qRot.x*qRot.y - qRot.w*qRot.z);	
+  mtx.v[1][1] = 1 - 2*(qRot.x*qRot.x + qRot.z*qRot.z);
+  mtx.v[2][1] = 2*(qRot.y*qRot.z + qRot.w*qRot.x);
+
+  mtx.v[0][2] = 2*(qRot.x*qRot.z + qRot.w*qRot.y); 
+  mtx.v[1][2] = 2*(qRot.y*qRot.z - qRot.w*qRot.x); 
+  mtx.v[2][2] = 1-2*(qRot.x*qRot.x + qRot.y*qRot.y);
+*/
+  mtx.t[0] = vtxT.x;
+  mtx.t[1] = vtxT.y;
+  mtx.t[2] = vtxT.z;
+}
+
+
 /* Stolen from allegro. Thanks!! */
 void EMath::inverse(const Matrix & mtx, Matrix & inv) {
 	Matrix mtxTmp = mtx;
@@ -179,86 +215,95 @@ void EMath::inverse(const Matrix & mtx, Matrix & inv) {
         }
       }
     }
-
+    
   }
-
-/*
-	for (int a=0; a<3; a++) {
-		for (int b=0; b<3; b++) {
-			inv.v[a][b] = -mtx.v[a][b];
-		}
-	}*/
-
-	inv.t[0] = -mtx.t[0];
-	inv.t[1] = -mtx.t[1];
-	inv.t[2] = -mtx.t[2];
+  
+  inv.t[0] = -mtx.t[0];
+  inv.t[1] = -mtx.t[1];
+  inv.t[2] = -mtx.t[2];
 }
 
 /* mtxA or mtxB NOT allowed to be the same as out.
  */
 void EMath::matrixMulti(const Matrix & mtxA, const Matrix & mtxB, Matrix & mtxOut) {
   for (int a=0; a<3; a++) {
-  	for (int b=0; b<3; b++) {
-	 		mtxOut.v[a][b] =
-				(mtxA.v[0][b] * mtxB.v[a][0]) +
-				(mtxA.v[1][b] * mtxB.v[a][1]) +
-				(mtxA.v[2][b] * mtxB.v[a][2]);
+    for (int b=0; b<3; b++) {
+      mtxOut.v[a][b] =
+	(mtxA.v[0][b] * mtxB.v[a][0]) +
+	(mtxA.v[1][b] * mtxB.v[a][1]) +
+	(mtxA.v[2][b] * mtxB.v[a][2]);
     }
-
+    
     mtxOut.t[a] =
-			(mtxA.t[0] * mtxB.v[a][0]) +
-			(mtxA.t[1] * mtxB.v[a][1]) +
-		  (mtxA.t[2] * mtxB.v[a][2]) +
-		  mtxB.t[a];
-	}
+      (mtxA.t[0] * mtxB.v[a][0]) +
+      (mtxA.t[1] * mtxB.v[a][1]) +
+      (mtxA.t[2] * mtxB.v[a][2]) +
+      mtxB.t[a];
+  }
+}
+
+
+void EMath::planeLineIntersection(const Vertex3D & nrml, float dist, 
+				  const Vertex3D & vtxA, const Vertex3D & vtxB, Vertex3D & vtxDiff) {
+  // returns the point where the line p1-p2 intersects the plane n&d
+  EMath::subst(vtxB, vtxA, vtxDiff);
+  float dot = EMath::dotProduct(nrml, vtxDiff);
+  float k = -(dist + EMath::dotProduct(nrml, vtxA) ) / dot;
+  EMath::scaleVertex(vtxDiff, k);
+  EMath::add(vtxA, vtxDiff);
 }
 
 
 /* */
 void EMath::normalizeVector(Vertex3D & vtx) {
-	float length_1;
-	float length = EMath::vectorLength(vtx);
-	if (EM_ZERO(length)) return;
-	length_1 = 1.0f / length;
-	vtx.x *= length_1;
-	vtx.y *= length_1;
-	vtx.z *= length_1;
+  float length_1;
+  float length = EMath::vectorLength(vtx);
+  if (EM_ZERO(length)) {
+    vtx.x = 0.0f;
+    vtx.y = 1.0f;
+    vtx.z = 0.0f;
+    return;
+  }
+  length_1 = 1.0f / length;
+  vtx.x *= length_1;
+  vtx.y *= length_1;
+  vtx.z *= length_1;
 }
 
 /* */
 void EMath::scaleVector(Vertex3D & vtx, float sc) {
-	vtx.x *= sc;
-	vtx.y *= sc;
-	vtx.z *= sc;
+  vtx.x *= sc;
+  vtx.y *= sc;
+  vtx.z *= sc;
 }
 
 /* Projection of vector A onto B. */
 float EMath::projection(const Vertex3D & vtxA, const Vertex3D & vtxB, Vertex3D & vtxOut) {
-	float k =(vtxA.x * vtxB.x  +  vtxA.y * vtxB.y  +  vtxA.z * vtxB.z) /
+  float k =(vtxA.x * vtxB.x  +  vtxA.y * vtxB.y  +  vtxA.z * vtxB.z) /
 		(vtxB.x * vtxB.x  +  vtxB.y * vtxB.y  +  vtxB.z * vtxB.z);
-	
-	vtxOut.x = k * vtxB.x;
-	vtxOut.y = k * vtxB.y;
-	vtxOut.z = k * vtxB.z;
-	
-	return k;
+  
+  vtxOut.x = k * vtxB.x;
+  vtxOut.y = k * vtxB.y;
+  vtxOut.z = k * vtxB.z;
+  
+  return k;
 }
 
 float EMath::perpendicular(const Vertex3D & vtxA, const Vertex3D & vtxB, Vertex3D & vtxOut) {
-	float k =(vtxA.x * vtxB.x  +  vtxA.y * vtxB.y  +  vtxA.z * vtxB.z) /
-		(vtxB.x * vtxB.x  +  vtxB.y * vtxB.y  +  vtxB.z * vtxB.z);
-	
-	vtxOut.x = vtxA.x - k * vtxB.x;
-	vtxOut.y = vtxA.y - k * vtxB.y;
-	vtxOut.z = vtxA.z - k * vtxB.z;
-	
-	return k;
+  float k =(vtxA.x * vtxB.x  +  vtxA.y * vtxB.y  +  vtxA.z * vtxB.z) /
+    (vtxB.x * vtxB.x  +  vtxB.y * vtxB.y  +  vtxB.z * vtxB.z);
+  
+  vtxOut.x = vtxA.x - k * vtxB.x;
+  vtxOut.y = vtxA.y - k * vtxB.y;
+  vtxOut.z = vtxA.z - k * vtxB.z;
+  
+  return k;
 }
 
 /* */
 float EMath::polygonZNormal(const Vertex3D & edgeA, const Vertex3D & edgeB, 
-																	 const Vertex3D & edgeC) {
-	return ((edgeB.x - edgeA.x) * (edgeC.y - edgeB.y)) - ((edgeC.x - edgeB.x) * (edgeB.y - edgeA.y));
+			    const Vertex3D & edgeC) {
+  return ((edgeB.x - edgeA.x) * (edgeC.y - edgeB.y)) - ((edgeC.x - edgeB.x) * (edgeB.y - edgeA.y));
 }
 
 
@@ -267,20 +312,20 @@ float EMath::polygonZNormal(const Vertex3D & edgeA, const Vertex3D & edgeB,
  * If k > 0 the vtxIn vector is comming from behind the wall and
  * no reflection is made. */
 void EMath::reflection(const Vertex3D & vtxIn, const Vertex3D & vtxWall, Vertex3D & vtxOut, 
-															bool bBehind) {
-	Vertex3D vtxPro;
-	float k =(vtxIn.x * vtxWall.x  +  vtxIn.y * vtxWall.y  +  vtxIn.z * vtxWall.z) /
-		(vtxWall.x * vtxWall.x  +  vtxWall.y * vtxWall.y  +  vtxWall.z * vtxWall.z);
-
-	if ( k < 0 || bBehind)	{
-		vtxPro.x = k * vtxWall.x;
-		vtxPro.y = k * vtxWall.y;
-		vtxPro.z = k * vtxWall.z;
-
-		vtxOut.x = - vtxPro.x - vtxPro.x + vtxIn.x;
-		vtxOut.y = - vtxPro.y - vtxPro.y + vtxIn.y;
-		vtxOut.z = - vtxPro.z - vtxPro.z + vtxIn.z;
-	}
+		       bool bBehind) {
+  Vertex3D vtxPro;
+  float k =(vtxIn.x * vtxWall.x  +  vtxIn.y * vtxWall.y  +  vtxIn.z * vtxWall.z) /
+    (vtxWall.x * vtxWall.x  +  vtxWall.y * vtxWall.y  +  vtxWall.z * vtxWall.z);
+  
+  if ( k < 0 || bBehind)	{
+    vtxPro.x = k * vtxWall.x;
+    vtxPro.y = k * vtxWall.y;
+    vtxPro.z = k * vtxWall.z;
+    
+    vtxOut.x = - vtxPro.x - vtxPro.x + vtxIn.x;
+    vtxOut.y = - vtxPro.y - vtxPro.y + vtxIn.y;
+    vtxOut.z = - vtxPro.z - vtxPro.z + vtxIn.z;
+  }
 }
 
 /* First the projection of vtxIn onto vtxWall is counted.
@@ -288,54 +333,78 @@ void EMath::reflection(const Vertex3D & vtxIn, const Vertex3D & vtxWall, Vertex3
  * If k > 0 the vtxIn vector is comming from behind the wall and
  * no reflection is made. */
 void EMath::reflectionDamp(const Vertex3D & vtxIn, const Vertex3D & vtxWall, Vertex3D & vtxOut, 
-																	float damp, float extra, float scale, bool bBehind) {
-	Vertex3D vtxPro;
-	float k =(vtxIn.x * vtxWall.x  +  vtxIn.y * vtxWall.y  +  vtxIn.z * vtxWall.z) /
-		(vtxWall.x * vtxWall.x  +  vtxWall.y * vtxWall.y  +  vtxWall.z * vtxWall.z);
-
-	if ( k < 0 || bBehind) {
-		vtxPro.x = k * vtxWall.x;
-		vtxPro.y = k * vtxWall.y;
-		vtxPro.z = k * vtxWall.z;
-
-		vtxOut.x = (vtxIn.x - vtxPro.x - vtxPro.x * damp + vtxWall.x * extra) * scale;
-		vtxOut.y = (vtxIn.y - vtxPro.y - vtxPro.y * damp + vtxWall.y * extra) * scale;
-		vtxOut.z = (vtxIn.z - vtxPro.z - vtxPro.z * damp + vtxWall.z * extra) * scale;
-	}
+			   float damp, float extra, float scale, bool bBehind) {
+  Vertex3D vtxPro;
+  float k =(vtxIn.x * vtxWall.x  +  vtxIn.y * vtxWall.y  +  vtxIn.z * vtxWall.z) /
+    (vtxWall.x * vtxWall.x  +  vtxWall.y * vtxWall.y  +  vtxWall.z * vtxWall.z);
+  
+  if ( k < 0 || bBehind) {
+    vtxPro.x = k * vtxWall.x;
+    vtxPro.y = k * vtxWall.y;
+    vtxPro.z = k * vtxWall.z;
+    
+    vtxOut.x = (vtxIn.x - vtxPro.x - vtxPro.x * damp + vtxWall.x * extra) * scale;
+    vtxOut.y = (vtxIn.y - vtxPro.y - vtxPro.y * damp + vtxWall.y * extra) * scale;
+    vtxOut.z = (vtxIn.z - vtxPro.z - vtxPro.z * damp + vtxWall.z * extra) * scale;
+  }
 }
 
+/*
 float EMath::vectorLength(const Vertex3D & vtx) {
-	return EMath::emSqrt(vtx.x * vtx.x + vtx.y * vtx.y + vtx.z * vtx.z);
+return EMath::emSqrt(vtx.x * vtx.x + vtx.y * vtx.y + vtx.z * vtx.z);
 }
 
 float EMath::vectorLengthSqr(const Vertex3D & vtx) {
-	return (vtx.x * vtx.x + vtx.y * vtx.y + vtx.z * vtx.z);
+return (vtx.x * vtx.x + vtx.y * vtx.y + vtx.z * vtx.z);
 }
+*/
 
 /* */
 float EMath::volume(const Vertex3D & vtxA, const Vertex3D & vtxB, const Vertex3D & vtxC) {
-	return vtxA.x*( vtxB.y*vtxC.z - vtxB.z*vtxC.y ) - 
-		vtxA.y*( vtxB.x*vtxC.z - vtxB.z*vtxC.x ) + 
-		vtxA.z*( vtxB.x*vtxC.y - vtxB.y*vtxC.x );
+  return vtxA.x*( vtxB.y*vtxC.z - vtxB.z*vtxC.y ) - 
+    vtxA.y*( vtxB.x*vtxC.z - vtxB.z*vtxC.x ) + 
+    vtxA.z*( vtxB.x*vtxC.y - vtxB.y*vtxC.x );
+}
+
+void EMath::rotationArc(const Vertex3D & vtxa, const Vertex3D & vtxb, Quaternion & qOut) {
+  Vertex3D vtxA = vtxa;
+  Vertex3D vtxB = vtxb;
+  EMath::normalizeVector(vtxA);
+  EMath::normalizeVector(vtxB);
+  Vertex3D vtxCross;
+  EMath::crossProduct(vtxA, vtxB, vtxCross);
+  float dot = EMath::dotProduct(vtxA, vtxB);
+  float sq = EMath::emSqrt((1+dot)*2);
+  qOut.x = vtxCross.x / sq;
+  qOut.y = vtxCross.y / sq;
+  qOut.z = vtxCross.z / sq;
+  qOut.w = sq / 2.0f;
+}
+
+void EMath::quaternionMulti(const Quaternion & qA, const Quaternion & qB, Quaternion & qOut) {
+  qOut.w = qA.w*qB.w - qA.x*qB.x - qA.y*qB.y - qA.z*qB.z; 
+  qOut.x = qA.w*qB.x + qA.x*qB.w + qA.y*qB.z - qA.z*qB.y; 
+  qOut.y = qA.w*qB.y - qA.x*qB.z + qA.y*qB.w + qA.z*qB.x; 
+  qOut.z = qA.w*qB.z + qA.x*qB.y - qA.y*qB.x + qA.z*qB.w; 
 }
 
 float EMath::quadratic(float f0, float f1, float f2, float t) {
-	// this was a beizer curve
-	// float t1 = 1.0f - t;
-	// return t1*t1*f0 + 2.0f*t*t1*f1 + t*t*f2;
-	float df1 = f1 - f0;
-	float df2 = f2 - f1;
-	float ddf = df2 - df1;
-	return f0 + t*df1 + 0.5f*t*(t-1.0f)*ddf;
+  // this was a beizer curve
+  // float t1 = 1.0f - t;
+  // return t1*t1*f0 + 2.0f*t*t1*f1 + t*t*f2;
+  float df1 = f1 - f0;
+  float df2 = f2 - f1;
+  float ddf = df2 - df1;
+  return f0 + t*df1 + 0.5f*t*(t-1.0f)*ddf;
 }
 
 float EMath::cubic(float f0, float f1, float f2, float f3, float t) {
-	float df1 = f1 - f0;
-	float df2 = f2 - f1;
-	float df3 = f3 - f2;
-	float ddf1 = df2 - df1;
-	float ddf2 = df3 - df2;
-	float dddf = ddf2 - ddf1;
-	return f0 + t*df1 + 0.5*t*(t-1.0f)*ddf1 + 0.166667f*t*(t-1.0f)*(t-2.0f)*dddf;
+  float df1 = f1 - f0;
+  float df2 = f2 - f1;
+  float df3 = f3 - f2;
+  float ddf1 = df2 - df1;
+  float ddf2 = df3 - df2;
+  float dddf = ddf2 - ddf1;
+  return f0 + t*df1 + 0.5*t*(t-1.0f)*ddf1 + 0.166667f*t*(t-1.0f)*(t-2.0f)*dddf;
 }
 

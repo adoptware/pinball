@@ -11,6 +11,7 @@
 
 #include "Behavior.h"
 #include "StateMachine.h"
+#include "EMath.h"
 
 /** A plunger, the . */
 class PlungerBehavior : public Behavior {
@@ -30,6 +31,8 @@ class PlungerBehavior : public Behavior {
   int m_iCounter;
   int m_sigPlunger;
   int m_iSound;
+  bool m_bFirst;
+  Vertex3D m_vtxTr;
 };
 
 #endif // ARMBEHAVIOR_H

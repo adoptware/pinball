@@ -16,6 +16,7 @@
 #include "PlungerBehavior.h"
 #include "Score.h"
 #include "BallGroup.h"
+#include "Table.h"
 #include <string>
 
 #if EM_DEBUG
@@ -45,15 +46,7 @@ BounceBehavior::BounceBehavior(int ball) : Behavior() {
   m_vtxOldDir.z = 0.0;
   m_iDirFactor = 0;
   m_iCollisionPrio = 0;
-  switch (m_iBall) {
-  case PBL_BALL_1: if (this->getParent() != NULL) this->getParent()->setTranslation(-4,0,34); 
-    break;
-  case PBL_BALL_2: if (this->getParent() != NULL) this->getParent()->setTranslation(-8, 0, 34); 
-    break;
-  case PBL_BALL_3: if (this->getParent() != NULL) this->getParent()->setTranslation(-12, 0, 34); 
-    break;
-  default: if (this->getParent() != NULL) this->getParent()->setTranslation(-16, 0, 34);
-  }
+  m_bFire = false;
   this->setType(PBL_TYPE_BOUNCEBEH);
 }
 
@@ -68,68 +61,33 @@ void BounceBehavior::getDirection(Vertex3D & vtx) {
   vtx.z = m_vtxOldDir.z;
 }
 
+void BounceBehavior::activateBall() {
+  m_bAlive = true;
+  this->getParent()->setTranslation(19.5f, 0.0f, 30.0f);
+  m_vtxDir.x = 0;
+  m_vtxDir.y = 0;
+  m_vtxDir.z = 0;
+}
+
 void BounceBehavior::StdOnSignal() {
   EM_COUT("BounceBehavior::onSignal()", 0);
   OnSignal( PBL_SIG_RESET_ALL) {
     m_bAlive = false;
-    switch (m_iBall) {
-    case PBL_BALL_1: this->getParent()->setTranslation(-4,0,40); break;
-    case PBL_BALL_2: this->getParent()->setTranslation(-8, 0, 40); break;
-    case PBL_BALL_3: this->getParent()->setTranslation(-12, 0, 40); break;
-    default: this->getParent()->setTranslation(-16, 0, 40);
-    }
+    this->getParent()->setTranslation(-4*m_iBall, 0, 40);
   }
-
-  OnSignal( PBL_SIG_BNUDGE) {
+  
+  OnSignal( PBL_SIG_BNUDGE ) {
     m_vtxDir.z -= SPEED_FCT*0.1f;
   } 
-  ElseOnSignal( PBL_SIG_TNUDGE) {
+  ElseOnSignal( PBL_SIG_TNUDGE ) {
     m_vtxDir.z += SPEED_FCT*0.1f;
   }
-  ElseOnSignal( PBL_SIG_LNUDGE) {
+  ElseOnSignal( PBL_SIG_LNUDGE ) {
     m_vtxDir.x -= SPEED_FCT*0.1f;
   } 
-  ElseOnSignal( PBL_SIG_RNUDGE) {
+  ElseOnSignal( PBL_SIG_RNUDGE ) {
     m_vtxDir.x += SPEED_FCT*0.1f;
   }
-
-#define ACTIVATE_BALL				  			\
-m_bAlive = true;					\
-this->getParent()->setTranslation(19.5f, 0.0f, 20.0f);	\
-m_vtxDir.x = 0; 	              \
-m_vtxDir.y = 0;						\
-m_vtxDir.z = 0;
-
-
-    //m_vtxDir.z = -MAX_SPEED + 0.02*SPEED_FCT*rand()/RAND_MAX + 0.08;
-
-    // debug stuff
-    if (Keyboard::isKeyDown(SDLK_a)) {
-      ACTIVATE_BALL;
-    }
-
-    OnSignal( PBL_SIG_BALL1_ON ) {
-      if (m_iBall == PBL_BALL_1) {
-	EM_COUT("BounceBehavior::onSignal() ball 1", 0);
-	ACTIVATE_BALL;
-      }
-    }
-    ElseOnSignal( PBL_SIG_BALL2_ON ) {
-      if (m_iBall == PBL_BALL_2) {
-	ACTIVATE_BALL;
-      }
-    }
-    ElseOnSignal( PBL_SIG_BALL3_ON ) {
-      if (m_iBall == PBL_BALL_3) {
-	ACTIVATE_BALL;
-      }
-    }
-    ElseOnSignal( PBL_SIG_BALL4_ON ) {
-      if (m_iBall == PBL_BALL_4) {
-	ACTIVATE_BALL;
-      }
-    }
-#undef ACTIVATE_BALL
 }
 
 void BounceBehavior::checkSpeed() {
@@ -140,69 +98,58 @@ void BounceBehavior::checkSpeed() {
     m_vtxDir.y /= len_1;
     m_vtxDir.z /= len_1;
   }
-  if (len > FIRE_SPEED) {
-    EmAssert(this->getParent()->getUserProperties() & 
-	     (PBL_BALL_1 | PBL_BALL_2 | PBL_BALL_3 | PBL_BALL_4),
+  if (len > FIRE_SPEED && m_bFire) {
+    EmAssert(this->getParent()->getUserProperties() & PBL_BALL,
 	     "BounceBehavior::onTick()");
     ((BallGroup*)this->getParent())->setFireTimer(20);
   }
+  
   if (m_vtxDir.y > MAX_SPEED_Y_DOWN) m_vtxDir.y = MAX_SPEED_Y_DOWN;
 }
 
 void BounceBehavior::onTick() {
+  EM_COUT("BounceBehavior::onTick()", 0);
   EmAssert(this->getParent() != NULL, "BounceBehavior::onTick()");
-  if (!m_bAlive) return;
-
-  // reset collision
-  m_iCollisionPrio = 0;
-
-  // debug stuff
+  
+  if (m_bAlive) {
+    // reset collision
+    m_iCollisionPrio = 0;
+    
+    // debug stuff
 #if EM_DEBUG
-  if (Keyboard::isKeyDown(SDLK_i)) m_vtxDir.z -= 0.005f;
-  if (Keyboard::isKeyDown(SDLK_k)) m_vtxDir.z += 0.005f;
-  if (Keyboard::isKeyDown(SDLK_j)) m_vtxDir.x -= 0.005f;
-  if (Keyboard::isKeyDown(SDLK_l)) m_vtxDir.x += 0.005f;
-
-  if (Keyboard::isKeyDown(SDLK_v)) return;
+    if (Keyboard::isKeyDown(SDLK_i)) m_vtxDir.z -= 0.005f;
+    if (Keyboard::isKeyDown(SDLK_k)) m_vtxDir.z += 0.005f;
+    if (Keyboard::isKeyDown(SDLK_j)) m_vtxDir.x -= 0.005f;
+    if (Keyboard::isKeyDown(SDLK_l)) m_vtxDir.x += 0.005f;
+    
+    if (Keyboard::isKeyDown(SDLK_v)) return;
 #endif
-
-  // Gravity
-  m_vtxDir.z += Z_GRAVITY;
-  m_vtxDir.y += Y_GRAVITY;
-  float x, y, z;
-  this->getParent()->getTranslation(x, y, z);
-  if (y <= 0) {
-    this->getParent()->addTranslation(0,-y,0);
-    m_vtxDir.y = EM_MAX(m_vtxDir.y, 0);
-  }
-
-  EM_COUT("BounceBehavior::onTick() " << x <<" "<< y <<" "<< z, 0);
-
-  this->checkSpeed();
-  // move the ball
-  m_vtxOldDir = m_vtxDir;
-  this->getParent()->addTranslation(m_vtxDir.x, m_vtxDir.y, m_vtxDir.z);
-
-  if (z > 39) {
-    m_bAlive = false;
-    switch (m_iBall) {
-    case PBL_BALL_1: SendSignal( PBL_SIG_BALL1_OFF, 0, this->getParent(), NULL ); 
-      Score::getInstance()->unActivateBall(PBL_BALL_1);
-      this->getParent()->setTranslation(-4, 0, 40); break;
-    case PBL_BALL_2: SendSignal( PBL_SIG_BALL2_OFF, 0, this->getParent(), NULL ); 
-      Score::getInstance()->unActivateBall(PBL_BALL_2);
-      this->getParent()->setTranslation(-8, 0, 40); break;
-    case PBL_BALL_3: SendSignal( PBL_SIG_BALL3_OFF, 0, this->getParent(), NULL ); 
-      Score::getInstance()->unActivateBall(PBL_BALL_3);
-      this->getParent()->setTranslation(-12, 0, 40); break;
-    case PBL_BALL_4: SendSignal( PBL_SIG_BALL4_OFF, 0, this->getParent(), NULL );
-      Score::getInstance()->unActivateBall(PBL_BALL_4);
-      this->getParent()->setTranslation(-16, 0, 40); break;
+    
+    // Gravity
+    m_vtxDir.z += Z_GRAVITY;
+    m_vtxDir.y += Y_GRAVITY;
+    float x, y, z;
+    this->getParent()->getTranslation(x, y, z);
+    if (y <= 0) {
+      this->getParent()->addTranslation(0,-y,0);
+      m_vtxDir.y = EM_MAX(m_vtxDir.y, 0);
+    }
+    
+    EM_COUT("BounceBehavior::onTick() " << x <<" "<< y <<" "<< z, 0);
+    
+    this->checkSpeed();
+    // move the ball
+    m_vtxOldDir = m_vtxDir;
+    this->getParent()->addTranslation(m_vtxDir.x, m_vtxDir.y, m_vtxDir.z);
+    
+    if (z > 39) {
+      m_bAlive = false;
+      Table::getInstance()->unActivateBall(m_iBall);
+      SendSignal( PBL_SIG_BALL_OFF, 0, this->getParent(), NULL );
     }
   }
-
-  EmAssert(this->getParent()->getUserProperties() & 
-	   (PBL_BALL_1 | PBL_BALL_2 | PBL_BALL_3 | PBL_BALL_4),
+  
+  EmAssert(this->getParent()->getUserProperties() & PBL_BALL,
 	   "BounceBehavior::onTick()");
   ((BallGroup*)this->getParent())->tick();
 }
@@ -258,7 +205,7 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     }
 
     if (pGroup->getUserProperties() & PBL_LOCK) {
-      Score::getInstance()->lockBall(m_iBall);
+      Table::getInstance()->lockBall(m_iBall);
     }
 
     if (m_iCollisionPrio > 5) return;
@@ -271,7 +218,7 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     m_vtxDir.x = (tx-bx)*0.1;
     m_vtxDir.y = 0;
     m_vtxDir.z = (tz-bz)*0.1;
-    EM_COUT("BounceBehavior.onCollision() cave\n", 0);
+    EM_COUT("BounceBehavior::onCollision() cave", 0);
 
   } else if (pGroup->getUserProperties() & PBL_BUMPER) {
     // bumper
@@ -280,7 +227,7 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     // use bumper as base
     EMath::reflectionDamp(m_vtxOldDir, vtxW, m_vtxDir, (float)1.0, 
 			  (float)SPEED_FCT*0.5, 1, true);
-    EM_COUT("BounceBehavior.onCollision() bumper\n", 0);
+    EM_COUT("BounceBehavior::onCollision() bumper", 0);
 
   } else if (pGroup->getUserProperties() & PBL_ACTIVE_ARM) {
     // active arm, the given speed is caclulated with a look up table
@@ -293,7 +240,7 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
       throw string("ArmBehavior expected in BounceBehavior.cpp");
     }
 
-    EM_COUT("arm", 1);
+    EM_COUT("BounceBehavior::onCollision()", 0);
     Matrix mtxArmRot, mtxArmRotInv;
     // the rotation of the arm
     Vertex3D vtxArmRot; 
@@ -419,10 +366,11 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     }
     EMath::reflectionDamp(m_vtxOldDir, vtxWall, m_vtxDir, (float)0.5, 0, 1);
     // move the ball slightly off the wall
-    this->getParent()->addTranslation(vtxWall.x * BORDER, vtxWall.y * BORDER, vtxWall.z * BORDER);
+    this->getParent()->addTranslation(vtxWall.x * BORDER, vtxWall.y * BORDER, 
+				      vtxWall.z * BORDER);
     EM_COUT("BounceBehavior.onCollision() walls\n" , 0);
 
-  } else if (pGroup->getUserProperties() & (PBL_BALL_1 | PBL_BALL_2 | PBL_BALL_3 | PBL_BALL_4)) {
+  } else if (pGroup->getUserProperties() & PBL_BALL) {
     // ball
     if (m_iCollisionPrio > 0) return;
     m_iCollisionPrio = 0;

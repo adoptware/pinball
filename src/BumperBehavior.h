@@ -17,17 +17,18 @@
 /** A behavior for the pinball game. */
 class BumperBehavior : public Behavior {
  public:
-	BumperBehavior();
-	~BumperBehavior();
-	void onTick();
-	void StdOnSignal() {};
-	void StdOnCollision();
-	inline void setSound(int s) { m_iSound = s; };
-	inline int getSound() { return m_iSound; };
+  BumperBehavior();
+  ~BumperBehavior();
+  void onTick();
+  void StdOnSignal();
+  void StdOnCollision();
+  inline void setSound(int s) { m_iSound = s; };
+  inline int getSound() { return m_iSound; };
  private:
-	int m_sigBump;
-	int m_iLightCounter;
-	int m_iSound;
+  int m_sigBump;
+  int m_iLightCounter;
+  int m_iSound;
+  bool m_bTilt;
 };
 
 #endif // BounceBehavior
