@@ -118,10 +118,6 @@ int Table::locked() {
 // Called to load a new table
 int Table::loadLevel(Engine * engine, const char * subdir)
 {
-  // Try to save the last high scores for the current table
-  Config::getInstance()->setHighScores(m_mapHighScores);
-  Config::getInstance()->writeHighScoresFile();
-
   // Clear old engine objects
   this->clear(engine);
   m_sTableName = string(subdir); 
@@ -166,10 +162,6 @@ int Table::loadLevel(Engine * engine, const char * subdir)
   eyebeh->setSound(SoundUtil::getInstance()->loadSample(filename.c_str()));
   groupCT->setBehavior(eyebeh);
 
-  // Read high scores for the current table
-  Config::getInstance()->readHighScoresFile();
-  Config::getInstance()->getHighScores(m_mapHighScores);
-
   // Reset pinball
   SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
 
@@ -190,8 +182,62 @@ string Table::getTableDataDirName()
   return datadir;
 }
 
-bool Table::isItHighScore(const int nScore)
+bool Table::isItHighScore(const int nNewScore)
 {
-  // TODO after implementing high scores table return here the last value
+  // The first score is the lowest
+  multimap<int, string>::iterator it = m_mapHighScores.begin();
+
+  int nScore = (*it).first;
+
+  if (nNewScore > nScore)
+    return true;
+
   return false;
+}
+
+void Table::readHighScores()
+{
+  Config::getInstance()->readHighScoresFile();
+  Config::getInstance()->getHighScores(m_mapHighScores);
+}
+
+void Table::writeHighScores()
+{
+  Config::getInstance()->setHighScores(m_mapHighScores);
+  Config::getInstance()->writeHighScoresFile();
+}
+
+bool Table::getHighScoresData(list<string>& listHighScores)
+{
+  int nScore = 0;
+  string sName;
+
+  char sScore[11];
+
+  for (multimap<int, string>::iterator it = m_mapHighScores.begin();
+       it != m_mapHighScores.end(); it++)
+  {
+    nScore = (*it).first;
+    sName  = (*it).second;
+
+    string sRow(25, ' ');
+
+    sprintf(sScore, "%10d", nScore);
+
+    sRow.replace(0, 10, sName);
+    sRow.replace(12, 21, sScore);
+
+    listHighScores.push_front(sRow);
+  }
+
+  return true;
+}
+
+void Table::saveNewHighScore(int nNewHighScore)
+{
+  // Remove the first element, it's the lowest score
+  multimap<int, string>::iterator it = m_mapHighScores.begin();
+  m_mapHighScores.erase(it);
+
+  m_mapHighScores.insert(it, pair<int, string>(nNewHighScore, "new"));
 }
