@@ -391,6 +391,7 @@ MenuItem* createMenus(Engine * engine) {
   if (datadir != NULL && getcwd(cwd, 256) != NULL) {
     struct dirent * entry;
     struct stat statbuf;
+    cerr<<  Config::getInstance()->getDataDir() <<endl; //!+rzr
     chdir(Config::getInstance()->getDataDir());
     while ((entry = readdir(datadir)) != NULL) {
       lstat(entry->d_name, &statbuf);

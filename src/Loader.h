@@ -19,6 +19,7 @@ class Engine;
 class Shape3D;
 class Polygon;
 class Behavior;
+class LoaderModule;
 
 #define LOADER_FIRSTSIGNAL 10000
 #define LOADER_FIRSTVARIABLE 20000
@@ -83,6 +84,7 @@ class Loader {
   void loadMisc(ifstream & file, istringstream & ist, Engine * engine, Group * group, Behavior * beh);
 
   static Loader * p_Loader;
+
   bool m_bModules;
   int m_iLineNumber;
   int m_iNextSignal;
@@ -91,6 +93,8 @@ class Loader {
   map<int, string> m_hSignalString;
   map<string, int> m_hVariableInt;
   map<int, string> m_hVariableString;
+
+  LoaderModule* m_loaderModule; //!+rzr
 };
 
 #endif // LOADER_H
