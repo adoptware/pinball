@@ -23,6 +23,8 @@ class BallGroup;
 
 #define MAX_BALL 3
 
+#define EM_MAX_HIGHSCORES 5
+
 class Table {
  protected:
   Table();
