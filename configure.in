@@ -101,6 +101,14 @@ AC_SUBST(MATHLIB)
 dnl Check for OpenGL
 AC_MSG_CHECKING(for OpenGL support)
 AC_TRY_COMPILE([
+//!+rzr: i need some help with autoconf + wingw32
+// Is it the right place (in configure.in) for this :
+#ifdef WIN32 // !+rzr patch 4 w32 DLL calls // might not the right place
+#ifndef WINAPI  // what is it ? 
+#define WINAPI __stdcall  // not sure it is good , but it works
+#endif 
+#endif // !-rzr  // rzr(a)chez.com 
+//!-rzr
  #if defined(__APPLE__) && defined(__MACH__)
  #include <OpenGL/gl.h>
   #else
