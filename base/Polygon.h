@@ -36,11 +36,11 @@ class Shape3D;
  * A shindex vertex may be refered by several polygons ie. polyindex edges.
  * @see Shape3D
  */
-class Polygon {
+class Polygon3D {
 	public:
-		Polygon(Shape3D* s, int size = 3);
-		~Polygon();
-		void copy(Polygon * poly);
+		Polygon3D(Shape3D* s, int size = 3);
+		~Polygon3D();
+		void copy(Polygon3D * poly);
 		/** Add add a shape vertex into this polygon- */
 		void add(int shindex);
 		/** Returns the polyindex if the vertex is included. Else -1. */

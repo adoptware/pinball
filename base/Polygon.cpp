@@ -13,8 +13,8 @@
 #include "Polygon.h"
 #include "Shape3D.h"
 
-Polygon::Polygon(Shape3D* s, int size) {
-	EmAssert(s != NULL, "Polygon::Polygon shape NULL in constructor");
+Polygon3D::Polygon3D(Shape3D* s, int size) {
+	EmAssert(s != NULL, "Polygon3D::Polygon3D shape NULL in constructor");
 	m_iProperties = 0;
 	m_nmlSrc.x = 0;
 	m_nmlSrc.y = 1;
@@ -32,10 +32,10 @@ Polygon::Polygon(Shape3D* s, int size) {
 	p_Shape3D = s;
 }
 
-Polygon::~Polygon() {
+Polygon3D::~Polygon3D() {
 }
 
-void Polygon::copy(Polygon * poly) {
+void Polygon3D::copy(Polygon3D * poly) {
 	if (poly == NULL) return;
 	m_nmlSrc = poly->m_nmlSrc;
 	m_nmlTrans = poly->m_nmlTrans;
@@ -48,20 +48,20 @@ void Polygon::copy(Polygon * poly) {
 	}
 }
 
-void Polygon::setProperty(int p) {
+void Polygon3D::setProperty(int p) {
 	m_iProperties |= p;
 }
 
-void Polygon::unsetProperty(int p) {
+void Polygon3D::unsetProperty(int p) {
 	m_iProperties -= (m_iProperties & p);
 }
 
-int Polygon::getProperties() {
+int Polygon3D::getProperties() {
 	return m_iProperties;
 }
 
-void Polygon::setColor(float r, float g, float b, float a) {
-	EmAssert(p_Shape3D != NULL, "Polygon::setColor shape NULL");
+void Polygon3D::setColor(float r, float g, float b, float a) {
+	EmAssert(p_Shape3D != NULL, "Polygon3D::setColor shape NULL");
 	vector<int>::iterator iter = m_vIndex.begin();
 	vector<int>::iterator end = m_vIndex.end();
 	for (; iter != end; ++iter) {
@@ -69,7 +69,7 @@ void Polygon::setColor(float r, float g, float b, float a) {
 	}
 }
 
-void Polygon::decrement(int shindex) {
+void Polygon3D::decrement(int shindex) {
 	if (shindex < 0) return;
 	vector<int>::iterator iter = m_vIndex.begin();
 	vector<int>::iterator end = m_vIndex.end();
@@ -78,7 +78,7 @@ void Polygon::decrement(int shindex) {
 	}
 }
 
-bool Polygon::connected(int shindexA, int shindexB) {
+bool Polygon3D::connected(int shindexA, int shindexB) {
 	if (this->includes(shindexA) == -1) return false;
 	if (this->includes(shindexB) == -1) return false;
 	if (this->includes(shindexA) == (this->includes(shindexB) + 1)) return true;
@@ -88,49 +88,49 @@ bool Polygon::connected(int shindexA, int shindexB) {
 	return false;
 }
 
-int Polygon::getIndex(int polyindex) {
+int Polygon3D::getIndex(int polyindex) {
 	if (polyindex < 0 || polyindex >= (signed)m_vIndex.size()) {
 		return -1;
 	}
 	return m_vIndex[polyindex];
 }
 
-int  Polygon::getIndexSize() {
+int  Polygon3D::getIndexSize() {
 	return m_vIndex.size();
 }
 
-Color * Polygon::getColor(int index) {
-	EmAssert(p_Shape3D != NULL, "Polygon::getColor shape NULL");
+Color * Polygon3D::getColor(int index) {
+	EmAssert(p_Shape3D != NULL, "Polygon3D::getColor shape NULL");
 	if (index < 0 || index >= (signed)m_vIndex.size()) {
 		return NULL;
 	}
 	return p_Shape3D->getColor(m_vIndex[index]);
 }
 
-void Polygon::setColor(int index, float r, float g, float b, float a) {
-	EmAssert(p_Shape3D != NULL, "Polygon::setColor shape NULL");
+void Polygon3D::setColor(int index, float r, float g, float b, float a) {
+	EmAssert(p_Shape3D != NULL, "Polygon3D::setColor shape NULL");
 	if (index < 0 || index >= (signed)m_vIndex.size()) {
 		return;
 	}
 	p_Shape3D->setColor(m_vIndex[index], r, g, b, a);
 }
 
-TexCoord * Polygon::getTexCoord(int index) {
-	EmAssert(p_Shape3D != NULL, "Polygon::getTexCoord shape NULL");
+TexCoord * Polygon3D::getTexCoord(int index) {
+	EmAssert(p_Shape3D != NULL, "Polygon3D::getTexCoord shape NULL");
 	if (index < 0 || index >= (signed)m_vIndex.size()) {
 		return NULL;
 	}
 	return p_Shape3D->getTexCoord(m_vIndex[index]);
 }
 
-void Polygon::add(int index) {
-	EmAssert(p_Shape3D != NULL, "Polygon::add shape NULL");
+void Polygon3D::add(int index) {
+	EmAssert(p_Shape3D != NULL, "Polygon3D::add shape NULL");
 	if (index < 0 || index >= (signed)p_Shape3D->m_vVtxSrc.size()) return;
 	m_vIndex.push_back(index);
 	if (m_vIndex.size() == 3) this->countNormal();
 }
 
-void Polygon::countNormal() {
+void Polygon3D::countNormal() {
   Vertex3D vtxA, vtxB;
   Vertex3D vtx0, vtx1, vtx2;
 
@@ -151,7 +151,7 @@ void Polygon::countNormal() {
 	EMath::normalizeVector(m_nmlSrc);
 }
 
-int Polygon::includes(int index) {
+int Polygon3D::includes(int index) {
 	if (p_Shape3D == NULL) return -1;
 	vector<int>::iterator iter = m_vIndex.begin();
 	vector<int>::iterator end = m_vIndex.end();
@@ -161,14 +161,14 @@ int Polygon::includes(int index) {
 	return -1;
 }
 
-void Polygon::moveUp(int polyindex) {
+void Polygon3D::moveUp(int polyindex) {
 	if (polyindex <= 0 || polyindex > (signed)m_vIndex.size()) return;
 	int tmp = m_vIndex[polyindex];
 	m_vIndex[polyindex] = m_vIndex[polyindex-1];
 	m_vIndex[polyindex-1] = tmp;
 }
 
-void Polygon::moveDown(int polyindex) {
+void Polygon3D::moveDown(int polyindex) {
 	if (polyindex < 0 || polyindex > (signed)m_vIndex.size()-1) return;
 	int tmp = m_vIndex[polyindex];
 	m_vIndex[polyindex] = m_vIndex[polyindex+1];

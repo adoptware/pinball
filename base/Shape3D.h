@@ -25,7 +25,7 @@
 #include "EMath.h"
 
 class Group;
-class Polygon;
+class Polygon3D;
 
 /** A Shape3D represents the visual part of a object.
  * First vertices are added the the shape with the
@@ -44,7 +44,7 @@ class Shape3D {
   int addAt(int index, float x, float y, float z,
 	    float r, float g, float b, float a, float u, float v);
   /** Adds a polygon. @see Polygon */
-  void add(Polygon*);
+  void add(Polygon3D*);
   /** Counts the polygon normals used for lightning. This must be called when
    * all vertices and polygons are added to the shape. */ 
   void countNormals();
@@ -71,11 +71,11 @@ class Shape3D {
    * removed. This function removes the vertex only if it is not used
    * by any polygon. */
   bool removeLooseVertex3D(int vtxindex);
-  Polygon* getPolygon(int index); 
+  Polygon3D* getPolygon(int index); 
   int getPolygonSize();
   /** Warning, this function is slow. */
-  int getPolygonIndex(Polygon * poly);
-  void removePolygon(Polygon * poly);
+  int getPolygonIndex(Polygon3D * poly);
+  void removePolygon(Polygon3D * poly);
   int find(float x, float y, float z, float diff);
   float getCollisionSize();
   void setParent(Group*);
@@ -85,7 +85,7 @@ class Shape3D {
   TexCoord * getTexCoord(int index);
   void setTexCoord(int index, float u, float v);
   
-  vector<Polygon*> m_vPolygon;
+  vector<Polygon3D*> m_vPolygon;
   vector<Vertex3D> m_vVtxSrc;
   vector<Vertex3D> m_vVtxTrans;
   vector<Vertex3D> m_vVtxAlign;

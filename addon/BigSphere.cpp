@@ -152,8 +152,8 @@ BigSphere::BigSphere(float fSize, int level, float fR, float fG, float fB, float
 
   // add the triangles to the shape
   for (int a = start; a < end; a +=  3) {
-    Polygon * p;
-    p = new Polygon(this, 3);
+    Polygon3D * p;
+    p = new Polygon3D(this, 3);
     p->add(triangles[a]);
     p->add(triangles[a+1]);
     p->add(triangles[a+2]);

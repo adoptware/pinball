@@ -23,11 +23,6 @@
 #define EM_OPENGL_LIGHTS 0
 #endif
 
-#if EM_DEBUG
-volatile int em_poly = 0;
-volatile float em_poly_m = 0;
-#endif
-
 /* Optimization observations:
  * * Voodoo 3 System
  * glVertex3f is a bit fatser than glVertex3fv ~3%.
@@ -35,6 +30,7 @@ volatile float em_poly_m = 0;
  */
 
 OpenGLVisitor * OpenGLVisitor::p_OpenGLVisitor = NULL;
+int OpenGLVisitor::m_iPoly = 0;
 
 OpenGLVisitor::OpenGLVisitor(){
   m_iMode = EM_GL_GCOL_TEX;
@@ -81,8 +77,7 @@ void OpenGLVisitor::empty() {
   } break;
   case EM_GL_CLEAN: {
 #if EM_DEBUG
-    em_poly_m = em_poly_m*0.0f + ((float)em_poly)*1.0f;
-    em_poly = 0;
+    m_iPoly = 0;
 #endif
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_ALPHA_TEST);
@@ -116,8 +111,8 @@ void OpenGLVisitor::visit(Group* g) {
 	glDisable(GL_POLYGON_OFFSET_FILL);
       }
 
-      vector<Polygon*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
-      vector<Polygon*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
+      vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
+      vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
 
       if ((*shapeIter)->m_Texture != NULL && filter != -1) {
 	// textured polygons	
@@ -133,7 +128,7 @@ void OpenGLVisitor::visit(Group* g) {
 	  for ( ; polyIter != polyEnd; ++polyIter) {
 	    if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
 #if EM_DEBUG
-	    ++em_poly;
+	    ++m_iPoly;
 #endif
 	    vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
 	    vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
@@ -154,7 +149,7 @@ void OpenGLVisitor::visit(Group* g) {
 	  for ( ; polyIter != polyEnd; ++polyIter) {
 	    if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
 #if EM_DEBUG
-	    ++em_poly;
+	    ++m_iPoly;
 #endif
 	    vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
 	    vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
@@ -181,7 +176,7 @@ void OpenGLVisitor::visit(Group* g) {
 	  for ( ; polyIter != polyEnd; ++polyIter) {
 	    if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
 #if EM_DEBUG
-	    em_poly++;
+	    ++m_iPoly;
 #endif
 	    vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
 	    vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
@@ -200,7 +195,7 @@ void OpenGLVisitor::visit(Group* g) {
 	  for ( ; polyIter != polyEnd; ++polyIter) {
 	    if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
 #if EM_DEBUG
-	    em_poly++;
+	    ++m_iPoly;
 #endif
 	    vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
 	    vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
@@ -235,20 +230,20 @@ void OpenGLVisitor::visit(Group* g) {
       glBegin(GL_POLYGON);
       glTexCoord2f(0, 0);
       glVertex3f(b->m_vtxAlign.x - b->m_fSizexD2, 
-								 b->m_vtxAlign.y + b->m_fSizeyD2, 
-								 b->m_vtxAlign.z);
+		 b->m_vtxAlign.y + b->m_fSizeyD2, 
+		 b->m_vtxAlign.z);
       glTexCoord2f(1, 0);
       glVertex3f(b->m_vtxAlign.x + b->m_fSizexD2, 
-								 b->m_vtxAlign.y + b->m_fSizeyD2, 
-								 b->m_vtxAlign.z);
+		 b->m_vtxAlign.y + b->m_fSizeyD2, 
+		 b->m_vtxAlign.z);
       glTexCoord2f(1, 1);
       glVertex3f(b->m_vtxAlign.x + b->m_fSizexD2, 
-								 b->m_vtxAlign.y - b->m_fSizeyD2, 
-								 b->m_vtxAlign.z);
+		 b->m_vtxAlign.y - b->m_fSizeyD2, 
+		 b->m_vtxAlign.z);
       glTexCoord2f(0, 1);
       glVertex3f(b->m_vtxAlign.x - b->m_fSizexD2, 
-								 b->m_vtxAlign.y - b->m_fSizeyD2, 
-								 b->m_vtxAlign.z);
+		 b->m_vtxAlign.y - b->m_fSizeyD2, 
+		 b->m_vtxAlign.z);
       glEnd();
 			
       EM_COUT_D("OpenGLVisitor::visit() BillBoard at " << b->m_vtxAlign.x <<" "<<
@@ -272,8 +267,8 @@ void OpenGLVisitor::visit(Group* g) {
 	glDisable(GL_POLYGON_OFFSET_FILL);
       }
 
-      vector<Polygon*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
-      vector<Polygon*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
+      vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
+      vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
       if ((*shapeIter)->m_Texture != NULL && filter != -1) {
 	// textured polygon
 	glEnable(GL_TEXTURE_2D);
@@ -284,13 +279,13 @@ void OpenGLVisitor::visit(Group* g) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 				
-	vector<Polygon*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
-	vector<Polygon*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
+	vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
+	vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
 	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALLWAYSLIT) {
 	  for ( ; polyIter != polyEnd; polyIter++) {
 	    if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
 #if EM_DEBUG
-	    em_poly++;
+	    ++m_iPoly;
 #endif
 	    // textured polygon
 	    vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
@@ -313,7 +308,7 @@ void OpenGLVisitor::visit(Group* g) {
 	  for ( ; polyIter != polyEnd; polyIter++) {
 	    if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
 #if EM_DEBUG
-	    em_poly++;
+	    ++m_iPoly;
 #endif
 	    // textured polygon
 	    vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
@@ -340,7 +335,7 @@ void OpenGLVisitor::visit(Group* g) {
 	  for ( ; polyIter != polyEnd; polyIter++) {
 	    if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
 #if EM_DEBUG
-	    em_poly++;
+	    ++m_iPoly;
 #endif
 	    vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
 	    vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
@@ -361,7 +356,7 @@ void OpenGLVisitor::visit(Group* g) {
 	  for ( ; polyIter != polyEnd; polyIter++) {
 	    if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
 #if EM_DEBUG
-	    em_poly++;
+	    ++m_iPoly;
 #endif
 	    vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
 	    vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();

@@ -57,6 +57,7 @@ class Engine : public Group {
   //  bool limitFPS(int fps);
   void delay(int ms);
   void setClearColor(float r, float g, float b, float a);
+  static float getFps() { return m_fFps; };
 #if EM_THREADS
   /** When using threaded ticks you must use this function instead of render(). */
   void renderThreadSafe();
@@ -65,6 +66,8 @@ class Engine : public Group {
   void resumeTickThread();
   void endTickThread();
 #endif
+ private:
+  static float m_fFps;
 };
 
 #endif // ENGINE_H
