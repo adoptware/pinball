@@ -1,4 +1,4 @@
-//#ident "$Id: Pinball.cpp,v 1.39 2003/05/28 05:21:22 henqvist Exp $"
+//#ident "$Id: Pinball.cpp,v 1.40 2003/06/01 22:37:44 rzr Exp $"
 /***************************************************************************
                           Pinball.cpp  -  description
                              -------------------
@@ -789,16 +789,78 @@ END_OF_MAIN();
 
 /// entry point function (main) for w32 codewarrior
 #if( (defined WIN32 ) && ( defined __MWERKS__ ) ) 
+
+extern "C" {
+/**
+ * @author: www.Philippe.COVAL.free.FR - $rev: $author
+ * Was need to convert win32 args to ansi way :
+ * int argc; char** argv;
+ * convertStringWords( GetCommandLine(), &argc, &argv);
+ * TODO : check if quotes are wanted or not ?
+ **/
+
+void convertStringWords( char * arg,
+                         int *argc, char*** argv);
+
+
+void convertStringWords( char * arg,
+                         int *argc, char*** argv)
+{
+  char *b, *e, *q;
+  int i=0;
+  int n;
+  b = arg;
+  q = e  = b ;
+  //debug("+ convertStringWords");  debug(arg);
+  *argc=0;
+  *argv = (char**) malloc( sizeof(char*));
+  
+  do {
+    while ( *b == ' ' ) b++;
+    q=e=b-1;
+  
+    do { q = strchr( q + 1 , '"'); }
+    while ( (q != NULL) && ( *(q-1) == '\\' ) );
+ 
+    do { e = strchr( e + 1 , ' '); }
+    while ( (e != NULL) && ( *(e-1) == '\\' ) );
+    //debugf("%u<%u ?\n",&q,&e);
+    
+    if ( (q != NULL) && ( e != NULL) && ( q < e ) ) {
+      //debug("quoted");
+      do { q = strchr( q + 1 , '"'); }
+      while ( (q != NULL) && ( *(q-1) == '\\' ) );
+      e = ++q;
+    }
+
+    if ( e != NULL) n = (e) - b; else n = strlen(b);
+    //debugf("n=%d=%s;\n", n,b);
+    
+    
+    *argv = (char**) realloc( *argv, ( (*argc) + 1 ) * sizeof(char*) );
+    (*argv)[ *argc ] = (char*) malloc ( n +1);
+    strncpy( (*argv)[ *argc ], b , n);
+    *( (*argv)[ *argc ] + n ) = '\0';
+    //debug( (*argv)[ *argc ] );
+    
+    b = e;    
+    (*argc)++;
+
+  } while ( e != NULL );
+  //debug("- convertStringWords");
+}
+
+} //extern "C"
+
 int WINAPI WinMain( HINSTANCE hInst,  HINSTANCE hPreInst, 
                     LPSTR lpszCmdLine,  int nCmdShow )
 {
-//   CreateMutex(); //allows only one instance of game
-//   if ( GetLastError() == ERROR_ALLREADY_EXISTS )  return ERROR_ALLREADY_EXISTS;
-  // TODO: get argc argv with 
-//  int argc=0; char** argv=0;
-   int argc = 1;   char* argv[1] = { 0 };
-   argv[0] = GetCommandLine(); //cut on space
+  int argc=0; char** argv = 0;
+  convertStringWords( GetCommandLine(), &argc, &argv);
+  
+  //int argc = 1;   char* argv[1] = { 0 };
+  //argv[0] = GetCommandLine(); //cut on space
   return main(argc,argv); 
 }
 #endif
-// EOF $Id: Pinball.cpp,v 1.39 2003/05/28 05:21:22 henqvist Exp $
+// EOF $Id: Pinball.cpp,v 1.40 2003/06/01 22:37:44 rzr Exp $

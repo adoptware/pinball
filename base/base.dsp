@@ -38,7 +38,7 @@ RSC=rc.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\Release"
-# PROP Intermediate_Dir "\tmp\pinball\win32\msvc6\Release\pinball\base"
+# PROP Intermediate_Dir "c:\tmp\pinball\win32\msvc6\Release\pinball\base"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I ".\\" /I "..\\" /D "NDEBUG" /D "_LIB" /D "WIN32" /D "_MBCS" /YX /FD /c
@@ -61,7 +61,7 @@ LIB32=link.exe -lib
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\Debug"
-# PROP Intermediate_Dir "\tmp\pinball\win32\msvc6\Debug\"
+# PROP Intermediate_Dir "c:\tmp\pinball\win32\msvc6\Debug\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\\" /I ".\\" /D "_DEBUG" /D "_LIB" /D "WIN32" /D "_MBCS" /YX /FD /GZ /c
@@ -150,10 +150,6 @@ SOURCE=Light.cpp
 # Begin Source File
 
 SOURCE=Node.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Obj3dsUtil.cpp
 # End Source File
 # Begin Source File
 

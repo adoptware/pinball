@@ -1,4 +1,4 @@
-//#ident "$Id: Loader.cpp,v 1.31 2003/05/27 11:53:32 rzr Exp $"
+//#ident "$Id: Loader.cpp,v 1.32 2003/06/01 22:37:44 rzr Exp $"
 /***************************************************************************
                             Loader.cpp -  description
                              -------------------
@@ -64,16 +64,16 @@ Loader::Loader() {
   m_iNextVariable = LOADER_FIRSTVARIABLE;
   m_bModules = true;
   m_LoaderModule = 0;
-  //#ifdef RZR_PATCHES_RZR
-  //m_Obj3dsUtil = 0;
-  //#endif
+#ifdef RZR_PATCHES_3DS
+  m_Obj3dsUtil = 0;
+#endif
 }
 
 Loader::~Loader() {
   delete m_LoaderModule;
-  //#ifdef RZR_PATCHES_RZR
-  //delete m_Obj3dsUtil;
-  //#endif
+#ifdef RZR_PATCHES_3DS
+  delete m_Obj3dsUtil;
+#endif
 };
 
 Loader * Loader::getInstance() {
@@ -1158,4 +1158,4 @@ void Loader::loadGroup3dsAscii(ifstream & file, istringstream & ist,
   EM_COUT("-Loader::loadShape3dsAscii", 0);
 }
 #endif //--------------------------------------------------------------------
-//EOF $Id: Loader.cpp,v 1.31 2003/05/27 11:53:32 rzr Exp $
+//EOF $Id: Loader.cpp,v 1.32 2003/06/01 22:37:44 rzr Exp $

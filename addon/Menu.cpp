@@ -1,3 +1,4 @@
+//#ident "$Id: Menu.cpp,v 1.11 2003/06/01 22:37:35 rzr Exp $"
 /***************************************************************************
                           Menu.cpp  -  description
                              -------------------
@@ -115,7 +116,7 @@ void MenuSub::draw() {
   
   vector<MenuItem*>::iterator menuIter = m_vMenuItem.begin();
   vector<MenuItem*>::iterator menuEnd = m_vMenuItem.end();
-  for (int a=0; menuIter != menuEnd; menuIter++, a++) {
+  { for (int a=0; menuIter != menuEnd; menuIter++, a++) {
     if (a == m_iCurrent) {
       char str[256];
       strncpy(str, "> ", 16);
@@ -125,7 +126,7 @@ void MenuSub::draw() {
     } else {
       p_EmFont->printRowCenter((*menuIter)->getText(), a+2 + yoffset);
     }
-  }
+  } }
   
   p_Engine->swap();
 }
@@ -287,3 +288,4 @@ int MenuInput::perform() {
 
   return m_iAction;;
 }
+//EOF: $Id: Menu.cpp,v 1.11 2003/06/01 22:37:35 rzr Exp $
