@@ -25,7 +25,7 @@
 #include "BehaviorVisitor.h"
 #include "CollisionVisitor.h"
 #include "OpenGLVisitor.h"
-#include "PointLightVisitor.h"
+//#include "PointLightVisitor.h"
 //#include "PNormalVisitor.h"
 #include "SoundVisitor.h"
 #include "SignalSender.h"
@@ -143,12 +143,14 @@ void Engine::stopEngine() {
 
 void Engine::clear() {
   SignalSender::getInstance()->clear();
-  PointLightVisitor::getInstance()->clear();
+  AmbientLightVisitor::getInstance()->clear();
+  //PointLightVisitor::getInstance()->clear();
   this->freeObjects();
 }
 
 void Engine::addLight(Light* l) {
-  PointLightVisitor::getInstance()->add(l);
+  //PointLightVisitor::getInstance()->add(l);
+  AmbientLightVisitor::getInstance()->add(l);
 }
 
 void Engine::setClearColor(float r, float g, float b, float a) {
@@ -230,13 +232,11 @@ void Engine::render() {
   this->accept(AmbientLightVisitor::getInstance());
   StopProfile();
   // Put some light from light sources.
-  if (Config::getInstance()->useLights()) {
-    EM_COUT("Engine::render() lights", 0);
-    StartProfile(PLIGHT);
-    PointLightVisitor::getInstance()->empty();
-    this->accept(PointLightVisitor::getInstance());
-    StopProfile();
-  }
+  EM_COUT("Engine::render() lights", 0);
+  StartProfile(PLIGHT);
+  //PointLightVisitor::getInstance()->empty();
+  //this->accept(PointLightVisitor::getInstance());
+  StopProfile();
   // Align vertices to view space.
   EM_COUT("Engine::render() align", 0);
   StartProfile(ALIGN);
@@ -368,9 +368,9 @@ void Engine::renderThreadSafe() {
   this->accept(AmbientLightVisitor::getInstance());
 
   // Put some light from light sources.
-  EM_COUT("Engine::render() plight", 0);
-  PointLightVisitor::getInstance()->empty();
-  this->accept(PointLightVisitor::getInstance());
+//   EM_COUT("Engine::render() plight", 0);
+//   PointLightVisitor::getInstance()->empty();
+//   this->accept(PointLightVisitor::getInstance());
 
   // Align vertices to view space.
   EM_COUT("Engine::render() align", 0);
