@@ -1,4 +1,4 @@
-//#ident "$Id: Pinball.cpp,v 1.45 2003/07/16 20:02:04 rzr Exp $"
+//#ident "$Id: Pinball.cpp,v 1.46 2003/07/25 01:01:56 rzr Exp $"
 /***************************************************************************
                           Pinball.cpp  -  description
                              -------------------
@@ -487,7 +487,7 @@ MenuItem* createMenus(Engine * engine) {
   MenuSub* menu = new MenuSub("main menu", engine);
   menu->setBottomText("http://pinball.sourceforge.net");
 
-  MenuSub* menuresume = new MenuSub("play", engine);
+  MenuSub* menuresume = new MenuSub("play", engine); //!rzr MLK
   menuresume->setAction(EM_MENU_RESUME);
   menu->addMenuItem(menuresume);
 
@@ -881,4 +881,4 @@ int WINAPI WinMain( HINSTANCE hInst,  HINSTANCE hPreInst,
   return main(argc,argv);
 }
 #endif
-// EOF $Id: Pinball.cpp,v 1.45 2003/07/16 20:02:04 rzr Exp $
+// EOF $Id: Pinball.cpp,v 1.46 2003/07/25 01:01:56 rzr Exp $
