@@ -24,6 +24,39 @@
 
 #define EMKey int
 
+#define SDLK_BACKSPACE KEY_BACKSPACE
+#define SDLK_TAB KEY_TAB
+//#define SDLK_CLEAR
+#define SDLK_RETURN KEY_ENTER
+//#define SDLK_PAUSE
+#define SDLK_ESCAPE KEY_ESC
+#define SDLK_SPACE KEY_SPACE
+//#define SDLK_EXCLAIM
+//#define SDLK_QUOTEDBL
+//#define SDLK_HASH
+//#define SDLK_DOLLAR
+//#define SDLK_AMPERSAND
+//#define SDLK_QUOTE
+//#define SDLK_LEFTPAREN
+//#define SDLK_RIGHTPAREN
+//#define SDLK_ASTERISK
+//#define SDLK_PLUS
+//#define SDLK_COMMA
+//#define SDLK_MINUS
+//#define SDLK_PERIOD
+//#define SDLK_SLASH
+#define SDLK_0 KEY_0
+#define SDLK_1 KEY_1
+#define SDLK_2 KEY_2
+#define SDLK_3 KEY_3
+#define SDLK_4 KEY_4
+#define SDLK_5 KEY_5
+#define SDLK_6 KEY_6
+#define SDLK_7 KEY_7
+#define SDLK_8 KEY_8
+#define SDLK_9 KEY_9
+// etc
+
 #define SDLK_a KEY_A
 #define SDLK_b KEY_B
 #define SDLK_c KEY_C
@@ -50,22 +83,7 @@
 #define SDLK_x KEY_X
 #define SDLK_y KEY_Y
 #define SDLK_z KEY_Z
-#define SDLK_0 KEY_0
-#define SDLK_1 KEY_1
-#define SDLK_2 KEY_2
-#define SDLK_3 KEY_3
-#define SDLK_4 KEY_4
-#define SDLK_5 KEY_5
-#define SDLK_6 KEY_6
-#define SDLK_7 KEY_7
-#define SDLK_8 KEY_8
-#define SDLK_9 KEY_9
 
-#define SDLK_ESCAPE KEY_ESC
-
-#define SDLK_RETURN KEY_ENTER
-
-#define SDLK_SPACE KEY_SPACE
 #define SDLK_INSERT KEY_INSERT
 #define SDLK_DELETE KEY_DEL
 #define SDLK_HOME KEY_HOME
@@ -82,6 +100,7 @@
 #define SDLK_LCTRL KEY_LCONTROL
 #define SDLK_RCTRL KEY_RCONTROL
 #define SDLK_COMPOSE KEY_ALTGR
+
 
 #endif // EM_USE_ALLEGRO
 
