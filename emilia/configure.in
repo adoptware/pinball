@@ -1,0 +1,27 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(core/Engine.cpp)
+AM_INIT_AUTOMAKE(libemilia,0.0.1)
+AM_PROG_LIBTOOL
+
+dnl Checks for programs.
+AC_PROG_CXX
+AC_PROG_INSTALL
+AC_PROG_MAKE_SET
+AC_LANG_CPLUSPLUS 
+
+CXXFLAGS="-g"
+CFLAGS="-g"
+
+dnl Checks for libraries.
+AC_PATH_X
+AC_PATH_XTRA
+LIBS="$X_PRE_LIBS $X_LIBS -lX11 -lXext -lXmu -lXt -lXv $X_EXTRA_LIBS -lGL -lGLU -lglut -lm -lSDL -lSDLmain -lSDL_image"
+
+dnl Checks for header files.
+AC_HEADER_STDC
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+
+dnl Checks for library functions.
+
+AC_OUTPUT(Makefile core/Makefile visitor/Makefile addon/Makefile test/Makefile)
