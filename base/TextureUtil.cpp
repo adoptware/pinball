@@ -1,4 +1,4 @@
-//#Ident "$Id: TextureUtil.cpp,v 1.14 2003/06/16 13:06:11 rzr Exp $"
+//#Ident "$Id: TextureUtil.cpp,v 1.15 2003/06/18 10:43:45 henqvist Exp $"
 /***************************************************************************
                           TextureUtil.cpp  -  description
                              -------------------
@@ -89,7 +89,8 @@ void TextureUtil::freeTextures()  {
         i != m_hEmTexture.end();
         i++) {
     glDeleteTextures (1, (GLuint*) ((*i).second) ); //is that correct ?
-    delete (*i).second ;  (*i).second = 0;
+    free((*i).second);  // malloc -> free
+    (*i).second = 0;
   }
   m_hEmTexture.clear();
   /// same pointers
@@ -431,4 +432,4 @@ const char * TextureUtil::getTextureName(EmTexture * tex) {
   }
 */
 
-//EOF: $Id: TextureUtil.cpp,v 1.14 2003/06/16 13:06:11 rzr Exp $
+//EOF: $Id: TextureUtil.cpp,v 1.15 2003/06/18 10:43:45 henqvist Exp $
