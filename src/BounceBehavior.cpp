@@ -13,23 +13,14 @@
 #include "Keyboard.h"
 #include "StateBehavior.h"
 #include "ArmBehavior.h"
+#include "PlungerBehavior.h"
 #include "Score.h"
+#include "BallGroup.h"
 #include <string>
 
 #if EM_DEBUG
 #include <iomanip>
 #endif
-
-#define MAX_SPEED 0.5f
-#define MAX_SPEED_Y_DOWN (MAX_SPEED*0.5f)
-#define SPEED_FCT 0.6f
-#define Y_GRAVITY -(SPEED_FCT*0.005f) // -SPEED_FCT/200
-#define Z_GRAVITY (SPEED_FCT*0.002f) //  SPEED_FCT/500
-#define BORDER (SPEED_FCT*0.05f)
-#define BORDER2 (SPEED_FCT*0.02f)
-
-#define ARM_TABLE_SIZE 8 // do not use less than 3
-#define ARM_WIDTH 6.1
 
 // these values are pure guesses
 Vertex3D g_vtxArmTable[] = { 
@@ -41,19 +32,6 @@ Vertex3D g_vtxArmTable[] = {
   {-0.11f, 0.0f, -0.5f},
   {-0.15f, 0.0f, -0.3f},
   {-0.14f, 0.0f, -0.14f} };
-
-
-#define CHECK_SPEED()    \
-{                        \
-	float l;               \
-	if ( (l=EMath::vectorLength(m_vtxDir)) > MAX_SPEED ) { \
-		l /= MAX_SPEED;      \
-		m_vtxDir.x /= l;     \
-		m_vtxDir.y /= l;     \
-		m_vtxDir.z /= l;     \
-	}	                     \
-  if (m_vtxDir.y > MAX_SPEED_Y_DOWN) m_vtxDir.y = MAX_SPEED_Y_DOWN; \
-}
 
 
 BounceBehavior::BounceBehavior(int ball) : Behavior() {
@@ -104,14 +82,14 @@ void BounceBehavior::StdOnSignal() {
 
   OnSignal( PBL_SIG_BNUDGE) {
     m_vtxDir.z -= SPEED_FCT*0.1f;
-  } else
-    OnSignal( PBL_SIG_TNUDGE) {
+  } 
+  ElseOnSignal( PBL_SIG_TNUDGE) {
     m_vtxDir.z += SPEED_FCT*0.1f;
-  } else
-    OnSignal( PBL_SIG_LNUDGE) {
+  }
+  ElseOnSignal( PBL_SIG_LNUDGE) {
     m_vtxDir.x -= SPEED_FCT*0.1f;
-  } else
-    OnSignal( PBL_SIG_RNUDGE) {
+  } 
+  ElseOnSignal( PBL_SIG_RNUDGE) {
     m_vtxDir.x += SPEED_FCT*0.1f;
   }
 
@@ -120,7 +98,10 @@ m_bAlive = true;					\
 this->getParent()->setTranslation(19.5f, 0.0f, 20.0f);	\
 m_vtxDir.x = 0; 	              \
 m_vtxDir.y = 0;						\
-m_vtxDir.z = -MAX_SPEED + 0.02*SPEED_FCT*rand()/RAND_MAX + 0.08;
+m_vtxDir.z = 0;
+
+
+    //m_vtxDir.z = -MAX_SPEED + 0.02*SPEED_FCT*rand()/RAND_MAX + 0.08;
 
     // debug stuff
     if (Keyboard::isKeyDown(SDLK_a)) {
@@ -133,22 +114,39 @@ m_vtxDir.z = -MAX_SPEED + 0.02*SPEED_FCT*rand()/RAND_MAX + 0.08;
 	ACTIVATE_BALL;
       }
     }
-    OnSignal( PBL_SIG_BALL2_ON ) {
+    ElseOnSignal( PBL_SIG_BALL2_ON ) {
       if (m_iBall == PBL_BALL_2) {
 	ACTIVATE_BALL;
       }
     }
-    OnSignal( PBL_SIG_BALL3_ON ) {
+    ElseOnSignal( PBL_SIG_BALL3_ON ) {
       if (m_iBall == PBL_BALL_3) {
 	ACTIVATE_BALL;
       }
     }
-    OnSignal( PBL_SIG_BALL4_ON ) {
+    ElseOnSignal( PBL_SIG_BALL4_ON ) {
       if (m_iBall == PBL_BALL_4) {
 	ACTIVATE_BALL;
       }
     }
 #undef ACTIVATE_BALL
+}
+
+void BounceBehavior::checkSpeed() {
+  float len = EMath::vectorLength(m_vtxDir);
+  if (len > MAX_SPEED ) {
+    float len_1 = len / MAX_SPEED;
+    m_vtxDir.x /= len_1;
+    m_vtxDir.y /= len_1;
+    m_vtxDir.z /= len_1;
+  }
+  if (len > FIRE_SPEED) {
+    EmAssert(this->getParent()->getUserProperties() & 
+	     (PBL_BALL_1 | PBL_BALL_2 | PBL_BALL_3 | PBL_BALL_4),
+	     "BounceBehavior::onTick()");
+    ((BallGroup*)this->getParent())->setFireTimer(20);
+  }
+  if (m_vtxDir.y > MAX_SPEED_Y_DOWN) m_vtxDir.y = MAX_SPEED_Y_DOWN;
 }
 
 void BounceBehavior::onTick() {
@@ -180,7 +178,7 @@ void BounceBehavior::onTick() {
 
   EM_COUT("BounceBehavior::onTick() " << x <<" "<< y <<" "<< z, 0);
 
-  CHECK_SPEED();
+  this->checkSpeed();
   // move the ball
   m_vtxOldDir = m_vtxDir;
   this->getParent()->addTranslation(m_vtxDir.x, m_vtxDir.y, m_vtxDir.z);
@@ -202,6 +200,11 @@ void BounceBehavior::onTick() {
       this->getParent()->setTranslation(-16, 0, 40); break;
     }
   }
+
+  EmAssert(this->getParent()->getUserProperties() & 
+	   (PBL_BALL_1 | PBL_BALL_2 | PBL_BALL_3 | PBL_BALL_4),
+	   "BounceBehavior::onTick()");
+  ((BallGroup*)this->getParent())->tick();
 }
 
 // each collision changes the direction of the ball
@@ -217,8 +220,29 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
   // Undo last translation
   //this->getParent()->addTranslation(-m_vtxDir.x, -m_vtxDir.y, -m_vtxDir.z);
 
+  // spagetti code :( - TODO -  make some functions!!!
   // change direction depending on which type the colliding object is
-  if (pGroup->getUserProperties() & (PBL_LOCK | PBL_TRAP)) {
+  if (pGroup->getUserProperties() & PBL_PLUNGER) {
+    // plunger
+    Behavior* beh = pGroup->getBehavior();
+    EmAssert(beh != NULL, "No behavior");
+		
+    if (beh->getType() != PBL_TYPE_PLUNGERBEH) {
+      throw string("StateBehavior expected");
+    }
+
+    if (m_iCollisionPrio > 6) return;
+    m_iCollisionPrio = 6;
+
+    if (!((PlungerBehavior*)beh)->getLaunch()) return;
+
+    float power = ((PlungerBehavior*)beh)->getPower();
+
+    EMath::reflectionDamp(m_vtxOldDir, vtxW, m_vtxDir, (float)1.0, 
+			  (float)SPEED_FCT*power, 1, true);
+    EM_COUT("BounceBehavior.onCollision() plunger " << power << "\n", 1);
+    
+  } else if (pGroup->getUserProperties() & (PBL_LOCK | PBL_TRAP)) {
     // trap in
     // 		Behavior* beh = pGroup->getBehavior(0);
     Behavior* beh = pGroup->getBehavior();
@@ -279,8 +303,9 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     Vertex3D vtxArmTr, vtxBall, vtxProj, vtxBallRot; 
     // the new calculated direction and speed vector
     Vertex3D vtxDir;
-    const Vertex3D vtxNull = {0.0f, 0.0f, 0.0f}, vtxRight = {1.0f, 0.0f, 0.0f}, 
-						   vtxSlightUp = {0.0f, 0.0f, -0.5f};
+    const Vertex3D vtxNull = {0.0f, 0.0f, 0.0f};
+    const Vertex3D vtxRight = {1.0f, 0.0f, 0.0f};
+    const Vertex3D vtxSlightUp = {0.0f, 0.0f, -0.5f};
     // get arm rotation and translation
     pGroup->getTranslation(vtxArmTr.x, vtxArmTr.y, vtxArmTr.z);
     pGroup->getRotation(vtxArmRot.x, vtxArmRot.y, vtxArmRot.z);
@@ -327,11 +352,13 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     if (!((ArmBehavior*)beh)->getIsRight()) {
       vtxDir.x = -vtxDir.x;
     }
+    vtxDir.y = 0.0f;
     // rotate the new direction according to the arm
     EMath::getTransformationMatrix(mtxArmRot, vtxNull, vtxArmRot);
     EMath::applyMatrixRot(mtxArmRot, vtxDir, m_vtxDir);
-    // move the ball slightly off the arm
+    // move the ball slightly off the arm TODO - fix this to something better
     EMath::applyMatrixRot(mtxArmRot, vtxSlightUp, vtxDir);
+    EM_COUT("sli " << vtxDir.x <<" "<< vtxDir.y <<" "<< vtxDir.z, 1);
     this->getParent()->addTranslation(vtxDir);
     EM_COUT("BounceBehavior.onCollision() active arm\n", 0);
 
