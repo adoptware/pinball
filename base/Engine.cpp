@@ -1,4 +1,4 @@
-//#ident "$Id: Engine.cpp,v 1.29 2003/07/26 22:13:42 rzr Exp $"
+//#ident "$Id: Engine.cpp,v 1.30 2003/07/28 01:51:07 rzr Exp $"
 /***************************************************************************
                           Engine.cpp  -  description
                              -------------------
@@ -104,7 +104,7 @@ Engine::Engine(int & argc, char *argv[]) {
 #endif
     }
         
-    SoundUtil::getInstance()->applyConfigVolume();
+    SoundUtil::getInstance()->applyConfigVolume(); // !+rzr todo: toggle off
     //          if (config->getSound() != 0 || config->getMusic() != 0) {
     //                  SoundUtil::getInstance()->initSound();
     //          } else {
@@ -123,6 +123,7 @@ Engine::~Engine() {
   p_Engine = NULL;
   this->stopEngine();
 }
+//!rzr : can't we move TextureUtil::initGrx here ?
 
 void Engine::stopEngine() {
 #if EM_USE_SDL
@@ -216,7 +217,8 @@ void Engine::drawSplash(EmTexture * tex) {
 #if EM_USE_ALLEGRO
   // TODO fix static 256x256 image size
   stretch_blit(tex, backbuffer, 0, 0, 256, 256, 0, 0, 
-               Config::getInstance()->getWidth(), Config::getInstance()->getHeight());
+               Config::getInstance()->getWidth(), 
+               Config::getInstance()->getHeight());
 #endif  
 }
 
@@ -292,7 +294,8 @@ void Engine::swap() {
 #endif
 
 #if EM_USE_ALLEGRO
-  blit(backbuffer, screen, 0, 0, 0, 0, Config::getInstance()->getWidth(), Config::getInstance()->getHeight());
+  blit(backbuffer, screen, 0, 0, 0, 0, 
+       Config::getInstance()->getWidth(), Config::getInstance()->getHeight());
 #endif
   StopProfile();
 }
@@ -339,15 +342,14 @@ void Engine::delay(int ms) {
 }
 
 bool Engine::nextTickFPS(int fps) {
-  // default 100 FPS
-  int delay = 10;
-  if (fps > 0) {
-    delay = 1000/fps;
-  }
-  if ((g_iStartTime + delay) <= GET_TIME) {
+  static int current_time=0; // !rzr+ : !Eye patched here for osx
+  int delay = 10; // default 100 FPS
+  if (fps > 0) {  delay = 1000/fps;  }
+  if (( g_iStartTime + delay ) <= current_time) {  // !Eye
     g_iStartTime += delay;
     return true;
   }
+  current_time=GET_TIME;  // !rzr- !Eye
   return false;
 }
 
@@ -451,7 +453,7 @@ int fctThread(void * data) {
     CollisionVisitor::getInstance()->empty();
     engine->accept(CollisionVisitor::getInstance());
                 
-    if (SDL_mutexV(g_Mutex) == -1)      cerr << "Error unlocking mutex" << endl;
+    if (SDL_mutexV(g_Mutex) == -1) cerr << "Error unlocking mutex" << endl;
     engine->limitFPS(100);
   }
   return 0;
@@ -482,13 +484,13 @@ void Engine::endTickThread() {
 
 void Engine::pauseTickThread() {
   if (g_Mutex != NULL) {
-    if (SDL_mutexP(g_Mutex) == -1)      cerr << "Error unlocking mutex" << endl;
+    if (SDL_mutexP(g_Mutex) == -1) cerr << "Error unlocking mutex" << endl;
   }
 }
 
 void Engine::resumeTickThread() {
   if (g_Mutex != NULL) {
-    if (SDL_mutexV(g_Mutex) == -1)      cerr << "Error unlocking mutex" << endl;
+    if (SDL_mutexV(g_Mutex) == -1) cerr << "Error unlocking mutex" << endl;
   }
   sched_yield();
 }
