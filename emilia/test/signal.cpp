@@ -6,8 +6,34 @@
 #include "Engine.h"
 #include "Camera.h"
 #include "Cube.h"
-#include "KeyRotBehavior.h"
 #include "Keyboard.h"
+#include "Behavior.h"
+#include "Shape3D.h"
+#include "StateMachine.h"
+
+class SignalTest : public Behavior {
+public:
+	void StdOnSignal();
+	void StdOnCollision() {};
+	void StdOnTick() {};
+};
+
+void SignalTest::StdOnSignal() {
+	OnSignal(1) {
+		cerr << "Got signal 1" << endl;
+		if (p_Parent != NULL) {
+			Shape3D* shape = p_Parent->getShape3D(0);
+			if (shape != NULL) shape->setColor(1,1,1,1);
+		}
+	}
+	OnSignal(2) {
+		cerr << "Got signal 2" << endl;
+		if (p_Parent != NULL) {
+			Shape3D* shape = p_Parent->getShape3D(0);
+			if (shape != NULL) shape->setColor(1,0,1,1);
+		}
+	}
+}
 
 /** Main */
 int main(int argc, char *argv[]) {
@@ -31,10 +57,18 @@ int main(int argc, char *argv[]) {
 	groupCube->addShape3D(cube);
 	
 	// Add a behavior to the cube
-	KeyRotBehavior* keyRBeh = new KeyRotBehavior();
-	groupCube->addBehavior(keyRBeh);
+	SignalTest* beh = new SignalTest();
+	groupCube->addBehavior(beh);
 		
-	while (!Keyboard::isKeyDown(KEY_ESC)) {
+	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
+		if (Keyboard::isKeyDown(SDLK_1)) {
+			// multicast a signal
+			SendSignal(1, 0, engine, NULL);
+		}
+		if (Keyboard::isKeyDown(SDLK_2)) {
+			// multicast a signal
+			SendSignal(2, 0, engine, NULL);
+		}
 		engine->tick();
 		engine->render();
 		engine->swap();

@@ -13,18 +13,15 @@
 #include "Behavior.h"
 #include "StateMachine.h"
 
-class Light;
-class Group;
-
-/**
-  *@author Henrik Enqvist
-  */
-
+/** The switch behavior turns on the group on if the active signal is 
+ * recieved. If the  */
 class SwitchBehavior : public Behavior  {
 	public:
 		SwitchBehavior(int aSignal, int uSignal, bool init=false);
 		~SwitchBehavior();
 		void StdOnSignal();
+		void StdOnCollision() {};
+		void onTick() {};
 	private:
 		int m_iActiveSignal;
 		int m_iUnActiveSignal;

@@ -19,8 +19,7 @@
  */
 class Cylinder : public Shape3D {
 	public:
-		/** <p>Cylinder(size, r, g, b, a). Color is defined by a, r, g, b.
-			* Alpha (a) not implemented yet.</p> */
+		/** <p>Cylinder(size, r, g, b, a).</p> */
 		Cylinder(float size, float r, float g, float b, float a, bool bTop = true);
 };
 
