@@ -1,6 +1,6 @@
 AUTOMAKE_OPTIONS = gnu
 
-highscoredir = $(EM_HIGHSCORE_DIR)/tux
+highscoredir = $(EM_BUILD_ROOT)/$(EM_HIGHSCORE_DIR)/tux
 
 tuxlibdir = $(EM_LIBDIR)
 tuxdatadir = $(datadir)/pinball/tux
