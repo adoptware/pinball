@@ -1,5 +1,7 @@
 AUTOMAKE_OPTIONS = gnu
 
+highscoredir = $(EM_HIGHSCORE_DIR)/professor
+
 professorlibdir = $(EM_LIBDIR)
 professordatadir = $(datadir)/pinball/professor
 
@@ -17,4 +19,12 @@ pinball.pbl \
 professor.mid \
 professor.png
 
-EXTRA_DIST = $(professordata_DATA)
+highscore_DATA = \
+highscores
+
+install-data-hook:
+#	chown games $(highscoredir)/highscores
+#	chgrp users $(highscoredir)/highscores
+	chmod 666 $(highscoredir)/highscores
+
+EXTRA_DIST = $(professordata_DATA) $(highscore_DATA)
