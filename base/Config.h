@@ -14,6 +14,8 @@
 #include <string>
 #include <string.h>
 
+#include "EMath.h"
+
 #ifndef PRIVATE_H
 #error Must include Private.h before Config.h
 #endif
@@ -35,33 +37,35 @@ class Config {
 	~Config();
 	static Config * getInstance();
 	void loadArgs(int & argc, char* argv[]);
-	int getWidth() { return m_iWidth; };
-	int getHeight() { return m_iHeight; };
-	int getBpp() { return m_iBpp; };
-	int getGLFilter() { return m_iGLFilter; };
-	int getView() { return m_iView; };
-	float getBrightness() { return m_fBrightness; };
-	bool useFullScreen() { return m_bFullScreen; };
-	bool useSound() { return m_bSound; };
-	bool useExternGL() { return m_bExternGL; };
-	bool useLights() { return m_bLights; };
+	inline int getWidth() { return m_iWidth; };
+	inline int getHeight() { return m_iHeight; };
+	inline int getBpp() { return m_iBpp; };
+	inline int getGLFilter() { return m_iGLFilter; };
+	inline int getView() { return m_iView; };
+	inline float getBrightness() { return m_fBrightness; };
+	inline bool useFullScreen() { return m_bFullScreen; };
+	inline int getSound() { return m_iSound; };
+	inline int getMusic() { return m_iMusic; };
+	inline bool useExternGL() { return m_bExternGL; };
+	inline bool useLights() { return m_bLights; };
 	void setSize(int w, int h);
-	void setBpp(int bpp) { m_iBpp = bpp; };
-	void setGLFilter(int filter) { m_iGLFilter = filter; };
-	void setView(int view) { m_iView = view; };
+	inline void setBpp(int bpp) { m_iBpp = bpp; };
+	inline void setGLFilter(int filter) { m_iGLFilter = filter; };
+	inline void setView(int view) { m_iView = view; };
 	/** This will NOT set the engine to full screen. You have to do
 	 * that manually. */
-	void setFullScreen(bool f) { m_bFullScreen = f; };
-	void setSound(bool s) { m_bSound = s; };
-	void setLights(bool l) { m_bLights = l; };
+	inline void setFullScreen(bool f) { m_bFullScreen = f; };
+	inline void setSound(int s) { m_iSound = EM_MIN( EM_MAX(s, 0), 8); };
+	inline void setMusic(int m) { m_iMusic = EM_MIN( EM_MAX(m, 0), 8); };
+	inline void setLights(bool l) { m_bLights = l; };
 	/** This will NOT set the brightness in the engine. You
 	 * have to do that manually. */
-	void setBrightness(float b) { m_fBrightness = b; };
+	inline void setBrightness(float b) { m_fBrightness = b; };
 	// TODO: is this a memory leak
 	void setDataDir(const char * ch);
 	void setSubDir(const char * ch);
-	const char * getDataDir() { return m_sDataDir.c_str(); };
-	const char * getDataSubDir() { return m_sDataSubDir.c_str(); };
+	inline const char * getDataDir() { return m_sDataDir.c_str(); };
+	inline const char * getDataSubDir() { return m_sDataSubDir.c_str(); };
 	void saveConfig();
 	void loadConfig();
 	void setDefault();
@@ -73,7 +77,8 @@ class Config {
 	int m_iView;
 	bool m_bLights;
 	bool m_bExternGL;
-	bool m_bSound;
+	int m_iSound;
+	int m_iMusic;
 	bool m_bFullScreen;
 	string m_sDataDir;
 	string m_sSubDir;

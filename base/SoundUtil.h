@@ -51,6 +51,7 @@ class SoundUtil {
 	 ** You don't need this use the Config class to turn on/off sound.
 	 ** @see Config */
 	void stopSound();
+	void applyConfigVolume();
 	// TODO
 	void freeSounds();
 	/** Loads a wave file. Returns the identifier of the sound, used for playback.
@@ -65,6 +66,7 @@ class SoundUtil {
 	const char * getMusicName(int music);
  private:
 	bool m_bInited;
+	int m_iVolume;
 	vector<EmSample*> m_vEmSample;
 	vector<EmMusic*> m_vEmMusic;
  	map<string, int> m_hEmSample;
