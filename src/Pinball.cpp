@@ -1,4 +1,4 @@
-//#ident "$Id: Pinball.cpp,v 1.37 2003/05/27 11:53:32 rzr Exp $"
+//#ident "$Id: Pinball.cpp,v 1.38 2003/05/27 12:49:58 henqvist Exp $"
 /***************************************************************************
                           Pinball.cpp  -  description
                              -------------------
@@ -60,6 +60,8 @@
 #if EM_USE_SDL
 #include <SDL.h>
 #endif
+
+#define AMBIENT 0.05f
 
 void get_config(void);
 
@@ -215,28 +217,25 @@ protected:
     // brightness
     switch (menubright->getCurrent()) {
     case 0: 
-      //menubright->getEngine()->setLightning(0, 0.1f); 
-      menubright->getEngine()->setLightning(0.2f, 0.0f); 
-      Config::getInstance()->setBrightness(0.2); break;
+      menubright->getEngine()->setLightning(0.3f, AMBIENT); 
+      Config::getInstance()->setBrightness(0.3); break;
     case 1: 
-      //menubright->getEngine()->setLightning(0, 0.2f);
-      menubright->getEngine()->setLightning(0.4f, 0.0f);
+      menubright->getEngine()->setLightning(0.4f, AMBIENT);
       Config::getInstance()->setBrightness(0.4f); break;
     case 2: 
-      //menubright->getEngine()->setLightning(0, 0.2f);
-      menubright->getEngine()->setLightning(0.6f, 0.0f);
-      Config::getInstance()->setBrightness(0.6f); break;
+      menubright->getEngine()->setLightning(0.5f, AMBIENT);
+      Config::getInstance()->setBrightness(0.5f); break;
     case 3: 
-      //menubright->getEngine()->setLightning(0, 0.2f);
-      menubright->getEngine()->setLightning(0.8f, 0.0f);
-      Config::getInstance()->setBrightness(0.8f); break;
+      menubright->getEngine()->setLightning(0.6f, AMBIENT);
+      Config::getInstance()->setBrightness(0.6f); break;
     case 4: 
-      //menubright->getEngine()->setLightning(0, 0.2f);
-      menubright->getEngine()->setLightning(1.0f, 0.0f);
-      Config::getInstance()->setBrightness(1.0f); break;
+      menubright->getEngine()->setLightning(0.7f, AMBIENT);
+      Config::getInstance()->setBrightness(0.7f); break;
+    case 5: 
+      menubright->getEngine()->setLightning(0.8f, AMBIENT);
+      Config::getInstance()->setBrightness(0.8f); break;
     default: 
-      //menubright->getEngine()->setLightning(0, 0.2f);
-      menubright->getEngine()->setLightning(0.6f, 0.0f);
+      menubright->getEngine()->setLightning(0.6f, AMBIENT);
       Config::getInstance()->setBrightness(0.6f); break;
     }
     // screen size
@@ -410,16 +409,18 @@ void get_config(void) {
     menuscreen->setCurrent(1);
   }
   // brightness
-  if (Config::getInstance()->getBrightness() < 0.3f) {
+  if (Config::getInstance()->getBrightness() < 0.35f) {
     menubright->setCurrent(0);
-  } else if (Config::getInstance()->getBrightness() < 0.5f) {
+  } else if (Config::getInstance()->getBrightness() < 0.45f) {
     menubright->setCurrent(1);
-  } else if (Config::getInstance()->getBrightness() < 0.7f) {
+  } else if (Config::getInstance()->getBrightness() < 0.55f) {
     menubright->setCurrent(2);
-  } else if (Config::getInstance()->getBrightness() < 0.9f) {
+  } else if (Config::getInstance()->getBrightness() < 0.65f) {
     menubright->setCurrent(3);
-  } else {
+  } else if (Config::getInstance()->getBrightness() < 0.75f) {
     menubright->setCurrent(4);
+  } else {
+    menubright->setCurrent(5);
   }
   // screen size
   if (Config::getInstance()->getWidth() == 320) {
@@ -592,11 +593,12 @@ MenuItem* createMenus(Engine * engine) {
   menugfx->addMenuItem(menuscreen);
 
   menubright = new MenuChoose(engine);
-  menubright->addText("brightness:     =....");
-  menubright->addText("brightness:     ==...");
-  menubright->addText("brightness:     ===..");
-  menubright->addText("brightness:     ====.");
-  menubright->addText("brightness:     =====");
+  menubright->addText("brightness:    =.....");
+  menubright->addText("brightness:    ==....");
+  menubright->addText("brightness:    ===...");
+  menubright->addText("brightness:    ====..");
+  menubright->addText("brightness:    =====.");
+  menubright->addText("brightness:    ======");
   menugfx->addMenuItem(menubright);
 
   menusize = new MenuChoose(engine);
@@ -699,29 +701,21 @@ int main(int argc, char *argv[]) {
     Config::getInstance()->loadConfig();
     Engine * engine = new Engine(argc, argv);
     
-    float direct = 0.0f, ambient = 0.0f;
-//     if (Config::getInstance()->useLights()) {
-//       direct = 0.0f;
-//     } else {
-    //direct = 0.9f;
-//     }
-    if (Config::getInstance()->getBrightness() < 0.3f) {
-      //ambient = 0.1f;
-      direct = 0.2f;
-    } else if (Config::getInstance()->getBrightness() < 0.5f) {
-      //ambient = 0.2f;
+    float direct = 0.0f;
+    if (Config::getInstance()->getBrightness() < 0.35f) {
+      direct = 0.3f;
+    } else if (Config::getInstance()->getBrightness() < 0.45f) {
       direct = 0.4f;
-    } else if (Config::getInstance()->getBrightness() < 0.7f) {
-      //ambient = 0.3f;
+    } else if (Config::getInstance()->getBrightness() < 0.55f) {
+      direct = 0.5f;
+    } else if (Config::getInstance()->getBrightness() < 0.65f) {
       direct = 0.6f;
-    } else if (Config::getInstance()->getBrightness() < 0.9f) {
-      //ambient = 0.4f;
-      direct = 0.8f;
+    } else if (Config::getInstance()->getBrightness() < 0.75f) {
+      direct = 0.7f;
     } else {
-      //ambient = 0.5f;
-      direct = 1.0f;
+      direct = 0.8f;
     }
-    engine->setLightning(direct, ambient);
+    engine->setLightning(direct, AMBIENT);
     
 #if EM_USE_SDL
     string filename = Config::getInstance()->getDataDir() + string("/font_34.png");
@@ -792,6 +786,7 @@ int main(int argc, char *argv[]) {
 END_OF_MAIN();
 #endif
 
+
 /// entry point function (main) for w32 codewarrior
 #if( (defined WIN32 ) && ( defined __MWERKS__ ) ) 
 int WINAPI WinMain( HINSTANCE hInst,  HINSTANCE hPreInst, 
@@ -806,4 +801,4 @@ int WINAPI WinMain( HINSTANCE hInst,  HINSTANCE hPreInst,
   return main(argc,argv); 
 }
 #endif
-// EOF $Id: Pinball.cpp,v 1.37 2003/05/27 11:53:32 rzr Exp $
+// EOF $Id: Pinball.cpp,v 1.38 2003/05/27 12:49:58 henqvist Exp $
