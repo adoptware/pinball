@@ -23,6 +23,7 @@ class PlungerBehavior : public Behavior {
   void StdOnCollision();
   inline void setSound(int s) { m_iSound = s; };
   inline int getSound() { return m_iSound; };
+  /** zero power is 0.0f max power is 1.0f */
   inline float getPower() { return m_fPower; };
   inline bool getLaunch() { return m_iLaunchState == 2; };
  private:
