@@ -319,8 +319,8 @@ bool CollisionVisitor::detectCollisionEmpty(CollisionBounds * cb1, CollisionBoun
 			bool collision = false;
 			float radiussqr = cb1->m_fRadius*cb1->m_fRadius;
 			//float distsqr = 9999.9f; // TODO MaxFloat
-			vector<Polygon *>::iterator iter =  cb2->m_vPolygon.begin();
-			vector<Polygon *>::iterator end = cb2->m_vPolygon.end();
+			vector<Polygon3D *>::iterator iter =  cb2->m_vPolygon.begin();
+			vector<Polygon3D *>::iterator end = cb2->m_vPolygon.end();
 			Vertex3D vtxDist;
 			for (; iter != end; ++iter) {
 				float d = this->vtxPolySqrDist(cb1->m_vtxTrans, (*iter), vtxDist);
@@ -329,8 +329,8 @@ bool CollisionVisitor::detectCollisionEmpty(CollisionBounds * cb1, CollisionBoun
 					// skip if polygon already in vector
 					{
 						bool isin = false;
-						vector<Polygon*>::iterator vectIter = m_vPolygon1.begin();
-						vector<Polygon*>::iterator vectEnd = m_vPolygon1.end();
+						vector<Polygon3D *>::iterator vectIter = m_vPolygon1.begin();
+						vector<Polygon3D *>::iterator vectEnd = m_vPolygon1.end();
 						isin = false;
 						for (; vectIter != vectEnd; vectIter++) {
 							if ((*vectIter) == (*iter)) {
@@ -368,12 +368,12 @@ bool CollisionVisitor::detectCollisionEmpty(CollisionBounds * cb1, CollisionBoun
 
 bool CollisionVisitor::collidePolygons(CollisionBounds * nb1, CollisionBounds * nb2) {
 	bool collision = false;
-	vector<Polygon*>::iterator iter1 = nb1->m_vPolygon.begin();
-	vector<Polygon*>::iterator end1 = nb1->m_vPolygon.end();
+	vector<Polygon3D*>::iterator iter1 = nb1->m_vPolygon.begin();
+	vector<Polygon3D*>::iterator end1 = nb1->m_vPolygon.end();
 	for ( ; iter1 != end1; ++iter1) {
 		// skip if polygon already in vector
-		vector<Polygon*>::iterator vectIter = m_vPolygon1.begin();
-		vector<Polygon*>::iterator vectEnd = m_vPolygon1.end();
+		vector<Polygon3D*>::iterator vectIter = m_vPolygon1.begin();
+		vector<Polygon3D*>::iterator vectEnd = m_vPolygon1.end();
 		bool isin = false;
 		for (; vectIter != vectEnd; ++vectIter) {
 			if ((*vectIter) == (*iter1)) {
@@ -382,8 +382,8 @@ bool CollisionVisitor::collidePolygons(CollisionBounds * nb1, CollisionBounds * 
 			}
 		}
 		if (isin) continue;
-		vector<Polygon*>::iterator iter2 = nb2->m_vPolygon.begin();
-		vector<Polygon*>::iterator end2 = nb2->m_vPolygon.end();
+		vector<Polygon3D*>::iterator iter2 = nb2->m_vPolygon.begin();
+		vector<Polygon3D*>::iterator end2 = nb2->m_vPolygon.end();
 		for ( ; iter2 != end2; ++iter2) {
 			// skip if polygon already in vector
 			vectIter = m_vPolygon2.begin();
@@ -415,13 +415,13 @@ bool CollisionVisitor::collidePolygons(CollisionBounds * nb1, CollisionBounds * 
 }
 
 /* Count a median normal for all polygons */
-void CollisionVisitor::countNormal(Vertex3D & vtx, vector<Polygon*> vPolygon) {
+void CollisionVisitor::countNormal(Vertex3D & vtx, vector<Polygon3D*> vPolygon) {
 	EM_COUT_D("CollisionVisitor::countNormal " << vPolygon.size() << " polygons" << endl, 0);
 	vtx.x = 0;
 	vtx.y = 0;
 	vtx.z = 0;
-	vector<Polygon*>::iterator iter = vPolygon.begin();
-	vector<Polygon*>::iterator end = vPolygon.end();
+	vector<Polygon3D*>::iterator iter = vPolygon.begin();
+	vector<Polygon3D*>::iterator end = vPolygon.end();
 	for (; iter != end; ++iter) {
 		vtx.x += (*iter)->m_nmlTrans.x;
 		vtx.y += (*iter)->m_nmlTrans.y;
@@ -438,7 +438,7 @@ void CollisionVisitor::countNormal(Vertex3D & vtx, vector<Polygon*> vPolygon) {
 
 
 /* TODO: */
-bool CollisionVisitor::intersect2d(Polygon *, Polygon *) {
+bool CollisionVisitor::intersect2d(Polygon3D *, Polygon3D *) {
 //	int axis = 1;
 //	float nx = ABS(p1->vtxTrNormal.x);
 //	float ny = ABS(p1->vtxTrNormal.y);
@@ -465,7 +465,7 @@ bool CollisionVisitor::intersect2d(Polygon *, Polygon *) {
  * Some sphere-polygon stuff
  *******************************************************/
 
-float CollisionVisitor::vtxPolySqrDist(const Vertex3D & vtx, Polygon * poly, Vertex3D & vtxDist) {
+float CollisionVisitor::vtxPolySqrDist(const Vertex3D & vtx, Polygon3D * poly, Vertex3D & vtxDist) {
 	EmAssert(poly->m_vIndex.size() > 2, "CollisionVisitor::vtxPolySqrDist polygon has less than 3 vertices");
 	float sqrdist = 9999.9f;
 	Vertex3D vtxTmp = {0.0f, 1.0f, 0.0f};
@@ -752,7 +752,7 @@ float CollisionVisitor::vtxTriSqrDist(const Vertex3D & vtx, const Vertex3D & vtx
 
 /* Check if two polygons intersect. Only for convex polygons.
  * Checks that the polygons has at least tre vertices. Use some macros to speed things up. */
-bool CollisionVisitor::intersect(Polygon * p1, Polygon * p2) {
+bool CollisionVisitor::intersect(Polygon3D * p1, Polygon3D * p2) {
 	if (p1->m_vIndex.size() < 3 || p2->m_vIndex.size() < 3) return false;
 	
 #if EM_DEBUG

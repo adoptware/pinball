@@ -12,7 +12,7 @@
 
 Grid::Grid(EmTexture* texture, float sizex, float sizey, int step, float bmStep,
 		float fR, float fG, float fB, float fA) : Shape3D((step+1)*(step+1), step*step) {
-	Polygon * poly;
+	Polygon3D * poly;
 
 	sizex /= step;
 	sizey /= step;
@@ -26,7 +26,7 @@ Grid::Grid(EmTexture* texture, float sizex, float sizey, int step, float bmStep,
 
 	{ for (int a=0; a<step; a++) {
 		for (int b=0; b<step; b++) {	
-			poly = new Polygon(this, 4);
+			poly = new Polygon3D(this, 4);
 // 			poly->add(a + b*(step+1),					a*bmStep, b*bmStep, 				fR, fG, fB, fA);
 // 			poly->add((a+1) + b*(step+1),			(a+1)*bmStep, b*bmStep, 		fR, fG, fB, fA);
 // 			poly->add((a+1) + (b+1)*(step+1),	(a+1)*bmStep, (b+1)*bmStep, fR, fG, fB, fA);

@@ -70,8 +70,8 @@ void AllegroVisitor::visit(Group * g) {
 		for ( ; shapeIter != shapeEnd; ++shapeIter) {
 			if (EM_SHAPE3D_HIDDEN & (*shapeIter)->m_iProperties) continue;
 
-			vector<Polygon*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
-			vector<Polygon*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
+			vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
+			vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
 			for ( ; polyIter != polyEnd; polyIter++) {
 				// if ((*polyIter)->m_iProperties & EM_POLY_HIDDEN) continue;
 				if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
@@ -193,8 +193,8 @@ void AllegroVisitor::visit(Group * g) {
 			if (EM_SHAPE3D_HIDDEN & (*shapeIter)->m_iProperties) continue;
 			if (!(EM_SHAPE3D_USE_TRANS & (*shapeIter)->m_iProperties)) continue;
 
-			vector<Polygon*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
-			vector<Polygon*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
+			vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
+			vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
 			for ( ; polyIter != polyEnd; ++polyIter) {
 				// if ((*polyIter)->m_iProperties & EM_POLY_HIDDEN) continue;
 				if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;

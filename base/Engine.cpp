@@ -48,7 +48,7 @@ volatile int g_iLastRender = 0;
 
 volatile unsigned int g_iLoops = 0;
 volatile unsigned int g_iMSeconds = 0;
-volatile float g_fFps = 0.0f;
+//volatile float g_fFps = 0.0f;
 
 #if EM_DEBUG
 #define StartProfile(a) Profiler::getInstance()->startProfile(a)
@@ -56,12 +56,6 @@ volatile float g_fFps = 0.0f;
 #else
 #define StartProfile(a)
 #define StopProfile()
-#endif
-
-#if EM_THREADS
-volatile bool g_bThread = true;;
-SDL_mutex* g_Mutex = NULL;
-SDL_Thread* g_Thread = NULL;
 #endif
 
 #if EM_USE_ALLEGRO
@@ -81,6 +75,7 @@ extern "C" {
 #define GET_TIME g_iMSeconds
 #endif
 
+float Engine::m_fFps = 0.0f;
 
 Engine::Engine(int & argc, char *argv[]) {
   Config * config = Config::getInstance();
@@ -97,7 +92,7 @@ Engine::Engine(int & argc, char *argv[]) {
     LOCK_VARIABLE(g_iLastRender);
     LOCK_VARIABLE(g_iLoops);
     LOCK_VARIABLE(g_iMSeconds);
-    LOCK_VARIABLE(g_fFPS);
+    LOCK_VARIABLE(g_fFps);
     LOCK_FUNCTION(fctCallBack);
     install_int(fctCallBack, 10); // 100 tick per sec
 #endif
@@ -135,8 +130,6 @@ void Engine::stopEngine() {
   cerr << "Shape-shape detections " << em_shapes_m << endl;
   cerr << "Bound-bound detections " << em_bounds_m << endl;
   cerr << "Poly-poly detections " << em_polygons_m << endl;
-  cerr << "Polygons *****************************" << endl;
-  cerr << "Average polygons " << em_poly_m << endl;
   Profiler::getInstance()->printProfile();
   //	cerr << "Seconds " << ((float)g_iSeconds/FPS) <<" " << ((float)g_iLoops*FPS/g_iSeconds) 
   //			 << " fps" << endl;
@@ -218,7 +211,7 @@ void Engine::setEngineCamera(Group* g) {
 void Engine::render() {
   EM_COUT("Engine::render()", 0);
   if (GET_TIME - g_iLastRender != 0.0f) {
-    g_fFps = g_fFps*0.99f + 0.01f*1000.0f/(GET_TIME - g_iLastRender);
+    m_fFps = m_fFps*0.9f + 0.1f*1000.0f/(GET_TIME - g_iLastRender);
   }
   g_iLastRender = GET_TIME;
   // Put some overall light.
@@ -350,6 +343,11 @@ void Engine::resetTick() {
 #undef GET_TIME
 
 #if EM_THREADS
+
+volatile bool g_bThread = true;;
+SDL_mutex* g_Mutex = NULL;
+SDL_Thread* g_Thread = NULL;
+
 void Engine::renderThreadSafe() {
   this->pauseTickThread();
 

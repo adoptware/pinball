@@ -38,8 +38,8 @@ Shape3D::Shape3D(int v, int p) {
 }
 
 Shape3D::~Shape3D() {
-	vector<Polygon*>::iterator iter = m_vPolygon.begin();
-	vector<Polygon*>::iterator end = m_vPolygon.end();
+	vector<Polygon3D*>::iterator iter = m_vPolygon.begin();
+	vector<Polygon3D*>::iterator end = m_vPolygon.end();
 	for ( ; iter != end; iter++) {
 		delete (*iter);
 	}
@@ -47,16 +47,16 @@ Shape3D::~Shape3D() {
 }
 
 void Shape3D::setPolygonProperty(int p) {
-	vector<Polygon*>::iterator iter = m_vPolygon.begin();
-	vector<Polygon*>::iterator end = m_vPolygon.end();
+	vector<Polygon3D*>::iterator iter = m_vPolygon.begin();
+	vector<Polygon3D*>::iterator end = m_vPolygon.end();
 	for ( ; iter != end; iter++) {
 		(*iter)->setProperty(p);
 	}
 }
 
 void Shape3D::unsetPolygonProperty(int p) {
-	vector<Polygon*>::iterator iter = m_vPolygon.begin();
-	vector<Polygon*>::iterator end = m_vPolygon.end();
+	vector<Polygon3D*>::iterator iter = m_vPolygon.begin();
+	vector<Polygon3D*>::iterator end = m_vPolygon.end();
 	for ( ; iter != end; iter++) {
 		(*iter)->unsetProperty(p);
 	}
@@ -226,8 +226,8 @@ void Shape3D::setTexCoord(int index, float u, float v) {
 bool Shape3D::removeLooseVertex3D(int vtxindex) {
 	if (vtxindex < 0 || vtxindex >= (signed)m_vVtxSrc.size()) return false;
 	// check that the vertex is not included in any polygon
-	vector<Polygon*>::iterator polyiter = m_vPolygon.begin();
-	vector<Polygon*>::iterator polyend = m_vPolygon.end();
+	vector<Polygon3D*>::iterator polyiter = m_vPolygon.begin();
+	vector<Polygon3D*>::iterator polyend = m_vPolygon.end();
 	for (; polyiter != polyend; ++polyiter) {
 		if ((*polyiter)->includes(vtxindex) >= 0) return false;
 	}
@@ -248,7 +248,7 @@ bool Shape3D::removeLooseVertex3D(int vtxindex) {
 	return true;
 }
 
-Polygon * Shape3D::getPolygon(int index) {
+Polygon3D * Shape3D::getPolygon(int index) {
 	if ( index < 0 || index >= (signed)m_vPolygon.size() ) {
 		return NULL;
 	}
@@ -259,20 +259,20 @@ int Shape3D::getPolygonSize() {
 	return m_vPolygon.size();
 }
 
-int Shape3D::getPolygonIndex(Polygon * poly) {
+int Shape3D::getPolygonIndex(Polygon3D * poly) {
 	if (poly == NULL) return -1;
-	vector<Polygon*>::iterator iter = m_vPolygon.begin();
-	vector<Polygon*>::iterator end = m_vPolygon.end();
+	vector<Polygon3D*>::iterator iter = m_vPolygon.begin();
+	vector<Polygon3D*>::iterator end = m_vPolygon.end();
 	for (int a=0; iter != end; iter++, a++) {
 		if ((*iter) == poly) return a;
 	}
 	return -1;
 }
 
-void Shape3D::removePolygon(Polygon * poly) {
+void Shape3D::removePolygon(Polygon3D * poly) {
 	if (poly == NULL) return;
-	vector<Polygon*>::iterator iter = m_vPolygon.begin();
-	vector<Polygon*>::iterator end = m_vPolygon.end();
+	vector<Polygon3D*>::iterator iter = m_vPolygon.begin();
+	vector<Polygon3D*>::iterator end = m_vPolygon.end();
 	for (; iter != end; iter++) {
 		if ((*iter) == poly) {
 			m_vPolygon.erase(iter);
@@ -293,15 +293,15 @@ int Shape3D::find(float x, float y, float z, float diff) {
 	return -1;
 }
 
-void Shape3D::add(Polygon* p) {
+void Shape3D::add(Polygon3D* p) {
 	if (p == NULL) return;
 	m_vPolygon.push_back(p);
 }
 
 /* Sets all polygons to color c. */
 void Shape3D::setColor(float r, float g, float b, float a) {
-	vector<Polygon*>::iterator iter = m_vPolygon.begin();
-	vector<Polygon*>::iterator end = m_vPolygon.end();
+	vector<Polygon3D*>::iterator iter = m_vPolygon.begin();
+	vector<Polygon3D*>::iterator end = m_vPolygon.end();
 	
 	for ( ; iter != end; iter++) {
 		(*iter)->setColor(r,g,b,a);
@@ -317,8 +317,8 @@ void Shape3D::countNormals() {
 		(*nmlIter).y = 0;
 		(*nmlIter).z = 0;
 		// Get the avrage of all normals in which the vertex resides.
-		vector<Polygon*>::iterator polyIter = m_vPolygon.begin();
-		vector<Polygon*>::iterator polyEnd = m_vPolygon.end();
+		vector<Polygon3D*>::iterator polyIter = m_vPolygon.begin();
+		vector<Polygon3D*>::iterator polyEnd = m_vPolygon.end();
 		for (; polyIter != polyEnd; polyIter++) {
 			if ((*polyIter)->includes(a) >= 0) {
 				(*nmlIter).x += (*polyIter)->m_nmlSrc.x;

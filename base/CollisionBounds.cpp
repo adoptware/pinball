@@ -40,7 +40,7 @@ CollisionBounds::~CollisionBounds() {
  * surrounds a polygon, there is no need to add it to
  * neighbouring bounds. This function returns true if
  * if a leaf fully surrounds a polygon. */
-bool CollisionBounds::addSurround(Polygon* p) {
+bool CollisionBounds::addSurround(Polygon3D* p) {
 	EmAssert(p != NULL, "CollisionBounds::add polygon NULL");
 	EM_COUT("CollisionBounds::add" << endl, 0);
 	// add polygons only to leafs
@@ -60,7 +60,7 @@ bool CollisionBounds::addSurround(Polygon* p) {
 	return false;
 }
 
-void CollisionBounds::addIntersect(Polygon* p) {
+void CollisionBounds::addIntersect(Polygon3D* p) {
 	EmAssert(p != NULL, "CollisionBounds::add polygon NULL");
 	EM_COUT("CollisionBounds::add" << endl, 0);
 	// add polygons only to leafs
@@ -81,7 +81,7 @@ void CollisionBounds::addIntersect(Polygon* p) {
 // TODO
 /* Does a fast conservative polygon-box intersection test.
  * May return intersection == true even if polygon-box does not intersect. */
-int CollisionBounds::intersect(Polygon* poly) {
+int CollisionBounds::intersect(Polygon3D* poly) {
 	if (poly == NULL) return 0;
 	if (poly->p_Shape3D == NULL) return 0;
 	if (poly->m_vIndex.size() == 0) return 0;
@@ -125,8 +125,8 @@ void CollisionBounds::setShape3D(Shape3D* s, int level) {
 	// Create new collision bounds
 	this->split(level);
 
-	vector<Polygon*>::iterator iter = s->m_vPolygon.begin();
-	vector<Polygon*>::iterator end = s->m_vPolygon.end();
+	vector<Polygon3D*>::iterator iter = s->m_vPolygon.begin();
+	vector<Polygon3D*>::iterator end = s->m_vPolygon.end();
 	for (int a=0; iter != end; iter++, a++) {
 		if (!this->addSurround(*iter)) {
 			this->addIntersect(*iter);
@@ -138,7 +138,7 @@ void CollisionBounds::setShape3D(Shape3D* s, int level) {
 
 /* Returns 2 if box surround all vertices, returns 1 if box surround
  * at least one vertex, else returns 0. */
-int CollisionBounds::surround(Polygon* poly) {
+int CollisionBounds::surround(Polygon3D* poly) {
 	if (poly == NULL) return 0;
 	if (poly->p_Shape3D == NULL) return 0;
 	if (poly->m_vIndex.size() == 0) return 0;
