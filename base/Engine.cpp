@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <cstring>
+#include <ctime>
 
 #if EM_THREADS
 #include <sched.h>
@@ -45,7 +46,6 @@ volatile int g_iLastRender = 0;
 
 volatile unsigned int g_iLoops = 0;
 volatile unsigned int g_iMSeconds = 0;
-volatile unsigned int g_iMSecondsFPS = 0;
 volatile float g_fFps = 0;
 
 #if EM_DEBUG
@@ -62,37 +62,11 @@ SDL_mutex* g_Mutex = NULL;
 SDL_Thread* g_Thread = NULL;
 #endif
 
-#if EM_DEBUG
-#if EM_USE_SDL
-extern "C" {
-
-Uint32 fctCallBack(Uint32 interval) {
-	g_iMSeconds += 100;
-	if (g_iMSeconds == 3000) {
-		g_fFps = g_fFps*0.5f + 0.5f*(float)g_iLoops*1000.0f / ((float)g_iMSeconds);
-		g_iMSeconds = 0;
-		g_iLoops = 0;
-		cerr << g_fFps << endl;
-	}
-  return interval;	
-}
-
-}
-#endif // EM_USE_SDL
-#endif // EM_DEBUG
-
 #if EM_USE_ALLEGRO
 extern "C" {
 
 void fctCallBack() {
 	g_iMSeconds += 10;
-	g_iMSecondsFPS += 10;
-	if (g_iMSecondsFPS == 3000) {
-		g_fFps = g_fFps*0.2f + 0.8f*(float)g_iLoops*1000.0f / ((float)g_iMSecondsFPS);
-		g_iMSecondsFPS = 0;
-		g_iLoops = 0;
-		cerr << g_fFps << endl;
-	}
 }
 
 END_OF_FUNCTION(fctCallBack)
@@ -112,17 +86,15 @@ Engine::Engine(int & argc, char *argv[]) {
 		SDL_Init(SDL_INIT_TIMER);
 #endif
 		TextureUtil::getInstance()->initGrx();
-#if EM_DEBUG
-#if EM_USE_SDL
-		SDL_SetTimer(100, fctCallBack); // 10 ticks per sec
-#endif
 #if EM_USE_ALLEGRO
-		LOCK_VARIABLE(g_iSeconds);
-		LOCK_VARIABLE(g_fFps);
+		LOCK_VARIABLE(g_iStartTime);
+		LOCK_VARIABLE(g_iDesiredTime);
+		LOCK_VARIABLE(g_iLastRender);
 		LOCK_VARIABLE(g_iLoops);
+		LOCK_VARIABLE(g_iMSeconds);
+		LOCK_VARIABLE(g_fFPS);
 		LOCK_FUNCTION(fctCallBack);
 		install_int(fctCallBack, 10); // 100 tick per sec
-#endif
 #endif
 	}
 	
@@ -317,7 +289,15 @@ void Engine::delay(int ms) {
 #endif
 }
 
-/* ATTENTION! This function wraps after ~49 days */
+#if EM_USE_SDL
+#define GET_TIME (signed)SDL_GetTicks()
+#endif
+
+#if EM_USE_ALLEGRO
+#define GET_TIME g_iMSeconds
+#endif
+
+/* ATTENTION! This function wraps after ~24 days */
 bool Engine::limitFPS(int fps) {
 	StartProfile(WAIT);
 	int delay = 0;
@@ -325,51 +305,41 @@ bool Engine::limitFPS(int fps) {
 		delay = 1000/fps;
 	}
 	if (g_iStartTime == -1) {
-#if EM_USE_SDL
-		g_iDesiredTime = g_iStartTime = SDL_GetTicks();
-#endif
-#if EM_USE_ALLEGRO
-		g_iDesiredTime = g_iStartTime = g_iMSeconds;
-#endif
+		g_iDesiredTime = g_iStartTime = GET_TIME;
 	}
 	g_iDesiredTime += delay;
-#if EM_USE_SDL
-	int time = SDL_GetTicks();
-	int realdelay = (g_iDesiredTime - time);
-#endif
-#if EM_USE_ALLEGRO
-	int realdelay = (g_iDesiredTime - g_iMSeconds);
-#endif
+	int realdelay = (g_iDesiredTime - GET_TIME);
 	if (realdelay < -500) {     // really slow - render anyway
 		EM_COUT("TO SLOW", 1);
-		g_iDesiredTime = time;
+		g_fFps = g_fFps*0.9f + 0.1f*1000.0f/(GET_TIME - g_iLastRender);
+		g_iDesiredTime = g_iLastRender =  GET_TIME;
 		StopProfile();
 		return true;
 	} else if (realdelay < -delay/2) { // slow
 		StopProfile();
 		return false;
 	} else if (realdelay < 0) { // abit slow - forgive a bit slow, gives better fps
+		g_fFps = g_fFps*0.5f + 0.5f*1000.0f/(GET_TIME - g_iLastRender);
+		g_iLastRender =  GET_TIME;
 		StopProfile();
 		return true;
 	} else {                    // to early, must delay
 		do {
-#if EM_USE_SDL
-			realdelay = (g_iDesiredTime - (signed)SDL_GetTicks());
-#endif
-#if EM_USE_ALLEGRO
-			realdelay = (g_iDesiredTime - g_iMSeconds);
-#endif
+			realdelay = (g_iDesiredTime - GET_TIME);
 			if (realdelay > 10) {
 			// The delay triggers rescheduling
 				this->delay(realdelay);
 			}
-			g_iLastRender = g_iDesiredTime;
 		} while (realdelay > 0);
+		g_fFps = g_fFps*0.5f + 0.5f*1000.0f/(GET_TIME - g_iLastRender);
+		g_iLastRender = GET_TIME;
 		StopProfile();
 		return true;
 	}
-	StopProfile();
+	// never gets here
 }
+
+#undef GET_TIME
 
 #if EM_THREADS
 void Engine::renderThreadSafe() {
