@@ -1,5 +1,5 @@
 #!/usr/bin/make -f
-# $Id: rules,v 1.1 2004/01/20 15:51:08 rzr Exp $
+# $Id: rules,v 1.2 2004/01/20 16:31:12 rzr Exp $
 # Sample debian/rules that uses debhelper.
 # GNU copyright 1997 to 1999 by Joey Hess.
 
@@ -64,7 +64,7 @@ install: build
 	# Add here commands to install the package into debian/pinball.
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
 
-	dh_movefiles
+#	dh_movefiles
 
 
 # Build architecture-independent files here.
@@ -73,7 +73,7 @@ binary-indep: build install
 	dh_testdir
 	dh_testroot
 	dh_installdocs
-	dh_installchangelogs -a ChangeLog
+	dh_installchangelogs ChangeLog
 	dh_compress -a
 	dh_fixperms
 	dh_installdeb

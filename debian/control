@@ -9,14 +9,22 @@ Package: pinball
 Architecture: any
 Depends: ${shlibs:Depends}, pinball-data (= ${Source-Version})
 Description: The Emilia Pinball Emulator
+<<<<<<< control
+ The Emilia Pinball Project is a pinball simulator
+ for Linux and other Unix systems.
+ .
+ There is only two levels to play with, but it is very addictive.
+=======
  The Emilia Pinball Project is a pinball simulator for Linux and other Unix systems.
  . 
  There is only two levels to play with, but it is very addictive.
+>>>>>>> 1.3
 
 Package: pinball-data
 Architecture: all
-Description: Data files for the Emilia Pinball Emulator.
- The Emilia Pinball Project is a pinball simulator for Linux and other Unix
- systems. There  is only two levels to play with, but it is very addictive.
+Description: Data files for the Emilia Pinball Emulator
+ The Emilia Pinball Project is a pinball simulator
+ for Linux and other Unix systems.
+ There is only two levels to play with, but it is very addictive.
  .
  This package contains various data files used by the pinball emulator.
