@@ -12,9 +12,7 @@
 #include "Behavior.h"
 #include "StateMachine.h"
 
-/**
- * <p>A Behavior for the pinball demo.</p>
- */
+/** A Behavior for the pinball demo. */
 class ArmBehavior : public Behavior {
 	public:
 		ArmBehavior(bool right = true);
