@@ -57,27 +57,27 @@ class Group;
  */
 class StdAnimation : public Behavior {
 	public:
-		/** Animation(step, type). */
-		StdAnimation(int step, int type);
-		~StdAnimation();
-		void onTick();
-		void add(float, float, float);
-		void setEnd(float, float, float);
-		/** Sets the end point to the first point. */
-		void setEndStart();
-		inline void setStep(int s) {	m_iStep = s; };
-		inline int getStep() { return m_iStep; };
-		inline void setAnimType(int t) { m_iAnimType = t; };
-		inline void clear() { m_vVertex.clear(); };
-		void StdOnSignal() {};
-		void StdOnCollision() {};
-	private:
-		vector<Vertex3D> m_vVertex;
-		int m_iStep;
-		int m_iTick;
-		int m_iIndex;
-		int m_iAnimType;
-		Vertex3D m_vtxEnd;
+  /** Animation(step, type). */
+  StdAnimation(int step, int type);
+  ~StdAnimation();
+  void onTick();
+  void add(float, float, float);
+  void setEnd(float, float, float);
+  /** Sets the end point to the first point. */
+  void setEndStart();
+  inline void setStep(int s) {	m_iStep = s; };
+  inline int getStep() { return m_iStep; };
+  inline void setAnimType(int t) { m_iAnimType = t; };
+  inline void clear() { m_vVertex.clear(); };
+  void StdEmptyOnSignal() {};
+  void StdEmptyOnCollision() {};
+ private:
+  vector<Vertex3D> m_vVertex;
+  int m_iStep;
+  int m_iTick;
+  int m_iIndex;
+  int m_iAnimType;
+  Vertex3D m_vtxEnd;
 };
 
 #endif // ANIMATION_H

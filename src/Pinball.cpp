@@ -40,6 +40,7 @@
 #include "Config.h"
 #include "EmFont.h"
 #include "Loader.h"
+#include "BallGroup.h"
 
 #if EM_USE_SDL
 #include <SDL.h>
@@ -48,9 +49,10 @@
 /****************************************************************************
  * Creates a ball 
  ***************************************************************************/
+/*
 Group * createBall(float r, float g, float b, int pbl, float x, Engine * engine) {
   Group * group = new Group();
-  /*Shape3D* ballCyl = new BigSphere(1, 1, r, g, b, 1);*/
+  //Shape3D* ballCyl = new BigSphere(1, 1, r, g, b, 1);
   //string filename;
   //string datadir(Config::getInstance()->getDataDir());
   //filename = datadir + string("/ball_co.emi");
@@ -110,6 +112,7 @@ Group * createBall(float r, float g, float b, int pbl, float x, Engine * engine)
 
   return group;
 }
+*/
 
 Score * score = NULL;
 
@@ -153,28 +156,17 @@ int loadLevel(Engine * engine, const char * subdir) {
   engine->addLight(cl);
 
   engine->setEngineCamera(groupCR);
-  /*
-  // Add pinball floor
-  Group* groupG = new Group();
-  #if EM_USE_ALLEGRO
-  filename = datadir + string("/floor2.pcx");
-  #endif
-  #if EM_USE_SDL
-  filename = datadir + string("/floor2.png");
-  #endif
-  EmTexture* tex = TextureUtil::getInstance()->loadTexture(filename.c_str());
-  Shape3D* gs = new Grid(tex, 78.0f, 43.0f, 16, 1.0f/16.0f, 1, 1, 1, 1);
-  gs->setProperty(EM_SHAPE3D_BEHIND2);
-  engine->add(groupG);
-  groupG->addShape3D(gs);
-  groupG->setTransform(1.5f, -1.0f, -3.0f, 0.0f, 0.25f, 0.0f);
-  groupG->setProperty(EM_GROUP_TRANSFORM_ONCE);
-  */
 
-  Group* gb1 = createBall(1, 0, 0, PBL_BALL_1, 4, engine);
-  Group* gb2 = createBall(0, 1, 0, PBL_BALL_2, 0, engine);
-  Group* gb3 = createBall(0, 0, 1, PBL_BALL_3, -4, engine);
-
+//   Group* gb1 = createBall(1, 0, 0, PBL_BALL_1, 4, engine);
+//   Group* gb2 = createBall(0, 1, 0, PBL_BALL_2, 0, engine);
+//   Group* gb3 = createBall(0, 0, 1, PBL_BALL_3, -4, engine);
+  Group* gb1 = new BallGroup(1, 0, 0, PBL_BALL_1, 4);
+  Group* gb2 = new BallGroup(0, 1, 0, PBL_BALL_2, 0);
+  Group* gb3 = new BallGroup(0, 0, 1, PBL_BALL_3, -4);
+  engine->add(gb1);
+  engine->add(gb2);
+  engine->add(gb3);
+  
   EyeBehavior* eyebeh = new EyeBehavior(gb1, gb2, gb3);
   filename = datadir + string("/nudge.wav");
   eyebeh->setSound(SoundUtil::getInstance()->loadSample(filename.c_str()));
@@ -199,7 +191,7 @@ MenuChoose* menusize = NULL;
 MenuChoose* menuview = NULL;
 MenuChoose* menufilter = NULL;
 MenuChoose* menufps = NULL;
-MenuChoose* menumaxfps = NULL;
+// MenuChoose* menumaxfps = NULL;
 
 /** Update the current meny with the configuration. */
 void get_config(void) {
@@ -277,11 +269,11 @@ void get_config(void) {
     menufps->setCurrent(0);
   }
   // max fps
-  if (Config::getInstance()->getMaxFPS() == 50) {
-    menumaxfps->setCurrent(0);
-  } else {
-    menumaxfps->setCurrent(1);
-  }
+//   if (Config::getInstance()->getMaxFPS() == 50) {
+//     menumaxfps->setCurrent(0);
+//   } else {
+//     menumaxfps->setCurrent(1);
+//   }
 }
 
 /** The apply meny item calls this function */	
@@ -383,11 +375,11 @@ protected:
       config->setShowFPS(true);
     }
     // max fps
-    if (menumaxfps->getCurrent() == 0) {
-      config->setMaxFPS(50); 
-    } else {
-      config->setMaxFPS(100);
-    }
+//     if (menumaxfps->getCurrent() == 0) {
+//       config->setMaxFPS(50); 
+//     } else {
+//       config->setMaxFPS(100);
+//     }
 		
     get_config();
     return EM_MENU_NOP;
@@ -513,10 +505,10 @@ MenuItem* createMenus(Engine * engine) {
   menufps->addText(   "show fps:         yes");
   menugfx->addMenuItem(menufps);
 
-  menumaxfps = new MenuChoose(engine);
-  menumaxfps->addText("max fps            50");
-  menumaxfps->addText("max fps           100");
-  menugfx->addMenuItem(menumaxfps);
+//   menumaxfps = new MenuChoose(engine);
+//   menumaxfps->addText("max fps            50");
+//   menumaxfps->addText("max fps           100");
+//   menugfx->addMenuItem(menumaxfps);
 
   menusnd = new MenuChoose(engine);
   menusnd->addText(   "sound:            off");

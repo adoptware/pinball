@@ -4,7 +4,7 @@
     begin                : Fri Jan 26 2001
     copyright            : (C) 2001 by Henrik Enqvist
     email                : henqvist@excite.com
- ***************************************************************************/
+***************************************************************************/
 
 #include <cstdio>
 #include <iostream>
@@ -22,278 +22,169 @@
 Score* Score::p_Score = NULL;
 
 Score::Score() {
-	m_Font = EmFont::getInstance();
-	this->clear();
+  m_Font = EmFont::getInstance();
+  this->clear();
 }
 
 Score::~Score(){
-	p_Score = NULL;
+  p_Score = NULL;
 }
 
 Score* Score::getInstance() {
- 	if (p_Score == NULL) {
- 		p_Score = new Score();
- 	}
- 	return p_Score;
+  if (p_Score == NULL) {
+    p_Score = new Score();
+  }
+  return p_Score;
 }
 
 void Score::addScore(int s, bool multi) {
-	if (multi) {
-		m_iScore += (s*m_iFactor);
-	} else {
-		m_iScore += s;
-	}
+  if (multi) {
+    m_iScore += (s*m_iFactor);
+  } else {
+    m_iScore += s;
+  }
 }
 
 void Score::setText1(const char * text) {
-	strncpy(m_Text1, text, 63);
+  strncpy(m_Text1, text, 63);
 }
 
 void Score::setText2(const char * text) {
-	strncpy(m_Text2, text, 63);
+  strncpy(m_Text2, text, 63);
 }
 
 void Score::setText3(const char * text) {
-	strncpy(m_Text3, text, 63);
+  strncpy(m_Text3, text, 63);
 }
 
 void Score::setText4(const char * text) {
-	strncpy(m_Text4, text, 63);
+  strncpy(m_Text4, text, 63);
 }
 
 void Score::clearText() {
-	strcpy(m_Text1, "");
-	strcpy(m_Text2, "");
-	strcpy(m_Text3, "");
-	strcpy(m_Text4, "");
+  strcpy(m_Text1, "");
+  strcpy(m_Text2, "");
+  strcpy(m_Text3, "");
+  strcpy(m_Text4, "");
 }
 
 void Score::activateBall(int ball) {
-	switch (ball) {
-	case PBL_BALL_1 : m_aBall[0] = PBL_ACTIVE; break;	
-	case PBL_BALL_2 : m_aBall[1] = PBL_ACTIVE; break;
-	case PBL_BALL_3 : m_aBall[2] = PBL_ACTIVE; break;
-	case PBL_BALL_4 : m_aBall[3] = PBL_ACTIVE; break;
-	}
+  switch (ball) {
+  case PBL_BALL_1 : m_aBall[0] = PBL_ACTIVE; break;	
+  case PBL_BALL_2 : m_aBall[1] = PBL_ACTIVE; break;
+  case PBL_BALL_3 : m_aBall[2] = PBL_ACTIVE; break;
+  case PBL_BALL_4 : m_aBall[3] = PBL_ACTIVE; break;
+  }
 }
 
 void Score::unActivateBall(int ball) {
-	switch (ball) {
-	case PBL_BALL_1 : m_aBall[0] = PBL_DEAD; break;	
-	case PBL_BALL_2 : m_aBall[1] = PBL_DEAD; break;
-	case PBL_BALL_3 : m_aBall[2] = PBL_DEAD; break;
-	case PBL_BALL_4 : m_aBall[3] = PBL_DEAD; break;
-	}
+  switch (ball) {
+  case PBL_BALL_1 : m_aBall[0] = PBL_DEAD; break;	
+  case PBL_BALL_2 : m_aBall[1] = PBL_DEAD; break;
+  case PBL_BALL_3 : m_aBall[2] = PBL_DEAD; break;
+  case PBL_BALL_4 : m_aBall[3] = PBL_DEAD; break;
+  }
 }
 
 bool Score::isBallActive(int ball) {
-	switch (ball) {
- 	case PBL_BALL_1: return m_aBall[0] == PBL_ACTIVE;
- 	case PBL_BALL_2: return m_aBall[1] == PBL_ACTIVE;
- 	case PBL_BALL_3: return m_aBall[2] == PBL_ACTIVE;
- 	case PBL_BALL_4: return m_aBall[3] == PBL_ACTIVE;
- 	}
-	return false;
+  switch (ball) {
+  case PBL_BALL_1: return m_aBall[0] == PBL_ACTIVE;
+  case PBL_BALL_2: return m_aBall[1] == PBL_ACTIVE;
+  case PBL_BALL_3: return m_aBall[2] == PBL_ACTIVE;
+  case PBL_BALL_4: return m_aBall[3] == PBL_ACTIVE;
+  }
+  return false;
 }
 
 bool Score::isBallDead(int ball) {
-	switch (ball) {
- 	case PBL_BALL_1: return m_aBall[0] == PBL_DEAD;
- 	case PBL_BALL_2: return m_aBall[1] == PBL_DEAD;
- 	case PBL_BALL_3: return m_aBall[2] == PBL_DEAD;
- 	case PBL_BALL_4: return m_aBall[3] == PBL_DEAD;
- 	}
-	return false;
+  switch (ball) {
+  case PBL_BALL_1: return m_aBall[0] == PBL_DEAD;
+  case PBL_BALL_2: return m_aBall[1] == PBL_DEAD;
+  case PBL_BALL_3: return m_aBall[2] == PBL_DEAD;
+  case PBL_BALL_4: return m_aBall[3] == PBL_DEAD;
+  }
+  return false;
 }
 
 /** The bounce behavior calls this method when the ball is locked */
 void Score::lockBall(int ball) {
- 	switch (ball) {
- 	case PBL_BALL_1: m_aBall[0] = PBL_LOCKED; break;
- 	case PBL_BALL_2: m_aBall[1] = PBL_LOCKED; break; 
- 	case PBL_BALL_3: m_aBall[2] = PBL_LOCKED; break;
- 	case PBL_BALL_4: m_aBall[2] = PBL_LOCKED; break;
- 	}
+  switch (ball) {
+  case PBL_BALL_1: m_aBall[0] = PBL_LOCKED; break;
+  case PBL_BALL_2: m_aBall[1] = PBL_LOCKED; break; 
+  case PBL_BALL_3: m_aBall[2] = PBL_LOCKED; break;
+  case PBL_BALL_4: m_aBall[2] = PBL_LOCKED; break;
+  }
 }
 
 void Score::unLockBall(int ball) {
-	switch (ball) {
-	case PBL_BALL_1 : if (m_aBall[0] == PBL_LOCKED) m_aBall[0] = PBL_ACTIVE; break;	
-	case PBL_BALL_2 : if (m_aBall[1] == PBL_LOCKED) m_aBall[1] = PBL_ACTIVE; break;
-	case PBL_BALL_3 : if (m_aBall[2] == PBL_LOCKED) m_aBall[2] = PBL_ACTIVE; break;
-	case PBL_BALL_4 : if (m_aBall[3] == PBL_LOCKED) m_aBall[2] = PBL_ACTIVE; break;
-	}
+  switch (ball) {
+  case PBL_BALL_1 : if (m_aBall[0] == PBL_LOCKED) m_aBall[0] = PBL_ACTIVE; break;	
+  case PBL_BALL_2 : if (m_aBall[1] == PBL_LOCKED) m_aBall[1] = PBL_ACTIVE; break;
+  case PBL_BALL_3 : if (m_aBall[2] == PBL_LOCKED) m_aBall[2] = PBL_ACTIVE; break;
+  case PBL_BALL_4 : if (m_aBall[3] == PBL_LOCKED) m_aBall[2] = PBL_ACTIVE; break;
+  }
 }
 
 bool Score::isBallLocked(int ball) {
-	switch (ball) {
-	case PBL_BALL_1 : return (m_aBall[0] == PBL_LOCKED);	
-	case PBL_BALL_2 : return (m_aBall[1] == PBL_LOCKED);
-	case PBL_BALL_3 : return (m_aBall[2] == PBL_LOCKED);
-	case PBL_BALL_4 : return (m_aBall[3] == PBL_LOCKED);
-	}
-	return false;
+  switch (ball) {
+  case PBL_BALL_1 : return (m_aBall[0] == PBL_LOCKED);	
+  case PBL_BALL_2 : return (m_aBall[1] == PBL_LOCKED);
+  case PBL_BALL_3 : return (m_aBall[2] == PBL_LOCKED);
+  case PBL_BALL_4 : return (m_aBall[3] == PBL_LOCKED);
+  }
+  return false;
 }
 
 int Score::active() {
- 	int active = 0;
- 	if (m_aBall[0] == PBL_ACTIVE) ++active;
-	if (m_aBall[1] == PBL_ACTIVE)	++active;
- 	if (m_aBall[2] == PBL_ACTIVE) ++active;
- 	if (m_aBall[3] == PBL_ACTIVE) ++active;
- 	return active;
+  int active = 0;
+  if (m_aBall[0] == PBL_ACTIVE) ++active;
+  if (m_aBall[1] == PBL_ACTIVE)	++active;
+  if (m_aBall[2] == PBL_ACTIVE) ++active;
+  if (m_aBall[3] == PBL_ACTIVE) ++active;
+  return active;
 }
 
 int Score::locked() {
-	int locked = 0;
-	if (m_aBall[0] == PBL_LOCKED) ++locked;
-	if (m_aBall[1] == PBL_LOCKED) ++locked;
-	if (m_aBall[2] == PBL_LOCKED) ++locked;
-	if (m_aBall[3] == PBL_LOCKED) ++locked;
-	return locked;
+  int locked = 0;
+  if (m_aBall[0] == PBL_LOCKED) ++locked;
+  if (m_aBall[1] == PBL_LOCKED) ++locked;
+  if (m_aBall[2] == PBL_LOCKED) ++locked;
+  if (m_aBall[3] == PBL_LOCKED) ++locked;
+  return locked;
 }
 
 
 void Score::onTick() {
-	if (this->active() == 0 && this->getCurrentBall() < 4) {
-		strcpy(m_Text1, "   press enter to launch ball");
-	} else if (this->getCurrentBall() > 3) {
-		strcpy(m_Text1, "   press r to start new game");
-	} else {
-		strcpy(m_Text1, "");
-	}
-
-// 	if (m_bLaunch && m_iBall < 4 && Keyboard::isKeyDown(SDLK_RETURN)) {
-// 		m_bLaunch = false;
-// 		switch (m_iBall) {
-// 		case 1 :
-// 			if (m_aAliveBall[0] == PBL_DEAD) {
-// 				SendSignal( PBL_SIG_BALL1_ON, 0, this->getParent(), NULL );
-// 				m_aAliveBall[0] = PBL_ALIVE;	
-// 				m_Text1 = "";	
-// 				m_Text2 = "";
-// 				m_Text3 = "";
-// 				m_Text4 = "";
-// 				break;
-// 			}	
-// 		case 2 :
-// 			if (m_aAliveBall[1] == PBL_DEAD) {
-// 				SendSignal( PBL_SIG_BALL2_ON, 0, this->getParent(), NULL );
-// 				m_aAliveBall[1] = PBL_ALIVE;	
-// 				m_Text1 = "";	
-// 				m_Text2 = "";
-// 				m_Text3 = "";
-// 				m_Text4 = "";
-// 				break;
-// 			}
-// 		case 3 :
-// 			if (m_aAliveBall[2] == PBL_DEAD) {
-// 				SendSignal( PBL_SIG_BALL3_ON, 0, this->getParent(), NULL );
-// 				m_aAliveBall[2] = PBL_ALIVE;
-// 				m_Text1 = "";
-// 				m_Text2 = "";
-// 				m_Text3 = "";
-// 				m_Text4 = "";
-// 				break;
-// 			}
-// 		default:
-// 			if (m_aAliveBall[0] == PBL_DEAD) {
-// 				SendSignal( PBL_SIG_BALL1_ON, 0, this->getParent(), NULL );
-// 				m_aAliveBall[0] = PBL_ALIVE;
-// 				m_Text1 = "";
-// 				m_Text2 = "";
-// 				m_Text3 = "";
-// 				m_Text4 = "";
-// 				break;
-// 			}	
-// 			if (m_aAliveBall[1] == PBL_DEAD) {
-// 				SendSignal( PBL_SIG_BALL2_ON, 0, this->getParent(), NULL );
-// 				m_aAliveBall[1] = PBL_ALIVE;
-// 				m_Text1 = "";
-// 				m_Text2 = "";
-// 				m_Text3 = "";
-// 				m_Text4 = "";
-// 				break;
-// 			}
-// 			if (m_aAliveBall[2] == PBL_DEAD) {
-// 				SendSignal( PBL_SIG_BALL3_ON, 0, this->getParent(), NULL );
-// 				m_aAliveBall[2] = PBL_ALIVE;
-// 				m_Text1 = "";
-// 				m_Text2 = "";
-// 				m_Text3 = "";
-// 				m_Text4 = "";
-// 				break;
-// 			}
-// 			throw string("All balls busy");
-// 		}
-// 		EM_COUT("Score::onTick() new ball", 1);
-// 	}
+  
+//   if (this->active() == 0 && this->getCurrentBall() < 4) {
+//     this->setText1("   press enter to launch ball");
+//   } else if (this->getCurrentBall() > 3) {
+//     this->setText1("   press r to start new game");
+//   } else {
+//     this->setText1("");
+//   }
 }
 
 void Score::StdOnSignal() {
-	EM_COUT((int)em_signal, 1);
+  EM_COUT((int)em_signal, 1);
 
-	OnSignal( PBL_SIG_RESET_ALL ) {
-		this->clear();
-	} 
-	//else
-// 	OnSignal( PBL_SIG_BALL1_OFF) {
-// 		m_aAliveBall[0] = PBL_DEAD;
-// 	}	else
-//   OnSignal( PBL_SIG_BALL2_OFF) {
-// 		m_aAliveBall[1] = PBL_DEAD;
-// 	} else
-//   OnSignal( PBL_SIG_BALL3_OFF) {
-// 		m_aAliveBall[2] = PBL_DEAD;
-// 	}	else
-// 	OnSignal( PBL_SIG_BALL4_OFF) {
-// 		m_aAliveBall[3] = PBL_DEAD;
-// 	}	else
-// 	OnSignal( PBL_SIG_BUMPER_ON ) {
-// 		//m_iScore += 450;
-// 		m_iBumps++;
-//  	}	else 
-//  		OnSignal( PBL_SIG_LOCK_1 OR_SI PBL_SIG_LOCK_2 OR_SI PBL_SIG_LOCK_3 OR_SI PBL_SIG_LOCK_4) {
-// 		if (this->alive() == 0) {
-// 			m_Text1 = "   press enter to launch ball";
-// 			m_bLaunch = true;
-// 		}
-//  		//m_iScore += 7500;
-// 	}	else
-// 	OnSignal( PBL_SIG_EXTRABALL ) {
-// 		m_bExtraBall = true;
-// 		//m_iScore += 50000;
-// 	}
-
-// 	OnSignal( PBL_SIG_BALL1_OFF OR_SI 
-// 						PBL_SIG_BALL2_OFF OR_SI	
-// 						PBL_SIG_BALL3_OFF OR_SI 
-// 						PBL_SIG_BALL4_OFF ) {
-// 		//if (m_iActiveBalls == 1) {
-// 		//SendSignal( PBL_SIG_MULTIBALL_OFF, 0, this->getParent(), NULL );
-// 		//SendSignal( PBL_SIG_LOCK_ON, 0, this->getParent(), NULL );
-// 		//}
-// 		EM_COUT("ball dead, locked " << this->locked() <<" alive "<< this->alive(), 1);
-// 		if (this->locked() == 0 && this->alive() == 1) {
-// 			SendSignal(PBL_SIG_MULTIBALL_OFF, 0, this->getParent(), NULL);
-// 			EM_COUT("multiball off", 1);
-// 		}
-
-// 		if (this->alive() == 0) {
-// 			if (m_bExtraBall) {
-// 				m_bExtraBall = false;
-// 			} else {
-// 				m_iBall++;
-// 			}
-// 			if (m_iBall > 3) {
-// 				m_Text1 = "   press r to start new game";
-// 			} else {
-// 				m_bLaunch = true;
-// 				m_Text1 = "   press enter to launch ball";
-// 				SendSignal(PBL_SIG_ALLBALLS_OFF, 0, this->getParent(), NULL);
-// 			}
-// 		}
-// 	}	
+  OnSignal( PBL_SIG_RESET_ALL ) {
+    this->clear();
+    this->setText1("   press enter to launch ball");
+  } 
+  ElseOnSignal( PBL_SIG_TILT ) {
+    this->clearText();
+    this->setText1("              TILT");
+    SendSignal( PBL_SIG_RESET_ALL, 600, this->getParent(), NULL );
+  }
+  ElseOnSignal( PBL_SIG_BALL1_ON OR_SI PBL_SIG_BALL2_ON OR_SI 
+		PBL_SIG_BALL3_ON OR_SI PBL_SIG_BALL3_ON ) {
+    this->clearText();
+  }
+  ElseOnSignal( PBL_SIG_GAME_OVER ) {
+    this->clearText();
+    this->setText1("   press r to start new game");
+  }
 }
 
 extern volatile float g_fFps;
@@ -326,6 +217,7 @@ void Score::draw() {
 
 void Score::clear() {
   this->clearText();
+  m_iState = STATE_STOPPED;
   m_iBall = 1;
   m_aBall[0] = PBL_DEAD;
   m_aBall[1] = PBL_DEAD;
@@ -334,4 +226,3 @@ void Score::clear() {
   m_iScore = 0;
   m_iFactor = 1;
 }
-
