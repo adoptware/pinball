@@ -1,6 +1,9 @@
 AUTOMAKE_OPTIONS = gnu
 
-pkglib_LIBRARIES = libemilia_base.a
+pinlibdir = $(libdir)/pinball
+pinincludedir = $(includedir)/pinball
+
+pinlib_LIBRARIES = libemilia_base.a
 
 INCLUDES = -I../addon
 
@@ -35,7 +38,7 @@ SoundVisitor.cpp \
 TextureUtil.cpp \
 TransformVisitor.cpp
 
-pkginclude_HEADERS = \
+pininclude_HEADERS = \
 AlignVisitor.h \
 AllegroVisitor.h \
 AmbientLightVisitor.h \
