@@ -13,10 +13,6 @@ Hardware rendering:
   OpenGL compatible gfx card.
   SDL 1.2.x, SDL_image and SDL_mixer libraries.
 
-Software rendering:
-  450 Mhz cpu (software rendering requires a faster cpu).
-  Allegro 4.0.x library.
-
 Recommended:
 	450 Mhz PIII.
   Decent graphics card, voodoo3, tnt2, geforce, matrox g450 (you 
@@ -41,12 +37,6 @@ sdl-devel.x.x.x.rpm. Then install with the usual:
 
 configure
 make 
-make install (as root user)
-
-or if you want to build a software version (Allegro)
-
-configure --with-allegro
-make
 make install (as root user)
 
 The game is startet with 'pinball'.

@@ -34,11 +34,11 @@ EMath::EMath() {
 EMath::~EMath() {
 }
 
-void EMath::applyMatrix(const Matrix & mtx, const Vertex3D & vtxIn, Vertex3D & vtxOut) {
-	vtxOut.x = vtxIn.x * mtx.v[0][0] + vtxIn.y * mtx.v[0][1] + vtxIn.z * mtx.v[0][2] + mtx.t[0];
-	vtxOut.y = vtxIn.x * mtx.v[1][0] + vtxIn.y * mtx.v[1][1] + vtxIn.z * mtx.v[1][2] + mtx.t[1];
-	vtxOut.z = vtxIn.x * mtx.v[2][0] + vtxIn.y * mtx.v[2][1] + vtxIn.z * mtx.v[2][2] + mtx.t[2];
-}
+// void EMath::applyMatrix(const Matrix & mtx, const Vertex3D & vtxIn, Vertex3D & vtxOut) {
+//   vtxOut.x = vtxIn.x * mtx.v[0][0] + vtxIn.y * mtx.v[0][1] + vtxIn.z * mtx.v[0][2] + mtx.t[0];
+//   vtxOut.y = vtxIn.x * mtx.v[1][0] + vtxIn.y * mtx.v[1][1] + vtxIn.z * mtx.v[1][2] + mtx.t[1];
+//   vtxOut.z = vtxIn.x * mtx.v[2][0] + vtxIn.y * mtx.v[2][1] + vtxIn.z * mtx.v[2][2] + mtx.t[2];
+// }
 
 void EMath::applyMatrixRot(const Matrix & mtx, const Vertex3D & vtxIn, Vertex3D & vtxOut) {
 	vtxOut.x = vtxIn.x * mtx.v[0][0] + vtxIn.y * mtx.v[0][1] + vtxIn.z * mtx.v[0][2];

@@ -1,63 +1,69 @@
 Name: 		pinball
-Version: 	0.0.2
-Release: 	1
+Version: 	0.1.3
+Release: 	1rh73
 
-Group:          Amusements/Games
-Group(cs): 	Zábava/Hry
-Summary: 	Emilia Pinball is free OpenGL game of playing pinball.
-Summary(cs): 	Emilia Pinball je volnì ¹iøitelná OpenGL hra.
+Group:    Amusements/Games
+Summary: 	Emilia Pinball is free OpenGL pinball game.
 
-Vendor:		Henrik Enqvist  (henquist@excite.com)
-Packager:       Michal Ambroz (o_o) (rebus@seznam.cz)
+Vendor:		Henrik Enqvist  (henqvist@users.sourceforge.net)
+Packager: Henrik Enqvist  (henqvist@users.sourceforge.net)
 License: 	GPL
-URL: 		http://pinball.sourceforge.net
+URL: 		  http://pinball.sourceforge.net
 Source: 	http://prdownloads.sourceforge.net/pinball/%{name}-%{version}.tar.gz
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-root
-Prefix: /usr
-Prefix: /etc
+#BuildRoot: 	%{_tmppath}/%{name}-%{version}-root
 
 %description
-Pinball with Tux.
+Pinball game.
 
 
 %prep
 %setup
 
 %build
-./configure
-make prefix=%{_prefix}
+#./configure --prefix=%{buildroot}%{_prefix}
+./configure --prefix=%{_prefix}
+#mkdir -p %{buildroot}%{_prefix}/bin
+#make prefix=%{buildroot}%{_prefix}
+make
 
 
 %install
-mkdir -p %{buildroot}%{_prefix}/bin
-make prefix=%{buildroot}%{_prefix} install
+#make prefix=%{buildroot}%{_prefix} install
+#some sort of hack
+#cp %{_prefix}/bin/pinball %{buildroot}%{_prefix}/bin/.
+#cp %{_prefix}/bin/pinball-config %{buildroot}%{_prefix}/bin/.
+make install
 
 #Install application link for X-Windows
-install -d %{buildroot}/etc/X11/applnk/Games
+install -d /etc/X11/applnk/Games
 echo -e "[Desktop Entry]
 Name=Emilia Pinball
 Comment=OpenGL pinball game
 Exec=pinball
 Icon=pinball.xpm
 Terminal=0
-Type=Application" > %{buildroot}/etc/X11/applnk/Games/"Emilia Pinball".desktop
-
-
+Type=Application" > /etc/X11/applnk/Games/EmiliaPinball.desktop
 
 
 %clean
-rm -rf %{buildroot}
+make uninstall
+#rm -rf %{buildroot}
+rm /etc/X11/applnk/Games/EmiliaPinball.desktop
 
 %files
 %defattr(-,root,root)
 %doc AUTHORS COPYING INSTALL NEWS README
-%doc doc/*
-/etc/X11/applnk/*
-%{_bindir}/*
+/etc/X11/applnk/Games/EmiliaPinball.desktop
+%{_prefix}/bin/pinball
+%{_prefix}/bin/pinball-config
 %{_prefix}/share/pinball/*
+%{_prefix}/lib/pinball/*
+%{_prefix}/include/pinball/*
 
 
 
 %changelog
+* Wed Mar 05 2003 Henrik Enqvist
+- removed build_root to make it work with libtool (ugly)
 * Fri Mar 08 2002 Michal Ambroz (O_O) <rebus@seznam.cz>
 - initial pinball RPM
