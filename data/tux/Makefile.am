@@ -1,5 +1,7 @@
 AUTOMAKE_OPTIONS = gnu
 
+highscoredir = $(EM_HIGHSCORE_DIR)/tux
+
 tuxlibdir = $(EM_LIBDIR)
 tuxdatadir = $(datadir)/pinball/tux
 
@@ -35,4 +37,13 @@ tiles.png \
 tiles.png.pcx \
 up.wav
 
-EXTRA_DIST = $(tuxdata_DATA)
+highscore_DATA = \
+highscores
+
+install-data-hook:
+#	chown games $(highscoredir)/highscores
+#	chgrp users $(highscoredir)/highscores
+	chmod 666 $(highscoredir)/highscores
+
+
+EXTRA_DIST = $(tuxdata_DATA) $(highscore_DATA)
