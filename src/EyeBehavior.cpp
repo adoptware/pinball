@@ -1,10 +1,11 @@
+//#ident "$Id: EyeBehavior.cpp,v 1.15 2003/06/13 13:39:46 rzr Exp $"
 /***************************************************************************
                           EyeBehavior.cpp  -  description
                              -------------------
     begin                : Wed Jan 26 2000
     copyright            : (C) 2000 by Henrik Enqvist
     email                : henqvist@excite.com
- ***************************************************************************/
+***************************************************************************/
 
 #include <string>
 
@@ -55,14 +56,15 @@ void EyeBehavior::onTick() {
   EmAssert(table->getBall(2) != NULL, "Ball3 group NULL");
   EmAssert(this->getParent() != NULL, "Parent group NULL");
 
-  // short cuts for changing view F1, F2, F2, F4
-  if (Keyboard::isKeyDown(SDLK_F1)) {
+  // shortcuts for changing view F1, F2, F2, F4 // now F5 F6 F7 F8
+  // I changed to F5 F6 F7 F8 to use the Alt+F4 quit shortcut //!rzr
+  if (Keyboard::isKeyDown(SDLK_F5)) {
     Config::getInstance()->setView(0);
-  } else if (Keyboard::isKeyDown(SDLK_F2)) {
+  } else if (Keyboard::isKeyDown(SDLK_F6)) {
     Config::getInstance()->setView(1);
-  } else if (Keyboard::isKeyDown(SDLK_F3)) {
+  } else if (Keyboard::isKeyDown(SDLK_F7)) {
     Config::getInstance()->setView(2);
-  } else if (Keyboard::isKeyDown(SDLK_F4)) {
+  } else if (Keyboard::isKeyDown(SDLK_F8)) {
     Config::getInstance()->setView(3);
   }
 
@@ -214,3 +216,4 @@ void EyeBehavior::onTick() {
     break;
   }
 }
+//EOF: $Id: EyeBehavior.cpp,v 1.15 2003/06/13 13:39:46 rzr Exp $

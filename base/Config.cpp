@@ -1,4 +1,4 @@
-//#ident "$Id: Config.cpp,v 1.28 2003/06/11 13:25:48 rzr Exp $"
+//#ident "$Id: Config.cpp,v 1.29 2003/06/13 13:39:44 rzr Exp $"
 /***************************************************************************
                           Config.cpp  -  description
                              -------------------
@@ -62,7 +62,9 @@ void Config::setDefault() {
   this->setView(0);
   this->setFullScreen(false);
   m_bExternGL = false;
-  this->setDataDir(EM_DATADIR);
+#ifndef RZR_PATHRELATIVE
+  this->setDataDir(EM_DATADIR);  //!rzr is it usefull, ! belongs to user cfg?
+#endif
   this->setLights(true);
   this->setBrightness(0.5f);
   this->setShowFPS(false);
@@ -75,13 +77,14 @@ void Config::setDefault() {
   string const rightnudge("rightnudge");
   string const launch("launch");
   string const reset("reset");
+
   this->setKey(leftflip, SDLK_LSHIFT);
   this->setKey(rightflip, SDLK_RSHIFT);
   this->setKey(bottomnudge, SDLK_SPACE);
   this->setKey(leftnudge, SDLK_LCTRL);
   this->setKey(rightnudge, SDLK_RCTRL);
   this->setKey(launch, SDLK_RETURN);
-  this->setKey(reset, SDLK_r);
+  this->setKey(reset, SDLK_r); // !rzr why not use Return
 }
 
 void Config::setDataDir(const char* ch) { 
@@ -174,8 +177,8 @@ void Config::saveConfig() {
     mkdir(dirname.c_str(), S_IRUSR | S_IWUSR |S_IXUSR);
   } else {
 #ifdef RZR_PATHRELATIVE //!rzr: check w32 config save (TODO)
-  dirname = m_sExeDir + '/' ;
-  filename = string(PACKAGE_NAME) + ".cfg";
+    dirname = m_sExeDir + '/' ;
+    filename = string(PACKAGE_NAME) + ".cfg";
 #else
     cerr << "Could not find environment variable HOME." << endl;
     cerr << "Not able to read or write config file" << endl;
@@ -184,9 +187,7 @@ void Config::saveConfig() {
   }
 #endif
 
-
   filename = dirname  + filename;
-
 
   ofstream file(filename.c_str());
   if (!file) {
@@ -228,8 +229,7 @@ void Config::loadConfig() {
 
 #if HAVE_SYS_STAT_H && HAVE_SYS_TYPES_H
   char const * const home = getenv("HOME");
-  if (home != NULL) {
-    // TODO unsafe
+  if (home != NULL) {    // TODO unsafe
     dirname = string(home) + '/' + dirname;
   } else {
 #ifdef RZR_PATHRELATIVE //!rzr: check w32 config save (TODO)
@@ -307,7 +307,7 @@ void Config::loadConfig() {
       this->setKey(keyname, (EMKey)key);
     }
   }
-  EM_CERR("- Config::loadConfig");
+  //EM_CERR("- Config::loadConfig");
 }
 
 void Config::setSize(int const w, int const h) { 
@@ -401,7 +401,7 @@ bool isAbsolutePath(char const * const argv0 ) ;
 bool isAbsolutePath(char const * const argv0 ) 
 {
   //EM_COUT(" check root drive c:\\ // absolute path -  check for wine ?", 42);
-bool t = false;
+  bool t = false;
 #ifdef WIN32
   // assert (strlen (argv0) > 3 );
   if ( ( *(argv0 +1) == ':' ) && ( *(argv0 +2)  == '\\' ) )
@@ -410,13 +410,13 @@ bool t = false;
   if ( *argv0  == '/' )  // WIN32 @ unix wine/ cygwine
     t = true;
   // check for macs, amigas  etc
-cout<<"- isAbsolutePath"<<endl;
+  //cout<<"- isAbsolutePath"<<endl;
   return t;
 }
 /// TODO; make it more robust for stranges paths 
 /// (ie "c:\\d/i//r\like\\\\this/\\/") , wine virtual pc etc
 void Config::setPaths(char const * const argv0) {
- // EM_CERR("+ Config::setPath"); 
+  // EM_CERR("+ Config::setPath"); 
   //!+rzr : make it work also in relative paths use
   // and "/long path/quoted/paths/" etc
   //EM_COUT( argv0 , 0);
@@ -424,11 +424,13 @@ void Config::setPaths(char const * const argv0) {
   m_sExeDir = "./";
   if ( *( m_sDataDir.c_str() ) != '/' ) {
     char* ptr=0; 
+    char* ptrw = 0;
     //cout<<"relative to exe file"<<endl;
+    ptr = (strrchr(argv0,'/')); // unix /cygwin / check win32 
 #ifdef WIN32
-    ptr = (strrchr(argv0,'\\')); 
-#endif
-    if ( ptr == 0 ) ptr = (strrchr(argv0,'/')); // unix /cygwin / check win32 
+    ptrw = (strrchr(argv0,'\\')); 
+#endif //TODO: MacOS file sep ':'   
+    if ( ptrw > ptr ) ptr = ptrw;
     //    assert( (*ptr != 0) );
     string path( argv0 , ptr - argv0 );
     //EM_COUT( path , 42);    
@@ -442,7 +444,7 @@ void Config::setPaths(char const * const argv0) {
     }
     m_sDataDir = m_sExeDir + '/' + string(EM_DATADIR) ;
   } else {  // cout<<"absolute path"<<endl;
-	  m_sDataDir =  string(EM_DATADIR) ;
+    m_sDataDir =  string(EM_DATADIR) ;
   }
   m_sDataSubDir = m_sDataDir  + "/"  + m_sSubDir ;
   
@@ -452,7 +454,7 @@ void Config::setPaths(char const * const argv0) {
   // m_sDataDir.replace (  m_sDataDir.find(\\,0) , 1,   /  );
 #endif 
  
- // EM_CERR("- Config::setPath"); // EM_CERR( m_sExeDir); EM_CERR( m_sDataDir);
+  // EM_CERR("- Config::setPath"); // EM_CERR( m_sExeDir); EM_CERR( m_sDataDir);
 } //!-rzr
 
-//EOF:$Id: Config.cpp,v 1.28 2003/06/11 13:25:48 rzr Exp $
+//EOF:$Id: Config.cpp,v 1.29 2003/06/13 13:39:44 rzr Exp $

@@ -1,4 +1,4 @@
-//#ident "$Id: config-rzr.h,v 1.8 2003/06/11 13:25:49 rzr Exp $"
+//#ident "$Id: config-rzr.h,v 1.9 2003/06/13 13:39:46 rzr Exp $"
 //#warning "!+rzr: Win32 portability hacks @ www.rzr.online.fr"
 #ifndef config_rzr_h_ // !+rzr 
 #define config_rzr_h_
@@ -50,7 +50,7 @@
 
 /// devel only until official release
 //#undef  RZR_PATCHES_3DS
-#define RZR_PATCHES_3DS
+//#define RZR_PATCHES_3DS
 
 ///
 //#undef RZR_DEBUG
@@ -92,6 +92,8 @@
 #define RZR_CPP_USE_NAMESPACE_STD
 #define RZR_LIBSTATIC 1
 #define RZR_PATHRELATIVE // main(argc,argv) lost @src/Pinball.cpp 
+#undef  EM_DATADIR //override autoconf path
+#undef  EM_LIBDIR  //unsed (so far)
 #undef  EM_HIGHSCORE_DIR
 #define RZR_CONFIG_STATIC_DEFAULT 1
 #endif
@@ -263,4 +265,4 @@ using namespace std;
 #endif
 #endif
 #endif //!-rzr ----------------------------------------------------------------
-//EOF: $Id: config-rzr.h,v 1.8 2003/06/11 13:25:49 rzr Exp $
+//EOF: $Id: config-rzr.h,v 1.9 2003/06/13 13:39:46 rzr Exp $
