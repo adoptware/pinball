@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
 	
 	// Add a behavior to the billboard
 	KeyBehavior* keyBeh = new KeyBehavior();
-	groupBB->addBehavior(keyBeh);
+	groupBB->setBehavior(keyBeh);
 		
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
 		engine->tick();

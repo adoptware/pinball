@@ -43,10 +43,10 @@ void Config::setDefault() {
 	// Default values
 	this->setSize(640, 480);
 	this->setSound(8);
-	this->setMusic(5);
+	this->setMusic(4);
 	this->setBpp(16);
 	this->setGLFilter(EM_LINEAR);
-	this->setView(0);
+	this->setView(1);
 	this->setFullScreen(false);
 	m_bExternGL = false;
 	this->setDataDir(EM_DATADIR);

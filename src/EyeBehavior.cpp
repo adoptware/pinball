@@ -15,12 +15,19 @@
 #include "Keyboard.h"
 #include "SoundUtil.h"
 
-#define TX -1.5f 
-#define TY 30
-#define TZ 6
-#define RX 0.23f
-#define RY 0
-#define RZ 0
+#define TX1 -1.5f 
+#define TY1 30
+#define TZ1 6
+#define RX1 0.23f
+#define RY1 0
+#define RZ1 0
+
+#define TX2 -1.5f 
+#define TY2 35
+#define TZ2 10
+#define RX2 0.22f
+#define RY2 0
+#define RZ2 0
 
 EyeBehavior::EyeBehavior(Group * g1, Group * g2, Group * g3) : Behavior() {
 	m_iNudgeTick = 0;
@@ -114,20 +121,20 @@ void EyeBehavior::onTick() {
 
 	float ex, ey, ez, sx, sy, sz;
 	
-	if (Config::getInstance()->getView() == 1) {
-		// locked view
+	if (Config::getInstance()->getView() == 2) {
+		// classic view
 		this->getParent()->getTranslation(ex, ey, ez);
 		
-		sx = (TX+m_fXNudge*2) - ex;
-		sy = (TY) - ey;
-		sz = (TZ+m_fZNudge*2) - ez;
+// 		sx = (TX+m_fXNudge*2) - ex;
+// 		sy = (TY) - ey;
+// 		sz = (TZ+m_fZNudge*2) - ez;
 		
-		this->getParent()->addTranslation(sx*0.1f, sy*0.1, sz*0.1f);
-		this->getParent()->setRotation(RX, RY, RZ);
+// 		this->getParent()->addTranslation(sx*0.1f, sy*0.1, sz*0.1f);
+// 		this->getParent()->setRotation(RX, RY, RZ);
 
 		this->getParent()->setTransform(0+m_fXNudge, 35, 12+m_fZNudge, 0.21f, 0, 0);
-	} else { 
-		// follow view
+	} else if (Config::getInstance()->getView() == 1) {
+		// dynamic view
 		float bx=0, by=0, bz=0;
 		int balls = 0;
 		
@@ -167,18 +174,58 @@ void EyeBehavior::onTick() {
 		
 		this->getParent()->getTranslation(ex, ey, ez);
 		
-		sx = (TX+bx*0.4+m_fXNudge*2) - ex;
-		sy = (TY+by*0.4) - ey;
-		sz = (TZ+bz*0.4+m_fZNudge*2) - ez;
+		sx = (TX1+bx*0.4+m_fXNudge*2) - ex;
+		sy = (TY1+by*0.4) - ey;
+		sz = (TZ1+bz*0.4+m_fZNudge*2) - ez;
 		
 		this->getParent()->addTranslation(sx*0.1f, sy*0.1, sz*0.1f);
-		this->getParent()->setRotation(RX, RY, RZ);
+		this->getParent()->setRotation(RX1, RY1, RZ1);
+	} else { 
+		// top view
+		float bx=0, by=0, bz=0;
+		int balls = 0;
+		
+		if (p_Score->isBallActive(PBL_BALL_1)) {
+			float x, y, z;
+			p_gBall1->getTranslation(x, y, z);
+			bx = x; by = y; bz = z;
+			balls++;
+		}
+		if (p_Score->isBallActive(PBL_BALL_2)) {
+			float x, y, z;
+			p_gBall2->getTranslation(x, y, z);
+			if (balls > 0) {
+				bx += x; 
+				by = EM_MAX(by, y); 
+				bz = EM_MAX(bz, z);
+			} else {
+				bx = x; by = y; bz = z;
+			}
+			balls++;
+		}
+		if (p_Score->isBallActive(PBL_BALL_3)) {
+			float x, y, z;
+			p_gBall3->getTranslation(x, y, z);
+			if (balls > 0) {
+				bx += x; 
+				by = EM_MAX(by, y); 
+				bz = EM_MAX(bz, z);
+			} else {
+				bx = x; by = y; bz = z;
+			}
+			balls++;
+		}
+		if (balls > 0) {
+			bx /= balls;
+		}
+		
+		this->getParent()->getTranslation(ex, ey, ez);
+		
+		sx = (TX2+bx*0.4+m_fXNudge*2) - ex;
+		sy = (TY2+by*0.1) - ey;
+		sz = (TZ2+bz*0.4+m_fZNudge*2) - ez;
+		
+		this->getParent()->addTranslation(sx*0.1f, sy*0.1, sz*0.1f);
+		this->getParent()->setRotation(RX2, RY2, RZ2);
 	}
 }
-
-#undef TX
-#undef TY
-#undef TZ
-#undef RX
-#undef RY
-#undef RZ

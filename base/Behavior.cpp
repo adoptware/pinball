@@ -11,7 +11,7 @@
 #include "Group.h"
 
 Behavior::Behavior() {
-	EM_COUT("Behavior::Behavior", 1);
+	//EM_COUT("Behavior::Behavior", 1);
 	p_Light = NULL;
 	p_Parent = NULL;
 	m_iType = 0;

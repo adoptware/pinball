@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
 	
 	// Add a behavior to the cube
 	SignalTest* beh = new SignalTest();
-	groupCube->addBehavior(beh);
+	groupCube->setBehavior(beh);
 		
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
 		if (Keyboard::isKeyDown(SDLK_1)) {

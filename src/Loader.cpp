@@ -121,6 +121,9 @@ int Loader::getSignal(const char * signal) {
 	if (strncmp(signal, "null", 63) == 0) return PBL_SIG_NULL;
 	if (strncmp(signal, "reset", 63) == 0) return PBL_SIG_RESET_ALL;
 	if (strncmp(signal, "tilt", 63) == 0) return PBL_SIG_TILT;
+	if (strncmp(signal, "game_over", 63) == 0) return PBL_SIG_GAME_OVER;
+	if (strncmp(signal, "game_start", 63) == 0) return PBL_SIG_GAME_START;
+	if (strncmp(signal, "game_pause", 63) == 0) return PBL_SIG_GAME_PAUSE;
 	//if (strncmp(signal, "extraball", 63) == 0) return PBL_SIG_EXTRABALL;
 	//if (strncmp(signal, "multiball_off", 63) == 0) return PBL_SIG_MULTIBALL_OFF;
 	//if (strncmp(signal, "allballs_off", 63) == 0) return PBL_SIG_ALLBALLS_OFF;
@@ -162,6 +165,9 @@ const char * Loader::getSignal(int signal) {
 	case PBL_SIG_NULL : return "null";
 	case PBL_SIG_RESET_ALL : return "reset";
 	case PBL_SIG_TILT : return "tilt";
+	case PBL_SIG_GAME_OVER : return "game_over";
+	case PBL_SIG_GAME_START : return "game_start";
+	case PBL_SIG_GAME_PAUSE : return "game_pause";
 		//case PBL_SIG_EXTRABALL : return "extraball";
 		//case PBL_SIG_MULTIBALL_OFF : return "multiball_off";
 		//case PBL_SIG_ALLBALLS_OFF : return "allballs_off";
@@ -306,7 +312,7 @@ void Loader::loadArmBehavior(ifstream & file, istringstream & ist, Group * group
 	} else {
 		beh = new ArmBehavior(false);
 	}
-	group->addBehavior(beh);	
+	group->setBehavior(beh);	
 
 	this->readNextToken(file, ist, str);
 	if (str == "sound") {
@@ -338,6 +344,10 @@ void Loader::loadAnimation(ifstream & file, istringstream & ist,
 		type = EM_ROTATION;
 	} else if (str == "translation") {
 		type = EM_TRANSLATION;
+	} else if (str == "light") {
+		type = EM_LIGHT;
+	} else {
+		throw string("Expecting rotation, translation or light in anim field");
 	}
 	StdAnimation* anim = new StdAnimation(50, type);
 
@@ -348,15 +358,16 @@ void Loader::loadAnimation(ifstream & file, istringstream & ist,
 		this->readNextToken(file, ist, a); 
 		this->readNextToken(file, ist, b); 
 		this->readNextToken(file, ist, c);
+		cerr << "****** " << a <<" "<< b <<" "<< c << endl;
 		if (count == 1) {
 			anim->setEnd(a, b, c);
 		} else {
 			anim->add(a, b, c);
 		}
 	}
-	group->addBehavior(anim);
+	group->setBehavior(anim);
 
-	this->loadMisc(file, ist, engine, group, anim);
+	EmReadCmp(file, ist, str, "}");
 }
 
 void Loader::loadBehaviorLight(ifstream & file, istringstream & ist, 
@@ -403,11 +414,7 @@ void Loader::loadBumperBehavior(ifstream & file, istringstream & ist, Engine * e
 	EmReadCmp(file, ist, str, "{");
 
 	BumperBehavior* beh = new BumperBehavior();
-	group->addBehavior(beh);
-
-	int score;
-	this->readNextToken(file, ist, score);
-	beh->setScore(score);
+	group->setBehavior(beh);
 
 	this->readNextToken(file, ist, str);
 	if (str == "sound") {
@@ -562,7 +569,7 @@ void Loader::loadStateBehavior(ifstream & file, istringstream & ist, Engine * en
 	EmReadCmp(file, ist, str, "{");
 		
 	StateBehavior* b = new StateBehavior();
-	group->addBehavior(b);
+	group->setBehavior(b);
 
 	this->loadMisc(file, ist, engine, group, b);
 }
@@ -620,7 +627,7 @@ void Loader::loadScript(ifstream & file, istringstream & ist, Engine * engine, G
 		script->addQueryItem(qi);
 		this->readNextToken(file, ist, str);
 	}
-	group->addBehavior(script);
+	group->setBehavior(script);
 }
 
 /****************************************************************
@@ -650,12 +657,12 @@ void Loader::loadModule(ifstream & file, istringstream & ist, Engine * engine, G
 				if (beh == NULL) {
 					throw string("Could not allocate behavior object");
 				} else {
-					group->addBehavior(beh);
+					group->setBehavior(beh);
 				}
 			}
 		}
 	} else {
-		group->addBehavior(new FakeModuleBehavior(filename.c_str()));
+		group->setBehavior(new FakeModuleBehavior(filename.c_str()));
 	}
 	EmReadCmp(file, ist, str, "}");
 }

@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 
 	// Add a behavior to the cube
 	KeyRotBehavior* keyRBeh = new KeyRotBehavior();
-	groupCube->addBehavior(keyRBeh);
+	groupCube->setBehavior(keyRBeh);
 		
 	bool render = true;
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
