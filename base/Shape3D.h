@@ -1,11 +1,11 @@
-//#ident "$Id: Shape3D.h,v 1.14 2003/05/27 11:53:25 rzr Exp $"
+//#ident "$Id: Shape3D.h,v 1.15 2003/07/16 20:02:04 rzr Exp $"
 /***************************************************************************
                           Shape3D.h  -  description
                              -------------------
     begin                : Wed Jan 26 2000
     copyright            : (C) 2000 by Henrik Enqvist
     email                : henqvist@excite.com
- ***************************************************************************/
+***************************************************************************/
 
 #ifndef SHAPE3D_H
 #define SHAPE3D_H
@@ -20,11 +20,13 @@
 //#define EM_SHAPE3D_FLAT 16
 //#define EM_SHAPE3D_DOUBLE 32
 
+
 #include <vector>
 #include <string>
 
 #include "TextureUtil.h"
 #include "EMath.h"
+using namespace std;
 
 class Group;
 class Polygon3D;
@@ -35,23 +37,28 @@ class Polygon3D;
  * with the 'add(Polygon*)' method. The Shape3D is finished off by calling
  * countNormals().
  * @see Polygon */
-class Shape3D {
- public:
+class Shape3D 
+{
+public:
   Shape3D(int v = 6, int p = 2);
   virtual ~Shape3D();
   /** Creates a new vertex and returns the index. The index is used when 
    * creating polygons. @see Polygon */
   int add(float x, float y, float z);
-  int add(float x, float y, float z, float r, float g, float b, float a, float u, float v);
+  int add(float x, float y, float z, float r, float g, float b, float a=1,
+          float u=0, float v=0);
   int addAt(int index, float x, float y, float z,
-	    float r, float g, float b, float a, float u, float v);
+            float r=1, float g=1, float b=1 , float a=1, 
+            float u=0, float v=0);
   /** Adds a polygon. @see Polygon */
   void add(Polygon3D*);
   /** Counts the polygon normals used for lightning. This must be called when
    * all vertices and polygons are added to the shape. */ 
   void countNormals();
   /** Sets the color of all polygons to rgba. */
-  void setColor(float r, float g, float b, float a);
+  void setColor(float r, float g, float b, float a=1.);
+  void setColor(int index, float r, float g, float b, float a=1.);
+  Color * getColor(int index);
   /** Applies a a property to all polygons. See Polygon class for
    * properties. @see Polygon */
   void setPolygonProperty(int property);
@@ -82,11 +89,10 @@ class Shape3D {
   float getCollisionSize();
   void setParent(Group*);
   Group * getParent() { return p_Parent; };
-  Color * getColor(int index);
-  void setColor(int index, float r, float g, float b, float a);
   TexCoord * getTexCoord(int index);
   void setTexCoord(int index, float u, float v);
-  
+
+public:  
   vector<Polygon3D*> m_vPolygon;
   vector<Vertex3D> m_vVtxSrc;
   vector<Vertex3D> m_vVtxTrans;
@@ -105,7 +111,8 @@ class Shape3D {
   int m_iProperties;
   /// used for importing 3ds files //!rzr
   string m_sMaterialName;
+  string m_sName;
 };
 
 #endif // SHAPE3D_H
-//EOF $Id: Shape3D.h,v 1.14 2003/05/27 11:53:25 rzr Exp $
+//EOF $Id: Shape3D.h,v 1.15 2003/07/16 20:02:04 rzr Exp $

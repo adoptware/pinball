@@ -1,4 +1,4 @@
-//#ident "$Id: LoaderModule.cpp,v 1.2 2003/04/09 12:19:07 rzr Exp $" 
+//#ident "$Id: LoaderModule.cpp,v 1.3 2003/07/16 20:02:04 rzr Exp $" 
 #ifndef LoaderModule_cpp_ 
 #define LoaderModule_cpp_
 /**
@@ -12,10 +12,9 @@
  * (and keyboard bug that goes along on win32)
  **/
 #include "Private.h"
-
+#include "Config.h"
 #include "Behavior.h"
 #include "LoaderModule.h"
-
 #include <map> 
 #include <string> 
 #include <iostream>
@@ -114,4 +113,4 @@ Behavior* LoaderModule::read(string  & filename)
   EM_COUT("- LoaderModule::read",0);
 }
 #endif // inclusion
-//$Id: LoaderModule.cpp,v 1.2 2003/04/09 12:19:07 rzr Exp $
+//$Id: LoaderModule.cpp,v 1.3 2003/07/16 20:02:04 rzr Exp $

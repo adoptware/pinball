@@ -1,4 +1,4 @@
-//#ident "$Id: Pinball.cpp,v 1.44 2003/06/18 10:43:44 henqvist Exp $"
+//#ident "$Id: Pinball.cpp,v 1.45 2003/07/16 20:02:04 rzr Exp $"
 /***************************************************************************
                           Pinball.cpp  -  description
                              -------------------
@@ -7,11 +7,6 @@
     email                : henqvist@excite.com
 ***************************************************************************/
 
-#include <fstream>
-#include <string>
-//#include <sstream>
-#include <strstream>
-#include <iostream>
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -31,7 +26,15 @@
 #include <unistd.h> // not in msvc (replaced by io.h)
 #endif //!-rzr
 
+#include "Config.h"
 #include "Pinball.h"
+
+#include <fstream>
+#include <string>
+//#include <sstream>
+#include <strstream>
+#include <iostream>
+
 #include "Keyboard.h"
 #include "Menu.h"
 #include "Engine.h"
@@ -50,7 +53,6 @@
 #include "CollisionBounds.h"
 #include "StateMachine.h"
 //#include "EyeBehavior.h"
-#include "Config.h"
 #include "EmFont.h"
 #include "Loader.h"
 #include "BallGroup.h"
@@ -250,7 +252,7 @@ protected:
     default: w = 640; h = 480;
     }
     if (config->getWidth() != w) {
-#ifdef  EM_USE_SDL
+#if  EM_USE_SDL
       SDL_SetVideoMode(w, h, config->getBpp(),
                        SDL_OPENGL
                        | (config->useFullScreen() ? SDL_FULLSCREEN : 0));
@@ -439,7 +441,7 @@ void get_config(void) {
     menusize->setCurrent(4);
   } else        if (Config::getInstance()->getWidth() == 1024) {
     menusize->setCurrent(5);
-  } else 	if (Config::getInstance()->getWidth() == 1280) {
+  } else        if (Config::getInstance()->getWidth() == 1280) {
     menusize->setCurrent(6);
   } else {
     menusize->setCurrent(3);
@@ -705,7 +707,9 @@ int main(int argc, char *argv[]) {
   //cerr<<"+ Pinball::main"<<endl;
   try {
     // Create a engine and parse emilia arguments
+#ifndef RZR_PATHRELATIVE
     Config::getInstance()->loadConfig();
+#endif
     Engine * engine = new Engine(argc, argv);
 
     float direct = 0.0f;
@@ -736,13 +740,16 @@ int main(int argc, char *argv[]) {
     // Add a score board and a menu.
     MenuItem* menu = createMenus(engine);
 
-    // Draw to the screen.
+    cerr<<"Draw to the screen"<<endl;
     int all = 0;
 
     engine->resetTick();
 
-    while (! (  SDL_QuitRequested()  //cout<<"catch close win"<<endl; //!rzr
-                || Keyboard::isKeyDown(SDLK_INSERT)))  {
+    while (! (  
+#if EM_USE_SDL
+              SDL_QuitRequested() || //cout<<"catch close win"<<endl; //!rzr
+#endif
+              Keyboard::isKeyDown(SDLK_INSERT)))  {
 #if EM_DEBUG
       if (Keyboard::isKeyDown(SDLK_p)) {
         Keyboard::waitForKey();
@@ -874,4 +881,4 @@ int WINAPI WinMain( HINSTANCE hInst,  HINSTANCE hPreInst,
   return main(argc,argv);
 }
 #endif
-// EOF $Id: Pinball.cpp,v 1.44 2003/06/18 10:43:44 henqvist Exp $
+// EOF $Id: Pinball.cpp,v 1.45 2003/07/16 20:02:04 rzr Exp $
