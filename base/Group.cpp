@@ -67,8 +67,11 @@ void Group::freeObjects() {
   // 		delete (*biter);
   // 	}
   // 	m_vBehavior.clear();
-
+#ifdef RZR_LIBSTATIC
+  if (p_Behavior != NULL) p_Behavior->clear(); //!+-rzr reuse allocated obj
+#else
   if (p_Behavior != NULL) delete p_Behavior;
+#endif
   if (p_BillBoard != NULL) delete p_BillBoard;
   if (p_Camera != NULL) delete p_Camera;
   if (p_Light != NULL) delete p_Light;
