@@ -1,4 +1,4 @@
-//#ident "$Id: Private.h,v 1.15 2003/05/12 12:17:59 rzr Exp $"
+//#ident "$Id: Private.h,v 1.16 2003/05/19 13:48:57 rzr Exp $"
 /***************************************************************************
                           Private.h  -  description
                              -------------------
@@ -20,8 +20,8 @@
 #undef  RZR_PATCHES   
 #define RZR_PATCHES   
 #endif
-
-
+// If using autoconf and want patches just add :
+// #define RZR_PATCHES (in pinconfig.h))
 #ifdef RZR_PATCHES  
 #include "config-rzr.h" // in a separate file until a better integration
 #endif //!-rzr 
@@ -47,10 +47,11 @@
 #error "Must specify allegro or sdl."
 #endif
 #endif
-#ifdef _MSC_VER
+#ifndef _MSC_VER
 namespace std {}; // !+-rzr: must be definied before used  (msvc)
-#endif
+// can't be empty for codewarrior
 using namespace std;
+#endif
 
 // Dummy operator to make MSVC carp work ??
 /*
@@ -115,3 +116,4 @@ bool operator == (const PolygonEdge & peA, const PolygonEdge & peB) {
 
 
 #endif // PRIVATE_H
+//EOF: $Id: Private.h,v 1.16 2003/05/19 13:48:57 rzr Exp $

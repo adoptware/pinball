@@ -1,9 +1,9 @@
-//#ident "$Id: config-rzr.h,v 1.3 2003/05/12 12:17:59 rzr Exp $"
+//#ident "$Id: config-rzr.h,v 1.4 2003/05/19 13:48:57 rzr Exp $"
 //#warning "!+rzr: Win32 portability hacks @ www.rzr.online.fr"
 #ifndef config_rzr_h_ // !+rzr 
 #define config_rzr_h_
 /**
- * @author: www.Philippe.COVAL.free.fr - $Author: rzr $
+ * @author: www.Philippe.COVAL.free.fr - rev: $Author: rzr $
  * Portability issues:
  *
  * - Linux = gcc@linux
@@ -41,13 +41,18 @@
 ///
 #undef RZR_DEBUG
 //--------------------------------------------------------------------------
-/// MicroSoft.com / Visual C++ (win32@win32)
+/// GCC @ gnu.org (everything is autoconfigured)
+#if ( (defined unix ) && ( defined __GNUC__ ) )
+#endif
+
+/// Visual C++ @ MicroSoft.com   (win32@win32)
 #if ( (defined WIN32 ) && ( defined _MSC_VER ) )
 #undef  HAVE_CONFIG_H 
 #undef  HAVE_UNISTD_H
 #define RZR_LINKS_UNSUPPORTED 1
 #define RZR_RANDOM_UNSUPPORTED 1
 #define RZR_WINAPI 1 
+#define RZR_CPP_USE_NAMESPACE_STD
 #define RZR_LIBSTATIC 1
 #define RZR_CONFIG_STATIC_DEFAULT 1
 #ifdef _DEBUG // win32 msvc debug
@@ -59,19 +64,20 @@
 #define EM_HIGHSCORE_DIR EM_DATADIR
 #endif
 
-/// MetroWreks.com / CodeWarrior (xcompiler windows2mac )
-#if( (defined WIN32 ) && ( defined __MWERKS__ ) )
+/// CodeWarrior  @ MetroWreks.com (xcompiler windows2mac )
+#if(  ( defined __MWERKS__ ) ) //(defined WIN32 ) &&
 #undef  HAVE_CONFIG_H
 #define HAVE_UNISTD_H 1
 #define RZR_LINKS_UNSUPPORTED 1
 #define RZR_RANDOM_UNSUPPORTED 1
 #define RZR_CONFIG_STATIC_DEFAULT 1
+#define RZR_CPP_USE_NAMESPACE_STD
 #define RZR_LIBSTATIC 1
 #undef  RZR_PATHRELATIVE // main(argc,argv) lost @src/Pinball.cpp 
 #define EM_HIGHSCORE_DIR EM_DATADIR
 #endif
 
-/// GNU.org / mingw32 (gcc for Win32, like cygwin) 
+/// gcc(mingw32) @ GNU.org  (gcc for Win32, like cygwin) 
 #if ( (defined WIN32 ) && ( defined __GNUC__ ) )
 #define HAVE_UNISTD_H 1
 #define RZR_LINKS_UNSUPPORTED 1
@@ -91,24 +97,6 @@
 
 //--------------------------------------------------------------------------
 
-#ifdef RZR_PATHRELATIVE // on upcoming versions
-#ifndef EM_DATADIR
-#define EM_DATADIR "share/pinball" // single dir and exes in it (!= unix)
-#endif
-#ifndef EM_LIBDIR
-#define EM_LIBDIR "lib/pinball"  // BUT subdirs are like unix
-#endif
-#else
-#ifndef EM_DATADIR
-#define EM_DATADIR "/data/" 
-#endif
-#ifndef EM_LIBDIR
-#define EM_LIBDIR "/lib/"  
-#endif
-#endif
-
-
-
 #ifdef RZR_LINKS_UNSUPPORTED
 #define lstat( name, opt)  stat(name, opt); //undef on mingw32@Linux
 #endif
@@ -116,6 +104,12 @@
 
 #ifdef RZR_RANDOM_UNSUPPORTED 
 #define random rand // cstdlibs random is not definied @msvc + mingw32
+#endif
+
+#ifdef RZR_CPP_USE_NAMESPACE_STD
+#include <iostream> 
+//namespace std {};
+using namespace std;
 #endif
 
 #ifdef RZR_WINAPI
@@ -137,6 +131,24 @@
 //#undef  assert
 //#define assert(x); {}
 #endif
+
+#ifdef RZR_PATHRELATIVE // on upcoming versions
+#ifndef EM_DATADIR
+#define EM_DATADIR "share/pinball" // single dir and exes in it (!= unix)
+#endif
+#ifndef EM_LIBDIR
+#define EM_LIBDIR "lib/pinball"  // BUT subdirs are like unix
+#endif
+#else
+#ifndef EM_DATADIR
+#define EM_DATADIR "/pinball/data/" 
+#endif
+#ifndef EM_LIBDIR
+#define EM_LIBDIR "/pinball/lib/"  
+#endif
+#endif
+
+
 //--------------------------------------------------------------------------
 // Common WIN32 options tested on mingw32 + msvc6
 #ifdef WIN32 //!+rzr MSVC++ , mingw32 (etc not tested so far)
@@ -147,14 +159,12 @@
 
 #endif // WIN32 // !rzr-
 
+
 #ifdef _MSC_VER
 //#undef WINAPI
-//#include <iostream> //!+-rzr
-namespace std {};
-using namespace std;
 //#ifdef Polygon // Polygon Is A Macro So It Is Renamed To Be Used As AClass
-#undef Polygon // other solution is to write "class Polygon" instead of just Polygon
-#define Polygon PolygonClass
+//#undef Polygon // other solution is to write "class Polygon" instead of just Polygon
+//#define Polygon PolygonClass
 // ---- Texture  Engine // undefined reference to `gluErrorString@4
 //#undef EM_GLERROR
 //#define EM_GLERROR(a) EM_COUT(a,42)
@@ -216,6 +226,5 @@ using namespace std;
 #define STDC_HEADERS 1
 #define VERSION "cvs-__DATE__"
 #endif
-
-
 #endif //!-rzr ----------------------------------------------------------------
+//EOF: $Id: config-rzr.h,v 1.4 2003/05/19 13:48:57 rzr Exp $

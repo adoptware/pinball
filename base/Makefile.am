@@ -1,3 +1,4 @@
+# $Id: Makefile.am,v 1.5 2003/05/19 13:48:57 rzr Exp $
 AUTOMAKE_OPTIONS = gnu
 
 pinlibdir = $(libdir)/pinball
@@ -25,6 +26,7 @@ Group.cpp \
 Keyboard.cpp \
 Light.cpp \
 Node.cpp \
+Obj3dsUtil.cpp \
 OctTree.cpp \
 OpenGLVisitor.cpp \
 PointLightVisitor.cpp \
@@ -57,6 +59,7 @@ Group.h \
 Keyboard.h \
 Light.h \
 Node.h \
+Obj3dsUtil.h \
 OctTree.h \
 OpenGLVisitor.h \
 PointLightVisitor.h \
