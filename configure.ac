@@ -1,21 +1,20 @@
-dnl Process this file with autoconf to produce a configure script.
-AC_INIT(base/Engine.cpp)
+dnl Process this file with autoconf 2.53 to produce a configure script.
+
+dnl init autoconf and automake
+AC_INIT(pinball, 0.2.0, [[henqvist@users.sourceforge.net]])
+
+AM_CONFIG_HEADER(pinconfig.h)
+
+AC_CANONICAL_HOST
+AC_CANONICAL_TARGET
+
+AM_INIT_AUTOMAKE
 
 dnl this is a c++ program
 CFLAGS="-g -W -Wall -O2"
 CXXFLAGS="-g -W -Wall -O2"
 
-PINBALL_VERSION=0.2.0
-SDL_VERSION=1.2.0
-ALLEGRO_VERSION=4.0.0
-
-AC_CANONICAL_HOST
-AC_CANONICAL_TARGET
-
 AC_CONFIG_SUBDIRS(libltdl)
-
-AM_INIT_AUTOMAKE(pinball, $PINBALL_VERSION)
-AM_CONFIG_HEADER(pinconfig.h)
 
 dnl Checks for programs.
 AC_PROG_CC
@@ -40,27 +39,26 @@ if test "x$exec_prefix" = xNONE; then
   exec_prefix="$prefix"
 fi
 
-EM_DATADIR="$datadir/$PACKAGE"
-eval EM_DATAPATH=`eval echo "$EM_DATADIR"`
-AC_DEFINE_UNQUOTED(EM_DATADIR, "$EM_DATAPATH")
-AC_SUBST(EM_DATAPATH)
+EM_DATADIR="$datadir/$PACKAGE_NAME"
 AC_SUBST(EM_DATADIR)
+eval EM_DATAPATH=`eval echo "$EM_DATADIR"`
+AC_DEFINE_UNQUOTED(EM_DATADIR, "$EM_DATAPATH", [The data dir /usr/local/share/pinball])
 
-EM_LIBDIR="$libdir/$PACKAGE"
-eval EM_LIBPATH=`eval echo "$EM_LIBDIR"`
-AC_DEFINE_UNQUOTED(EM_LIBDIR, "$EM_LIBPATH")
-AC_SUBST(EM_LIBPATH)
+EM_LIBDIR="$libdir/$PACKAGE_NAME"
 AC_SUBST(EM_LIBDIR)
+eval EM_LIBPATH=`eval echo "$EM_LIBDIR"`
+AC_DEFINE_UNQUOTED(EM_LIBDIR, "$EM_LIBPATH", [The library or plugin dir /usr/local/lib/pinball])
 
+AC_ARG_ENABLE(libtest, [  --disable-libtest     SDL_image _mixer libtest work around ], , enable_libtest=yes)
 
 dnl *******************************************
 dnl Allegro or SDL version ********************
 
-AC_ARG_WITH(allegro, [  --with-allegro          Use allegro (software rendering) instead of SDL and OpenGL], use_allegro="yes", use_allegro="no")
+AC_ARG_WITH(allegro, [  --with-allegro          use allegro (software rendering) instead of SDL and OpenGL], use_allegro="yes", use_allegro="no")
 
-if test x"$use_allegro" = "xno"; then
+if test x"$use_allegro" == "xno"; then
 
-AC_DEFINE(EM_USE_SDL)
+AC_DEFINE(EM_USE_SDL, [1], [Shall we use SDL and OpenGL])
 
 dnl *******************************************
 dnl OPENGL ************************************
@@ -102,11 +100,6 @@ AC_SUBST(MATHLIB)
 dnl Check for OpenGL
 AC_MSG_CHECKING(for OpenGL support)
 AC_TRY_COMPILE([
- #ifdef WIN32 // !+rzr patch 4 w32 DLL calls // might not the right place
- #ifndef WINAPI  // what is it ? 
- #define WINAPI __stdcall  // not sure it is good , but it works
- #endif 
- #endif // !-rzr  // rzr(a)chez.com 
  #if defined(__APPLE__) && defined(__MACH__)
  #include <OpenGL/gl.h>
   #else
@@ -120,14 +113,14 @@ LIBS="$GL_LIBS $LIBS"
 
 dnl *******************************************
 dnl SDL ***************************************
-AM_PATH_SDL($SDL_VERSION, : , AC_MSG_ERROR([*** SDL version $SDL_VERSION not found! Make sure you have the development package of SDL installed - (www.libsdl.org) - or try to use the --with-sdl-prefix option]))
+AM_PATH_SDL(1.2.0, : , AC_MSG_ERROR([*** SDL version 1.2.0 not found! Make sure you have the development package of SDL installed - (www.libsdl.org) - or try to use the --with-sdl-prefix option]))
 CFLAGS="$CFLAGS $SDL_CFLAGS"
 CPPFLAGS="$CPPFLAGS $SDL_CFLAGS"
 LIBS="$LIBS $SDL_LIBS"
 
 dnl SDL_image *********************************
-AC_ARG_WITH(sdlimage-prefix, [  --with-sdlimage-prefix=PFX prefix where SDL_image library is installed], sdlimage_prefix="$withval", sdlimage_prefix="")
- 
+AC_ARG_WITH(sdlimage-prefix, [  --with-sdlimage-prefix=PFX prefix where SDL_image library is installed], sdlimage_prefix="$withval", sdlimage_prefix="") 
+
 if test x"$sdlimage_prefix" != "x"; then
   SDLIMAGE_LIB="-L$sdlimage_prefix/lib"
   SDLIMAGE_CFLAGS="-I$sdlimage_prefix/include"
@@ -136,8 +129,9 @@ if test x"$sdlimage_prefix" != "x"; then
   CFLAGS="$CFLAGS $SDLIMAGE_CFLAGS"
 fi
 
-AC_CHECK_LIB(SDL_image, IMG_Load, : ,AC_MSG_ERROR([*** libSDL_image not found! Make sure you have the development package of SDL_image installed - (www.libsdl.org) - or try to use the --with-sdlimage-prefix option]), )
-AC_DEFINE(EM_USE_SDLIMAGE)
+if test x"$enable_libtest" = x"yes"; then
+  AC_CHECK_LIB(SDL_image, IMG_Load, : ,AC_MSG_ERROR([*** libSDL_image not found! Make sure you have the development package of SDL_image installed - (www.libsdl.org) - or try to use the --with-sdlimage-prefix option]), )
+fi
 LIBS="$LIBS -lSDL_image"
 
 dnl SDL_mixer **********************************
@@ -151,19 +145,20 @@ if test x"$sdlmixer_prefix" != "x"; then
   CFLAGS="$CFLAGS $SDLMIXER_CFLAGS"
 fi
 
-AC_CHECK_LIB(SDL_mixer, Mix_OpenAudio, : ,AC_MSG_ERROR([*** libSDL_mixer not found. Make sure you have the development package of SDL_mixer installed - (www.libsdl.org) - or try to use --with-sdlmixer-prefix option]), )
-AC_DEFINE(EM_USE_SDLMIXER)
+if test x"enable_libtest" = x"yes"; then
+  AC_CHECK_LIB(SDL_mixer, Mix_OpenAudio, : ,AC_MSG_ERROR([*** libSDL_mixer not found. Make sure you have the development package of SDL_mixer installed - (www.libsdl.org) - or try to use --with-sdlmixer-prefix option]), )
+fi
 LIBS="$LIBS -lSDL_mixer"
 
 dnl else use allegro instead of sdl
 
 else
 
-AC_DEFINE(EM_USE_ALLEGRO)
+AC_DEFINE(EM_USE_ALLEGRO, [1], [Shall we use allegro - software rendering])
 
 dnl *******************************************
 dnl ALLEGRO ***********************************
-AM_PATH_ALLEGRO($ALLEGRO_VERSION, : , AC_MSG_ERROR([*** Allegro version $ALLEGRO_VERSION not found! Make sure you have the development package of Allegro installed - (www.talula.demon.co.uk/allegro) - or try to use the --with-allegro-prefix option]) )
+AM_PATH_ALLEGRO(4.0.0, : , AC_MSG_ERROR([*** Allegro version 4.0.0 not found! Make sure you have the development package of Allegro installed - (www.talula.demon.co.uk/allegro) - or try to use the --with-allegro-prefix option]) )
 CFLAGS="$CFLAGS $ALLEGRO_CFLAGS"
 CPPFLAGS="$CPPFLAGS $ALLEGRO_CFLAGS"
 LIBS="$LIBS $ALLEGRO_LIBS"
@@ -177,10 +172,10 @@ dnl CPP_UNIT ***********************************
 
 AC_ARG_WITH(unittest, [  --with-unittest         Try to use unitest], use_unittest="yes", use_unittest="no")
 
-if test x"$use_unittest" = "xyes"; then
+if test x"$use_unittest" == "xyes"; then
 
 AM_PATH_CPPUNIT(1.8.0, [
-  AC_DEFINE(EM_UNIT_TEST) 
+  AC_DEFINE(EM_UNIT_TEST, [1], [Shall we compile unittests]) 
   CPPFLAGS="$CPPFLAGS $CPPUNIT_CFLAGS"	
   CFLAGS="$CFLAGS $CPPUNIT_CFLAGS" 
   LIBS="$LIBS $CPPUNIT_LIBS"
@@ -192,26 +187,26 @@ dnl ********************************************
 dnl HEADERS ************************************
 dnl Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS(sys/stat.h, : ,AC_MSG_WARN([*** Header sys/stat.h not found. Not able to save config]))
-AC_CHECK_HEADERS(sys/types.h, : ,AC_MSG_WARN([*** Header sys/types.h not found. Not able to save config]))
-AC_CHECK_HEADERS(unistd.h, : ,AC_MSG_WARN([*** Header unistd.h not found.]))
+AC_CHECK_HEADERS(sys/stat.h, : ,AC_MSG_ERROR([*** Header sys/stat.h not found. Not able to save config]))
+AC_CHECK_HEADERS(sys/types.h, : ,AC_MSG_ERROR([*** Header sys/types.h not found. Not able to save config]))
 
 dnl ********************************************
 dnl Debug and Config ***************************
 AC_ARG_WITH(debug, [  --with-debug            Compile debug version], use_debug="yes", use_debug="no")
 
-if test x"$use_debug" = "xyes"; then
-AC_DEFINE(EM_DEBUG)
+if test x"$use_debug" == "xyes"; then
+AC_DEFINE(EM_DEBUG, [1], [Shall we use debug features such as profiling and keyboard ball steering])
 fi
 
-AC_DEFINE(EM_USE_SOURCE_SPECULAR)
+AC_DEFINE(EM_USE_SOURCE_SPECULAR, [1], [Specular])
 dnl AC_DEFINE(EM_USE_FAST_FLOAT2INT)
 dnl AC_DEFINE(EM_DEBUG_COLLISION)
-AC_DEFINE(EM_USE_QUADTREE)
-AC_DEFINE(EM_USE_SHARED_COLOR)
+AC_DEFINE(EM_USE_QUADTREE, [1], [Quadtree instead of octtree])
+AC_DEFINE(EM_USE_SHARED_COLOR, [1], [One color per vertex])
 
-AC_SUBST(PINBALL_VERSION)
 dnl AC_SUBST(pkglibdir)
 dnl AC_SUBST(pkgincludedir)
 
-AC_OUTPUT(Makefile addon/Makefile base/Makefile data/Makefile data/tux/Makefile data/professor/Makefile src/Makefile test/Makefile pinball-config)
+AC_CONFIG_FILES([Makefile addon/Makefile base/Makefile data/Makefile data/tux/Makefile data/professor/Makefile src/Makefile test/Makefile pinball-config])
+
+AC_OUTPUT
