@@ -1,11 +1,11 @@
-//#ident "$Id: Obj3dsUtil.h,v 1.2 2003/05/27 11:53:25 rzr Exp $" 
+//#ident "$Id: Obj3dsUtil.h,v 1.1 2003/05/28 07:11:21 henqvist Exp $" 
 #ifndef Obj3dsUtil_h_ 
 #define Obj3dsUtil_h_ 
 class Shape3D;
 class Obj3dsUtil;
 class Group;
 /**
- * @author: www.Philippe.COVAL.online.fr - Rev: $Author: rzr $ 
+ * @author: www.Philippe.COVAL.online.fr - Rev: $Author: henqvist $ 
  * 3dStudio : 3ds max import / export (Assci)
  * Wrap to a rzr's mini-lib (Under devel)
  * load 3ds objects (exported to ascii (dos "\r\n" ) .asc) 
@@ -63,4 +63,4 @@ protected:
   static Obj3dsUtil* p_Instance;
 };
 #endif //_h_ inclusion 
-//EOF $Id: Obj3dsUtil.h,v 1.2 2003/05/27 11:53:25 rzr Exp $
+//EOF $Id: Obj3dsUtil.h,v 1.1 2003/05/28 07:11:21 henqvist Exp $
