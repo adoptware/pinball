@@ -52,12 +52,13 @@
 #define PBL_SIG_BALL_OFF         3102
 //#define PBL_SIG_ALLBALLS_OFF      3109
 
+#define PBL_SIG_EXTRABALL						1013
+
 /*
 
 #define PBL_SIG_HIT_CAVE    				1002
 #define PBL_SIG_CAVE_OUT 		    		1012
 #define PBL_SIG_ACTIVATE_EXTRABALL 	1003
-#define PBL_SIG_EXTRABALL						1013
 #define PBL_SIG_JACKPOT							1004
 #define PBL_SIG_NEW_TARGET					1060
 #define PBL_SIG_TARGET_1 						1005

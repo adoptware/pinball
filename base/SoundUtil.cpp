@@ -10,6 +10,7 @@
 #include "SoundUtil.h"
 #include "EMath.h"
 #include "Config.h"
+#include <iostream>
 
 SoundUtil* SoundUtil::p_SoundUtil = NULL;
 

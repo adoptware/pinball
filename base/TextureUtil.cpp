@@ -11,6 +11,7 @@
 #include "Private.h"
 #include "TextureUtil.h"
 #include "Config.h"
+#include <iostream>
 
 #if EM_USE_SDL
 #if defined(__APPLE__) && defined(__MACH__) // !+rzr should be in .in files 

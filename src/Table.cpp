@@ -172,18 +172,19 @@ int Table::loadLevel(Engine * engine, const char * subdir) {
   return 0;
 }
 
-// pnf
-string Table::getTableName() {
+string Table::getTableName()
+{
   return m_sTableName;
 }
 
-// pnf
-string Table::getTableDataDirName() {
+string Table::getTableDataDirName()
+{
   string datadir(Config::getInstance()->getDataSubDir());
   return datadir;
 }
 
-bool Table::isItHighScore(const int nNewScore) {
+bool Table::isItHighScore(const int nNewScore)
+{
   // The first score is the lowest
   multimap<int, string>::iterator it = m_mapHighScores.begin();
 
@@ -195,7 +196,8 @@ bool Table::isItHighScore(const int nNewScore) {
   return false;
 }
 
-bool Table::getHighScoresData(list<string>& listHighScores) {
+bool Table::getHighScoresData(list<string>& listHighScores)
+{
   int nScore = 0;
   string sName;
 
@@ -219,58 +221,78 @@ bool Table::getHighScoresData(list<string>& listHighScores) {
   return true;
 }
 
-void Table::saveNewHighScore(int nNewHighScore, const char * name) {
+void Table::saveNewHighScore(int nNewHighScore, const char * name)
+{
   // Remove the first element, it's the lowest score,
   // a map is by always sorted.
   multimap<int, string>::iterator it = m_mapHighScores.begin();
-  m_mapHighScores.erase(it);
 
-  m_mapHighScores.insert(pair<int, string>(nNewHighScore, name));
+  // Make shure that the new score is at least bigger then the lowest score
+  int nScore = (*it).first;
+  if (nNewHighScore > nScore)
+  {
+    m_mapHighScores.erase(it);
+
+    m_mapHighScores.insert(pair<int, string>(nNewHighScore, name));
+  }
 }
-
-//
-// HighScores
-// pnf
-//
 
 #define HIGH_SCORES_FILENAME "/highscores"
 
-bool Table::readHighScoresFile() {
+bool Table::readHighScoresFile()
+{
   // This is the current table's name
-  if (m_sTableName.length() == 0) {
+  if (m_sTableName.length() == 0)
+  {
     cerr << "No current table name!" << endl;
     return false;
-	}
+  }
+
   // Clear old high scores
   m_mapHighScores.clear();
-  //string sFileName = string(Config::getInstance()->getDataSubDir()) + HIGH_SCORES_FILENAME;
-	string sFileName = string(EM_HIGHSCORE_DIR) +"/"+ m_sTableName + HIGH_SCORES_FILENAME;
+
+  //string sFileName = string(Config::getInstance()->getDataSubDir()) +
+		       HIGH_SCORES_FILENAME;
+
+  string sFileName = string(EM_HIGHSCORE_DIR) +"/"+ m_sTableName +
+		     HIGH_SCORES_FILENAME;
 	
   ifstream file(sFileName.c_str());
-  if (!file) {
+  if (!file)
+  {
     cerr << "Couldn't open high scores file: " << sFileName << endl;
     cerr << "Using default values!" << endl;
-    for (int i=0; i<10; i++) {
-      m_mapHighScores.insert(pair<int, string>(10 - i, "lia"));
-		}
+  
+    for (int i=0; i<10; i++)
+      m_mapHighScores.insert(pair<int, string>(0, "?"));
+
     return false;
   }
-	cerr << "read HS file..." << endl;
+
+  cerr << "read HS file..." << endl;
 	
   int nScore = 0;
   string sName;
-  while (file) {
+
+  while (file)
+  {
     file >> nScore;
     file >> sName;
-    if (nScore == 0) continue;
+
+    if (nScore == 0)
+      continue;
+
     m_mapHighScores.insert(pair<int, string>(nScore, sName));
+
     // We only read 10 scores from the file!
-    if (m_mapHighScores.size() >= 10) break;
+    if (m_mapHighScores.size() >= 10)
+      break;
   }
+
   // If we read less then 10 scores
-  for (int i=m_mapHighScores.size(); i<10; i++) {
+  for (int i=m_mapHighScores.size(); i<10; i++)
     m_mapHighScores.insert(pair<int, string>(10 - i, "lia"));
-	}
+
   return true;
 }
 
@@ -289,20 +311,29 @@ bool Table::readHighScoresFile() {
 // TODO: Find a way to safely write in a common file all high scores, this
 //  method also should be FHS friendly...
 //
-bool Table::writeHighScoresFile() {
+//
+// LAST CHANGES! Henrik changed this to dir EM_HIGHSCORE_DIR defined during
+//                compilation...
+//
+bool Table::writeHighScoresFile()
+{
   // This is the current table's name
-  if (m_sTableName.length() == 0) {
+  if (m_sTableName.length() == 0)
+  {
     cerr << "No current table name! (the first time is normal...)" << endl;
     return false;
   }
 
-  //string sFileName = string(Config::getInstance()->getDataSubDir()) + HIGH_SCORES_FILENAME;
-	string sFileName = string(EM_HIGHSCORE_DIR) +"/"+ m_sTableName + HIGH_SCORES_FILENAME;
+  //string sFileName = string(Config::getInstance()->getDataSubDir()) +
+		       HIGH_SCORES_FILENAME;
 
+  string sFileName = string(EM_HIGHSCORE_DIR) +"/"+ m_sTableName +
+		     HIGH_SCORES_FILENAME;
 
   ofstream file(sFileName.c_str());//, ios_base::out | ios_base::trunc);
 
-  if (!file) {
+  if (!file)
+  {
     cerr << "Couldn't open high scores file: " << sFileName << endl;
     cerr << "Can't save high scores!" <<  endl;
     return false;
@@ -314,15 +345,19 @@ bool Table::writeHighScoresFile() {
   string sName;
 
   for (multimap<int, string>::iterator it = m_mapHighScores.begin();
-       it != m_mapHighScores.end(); it++) {
+       it != m_mapHighScores.end(); it++)
+  {
     nScore = (*it).first;
     sName  = (*it).second;
 
     file << nScore << " " << sName << endl;
-		// We only write 10 scores to file! (for safety...)
-    if (nIndex >= 10) break;
-		nIndex++;
+
+    // We only write 10 scores to file! (for safety...)
+    if (nIndex >= 10)
+      break;
+
+    nIndex++;
   }
+
   return true;
 }
-
