@@ -178,6 +178,7 @@ void Engine::setLightning(float diffuse, float ambient) {
 }
 
 void Engine::drawSplash(EmTexture * tex) {
+	if (tex == NULL) return;
 #if EM_USE_SDL
 	int filter = Config::getInstance()->getGLFilter();
 	if (filter == -1) return;
@@ -204,7 +205,12 @@ void Engine::drawSplash(EmTexture * tex) {
 	glVertex3f(-EM_RIGHT, -EM_UP, -1);
 	glEnd();
 #endif
-	// allegro todo	
+	// allegro todo
+#if EM_USE_ALLEGRO
+	// TODO fix static 256x256 image size
+	stretch_blit(tex, backbuffer, 0, 0, 256, 256, 0, 0, 
+							 Config::getInstance()->getWidth(), Config::getInstance()->getHeight());
+#endif	
 }
 
 void Engine::setEngineCamera(Group* g) {
