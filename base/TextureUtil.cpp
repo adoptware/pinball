@@ -1,4 +1,4 @@
-//#Ident "$Id: TextureUtil.cpp,v 1.17 2003/07/25 01:01:54 rzr Exp $"
+//#Ident "$Id: TextureUtil.cpp,v 1.18 2003/07/26 22:13:42 rzr Exp $"
 /***************************************************************************
                           TextureUtil.cpp  -  description
                              -------------------
@@ -27,7 +27,7 @@ extern "C" {
   struct_image* loadP(const char * filename);
 
   struct_image* loadP(const char * filename) {
-    SDL_Surface* surface = IMG_Load(filename);
+    SDL_Surface* surface = IMG_Load(filename); //MLK
     if (surface == NULL) {
       cerr << "::loadP could not load: " << filename << endl;
       return NULL;
@@ -42,7 +42,7 @@ extern "C" {
       image->channels = 4;
     } else {
       cerr << "::loadP Only 32 bit RGBA and 24 bit RGB images supported"<<endl;
-      // TODO free surface struct
+      // TODO free surface struct or COPY texels ?
       free(image);
       return NULL;
     }
@@ -139,7 +139,8 @@ void TextureUtil::initGrx() {
   }
 
   if (SDL_InitSubSystem(SDL_INIT_JOYSTICK) < 0) {
-    cerr << "Couldn't initialize SDL joystick: " <<  SDL_GetError() << endl << endl;
+    cerr << "Couldn't initialize SDL joystick: " 
+         <<  SDL_GetError() << endl << endl;
   } else {
     int njoystick = SDL_NumJoysticks();
     cerr << njoystick << " joysticks were found." << endl;
@@ -324,7 +325,8 @@ EmImage* TextureUtil::loadImage(const char* filename) {
   RGB pal[256];
   BITMAP * bm = load_bitmap(filename, pal);
   if (bm == NULL) {
-    cerr << "TextareUtil::loadImage unable to load " << filename << " : " << allegro_error << endl;
+    cerr << "TextureUtil::loadImage unable to load " 
+         << filename << " : " << allegro_error << endl;
   }
   return bm;
 #endif // EM_USE_ALLEGRO
@@ -352,7 +354,6 @@ int TextureUtil::genTexture( char const * const filename,
   glGenTextures(1, texture);
   glBindTexture(GL_TEXTURE_2D, *texture);
 
-
   // 2d texture, level of detail 0 (normal), 3 components (red, green, blue),
   // x size from image, y size from image,
   // border 0 (normal), rgb color data, unsigned byte data,
@@ -366,12 +367,12 @@ int TextureUtil::genTexture( char const * const filename,
     return -1;
   }
 
-
   glTexImage2D(GL_TEXTURE_2D, 0, comp, image->width, image->height, 0, comp,
                GL_UNSIGNED_BYTE, image->pixels);
-
+  
   EM_COUT("loaded texture: " << filename, 1);
   EM_COUT("size " << image->width <<" "<< image->height, 1);
+  free(image); image = 0; //! that is were we delete Textures 
   //    EM_COUT("bytes per pixel " << (int)image->format->BytesPerPixel, 1);
   //    EM_COUT("bits per pixel " << (int)image->format->BitsPerPixel, 1);
 
@@ -433,4 +434,4 @@ const char * TextureUtil::getTextureName(EmTexture * tex) {
   }
 */
 
-//EOF: $Id: TextureUtil.cpp,v 1.17 2003/07/25 01:01:54 rzr Exp $
+//EOF: $Id: TextureUtil.cpp,v 1.18 2003/07/26 22:13:42 rzr Exp $
