@@ -11,7 +11,7 @@
 #include "Polygon.h"
 
 Cone::Cone(float fSize, float fR, float fG, float fB, float fA) : Shape3D(8+1, 8+1) {
-	Polygon* p;
+	Polygon3D* p;
 	// Top vertex.
 	this->add(0, fSize/2, 0);
 	// Ring of vertices.
@@ -20,21 +20,21 @@ Cone::Cone(float fSize, float fR, float fG, float fB, float fA) : Shape3D(8+1, 8
 							 fR, fG, fB, fA, 0.0f, 0.0f);
 	}	
 	// The ring of polygons.
-	for (int ap=1; ap<8; ap+=1)	{
-		p = new Polygon(this, 3);
+	for (int a=1; a<8; a+=1)	{
+		p = new Polygon3D(this, 3);
 		p->add(0);
-		p->add(ap+1);
-		p->add(ap);
+		p->add(a+1);
+		p->add(a);
 		this->add(p);
 	}
 	// the last one
-	p = new Polygon(this, 3);
+	p = new Polygon3D(this, 3);
 	p->add(0);
 	p->add(1);
 	p->add(8);
 	this->add(p);
 	// The bottom of the cone.
-	p = new Polygon(this, 8);
+	p = new Polygon3D(this, 8);
 	p->add(1);
 	p->add(2);
 	p->add(3);

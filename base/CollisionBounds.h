@@ -14,7 +14,7 @@
 #include "EMath.h"
 
 class Shape3D;
-class Polygon;
+class Polygon3D;
 class Group;
 
 /** */
@@ -44,13 +44,13 @@ class CollisionBounds {
 	 ** y = oldY +/- 0.25*oldSize and z = oldZ + +/- 0.25*oldSize and the new size
 	 ** will be 0.5*oldSize.</p>*/
 	void split(int level);
-	int intersect(Polygon* p);
+	int intersect(Polygon3D* p);
 	void setParent(Group* g);
-	int surround(Polygon* p);
+	int surround(Polygon3D* p);
 	/** Removes empty bounding boxes from the tree of bounding boxes. */
 	bool removeEmpty();
-	bool addSurround(Polygon* p);
-	void addIntersect(Polygon* p);
+	bool addSurround(Polygon3D* p);
+	void addIntersect(Polygon3D* p);
 	void printTree(int level=0);
 	
 	Vertex3D m_vtxSrc;
@@ -62,7 +62,7 @@ class CollisionBounds {
 	float m_fBoxSize;
 	/** You should always use Radius when detection collision */
 	float m_fRadius;
-	vector<Polygon*> m_vPolygon;
+	vector<Polygon3D*> m_vPolygon;
 	vector<CollisionBounds*> m_vCollisionBounds;
 	//float m_fR, m_fG, m_fB;
 };

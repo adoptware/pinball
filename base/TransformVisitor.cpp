@@ -64,8 +64,8 @@ void TransformVisitor::visit(Group* g) {
   vector<Shape3D*>::iterator shapeEnd = g->m_vShape3D.end();
   for ( ; shapeIter != shapeEnd; ++shapeIter) {
 	  
-    vector<Polygon*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
-    vector<Polygon*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
+    vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
+    vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
 	  
     // Apply transform to all polygon normals
     for ( ; polyIter != polyEnd; ++polyIter) {
