@@ -1,3 +1,4 @@
+//#ident "$Id: Pinball.cpp,v 1.33 2003/05/12 12:17:59 rzr Exp $"
 /***************************************************************************
                           Pinball.cpp  -  description
                              -------------------
@@ -28,9 +29,8 @@
 #include "Private.h" // macro flags defined here
 
 #ifdef HAVE_UNISTD_H 
-#include <unistd.h> // not in msvc
+#include <unistd.h> // not in msvc (replaced by io.h)
 #endif //!-rzr
-
 
 #include "Pinball.h"
 #include "Keyboard.h"
@@ -504,31 +504,7 @@ MenuItem* createMenus(Engine * engine) {
 
   // create one entry for each directory
   // TODO scrolling text if to many tables
-#ifdef _MSC_VER //!+rzr : thanx to ramlaid ;)
-  struct _finddata_t dirFile;
-  long hFile=0;
-  char cwd[256];
-  if (getcwd(cwd,256) != NULL)  {
-    chdir(Config::getInstance()->getDataDir());
-    if( (hFile = _findfirst( "*", &dirFile )) != NULL ) {
-      do {
-        if ((dirFile.attrib & _A_SUBDIR) != 0) 	{
-          if (strcmp(".", dirFile.name) != 0 
-              && strcmp("..", dirFile.name) != 0) {
-            MenuFct * menufct = new MyMenuLoad(dirFile.name, NULL, engine);
-            menuload->addMenuItem(menuloadfct);
-	    if (tex != NULL) {
-	      menufct->setBackground(tex);
-	    }
-          }
-        }
-      }
-      while( _findnext( hFile, &dirFile ) == 0 );
-      chdir(cwd);
-      _findclose( hFile );
-    }
-  }
-#else
+#if ( HAVE_UNISTD_H ) // __GNUC__ //!+rzr 
   DIR * datadir = opendir(Config::getInstance()->getDataDir());
   char cwd[256];
   if (datadir != NULL && getcwd(cwd, 256) != NULL) {
@@ -551,6 +527,34 @@ MenuItem* createMenus(Engine * engine) {
     chdir(cwd);
     closedir(datadir);
   }
+#else
+#ifdef _MSC_VER //!+rzr : thanx to ramlaid ;)
+  struct _finddata_t dirFile;
+  long hFile=0;
+  char cwd[256];
+  if (getcwd(cwd,256) != NULL)  {
+    chdir(Config::getInstance()->getDataDir());
+    if( (hFile = _findfirst( "*", &dirFile )) != NULL ) {
+      do {
+        if ((dirFile.attrib & _A_SUBDIR) != 0) 	{
+          if (strcmp(".", dirFile.name) != 0 
+              && strcmp("..", dirFile.name) != 0) {
+            MenuFct * menufct = new MyMenuLoad(dirFile.name, NULL, engine);
+            menuload->addMenuItem(menufct);
+	    if (tex != NULL) {
+	      menufct->setBackground(tex);
+	    }
+          }
+        }
+      }
+      while( _findnext( hFile, &dirFile ) == 0 );
+      chdir(cwd);
+      _findclose( hFile );
+    }
+  }
+#else
+  //#warning "check your compiler here"  
+#endif
 #endif //!+rzr
 
   menuview = new MenuChoose(engine);
@@ -753,4 +757,14 @@ int main(int argc, char *argv[]) {
 
 #if EM_USE_ALLEGRO
 END_OF_MAIN();
+#endif
+
+
+#if( (defined WIN32 ) && ( defined __MWERKS__ ) ) // w32 codewarrior
+int WINAPI WinMain( HINSTANCE hInst,  HINSTANCE hPreInst, 
+                    LPSTR lpszCmdLine,  int nCmdShow )
+{
+  // TODO: get argc argv with GetCommandLine()
+  return main(0,0); 
+}
 #endif

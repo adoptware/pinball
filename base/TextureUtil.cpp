@@ -1,3 +1,4 @@
+//#ident "$Id:"
 /***************************************************************************
                           TextureUtil.cpp  -  description
                              -------------------
@@ -14,11 +15,12 @@
 #include <iostream>
 
 #if EM_USE_SDL
-#if defined(__APPLE__) && defined(__MACH__) // !+rzr should be in .in files 
-#include <OpenGL/gl.h>
-#else
-#include <GL/gl.h>
-#endif //!-rzr (autoconf again)
+#include <SDL_opengl.h> //should fix GL portability ; instead of :
+//#if defined(__APPLE__) && defined(__MACH__) // !+rzr should be in .in files 
+//#include <OpenGL/gl.h>
+//#else
+//#include <GL/gl.h>
+//#endif //!-rzr (autoconf again)
 // TODO remove glu
 #if EM_DEBUG
 #include <GL/glu.h>
@@ -28,30 +30,29 @@
 
 extern "C" {
 
-struct_image* loadP(const char * filename) {
-  SDL_Surface* surface = IMG_Load(filename);
-  if (surface == NULL) {
-    cerr << "::loadP could not load: " << filename << endl;
-    return NULL;
+  struct_image* loadP(const char * filename) {
+    SDL_Surface* surface = IMG_Load(filename);
+    if (surface == NULL) {
+      cerr << "::loadP could not load: " << filename << endl;
+      return NULL;
   }
-  struct_image* image = (struct_image*) malloc(sizeof(struct_image));
-  image->width = surface->w;
-  image->height = surface->h;
-  // asume 24 bits are 3*8 and 32 are 4*8
-  if (surface->format->BitsPerPixel == 24) {
-    image->channels = 3;
-  } else if (surface->format->BitsPerPixel == 32) {
-    image->channels = 4;
-  } else {
-    cerr << "::loadP Only 32 bit RGBA and 24 bit RGB images supported" << endl;
-    // TODO free surface struct
-    free(image);
+    struct_image* image = (struct_image*) malloc(sizeof(struct_image));
+    image->width = surface->w;
+    image->height = surface->h;
+    // asume 24 bits are 3*8 and 32 are 4*8
+    if (surface->format->BitsPerPixel == 24) {
+      image->channels = 3;
+    } else if (surface->format->BitsPerPixel == 32) {
+      image->channels = 4;
+    } else {
+      cerr << "::loadP Only 32 bit RGBA and 24 bit RGB images supported" << endl;
+      // TODO free surface struct
+      free(image);
     return NULL;
+    }
+    image->pixels = (unsigned char*) surface->pixels;
+    return image;
   }
-  image->pixels = (unsigned char*) surface->pixels;
-  return image;
-}
-  
 }
 #endif // EM_USE_SDLIMAGE
 
@@ -90,7 +91,10 @@ void TextureUtil::freeTextures()
   map<EmTexture*,string>::iterator i;
   for ( i = m_hImageName.begin();
         i != m_hImageName.end();
-        i++) { delete (*i).first ; } // (*i).first = 0; }
+        i++) { 
+    glDeleteTextures (1, (*i).first ); //is that correct ?
+    delete (*i).first ;  // (*i).first = 0; 
+  }
   m_hImageName.erase ( m_hImageName.begin() , m_hImageName.end() );
   /// same pointers
   m_hEmTexture.erase ( m_hEmTexture.begin() , m_hEmTexture.end() );

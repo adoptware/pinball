@@ -1,4 +1,4 @@
-//#ident "$Id: Config.h,v 1.15 2003/05/11 14:06:13 rzr Exp $"
+//#ident "$Id: Config.h,v 1.16 2003/05/12 12:17:58 rzr Exp $"
 /***************************************************************************
                           Config.h  -  description
                              -------------------
@@ -18,11 +18,12 @@
 #include "Keyboard.h"
 
 #ifndef PRIVATE_H
-#error Must include Private.h before Config.h
+#error "Must include Private.h before Config.h"
 #endif
 
 #if EM_USE_SDL
-#include <GL/gl.h>
+//#include <GL/gl.h>
+#include <SDL_opengl.h> //!+-rzr: better portability
 #define EM_LINEAR GL_LINEAR
 #define EM_NEAREST GL_NEAREST
 #else

@@ -1,9 +1,9 @@
-//#ident "$Id: config-rzr.h,v 1.2 2003/04/09 12:19:06 rzr Exp $"
+//#ident "$Id: config-rzr.h,v 1.3 2003/05/12 12:17:59 rzr Exp $"
 //#warning "!+rzr: Win32 portability hacks @ www.rzr.online.fr"
 #ifndef config_rzr_h_ // !+rzr 
 #define config_rzr_h_
 /**
- * @author: www.Philippe.COVAL.free.fr - $author:$
+ * @author: www.Philippe.COVAL.free.fr - $Author: rzr $
  * Portability issues:
  *
  * - Linux = gcc@linux
@@ -23,97 +23,147 @@
   exec Pinball.exe
  
  **/
-#if ( ! ( (defined __GNUC__ ) || ( defined _MSC_VER )) )
-#warning "This compiler has never been tested so far"
-#endif
-
-//--------------------------------------------------------------------------
+ 
 /// default settings customise yourself
 /// just define if you dont want to use plugins (dll vs static) 
 /// default: undefined
-#undef RZR_LIBSTATIC
-//#define RZR_LIBSTATIC  // @ src/Loader.cpp
 
 /// if the program file is copied elsewhere it still works
-#undef RZR_PATHRELATIVE
-/// default: undefined
-//#define RZR_PATHRELATIVE // @ base/Config.cpp
-
-#ifdef WIN32
-// mingw32@Linux : Dyn loadling works, but keyboard is too slow w/ dll ???
-#define RZR_LIBSTATIC 
-// no more absolute path
-#define RZR_PATHRELATIVE // @ base/Config.cpp
-#undef RELEASE
-#define RELEASE
+#undef RZR_PATHRELATIVE  // @ base/Config.cpp
+/// mingw32@Linux : Dyn loadling works, but keyboard is too slow w/ dll ???
+#undef RZR_LIBSTATIC  // @ src/Loader.cpp
+/// vfat etc
+#undef RZR_LINKS_UNSUPPORTED
+///
+#undef RZR_CONFIG_STATIC_DEFAULT
+/// cstdlibs random is not definied @msvc + mingw32
+#undef RZR_RANDOM_UNSUPPORTED
+///
+#undef RZR_DEBUG
+//--------------------------------------------------------------------------
+/// MicroSoft.com / Visual C++ (win32@win32)
+#if ( (defined WIN32 ) && ( defined _MSC_VER ) )
+#undef  HAVE_CONFIG_H 
+#undef  HAVE_UNISTD_H
+#define RZR_LINKS_UNSUPPORTED 1
+#define RZR_RANDOM_UNSUPPORTED 1
+#define RZR_WINAPI 1 
+#define RZR_LIBSTATIC 1
+#define RZR_CONFIG_STATIC_DEFAULT 1
+#ifdef _DEBUG // win32 msvc debug
+#define RZR_DEBUG 1
 #endif
+#define RZR_PATHRELATIVE 1
+#define EM_DATADIR "../data/" // from ./Release/pinball.exe
+#define EM_LIBDIR "." //unused (so far)
+#define EM_HIGHSCORE_DIR EM_DATADIR
+#endif
+
+/// MetroWreks.com / CodeWarrior (xcompiler windows2mac )
+#if( (defined WIN32 ) && ( defined __MWERKS__ ) )
+#undef  HAVE_CONFIG_H
+#define HAVE_UNISTD_H 1
+#define RZR_LINKS_UNSUPPORTED 1
+#define RZR_RANDOM_UNSUPPORTED 1
+#define RZR_CONFIG_STATIC_DEFAULT 1
+#define RZR_LIBSTATIC 1
+#undef  RZR_PATHRELATIVE // main(argc,argv) lost @src/Pinball.cpp 
+#define EM_HIGHSCORE_DIR EM_DATADIR
+#endif
+
+/// GNU.org / mingw32 (gcc for Win32, like cygwin) 
+#if ( (defined WIN32 ) && ( defined __GNUC__ ) )
+#define HAVE_UNISTD_H 1
+#define RZR_LINKS_UNSUPPORTED 1
+#define RZR_PATHRELATIVE 1
+#define RZR_LIBSTATIC  1
+#define RZR_RANDOM_UNSUPPORTED 1
+#endif
+
+/// other compilers
+#if ( ! ( (defined __GNUC__ ) || ( defined _MSC_VER )  || (defined __MWERKS__ )))
+#warning "This compiler has never been tested (so far)"
+#define RZR_CONFIG_STATIC_DEFAULT 1
+#define RZR_LINKS_UNSUPPORTED 1
+#undef  RZR_PATHRELATIVE
+#define HAVE_UNISTD_H
+#endif
+
+//--------------------------------------------------------------------------
 
 #ifdef RZR_PATHRELATIVE // on upcoming versions
-#undef EM_DATADIR 
-#undef EM_LIBDIR
-//#define EM_DATADIR "../share/pinball" 
-//#define EM_LIBDIR "../lib/pinball"
+#ifndef EM_DATADIR
 #define EM_DATADIR "share/pinball" // single dir and exes in it (!= unix)
+#endif
+#ifndef EM_LIBDIR
 #define EM_LIBDIR "lib/pinball"  // BUT subdirs are like unix
 #endif
+#else
+#ifndef EM_DATADIR
+#define EM_DATADIR "/data/" 
+#endif
+#ifndef EM_LIBDIR
+#define EM_LIBDIR "/lib/"  
+#endif
+#endif
 
+
+
+#ifdef RZR_LINKS_UNSUPPORTED
+#define lstat( name, opt)  stat(name, opt); //undef on mingw32@Linux
+#endif
+
+
+#ifdef RZR_RANDOM_UNSUPPORTED 
+#define random rand // cstdlibs random is not definied @msvc + mingw32
+#endif
+
+#ifdef RZR_WINAPI
+#include <windows.h>
+#ifndef WINAPI  // what are those ? dll rt ?  @ windows.h 4 GL/gl.h
+#define WINAPI __stdcall  // not sure it is good , but it worked for me
+// WINGDIAPI
+#endif
+#endif
+
+#ifdef  RZR_DEBUG
+#define EM_DEBUG 1
+#undef  RELEASE 
+//#include <assert.h>
+#include <cassert>
+#else // win32 msvc release
+#define RELEASE 1
+#undef  EM_DEBUG
+//#undef  assert
+//#define assert(x); {}
+#endif
 //--------------------------------------------------------------------------
 // Common WIN32 options tested on mingw32 + msvc6
 #ifdef WIN32 //!+rzr MSVC++ , mingw32 (etc not tested so far)
-#undef EM_DATADIR
-#define EM_DATADIR "../data" //Make in work ONLY in the source tree
-//#define EM_LIBDIR "." // dll not build (so far)
-
 // ----- // configure should check if the install fs supports modes & links
-#ifndef WINAPI  // what are those ? dll rt ?  @ windows.h 4 GL/gl.h
-#define WINAPI __stdcall  // not sure it is good , but it worked for me
-#endif
-#define random rand // cstdlibs random is not definied @msvc + mingw32
 //#include <io.h> // mkdir
 //#include <sys/stat.h>
 //#define mkdir(dir,modes) mkdir(dir) // @direct.h // autoconf should do that 
-// ---- Texture  Engine // undefined reference to `gluErrorString@4
-//#undef EM_GLERROR
-//#define EM_GLERROR(a) EM_COUT(a,42)
+
 #endif // WIN32 // !rzr-
-//--------------------------------------------------------------------------
-//!+rzr : MS VC++ 's pinconfig.h ; why not have a default pinconfig.h
-// will be override with ./configure 
-#ifdef  _MSC_VER 
-#define EM_USE_SOURCE_SPECULAR 1
-#define EM_USE_QUADTREE 1
-#define EM_USE_SDLIMAGE 1
-#define EM_USE_SDLMIXER 1
-#define EM_USE_SDL 1
-#define EM_USE_SHARED_COLOR 1
-#define HAVE_MEMORY_H 1
-#define HAVE_STDINT_H 1
-#define HAVE_STDLIB_H 1
-#define HAVE_STRING_H 1
-#define HAVE_SYS_STAT_H 1
-#define HAVE_SYS_TYPES_H 1
-#define HAVE_UNISTD_H 0
-#define PACKAGE "pinball"
-#define PACKAGE_BUGREPORT ""
-#define PACKAGE_NAME ""
-#define PACKAGE_STRING ""
-#define PACKAGE_TARNAME ""
-#define PACKAGE_VERSION ""
-#define STDC_HEADERS 1
-#define VERSION "cvs-2003-04-08-rzr"
-#undef HAVE_UNISTD_H
-//--------------------------------------------------------------------------
-#undef WINAPI
-#include <windows.h>
+
+#ifdef _MSC_VER
+//#undef WINAPI
 //#include <iostream> //!+-rzr
 namespace std {};
 using namespace std;
 //#ifdef Polygon // Polygon Is A Macro So It Is Renamed To Be Used As AClass
-#undef Polygon
+#undef Polygon // other solution is to write "class Polygon" instead of just Polygon
 #define Polygon PolygonClass
-//#endif // other solution is to write "class Polygon" instead of just Polygon
+// ---- Texture  Engine // undefined reference to `gluErrorString@4
+//#undef EM_GLERROR
+//#define EM_GLERROR(a) EM_COUT(a,42)
+#include <GL/glu.h>
+//#define gluErrorString(x) x
+//#endif 
 #endif // msvc6
-//--------------------------------------------------------------------------
+
+
 #ifdef _MSC_VER
 // trunct template 255
 #pragma warning (disable:4786)
@@ -133,10 +183,39 @@ using namespace std;
 #pragma warning (disable:4101)
 #endif
 
-//-----------------------------------------------------------------------------
-/// mingw32 hacks
-#if ( (defined WIN32 ) && ( defined __GNUC__ ) )
-#define lstat( name, opt)  stat(name, opt); //undef on mingw32@Linux
+//--------------------------------------------------------------------------
+#ifdef RZR_DELETESAFE
+#define deletesafe(x); { delete(x); x=NULL; } //!+rzr @ Group.h
+#ifdef delete
+//#warning "..."
+#define delete_1stdef_hopeitisunused delete
+#undef delete
+#define delete(x) deletesafe(x) //!-rzr
 #endif
+#endif
+//--------------------------------------------------------------------------
+#ifdef  RZR_CONFIG_STATIC_DEFAULT
+#define EM_USE_SOURCE_SPECULAR 1
+#define EM_USE_QUADTREE 1
+#define EM_USE_SDLIMAGE 1
+#define EM_USE_SDLMIXER 1
+#define EM_USE_SDL 1
+#define EM_USE_SHARED_COLOR 1
+#define HAVE_MEMORY_H 1
+#define HAVE_STDINT_H 1
+#define HAVE_STDLIB_H 1
+#define HAVE_STRING_H 1
+#define HAVE_SYS_STAT_H 1
+#define HAVE_SYS_TYPES_H 1
+#define PACKAGE "pinball"
+#define PACKAGE_BUGREPORT ""
+#define PACKAGE_NAME ""
+#define PACKAGE_STRING ""
+#define PACKAGE_TARNAME ""
+#define PACKAGE_VERSION ""
+#define STDC_HEADERS 1
+#define VERSION "cvs-__DATE__"
+#endif
+
 
 #endif //!-rzr ----------------------------------------------------------------

@@ -1,3 +1,4 @@
+//#ident "$Id: TextureUtil.h,v 1.4 2003/05/12 12:17:59 rzr Exp $"
 /***************************************************************************
                           TextureUtil.h  -  description
                              -------------------
@@ -11,11 +12,12 @@
 #define TEXTUREUTIL_H
 
 #ifndef PRIVATE_H
-#error Must include Private.h before TextureUtil.h
+#error "Must include Private.h before Config.h"
 #endif
 
 #if EM_USE_SDL
-#include <GL/gl.h>
+//#include <GL/gl.h>
+#include <SDL_opengl.h> //!+-rzr: better portability
 
 typedef struct {
   unsigned int width;

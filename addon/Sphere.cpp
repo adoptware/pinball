@@ -1,3 +1,4 @@
+//#ident "$Id: Sphere.cpp,v 1.6 2003/05/12 12:17:58 rzr Exp $"
 /***************************************************************************
                           Sphere.cpp  -  description
                              -------------------
@@ -32,13 +33,13 @@ Sphere::Sphere(float fSize, float fR, float fG, float fB, float fA) : Shape3D(3*
 
 	} }
 	// First ring of polygons.
-	for (int a=2; a<9; a++) {
+	{ for (int a=2; a<9; a++) {
 		p = new Polygon3D(this, 3);
 		p->add(0);
 		p->add(a+1);
 		p->add(a);
 		this->add(p);
-	}
+	} }
 
 	p = new Polygon3D(this, 3);
 	p->add(0);
@@ -46,14 +47,14 @@ Sphere::Sphere(float fSize, float fR, float fG, float fB, float fA) : Shape3D(3*
 	p->add(9);
 	this->add(p);
 	// Second ring.
-	for (int a=2; a<9; a++) {
+	{ for (int a=2; a<9; a++) {
 		p = new Polygon3D(this, 4);
 		p->add(a);
 		p->add(a+1);
 		p->add(a+9);
 		p->add(a+8);
 		this->add(p);
-	}
+	} }
 
 	p = new Polygon3D(this, 4);
 	p->add(9);
@@ -62,14 +63,14 @@ Sphere::Sphere(float fSize, float fR, float fG, float fB, float fA) : Shape3D(3*
 	p->add(17);
 	this->add(p);
 	// Third ring.
-	for (int a=10; a<17; a++)	{
+	{ for (int a=10; a<17; a++)	{
 		p = new Polygon3D(this, 4);
 		p->add(a);
 		p->add(a+1);
 		p->add(a+9);
 		p->add(a+8);
 		this->add(p);
-	}
+	} }
 
 	p = new Polygon3D(this, 4);
 	p->add(17);
@@ -78,13 +79,13 @@ Sphere::Sphere(float fSize, float fR, float fG, float fB, float fA) : Shape3D(3*
 	p->add(25);
 	this->add(p);
 	// Fourth ring.
-	for (int a=18; a<25; a++)	{
+	{ for (int a=18; a<25; a++)	{
 		p = new Polygon3D(this, 3);
 		p->add(a);
 		p->add(a+1);
 		p->add(1);
 		this->add(p);
-	}
+	} }
 
 	p = new Polygon3D(this, 3);
 	p->add(25);
