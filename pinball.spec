@@ -1,27 +1,28 @@
 Name: 		pinball
-Version: 	0.1.3
+Version: 	0.3.0
 Release: 	1rh73
 
-Group:    Amusements/Games
+Group:    	Amusements/Games
 Summary: 	Emilia Pinball is free OpenGL pinball game.
 
 Vendor:		Henrik Enqvist  (henqvist@users.sourceforge.net)
-Packager: Henrik Enqvist  (henqvist@users.sourceforge.net)
+Packager: 	Henrik Enqvist  (henqvist@users.sourceforge.net)
 License: 	GPL
-URL: 		  http://pinball.sourceforge.net
+URL: 		http://pinball.sourceforge.net
 Source: 	http://prdownloads.sourceforge.net/pinball/%{name}-%{version}.tar.gz
-#BuildRoot: 	%{_tmppath}/%{name}-%{version}-root
+BuildRoot: 	%{_tmppath}/%{name}-%{version}-root
 
 %description
 Pinball game.
 
 
 %prep
+#rm -rf %{buildroot}
 %setup
 
 %build
-#./configure --prefix=%{buildroot}%{_prefix}
-./configure --prefix=%{_prefix}
+./configure --prefix=%{buildroot}%{_prefix}
+#./configure --prefix=%{_prefix}
 #mkdir -p %{buildroot}%{_prefix}/bin
 #make prefix=%{buildroot}%{_prefix}
 make
@@ -35,25 +36,25 @@ make
 make install
 
 #Install application link for X-Windows
-install -d /etc/X11/applnk/Games
-echo -e "[Desktop Entry]
-Name=Emilia Pinball
-Comment=OpenGL pinball game
-Exec=pinball
-Icon=pinball.xpm
-Terminal=0
-Type=Application" > /etc/X11/applnk/Games/EmiliaPinball.desktop
+#install -d /etc/X11/applnk/Games
+#echo -e "[Desktop Entry]
+#Name=Emilia Pinball
+#Comment=OpenGL pinball game
+#Exec=pinball
+#Icon=%{_prefix}/share/pinball/pinball.xpm
+#Terminal=0
+#Type=Application" > /etc/X11/applnk/Games/EmiliaPinball.desktop
 
 
 %clean
 make uninstall
 #rm -rf %{buildroot}
-rm /etc/X11/applnk/Games/EmiliaPinball.desktop
+#rm /etc/X11/applnk/Games/EmiliaPinball.desktop
 
 %files
 %defattr(-,root,root)
 %doc AUTHORS COPYING INSTALL NEWS README
-/etc/X11/applnk/Games/EmiliaPinball.desktop
+#/etc/X11/applnk/Games/EmiliaPinball.desktop
 %{_prefix}/bin/pinball
 %{_prefix}/bin/pinball-config
 %{_prefix}/share/pinball/*
