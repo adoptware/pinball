@@ -40,7 +40,7 @@ void PointLightVisitor::clear() {
 	m_vLight.clear();
 }
 
-void PointLightVisitor::visit(Group* g) {
+void PointLightVisitor::visit(Group * g) {
 	// Check properties before applying light
 	if (g->m_iProperties & EM_GROUP_NO_LIGHT) return;
 
@@ -58,7 +58,7 @@ void PointLightVisitor::visit(Group* g) {
 	}
 }
 
-void PointLightVisitor::visit(Shape3D* s, Group* g) {
+void PointLightVisitor::visit(Shape3D * s, Group *) {
 	vector<Light*>::iterator lightIter = m_vLight.begin();
 	vector<Light*>::iterator lightEnd = m_vLight.end();
 	EM_COUT("PointLightVisitor::visit() lights " << m_vLight.size(), 0);

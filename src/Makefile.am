@@ -2,12 +2,9 @@ AUTOMAKE_OPTIONS = gnu
 
 bin_PROGRAMS = pinball
 
-noinst_LIBRARIES = libemilia_pin.a
-dnl noinst_LTLIBRARIES = libemilia_pin.la
+pkglib_LIBRARIES = libemilia_pin.a
 
-dnl libemilia_pin_la_LDFLAGS = -static
-
-INCLUDES = -I../base -I../addon -I../visitor @INCLTDL@
+INCLUDES = -I../base -I../addon @INCLTDL@
 
 pinball_LDADD = ../src/libemilia_pin.a ../addon/libemilia_addon.a ../base/libemilia_base.a @LIBLTDL@
 pinball_LDFLAGS = -export-dynamic
@@ -26,7 +23,7 @@ StateBehavior.cpp
 
 dnl libemilia_pin_la_SOURCES = $(libemilia_pin_a_SOURCES)
 
-noinst_HEADERS = \
+pkginclude_HEADERS = \
 ArmBehavior.h \
 BounceBehavior.h \
 BumperBehavior.h \

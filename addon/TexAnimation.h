@@ -23,9 +23,8 @@ class TexAnimation : public Behavior {
 		~TexAnimation();
 		void onTick();
 		void add(float, float);
-
-		void StdOnSignal() {};
-		void StdOnCollision() {};
+		void onCollision(const Vertex3D &, const Vertex3D &, Group *) {};
+		void onSignal(int, Group *) {};
 	private:
 		vector<TexCoord> m_vTexCoord;
 		int m_iStep;

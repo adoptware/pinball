@@ -18,8 +18,8 @@ class KeyBehavior : public Behavior {
 		KeyBehavior();
 		~KeyBehavior();
 		void onTick();
-		virtual void onCollision(const Vertex3D & vtxWall, const Vertex3D & vtxOwn, Group * g);
-		virtual void onSignal(int signal, Group * sender) {};
+		virtual void onCollision(const Vertex3D &, const Vertex3D &, Group *) {};
+		virtual void onSignal(int, Group *) {};
 	private:
 		float m_x, m_y, m_z;
 };

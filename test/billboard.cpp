@@ -15,16 +15,16 @@
 
 /** Main */
 int main(int argc, char *argv[]) {
-	cerr << "BillBoard test." << endl;
+  cerr << "BillBoard test." << endl;
 
-	if (argc < 2) {
-		cerr << "Usage: billboard <image-file>" << endl;
-		return 0;
-	}
-
-	// Create the engine.
-	Engine* engine = new Engine(argc, argv);
-	engine->setLightning(0.5f, 0.1f);
+  if (argc < 2) {
+    cerr << "Usage: billboard <image-file>" << endl;
+    return 0;
+  }
+  
+  // Create the engine.
+  Engine* engine = new Engine(argc, argv);
+  engine->setLightning(0.5f, 0.1f);
 
 	// Add a camera. Move a bit.
 	Camera* camera = new Camera();
@@ -54,11 +54,11 @@ int main(int argc, char *argv[]) {
 	// Add a behavior to the billboard
 	KeyBehavior* keyBeh = new KeyBehavior();
 	groupBB->setBehavior(keyBeh);
-		
+	
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
-		engine->tick();
-		engine->render();
-		engine->swap();
+	  engine->tick();
+	  engine->render();
+	  engine->swap();
 	}
 	delete(engine);
 	return 0;

@@ -70,12 +70,15 @@ int main(int argc, char *argv[]) {
 	groupCube1->setBehavior(keyRBeh);
 	KeyBehavior* keyBeh = new KeyBehavior();
 	groupCube2->setBehavior(keyBeh);
-		
+
+	engine->resetTick();
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
-		engine->tick();
-		engine->render();
-		engine->swap();
-		engine->limitFPS(50);
+	  if (engine->nextTickFPS(50)) {
+	    engine->tick();
+	  } else {
+	    engine->render();
+	    engine->swap();
+	  }
 	}
 	engine->stopEngine();
 	return 0;

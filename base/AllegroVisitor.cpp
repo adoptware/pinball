@@ -58,8 +58,8 @@ void AllegroVisitor::empty() {
 #endif // EM_USE_ALLEGRO
 }
 
-void AllegroVisitor::visit(Group* g) {
 #if EM_USE_ALLEGRO
+void AllegroVisitor::visit(Group * g) {
 	int filter = Config::getInstance()->getGLFilter();
 
 	switch (m_iMode) {
@@ -297,5 +297,8 @@ void AllegroVisitor::visit(Group* g) {
 		}
 	} break;
 	}
-#endif // EM_USE_ALLEGRO
 }
+#else
+void AllegroVisitor::visit(Group *) {
+}
+#endif // EM_USE_ALLEGRO
