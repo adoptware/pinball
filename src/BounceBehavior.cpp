@@ -182,12 +182,16 @@ void BounceBehavior::onTick() {
 		m_bAlive = false;
 		switch (m_iBall) {
 		case PBL_BALL_1: SendSignal( PBL_SIG_BALL1_OFF, 0, this->getParent(), NULL ); 
+			Score::getInstance()->unActivateBall(PBL_BALL_1);
 			this->getParent()->setTranslation(-4, 0, 40); break;
 		case PBL_BALL_2: SendSignal( PBL_SIG_BALL2_OFF, 0, this->getParent(), NULL ); 
+			Score::getInstance()->unActivateBall(PBL_BALL_2);
 			this->getParent()->setTranslation(-8, 0, 40); break;
 		case PBL_BALL_3: SendSignal( PBL_SIG_BALL3_OFF, 0, this->getParent(), NULL ); 
+			Score::getInstance()->unActivateBall(PBL_BALL_3);
 			this->getParent()->setTranslation(-12, 0, 40); break;
-		default: SendSignal( PBL_SIG_BALL4_OFF, 0, this->getParent(), NULL );
+		case PBL_BALL_4: SendSignal( PBL_SIG_BALL4_OFF, 0, this->getParent(), NULL );
+			Score::getInstance()->unActivateBall(PBL_BALL_4);
 			this->getParent()->setTranslation(-16, 0, 40); break;
 		}
 	}
@@ -201,6 +205,8 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
 
 	// Undo last translation
 	//this->getParent()->addTranslation(-m_vtxDir.x, -m_vtxDir.y, -m_vtxDir.z);
+
+	// we need a wall to do the bouncing on
 
 	// change direction depending on which type the colliding object is
 	if (pGroup->getUserProperties() & (PBL_LOCK | PBL_TRAP)) {
@@ -217,9 +223,9 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
 			throw string("StateBehavior expected");
 		}
 
-		if (pGroup->getUserProperties() & PBL_LOCK) {
-			Score::getInstance()->lockBall(m_iBall);
-		}
+ 		if (pGroup->getUserProperties() & PBL_LOCK) {
+ 			Score::getInstance()->lockBall(m_iBall);
+ 		}
 
 		if (m_iCollisionPrio > 5) return;
 		m_iCollisionPrio = 5;
