@@ -584,8 +584,6 @@ int main(int argc, char *argv[]) {
   MenuItem* menu = createMenus(engine);
 
   // Draw to the screen.
-  bool render = false;
-  int skip = 0;
   int all = 0;
   engine->resetTick();
   while (!Keyboard::isKeyDown(SDLK_INSERT)) {
@@ -599,7 +597,7 @@ int main(int argc, char *argv[]) {
     if (Keyboard::isKeyDown(SDLK_ESCAPE) || all == 0) {
       SoundUtil::getInstance()->pauseMusic();
       if (menu->perform() == EM_MENU_EXIT) {
-	break;
+				break;
       }
       engine->resetTick();
       SoundUtil::getInstance()->resumeMusic();
@@ -608,27 +606,23 @@ int main(int argc, char *argv[]) {
     if (Keyboard::isKeyDown(SDLK_r)) {
       SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
     }
-
+		
     if (engine->nextTickFPS(200)) {
       engine->tick(); 
     } else {
       engine->render();
       if (score != NULL) {
-	score->draw();
+				score->draw();
       }
       if (engine->getGroup(0) == NULL) {
-	EmFont::getInstance()->printRowCenter("no table loaded", 6);
-	EmFont::getInstance()->printRowCenter("press esc", 8);
+				EmFont::getInstance()->printRowCenter("no table loaded", 6);
+				EmFont::getInstance()->printRowCenter("press esc", 8);
       }
       engine->swap();
     }
     all++;
     //engine->limitFPS(100);
   }
-
-#if EM_DEBUG
-  cerr << "Skip " << skip  << " of " << all << endl;
-#endif
 
   Config::getInstance()->saveConfig();
 
