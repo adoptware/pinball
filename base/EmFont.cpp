@@ -12,7 +12,7 @@
 #include "Config.h"
 #include <cstring>
 #include <string>
-
+#include <iostream>
 
 // extern int em_width_;
 // extern int em_height_;

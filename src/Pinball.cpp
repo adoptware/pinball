@@ -10,6 +10,7 @@
 #include <string>
 //#include <sstream>
 #include <strstream>
+#include <iostream>
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -81,16 +82,21 @@ MenuChoose* menufire = NULL;
  ***************************************************************************/
 
 // Menu item to display high scores - pnf
-class MyMenuHighScores : public MenuFct {
+class MyMenuHighScores : public MenuFct
+{
 public:
-  MyMenuHighScores(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, fct, e) {};
+  MyMenuHighScores(const char * name, int (*fct)(void), Engine *e)
+		  : MenuFct(name, fct, e) {};
 protected:
-  int perform() {
+  int perform()
+  {
     p_Engine->clearScreen();
-    if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
+
+    if (p_Texture != NULL)
+      p_Engine->drawSplash(p_Texture);
 
     p_EmFont->printRowCenter("- High Scores -", 2);
-    string sHeader = string("- for table ") + Table::getInstance()->getTableName() + " -";
+    string sHeader = string("table: ") + Table::getInstance()->getTableName();
     p_EmFont->printRowCenter(sHeader.c_str(), 3);
 
     int nStartRow = 5;
@@ -100,20 +106,25 @@ protected:
 
     Table::getInstance()->getHighScoresData(listHighScores);
 
-    if (listHighScores.size() > 0) {
+    if (listHighScores.size() > 0)
+    {
       list<string>::iterator it = listHighScores.begin();
 
       for (int i=0; i<10 && it!=listHighScores.end(); i++, it++) {
 	sRow = (*it);
         p_EmFont->printRowCenter(sRow.c_str(), nStartRow + i);
       }
-    } else {
+    }
+    else
+    {
       p_EmFont->printRowCenter("No Table Loaded!", 10);
     }
-    p_EmFont->printRowCenter("Any key to exit...", 20);
+
+    p_EmFont->printRowCenter("Hit any key to main menu...", 20);
 
     p_Engine->swap();
     Keyboard::waitForKey();
+
     return EM_MENU_NOP;
   }
 };

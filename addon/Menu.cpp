@@ -178,8 +178,10 @@ int MenuChoose::prev() {
 /***************************************************************************
  * A menu that performs a function when choosen */
 
-MenuFct::MenuFct(const char * name, int (*fct)(void), Engine* e) : MenuItem(e, EM_MENU_FCT) {
-  strncpy(m_Name, name, 63);
+MenuFct::MenuFct(const char * name, int (*fct)(void), Engine* e)
+		: MenuItem(e, EM_MENU_FCT)
+{
+  strncpy(m_Name, name, MAX_MENU_NAME);
   p_Fct = fct;
 }
 
@@ -193,51 +195,102 @@ int MenuFct::perform() {
 /**************************************************************************
  * A meny item to input text */
 
-MenuInput::MenuInput(const char * name, Engine* e) : MenuItem(e, EM_MENU_INPUT) {
-	strncpy(m_Name, name, 63);
-	strcpy(m_Input, ".....");
-	m_iAction = EM_MENU_BACK;
+#define FILL_CHAR       '.'    // Char used to fill the input line so the
+                               //  user can see the max input length
+#define DEFAULT_STRING  "?"    // Default name for those who don't give name
+
+MenuInput::MenuInput(const char * name, Engine* e) : MenuItem(e, EM_MENU_INPUT)
+{
+  strncpy(m_Name, name, MAX_MENU_NAME);
+  memset(m_Input, FILL_CHAR,  MAX_INPUT_STRING);
+  m_Input[MAX_INPUT_STRING] = '\0';
+
+  m_iAction = EM_MENU_BACK;
 }
 
-MenuInput::~MenuInput() {
+MenuInput::~MenuInput()
+{
 }
 
-const char* MenuInput::getInput() {
-	return m_Input;
+const char* MenuInput::getInput()
+{
+  return m_Input;
 }
 
-void MenuInput::draw() {
+void MenuInput::draw()
+{
   EM_COUT("MenuSub::draw() " << this->getText(), 1);
+
   p_Engine->clearScreen();
-	if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
+
+  if (p_Texture != NULL)
+    p_Engine->drawSplash(p_Texture);
   
-  p_EmFont->printRowCenter(this->getText(), 8);
+  p_EmFont->printRowCenter(this->getText(),   8);
   p_EmFont->printRowCenter(this->getInput(), 10);
   
   p_Engine->swap();
 }
 
-int MenuInput::perform() {
+int MenuInput::perform()
+{
   EM_COUT("MenuInput::perform() " << this->getText(), 1);
-	this->draw();
 
-	int iLetter = 0;
-	while (iLetter < 63) {
-		EMKey key = Keyboard::waitForKey();
-		if ((key == SDLK_RETURN && iLetter > 0) || key == SDLK_ESCAPE) {
-			break;
-		} else if (key == SDLK_BACKSPACE || key == SDLK_DELETE) {
-			if (iLetter > 0) {
-				--iLetter;
-				m_Input[iLetter] = '\0';
-			}
-		} else {
-			m_Input[iLetter] = key;
-			++iLetter;
-			m_Input[iLetter] = '\0';
-		}
-		EM_COUT("MenuInput::perform() input " << this->getInput(), 1);
-		this->draw();
-	}
-	return m_iAction;;
+  this->draw();
+
+  int iLetter = 0;
+
+  while (iLetter < MAX_INPUT_STRING)
+  {
+    EMKey key = Keyboard::waitForKey();
+
+    // If return or escape then end input
+    if (key == SDLK_RETURN || key == SDLK_ESCAPE)
+    {
+      break;
+    }
+    // Delete previous char, replacing it by the FILL_CHAR
+    else if (key == SDLK_BACKSPACE || key == SDLK_DELETE)
+    {
+      if (iLetter > 0)
+      {
+	iLetter--;
+
+	m_Input[iLetter] = FILL_CHAR;
+      }
+    }
+    else
+    {
+      m_Input[iLetter] = key;
+
+      iLetter++;
+    }
+
+    EM_COUT("MenuInput::perform() input " << this->getInput(), 1);
+
+    this->draw();
+  }
+
+  //
+  // Clear the FILL_CHAR at the end of the input string, if the result is
+  //  empty replace it by an '?'
+  //
+
+  int i = 0;
+
+  if (strlen(m_Input) > 0)
+  {
+    // Stop at first FILL_CHAR
+    for (i=0; i<strlen(m_Input); i++)
+      if (m_Input[i] == FILL_CHAR)
+	break;
+
+    // Terminate string at first FILL_CHAR
+    m_Input[i] = '\0';
+  }
+
+  if (strlen(m_Input) == 0)
+    strcpy(m_Input, DEFAULT_STRING);
+
+  return m_iAction;;
 }

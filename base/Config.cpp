@@ -423,3 +423,4 @@ void Config::setPaths(char const * const argv0) {
   EM_COUT( m_sDataDir, 42);
   EM_COUT("- Config::getFullPath",0);
 } //!-rzr
+
