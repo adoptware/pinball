@@ -96,8 +96,8 @@ int main(int argc, char *argv[]) {
 	for (int a=0; a<16; a++) {
 		Shape3D * shape;
 		switch (a%3) {
-		case 0: shape = new BigSphere(1.0, 1, 1.0, 1.0, 1.0, 1.0); break;
-		case 1: shape = new Cone(2.0, 1.0, 1.0, 1.0, 1.0); break;
+		case 0: shape = new BigSphere(1.0, 2, 1.0, 1.0, 1.0, 1.0); break;
+		case 1: shape = new Cone(2.0, 16, 1.0, 1.0, 1.0, 1.0); break;
 		default: shape = new Cube(2.0, 1.0, 1.0, 1.0, 1.0);
 		}
 		// Add the shape.
