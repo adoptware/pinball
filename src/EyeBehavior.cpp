@@ -82,7 +82,6 @@ void EyeBehavior::onTick() {
     string leftnudge("leftnudge");
     string rightnudge("rightnudge");
     if (Keyboard::isKeyDown(Config::getInstance()->getKey(bottomnudge)) && !m_bTilt) {
-      cerr << "nudge" << endl;
       m_fZNudge = 1.0f;
       m_iTiltTick += 100;
       m_iNudgeTick = 50;

@@ -196,7 +196,7 @@ void StateBehavior::setState(StateItem* stateitem) {
     Shape3D* shape = this->getParent()->getShape3D(0);   
     if (shape != NULL) {         
       // only apply to fisrst polygon TODO
-      Polygon* poly = shape->getPolygon(0);     
+      Polygon3D* poly = shape->getPolygon(0);     
       if (poly != NULL) {                       
 	vector<TexCoord>::iterator iter1 = p_CurrentStateItem->m_vTexCoord.begin();               
 	vector<TexCoord>::iterator end1 = p_CurrentStateItem->m_vTexCoord.end();

@@ -17,7 +17,7 @@
 class Group;
 class Engine;
 class Shape3D;
-class Polygon;
+class Polygon3D;
 class Behavior;
 class LoaderModule;
 
@@ -61,7 +61,7 @@ class Loader {
 
   void readPolygon(ifstream & file, istringstream & ist, Shape3D* shape);
   void readTexture(ifstream & file, istringstream & ist,Shape3D* shape);
-  void readPolygonEdge(ifstream & file, istringstream & ist,Polygon* poly);
+  void readPolygonEdge(ifstream & file, istringstream & ist,Polygon3D* poly);
   void readVertex(ifstream & file, istringstream & ist,Shape3D* shape);
   void readUnknown(ifstream & file, istringstream & ist);
 
