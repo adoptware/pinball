@@ -40,7 +40,7 @@ CollisionVisitor::CollisionVisitor() {
 	//m_iPolygonsA = 0;
 	//m_iPolygonsB = 0;
 	// TODO: Some way to control the global octtree
-	p_OctTree = new OctTree(1, 100);
+	p_OctTree = new OctTree(2, 100);
 }
 
 CollisionVisitor::~CollisionVisitor() {

@@ -12,7 +12,6 @@
 #include "Visitor.h"
 
 class Group;
-
 /** @author Henrik Enqvist */
 class SoundVisitor : public Visitor {
  protected:

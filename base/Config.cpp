@@ -42,7 +42,8 @@ Config * Config::getInstance() {
 void Config::setDefault() {
 	// Default values
 	this->setSize(640, 480);
-	this->setSound(true);
+	this->setSound(8);
+	this->setMusic(5);
 	this->setBpp(16);
 	this->setGLFilter(EM_LINEAR);
 	this->setView(0);
@@ -84,7 +85,8 @@ void Config::saveConfig() {
 		return;
 	}
 	file << "size: " << m_iWidth <<" "<< m_iHeight << endl;
-	file << "sound: " << (m_bSound ? "1" : "0") << endl;
+	file << "sound: " << m_iSound << endl;
+	file << "music: " << m_iMusic << endl;
 	file << "view: " << m_iView << endl;
 	file << "bpp: " << m_iBpp << endl;
 	file << "fullscreen: " << (m_bFullScreen ? "1" : "0") << endl;
@@ -129,9 +131,13 @@ void Config::loadConfig() {
 			file >> m_iWidth;
 			file >> m_iHeight;
 		} else if (str == "sound:") {
-			file >> str;
-			if (str == "0") this->setSound(false);
-			else this->setSound(true);
+			int vol;
+			file >> vol;
+			this->setSound(vol);
+		} else if (str == "music:") {
+			int vol;
+			file >> vol;
+			this->setMusic(vol);
 		} else if (str == "view:") {
 			file >> m_iView;
 		} else if (str == "bpp:") {
@@ -210,7 +216,8 @@ void Config::loadArgs(int & argc, char *argv[]) {
 	 		}
 			REMOVEARG(a, argc, argv);
    	} else if (strcmp(argv[a], "-nosound") == 0) {
-			this->setSound(false);
+			this->setSound(0);
+			this->setMusic(0);
 			EM_COUT("Disabling sound", 1);
 			REMOVEARG(a, argc, argv);
    	} else if (strcmp(argv[a], "-nolights") == 0) {
