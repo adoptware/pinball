@@ -1,4 +1,4 @@
-//#ident "$Id: Pinball.cpp,v 1.38 2003/05/27 12:49:58 henqvist Exp $"
+//#ident "$Id: Pinball.cpp,v 1.39 2003/05/28 05:21:22 henqvist Exp $"
 /***************************************************************************
                           Pinball.cpp  -  description
                              -------------------
@@ -107,10 +107,10 @@ protected:
     Table::getInstance()->getHighScoresData(listHighScores);
 
     if (listHighScores.size() > 0) {
-      list<string>::iterator it = listHighScores.begin();
-
-      for (int i=0; i<10 && it!=listHighScores.end(); i++, it++) {
-        sRow = (*it);
+      list<string>::iterator iter = listHighScores.begin();
+      list<string>::iterator end = listHighScores.end();
+      for (int i=0; i<EM_MAX_HIGHSCORES && iter != end; ++i, ++iter) {
+        sRow = (*iter);
         p_EmFont->printRowCenter(sRow.c_str(), nStartRow + i);
       }
     } else {
@@ -235,8 +235,8 @@ protected:
       menubright->getEngine()->setLightning(0.8f, AMBIENT);
       Config::getInstance()->setBrightness(0.8f); break;
     default: 
-      menubright->getEngine()->setLightning(0.6f, AMBIENT);
-      Config::getInstance()->setBrightness(0.6f); break;
+      menubright->getEngine()->setLightning(0.5f, AMBIENT);
+      Config::getInstance()->setBrightness(0.5f); break;
     }
     // screen size
     int w, h;
@@ -801,4 +801,4 @@ int WINAPI WinMain( HINSTANCE hInst,  HINSTANCE hPreInst,
   return main(argc,argv); 
 }
 #endif
-// EOF $Id: Pinball.cpp,v 1.38 2003/05/27 12:49:58 henqvist Exp $
+// EOF $Id: Pinball.cpp,v 1.39 2003/05/28 05:21:22 henqvist Exp $
