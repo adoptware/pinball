@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 	groupSphere->addShape3D(sphere);
 	// Add a light
 	BigSphere* li = new BigSphere(1, 0, 1, 1, 1, 1);
-	li->setProperty(EM_SHAPE3D_ALLWAYSLIT);
+	li->setProperty(EM_SHAPE3D_ALWAYSLIT);
 	Light* lightR = new Light(2, 0, 0,  1, 0, 0);
 	Group* groupLightR1 = new Group();
 	Group* groupLightR2 = new Group();

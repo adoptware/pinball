@@ -62,7 +62,7 @@ void Config::setDefault() {
   m_bExternGL = false;
   this->setDataDir(EM_DATADIR);
   this->setLights(true);
-  this->setBrightness(0.1f);
+  this->setBrightness(0.3f);
   this->setShowFPS(false);
   this->setFire(false);
 
