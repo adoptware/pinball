@@ -131,29 +131,29 @@ int Shape3D::addAt(int index, float x, float y, float z,
 	vtx.x = x;
 	vtx.y = y;
 	vtx.z = z;
-	m_vVtxSrc.insert(&m_vVtxSrc[index], vtx);
+	m_vVtxSrc.insert(m_vVtxSrc.begin()+index, vtx);
 	// Add dummy values to trans and align, i.e. allocate space
-	m_vVtxTrans.insert(&m_vVtxTrans[index], vtx);
-	m_vVtxAlign.insert(&m_vVtxAlign[index], vtx);
+	m_vVtxTrans.insert(m_vVtxTrans.begin()+index, vtx);
+	m_vVtxAlign.insert(m_vVtxAlign.begin()+index, vtx);
 	// Add dummy values to normals, i.e. allocate space
-	m_vNmlSrc.insert(&m_vNmlSrc[index], vtx);
-	m_vNmlTrans.insert(&m_vNmlTrans[index], vtx);
-	m_vNmlAlign.insert(&m_vNmlAlign[index], vtx);
+	m_vNmlSrc.insert(m_vNmlSrc.begin()+index, vtx);
+	m_vNmlTrans.insert(m_vNmlTrans.begin()+index, vtx);
+	m_vNmlAlign.insert(m_vNmlAlign.begin()+index, vtx);
 
 	Color color = {1.0f, 1.0f, 1.0f, 1.0f};
-	m_vLight.insert(&m_vLight[index], color);
-	m_vSpecular.insert(&m_vSpecular[index], color);
+	m_vLight.insert(m_vLight.begin()+index, color);
+	m_vSpecular.insert(m_vSpecular.begin()+index, color);
 
 	color.r = r;
 	color.g = g;
 	color.b = b;
 	color.a = a;
-	m_vColor.insert(&m_vColor[index], color);
-	m_vLitColor.insert(&m_vLitColor[index], color);
+	m_vColor.insert(m_vColor.begin()+index, color);
+	m_vLitColor.insert(m_vLitColor.begin()+index, color);
 	TexCoord texcoord;
 	texcoord.u = u;
 	texcoord.v = v;
-	m_vTexCoord.insert(&m_vTexCoord[index], texcoord);
+	m_vTexCoord.insert(m_vTexCoord.begin()+index, texcoord);
 
 	return index;
 }
@@ -222,12 +222,12 @@ bool Shape3D::removeLooseVertex3D(int vtxindex) {
 		if ((*polyiter)->includes(vtxindex) >= 0) return false;
 	}
 
- 	m_vVtxSrc.erase(&m_vVtxSrc[vtxindex]);
- 	m_vVtxTrans.erase(&m_vVtxTrans[vtxindex]);
- 	m_vVtxAlign.erase(&m_vVtxAlign[vtxindex]);
- 	m_vNmlSrc.erase(&m_vNmlSrc[vtxindex]);
- 	m_vNmlTrans.erase(&m_vNmlTrans[vtxindex]);
- 	m_vNmlAlign.erase(&m_vNmlAlign[vtxindex]);
+ 	m_vVtxSrc.erase(m_vVtxSrc.begin()+vtxindex);
+ 	m_vVtxTrans.erase(m_vVtxTrans.begin()+vtxindex);
+ 	m_vVtxAlign.erase(m_vVtxAlign.begin()+vtxindex);
+ 	m_vNmlSrc.erase(m_vNmlSrc.begin()+vtxindex);
+ 	m_vNmlTrans.erase(m_vNmlTrans.begin()+vtxindex);
+ 	m_vNmlAlign.erase(m_vNmlAlign.begin()+vtxindex);
 	
 	// decrement each index above vtxindex
 	polyiter = m_vPolygon.begin();

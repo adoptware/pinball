@@ -4,6 +4,8 @@
  The arrow keys rotates the cube.
  ***************************************************************************/
 
+#include <iostream>
+
 #include "Private.h"
 #include "Engine.h"
 #include "Camera.h"

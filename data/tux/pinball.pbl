@@ -7444,6 +7444,7 @@ object lock1 {
   shape {
     vts { 4 }
     pls { 1 }
+    hid { }
     vtx { 
       -1 1 0
       1 1 1 1
@@ -7520,6 +7521,7 @@ object lock2 {
   shape {
     vts { 4 }
     pls { 1 }
+    hid { }
     vtx { 
       -1 1 0
       1 1 1 1
@@ -9415,7 +9417,6 @@ object floor_lane_o {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -9452,7 +9453,6 @@ object floor_lane_o {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -9540,7 +9540,7 @@ object floor {
   shape {
     vts { 225 }
     pls { 196 }
-    bh2 { }
+    bhi { }
     tex { 
       floor2.png
     }
@@ -12085,7 +12085,6 @@ object floor_lane_b {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -12122,7 +12121,6 @@ object floor_lane_b {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -12242,7 +12240,6 @@ object floor_lane_oo {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -12279,7 +12276,6 @@ object floor_lane_oo {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -12399,7 +12395,6 @@ object floor_lane_t {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -12436,7 +12431,6 @@ object floor_lane_t {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -12636,7 +12630,6 @@ object floor_top_l {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -12673,7 +12666,6 @@ object floor_top_l {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -12793,7 +12785,6 @@ object floor_top_i {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -12830,7 +12821,6 @@ object floor_top_i {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -12950,7 +12940,6 @@ object floor_top_n {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -12987,7 +12976,6 @@ object floor_top_n {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -13107,7 +13095,6 @@ object floor_top_u {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -13144,7 +13131,6 @@ object floor_top_u {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -13264,7 +13250,6 @@ object floor_top_x {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -13301,7 +13286,6 @@ object floor_top_x {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -14755,7 +14739,6 @@ object left_shoot {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -14792,7 +14775,6 @@ object left_shoot {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -14906,7 +14888,6 @@ object right_shoot {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png
@@ -14943,7 +14924,6 @@ object right_shoot {
   shape {
     vts { 4 }
     pls { 1 }
-    bhi { }
     lit { }
     tex { 
       tiles.png

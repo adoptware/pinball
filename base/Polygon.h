@@ -18,6 +18,8 @@
 #define EM_POLY_TRANS 64
 //#define EM_POLY_CCW_VIEW 128
 
+using namespace std;
+
 #include <vector>
 
 #include "EMath.h"
@@ -38,6 +40,7 @@ class Polygon {
 	public:
 		Polygon(Shape3D* s, int size = 3);
 		~Polygon();
+		void copy(Polygon * poly);
 		/** Add add a shape vertex into this polygon- */
 		void add(int shindex);
 		/** Returns the polyindex if the vertex is included. Else -1. */
