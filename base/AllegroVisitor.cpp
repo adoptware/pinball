@@ -49,10 +49,6 @@ void AllegroVisitor::empty() {
 		drawing_mode(DRAW_MODE_SOLID, NULL, 0, 0);
 	} break;
 	case EM_ALLEGRO_CLEAN: {
-#if EM_DEBUG
-		em_poly_m = em_poly_m*0.7 + em_poly*0.3;
-		em_poly = 0;
-#endif
 	} break;
 	}
 #endif // EM_USE_ALLEGRO
@@ -87,16 +83,16 @@ void AllegroVisitor::visit(Group * g) {
 					for (; indexIter != indexEnd; ++indexIter, ++index) {
 #if 0
 						alleg_vtx[index].x = (*shapeIter)->m_vVtxAlign[(*indexIter)].x;
-						alleg_vtx[index].y = -(*shapeIter)->m_vVtxAlign[(*indexIter)].y;
-						alleg_vtx[index].z = -(*shapeIter)->m_vVtxAlign[(*indexIter)].z;
+						alleg_vtx[index].y = (*shapeIter)->m_vVtxAlign[(*indexIter)].y;
+						alleg_vtx[index].z = (*shapeIter)->m_vVtxAlign[(*indexIter)].z;
 						alleg_vtx[index].u = 0;
 						alleg_vtx[index].v = 0;
 						alleg_vtx[index].c = 0xFFFFFF;
 #else
 						// TODO Fix this slow copying !!!
 						alleg_vtx[index].x = (*shapeIter)->m_vVtxAlign[(*indexIter)].x;
-						alleg_vtx[index].y = -(*shapeIter)->m_vVtxAlign[(*indexIter)].y;
-						alleg_vtx[index].z = -(*shapeIter)->m_vVtxAlign[(*indexIter)].z;
+						alleg_vtx[index].y = (*shapeIter)->m_vVtxAlign[(*indexIter)].y;
+						alleg_vtx[index].z = (*shapeIter)->m_vVtxAlign[(*indexIter)].z;
 						float r = (*shapeIter)->m_vLitColor[(*indexIter)].r*255.0f;
 						float g = (*shapeIter)->m_vLitColor[(*indexIter)].g*255.0f;
 						float b = (*shapeIter)->m_vLitColor[(*indexIter)].b*255.0f;
@@ -111,8 +107,8 @@ void AllegroVisitor::visit(Group * g) {
 					for (; indexIter != indexEnd; ++indexIter, ++index) {
 						// TODO Fix this slow copying !!!
 						alleg_vtx[index].x = (*shapeIter)->m_vVtxAlign[(*indexIter)].x;
-						alleg_vtx[index].y = -(*shapeIter)->m_vVtxAlign[(*indexIter)].y;
-						alleg_vtx[index].z = -(*shapeIter)->m_vVtxAlign[(*indexIter)].z;
+						alleg_vtx[index].y = (*shapeIter)->m_vVtxAlign[(*indexIter)].y;
+						alleg_vtx[index].z = (*shapeIter)->m_vVtxAlign[(*indexIter)].z;
 						// TODO Not all textures are 256
 						alleg_vtx[index].u = (int)((*shapeIter)->m_vTexCoord[(*indexIter)].u*255.0f);
 						alleg_vtx[index].v = (int)((*shapeIter)->m_vTexCoord[(*indexIter)].v*255.0f);
@@ -170,9 +166,6 @@ void AllegroVisitor::visit(Group * g) {
 											size, alleg_clip_p);
 				}
 				// 72 % (79%)
-#if EM_DEBUG
-				++em_poly;
-#endif
 			}
 		}
 		// billboard TODO
@@ -207,8 +200,8 @@ void AllegroVisitor::visit(Group * g) {
 					for (; indexIter != indexEnd; ++indexIter, ++index) {
 						// TODO Fix this slow copying !!!
 						alleg_vtx[index].x = (*shapeIter)->m_vVtxAlign[(*indexIter)].x;
-						alleg_vtx[index].y = -(*shapeIter)->m_vVtxAlign[(*indexIter)].y;
-						alleg_vtx[index].z = -(*shapeIter)->m_vVtxAlign[(*indexIter)].z;
+						alleg_vtx[index].y = (*shapeIter)->m_vVtxAlign[(*indexIter)].y;
+						alleg_vtx[index].z = (*shapeIter)->m_vVtxAlign[(*indexIter)].z;
 						// TODO implement a fast float to int conversion and fast clamp;
 						// see section 2.1 i Game Prog Gems 2
 						float r = (*shapeIter)->m_vLitColor[(*indexIter)].r*255.0f;
@@ -224,8 +217,8 @@ void AllegroVisitor::visit(Group * g) {
 					for (; indexIter != indexEnd; ++indexIter, ++index) {
 						// TODO Fix this slow copying !!!
 						alleg_vtx[index].x = (*shapeIter)->m_vVtxAlign[(*indexIter)].x;
-						alleg_vtx[index].y = -(*shapeIter)->m_vVtxAlign[(*indexIter)].y;
-						alleg_vtx[index].z = -(*shapeIter)->m_vVtxAlign[(*indexIter)].z;
+						alleg_vtx[index].y = (*shapeIter)->m_vVtxAlign[(*indexIter)].y;
+						alleg_vtx[index].z = (*shapeIter)->m_vVtxAlign[(*indexIter)].z;
 						// TODO Not all textures are 255
 						alleg_vtx[index].u = (int)((*shapeIter)->m_vTexCoord[(*indexIter)].u*255.0f);
 						alleg_vtx[index].v = (int)((*shapeIter)->m_vTexCoord[(*indexIter)].v*255.0f);
@@ -281,9 +274,6 @@ void AllegroVisitor::visit(Group * g) {
 					polygon3d_f(backbuffer, POLYTYPE_ATEX_MASK_LIT | POLYTYPE_ZBUF, 
 											(*shapeIter)->m_Texture, size, alleg_clip_p);
 				}
-#if EM_DEBUG
-				++em_poly;
-#endif
 			}
 		}
 		// billboard TODO
