@@ -18,6 +18,7 @@
 BumperBehavior::BumperBehavior() : Behavior() {
 	m_iLightCounter = -1;
 	m_iSound = -1;
+	m_iScore = 0;
 	this->setType(PBL_TYPE_BUMPERBEH);
 }
 
@@ -39,7 +40,7 @@ void BumperBehavior::StdOnCollision() {
 		m_iLightCounter = 20;
 		SetLightOn(true);
 		SendSignal(PBL_SIG_BUMPER_ON, 0, this->getParent(), NULL);
-		Score::getInstance()->addScore(450);
+		Score::getInstance()->addScore(450, true);
 		SoundUtil::getInstance()->playSample(m_iSound, false);
 	}
 }
