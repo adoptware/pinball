@@ -1,4 +1,4 @@
-//#ident "$Id: config-rzr.h,v 1.11 2003/07/25 01:01:54 rzr Exp $"
+//#ident "$Id: config-rzr.h,v 1.12 2003/07/26 22:13:42 rzr Exp $"
 //#warning "!+rzr: Win32 portability hacks @ www.rzr.online.fr"
 #ifndef config_rzr_h_ // !+rzr 
 #define config_rzr_h_
@@ -111,9 +111,16 @@
 #undef  EM_HIGHSCORE_DIR
 #endif
 
-/// MacOS aka Darwin
+/// MacOSX aka Darwin
 #if defined(__APPLE__) && defined(__MACH__)
 #define RZR_LIBSTATIC 1
+#endif
+
+/// project builder @ MacOSX
+#if defined ( MacOSX ) // !+Eye @ project builderx
+#define RZR_LIBSTATIC 1
+#define WANT_MALLOC_NO 1 //dont have <malloc.h>
+#undef  RZR_PATCHES_3DS
 #endif
 
 /// other compilers
@@ -267,4 +274,4 @@ using namespace std;
 #endif
 #endif
 #endif //!-rzr ----------------------------------------------------------------
-//EOF: $Id: config-rzr.h,v 1.11 2003/07/25 01:01:54 rzr Exp $
+//EOF: $Id: config-rzr.h,v 1.12 2003/07/26 22:13:42 rzr Exp $
