@@ -14,9 +14,9 @@
 /** A simple cylinder. @see Shape3D */
 class Cylinder : public Shape3D {
 	public:
-		/** Cylinder(size, r, g, b, a). You must enable transparency to be able
+		/** Cylinder(size, sides, r, g, b, a). You must enable transparency to be able
 		 * to use the alpha color. */
-		Cylinder(float size, float r, float g, float b, float a, bool bTop = true);
+		Cylinder(float size, int sides, float r, float g, float b, float a, bool bTop = true);
 };
 
 #endif // SPHERE_H
