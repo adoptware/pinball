@@ -35,7 +35,9 @@ class BounceBehavior : public Behavior {
   void StdOnSignal();
   void onCollision(const Vertex3D & vtx, const Vertex3D & vtx, Group* g);
   void getDirection(Vertex3D & vtx);
-  inline bool isAlive() {return m_bAlive;};
+  inline bool isAlive() { return m_bAlive; };
+  inline void setFire(bool f) { m_bFire = f; };
+  void activateBall();
  private:
   void checkSpeed();
 
@@ -45,6 +47,7 @@ class BounceBehavior : public Behavior {
   Vertex3D m_vtxOldDir;
   int m_iDirFactor;
   int m_iCollisionPrio;
+  bool m_bFire;
 };
 
 #endif // BounceBehavior

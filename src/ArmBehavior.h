@@ -9,6 +9,8 @@
 #ifndef ARMBEHAVIOR_H
 #define ARMBEHAVIOR_H
 
+#include <string>
+
 #include "Behavior.h"
 #include "StateMachine.h"
 #include "EMath.h"
@@ -20,7 +22,7 @@ class ArmBehavior : public Behavior {
   ArmBehavior(bool right = true);
   ~ArmBehavior();
   void onTick();
-  void StdEmptyOnSignal() {};
+  void StdOnSignal();
   void StdEmptyOnCollision() {};
   void doArm(SDLKey key);
   inline void setSound(int s) { m_iSound = s; };
@@ -33,7 +35,8 @@ class ArmBehavior : public Behavior {
   int m_iCount;
   bool m_bOn;
   int m_iSound;
-  bool m_bRot;
+  bool m_bFirst;
+  bool m_bTilt;
 };
 
 #endif // ARMBEHAVIOR_H

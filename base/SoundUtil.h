@@ -39,44 +39,44 @@
 /** Singleton class for loading and playing samples */
 class SoundUtil {
  protected:
-	SoundUtil();
+  SoundUtil();
  public:
-	~SoundUtil();
-	static SoundUtil* getInstance();
-	/** Initializes the sound system. Used by Engine constructor. 
-	 ** You don't need this use the Config class to turn on/off sound.
-	 ** @see Config */
-	int initSound();
-	/** Shuts down sound system. Used by Engine::stopEngine. 
-	 ** You don't need this use the Config class to turn on/off sound.
-	 ** @see Config */
-	void stopSound();
-	void applyConfigVolume();
-	// TODO
-	void freeSounds();
-	/** Loads a wave file. Returns the identifier of the sound, used for playback.
-	 ** Returns -1 if it fails to load the wave file. */
-	int loadSample(const char * filename);
-	/** Loads a midi file. Returns the identifier of the sound, used for playback.
-	 ** Returns -1 if it fails to load the midi file. */
-	int loadMusic(const char * filename);
-	void playSample(int sound, bool loop);
-	void playMusic(int sound, bool loop);
-	void stopMusic();
-	void pauseMusic();
-	void resumeMusic();
-	const char * getSoundName(int sound);
-	const char * getMusicName(int music);
+  ~SoundUtil();
+  static SoundUtil* getInstance();
+  /** Initializes the sound system. Used by Engine constructor. 
+   ** You don't need this use the Config class to turn on/off sound.
+   ** @see Config */
+  int initSound();
+  /** Shuts down sound system. Used by Engine::stopEngine. 
+   ** You don't need this use the Config class to turn on/off sound.
+   ** @see Config */
+  void stopSound();
+  void applyConfigVolume();
+  // TODO
+  void freeSounds();
+  /** Loads a wave file. Returns the identifier of the sound, used for playback.
+   ** Returns -1 if it fails to load the wave file. */
+  int loadSample(const char * filename);
+  /** Loads a midi file. Returns the identifier of the sound, used for playback.
+   ** Returns -1 if it fails to load the midi file. */
+  int loadMusic(const char * filename);
+  void playSample(int sound, bool loop);
+  void playMusic(int sound, bool loop);
+  void stopMusic();
+  void pauseMusic();
+  void resumeMusic();
+  const char * getSoundName(int sound);
+  const char * getMusicName(int music);
  private:
-	bool m_bInited;
-	int m_iLoopingMusic;
-	vector<EmSample*> m_vEmSample;
-	vector<EmMusic*> m_vEmMusic;
- 	map<string, int> m_hEmSample;
-	map<string, int> m_hEmMusic;
-	map<int, string> m_hSoundName;
-	map<int, string> m_hMusicName;
-	static SoundUtil* p_SoundUtil;
+  bool m_bInited;
+  int m_iLoopingMusic;
+  vector<EmSample*> m_vEmSample;
+  vector<EmMusic*> m_vEmMusic;
+  map<string, int> m_hEmSample;
+  map<string, int> m_hEmMusic;
+  map<int, string> m_hSoundName;
+  map<int, string> m_hMusicName;
+  static SoundUtil* p_SoundUtil;
 };
 
 #endif

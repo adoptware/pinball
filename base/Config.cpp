@@ -12,7 +12,7 @@
 
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <stdio.h>
+#include <cstdio>
 
 // int em_width_ = 640;
 // int em_height_ = 480;
@@ -52,8 +52,23 @@ void Config::setDefault() {
   this->setDataDir(EM_DATADIR);
   this->setLights(true);
   this->setBrightness(0.1f);
-  this->setMaxFPS(80);
   this->setShowFPS(false);
+  this->setFire(false);
+
+  string leftflip("leftflip");
+  string rightflip("rightflip");
+  string bottomnudge("bottomnudge");
+  string leftnudge("leftnudge");
+  string rightnudge("rightnudge");
+  string launch("launch");
+  string reset("reset");
+  this->setKey(leftflip, SDLK_LSHIFT);
+  this->setKey(rightflip, SDLK_RSHIFT);
+  this->setKey(bottomnudge, SDLK_SPACE);
+  this->setKey(leftnudge, SDLK_LCTRL);
+  this->setKey(rightnudge, SDLK_RCTRL);
+  this->setKey(launch, SDLK_RETURN);
+  this->setKey(reset, SDLK_r);
 }
 
 void Config::setDataDir(const char* ch) { 
@@ -64,6 +79,32 @@ void Config::setDataDir(const char* ch) {
 void Config::setSubDir(const char* ch) { 
   m_sSubDir = string(ch); 
   m_sDataSubDir = m_sDataDir + "/" + m_sSubDir;
+}
+
+
+EMKey Config::getKey(string & str) {
+  if (m_hKey.find(str) != m_hKey.end()) {
+    map<string, EMKey>::iterator element = m_hKey.find(str);
+    return (*element).second;
+  }
+  // failed, just return anything
+  return SDLK_HOME;
+}
+
+void Config::setKey(string & str, EMKey key) {
+  if (m_hKey.find(str) != m_hKey.end()) {
+    m_hKey.erase(m_hKey.find(str));
+  }
+  m_hKey.insert(pair<string, EMKey>(str, key));
+}
+
+const char * Config::getKeyCommonName(EMKey key) {
+#if EM_USE_SDL
+  return SDL_GetKeyName(key);
+#endif // EM_USESDL
+#if EM_USE_ALLEGRO
+  return NULL;
+#endif
 }
 
 void Config::saveConfig() {
@@ -101,11 +142,18 @@ void Config::saveConfig() {
   } else {
     file << "texture_filter: " << "-1" << endl;
   }
-  file << "maxfps: " << m_iMaxFPS << endl;
   file << "showfps: " << (m_bShowFPS ? "1" : "0") << endl;
+  file << "fire: " << (m_bFire ? "1" : "0") << endl;
+
+  map<string, EMKey>::iterator iter = m_hKey.begin();
+  map<string, EMKey>::iterator end = m_hKey.end();
+  for (; iter != end; ++iter) {
+    file << "keyboard: " << (*iter).first <<" "<< (*iter).second << endl;
+  }  
 }
 
 void Config::loadConfig() {
+  // loading default fixes possible problems with missing values in config file
   this->setDefault();
 
   string filename;
@@ -146,8 +194,6 @@ void Config::loadConfig() {
       file >> m_iView;
     } else if (str == "bpp:") {
       file >> m_iBpp;
-    } else if (str == "maxfps:") {
-      file >> m_iMaxFPS;
     } else if (str == "fullscreen:") {
       file >> str;
       if (str == "0") this->setFullScreen(false);
@@ -156,6 +202,10 @@ void Config::loadConfig() {
       file >> str;
       if (str == "0") this->setShowFPS(false);
       else this->setShowFPS(true);
+    } else if (str == "fire:") {
+      file >> str;
+      if (str == "0") this->setFire(false);
+      else this->setFire(true);
     } else if (str == "lights:") {
       file >> str;
       if (str == "0") this->setLights(false);
@@ -173,6 +223,12 @@ void Config::loadConfig() {
       float bright;
       file >> bright;
       this->setBrightness(bright);
+    } else if (str == "keyboard:") {
+      string keyname;
+      int key;
+      file >> keyname;
+      file >> key;
+      this->setKey(keyname, (EMKey)key);
     }
   }
 }

@@ -6,6 +6,8 @@
     email                : henqvist@excite.com
  ***************************************************************************/
 
+#include <string>
+
 #include "Private.h"
 #include "PlungerBehavior.h"
 #include "Pinball.h"
@@ -13,8 +15,10 @@
 #include "Keyboard.h"
 #include "SoundUtil.h"
 #include "Loader.h"
+#include "Config.h"
 
 PlungerBehavior::PlungerBehavior() : Behavior() {
+  m_bFirst = true;
   m_iLaunchState = 0;
   m_fPower = 0.0f;
   m_iCounter = -1;
@@ -27,18 +31,17 @@ PlungerBehavior::~PlungerBehavior() {
 }
 
 void PlungerBehavior::StdEmptyOnCollision() {
-//  OnCallerProperty( PBL_BALL_1 OR_CP PBL_BALL_2 OR_CP PBL_BALL_3 OR_CP PBL_BALL_4 ) {
-//     if (!m_bLaunch || m_iCounter > 0) {
-//       return;
-//     }
-//     m_iCounter = 10;
-//     SendSignal(m_sigPlunger, 0, this->getParent(), NULL);
-//     SoundUtil::getInstance()->playSample(m_iSound, false);
-//  }
 }
 
 void PlungerBehavior::onTick() {
-  if (Keyboard::isKeyDown(SDLK_RETURN)) {
+  EM_COUT("PlungerBehavior::onTick()", 0);
+  if (m_bFirst) {
+    this->getParent()->getTranslation(m_vtxTr.x, m_vtxTr.y, m_vtxTr.z);
+    m_bFirst = false;
+  }
+
+  string launch("launch");
+  if (Keyboard::isKeyDown(Config::getInstance()->getKey(launch))) {
     // return pressed, pull plunger back
     m_iCounter = -1;
     m_iLaunchState = 1;
@@ -54,12 +57,17 @@ void PlungerBehavior::onTick() {
     } else if (m_iLaunchState == 2) {
       if (m_iCounter > -1) {
 	// short delay after launching
-				--m_iCounter;
+	--m_iCounter;
       } else {
 	// reset
-				m_iLaunchState = 0;
-				m_fPower = 0.0f;
+	m_iLaunchState = 0;
+	m_fPower = 0.0f;
       }
     }
+  }
+  if (m_iLaunchState == 1) {
+    this->getParent()->setTranslation(m_vtxTr.x, m_vtxTr.y, m_vtxTr.z + m_fPower);
+  } else {
+    this->getParent()->setTranslation(m_vtxTr.x, m_vtxTr.y, m_vtxTr.z);
   }
 }

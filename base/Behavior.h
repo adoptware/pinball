@@ -24,41 +24,41 @@ class Light;
  * your behaviors. */
 class Behavior {
  public:
-	/** Simple constructor. You are supposed to create subclasses
-	 * and add the subclasses to the group. */
-	Behavior();
-	virtual ~Behavior() {};
-	/** Override this method to create behavior that occurs on each render loop. */
-	virtual void onTick() = 0;
-	/** Override this method to create behavior that occurs on a collision.
-	 * @see Shape3D
-	 * @see CollisionBounds */
-	virtual void onCollision(const Vertex3D & vtxWall, const Vertex3D & vtxOwn, Group * g) = 0;
-	/** Called each time a signal i sent through the system.
-	 * Override this method to create behavior that occurs on a signal. */
-	virtual void onSignal(int signal, Group * sender) = 0;
-	/** Adds a light for subclasses to use. The light must before be added to a group.
-	 * and to the engine. */
-	inline void setLight(Light * l) { p_Light = l; };
-	/** Returns to light added the behavior. Returns NULL if no light added. */
-	inline Light * getLight() { return p_Light; };
-	/** Gets the user defined type for this behavior. Subclasses should set
-	 * type to a unique id. Defaults to 0. */ 
-	inline int getType() { return m_iType; };
-	/** Gets the parent group for this behavior. The behavior must be added to
-	 * a group before we can use this. */
-	inline Group * getParent() { return p_Parent; };
+  /** Simple constructor. You are supposed to create subclasses
+   * and add the subclasses to the group. */
+  Behavior();
+  virtual ~Behavior() {};
+  /** Override this method to create behavior that occurs on each render loop. */
+  virtual void onTick() = 0;
+  /** Override this method to create behavior that occurs on a collision.
+   * @see Shape3D
+   * @see CollisionBounds */
+  virtual void onCollision(const Vertex3D & vtxWall, const Vertex3D & vtxOwn, Group * g) = 0;
+  /** Called each time a signal i sent through the system.
+   * Override this method to create behavior that occurs on a signal. */
+  virtual void onSignal(int signal, Group * sender) = 0;
+  /** Adds a light for subclasses to use. The light must before be added to a group.
+   * and to the engine. */
+  inline void setLight(Light * l) { p_Light = l; };
+  /** Returns to light added the behavior. Returns NULL if no light added. */
+  inline Light * getLight() { return p_Light; };
+  /** Gets the user defined type for this behavior. Subclasses should set
+   * type to a unique id. Defaults to 0. */ 
+  inline int getType() { return m_iType; };
+  /** Gets the parent group for this behavior. The behavior must be added to
+   * a group before we can use this. */
+  inline Group * getParent() { return p_Parent; };
  protected:
-	/** Subclasses uses this funcition to set the behavior type. */
-	inline void setType(int t) { m_iType = t; };
+  /** Subclasses uses this funcition to set the behavior type. */
+  inline void setType(int t) { m_iType = t; };
  private:
-	friend class Group;
-	/** Only for internal use. The Group class uses this when a
-	 * behavior is added to the group. */
-	inline void setParent(Group * g) { p_Parent = g;	};
-	Light * p_Light;
-	Group * p_Parent;
-	int m_iType;
+  friend class Group;
+  /** Only for internal use. The Group class uses this when a
+   * behavior is added to the group. */
+  inline void setParent(Group * g) { p_Parent = g;	};
+  Light * p_Light;
+  Group * p_Parent;
+  int m_iType;
 };
 
 #endif // BEHAVIOR_H

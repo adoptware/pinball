@@ -70,11 +70,16 @@ typedef struct {
   float r, g, b, a;
 } Color;
 
+typedef struct {
+  float x, y, z, w;
+} Quaternion;
+
 /** A class that collects the math functions. */
 class EMath {
  public:
   EMath();
   ~EMath();
+
   inline static void applyMatrix(const Matrix & mtx, const Vertex3D & vtxIn, 
 				 Vertex3D & vtxOut) {
     vtxOut.x = vtxIn.x * mtx.v[0][0] + vtxIn.y * mtx.v[0][1] 
@@ -87,6 +92,14 @@ class EMath {
   static void applyMatrixRot(const Matrix & mtx, const Vertex3D & vtxIn, Vertex3D & vtxOut);
   static void applyMatrixTrans(const Matrix & mtx, const Vertex3D & vtxIn, Vertex3D & vtxOut);
   static void crossProduct(const Vertex3D & vtxA, const Vertex3D & vtxB, Vertex3D & vtxOut);
+  // static void getCameraMatrix(Matrix & mtx, const Vertex3D & trans, Vertex3D & front, 
+  // Vertex3D & up, float fov, float aspect);
+  static void getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT, const Vertex3D & vtxR);
+  static void getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT, const Quaternion & qRot);
+  static void inverse(const Matrix & mtx, Matrix & inv);
+  static void matrixMulti(const Matrix & mtxA, const Matrix & mtxB, Matrix & mtxOut);
+
+
   static float dotProduct(const Vertex3D & vtxA, const Vertex3D & vtxB);
   static float emAcos(float f);
   static float emAtan(float f);
@@ -96,19 +109,39 @@ class EMath {
   static float emSqrt(float f);
   static float emTan(float f);
   static float emPow(float x, float y);
+
+  inline static void add(const Vertex3D & vtxA, Vertex3D & vtxOut) {
+    vtxOut.x += vtxA.x;
+    vtxOut.y += vtxA.y;
+    vtxOut.z += vtxA.z;
+  };
+  inline static void add(const Vertex3D & vtxA, const Vertex3D & vtxB, Vertex3D & vtxOut) {
+    vtxOut.x = vtxA.x + vtxB.x;
+    vtxOut.y = vtxA.y + vtxB.y;
+    vtxOut.z = vtxA.z + vtxB.z;
+  };
+  inline static void subst(const Vertex3D & vtxA, Vertex3D & vtxOut) {
+    vtxOut.x -= vtxA.x;
+    vtxOut.y -= vtxA.y;
+    vtxOut.z -= vtxA.z;
+  };
+  inline static void subst(const Vertex3D & vtxA, const Vertex3D & vtxB, Vertex3D & vtxOut) {
+    vtxOut.x = vtxA.x - vtxB.x;
+    vtxOut.y = vtxA.y - vtxB.y;
+    vtxOut.z = vtxA.z - vtxB.z;
+  };
   inline static void scaleVertex(Vertex3D & vtx, float s) {
     vtx.x *= s; 
     vtx.y *= s;
     vtx.z *= s;
   };
-  // static void getCameraMatrix(Matrix & mtx, const Vertex3D & trans, Vertex3D & front, 
-  // Vertex3D & up, float fov, float aspect);
-  static void getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT, const Vertex3D & vtxR);
-  static void inverse(const Matrix & mtx, Matrix & inv);
-  static void matrixMulti(const Matrix & mtxA, const Matrix & mtxB, Matrix & mtxOut);
   static void normalizeVector(Vertex3D & vtx);
   static float polygonZNormal(const Vertex3D & edgeA, const Vertex3D & edgeB, 
 			      const Vertex3D & edgeC);
+
+  void planeLineIntersection(const Vertex3D & nrml, float dist, 
+			     const Vertex3D & vtxA, const Vertex3D & vtxB, Vertex3D & vtxDiff);
+
   /** The projection of vxtA onto vxtB. vtxA and vxtOut is ( in this case )
    * allowed to be the same vector. */
   static float projection(const Vertex3D & vtxA, const Vertex3D & vtxB, Vertex3D & vtxOut);
@@ -127,10 +160,17 @@ class EMath {
 			     Vertex3D & vtxOut, float damp, float extra, 
 			     float scale, bool bBehind = false);
   static void scaleVector(Vertex3D & vtx, float sc);
-  static float vectorLength(const Vertex3D & vtx);
+  inline static float vectorLength(const Vertex3D & vtx) {
+    return EMath::emSqrt(vtx.x * vtx.x + vtx.y * vtx.y + vtx.z * vtx.z);
+  };
   /** The vector length but without the square root */
-  static float vectorLengthSqr(const Vertex3D & vtx);
+  inline static float vectorLengthSqr(const Vertex3D & vtx) {
+    return (vtx.x * vtx.x + vtx.y * vtx.y + vtx.z * vtx.z);
+  };
+
   static float volume(const Vertex3D & vtxA, const Vertex3D & vtxB, const Vertex3D & vtxC);
+  static void rotationArc(const Vertex3D & vtxA, const Vertex3D & vtxB, Quaternion & vtxOut);
+  static void quaternionMulti(const Quaternion & qA, const Quaternion & qB, Quaternion & qOut);
   /** Quadratic interpolation. f0 is at t=0, f1 is at t=1 and f2 at t=2. You
    * may give any t for recieving values. */
   static float quadratic(float f0, float f1, float f2, float t);

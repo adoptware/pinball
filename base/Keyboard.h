@@ -91,15 +91,15 @@
 
 class Keyboard {
  public:
-	Keyboard();
-	~Keyboard();
-	static void clear();
-	static void poll();
-	static bool isKeyDown(int piKey);
-	static EMKey waitForKey();
+  Keyboard();
+  ~Keyboard();
+  static void clear();
+  static void poll();
+  static bool isKeyDown(int piKey);
+  static EMKey waitForKey();
 #if EM_USE_SDL
  private:
-	static bool m_abKey[KEY_MAX];
+  static bool m_abKey[KEY_MAX];
 #endif
 };
 
