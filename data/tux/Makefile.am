@@ -38,7 +38,7 @@ tiles.png.pcx \
 up.wav
 
 # This will create a new empty highscores file
-# NOTE! The user pinball must exist!
+# NOTE! The user games must exist!
 install-data-hook:
 	mkdir -p $(highscoredir)
 	touch $(highscoredir)/highscores
