@@ -5,6 +5,8 @@
 #include "Private.h"
 #include "TextureUtil.h"
 
+#include <iostream>
+
 #if EM_UNIT_TEST
 #include <cppunit/ui/text/TestRunner.h>
 #include "Private.h"
