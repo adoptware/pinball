@@ -1,7 +1,7 @@
 AUTOMAKE_OPTIONS = gnu
 
 tuxlibdir = $(EM_LIBDIR)
-tuxdatadir = $(pkgdatadir)/tux
+tuxdatadir = $(datadir)/pinball/tux
 
 tuxlib_LTLIBRARIES = libModuleTux.la
 
