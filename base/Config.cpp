@@ -10,14 +10,14 @@
 #include "Config.h"
 #include "EMath.h"
 
+#if HAVE_SYS_STAT_H
 #include <sys/stat.h>
+#endif
+#if HAVE_SYS_TYPES_H
 #include <sys/types.h>
-#include <cstdio>
+#endif
 
-// int em_width_ = 640;
-// int em_height_ = 480;
-// int em_width_div2_ = 320;
-// int em_height_div2_ = 240;
+#include <cstdio>
 
 Config * Config::p_Instance = NULL;
 
@@ -109,6 +109,8 @@ const char * Config::getKeyCommonName(EMKey key) {
 
 void Config::saveConfig() {
   string filename;
+
+#if HAVE_SYS_STAT_H && HAVE_SYS_TYPES_H
   char* home = getenv("HOME");
   if (home != NULL) {
     // TODO unsafe
@@ -120,6 +122,7 @@ void Config::saveConfig() {
     cerr << "Not able to read or write config file" << endl;
     return;
   }
+#endif
 
   ofstream file(filename.c_str());
   if (!file) {
