@@ -115,10 +115,17 @@ int Table::locked() {
   return locked;
 }
 
-int Table::loadLevel(Engine * engine, const char * subdir) {
+// Called to load a new table
+int Table::loadLevel(Engine * engine, const char * subdir)
+{
+  // Try to save the last high scores for the current table
+  Config::getInstance()->setHighScores(m_mapHighScores);
+  Config::getInstance()->writeHighScoresFile();
+
   // Clear old engine objects
   this->clear(engine);
   m_sTableName = string(subdir); 
+
   // Load from file
   Config::getInstance()->setSubDir(subdir);
   string datadir(Config::getInstance()->getDataSubDir());
@@ -159,6 +166,10 @@ int Table::loadLevel(Engine * engine, const char * subdir) {
   eyebeh->setSound(SoundUtil::getInstance()->loadSample(filename.c_str()));
   groupCT->setBehavior(eyebeh);
 
+  // Read high scores for the current table
+  Config::getInstance()->readHighScoresFile();
+  Config::getInstance()->getHighScores(m_mapHighScores);
+
   // Reset pinball
   SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
 
@@ -177,4 +188,10 @@ string Table::getTableDataDirName()
   string datadir(Config::getInstance()->getDataSubDir());
 
   return datadir;
+}
+
+bool Table::isItHighScore(const int nScore)
+{
+  // TODO after implementing high scores table return here the last value
+  return false;
 }

@@ -10,6 +10,7 @@
 #define TABLE_H
 
 #include <string>
+#include <map>
 
 class Score;
 class Engine;
@@ -49,6 +50,9 @@ class Table {
   // Get the tables data directory name - pnf
   string getTableDataDirName();
 
+  // Returns tru if the argument value is a high score
+  bool isItHighScore(const int nScore);
+
  private:
   void clear(Engine * engine);
 
@@ -58,6 +62,9 @@ class Table {
   BallGroup * p_Ball[MAX_BALL];
   Score * p_Score;
   string m_sTableName;
+
+  // Keep the high scores for the current table
+  multimap<int, string> m_mapHighScores;
 };
 
 #endif // TABLE_H
