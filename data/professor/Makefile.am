@@ -10,6 +10,8 @@ libmodule_professor_la_LDFLAGS = -module
 libmodule_professor_la_SOURCES = ModuleProfessor.cpp
 
 professordata_DATA = \
+floor.png \
+floor.png.pcx \
 pinball.pbl \
 professor.mid
 

@@ -349,10 +349,11 @@ void Loader::loadAnimation(ifstream & file, istringstream & ist,
 	} else {
 		throw string("Expecting rotation, translation or light in anim field");
 	}
-	StdAnimation* anim = new StdAnimation(50, type);
-
-	int count;
+	int count, step;
+	this->readNextToken(file, ist, step);
 	this->readNextToken(file, ist, count);
+	StdAnimation* anim = new StdAnimation(step, type);
+
 	for (; count > 0; count--) {
 		float a, b, c;
 		this->readNextToken(file, ist, a); 
