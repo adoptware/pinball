@@ -233,9 +233,9 @@ void get_config(void) {
 		menuscreen->setCurrent(1);
 	}
 	// brightness
-	if (Config::getInstance()->getBrightness() < 0.09f) {
+	if (Config::getInstance()->getBrightness() < 0.19f) {
 		menubright->setCurrent(0);
-	} else 	if (Config::getInstance()->getBrightness() > 0.11f) {
+	} else 	if (Config::getInstance()->getBrightness() > 0.21f) {
 		menubright->setCurrent(2);
 	} else {
 		menubright->setCurrent(1);
@@ -258,9 +258,9 @@ void get_config(void) {
 	}
 	// view mode
 	switch(Config::getInstance()->getView()) {
-	case 1: menuview->setCurrent(1);
-	case 2: menuview->setCurrent(2);
-	default: menuview->setCurrent(0);
+	case 0: menuview->setCurrent(0); break;
+	case 1: menuview->setCurrent(1); break;
+	default: menuview->setCurrent(2);
 	}
 	// texture filter
 	if (Config::getInstance()->getGLFilter() == EM_LINEAR) {
@@ -334,14 +334,14 @@ protected:
 		}
 		// brightness
 		switch (menubright->getCurrent()) {
-		case 0: menubright->getEngine()->setLightning(0, 0); 
+		case 0: menubright->getEngine()->setLightning(0, 0.1f); 
 			Config::getInstance()->setBrightness(0); break;
-		case 1: menubright->getEngine()->setLightning(0, 0.1f);
-			Config::getInstance()->setBrightness(0.1f); break;
-		case 2: menubright->getEngine()->setLightning(0, 0.2f);
+		case 1: menubright->getEngine()->setLightning(0, 0.2f);
 			Config::getInstance()->setBrightness(0.2f); break;
-		default: menubright->getEngine()->setLightning(0, 0.1f);
-			Config::getInstance()->setBrightness(0.1f); break;
+		case 2: menubright->getEngine()->setLightning(0, 0.4f);
+			Config::getInstance()->setBrightness(0.4f); break;
+		default: menubright->getEngine()->setLightning(0, 0.2f);
+			Config::getInstance()->setBrightness(0.2f); break;
 		}
 		// screen size
 		int w, h;
@@ -364,9 +364,9 @@ protected:
 		config->setSize(w, h);
 		
 		switch (menuview->getCurrent()) {
-		case 1: config->setView(1);
-		case 2: config->setView(2);
-		default: config->setView(0);
+		case 0: config->setView(0); break;
+		case 1: config->setView(1); break;
+		default: config->setView(2);
 		}
 		// texture filter
 		if (menufilter->getCurrent() == 0) {
@@ -477,8 +477,8 @@ MenuItem* createMenus(Engine * engine) {
 	}
 
 	menuview = new MenuChoose(engine);
-	menuview->addText(  "view:             top");
 	menuview->addText(  "view:        standard");
+	menuview->addText(  "view:             top");
 	menuview->addText(  "view:          locked");
 	menugfx->addMenuItem(menuview);
 
@@ -520,26 +520,26 @@ MenuItem* createMenus(Engine * engine) {
 
 	menusnd = new MenuChoose(engine);
 	menusnd->addText(   "sound:            off");
-	menusnd->addText(   "sound:       o.......");
-	menusnd->addText(   "sound:       oo......");
-	menusnd->addText(   "sound:       ooo.....");
-	menusnd->addText(   "sound:       oooo....");
-	menusnd->addText(   "sound:       ooooo...");
-	menusnd->addText(   "sound:       oooooo..");
-	menusnd->addText(   "sound:       ooooooo.");
-	menusnd->addText(   "sound:       oooooooo");
+	menusnd->addText(   "sound:       =.......");
+	menusnd->addText(   "sound:       ==......");
+	menusnd->addText(   "sound:       ===.....");
+	menusnd->addText(   "sound:       ====....");
+	menusnd->addText(   "sound:       =====...");
+	menusnd->addText(   "sound:       ======..");
+	menusnd->addText(   "sound:       =======.");
+	menusnd->addText(   "sound:       ========");
 	menuaudio->addMenuItem(menusnd);
 
 	menumusic = new MenuChoose(engine);
 	menumusic->addText( "music:            off");
-	menumusic->addText( "music:       o.......");
-	menumusic->addText( "music:       oo......");
-	menumusic->addText( "music:       ooo.....");
-	menumusic->addText( "music:       oooo....");
-	menumusic->addText( "music:       ooooo...");
-	menumusic->addText( "music:       oooooo..");
-	menumusic->addText( "music:       ooooooo.");
-	menumusic->addText( "music:       oooooooo");
+	menumusic->addText( "music:       =.......");
+	menumusic->addText( "music:       ==......");
+	menumusic->addText( "music:       ===.....");
+	menumusic->addText( "music:       ====....");
+	menumusic->addText( "music:       =====...");
+	menumusic->addText( "music:       ======..");
+	menumusic->addText( "music:       =======.");
+	menumusic->addText( "music:       ========");
 	menuaudio->addMenuItem(menumusic);
 
 	MenuFct* menuapply = new MyMenuApply("apply", NULL, engine);
@@ -573,12 +573,12 @@ int main(int argc, char *argv[]) {
 	} else {
 		direct = 0.5f;
 	}
-	if (Config::getInstance()->getBrightness() < 0.09f) {
-		ambient = 0.0f;
-	} else if (Config::getInstance()->getBrightness() > 0.11f) {
-		ambient = 0.2f;
-	} else {
+	if (Config::getInstance()->getBrightness() < 0.19f) {
 		ambient = 0.1f;
+	} else if (Config::getInstance()->getBrightness() > 0.21f) {
+		ambient = 0.4f;
+	} else {
+		ambient = 0.2f;
 	}
 	engine->setLightning(direct, ambient);
 

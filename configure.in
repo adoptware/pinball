@@ -5,8 +5,8 @@ dnl AC_INIT(pinball, 0.0.8, [henqvist@excite.com])
 dnl AC_CONFIG_SRCDIR(base/Engine.cpp)
 
 dnl this is a c++ program
-CFLAGS="-g -W -Wall"
-CXXFLAGS="-g -W -Wall"
+CFLAGS="-g -W -Wall -O2"
+CXXFLAGS="-g -W -Wall -O2"
 
 SDL_VERSION=1.2.0
 ALLEGRO_VERSION=4.0.0
@@ -17,7 +17,7 @@ AC_CANONICAL_TARGET
 AC_CONFIG_SUBDIRS(libltdl)
 
 dnl old automake?
-AM_INIT_AUTOMAKE(pinball, 0.0.8)
+AM_INIT_AUTOMAKE(pinball, 0.1.0)
 dnl AM_INIT_AUTOMAKE
 AM_CONFIG_HEADER(config.h)
 
@@ -177,7 +177,7 @@ AC_CHECK_HEADERS(sys/types.h, : ,AC_MSG_ERROR([*** Header sys/types.h not found.
 
 dnl ********************************************
 dnl Debug and Config ***************************
-AC_DEFINE(EM_DEBUG)
+dnl AC_DEFINE(EM_DEBUG)
 AC_DEFINE(EM_USE_SOURCE_SPECULAR)
 dnl AC_DEFINE(EM_USE_FAST_FLOAT2INT)
 dnl AC_DEFINE(EM_DEBUG_COLLISION)
