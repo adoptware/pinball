@@ -61,6 +61,8 @@ host_alias = @host_alias@
 host_triplet = @host@
 CC = @CC@
 CXX = @CXX@
+EM_DATADIR = @EM_DATADIR@
+EM_DATAPATH = @EM_DATAPATH@
 GL_LIBS = @GL_LIBS@
 MAKEINFO = @MAKEINFO@
 MATHLIB = @MATHLIB@
@@ -83,11 +85,12 @@ libemilia_addon_a_SOURCES =  BigSphere.cpp ColorBehavior.cpp Cone.cpp Cube.cpp C
 noinst_HEADERS =  BigSphere.h ColorBehavior.h Cone.h Cube.h Cylinder.h EmFont.h Grid.h KeyBehavior.h KeyRotBehavior.h Meny.h Shape3DUtil.h SoundUtil.h Sphere.h StdAnimation.h TexAnimation.h TextureUtil.h
 
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+CONFIG_HEADER = ../conf.h
 CONFIG_CLEAN_FILES = 
 LIBRARIES =  $(noinst_LIBRARIES)
 
 
-DEFS = @DEFS@ -I. -I$(srcdir) 
+DEFS = @DEFS@ -I. -I$(srcdir) -I..
 CPPFLAGS = @CPPFLAGS@
 LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
