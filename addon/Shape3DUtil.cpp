@@ -16,7 +16,7 @@
 
 
 void Shape3DUtil::readUnknown(ifstream & file) {
-	EM_COUT("loading unknown", 0);
+	EM_COUT("loading unknown", 1);
 	string str;
 	file >> str; if (str != "{") throw string("parse error");
 
@@ -152,7 +152,7 @@ Shape3D* Shape3DUtil::loadShape3D(const char* fileName) {
 		if (!file) {
 			throw string("Shape3DUtil::load() : file not found: ");
 		}
-		cerr << "Shape3DUtil::load() : file found" << endl;
+		EM_COUT("Shape3DUtil::load() : file found", 1);
 		
 		string str;
 		file >> str;
@@ -178,7 +178,7 @@ Shape3D* Shape3DUtil::loadShape3Dold(const char* fileName) {
 		cerr << "Shape3DUtil::loadShape3D() file not found: \"" << fileName << "\"" << endl;
 		return NULL;
 	}
-	cerr << "Shape3DUtil::loadShape3D() file found" << endl;
+	EM_COUT("Shape3DUtil::loadShape3D() file found", 1);
 	
 	string str1;
 	string str2;
