@@ -17,11 +17,12 @@ AC_CANONICAL_TARGET
 AC_CONFIG_SUBDIRS(libltdl)
 
 dnl old automake?
-AM_INIT_AUTOMAKE(pinball, 0.1.1)
+AM_INIT_AUTOMAKE(pinball, 0.1.2)
 dnl AM_INIT_AUTOMAKE
 AM_CONFIG_HEADER(config.h)
 
 dnl Checks for programs.
+AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_INSTALL
 dnl AC_PROG_RANLIB
@@ -161,12 +162,12 @@ fi
 
 dnl ********************************************
 dnl CPP_UNIT ***********************************
-AM_PATH_CPPUNIT(1.8.0, [
-	AC_DEFINE(EM_UNIT_TEST) 
-	CPPFLAGS="$CPPFLAGS $CPPUNIT_CFLAGS"	
-	CFLAGS="$CFLAGS $CPPUNIT_CFLAGS" 
-	LIBS="$LIBS $CPPUNIT_LIBS"
-	], AC_MSG_WARN([*** CppUnit was not found. No unit testing.]))
+dnl AM_PATH_CPPUNIT(1.8.0, [
+dnl 	AC_DEFINE(EM_UNIT_TEST) 
+dnl 	CPPFLAGS="$CPPFLAGS $CPPUNIT_CFLAGS"	
+dnl 	CFLAGS="$CFLAGS $CPPUNIT_CFLAGS" 
+dnl 	LIBS="$LIBS $CPPUNIT_LIBS"
+dnl 	], AC_MSG_WARN([*** CppUnit was not found. No unit testing.]))
 
 dnl ********************************************
 dnl HEADERS ************************************

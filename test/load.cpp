@@ -3,6 +3,8 @@
  The arrow keys rotates the object.
  ***************************************************************************/
 
+#include <iostream>
+
 #include "Private.h"
 #include "Engine.h"
 #include "Camera.h"

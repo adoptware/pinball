@@ -277,7 +277,7 @@ void get_config(void) {
 		menufps->setCurrent(0);
 	}
 	// max fps
-	if (Config::getInstance()->getMaxFPS() == 40) {
+	if (Config::getInstance()->getMaxFPS() == 50) {
 		menumaxfps->setCurrent(0);
 	} else {
 		menumaxfps->setCurrent(1);
@@ -384,9 +384,9 @@ protected:
 		}
 		// max fps
 		if (menumaxfps->getCurrent() == 0) {
-			config->setMaxFPS(40); 
+			config->setMaxFPS(50); 
 		} else {
-			config->setMaxFPS(80);
+			config->setMaxFPS(100);
 		}
 		
 		get_config();
@@ -514,8 +514,8 @@ MenuItem* createMenus(Engine * engine) {
 	menugfx->addMenuItem(menufps);
 
 	menumaxfps = new MenuChoose(engine);
-	menumaxfps->addText("max fps            40");
-	menumaxfps->addText("max fps            80");
+	menumaxfps->addText("max fps            50");
+	menumaxfps->addText("max fps           100");
 	menugfx->addMenuItem(menumaxfps);
 
 	menusnd = new MenuChoose(engine);
@@ -618,15 +618,15 @@ int main(int argc, char *argv[]) {
 
 		engine->tick();
 		engine->tick();
-		if (Config::getInstance()->getMaxFPS() == 40) {
+		if (Config::getInstance()->getMaxFPS() == 50) {
 			engine->tick();
 			engine->tick();
 		}
 
-		if (Config::getInstance()->getMaxFPS() == 40) {
-			render = engine->limitFPS(40);
+		if (Config::getInstance()->getMaxFPS() == 50) {
+			render = engine->limitFPS(50);
 		} else {	
-			render = engine->limitFPS(80);
+			render = engine->limitFPS(100);
 		}
 
 		if (render) {

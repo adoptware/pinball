@@ -5,6 +5,8 @@
  them better but that's a diffrent story.
  ***************************************************************************/
 
+#include <iostream>
+
 #include "Private.h"
 #include "Engine.h"
 #include "Camera.h"
