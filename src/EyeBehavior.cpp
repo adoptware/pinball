@@ -6,6 +6,8 @@
     email                : henqvist@excite.com
  ***************************************************************************/
 
+#include <string>
+
 #include "Private.h"
 #include "EyeBehavior.h"
 #include "Group.h"
@@ -14,42 +16,41 @@
 #include "Score.h"
 #include "Keyboard.h"
 #include "SoundUtil.h"
+#include "Table.h"
+#include "BallGroup.h"
 
 // locked view
-#define TX0 0.0f
-#define TY0 33.0f
-#define TZ0 20.0f
-#define RX0 0.19f
+#define TX0 -1.75f
+#define TY0 40.0f
+#define TZ0 40.0f
+#define RX0 0.15f
 #define RY0 0.0f
 #define RZ0 0.0f
 
 // top view
-#define TX1 -1.5f 
-#define TY1 30.0f
-#define TZ1 6.0f
+#define TX1 -1.75f 
+#define TY1 40.0f
+#define TZ1 10.0f
 #define RX1 0.23f
 #define RY1 0.0f
 #define RZ1 0.0f
 
 // pan & scan view
-#define TX2 -1.5f 
-#define TY2 35.0f
-#define TZ2 10.0f
-#define RX2 0.22f
+#define TX2 -1.75f 
+#define TY2 40.0f
+#define TZ2 30.0f
+#define RX2 0.17f
 #define RY2 0.0f
 #define RZ2 0.0f
 
-EyeBehavior::EyeBehavior(Group * g1, Group * g2, Group * g3) : Behavior() {
+EyeBehavior::EyeBehavior() : Behavior() {
+  m_bTilt = false;
   m_iNudgeTick = 0;
   m_iNudgeType = 0;
   m_iTiltTick = 0;
   m_fXNudge = 0.0f;
   m_fZNudge = 0.0f;
   m_iSound = -1;
-  p_gBall1 = g1;
-  p_gBall2 = g2;
-  p_gBall3 = g3;
-  p_Score = Score::getInstance();
   this->setType(PBL_TYPE_EYEBEH);
 }
 
@@ -63,18 +64,24 @@ void EyeBehavior::StdOnSignal() {
     m_iTiltTick = 0;
     m_fXNudge = 0.0f;
     m_fZNudge = 0.0f;
+    m_bTilt = false;
   }
 }
 
 void EyeBehavior::onTick() {
-  EmAssert(p_gBall1 != NULL, "Ball1 group NULL");
-  EmAssert(p_gBall2 != NULL, "Ball2 group NULL");
-  EmAssert(p_gBall3 != NULL, "Ball3 group NULL");
+  EM_COUT("EyeBehavior::onTick()", 0);
+  Table * table = Table::getInstance();
+  EmAssert(table->getBall(0) != NULL, "Ball1 group NULL");
+  EmAssert(table->getBall(1) != NULL, "Ball2 group NULL");
+  EmAssert(table->getBall(2) != NULL, "Ball3 group NULL");
   EmAssert(this->getParent() != NULL, "Parent group NULL");
 
   // the nudge code is here
   if (m_iNudgeTick < 1) {
-    if (Keyboard::isKeyDown(SDLK_SPACE)) {
+    string bottomnudge("bottomnudge");
+    string leftnudge("leftnudge");
+    string rightnudge("rightnudge");
+    if (Keyboard::isKeyDown(Config::getInstance()->getKey(bottomnudge)) && !m_bTilt) {
       cerr << "nudge" << endl;
       m_fZNudge = 1.0f;
       m_iTiltTick += 100;
@@ -82,14 +89,14 @@ void EyeBehavior::onTick() {
       m_iNudgeType = PBL_SIG_BNUDGE;
       SendSignal(PBL_SIG_BNUDGE, 0, this->getParent(), NULL ); 
       SoundUtil::getInstance()->playSample(m_iSound, false);
-    } else if (Keyboard::isKeyDown(SDLK_LCTRL)) {
+    } else if (Keyboard::isKeyDown(Config::getInstance()->getKey(leftnudge)) && !m_bTilt) {
       m_fXNudge = -1.0f;
       m_iTiltTick += 100;
       m_iNudgeTick = 50;
       m_iNudgeType = PBL_SIG_LNUDGE;
       SendSignal(PBL_SIG_LNUDGE, 0, this->getParent(), NULL ); 
       SoundUtil::getInstance()->playSample(m_iSound, false);
-    } else if (Keyboard::isKeyDown(SDLK_RCTRL) || Keyboard::isKeyDown(SDLK_COMPOSE)) {
+    } else if (Keyboard::isKeyDown(Config::getInstance()->getKey(rightnudge)) && !m_bTilt) {
       m_fXNudge = 1.0f;
       m_iTiltTick += 100;
       m_iNudgeTick = 50;
@@ -126,6 +133,7 @@ void EyeBehavior::onTick() {
     m_iTiltTick = 0;
   } else if (m_iTiltTick > 110) {
     // send warning signal
+    m_bTilt = true;
     SendSignal( PBL_SIG_TILT_WARNING, 0, this->getParent(), NULL ); 
     EM_COUT("EyeBehavior::onTick() WARNING", 1);
   }
@@ -137,15 +145,8 @@ void EyeBehavior::onTick() {
   float ex, ey, ez, sx, sy, sz;
 	
   if (Config::getInstance()->getView() == 2) {
-    // classic view
+    // locked view
     this->getParent()->getTranslation(ex, ey, ez);
-	  
-    //sx = (TX+m_fXNudge*2) - ex;
-    //sy = (TY) - ey;
-    //sz = (TZ+m_fZNudge*2) - ez;
-	  
-    //this->getParent()->addTranslation(sx*0.1f, sy*0.1, sz*0.1f);
-    //this->getParent()->setRotation(RX, RY, RZ);
 	  
     this->getParent()->setTransform(TX0+m_fXNudge, TY0, TZ0+m_fZNudge, RX0, RY0, RZ0);
   } else if (Config::getInstance()->getView() == 1) {
@@ -153,15 +154,15 @@ void EyeBehavior::onTick() {
     float bx=0, by=0, bz=0;
     int balls = 0;
 		
-    if (p_Score->isBallActive(PBL_BALL_1)) {
+    if (table->isBallActive(0)) {
       float x, y, z;
-      p_gBall1->getTranslation(x, y, z);
+      table->getBall(0)->getTranslation(x, y, z);
       bx = x; by = y; bz = z;
       balls++;
     }
-    if (p_Score->isBallActive(PBL_BALL_2)) {
+    if (table->isBallActive(1)) {
       float x, y, z;
-      p_gBall2->getTranslation(x, y, z);
+      table->getBall(1)->getTranslation(x, y, z);
       if (balls > 0) {
 	bx += x; 
 	by = EM_MAX(by, y); 
@@ -171,9 +172,9 @@ void EyeBehavior::onTick() {
       }
       balls++;
     }
-    if (p_Score->isBallActive(PBL_BALL_3)) {
+    if (table->isBallActive(2)) {
       float x, y, z;
-      p_gBall3->getTranslation(x, y, z);
+      table->getBall(2)->getTranslation(x, y, z);
       if (balls > 0) {
 	bx += x; 
 	by = EM_MAX(by, y); 
@@ -196,19 +197,19 @@ void EyeBehavior::onTick() {
     this->getParent()->addTranslation(sx*0.1f, sy*0.1, sz*0.1f);
     this->getParent()->setRotation(RX1, RY1, RZ1);
   } else { 
-    // standard view
+    // pan & scan view
     float bx=0, by=0, bz=0;
     int balls = 0;
 		
-    if (p_Score->isBallActive(PBL_BALL_1)) {
+    if (table->isBallActive(0)) {
       float x, y, z;
-      p_gBall1->getTranslation(x, y, z);
+      table->getBall(0)->getTranslation(x, y, z);
       bx = x; by = y; bz = z;
       balls++;
     }
-    if (p_Score->isBallActive(PBL_BALL_2)) {
+    if (table->isBallActive(1)) {
       float x, y, z;
-      p_gBall2->getTranslation(x, y, z);
+      table->getBall(1)->getTranslation(x, y, z);
       if (balls > 0) {
 	bx += x; 
 	by = EM_MAX(by, y); 
@@ -218,9 +219,9 @@ void EyeBehavior::onTick() {
       }
       balls++;
     }
-    if (p_Score->isBallActive(PBL_BALL_3)) {
+    if (table->isBallActive(2)) {
       float x, y, z;
-      p_gBall3->getTranslation(x, y, z);
+      table->getBall(2)->getTranslation(x, y, z);
       if (balls > 0) {
 	bx += x; 
 	by = EM_MAX(by, y); 

@@ -28,52 +28,54 @@ class EmFont;
 /** The base class for all menus. */
 class MenuItem {
  public:
-	MenuItem(Engine* e, int type);
-	virtual ~MenuItem();
-	virtual const char* getText() = 0;
-	virtual int perform() = 0;
-	inline int getType() { return m_iType; };
-	inline Engine * getEngine() { return p_Engine; };
+  MenuItem(Engine* e, int type);
+  virtual ~MenuItem();
+  virtual const char* getText() = 0;
+  virtual int perform() = 0;
+  inline int getType() { return m_iType; };
+  inline Engine * getEngine() { return p_Engine; };
  protected:
-	EmFont* p_EmFont;
-	Engine* p_Engine;
-	int m_iType;
+  EmFont* p_EmFont;
+  Engine* p_Engine;
+  int m_iType;
 };
 
 /** A meny holding sub menys, can also be used for a back or exit item */
 class MenuSub : public MenuItem {
  public:
-	MenuSub(const char* name, Engine* e);
-	~MenuSub();
-	void addMenuItem(MenuItem* m);
-	int perform();
-	void draw();
-	/** Gives the number of submenus */
-	inline int size() { return m_vMenuItem.size(); };
-	inline void setAction(int a) { m_iAction = a; };
-	inline const char* getText() { return m_Name; };
+  MenuSub(const char* name, Engine* e);
+  ~MenuSub();
+  void addMenuItem(MenuItem* m);
+  int perform();
+  void draw();
+  /** Gives the number of submenus */
+  inline int size() { return m_vMenuItem.size(); };
+  inline void setAction(int a) { m_iAction = a; };
+  inline const char* getText() { return m_Name; };
  protected:
-	char m_Name[64];
-	int m_iCurrent;
-	int m_iAction;
-	vector<MenuItem*> m_vMenuItem;
+  char m_Name[64];
+  int m_iCurrent;
+  int m_iAction;
+  vector<MenuItem*> m_vMenuItem;
 };
 
 class MenuChoose : public MenuItem {
  public:
-	MenuChoose(Engine* e);
-	~MenuChoose();
-	void addText(const char * text);
-	const char* getText();
-	int perform();
-	inline int getCurrent() { return m_iCurrent; };
-	inline void setCurrent(int c) { m_iCurrent = c; m_iPrevious = c; };
+  MenuChoose(Engine* e);
+  ~MenuChoose();
+  void addText(const char * text);
+  const char* getText();
+  int perform();
+  int next();
+  int prev();
+  inline int getCurrent() { return m_iCurrent; };
+  inline void setCurrent(int c) { m_iCurrent = c; m_iPrevious = c; };
  protected:
-	int m_iCurrent;
-	/** Previous is the currently active alternative in the engine. */
-	int m_iPrevious;
-	vector<char*> m_vText;
-	char t_Str[64];
+  int m_iCurrent;
+  /** Previous is the currently active alternative in the engine. */
+  int m_iPrevious;
+  vector<char*> m_vText;
+  char t_Str[64];
 };
 
 /** You can create a MenuFct instance and pass i a function
@@ -81,13 +83,13 @@ class MenuChoose : public MenuItem {
  * The perform function should return EM_MENU_BACK, EM_MENU_NOP or EM_MENU_QUIT. */
 class MenuFct : public MenuItem {
  public:
-	MenuFct(const char * name, int (*fct)(void), Engine* e);
-	~MenuFct();
-	int perform();
-	inline const char* getText() { return m_Name; };
+  MenuFct(const char * name, int (*fct)(void), Engine* e);
+  ~MenuFct();
+  int perform();
+  virtual const char* getText() { return m_Name; };
  protected:
-	char m_Name[64];
-	int (*p_Fct)(void);
+  char m_Name[64];
+  int (*p_Fct)(void);
 };
 
 #endif // MENU_H

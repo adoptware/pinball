@@ -8,14 +8,15 @@
 
 #include <fstream>
 #include <string>
+#include <strstream>
 
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <dirent.h>
-#include <string.h>
-#include <stdlib.h>
-#include <time.h>
+#include <cstring>
+#include <cstdlib>
+#include <ctime>
 
 #include "Private.h"
 #include "Pinball.h"
@@ -41,147 +42,17 @@
 #include "EmFont.h"
 #include "Loader.h"
 #include "BallGroup.h"
+#include "Table.h"
 
 #if EM_USE_SDL
 #include <SDL.h>
 #endif
 
-/****************************************************************************
- * Creates a ball 
- ***************************************************************************/
-/*
-Group * createBall(float r, float g, float b, int pbl, float x, Engine * engine) {
-  Group * group = new Group();
-  //Shape3D* ballCyl = new BigSphere(1, 1, r, g, b, 1);
-  //string filename;
-  //string datadir(Config::getInstance()->getDataDir());
-  //filename = datadir + string("/ball_co.emi");
-  //	sprintf(filename, "%s/ball_co.emi", Config::getInstance()->getDataDir());
-  //Shape3D* ballCyl = Shape3DUtil::loadShape3D(filename.c_str());
-  Shape3D* ballSphere = new BigSphere(1, 2, r, g, b, 1);
-  ballSphere->setProperty(EM_SHAPE3D_SPECULAR);
-  //ballCyl->setProperty(EM_SHAPE3D_HIDDEN);
-  //CollisionBounds* ballBounds = new CollisionBounds(ballCyl->getCollisionSize());
-  //ballBounds->setShape3D(ballCyl, 0); 
-  CollisionBounds* ballBounds = new CollisionBounds(1.0f/EM_SQRT_3);
-
-  // create a transparent black polygon in the bottom of the ball - a shadow
-  Shape3D* shadow = new Shape3D(8, 1);
-
-  shadow->add(0, -1, 1,
-	      0.0f, 0.0f, 0.0f, 0.5f,  0.0f, 0.0f);
-  shadow->add(-0.707,-1, 0.707,
-	      0.0f, 0.0f, 0.0f, 0.5f,  0.0f, 0.0f);
-  shadow->add(-1, -1, 0,
-	      0.0f, 0.0f, 0.0f, 0.5f,  0.0f, 0.0f);
-  shadow->add(-0.707,-1, -0.707,
-	      0.0f, 0.0f, 0.0f, 0.5f,  0.0f, 0.0f);
-  shadow->add(0, -1, -1,
-	      0.0f, 0.0f, 0.0f, 0.5f,  0.0f, 0.0f);
-  shadow->add(0.707, -1, -0.707,
-	      0.0f, 0.0f, 0.0f, 0.5f,  0.0f, 0.0f);
-  shadow->add(1, -1, 0,
-	      0.0f, 0.0f, 0.0f, 0.5f,  0.0f, 0.0f);
-  shadow->add(0.707, -1, 0.707,
-	      0.0f, 0.0f, 0.0f, 0.5f,  0.0f, 0.0f);
-
-  Polygon* poly = new Polygon(shadow, 3);
-  poly->add(0);
-  poly->add(1);
-  poly->add(2);
-  poly->add(3);
-  poly->add(4);
-  poly->add(5);
-  poly->add(6);
-  poly->add(7);
-  //poly->setProperty(EM_POLY_TRANS);
-  shadow->add(poly);
-  //shadow->setProperty(EM_SHAPE3D_USE_TRANS);
-  shadow->countNormals();
-
-  BounceBehavior* bouBeh = new BounceBehavior(pbl);
-
-  engine->add(group);
-  group->setUserProperty(pbl);
-  group->setCollisionBounds(ballBounds);
-  //group->addShape3D(ballCyl);
-  group->addShape3D(ballSphere);
-  group->addShape3D(shadow);
-  group->setBehavior(bouBeh);
-  group->setTransform(x, 0, 8, 0, 0, 0);
-
-  return group;
-}
-*/
-
-Score * score = NULL;
-
-/****************************************************************************
- * Table loading
- ***************************************************************************/
-int loadLevel(Engine * engine, const char * subdir) {
-  score = NULL;
-  // Clear old engine objects
-  engine->clear();
-  // Load from file
-  Config::getInstance()->setSubDir(subdir);
-  string datadir(Config::getInstance()->getDataSubDir());
-  string filename = datadir + string("/pinball.pbl");
-  Loader::getInstance()->clearSignalVariable();
-  if (Loader::getInstance()->loadFile(filename.c_str(), engine) != 0) {
-    cerr << "Error loading level" << endl;
-    cerr << "Try reinstalling the game or use the -data switch to specify the data directory" 
-	 << endl;
-    engine->clear();
-    return -1;
-  }
-  score = Score::getInstance();
-  engine->setBehavior(score);
-  // Add a camera.
-  Group* groupCR = new Group();
-  Group* groupCT = new Group();
-  Camera* camera = new Camera();
-  //	KeyRotBehavior* keyRBeh = new KeyRotBehavior();
-  //	KeyBehavior* keyBeh = new KeyBehavior();
-  engine->add(groupCT);
-  // 	groupCT->setBehavior(keyBeh);
-  //	groupCT->setTransform(0, 25, 25, 0, 0, 0);
-  groupCT->add(groupCR);
-  // 	groupCR->setBehavior(keyRBeh);
-  //	groupCR->setTransform(0.0f, 0.0f, 0.0f, 0.175f, 0, 0);
-  groupCR->setCamera(camera);
-
-  Light* cl = new Light(1, 0.05f, 0, 1,1,1);
-  groupCR->setLight(cl);
-  engine->addLight(cl);
-
-  engine->setEngineCamera(groupCR);
-
-//   Group* gb1 = createBall(1, 0, 0, PBL_BALL_1, 4, engine);
-//   Group* gb2 = createBall(0, 1, 0, PBL_BALL_2, 0, engine);
-//   Group* gb3 = createBall(0, 0, 1, PBL_BALL_3, -4, engine);
-  Group* gb1 = new BallGroup(1, 0, 0, PBL_BALL_1, 4);
-  Group* gb2 = new BallGroup(0, 1, 0, PBL_BALL_2, 0);
-  Group* gb3 = new BallGroup(0, 0, 1, PBL_BALL_3, -4);
-  engine->add(gb1);
-  engine->add(gb2);
-  engine->add(gb3);
-  
-  EyeBehavior* eyebeh = new EyeBehavior(gb1, gb2, gb3);
-  filename = datadir + string("/nudge.wav");
-  eyebeh->setSound(SoundUtil::getInstance()->loadSample(filename.c_str()));
-  groupCT->setBehavior(eyebeh);
-
-  // Reset pinball
-  SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
-
-  return 0;
-}
+void get_config(void);
 
 /****************************************************************************
  * Menus
  ***************************************************************************/
-
 
 MenuChoose* menusnd = NULL;
 MenuChoose* menumusic = NULL;
@@ -191,95 +62,49 @@ MenuChoose* menusize = NULL;
 MenuChoose* menuview = NULL;
 MenuChoose* menufilter = NULL;
 MenuChoose* menufps = NULL;
-// MenuChoose* menumaxfps = NULL;
+MenuChoose* menufire = NULL;
 
-/** Update the current meny with the configuration. */
-void get_config(void) {
-  // sound
-  switch (Config::getInstance()->getSound()) {
-  case 0: menusnd->setCurrent(0); break;
-  case 1: menusnd->setCurrent(1); break;
-  case 2: menusnd->setCurrent(2); break;
-  case 3: menusnd->setCurrent(3); break;
-  case 4: menusnd->setCurrent(4); break;
-  case 5: menusnd->setCurrent(5); break;
-  case 6: menusnd->setCurrent(6); break;
-  case 7: menusnd->setCurrent(7); break;
-  case 8: menusnd->setCurrent(8); break;
-  }
-  switch (Config::getInstance()->getMusic()) {
-  case 0: menumusic->setCurrent(0); break;
-  case 1: menumusic->setCurrent(1); break;
-  case 2: menumusic->setCurrent(2); break;
-  case 3: menumusic->setCurrent(3); break;
-  case 4: menumusic->setCurrent(4); break;
-  case 5: menumusic->setCurrent(5); break;
-  case 6: menumusic->setCurrent(6); break;
-  case 7: menumusic->setCurrent(7); break;
-  case 8: menumusic->setCurrent(8); break;
-  }
-  // fullscreen
-  if (Config::getInstance()->useFullScreen()) {
-    menuscreen->setCurrent(0);
-  } else {
-    menuscreen->setCurrent(1);
-  }
-  // brightness
-  if (Config::getInstance()->getBrightness() < 0.19f) {
-    menubright->setCurrent(0);
-  } else 	if (Config::getInstance()->getBrightness() > 0.21f) {
-    menubright->setCurrent(2);
-  } else {
-    menubright->setCurrent(1);
-  }
-  // screen size
-  if (Config::getInstance()->getWidth() == 320) {
-    menusize->setCurrent(0);
-  } else 	if (Config::getInstance()->getWidth() == 400) {
-    menusize->setCurrent(1);
-  } else 	if (Config::getInstance()->getWidth() == 512) {
-    menusize->setCurrent(2);
-  } else 	if (Config::getInstance()->getWidth() == 640) {
-    menusize->setCurrent(3);
-  } else 	if (Config::getInstance()->getWidth() == 800) {
-    menusize->setCurrent(4);
-  } else 	if (Config::getInstance()->getWidth() == 1024) {
-    menusize->setCurrent(5);
-  } else {
-    menusize->setCurrent(0);
-  }
-  // view mode
-  switch(Config::getInstance()->getView()) {
-  case 0: menuview->setCurrent(0); break;
-  case 1: menuview->setCurrent(1); break;
-  default: menuview->setCurrent(2);
-  }
-  // texture filter
-  if (Config::getInstance()->getGLFilter() == EM_LINEAR) {
-    menufilter->setCurrent(0);
-  } else if (Config::getInstance()->getGLFilter() == EM_NEAREST) {
-    menufilter->setCurrent(1);
-  } else {
-    menufilter->setCurrent(2);
-  }
-  //
-  if (Config::getInstance()->getShowFPS()) {
-    menufps->setCurrent(1);
-  } else {
-    menufps->setCurrent(0);
-  }
-  // max fps
-//   if (Config::getInstance()->getMaxFPS() == 50) {
-//     menumaxfps->setCurrent(0);
-//   } else {
-//     menumaxfps->setCurrent(1);
-//   }
-}
+/****************************************************************************
+ * Define some menu classes
+ ***************************************************************************/
 
-/** The apply meny item calls this function */	
+/** Menu item for changing a key binding. */
+class MyMenuKey : public MenuFct {
+public:
+  MyMenuKey(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, fct, e) {};
+protected:
+  int perform () {
+    p_Engine->clearScreen();
+    p_EmFont->printRowCenter("press a key", 10);
+    p_Engine->swap();
+    EMKey key = Keyboard::waitForKey();
+    string name(m_Name);
+    Config::getInstance()->setKey(name, key);
+    return EM_MENU_NOP;
+  }
+  const char * getText() {
+    ostrstream stm;
+    stm.clear();
+    string name(m_Name);
+    string key(Config::getInstance()->getKeyCommonName(Config::getInstance()->getKey(name)));
+    name = name + ":";
+    while (name.size() < 12) {
+      name = name + " ";
+    }
+    while (key.size() < 12) {
+      key = " " + key;
+    }
+    stm << name << key << '\0';
+    string text = stm.str();
+    return text.c_str();
+  }    
+};
+
+
+/** The apply meny item. */	
 class MyMenuApply : public MenuFct {
 public:
-  MyMenuApply(const char * name, int (*fct)(void), Engine *e) : 	MenuFct(name, fct, e) {};
+  MyMenuApply(const char * name, int (*fct)(void), Engine *e) :	MenuFct(name, fct, e) {};
 protected:
   int perform () {
     Config* config = Config::getInstance();
@@ -374,18 +199,38 @@ protected:
     } else {
       config->setShowFPS(true);
     }
-    // max fps
-//     if (menumaxfps->getCurrent() == 0) {
-//       config->setMaxFPS(50); 
-//     } else {
-//       config->setMaxFPS(100);
-//     }
-		
+    // fire
+    if (menufire->getCurrent() == 0) {
+      config->setFire(false);
+      for (int a=0; a<MAX_BALL; ++a) {
+	BallGroup * bg = Table::getInstance()->getBall(a);
+	if (bg != NULL) {
+	  Behavior * beh = bg->getBehavior();
+	  EmAssert(beh != NULL, "MyMenuApply::perform behavior NULL");
+	  EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
+		   "MyMenuApply::perform behavior not bouncebehavior");
+	  ((BounceBehavior*)beh)->setFire(false);
+	}
+      }
+    } else {
+      config->setFire(true);
+      for (int a=0; a<MAX_BALL; ++a) {
+	BallGroup * bg = Table::getInstance()->getBall(a);
+	if (bg != NULL) {
+	  Behavior * beh = bg->getBehavior();
+	  EmAssert(beh != NULL, "MyMenuApply::perform behavior NULL");
+	  EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
+		   "MyMenuApply::perform behavior not bouncebehavior");
+	  ((BounceBehavior*)beh)->setFire(true);
+	}
+      }
+    }
     get_config();
     return EM_MENU_NOP;
   }
 };
 
+/** The back button. */
 class MyMenuCancel : public MenuFct {
 public:
   MyMenuCancel(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, fct, e) {};
@@ -396,6 +241,7 @@ protected:
   }
 };
 
+/** Button for loading a table. */
 class MyMenuLoad : public MenuFct {
 public:
   MyMenuLoad(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, fct, e) {
@@ -407,7 +253,7 @@ protected:
     p_EmFont->printRowCenter("LOADING", 10);
     p_Engine->swap();
 
-    if (loadLevel(p_Engine, m_Name) == 0) {
+    if (Table::getInstance()->loadLevel(p_Engine, m_Name) == 0) {
       p_Engine->clearScreen();
       p_EmFont->printRowCenter("OK", 10);
       p_Engine->swap();
@@ -421,6 +267,94 @@ protected:
     return EM_MENU_BACK;
   }
 };
+
+
+/****************************************************************************
+ * Menu functions
+ ***************************************************************************/
+
+/** Update the current meny with the configuration. */
+void get_config(void) {
+  // sound
+  switch (Config::getInstance()->getSound()) {
+  case 0: menusnd->setCurrent(0); break;
+  case 1: menusnd->setCurrent(1); break;
+  case 2: menusnd->setCurrent(2); break;
+  case 3: menusnd->setCurrent(3); break;
+  case 4: menusnd->setCurrent(4); break;
+  case 5: menusnd->setCurrent(5); break;
+  case 6: menusnd->setCurrent(6); break;
+  case 7: menusnd->setCurrent(7); break;
+  case 8: menusnd->setCurrent(8); break;
+  }
+  switch (Config::getInstance()->getMusic()) {
+  case 0: menumusic->setCurrent(0); break;
+  case 1: menumusic->setCurrent(1); break;
+  case 2: menumusic->setCurrent(2); break;
+  case 3: menumusic->setCurrent(3); break;
+  case 4: menumusic->setCurrent(4); break;
+  case 5: menumusic->setCurrent(5); break;
+  case 6: menumusic->setCurrent(6); break;
+  case 7: menumusic->setCurrent(7); break;
+  case 8: menumusic->setCurrent(8); break;
+  }
+  // fullscreen
+  if (Config::getInstance()->useFullScreen()) {
+    menuscreen->setCurrent(0);
+  } else {
+    menuscreen->setCurrent(1);
+  }
+  // brightness
+  if (Config::getInstance()->getBrightness() < 0.19f) {
+    menubright->setCurrent(0);
+  } else 	if (Config::getInstance()->getBrightness() > 0.21f) {
+    menubright->setCurrent(2);
+  } else {
+    menubright->setCurrent(1);
+  }
+  // screen size
+  if (Config::getInstance()->getWidth() == 320) {
+    menusize->setCurrent(0);
+  } else 	if (Config::getInstance()->getWidth() == 400) {
+    menusize->setCurrent(1);
+  } else 	if (Config::getInstance()->getWidth() == 512) {
+    menusize->setCurrent(2);
+  } else 	if (Config::getInstance()->getWidth() == 640) {
+    menusize->setCurrent(3);
+  } else 	if (Config::getInstance()->getWidth() == 800) {
+    menusize->setCurrent(4);
+  } else 	if (Config::getInstance()->getWidth() == 1024) {
+    menusize->setCurrent(5);
+  } else {
+    menusize->setCurrent(0);
+  }
+  // view mode
+  switch(Config::getInstance()->getView()) {
+  case 0: menuview->setCurrent(0); break;
+  case 1: menuview->setCurrent(1); break;
+  default: menuview->setCurrent(2);
+  }
+  // texture filter
+  if (Config::getInstance()->getGLFilter() == EM_LINEAR) {
+    menufilter->setCurrent(0);
+  } else if (Config::getInstance()->getGLFilter() == EM_NEAREST) {
+    menufilter->setCurrent(1);
+  } else {
+    menufilter->setCurrent(2);
+  }
+  // show fps
+  if (Config::getInstance()->getShowFPS()) {
+    menufps->setCurrent(1);
+  } else {
+    menufps->setCurrent(0);
+  }
+  // fire
+  if (Config::getInstance()->getFire()) {
+    menufire->setCurrent(1);
+  } else {
+    menufire->setCurrent(0);
+  }
+}
 
 /* Create some menus */
 MenuItem* createMenus(Engine * engine) {
@@ -446,6 +380,9 @@ MenuItem* createMenus(Engine * engine) {
 
   MenuSub* menuaudio = new MenuSub("audio", engine);
   menucfg->addMenuItem(menuaudio);
+
+  MenuSub* menukey = new MenuSub("keyboard", engine);
+  menucfg->addMenuItem(menukey);
 
   // create one entry for each directory
   // TODO scrolling text if to many tables
@@ -505,10 +442,15 @@ MenuItem* createMenus(Engine * engine) {
   menufps->addText(   "show fps:         yes");
   menugfx->addMenuItem(menufps);
 
-//   menumaxfps = new MenuChoose(engine);
-//   menumaxfps->addText("max fps            50");
-//   menumaxfps->addText("max fps           100");
-//   menugfx->addMenuItem(menumaxfps);
+  menufire = new MenuChoose(engine);
+  menufire->addText(  "fire effect:       no");
+  menufire->addText(  "fire effect:      yes");
+  menugfx->addMenuItem(menufire);
+
+  //   menumaxfps = new MenuChoose(engine);
+  //   menumaxfps->addText("max fps            50");
+  //   menumaxfps->addText("max fps           100");
+  //   menugfx->addMenuItem(menumaxfps);
 
   menusnd = new MenuChoose(engine);
   menusnd->addText(   "sound:            off");
@@ -534,16 +476,33 @@ MenuItem* createMenus(Engine * engine) {
   menumusic->addText( "music:       ========");
   menuaudio->addMenuItem(menumusic);
 
+  MyMenuKey * menuleftflip = new MyMenuKey("leftflip", NULL, engine);
+  menukey->addMenuItem(menuleftflip);
+  MyMenuKey * menurightflip = new MyMenuKey("rightflip", NULL, engine);
+  menukey->addMenuItem(menurightflip);
+  MyMenuKey * menuleftnudge = new MyMenuKey("leftnudge", NULL, engine);
+  menukey->addMenuItem(menuleftnudge);
+  MyMenuKey * menurightnudge = new MyMenuKey("rightnudge", NULL, engine);
+  menukey->addMenuItem(menurightnudge);
+  MyMenuKey * menubottomnudge = new MyMenuKey("bottomnudge", NULL, engine);
+  menukey->addMenuItem(menubottomnudge);
+  MyMenuKey * menulaunch = new MyMenuKey("launch", NULL, engine);
+  menukey->addMenuItem(menulaunch);
+  MyMenuKey * menureset = new MyMenuKey("reset", NULL, engine);
+  menukey->addMenuItem(menureset);
+
   MenuFct* menuapply = new MyMenuApply("apply", NULL, engine);
   menuaudio->addMenuItem(menuapply);
   //menucfg->addMenuItem(menuapply);
   menugfx->addMenuItem(menuapply);
+  //menukey->addMenuItem(menuapply);
 
   MenuFct* menucancel = new MyMenuCancel("back", NULL, engine);
   menucfg->addMenuItem(menucancel);
   menugfx->addMenuItem(menucancel);
   menuaudio->addMenuItem(menucancel);
   menuload->addMenuItem(menucancel);
+  menukey->addMenuItem(menucancel);
 
   get_config();
   return menu;
@@ -552,81 +511,85 @@ MenuItem* createMenus(Engine * engine) {
 
 /** Main */
 int main(int argc, char *argv[]) {
-  // Create a engine and parse emilia arguments
-  Config::getInstance()->loadConfig();
-  Engine * engine = new Engine(argc, argv);
-
-  float direct, ambient;
-  if (Config::getInstance()->useLights()) {
-    direct = 0.0f;
-  } else {
-    direct = 0.5f;
-  }
-  if (Config::getInstance()->getBrightness() < 0.19f) {
-    ambient = 0.1f;
-  } else if (Config::getInstance()->getBrightness() > 0.21f) {
-    ambient = 0.4f;
-  } else {
-    ambient = 0.2f;
-  }
-  engine->setLightning(direct, ambient);
-
+  try {
+    // Create a engine and parse emilia arguments
+    Config::getInstance()->loadConfig();
+    Engine * engine = new Engine(argc, argv);
+    
+    float direct, ambient;
+    if (Config::getInstance()->useLights()) {
+      direct = 0.0f;
+    } else {
+      direct = 0.5f;
+    }
+    if (Config::getInstance()->getBrightness() < 0.19f) {
+      ambient = 0.1f;
+    } else if (Config::getInstance()->getBrightness() > 0.21f) {
+      ambient = 0.4f;
+    } else {
+      ambient = 0.2f;
+    }
+    engine->setLightning(direct, ambient);
+    
 #if EM_USE_SDL
-  string filename = Config::getInstance()->getDataDir() + string("/font_34.png");
+    string filename = Config::getInstance()->getDataDir() + string("/font_34.png");
 #endif
 #if EM_USE_ALLEGRO
-  string filename = Config::getInstance()->getDataDir() + string("/font_35.pcx");
+    string filename = Config::getInstance()->getDataDir() + string("/font_35.pcx");
 #endif
-
-  EmFont::getInstance()->loadFont(filename.c_str());
-
-  // Add a score board and a menu.
-  MenuItem* menu = createMenus(engine);
-
-  // Draw to the screen.
-  int all = 0;
-  engine->resetTick();
-  while (!Keyboard::isKeyDown(SDLK_INSERT)) {
+    
+    EmFont::getInstance()->loadFont(filename.c_str());
+    
+    // Add a score board and a menu.
+    MenuItem* menu = createMenus(engine);
+    
+    // Draw to the screen.
+    int all = 0;
+    engine->resetTick();
+    while (!Keyboard::isKeyDown(SDLK_INSERT)) {
 #if EM_DEBUG
-    if (Keyboard::isKeyDown(SDLK_p)) {
-      Keyboard::waitForKey();
-      Keyboard::clear();
-      engine->resetTick();
-    }
+      if (Keyboard::isKeyDown(SDLK_p)) {
+	Keyboard::waitForKey();
+	Keyboard::clear();
+	engine->resetTick();
+      }
 #endif
-    if (Keyboard::isKeyDown(SDLK_ESCAPE) || all == 0) {
-      SoundUtil::getInstance()->pauseMusic();
-      if (menu->perform() == EM_MENU_EXIT) {
-				break;
+      if (Keyboard::isKeyDown(SDLK_ESCAPE) || all == 0) {
+	SoundUtil::getInstance()->pauseMusic();
+	if (menu->perform() == EM_MENU_EXIT) {
+	  break;
+	}
+	engine->resetTick();
+	SoundUtil::getInstance()->resumeMusic();
       }
-      engine->resetTick();
-      SoundUtil::getInstance()->resumeMusic();
-    }
-
-    if (Keyboard::isKeyDown(SDLK_r)) {
-      SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
-    }
-		
-    if (engine->nextTickFPS(200)) {
-      engine->tick(); 
-    } else {
-      engine->render();
-      if (score != NULL) {
-				score->draw();
+      
+      if (Keyboard::isKeyDown(SDLK_r)) {
+	SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
       }
-      if (engine->getGroup(0) == NULL) {
-				EmFont::getInstance()->printRowCenter("no table loaded", 6);
-				EmFont::getInstance()->printRowCenter("press esc", 8);
+      
+      if (engine->nextTickFPS(200)) {
+	engine->tick(); 
+      } else {
+	engine->render();
+	if (Table::getInstance()->getScore() != NULL) {
+	  Table::getInstance()->getScore()->draw();
+	}
+	if (engine->getGroup(0) == NULL) {
+	  EmFont::getInstance()->printRowCenter("no table loaded", 6);
+	  EmFont::getInstance()->printRowCenter("press esc", 8);
+	}
+	engine->swap();
       }
-      engine->swap();
+      all++;
+      //engine->limitFPS(100);
     }
-    all++;
-    //engine->limitFPS(100);
+    
+    Config::getInstance()->saveConfig();
+    
+    delete(engine);
+  } catch (string str) {
+    cerr << "EXCEPTION: " << str << endl;
   }
-
-  Config::getInstance()->saveConfig();
-
-  delete(engine);
   return 0;
 }
 

@@ -1,9 +1,6 @@
 #define PBL_NULL			0x0
 #define PBL_LOCK			0x1
-#define PBL_BALL_1	                0x2
-#define PBL_BALL_2			0x4
-#define PBL_BALL_3			0x8
-#define PBL_BALL_4			0x10
+#define PBL_BALL	                0x2
 #define PBL_WALLS			0x20	
 #define PBL_WALLS_ONE			0x40
 #define PBL_UNACTIVE_ARM		0x80
@@ -39,6 +36,7 @@
 #define PBL_SIG_GAME_START      669
 #define PBL_SIG_GAME_PAUSE      670
 #define PBL_SIG_TILT_WARNING    671
+#define PBL_SIG_CLEAR_TEXT      672
 
 #define PBL_SIG_LNUDGE          681
 #define PBL_SIG_RNUDGE          682
@@ -47,39 +45,12 @@
 #define PBL_SIG_LEFTARM_ON      691
 #define PBL_SIG_RIGHTARM_ON     692
 #define PBL_SIG_MULTIBALL_OFF   771
-//#define PBL_SIG_EXTRABALL       692
 
 // #define PBL_SIG__grp_type_act/un    (grp)(type)(0)(1=on,2=off)
 
-#define PBL_SIG_FACTOR_1          2101
-#define PBL_SIG_FACTOR_2          2201
-#define PBL_SIG_FACTOR_3          2301
-#define PBL_SIG_FACTOR_4          2401
-#define PBL_SIG_FACTOR_5          2501
-#define PBL_SIG_FACTOR_6          2601
-#define PBL_SIG_FACTOR_7          2701
-#define PBL_SIG_FACTOR_8          2801
-#define PBL_SIG_FACTOR_9          2901
-#define PBL_SIG_FACTOR_10         2011
-
-#define PBL_SIG_BALL1_ON          3101
-#define PBL_SIG_BALL1_OFF         3102
-#define PBL_SIG_BALL2_ON          3201
-#define PBL_SIG_BALL2_OFF         3202
-#define PBL_SIG_BALL3_ON          3301
-#define PBL_SIG_BALL3_OFF         3302
-#define PBL_SIG_BALL4_ON          3401
-#define PBL_SIG_BALL4_OFF         3402
+#define PBL_SIG_BALL_ON          3101
+#define PBL_SIG_BALL_OFF         3102
 //#define PBL_SIG_ALLBALLS_OFF      3109
-
-#define PBL_SIG_LOCK_1            5101
-#define PBL_SIG_LOCK_2            5201
-#define PBL_SIG_LOCK_3            5301
-#define PBL_SIG_LOCK_4            5401
-
-#define PBL_SIG_BUMPER_ON         9101
-
-#define PBL_SIG_JACKPOT           9201
 
 /*
 
