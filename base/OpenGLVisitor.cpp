@@ -24,8 +24,8 @@
 #endif
 
 #if EM_DEBUG
-int em_poly = 0;
-float em_poly_m = 0;
+volatile int em_poly = 0;
+volatile float em_poly_m = 0;
 #endif
 
 /* Optimization observations:
@@ -54,10 +54,6 @@ OpenGLVisitor * OpenGLVisitor::getInstance() {
 
 void OpenGLVisitor::empty() {
 #if EM_USE_SDL
-#if EM_DEBUG
-	em_poly_m = em_poly_m*0.7 + em_poly*0.1;
-	em_poly = 0;
-#endif
 #if EM_VERTEXARRAY
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -84,6 +80,10 @@ void OpenGLVisitor::empty() {
 		// 		glAlphaFunc(GL_GREATER, 0.05);
 	} break;
 	case EM_GL_CLEAN: {
+#if EM_DEBUG
+		em_poly_m = em_poly_m*0.0f + ((float)em_poly)*1.0f;
+		em_poly = 0;
+#endif
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_ALPHA_TEST);
 		glDisable(GL_TEXTURE_2D);

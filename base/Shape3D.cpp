@@ -181,6 +181,16 @@ int Shape3D::getVertex3DIndex(Vertex3D * vtx) {
 	return -1;
 }
 
+int Shape3D::getVertex3DIndex(TexCoord * tex) {
+	if (tex == NULL) return -1;
+	vector<TexCoord>::iterator iter = m_vTexCoord.begin();
+	vector<TexCoord>::iterator end = m_vTexCoord.end();
+	for (int a=0; iter != end; iter++, a++) {
+		if (&(*iter) == tex) return a;
+	}
+	return -1;
+}
+
 Color * Shape3D::getColor(int index) {
 	if (index < 0 || index >= (signed)m_vColor.size()) {
 		return NULL;

@@ -63,6 +63,7 @@ bool operator == (const PolygonEdge & peA, const PolygonEdge & peB) {
 
 
 #if EM_DEBUG
+#include <iostream>
   #define EM_COUT(a, level) if (level > 0) { cerr << a << endl; };
 #else
 	#define EM_COUT(a, level)
@@ -81,7 +82,7 @@ bool operator == (const PolygonEdge & peA, const PolygonEdge & peB) {
 	if (error != GL_NO_ERROR) {  \
 		const GLubyte* str = gluErrorString(error); \
 		cerr << "OpenGL error: " << a << str << endl;    \
-	} asdf
+	}
 #else
 #define EM_GLERROR(a)
 #endif
