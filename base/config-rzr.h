@@ -1,9 +1,9 @@
-//#ident "$Id: config-rzr.h,v 1.7 2003/06/01 22:37:44 rzr Exp $"
+//#ident "$Id: config-rzr.h,v 1.8 2003/06/11 13:25:49 rzr Exp $"
 //#warning "!+rzr: Win32 portability hacks @ www.rzr.online.fr"
 #ifndef config_rzr_h_ // !+rzr 
 #define config_rzr_h_
 /**
- * @author: www.Philippe.COVAL.free.fr - rev: $Author: rzr $
+ * @author: www.Philippe.COVAL.online.fr - rev: $Author: rzr $
  * Portability issues:
  *
  * - Linux = gcc@linux
@@ -28,28 +28,41 @@
 /// just define if you dont want to use plugins (dll vs static) 
 /// default: undefined
 
-/// if the program file is copied elsewhere it still works
+// used for single dir package (w32)
+//if the program file is copied elsewhere it still works
 //#undef RZR_PATHRELATIVE  // @ base/Config.cpp
+
+// disable dyn libs (.dll)
 /// mingw32@Linux : Dyn loadling works, but keyboard is too slow w/ dll ???
 //#undef RZR_LIBSTATIC  // @ src/Loader.cpp
+
 /// vfat etc
 //#undef RZR_LINKS_UNSUPPORTED
+
 /// configure should check if the install fs supports modes & links
 //#undef RZR_MODES_UNSUPPORTED // w32
+
 ///
 //#undef RZR_CONFIG_STATIC_DEFAULT
+
 /// cstdlibs random is not definied @msvc + mingw32
 //#undef RZR_RANDOM_UNSUPPORTED
-///
-//#undef RZR_DEBUG
 
 /// devel only until official release
 //#undef  RZR_PATCHES_3DS
-//#define RZR_PATCHES_3DS
+#define RZR_PATCHES_3DS
+
+///
+//#undef RZR_DEBUG
 
 //--------------------------------------------------------------------------
 /// GCC @ gnu.org (everything is autoconfigured)
 #if ( (defined unix ) && ( defined __GNUC__ ) )
+#ifdef  RZR_PATHRELATIVE 
+#undef  EM_DATADIR //override autoconf path
+#undef  EM_LIBDIR  //unsed (so far)
+#undef  EM_HIGHSCORE_DIR
+#endif
 #endif
 
 /// Visual C++ @ MicroSoft.com   (win32@win32) dont use autoconf
@@ -62,14 +75,12 @@
 #define RZR_WINAPI 1 
 #define RZR_CPP_USE_NAMESPACE_STD
 #define RZR_LIBSTATIC 1
+#undef  EM_HIGHSCORE_DIR
 #define RZR_CONFIG_STATIC_DEFAULT 1
 #ifdef  _DEBUG // win32 msvc debug
 #define RZR_DEBUG 1
 #endif
 #define RZR_PATHRELATIVE 1
-#define EM_DATADIR "../data/" // from ./Release/pinball.exe
-#define EM_LIBDIR "." //unused (so far)
-#define EM_HIGHSCORE_DIR EM_DATADIR
 #endif
 
 /// CodeWarrior  @ MetroWreks.com (xcompiler windows2mac ) dont use autoconf
@@ -78,13 +89,11 @@
 #define HAVE_UNISTD_H 1
 #define RZR_LINKS_UNSUPPORTED 1
 #define RZR_RANDOM_UNSUPPORTED 1
-#define RZR_CONFIG_STATIC_DEFAULT 1
 #define RZR_CPP_USE_NAMESPACE_STD
 #define RZR_LIBSTATIC 1
-#undef  RZR_PATHRELATIVE // main(argc,argv) lost @src/Pinball.cpp 
-#define EM_DATADIR "../data/" // from ./Release/pinball.exe
-#define EM_LIBDIR "." //unused (so far)
-#define EM_HIGHSCORE_DIR EM_DATADIR
+#define RZR_PATHRELATIVE // main(argc,argv) lost @src/Pinball.cpp 
+#undef  EM_HIGHSCORE_DIR
+#define RZR_CONFIG_STATIC_DEFAULT 1
 #endif
 
 /// gcc(mingw32) @ GNU.org  (gcc for Win32, like cygwin) uses autoconf
@@ -98,6 +107,11 @@
 #undef  EM_DATADIR //override autoconf path
 #undef  EM_LIBDIR  //unsed (so far)
 #undef  EM_HIGHSCORE_DIR
+#endif
+
+/// MacOS aka Darwin
+#if defined(__APPLE__) && defined(__MACH__)
+#define RZR_LIBSTATIC 1
 #endif
 
 /// other compilers
@@ -156,25 +170,25 @@ using namespace std;
 //#define assert(x); {}
 #endif
 
-#ifdef RZR_PATHRELATIVE // Warning autoconf allready defines Path (abs) !!
+
+#ifdef RZR_PATHRELATIVE  // Warning autoconf allready defines Path (abs) !!
 #ifndef EM_DATADIR
-#define EM_DATADIR "share/pinball" // single dir and exes in it (!= unix)
+#define EM_DATADIR "data" // single dir and exes in it (!= unix)
 #endif
 #ifndef EM_LIBDIR
-#define EM_LIBDIR "lib/pinball"  // BUT subdirs are like unix
+#define EM_LIBDIR "."  // BUT subdirs are like unix
 #endif
 #else // Absolute default path, In case they're not defined
 #ifndef EM_DATADIR
-#define EM_DATADIR "/pinball/data/" 
+#define EM_DATADIR "/pinball/data" 
 #endif
 #ifndef EM_LIBDIR
-#define EM_LIBDIR "/pinball/lib/"  
+#define EM_LIBDIR "/pinball/lib"  
 #endif
 #endif
 #ifndef EM_HIGHSCORE_DIR
 #define EM_HIGHSCORE_DIR EM_DATADIR
 #endif
-
 
 //--------------------------------------------------------------------------
 
@@ -249,4 +263,4 @@ using namespace std;
 #endif
 #endif
 #endif //!-rzr ----------------------------------------------------------------
-//EOF: $Id: config-rzr.h,v 1.7 2003/06/01 22:37:44 rzr Exp $
+//EOF: $Id: config-rzr.h,v 1.8 2003/06/11 13:25:49 rzr Exp $

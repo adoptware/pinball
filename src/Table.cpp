@@ -1,3 +1,4 @@
+//#ident "$Id: Table.cpp,v 1.16 2003/06/11 13:25:51 rzr Exp $"
 /***************************************************************************
                             Table.cpp -  description
                              -------------------
@@ -10,7 +11,7 @@
                                   table when a name with more then one
                                   word exists.
 
- ***************************************************************************/
+***************************************************************************/
 
 #include "Private.h"
 #include "Table.h"
@@ -235,7 +236,7 @@ void Table::saveNewHighScore(int nNewHighScore, const char * name) {
   }
 }
 
-#define HIGH_SCORES_FILENAME "/highscores"
+#define HIGH_SCORES_FILENAME "highscores" //!rzr: removed /
 
 bool Table::readHighScoresFile() {
   // This is the current table's name
@@ -246,7 +247,15 @@ bool Table::readHighScoresFile() {
   // Clear old high scores
   m_mapHighScores.clear();
 
-  string sFileName = string(EM_HIGHSCORE_DIR) +"/"+ m_sTableName + HIGH_SCORES_FILENAME;
+  //!rzr+ : fix w32
+  string sFileName =  m_sTableName + "/" + HIGH_SCORES_FILENAME; 
+#ifdef RZR_PATHRELATIVE
+  sFileName = string( Config::getInstance()->getExeDir() ) 
+    +"/"+ m_sTableName +".cfg";
+#else
+  sFileName = string(EM_HIGHSCORE_DIR) + "/" + sFileName;
+#endif //!rzr-
+
   ifstream file(sFileName.c_str());
   if (!file) {
     cerr << "Couldn't open high scores file: " << sFileName << endl;
@@ -299,8 +308,15 @@ bool Table::writeHighScoresFile() {
     cerr << "No current table name! (the first time is normal...)" << endl;
     return false;
   }
+  //!rzr+ : fix w32
+  string sFileName =  m_sTableName + "/" + HIGH_SCORES_FILENAME; 
+#ifdef RZR_PATHRELATIVE
+  sFileName = string( Config::getInstance()->getExeDir() ) 
+    +"/"+ m_sTableName +".cfg";
+#else
+  sFileName = string(EM_HIGHSCORE_DIR) + "/" + sFileName;
+#endif //!rzr-
 
-  string sFileName = string(EM_HIGHSCORE_DIR) +"/"+ m_sTableName + HIGH_SCORES_FILENAME;
   ofstream file(sFileName.c_str());//, ios_base::out | ios_base::trunc);
   if (!file) {
     cerr << "Couldn't open high scores file: " << sFileName << endl;

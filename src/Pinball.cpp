@@ -1,4 +1,4 @@
-//#ident "$Id: Pinball.cpp,v 1.40 2003/06/01 22:37:44 rzr Exp $"
+//#ident "$Id: Pinball.cpp,v 1.41 2003/06/11 13:25:50 rzr Exp $"
 /***************************************************************************
                           Pinball.cpp  -  description
                              -------------------
@@ -250,9 +250,8 @@ protected:
     default: w = 640; h = 480;
     }
     if (config->getWidth() != w) {
-#ifdef WIN32  //!+-rzr 
-      //cout<<("Workround bug (for WIN32) + macosx etc");
-      textureutil->freeTextures();
+#ifdef WIN32  //!+-rzr   //cout<<("Workround bug (for WIN32) + macosx etc");
+      textureutil->freeTextures(); //TODO : check @w32
 #endif
 #if EM_USE_SDL
       SDL_SetVideoMode(w, h, config->getBpp(), 
@@ -261,8 +260,9 @@ protected:
 #endif // SDL
       textureutil->resizeView(w, h);
 #ifdef WIN32
-      string filename = Config::getInstance()->getDataDir() + string("/font_34.png");
-      //cout<<filename<<endl;
+      //textureutil->reloadTextures(); //TODO: may fix the w32 bug
+      string filename = Config::getInstance()->getDataDir() 
+        + string("/font_34.png");
       EmFont::getInstance()->loadFont(filename.c_str());
 #endif //!-rzr
     }
@@ -576,7 +576,7 @@ MenuItem* createMenus(Engine * engine) {
     }
   }
 #else
-  //#warning "check your compiler here"  
+#warning "check your compiler here"  
 #endif
 #endif //!+rzr
 
@@ -611,8 +611,8 @@ MenuItem* createMenus(Engine * engine) {
   menugfx->addMenuItem(menusize);
 
   menufilter = new MenuChoose(engine);
-  menufilter->addText("texture:       linear");
-  menufilter->addText("texture:      nearest");
+  menufilter->addText("texture:       nicest"); //was linear // gamers  //!rzr
+  menufilter->addText("texture:      fastest"); //was nearest // vocabulary :) 
   menufilter->addText("texture:         none");
   menugfx->addMenuItem(menufilter);
 
@@ -698,9 +698,14 @@ int main(int argc, char *argv[]) {
   //cerr<<"+ Pinball::main"<<endl;
   try {
     // Create a engine and parse emilia arguments
-    Config::getInstance()->loadConfig();
+#ifdef RZR_PATHRELATIVE
+	Config::getInstance()->setPaths(argv[0]); //before to get pinball.exe 's path 
+#endif
     Engine * engine = new Engine(argc, argv);
-    
+	Config::getInstance()->loadConfig();
+#ifdef RZR_PATHRELATIVE
+    Config::getInstance()->setPaths(argv[0]); //before to get pinball.exe 's path // again
+#endif    
     float direct = 0.0f;
     if (Config::getInstance()->getBrightness() < 0.35f) {
       direct = 0.3f;
@@ -731,8 +736,12 @@ int main(int argc, char *argv[]) {
     
     // Draw to the screen.
     int all = 0;
+
     engine->resetTick();
-    while (!Keyboard::isKeyDown(SDLK_INSERT)) {
+    
+    
+    while (! (  SDL_QuitRequested()  //cout<<"catch close win"<<endl; //!rzr
+                || Keyboard::isKeyDown(SDLK_INSERT)))  {
 #if EM_DEBUG
       if (Keyboard::isKeyDown(SDLK_p)) {
         Keyboard::waitForKey();
@@ -766,6 +775,7 @@ int main(int argc, char *argv[]) {
         }
         engine->swap();
       }
+      
       all++;
       //engine->limitFPS(100);
     }
@@ -779,7 +789,7 @@ int main(int argc, char *argv[]) {
   } catch (string str) {
     cerr << "EXCEPTION: " << str << endl;
   }
-  return 0;
+  return EXIT_SUCCESS;
 }
 
 #if EM_USE_ALLEGRO
@@ -791,64 +801,64 @@ END_OF_MAIN();
 #if( (defined WIN32 ) && ( defined __MWERKS__ ) ) 
 
 extern "C" {
-/**
- * @author: www.Philippe.COVAL.free.FR - $rev: $author
- * Was need to convert win32 args to ansi way :
- * int argc; char** argv;
- * convertStringWords( GetCommandLine(), &argc, &argv);
- * TODO : check if quotes are wanted or not ?
- **/
+  /**
+   * @author: www.Philippe.COVAL.free.FR - $rev: $author
+   * Was need to convert win32 args to ansi way :
+   * int argc; char** argv;
+   * convertStringWords( GetCommandLine(), &argc, &argv);
+   * TODO : check if quotes are wanted or not ?
+   **/
 
-void convertStringWords( char * arg,
-                         int *argc, char*** argv);
+  void convertStringWords( char * arg,
+                           int *argc, char*** argv);
 
 
-void convertStringWords( char * arg,
-                         int *argc, char*** argv)
-{
-  char *b, *e, *q;
-  int i=0;
-  int n;
-  b = arg;
-  q = e  = b ;
-  //debug("+ convertStringWords");  debug(arg);
-  *argc=0;
-  *argv = (char**) malloc( sizeof(char*));
+  void convertStringWords( char * arg,
+                           int *argc, char*** argv)
+  {
+    char *b, *e, *q;
+    int i=0;
+    int n;
+    b = arg;
+    q = e  = b ;
+    //debug("+ convertStringWords");  debug(arg);
+    *argc=0;
+    *argv = (char**) malloc( sizeof(char*));
   
-  do {
-    while ( *b == ' ' ) b++;
-    q=e=b-1;
+    do {
+      while ( *b == ' ' ) b++;
+      q=e=b-1;
   
-    do { q = strchr( q + 1 , '"'); }
-    while ( (q != NULL) && ( *(q-1) == '\\' ) );
- 
-    do { e = strchr( e + 1 , ' '); }
-    while ( (e != NULL) && ( *(e-1) == '\\' ) );
-    //debugf("%u<%u ?\n",&q,&e);
-    
-    if ( (q != NULL) && ( e != NULL) && ( q < e ) ) {
-      //debug("quoted");
       do { q = strchr( q + 1 , '"'); }
       while ( (q != NULL) && ( *(q-1) == '\\' ) );
-      e = ++q;
-    }
+ 
+      do { e = strchr( e + 1 , ' '); }
+      while ( (e != NULL) && ( *(e-1) == '\\' ) );
+      //debugf("%u<%u ?\n",&q,&e);
+    
+      if ( (q != NULL) && ( e != NULL) && ( q < e ) ) {
+        //debug("quoted");
+        do { q = strchr( q + 1 , '"'); }
+        while ( (q != NULL) && ( *(q-1) == '\\' ) );
+        e = ++q;
+      }
 
-    if ( e != NULL) n = (e) - b; else n = strlen(b);
-    //debugf("n=%d=%s;\n", n,b);
+      if ( e != NULL) n = (e) - b; else n = strlen(b);
+      //debugf("n=%d=%s;\n", n,b);
     
     
-    *argv = (char**) realloc( *argv, ( (*argc) + 1 ) * sizeof(char*) );
-    (*argv)[ *argc ] = (char*) malloc ( n +1);
-    strncpy( (*argv)[ *argc ], b , n);
-    *( (*argv)[ *argc ] + n ) = '\0';
-    //debug( (*argv)[ *argc ] );
+      *argv = (char**) realloc( *argv, ( (*argc) + 1 ) * sizeof(char*) );
+      (*argv)[ *argc ] = (char*) malloc ( n +1);
+      strncpy( (*argv)[ *argc ], b , n);
+      *( (*argv)[ *argc ] + n ) = '\0';
+      //debug( (*argv)[ *argc ] );
     
-    b = e;    
-    (*argc)++;
+      b = e;    
+      (*argc)++;
 
-  } while ( e != NULL );
-  //debug("- convertStringWords");
-}
+    } while ( e != NULL );
+    //debug("- convertStringWords");
+  }
 
 } //extern "C"
 
@@ -863,4 +873,4 @@ int WINAPI WinMain( HINSTANCE hInst,  HINSTANCE hPreInst,
   return main(argc,argv); 
 }
 #endif
-// EOF $Id: Pinball.cpp,v 1.40 2003/06/01 22:37:44 rzr Exp $
+// EOF $Id: Pinball.cpp,v 1.41 2003/06/11 13:25:50 rzr Exp $

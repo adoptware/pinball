@@ -1,4 +1,4 @@
-//#ident "$Id: Menu.cpp,v 1.11 2003/06/01 22:37:35 rzr Exp $"
+//#ident "$Id: Menu.cpp,v 1.12 2003/06/11 13:25:41 rzr Exp $"
 /***************************************************************************
                           Menu.cpp  -  description
                              -------------------
@@ -288,4 +288,4 @@ int MenuInput::perform() {
 
   return m_iAction;;
 }
-//EOF: $Id: Menu.cpp,v 1.11 2003/06/01 22:37:35 rzr Exp $
+//EOF: $Id: Menu.cpp,v 1.12 2003/06/11 13:25:41 rzr Exp $

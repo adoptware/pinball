@@ -1,4 +1,4 @@
-//#ident "$Id:"
+//#Ident "$Id: TextureUtil.cpp,v 1.10 2003/06/11 13:25:49 rzr Exp $"
 /***************************************************************************
                           TextureUtil.cpp  -  description
                              -------------------
@@ -101,8 +101,7 @@ void TextureUtil::freeTextures()
   m_hImageName.erase ( m_hImageName.begin() , m_hImageName.end() );
   /// same pointers
   m_hEmTexture.erase ( m_hEmTexture.begin() , m_hEmTexture.end() );
-}
-//!-rzr
+}//!-rzr
 
 void TextureUtil::initGrx() {
   Config * config = Config::getInstance();
