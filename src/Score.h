@@ -47,7 +47,7 @@ class Score : public Behavior  {
 /*   void setMultiplier(int m) { m_iFactor = m; }; */
 /*   int getMultiplier() { return m_iFactor; }; */
 
-  void testForHighScore();
+  bool testForHighScore();
 
  private:
   char m_Text1[64];

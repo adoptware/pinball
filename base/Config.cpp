@@ -421,8 +421,9 @@ bool Config::readHighScoresFile()
     return false;
   }
 
-  int nCounter = 0;
-  int nScore   = 0;
+cerr << "read HS file..." << endl;
+
+  int nScore = 0;
 
   string sName;
 
@@ -431,12 +432,13 @@ bool Config::readHighScoresFile()
     file >> nScore;
     file >> sName;
 
+    if (nScore == 0)
+      continue;
+
     m_mapHighScores.insert(pair<int, string>(nScore, sName));
 
-    nCounter++;
-
     // We only read 10 scores from the file!
-    if (nCounter > 10)
+    if (m_mapHighScores.size() >= 10)
       break;
   }
 
@@ -447,12 +449,27 @@ bool Config::readHighScoresFile()
   return true;
 }
 
+// NOTE!!!
+// For now the high scores are saved in a file that is in directory
+//  /usr/local/share/pinball/tux (for table tux, last dir is table's name)
+// Problem: this file must be owned by user pinball with write access
+//  to all (don't create a root file with write access to all...!).
+// For now please create this file by hand if you want to save your scores:
+// # su <- give root password
+// # adduser pinball
+// # cd /usr/local/share/pinball/tux
+// # touch highscores
+// # chown pinball:pinball highscores
+// # chmod a+w highscores
+// TODO: Find a way to safely write in a common file all high scores, this
+//  method also should be FHS friendly...
+//
 bool Config::writeHighScoresFile()
 {
   // This is the current table's name
   if (m_sSubDir.length() == 0)
   {
-    cerr << "No current table name!" << endl;
+    cerr << "No current table name! (the first time is normal..." << endl;
     return false;
   }
 
@@ -468,24 +485,24 @@ bool Config::writeHighScoresFile()
     return false;
   }
 
-  int nCounter = 0;
-  int nScore   = 0;
+  int nIndex = 1;
+  int nScore = 0;
 
   string sName;
 
   for (multimap<int, string>::iterator it = m_mapHighScores.begin();
-       it != m_mapHighScores.end(); ++it)
+       it != m_mapHighScores.end(); it++)
   {
     nScore = (*it).first;
     sName  = (*it).second;
 
     file << nScore << " " << sName << endl;
 
-    nCounter++;
-
     // We only write 10 scores to file! (for safety...)
-    if (nCounter > 10)
+    if (nIndex >= 10)
       break;
+
+    nIndex++;
   }
 
   return true;

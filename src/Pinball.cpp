@@ -79,6 +79,53 @@ MenuChoose* menufire = NULL;
  * Define some menu classes
  ***************************************************************************/
 
+// Menu item to display high scores - pnf
+class MyMenuHighScores : public MenuFct
+{
+public:
+  MyMenuHighScores(const char * name,
+                   int (*fct)(void), Engine *e) : MenuFct(name, fct, e) {};
+
+protected:
+  int perform()
+  {
+    p_Engine->clearScreen();
+
+    p_EmFont->printRowCenter("- High Scores -", 2);
+
+    int nStartRow = 5;
+    string sRow = "X";
+
+    list<string> listHighScores;
+
+    Table::getInstance()->getHighScoresData(listHighScores);
+
+    if (listHighScores.size() > 0)
+    {
+      list<string>::iterator it = listHighScores.begin();
+
+      for (int i=0; i<10 && it!=listHighScores.end(); i++, it++)
+      {
+	sRow = (*it);
+
+        p_EmFont->printRowCenter(sRow.c_str(), nStartRow + i);
+      }
+
+      p_EmFont->printRowCenter("Any key to exit...", 20);
+    }
+    else
+    {
+      p_EmFont->printRowCenter("No Table Loaded!", 10);
+    }
+
+    p_Engine->swap();
+
+    EMKey key = Keyboard::waitForKey();
+
+    return EM_MENU_NOP;
+  }
+};
+
 /** Menu item for changing a key binding. */
 class MyMenuKey : public MenuFct {
 public:
@@ -274,7 +321,13 @@ protected:
     p_EmFont->printRowCenter("LOADING", 10);
     p_Engine->swap();
 
+    // Save the high scores of current table, if any - pnf
+    Table::getInstance()->writeHighScores();
+
     if (Table::getInstance()->loadLevel(p_Engine, m_Name) == 0) {
+      // Load high scores for this table - pnf
+      Table::getInstance()->readHighScores();
+
       p_Engine->clearScreen();
       p_EmFont->printRowCenter("OK", 10);
       p_Engine->swap();
@@ -390,7 +443,8 @@ MenuItem* createMenus(Engine * engine) {
   menu->addMenuItem(menuload);
 
   // Show high scores for current loadad table - pnf
-  MenuSub* menuhighscores = new MenuSub("high scores", engine);
+  MyMenuHighScores* menuhighscores = new MyMenuHighScores("High Scores", NULL,
+                                                          engine);
   menu->addMenuItem(menuhighscores);
 
   MenuSub* menucfg = new MenuSub("config", engine);
@@ -414,7 +468,6 @@ MenuItem* createMenus(Engine * engine) {
   if (tex != NULL) {
 		menu->setBackground(tex);
 		menuload->setBackground(tex);
-		menuhighscores->setBackground(tex);
 		menucfg->setBackground(tex);
 		menugfx->setBackground(tex);
 		menuaudio->setBackground(tex);
@@ -467,6 +520,7 @@ MenuItem* createMenus(Engine * engine) {
     closedir(datadir);
   }
 #endif //!+rzr
+
   menuview = new MenuChoose(engine);
   menuview->addText(  "view:        standard");
   menuview->addText(  "view:             top");
@@ -564,9 +618,6 @@ MenuItem* createMenus(Engine * engine) {
   menugfx->addMenuItem(menucancel);
   menuaudio->addMenuItem(menucancel);
   menuload->addMenuItem(menucancel);
-  // pnf
-  menuhighscores->addMenuItem(menucancel);
-  menukey->addMenuItem(menucancel);
 
   get_config();
   return menu;
@@ -650,6 +701,9 @@ int main(int argc, char *argv[]) {
     }
     
     Config::getInstance()->saveConfig();
+
+    // Write high scores to disk - pnf
+    Table::getInstance()->writeHighScores();
     
     delete(engine);
   } catch (string str) {

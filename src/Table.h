@@ -11,6 +11,7 @@
 
 #include <string>
 #include <map>
+#include <list>
 
 class Score;
 class Engine;
@@ -50,8 +51,20 @@ class Table {
   // Get the tables data directory name - pnf
   string getTableDataDirName();
 
-  // Returns tru if the argument value is a high score
-  bool isItHighScore(const int nScore);
+  // Returns true if the argument value is a high score - pnf
+  bool isItHighScore(const int nNewScore);
+
+  // Main method to read high scores from disk and update memory - pnf
+  void readHighScores();
+
+  // Main method to update memory and write high scores to disk - pnf
+  void writeHighScores();
+
+  // Returns the high scores data in a string array
+  bool getHighScoresData(list<string>& listHighScores);
+
+  // Save new high score in high scores table
+  void saveNewHighScore(int nNewHighScore);
 
  private:
   void clear(Engine * engine);
