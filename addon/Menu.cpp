@@ -18,6 +18,7 @@
 MenuItem::MenuItem(Engine * e, int type) {
 	EmAssert(e != NULL, "Engine not created");
 
+	p_Texture = NULL;
 	p_EmFont = EmFont::getInstance();
 	p_Engine = e;
 	m_iType = type;
@@ -33,7 +34,6 @@ MenuSub::MenuSub(const char * name, Engine* e) : MenuItem(e, EM_MENU_SUB) {
 	strncpy(m_Name, name, 63);
 	m_iCurrent = 0;
 	m_iAction = EM_MENU_NOP;
-	p_Texture = NULL;
 }
 
 MenuSub::~MenuSub() {

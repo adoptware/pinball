@@ -20,6 +20,9 @@
 #include "SoundUtil.h"
 #include "BounceBehavior.h"
 
+#include <iostream>
+#include <fstream>
+
 /******************************************************* 
  * Singleton suff 
  ******************************************************/
@@ -116,8 +119,7 @@ int Table::locked() {
 }
 
 // Called to load a new table
-int Table::loadLevel(Engine * engine, const char * subdir)
-{
+int Table::loadLevel(Engine * engine, const char * subdir) {
   // Clear old engine objects
   this->clear(engine);
   m_sTableName = string(subdir); 
@@ -169,21 +171,17 @@ int Table::loadLevel(Engine * engine, const char * subdir)
 }
 
 // pnf
-string Table::getTableName()
-{
+string Table::getTableName() {
   return m_sTableName;
 }
 
 // pnf
-string Table::getTableDataDirName()
-{
+string Table::getTableDataDirName() {
   string datadir(Config::getInstance()->getDataSubDir());
-
   return datadir;
 }
 
-bool Table::isItHighScore(const int nNewScore)
-{
+bool Table::isItHighScore(const int nNewScore) {
   // The first score is the lowest
   multimap<int, string>::iterator it = m_mapHighScores.begin();
 
@@ -195,28 +193,14 @@ bool Table::isItHighScore(const int nNewScore)
   return false;
 }
 
-void Table::readHighScores()
-{
-  Config::getInstance()->readHighScoresFile();
-  Config::getInstance()->getHighScores(m_mapHighScores);
-}
-
-void Table::writeHighScores()
-{
-  Config::getInstance()->setHighScores(m_mapHighScores);
-  Config::getInstance()->writeHighScoresFile();
-}
-
-bool Table::getHighScoresData(list<string>& listHighScores)
-{
+bool Table::getHighScoresData(list<string>& listHighScores) {
   int nScore = 0;
   string sName;
 
   char sScore[11];
 
   for (multimap<int, string>::iterator it = m_mapHighScores.begin();
-       it != m_mapHighScores.end(); it++)
-  {
+       it != m_mapHighScores.end(); it++) {
     nScore = (*it).first;
     sName  = (*it).second;
 
@@ -233,11 +217,106 @@ bool Table::getHighScoresData(list<string>& listHighScores)
   return true;
 }
 
-void Table::saveNewHighScore(int nNewHighScore)
-{
+void Table::saveNewHighScore(int nNewHighScore) {
   // Remove the first element, it's the lowest score
   multimap<int, string>::iterator it = m_mapHighScores.begin();
   m_mapHighScores.erase(it);
 
   m_mapHighScores.insert(it, pair<int, string>(nNewHighScore, "new"));
 }
+
+//
+// HighScores
+// pnf
+//
+
+#define HIGH_SCORES_FILENAME      "/highscores"
+
+bool Table::readHighScoresFile() {
+  // This is the current table's name
+  if (m_sTableName.length() == 0) {
+    cerr << "No current table name!" << endl;
+    return false;
+	}
+  // Clear old high scores
+  m_mapHighScores.clear();
+  string sFileName = string(Config::getInstance()->getDataSubDir()) + HIGH_SCORES_FILENAME;
+	
+  ifstream file(sFileName.c_str());
+  if (!file) {
+    cerr << "Couldn't open high scores file: " << sFileName << endl;
+    cerr << "Using default values!" << endl;
+    for (int i=0; i<10; i++) {
+      m_mapHighScores.insert(pair<int, string>(10 - i, "lia"));
+		}
+    return false;
+  }
+	cerr << "read HS file..." << endl;
+	
+  int nScore = 0;
+  string sName;
+  while (file) {
+    file >> nScore;
+    file >> sName;
+    if (nScore == 0) continue;
+    m_mapHighScores.insert(pair<int, string>(nScore, sName));
+    // We only read 10 scores from the file!
+    if (m_mapHighScores.size() >= 10) break;
+  }
+  // If we read less then 10 scores
+  for (int i=m_mapHighScores.size(); i<10; i++) {
+    m_mapHighScores.insert(pair<int, string>(10 - i, "lia"));
+	}
+  return true;
+}
+
+// NOTE!!!
+// For now the high scores are saved in a file that is in directory
+//  /usr/local/share/pinball/tux (for table tux, last dir is table's name)
+// Problem: this file must be owned by user pinball with write access
+//  to all (don't create a root file with write access to all...!).
+// For now please create this file by hand if you want to save your scores:
+// # su <- give root password
+// # adduser pinball
+// # cd /usr/local/share/pinball/tux
+// # touch highscores
+// # chown pinball:pinball highscores
+// # chmod a+w highscores
+// TODO: Find a way to safely write in a common file all high scores, this
+//  method also should be FHS friendly...
+//
+bool Table::writeHighScoresFile() {
+  // This is the current table's name
+  if (m_sTableName.length() == 0) {
+    cerr << "No current table name! (the first time is normal..." << endl;
+    return false;
+  }
+
+  string sFileName = string(Config::getInstance()->getDataSubDir()) + HIGH_SCORES_FILENAME;
+
+  ofstream file(sFileName.c_str());//, ios_base::out | ios_base::trunc);
+
+  if (!file) {
+    cerr << "Couldn't open high scores file: " << sFileName << endl;
+    cerr << "Can't save high scores!" <<  endl;
+    return false;
+  }
+
+  int nIndex = 1;
+  int nScore = 0;
+
+  string sName;
+
+  for (multimap<int, string>::iterator it = m_mapHighScores.begin();
+       it != m_mapHighScores.end(); it++) {
+    nScore = (*it).first;
+    sName  = (*it).second;
+
+    file << nScore << " " << sName << endl;
+		// We only write 10 scores to file! (for safety...)
+    if (nIndex >= 10) break;
+		nIndex++;
+  }
+  return true;
+}
+
