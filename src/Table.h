@@ -44,6 +44,11 @@ class Table {
   int getCurrentBall() { return m_iBall; };
   void setCurrentBall(int ball) { m_iBall = ball; };
 
+  // Get the table name - pnf
+  string getTableName();
+  // Get the tables data directory name - pnf
+  string getTableDataDirName();
+
  private:
   void clear(Engine * engine);
 
