@@ -96,7 +96,7 @@ void loadProperties(ifstream & file, Group * g) {
 }
 
 void loadArmBehavior(ifstream & file, Group * group) {
-	cerr << "arm" << endl;
+	EM_COUT("arm", 1);
 
 	string str;
 
@@ -119,7 +119,7 @@ void loadArmBehavior(ifstream & file, Group * group) {
 }
 
 void loadAnimation(ifstream & file, Engine * engine, Group * group, Behavior * beh) {
-	cerr << "anim" << endl;
+	EM_COUT("anim", 1);
 
 	string str;
 
@@ -156,7 +156,7 @@ void loadAnimation(ifstream & file, Engine * engine, Group * group, Behavior * b
 
 
 void loadBehaviorLight(ifstream & file, Engine * engine, Group * group, Behavior * beh) {
-	cerr << "light" << endl;
+	EM_COUT("light", 1);
 
 	string str;
 	
@@ -189,7 +189,7 @@ void loadBehaviorLight(ifstream & file, Engine * engine, Group * group, Behavior
 }
 
 void loadCaveBehavior(ifstream & file, Engine * engine, Group* group) {
-	cerr << "cave" << endl;
+	EM_COUT("cave", 1);
 
 	string str;
 
@@ -211,7 +211,7 @@ void loadCaveBehavior(ifstream & file, Engine * engine, Group* group) {
 }
 
 void loadBumperBehavior(ifstream & file, Engine * engine, Group * group) {
-	cerr << "bumper" << endl;
+	EM_COUT("bumper", 1);
 
 	string str;
 
@@ -227,7 +227,7 @@ void loadBumperBehavior(ifstream & file, Engine * engine, Group * group) {
 }
 
 void loadTriggerBehavior(ifstream & file, Engine * engine, Group * group) {
-	cerr << "trigger" << endl;
+	EM_COUT("trigger", 1);
 	
 	string str;
 
@@ -292,7 +292,7 @@ void loadTriggerBehavior(ifstream & file, Engine * engine, Group * group) {
 }
 
 void loadSwitchBehavior(ifstream & file, Engine * engine, Group * group) {
-	cerr << "switch" << endl;
+	EM_COUT("switch", 1);
 
 	string str;
 
@@ -312,7 +312,7 @@ void loadSwitchBehavior(ifstream & file, Engine * engine, Group * group) {
 
 /* thins added to object, e.g. lights, animation, behavior*/
 void loadMisc(ifstream & file, Engine * engine, Group * group, Behavior * beh) {
-	cerr << "misc" << endl;
+	EM_COUT("misc", 1);
 
 	string str;
 
@@ -347,7 +347,7 @@ void loadMisc(ifstream & file, Engine * engine, Group * group, Behavior * beh) {
 
 /* Normal Object */
 Group * loadStdObject(ifstream & file, Engine * engine) {
-	cerr << "object" << endl;
+	EM_COUT("object", 1);
 
 	char collision[256], shape[256];
 	float tx, ty, tz;

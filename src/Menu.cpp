@@ -9,8 +9,9 @@
 #include "Meny.h"
 #include "EmFont.h"
 #include "Config.h"
+#include "Engine.h"
 
-void sndFunc(Meny * m) {
+void fctSound(Meny * m) {
   if (Config::getInstance()->useSound()) {
 		Config::getInstance()->setSound(false);
 		m->setName("sound off");
@@ -18,11 +19,10 @@ void sndFunc(Meny * m) {
 		Config::getInstance()->setSound(true);
 		m->setName("sound on");
 	}
-
-	cerr << "sound" << endl;
+	EM_COUT("sound", 1);
 }
 
-void grxFunc(Meny * m) {
+void fctGrx(Meny * m) {
   if (Config::getInstance()->useFullScreen()) {
 		Config::getInstance()->setFullScreen(false);
 		m->setName("graphics windowed");
@@ -30,11 +30,21 @@ void grxFunc(Meny * m) {
 		Config::getInstance()->setFullScreen(true);
 		m->setName("graphics fullscreen");
 	}
-
-	cerr << "graphics" << endl;
+	EM_COUT("graphics", 1);
 }	
 
-Meny*  createMenus(Engine * engine) {
+void fctTexture(Meny * m) {
+  if (Config::getInstance()->getGLFilter() == GL_LINEAR) {
+		Config::getInstance()->setGLFilter(GL_NEAREST);
+		m->setName("texture filter nearest");
+	} else {
+		Config::getInstance()->setGLFilter(GL_LINEAR);
+		m->setName("texture filter linear");
+	}
+	EM_COUT("texture", 1);
+}	
+
+Meny* createMenus(Engine * engine) {
 	
 	// Load a font
 	EmFont* font = EmFont::getInstance();
@@ -61,7 +71,7 @@ Meny*  createMenus(Engine * engine) {
 		menysnd->setName("sound on");
 	}
 	menysnd->setAction(EM_MENU_SUB);
-	menysnd->setFunction(sndFunc);
+	menysnd->setFunction(fctSound);
 	menycfg->addMeny(menysnd);
 
 	Meny* menygrx = new Meny("graphics windowed", engine);
@@ -69,8 +79,16 @@ Meny*  createMenus(Engine * engine) {
 		menygrx->setName("graphics fullscreen");
 	}
 	menygrx->setAction(EM_MENU_SUB);
-	menygrx->setFunction(grxFunc);
+	menygrx->setFunction(fctGrx);
 	menycfg->addMeny(menygrx);
+
+	Meny* menytex = new Meny("texture filter nearest", engine);
+	if (Config::getInstance()->getGLFilter() == GL_LINEAR) {
+		menytex->setName("texture filter linear");
+	}
+	menytex->setAction(EM_MENU_SUB);
+	menytex->setFunction(fctTexture);
+	menycfg->addMeny(menytex);
 
 	Meny* menyctrl = new Meny("controls", engine);
 	menyctrl->setAction(EM_MENU_SUB);

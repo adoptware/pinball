@@ -33,6 +33,7 @@
 #include "StateMachine.h"
 #include "Shape3DUtil.h"
 #include "EyeBehavior.h"
+#include "Config.h"
 
 #include "Loader.h"
 
@@ -40,7 +41,20 @@
 int main(int argc, char *argv[]) {
 	cout << "pinball" << endl;
 	//	srandom(time(0));
-
+	
+	// Load config
+	char* home = getenv("HOME");
+	if (home != NULL) {
+		char str[256];
+		// TODO unsafe
+		strcpy(str, home);
+		strcat(str, "/");
+		strcat(str, ".emilia");
+		Config::getInstance()->loadConfig(str);
+	} else {
+		cerr << "Could not find environment variable HOME." << endl;
+		cerr << "Not able to read or write config file" << endl;
+	}
 	// Create a engine
 	Engine* engine = new Engine(argc, argv);
 	engine->setLightning(0.0f, 0.1f);
@@ -183,13 +197,23 @@ int main(int argc, char *argv[]) {
 
 	extern float em_groups_m, em_shapes_m, em_bounds_m, em_polygons_m;
 
+#if EM_DEBUG
 	cerr << "Groups " << em_groups_m << endl;
 	cerr << "Shapes " << em_shapes_m << endl;
 	cerr << "Bounds " << em_bounds_m << endl;
 	cerr << "Polys " << em_polygons_m << endl;
 
 	cerr << "Skip " << skip  << " of " << all << endl;
+#endif
 
+	if (home != NULL) {
+		char str[256];
+		// TODO unsafe
+		strcpy(str, home);
+		strcat(str, "/");
+		strcat(str, ".emilia");
+		Config::getInstance()->saveConfig(str);
+	}
 	delete(engine);
 	delete(menu);
 	return 0;
