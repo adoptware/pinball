@@ -195,10 +195,13 @@ void StateBehavior::setState(StateItem* stateitem) {
   this->getParent()->unsetUserProperty(previtem->m_iUserProperty);
   this->getParent()->setUserProperty(p_CurrentStateItem->m_iUserProperty);
   // defaults to shape 0
-  Shape3D* shape = this->getParent()->getShape3D(0);   
-  if (shape != NULL) {
+  int sindex = 0;
+  Shape3D* shape = this->getParent()->getShape3D(sindex);   
+  while (shape != NULL) {
     shape->unsetProperty(previtem->m_iShapeProperty);
     shape->setProperty(p_CurrentStateItem->m_iShapeProperty);
+    ++sindex;
+    shape = this->getParent()->getShape3D(sindex);
   }
   // apply texcoords
   if (m_bTexCoord) {
