@@ -49,7 +49,17 @@ void AlignVisitor::empty() {
     return;
   }
 	
+#if EM_USE_ALLEGRO
+	Matrix mtxTmp;
+	Matrix mtxScale = EMath::identityMatrix;
+	mtxScale.v[0][0] = 0.8;
+	mtxScale.v[1][1] = -0.6;
+	mtxScale.v[2][2] = -1;
+	EMath::matrixMulti(mtxScale, p_GroupCamera->m_mtxTrans, mtxTmp);
+	EMath::inverse(mtxTmp, m_mtxInverse);
+#else
   EMath::inverse(p_GroupCamera->m_mtxTrans, m_mtxInverse);
+#endif
 }
 
 void AlignVisitor::setCamera(Group * g) {
