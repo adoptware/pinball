@@ -14,6 +14,7 @@
 #include "StateBehavior.h"
 #include "ArmBehavior.h"
 #include "PlungerBehavior.h"
+#include "BumperBehavior.h"
 #include "Score.h"
 #include "BallGroup.h"
 #include "Table.h"
@@ -173,10 +174,7 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     // plunger
     Behavior* beh = pGroup->getBehavior();
     EmAssert(beh != NULL, "No behavior");
-		
-    if (beh->getType() != PBL_TYPE_PLUNGERBEH) {
-      throw string("StateBehavior expected");
-    }
+    EmAssert(beh->getType() == PBL_TYPE_PLUNGERBEH, "StateBehavior expected");
 
     if (m_iCollisionPrio > 6) return;
     m_iCollisionPrio = 6;
@@ -197,8 +195,8 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
 		
     if (beh->getType() == PBL_TYPE_STATEBEH) {
       if (((StateBehavior*)beh)->getOwnerBall() != m_iBall) {
-				EM_COUT(((StateBehavior*)beh)->getOwnerBall() << " != " << m_iBall, 0);
-				return;
+	EM_COUT(((StateBehavior*)beh)->getOwnerBall() << " != " << m_iBall, 0);
+	return;
       }
     } else {
       throw string("StateBehavior expected");
@@ -224,11 +222,14 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     // bumper
     if (m_iCollisionPrio > 3) return;
     m_iCollisionPrio = 3;
+    Behavior* beh = pGroup->getBehavior();
+    EmAssert(beh != NULL, "No behavior");
+    EmAssert(beh->getType() == PBL_TYPE_BUMPERBEH, "BumperBehavior");
+    float power = ((BumperBehavior*)beh)->getPower();
     // use bumper as base
     EMath::reflectionDamp(m_vtxOldDir, vtxW, m_vtxDir, (float)1.0, 
-			  (float)SPEED_FCT*0.5, 1, true);
+			  (float)SPEED_FCT*power, 1, true);
     EM_COUT("BounceBehavior::onCollision() bumper", 0);
-
   } else if (pGroup->getUserProperties() & PBL_ACTIVE_ARM) {
     // active arm, the given speed is caclulated with a look up table
     if (m_iCollisionPrio > 3) return;
@@ -236,9 +237,7 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     // get the behavior
     Behavior* beh = pGroup->getBehavior();
     EmAssert(beh != NULL, "No behavior");
-    if (beh->getType() != PBL_TYPE_ARMBEH) {
-      throw string("ArmBehavior expected in BounceBehavior.cpp");
-    }
+    EmAssert(beh->getType() == PBL_TYPE_ARMBEH, "ArmBehavior");
 
     EM_COUT("BounceBehavior::onCollision()", 0);
     Matrix mtxArmRot, mtxArmRotInv;

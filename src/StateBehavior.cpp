@@ -213,13 +213,8 @@ void StateBehavior::setState(StateItem* stateitem) {
       if (poly != NULL) {                       
 	vector<TexCoord>::iterator iter1 = p_CurrentStateItem->m_vTexCoord.begin();               
 	vector<TexCoord>::iterator end1 = p_CurrentStateItem->m_vTexCoord.end();
-#if EM_USE_SHARED_COLOR
 	vector<TexCoord>::iterator iter2 = shape->m_vTexCoord.begin();  
 	vector<TexCoord>::iterator end2 = shape->m_vTexCoord.end();     
-#else
-	vector<TexCoord>::iterator iter2 = poly->m_vTexCoord.begin();  
-	vector<TexCoord>::iterator end2 = poly->m_vTexCoord.end();     
-#endif
 	for (; iter1 != end1 && iter2 != end2; ++iter1, ++iter2) {       
 	  (*iter2) = (*iter1);                  
 	}                                       
