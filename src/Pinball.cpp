@@ -1,4 +1,4 @@
-//#ident "$Id: Pinball.cpp,v 1.35 2003/05/20 17:20:17 henqvist Exp $"
+//#ident "$Id: Pinball.cpp,v 1.36 2003/05/26 08:47:04 henqvist Exp $"
 /***************************************************************************
                           Pinball.cpp  -  description
                              -------------------
@@ -50,7 +50,7 @@
 #include "Score.h"
 #include "CollisionBounds.h"
 #include "StateMachine.h"
-#include "EyeBehavior.h"
+//#include "EyeBehavior.h"
 #include "Config.h"
 #include "EmFont.h"
 #include "Loader.h"
@@ -76,20 +76,18 @@ MenuChoose* menuview = NULL;
 MenuChoose* menufilter = NULL;
 MenuChoose* menufps = NULL;
 MenuChoose* menufire = NULL;
+MenuChoose* menulights = NULL;
 
 /****************************************************************************
  * Define some menu classes
  ***************************************************************************/
 
 // Menu item to display high scores - pnf
-class MyMenuHighScores : public MenuFct
-{
+class MyMenuHighScores : public MenuFct {
 public:
-  MyMenuHighScores(const char * name, int (*fct)(void), Engine *e)
-		  : MenuFct(name, fct, e) {};
+  MyMenuHighScores(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, fct, e) {};
 protected:
-  int perform()
-  {
+  int perform() {
     p_Engine->clearScreen();
 
     if (p_Texture != NULL)
@@ -106,22 +104,18 @@ protected:
 
     Table::getInstance()->getHighScoresData(listHighScores);
 
-    if (listHighScores.size() > 0)
-    {
+    if (listHighScores.size() > 0) {
       list<string>::iterator it = listHighScores.begin();
 
-      for (int i=0; i<10 && it!=listHighScores.end(); i++, it++)
-      {
-	sRow = (*it);
+      for (int i=0; i<10 && it!=listHighScores.end(); i++, it++) {
+        sRow = (*it);
         p_EmFont->printRowCenter(sRow.c_str(), nStartRow + i);
       }
-    }
-    else
-    {
+    } else {
       p_EmFont->printRowCenter("No Table Loaded!", 10);
     }
 
-    p_EmFont->printRowCenter("Hit any key to main menu...", 20);
+    p_EmFont->printRowCenter("Hit any key for main menu...", 20);
 
     p_Engine->swap();
     Keyboard::waitForKey();
@@ -220,18 +214,30 @@ protected:
     }
     // brightness
     switch (menubright->getCurrent()) {
-    case 0: menubright->getEngine()->setLightning(0, 0.1f); 
-      Config::getInstance()->setBrightness(0.1); break;
-    case 1: menubright->getEngine()->setLightning(0, 0.2f);
-      Config::getInstance()->setBrightness(0.2f); break;
-    case 2: menubright->getEngine()->setLightning(0, 0.3f);
-      Config::getInstance()->setBrightness(0.3f); break;
-    case 3: menubright->getEngine()->setLightning(0, 0.4f);
+    case 0: 
+      //menubright->getEngine()->setLightning(0, 0.1f); 
+      menubright->getEngine()->setLightning(0.2f, 0.0f); 
+      Config::getInstance()->setBrightness(0.2); break;
+    case 1: 
+      //menubright->getEngine()->setLightning(0, 0.2f);
+      menubright->getEngine()->setLightning(0.4f, 0.0f);
       Config::getInstance()->setBrightness(0.4f); break;
-    case 4: menubright->getEngine()->setLightning(0, 0.5f);
-      Config::getInstance()->setBrightness(0.5f); break;
-    default: menubright->getEngine()->setLightning(0, 0.3f);
-      Config::getInstance()->setBrightness(0.3f); break;
+    case 2: 
+      //menubright->getEngine()->setLightning(0, 0.2f);
+      menubright->getEngine()->setLightning(0.6f, 0.0f);
+      Config::getInstance()->setBrightness(0.6f); break;
+    case 3: 
+      //menubright->getEngine()->setLightning(0, 0.2f);
+      menubright->getEngine()->setLightning(0.8f, 0.0f);
+      Config::getInstance()->setBrightness(0.8f); break;
+    case 4: 
+      //menubright->getEngine()->setLightning(0, 0.2f);
+      menubright->getEngine()->setLightning(1.0f, 0.0f);
+      Config::getInstance()->setBrightness(1.0f); break;
+    default: 
+      //menubright->getEngine()->setLightning(0, 0.2f);
+      menubright->getEngine()->setLightning(0.6f, 0.0f);
+      Config::getInstance()->setBrightness(0.6f); break;
     }
     // screen size
     int w, h;
@@ -264,9 +270,10 @@ protected:
     config->setSize(w, h);
 		
     switch (menuview->getCurrent()) {
-    case 0: config->setView(0); break;
     case 1: config->setView(1); break;
-    default: config->setView(2);
+    case 2: config->setView(2); break;
+    case 3: config->setView(3); break;
+    default: config->setView(0);
     }
     // texture filter
     if (menufilter->getCurrent() == 0) {
@@ -286,27 +293,33 @@ protected:
     if (menufire->getCurrent() == 0) {
       config->setFire(false);
       for (int a=0; a<MAX_BALL; ++a) {
-	BallGroup * bg = Table::getInstance()->getBall(a);
-	if (bg != NULL) {
-	  Behavior * beh = bg->getBehavior();
-	  EmAssert(beh != NULL, "MyMenuApply::perform behavior NULL");
-	  EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
-		   "MyMenuApply::perform behavior not bouncebehavior");
-	  ((BounceBehavior*)beh)->setFire(false);
-	}
+        BallGroup * bg = Table::getInstance()->getBall(a);
+        if (bg != NULL) {
+          Behavior * beh = bg->getBehavior();
+          EmAssert(beh != NULL, "MyMenuApply::perform behavior NULL");
+          EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
+                   "MyMenuApply::perform behavior not bouncebehavior");
+          ((BounceBehavior*)beh)->setFire(false);
+        }
       }
     } else {
       config->setFire(true);
       for (int a=0; a<MAX_BALL; ++a) {
-	BallGroup * bg = Table::getInstance()->getBall(a);
-	if (bg != NULL) {
-	  Behavior * beh = bg->getBehavior();
-	  EmAssert(beh != NULL, "MyMenuApply::perform behavior NULL");
-	  EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
-		   "MyMenuApply::perform behavior not bouncebehavior");
-	  ((BounceBehavior*)beh)->setFire(true);
-	}
+        BallGroup * bg = Table::getInstance()->getBall(a);
+        if (bg != NULL) {
+          Behavior * beh = bg->getBehavior();
+          EmAssert(beh != NULL, "MyMenuApply::perform behavior NULL");
+          EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
+                   "MyMenuApply::perform behavior not bouncebehavior");
+          ((BounceBehavior*)beh)->setFire(true);
+        }
       }
+    }
+    // dynamic lights
+    if (menulights->getCurrent() == 0) {
+      config->setLights(true);
+    } else {
+      config->setLights(false);
     }
     get_config();
     return EM_MENU_NOP;
@@ -397,13 +410,13 @@ void get_config(void) {
     menuscreen->setCurrent(1);
   }
   // brightness
-  if (Config::getInstance()->getBrightness() < 0.15f) {
+  if (Config::getInstance()->getBrightness() < 0.3f) {
     menubright->setCurrent(0);
-  } else if (Config::getInstance()->getBrightness() < 0.25f) {
+  } else if (Config::getInstance()->getBrightness() < 0.5f) {
     menubright->setCurrent(1);
-  } else if (Config::getInstance()->getBrightness() < 0.35f) {
+  } else if (Config::getInstance()->getBrightness() < 0.7f) {
     menubright->setCurrent(2);
-  } else if (Config::getInstance()->getBrightness() < 0.45f) {
+  } else if (Config::getInstance()->getBrightness() < 0.9f) {
     menubright->setCurrent(3);
   } else {
     menubright->setCurrent(4);
@@ -426,9 +439,10 @@ void get_config(void) {
   }
   // view mode
   switch(Config::getInstance()->getView()) {
-  case 0: menuview->setCurrent(0); break;
   case 1: menuview->setCurrent(1); break;
-  default: menuview->setCurrent(2);
+  case 2: menuview->setCurrent(2); break;
+  case 3: menuview->setCurrent(3); break;
+  default: menuview->setCurrent(0);
   }
   // texture filter
   if (Config::getInstance()->getGLFilter() == EM_LINEAR) {
@@ -450,12 +464,19 @@ void get_config(void) {
   } else {
     menufire->setCurrent(0);
   }
+  // dynamic lights
+  if (Config::getInstance()->useLights()) {
+    menulights->setCurrent(0);
+  } else {
+    menulights->setCurrent(1);
+  }
 }
 
 /* Create some menus */
 MenuItem* createMenus(Engine * engine) {
   // Create the meny
-  MenuSub* menu = new MenuSub("menu", engine);
+  MenuSub* menu = new MenuSub("main menu", engine);
+  menu->setBottomText("http://pinball.sourceforge.net");
 
   MenuSub* menuresume = new MenuSub("play", engine);
   menuresume->setAction(EM_MENU_RESUME);
@@ -483,6 +504,7 @@ MenuItem* createMenus(Engine * engine) {
   menucfg->addMenuItem(menuaudio);
 
   MenuSub* menukey = new MenuSub("keyboard", engine);
+  menukey->setBottomText("shorcuts for view change F1-F4");
   menucfg->addMenuItem(menukey);
 
   string filename = string(Config::getInstance()->getDataSubDir()) + "/splash.png";
@@ -558,9 +580,10 @@ MenuItem* createMenus(Engine * engine) {
 #endif //!+rzr
 
   menuview = new MenuChoose(engine);
-  menuview->addText(  "view:        standard");
+  menuview->addText(  "view:         classic");
+  menuview->addText(  "view:   softly moving");
+  menuview->addText(  "view:          moving");
   menuview->addText(  "view:             top");
-  menuview->addText(  "view:          locked");
   menugfx->addMenuItem(menuview);
 
   menuscreen = new MenuChoose(engine);
@@ -600,6 +623,11 @@ MenuItem* createMenus(Engine * engine) {
   menufire->addText(  "fire effect:       no");
   menufire->addText(  "fire effect:      yes");
   menugfx->addMenuItem(menufire);
+
+  menulights = new MenuChoose(engine);
+  menulights->addText("dynamic lights:   yes");
+  menulights->addText("dynamic lights:    no");
+  menugfx->addMenuItem(menulights);
 
   //   menumaxfps = new MenuChoose(engine);
   //   menumaxfps->addText("max fps            50");
@@ -671,22 +699,27 @@ int main(int argc, char *argv[]) {
     Config::getInstance()->loadConfig();
     Engine * engine = new Engine(argc, argv);
     
-    float direct, ambient;
-    if (Config::getInstance()->useLights()) {
-      direct = 0.0f;
+    float direct = 0.0f, ambient = 0.0f;
+//     if (Config::getInstance()->useLights()) {
+//       direct = 0.0f;
+//     } else {
+    //direct = 0.9f;
+//     }
+    if (Config::getInstance()->getBrightness() < 0.3f) {
+      //ambient = 0.1f;
+      direct = 0.2f;
+    } else if (Config::getInstance()->getBrightness() < 0.5f) {
+      //ambient = 0.2f;
+      direct = 0.4f;
+    } else if (Config::getInstance()->getBrightness() < 0.7f) {
+      //ambient = 0.3f;
+      direct = 0.6f;
+    } else if (Config::getInstance()->getBrightness() < 0.9f) {
+      //ambient = 0.4f;
+      direct = 0.8f;
     } else {
-      direct = 0.5f;
-    }
-    if (Config::getInstance()->getBrightness() < 0.15f) {
-      ambient = 0.1f;
-    } else if (Config::getInstance()->getBrightness() < 0.25f) {
-      ambient = 0.2f;
-    } else if (Config::getInstance()->getBrightness() < 0.35f) {
-      ambient = 0.3f;
-    } else if (Config::getInstance()->getBrightness() < 0.45f) {
-      ambient = 0.4f;
-    } else {
-      ambient = 0.5f;
+      //ambient = 0.5f;
+      direct = 1.0f;
     }
     engine->setLightning(direct, ambient);
     
