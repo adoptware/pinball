@@ -6,6 +6,8 @@
     email                : henqvist@excite.com
  ***************************************************************************/
 
+#include <iostream>
+
 #include "Private.h"
 #include "OctTree.h"
 #include "Group.h"

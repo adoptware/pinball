@@ -35,6 +35,19 @@ Polygon::Polygon(Shape3D* s, int size) {
 Polygon::~Polygon() {
 }
 
+void Polygon::copy(Polygon * poly) {
+	if (poly == NULL) return;
+	m_nmlSrc = poly->m_nmlSrc;
+	m_nmlTrans = poly->m_nmlTrans;
+	m_colFlatLight = poly->m_colFlatLight;
+	m_vIndex.clear();
+	vector<int>::iterator iter = poly->m_vIndex.begin();
+	vector<int>::iterator end = poly->m_vIndex.end();
+	for (; iter != end; ++iter) {
+		m_vIndex.push_back(*iter);
+	}
+}
+
 void Polygon::setProperty(int p) {
 	m_iProperties |= p;
 }
