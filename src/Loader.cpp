@@ -127,13 +127,6 @@ int Loader::getSignal(const char * signal) {
 	if (strncmp(signal, "game_over", 63) == 0) return PBL_SIG_GAME_OVER;
 	if (strncmp(signal, "game_start", 63) == 0) return PBL_SIG_GAME_START;
 	if (strncmp(signal, "game_pause", 63) == 0) return PBL_SIG_GAME_PAUSE;
-	if (strncmp(signal, "extraball", 63) == 0) return PBL_SIG_EXTRABALL;
-	//if (strncmp(signal, "multiball_off", 63) == 0) return PBL_SIG_MULTIBALL_OFF;
-	//if (strncmp(signal, "allballs_off", 63) == 0) return PBL_SIG_ALLBALLS_OFF;
-// 	if (strncmp(signal, "lock1", 63) == 0) return PBL_SIG_LOCK_1;
-// 	if (strncmp(signal, "lock2", 63) == 0) return PBL_SIG_LOCK_2;
-// 	if (strncmp(signal, "lock3", 63) == 0) return PBL_SIG_LOCK_3;
-// 	if (strncmp(signal, "lock4", 63) == 0) return PBL_SIG_LOCK_4;
 	// other signals
 	map<string, int>::iterator element = m_hSignalInt.find(string(signal));
 	if (element != m_hSignalInt.end()) {
@@ -171,13 +164,6 @@ const char * Loader::getSignal(int signal) {
 	case PBL_SIG_GAME_OVER : return "game_over";
 	case PBL_SIG_GAME_START : return "game_start";
 	case PBL_SIG_GAME_PAUSE : return "game_pause";
-	case PBL_SIG_EXTRABALL : return "extraball";
-	  //case PBL_SIG_MULTIBALL_OFF : return "multiball_off";
-	  //case PBL_SIG_ALLBALLS_OFF : return "allballs_off";
-	  // 	case PBL_SIG_LOCK_1 : return "lock1";
-	  // 	case PBL_SIG_LOCK_2 : return "lock2";
-	  // 	case PBL_SIG_LOCK_3 : return "lock3";
-	  // 	case PBL_SIG_LOCK_4 : return "lock4";
 	}
 	// other signals
 	map<int, string>::iterator element = m_hSignalString.find(signal);
