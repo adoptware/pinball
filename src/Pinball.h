@@ -33,6 +33,7 @@
 
 #define PBL_SIG_RESET_ALL				666
 #define PBL_SIG_TILT            667
+#define PBL_SIG_GAMEOVER        668
 
 #define PBL_SIG_LNUDGE          671
 #define PBL_SIG_RNUDGE          672
@@ -41,7 +42,7 @@
 #define PBL_SIG_LEFTARM_ON      681
 #define PBL_SIG_RIGHTARM_ON     682
 #define PBL_SIG_MULTIBALL_OFF   691
-#define PBL_SIG_EXTRABALL       692
+//#define PBL_SIG_EXTRABALL       692
 
 // #define PBL_SIG__grp_type_act/un    (grp)(type)(0)(1=on,2=off)
 

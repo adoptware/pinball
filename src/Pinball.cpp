@@ -129,10 +129,10 @@ int loadLevel(Engine * engine, const char * subdir) {
 		cerr << "Error loading level" << endl;
 		cerr << "Try reinstalling the game or use the -data switch to specify the data directory" 
 				 << endl;
+		engine->clear();
 		return -1;
 	}
 	score = Score::getInstance();
-	score->clear();
 	engine->addBehavior(score);
 	// Add a camera.
 	Group* groupCR = new Group();
@@ -190,7 +190,9 @@ int loadLevel(Engine * engine, const char * subdir) {
  * Menus
  ***************************************************************************/
 
+
 MenuChoose* menusnd = NULL;
+MenuChoose* menumusic = NULL;
 MenuChoose* menubright = NULL;
 MenuChoose* menuscreen = NULL;
 MenuChoose* menusize = NULL;
@@ -200,10 +202,27 @@ MenuChoose* menufilter = NULL;
 /** Update the current meny with the configuration. */
 void get_config(void) {
 	// sound
-	if (Config::getInstance()->useSound()) {
-		menusnd->setCurrent(0);
-	} else {
-		menusnd->setCurrent(1);
+	switch (Config::getInstance()->getSound()) {
+	case 0: menusnd->setCurrent(0); break;
+	case 1: menusnd->setCurrent(1); break;
+	case 2: menusnd->setCurrent(2); break;
+	case 3: menusnd->setCurrent(3); break;
+	case 4: menusnd->setCurrent(4); break;
+	case 5: menusnd->setCurrent(5); break;
+	case 6: menusnd->setCurrent(6); break;
+	case 7: menusnd->setCurrent(7); break;
+	case 8: menusnd->setCurrent(8); break;
+	}
+	switch (Config::getInstance()->getMusic()) {
+	case 0: menumusic->setCurrent(0); break;
+	case 1: menumusic->setCurrent(1); break;
+	case 2: menumusic->setCurrent(2); break;
+	case 3: menumusic->setCurrent(3); break;
+	case 4: menumusic->setCurrent(4); break;
+	case 5: menumusic->setCurrent(5); break;
+	case 6: menumusic->setCurrent(6); break;
+	case 7: menumusic->setCurrent(7); break;
+	case 8: menumusic->setCurrent(8); break;
 	}
 	// fullscreen
 	if (Config::getInstance()->useFullScreen()) {
@@ -260,11 +279,29 @@ protected:
 		Config* config = Config::getInstance();
 		TextureUtil * textureutil = TextureUtil::getInstance();
 		// sound
-		if (menusnd->getCurrent() == 0) {
-			config->setSound(true);
-		} else {
-			config->setSound(false);
+		switch (menusnd->getCurrent()) {
+		case 0: config->setSound(0); break;
+		case 1: config->setSound(1); break;
+		case 2: config->setSound(2); break;
+		case 3: config->setSound(3); break;
+		case 4: config->setSound(4); break;
+		case 5: config->setSound(5); break;
+		case 6: config->setSound(6); break;
+		case 7: config->setSound(7); break;
+		case 8: config->setSound(8); break;
 		}
+		switch (menumusic->getCurrent()) {
+		case 0: config->setMusic(0); break;
+		case 1: config->setMusic(1); break;
+		case 2: config->setMusic(2); break;
+		case 3: config->setMusic(3); break;
+		case 4: config->setMusic(4); break;
+		case 5: config->setMusic(5); break;
+		case 6: config->setMusic(6); break;
+		case 7: config->setMusic(7); break;
+		case 8: config->setMusic(8); break;
+		}
+		SoundUtil::getInstance()->applyConfigVolume();
 		// fullscreen
 		if (menuscreen->getCurrent() == 0) {
 			if (config->useFullScreen() == false) {
@@ -343,10 +380,26 @@ protected:
 
 class MyMenuLoad : public MenuFct {
 public:
-	MyMenuLoad(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, fct, e) {};
+	MyMenuLoad(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, fct, e) {
+		
+	};
 protected:
 	int perform () {
-		loadLevel(p_Engine, m_Name);
+		p_Engine->clearScreen();
+		p_EmFont->printRowCenter("LOADING", 10);
+		p_Engine->swap();
+
+		if (loadLevel(p_Engine, m_Name) == 0) {
+			p_Engine->clearScreen();
+			p_EmFont->printRowCenter("OK", 10);
+			p_Engine->swap();
+			p_Engine->delay(500);
+		} else {
+			p_Engine->clearScreen();
+			p_EmFont->printRowCenter("ERROR", 10);
+			p_Engine->swap();
+			p_Engine->delay(1000);
+		}
 		return EM_MENU_BACK;
 	}
 };
@@ -373,6 +426,9 @@ MenuItem* createMenus(Engine * engine) {
 	MenuSub* menugfx = new MenuSub("graphics", engine);
 	menucfg->addMenuItem(menugfx);
 
+	MenuSub* menuaudio = new MenuSub("audio", engine);
+	menucfg->addMenuItem(menuaudio);
+
 	// create one entry for each directory
 	// TODO scrolling text if to many tables
 	DIR * datadir = opendir(Config::getInstance()->getDataDir());
@@ -393,6 +449,11 @@ MenuItem* createMenus(Engine * engine) {
 		chdir(cwd);
 		closedir(datadir);
 	}
+
+	menuview = new MenuChoose(engine);
+	menuview->addText(  "view:    follows ball");
+	menuview->addText(  "view:          locked");
+	menugfx->addMenuItem(menuview);
 
 	menuscreen = new MenuChoose(engine);
 	menuscreen->addText("screen:    fullscreen");
@@ -420,23 +481,39 @@ MenuItem* createMenus(Engine * engine) {
 	menufilter->addText("texture:         none");
 	menugfx->addMenuItem(menufilter);
 
-	menuview = new MenuChoose(engine);
-	menuview->addText(  "view:    follows ball");
-	menuview->addText(  "view:          locked");
-	menucfg->addMenuItem(menuview);
-
 	menusnd = new MenuChoose(engine);
-	menusnd->addText(   "sound:             on");
 	menusnd->addText(   "sound:            off");
-	menucfg->addMenuItem(menusnd);
+	menusnd->addText(   "sound:              1");
+	menusnd->addText(   "sound:              2");
+	menusnd->addText(   "sound:              3");
+	menusnd->addText(   "sound:              4");
+	menusnd->addText(   "sound:              5");
+	menusnd->addText(   "sound:              6");
+	menusnd->addText(   "sound:              7");
+	menusnd->addText(   "sound:              8");
+	menuaudio->addMenuItem(menusnd);
+
+	menumusic = new MenuChoose(engine);
+	menumusic->addText( "music:            off");
+	menumusic->addText( "music:              1");
+	menumusic->addText( "music:              2");
+	menumusic->addText( "music:              3");
+	menumusic->addText( "music:              4");
+	menumusic->addText( "music:              5");
+	menumusic->addText( "music:              6");
+	menumusic->addText( "music:              7");
+	menumusic->addText( "music:              8");
+	menuaudio->addMenuItem(menumusic);
 
 	MenuFct* menuapply = new MyMenuApply("apply", NULL, engine);
-	menucfg->addMenuItem(menuapply);
+	menuaudio->addMenuItem(menuapply);
+	//menucfg->addMenuItem(menuapply);
 	menugfx->addMenuItem(menuapply);
 
 	MenuFct* menucancel = new MyMenuCancel("back", NULL, engine);
 	menucfg->addMenuItem(menucancel);
 	menugfx->addMenuItem(menucancel);
+	menuaudio->addMenuItem(menucancel);
 	menuload->addMenuItem(menucancel);
 
 	get_config();
