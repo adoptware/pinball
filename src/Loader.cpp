@@ -1,4 +1,4 @@
-//#ident "$Id: Loader.cpp,v 1.29 2003/05/21 17:54:51 henqvist Exp $"
+//#ident "$Id: Loader.cpp,v 1.30 2003/05/26 08:47:04 henqvist Exp $"
 /***************************************************************************
                             Loader.cpp -  description
                              -------------------
@@ -417,6 +417,12 @@ void Loader::loadBumperBehavior(ifstream & file, istringstream & ist, Engine * e
   BumperBehavior* beh = new BumperBehavior();
   group->setBehavior(beh);
   
+  if (this->cmpVersion(m_FileVersion, 0, 3, 0) >= 0) { // 0.3.0 and above
+    float power;
+    this->readNextToken(file, ist, power); 
+    beh->setPower(power);
+  }
+
   this->readNextToken(file, ist, str);
   if (str == "sound") {
     string soundname;
@@ -878,18 +884,7 @@ void Loader::readPolygonEdge(ifstream & file, istringstream & ist, Polygon3D* po
   EmReadCmp(file, ist, str, "{");
 
   this->readNextToken(file, ist, i);
-#if EM_USE_SHARED_COLOR
   poly->add(i);
-#else
-  float u, v, a, r, g, b;
-  this->readNextToken(file, ist, u);
-  this->readNextToken(file, ist, v);
-  this->readNextToken(file, ist, r);
-  this->readNextToken(file, ist, g);
-  this->readNextToken(file, ist, b);
-  this->readNextToken(file, ist, a);
-  poly->add(i, u, v, r, g, b, a);
-#endif
 
   EmReadCmp(file, ist, str, "}");
 
@@ -905,14 +900,12 @@ void Loader::readVertex(ifstream & file, istringstream & ist, Shape3D* shape) {
   this->readNextToken(file, ist, x);
   this->readNextToken(file, ist, y);
   this->readNextToken(file, ist, z);
-#if EM_USE_SHARED_COLOR
   this->readNextToken(file, ist, r);
   this->readNextToken(file, ist, g);
   this->readNextToken(file, ist, b);
   this->readNextToken(file, ist, a);
   this->readNextToken(file, ist, u);
   this->readNextToken(file, ist, v);
-#endif
 
   EmReadCmp(file, ist, str, "}");
 
@@ -1063,6 +1056,6 @@ void Loader::loadShape3dsAscii(ifstream & file, istringstream & ist,
   //EM_COUT("-Loader::loadShape3dsAscii", 0);
 }
 //#endif //--------------------------------------------------------------------
-//EOF $Id: Loader.cpp,v 1.29 2003/05/21 17:54:51 henqvist Exp $
+//EOF $Id: Loader.cpp,v 1.30 2003/05/26 08:47:04 henqvist Exp $
 
 

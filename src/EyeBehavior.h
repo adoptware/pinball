@@ -12,6 +12,38 @@
 #include "Behavior.h"
 #include "StateMachine.h"
 
+// locked view
+#define TX0 -1.75f
+#define TY0 40.0f
+#define TZ0 40.0f
+#define RX0 0.15f
+#define RY0 0.0f
+#define RZ0 0.0f
+
+// soft pan & scan view
+#define TX1 -1.75f 
+#define TY1 35.0f
+#define TZ1 37.0f
+#define RX1 0.14f
+#define RY1 0.0f
+#define RZ1 0.0f
+
+// moving pan & scan view
+#define TX2 -1.75f 
+#define TY2 32.0f
+#define TZ2 34.0f
+#define RX2 0.14f
+#define RY2 0.0f
+#define RZ2 0.0f
+
+// top view
+#define TX3 -1.75f 
+#define TY3 40.0f
+#define TZ3 10.0f
+#define RX3 0.23f
+#define RY3 0.0f
+#define RZ3 0.0f
+
 class Score;
 
 /**
@@ -33,6 +65,7 @@ class EyeBehavior : public Behavior {
   float m_fZNudge;
   int m_iSound;
   bool m_bTilt;
+  bool m_bFButton;
 };
 
 #endif // EYEBEHAVIOR_H
