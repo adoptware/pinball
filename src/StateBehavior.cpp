@@ -22,7 +22,8 @@ StateItem::StateItem() {
   m_iCollSig = -1;
   m_iSigDelay = 0;
   m_bLight = false;
-  m_iProperty = PBL_NULL;
+  m_iUserProperty = PBL_NULL;
+  m_iShapeProperty = 0;
   m_iSound = -1;
   m_iMusic = -1;
   m_iDelay = -1;
@@ -185,12 +186,20 @@ void StateBehavior::onTick() {
 }
 
 void StateBehavior::setState(StateItem* stateitem) {
+  EmAssert(p_CurrentStateItem != NULL, "Current state item NULL");
   if (stateitem == NULL) return;
-  this->getParent()->unsetUserProperty(p_CurrentStateItem->m_iProperty);
+  StateItem* previtem = p_CurrentStateItem;
   p_CurrentStateItem = stateitem;
 
   // set properties
-  this->getParent()->setUserProperty(p_CurrentStateItem->m_iProperty);
+  this->getParent()->unsetUserProperty(previtem->m_iUserProperty);
+  this->getParent()->setUserProperty(p_CurrentStateItem->m_iUserProperty);
+  // defaults to shape 0
+  Shape3D* shape = this->getParent()->getShape3D(0);   
+  if (shape != NULL) {
+    shape->unsetProperty(previtem->m_iShapeProperty);
+    shape->setProperty(p_CurrentStateItem->m_iShapeProperty);
+  }
   // apply texcoords
   if (m_bTexCoord) {
     // default to shape 0 TODO remove this thing, we can use shapes instead   
@@ -214,6 +223,7 @@ void StateBehavior::setState(StateItem* stateitem) {
       }                                         
     }
   }
+  // look out shapes conflicts with shape properties
   if (m_bShape) {
     vector<bool>::iterator iter = p_CurrentStateItem->m_vShapeEnable.begin();
     vector<bool>::iterator end = p_CurrentStateItem->m_vShapeEnable.end();
