@@ -37,6 +37,7 @@
 #endif
 #endif
 
+namespace std {}; // !+-rzr: must be definied before used  (msvc)
 using namespace std;
 
 // Dummy operator to make MSVC carp work ??
@@ -100,5 +101,9 @@ bool operator == (const PolygonEdge & peA, const PolygonEdge & peB) {
 #define EmAssert(a, b)
 #endif
 
+#define RZR_PATCHES //!+rzr : for win32 port + some upcoming stuff
+#ifdef RZR_PATCHES  
+#include "config-rzr.h" // in a separate file until a better integration
+#endif //!-rzr 
 
 #endif // PRIVATE_H
