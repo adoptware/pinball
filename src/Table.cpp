@@ -220,11 +220,12 @@ bool Table::getHighScoresData(list<string>& listHighScores) {
 }
 
 void Table::saveNewHighScore(int nNewHighScore, const char * name) {
-  // Remove the first element, it's the lowest score
+  // Remove the first element, it's the lowest score,
+  // a map is by always sorted.
   multimap<int, string>::iterator it = m_mapHighScores.begin();
   m_mapHighScores.erase(it);
 
-  m_mapHighScores.insert(it, pair<int, string>(nNewHighScore, name));
+  m_mapHighScores.insert(pair<int, string>(nNewHighScore, name));
 }
 
 //

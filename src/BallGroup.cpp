@@ -85,7 +85,7 @@ BallGroup::BallGroup(float r, float g, float b, int pbl) : Group() {
   { for (int a=0; a<8; ++a) {
     aFire[a] = new Group();
     aFireShape[a] = new BigSphere(1.2f - (float)a/10.0f, 1, 1, 1, 0, 0.3);
-    aFireShape[a]->setProperty(EM_SHAPE3D_ALLWAYSLIT | EM_SHAPE3D_HIDDEN);
+    aFireShape[a]->setProperty(EM_SHAPE3D_ALWAYSLIT | EM_SHAPE3D_HIDDEN);
     aFire[a]->addShape3D(aFireShape[a]);
     this->add(aFire[a]);
   } }
