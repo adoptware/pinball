@@ -1,10 +1,11 @@
+//#ident "$Id: AlignVisitor.cpp,v 1.5 2003/07/25 01:01:54 rzr Exp $"
 /***************************************************************************
                           AlignVisitor.cpp  -  description
                              -------------------
     begin                : Wed Jan 26 2000
     copyright            : (C) 2000 by Henrik Enqvist
     email                : henqvist@excite.com
- ***************************************************************************/
+***************************************************************************/
 
 #include "Private.h"
 #include "AlignVisitor.h"
@@ -42,21 +43,21 @@ AlignVisitor * AlignVisitor::getInstance() {
 /* Clean up camera matrix. */
 void AlignVisitor::empty() {
   if (p_GroupCamera == NULL) return;
-	
+        
   EM_COUT("AlignVisitor::empty()", 0);
   // backward matrix multiplication for the camera
   if (p_GroupCamera == NULL) {
     return;
   }
-	
+        
 #if EM_USE_ALLEGRO
-	Matrix mtxTmp;
-	Matrix mtxScale = EMath::identityMatrix;
-	mtxScale.v[0][0] = 0.8;
-	mtxScale.v[1][1] = -0.6;
-	mtxScale.v[2][2] = -1;
-	EMath::matrixMulti(mtxScale, p_GroupCamera->m_mtxTrans, mtxTmp);
-	EMath::inverse(mtxTmp, m_mtxInverse);
+  Matrix mtxTmp;
+  Matrix mtxScale = EMath::identityMatrix;
+  mtxScale.v[0][0] = 0.8;
+  mtxScale.v[1][1] = -0.6;
+  mtxScale.v[2][2] = -1;
+  EMath::matrixMulti(mtxScale, p_GroupCamera->m_mtxTrans, mtxTmp);
+  EMath::inverse(mtxTmp, m_mtxInverse);
 #else
   EMath::inverse(p_GroupCamera->m_mtxTrans, m_mtxInverse);
 #endif
@@ -84,12 +85,12 @@ void AlignVisitor::visit(Group * g) {
     //vector<Vertex3D>::iterator nmlAlignEnd = (*shapeIter)->m_vNmlAlign.end();
     
     EmAssert(((*shapeIter)->m_vVtxTrans.size () ==
-	      (*shapeIter)->m_vVtxAlign.size ()) &&
-	     ((*shapeIter)->m_vNmlTrans.size () ==
-	      (*shapeIter)->m_vNmlAlign.size ()), "size miss match");
+              (*shapeIter)->m_vVtxAlign.size ()) &&
+             ((*shapeIter)->m_vNmlTrans.size () ==
+              (*shapeIter)->m_vNmlAlign.size ()), "size miss match");
     
     for ( ; transIter != transEnd; 
-	  transIter++, alignIter++, nmlTransIter++, nmlAlignIter++) {
+          transIter++, alignIter++, nmlTransIter++, nmlAlignIter++) {
       // Translation and rotation needs to be applied in wrong order
       Vertex3D vtx;
       vtx.x = (*transIter).x + m_mtxInverse.t[0];
@@ -102,25 +103,25 @@ void AlignVisitor::visit(Group * g) {
       // TODO: optimize = macro instead of apply-fct calls, remove normalize
       
       EM_COUT("AlignVisitor::visit() " <<
-	      (*transIter).x <<" "<< (*transIter).y <<" "<< (*transIter).z <<" -> "<<
-	      (*alignIter).x <<" "<< (*alignIter).y <<" "<< (*alignIter).z, 0);
+              (*transIter).x <<" "<< (*transIter).y <<" "<< (*transIter).z <<" -> "<<
+              (*alignIter).x <<" "<< (*alignIter).y <<" "<< (*alignIter).z, 0);
     }
   }
   // Apply transform to BillBoard.
   if (g->p_BillBoard != NULL) {
     // Translation and rotation needs to be applied in wrong order
-    Vertex3D vtx;
+    Vertex3D vtx = { 0 , 0 , 0 } ; //!rzr UMR
     vtx.x = g->p_BillBoard->m_vtxTrans.x + m_mtxInverse.t[0];
     vtx.y = g->p_BillBoard->m_vtxTrans.y + m_mtxInverse.t[1];
     vtx.z = g->p_BillBoard->m_vtxTrans.z + m_mtxInverse.t[2];
     EMath::applyMatrixRot(m_mtxInverse, vtx,  g->p_BillBoard->m_vtxAlign);
     EM_COUT("AlignVisitor::visit() billboard " <<
-	    g->p_BillBoard->m_vtxTrans.x <<" "<< 
-	    g->p_BillBoard->m_vtxTrans.y <<" "<< 
-	    g->p_BillBoard->m_vtxTrans.z <<" -> "<< 
-	    g->p_BillBoard->m_vtxAlign.x <<" "<< 
-	    g->p_BillBoard->m_vtxAlign.y <<" "<< 
-	    g->p_BillBoard->m_vtxAlign.z , 0);
+            g->p_BillBoard->m_vtxTrans.x <<" "<< 
+            g->p_BillBoard->m_vtxTrans.y <<" "<< 
+            g->p_BillBoard->m_vtxTrans.z <<" -> "<< 
+            g->p_BillBoard->m_vtxAlign.x <<" "<< 
+            g->p_BillBoard->m_vtxAlign.y <<" "<< 
+            g->p_BillBoard->m_vtxAlign.z , 0);
   }
   // Apply transform to Light.
   if (g->p_Light != NULL) {
@@ -132,13 +133,13 @@ void AlignVisitor::visit(Group * g) {
     EMath::applyMatrixRot(m_mtxInverse, vtx,  g->p_Light->m_vtxAlign);
   }
   // Apply transform to oSound.
-  //	if (g->m_Sound != NULL) {
-  //		EMath::applyMatrix(mtxCamera, g->m_Sound->vtxTrans, g->m_Sound->vtxAlign);
-  //	}
+  //    if (g->m_Sound != NULL) {
+  //            EMath::applyMatrix(mtxCamera, g->m_Sound->vtxTrans, g->m_Sound->vtxAlign);
+  //    }
   
-//	Apply transform to oNestedBounds.
-//	if (g->m_CollisionBounds != NULL)	{
-//		this->visit(g->oNestedBounds);
-//	}
+  //    Apply transform to oNestedBounds.
+  //    if (g->m_CollisionBounds != NULL)       {
+  //            this->visit(g->oNestedBounds);
+  //    }
 }
 

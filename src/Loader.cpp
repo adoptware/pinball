@@ -1,4 +1,4 @@
-//#ident "$Id: Loader.cpp,v 1.34 2003/07/16 20:02:04 rzr Exp $"
+//#ident "$Id: Loader.cpp,v 1.35 2003/07/25 01:01:56 rzr Exp $"
 /***************************************************************************
                             Loader.cpp -  description
                              -------------------
@@ -485,7 +485,7 @@ void Loader::loadStateItem(ifstream & file, istringstream & ist, Engine * engine
   this->readNextToken(file, ist, cstate);
   this->readNextToken(file, ist, dstate);
   this->readNextToken(file, ist, delay);
-  StateItem* stateitem = new StateItem();
+  StateItem* stateitem = new StateItem(); //!rzr+ MLK
   stateitem->setActSig(this->getSignal(asig.c_str()));
   stateitem->setCollSig(this->getSignal(csig.c_str()));
   stateitem->setCollState(cstate);
@@ -625,7 +625,7 @@ void Loader::loadStateBehavior(ifstream & file, istringstream & ist, Engine * en
 
   EmReadCmp(file, ist, str, "{");
 		
-  StateBehavior* b = new StateBehavior();
+  StateBehavior* b = new StateBehavior(); //!+rzr MLK
   group->setBehavior(b);
 
   this->loadMisc(file, ist, engine, group, b);
@@ -1169,4 +1169,4 @@ void Loader::loadGroup3dsAscii(ifstream & file, istringstream & ist,
   EM_COUT("- Loader::loadGroup3dsAscii", 1);
 }
 #endif //--------------------------------------------------------------------
-//EOF $Id: Loader.cpp,v 1.34 2003/07/16 20:02:04 rzr Exp $
+//EOF $Id: Loader.cpp,v 1.35 2003/07/25 01:01:56 rzr Exp $
