@@ -64,10 +64,20 @@ bool operator == (const PolygonEdge & peA, const PolygonEdge & peB) {
 
 extern Matrix identityMatrix;
 
-//#define EM_DEBUG 0
-
 #ifndef EM_DEBUG
-#define EM_DEBUG 1
+#define EM_DEBUG 0
+#endif
+
+#ifndef EM_DEBUG_COLLISION 
+#define EM_DEBUG_COLLISION 0
+#endif
+
+#ifndef EM_USE_GLOBAL_SPECULAR
+#define EM_USE_GLOBAL_SPECULAR 0
+#endif
+
+#ifndef EM_USE_SOURCE_SPECULAR
+#define EM_USE_SOURCE_SPECULAR 1
 #endif
 
 #if EM_DEBUG

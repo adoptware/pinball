@@ -13,6 +13,7 @@
 #include "Shape3D.h"
 #include "Polygon.h"
 #include "BillBoard.h"
+#include "Config.h"
 
 #ifndef VERTEXARRAY
 #define VERTEXARRAY 0
@@ -45,10 +46,22 @@ void OpenGLVisitor::visit(Group* g) {
 		if (EM_SHAPE3D_HIDDEN & (*shapeIter)->m_iProperties) continue;
 		if (EM_SHAPE3D_TRANS & (*shapeIter)->m_iProperties) continue;
 
+		if ((*shapeIter)->m_iProperties & EM_SHAPE3D_DOUBLE) {
+			glDisable(GL_CULL_FACE);
+		} else {
+			glEnable(GL_CULL_FACE);
+		}
+
 		// the shape has a texture
 		if ((*shapeIter)->m_Texture != NULL) { 
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, *((*shapeIter)->m_Texture));
+
+			int filter = Config::getInstance()->getGLFilter();
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 			if (g->m_iProperties & EM_GROUP_NO_LIGHT) {
 				glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
@@ -188,7 +201,13 @@ void OpenGLVisitor::visit(Group* g) {
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, *(b->m_Texture));
 		
-		// blending not done yet
+		int filter = Config::getInstance()->getGLFilter();
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		// no blending
 		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
 		// should some pixels be masked

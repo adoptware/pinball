@@ -93,15 +93,19 @@ int Shape3D::add(float x, float y, float z) {
 
 	return m_vVtxSrc.size() - 1;
 }
-/*
- * Gets a vertex by index.
- */
+
 Vertex3D * Shape3D::getVertex3D(int index) {
 	if ( index < 0 || (unsigned)index >= m_vVtxSrc.size() ) {
-		EmAssert ( false, "Shape3D::getVertex() requested unknown vertex." );
 		return NULL;
 	}
 	return &(m_vVtxSrc[index]);
+}
+
+Polygon * Shape3D::getPolygon(int index) {
+	if ( index < 0 || (unsigned)index >= m_vPolygon.size() ) {
+		return NULL;
+	}
+	return m_vPolygon[index];
 }
 
 int Shape3D::find(float x, float y, float z, float diff) {

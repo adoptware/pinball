@@ -13,6 +13,7 @@
 #include "Shape3D.h"
 #include "Polygon.h"
 #include "BillBoard.h"
+#include "Config.h"
 
 OpenGLTransVisitor * OpenGLTransVisitor::p_OpenGLTransVisitor = NULL;
 
@@ -40,10 +41,22 @@ void OpenGLTransVisitor::visit(Group* g) {
 		if (EM_SHAPE3D_HIDDEN & (*shapeIter)->m_iProperties) continue;
 		if (!(EM_SHAPE3D_TRANS & (*shapeIter)->m_iProperties)) continue;
 
+		if ((*shapeIter)->m_iProperties & EM_SHAPE3D_DOUBLE) {
+			glDisable(GL_CULL_FACE);
+		} else {
+			glEnable(GL_CULL_FACE);
+		}
+
 		// the shape has a texture
 		if ((*shapeIter)->m_Texture != NULL) { 
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, *((*shapeIter)->m_Texture));
+
+			int filter = Config::getInstance()->getGLFilter();
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 			if (g->m_iProperties & EM_GROUP_NO_LIGHT) {
 				glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
@@ -115,13 +128,13 @@ void OpenGLTransVisitor::visit(Group* g) {
 										 (*shapeIter)->m_vNmlTrans[(*indexIter)].y,
 										 (*shapeIter)->m_vNmlTrans[(*indexIter)].z);
 #else
-					/* transparent polygons should not be lit 
+					/* transparent polygons should not be lit */
 					glColor4f((*colorIter).r * (*shapeIter)->m_vLight[(*indexIter)].r,
 										(*colorIter).g * (*shapeIter)->m_vLight[(*indexIter)].g,
 										(*colorIter).b * (*shapeIter)->m_vLight[(*indexIter)].b,
 										(*colorIter).a);
-					*/
-					glColor4f((*colorIter).r, (*colorIter).g, (*colorIter).b, (*colorIter).a);
+					
+					//glColor4f((*colorIter).r, (*colorIter).g, (*colorIter).b, (*colorIter).a);
 #endif
 					glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
 										 (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
@@ -143,7 +156,13 @@ void OpenGLTransVisitor::visit(Group* g) {
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, *(b->m_Texture));
 		
-		// blending not done yet
+		int filter = Config::getInstance()->getGLFilter();
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		// no blending 
 		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
 		// should some pixels be masked

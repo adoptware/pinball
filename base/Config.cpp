@@ -41,6 +41,7 @@ void Config::setDefault() {
 	m_iHeight = 480;
 	m_bSound = true;
 	m_iBpp = 16;
+	m_iGLFilter = GL_LINEAR;
 	m_bFullScreen = false;
 	m_bExternGL = false;
 }
@@ -116,6 +117,10 @@ void Config::loadArgs(int & argc, char *argv[]) {
    	} else if (strcmp(argv[a], "-nosound") == 0) {
 			m_bSound = false;
 			EM_COUT("Disabling sound", 1);
+			REMOVEARG(a, argc, argv);
+   	} else if (strcmp(argv[a], "-nearest") == 0) {
+			m_iGLFilter = GL_NEAREST;
+			EM_COUT("Using nearest for texture mapping", 1);
 			REMOVEARG(a, argc, argv);
    	} else if (strcmp(argv[a], "-externgl") == 0) {
 			m_bExternGL = true;

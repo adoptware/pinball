@@ -58,27 +58,27 @@ if (g_mutexRender == NULL) { \
 #define CHECK_MUTEX()
 #endif
 
+
+SDL_mutex * g_mutexRender = NULL;
+SDL_Thread * g_threadRender = NULL;
+volatile bool g_bRender = true;
+
+volatile int g_iStartTime = -1;
+volatile int g_iDesiredTime = -1;
+
 volatile int g_iLoops = 0;
 volatile int g_iSeconds = 0;
 
 volatile int g_aFunction[20] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 volatile int g_iCurrentFct = 0;
 
-volatile int g_iStartTime = -1;
-volatile int g_iDesiredTime = -1;
-
-SDL_mutex * g_mutexRender = NULL;
-SDL_Thread * g_threadRender = NULL;
-volatile bool g_bRender = true;
-
-/*
-Uint32 callBack(Uint32 interval) {
+#if EM_DEBUG
+Uint32 fctCallBack(Uint32 interval) {
 	g_iSeconds++;
   g_aFunction[g_iCurrentFct]++;
   return interval;
 }
-*/
-
+#endif // EM_DEBUG
 
 Engine::Engine(int & argc, char *argv[]) {
 	m_Background = NULL;
@@ -88,6 +88,9 @@ Engine::Engine(int & argc, char *argv[]) {
 
 	if (!config->useExternGL()) {
 		this->initGrx();
+#if EM_DEBUG
+		SDL_SetTimer(100, fctCallBack); 
+#endif
 	}
 	if (config->useSound()) {
 		this->initSound();
@@ -101,7 +104,8 @@ Engine::Engine(int & argc, char *argv[]) {
 Engine::~Engine() {
 	SDL_DestroyMutex(g_mutexRender);
 	SDL_Quit();
-	
+
+#if EM_DEBUG	
 	cerr << "Function null " << g_aFunction[0] << endl;
 	cerr << "Function align " << g_aFunction[ALIGN] << endl;
 	cerr << "Function beh " << g_aFunction[BEH] << endl;
@@ -121,7 +125,8 @@ Engine::~Engine() {
 	cerr << "Function tick out " << g_aFunction[TICK_OUT] << endl;
 	//	cerr << "Seconds " << ((float)g_iSeconds/FPS) <<" " << ((float)g_iLoops*FPS/g_iSeconds) 
 	//			 << " fps" << endl;
-	cerr << "Fps " << (float)(g_iLoops)*1000 / SDL_GetTicks() << endl;
+	cerr << "Fps " << (float)(g_iLoops)*1000 / (SDL_GetTicks()-g_iStartTime) << endl;
+#endif
 }
 
 
@@ -180,10 +185,14 @@ void Engine::initGrx() {
 	SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
 
 	/* Initialize the display */
-	SDL_Surface* screen = SDL_SetVideoMode(config->getWidth(), config->getHeight(), 
-																				 config->getBpp(), 
-																				 SDL_OPENGL | 
-																				 (config->useFullScreen() ? SDL_FULLSCREEN : 0));
+	SDL_Surface* screen = SDL_SetVideoMode(config->getWidth(), config->getHeight(), config->getBpp(), 
+																				 SDL_OPENGL | (config->useFullScreen() ? SDL_FULLSCREEN : 0));
+
+	if (config->useFullScreen()) {
+		SDL_ShowCursor(SDL_DISABLE);
+	}
+	SDL_WM_SetCaption("Emilia Pinball", NULL);
+
 	if (screen == NULL) {
 		cerr << "Couldn't set video mode: " << SDL_GetError() << endl;
 		exit(1);
@@ -403,21 +412,25 @@ void Engine::tick() {
 }
 
 /* ATTENTION! This function wraps after ~49 days */
-bool Engine::limitFPS(int delay) {
-	if (g_iStartTime = -1) {
+bool Engine::limitFPS(int fps) {
+	int delay = 0;
+	if (fps > 0) {
+		delay = 1000/fps;
+	}
+	if (g_iStartTime == -1) {
 		g_iDesiredTime = g_iStartTime = SDL_GetTicks();
 	}
 	g_iDesiredTime += delay;
 	int time = SDL_GetTicks();
 	int realdelay = (g_iDesiredTime - time);
-	if (delay < 0) {
-		return false;
-	} else {
-		SDL_Delay(delay);
-		return true;
-	}
-	if (delay < -1000) {
+	if (realdelay < -1000) {
 		cerr << "TO SLOW" << endl;
 		g_iDesiredTime = time;
+	} else if (realdelay < 0) {
+		return false;
+	} else {
+		while (SDL_GetTicks() < g_iDesiredTime);
+		//SDL_Delay(delay);
+		return true;
 	}
 }
