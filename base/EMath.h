@@ -81,7 +81,7 @@ class EMath {
   ~EMath();
 
   inline static void applyMatrix(const Matrix & mtx, const Vertex3D & vtxIn, 
-				 Vertex3D & vtxOut) {
+                                 Vertex3D & vtxOut) {
     vtxOut.x = vtxIn.x * mtx.v[0][0] + vtxIn.y * mtx.v[0][1] 
       + vtxIn.z * mtx.v[0][2] + mtx.t[0];
     vtxOut.y = vtxIn.x * mtx.v[1][0] + vtxIn.y * mtx.v[1][1] 
@@ -89,13 +89,20 @@ class EMath {
     vtxOut.z = vtxIn.x * mtx.v[2][0] + vtxIn.y * mtx.v[2][1] 
       + vtxIn.z * mtx.v[2][2] + mtx.t[2];
   };
-  static void applyMatrixRot(const Matrix & mtx, const Vertex3D & vtxIn, Vertex3D & vtxOut);
+  inline static void applyMatrixRot(const Matrix & mtx, const Vertex3D & vtxIn, 
+                             Vertex3D & vtxOut) {
+    vtxOut.x = vtxIn.x * mtx.v[0][0] + vtxIn.y * mtx.v[0][1] + vtxIn.z * mtx.v[0][2];
+    vtxOut.y = vtxIn.x * mtx.v[1][0] + vtxIn.y * mtx.v[1][1] + vtxIn.z * mtx.v[1][2];
+    vtxOut.z = vtxIn.x * mtx.v[2][0] + vtxIn.y * mtx.v[2][1] + vtxIn.z * mtx.v[2][2];
+  };
   static void applyMatrixTrans(const Matrix & mtx, const Vertex3D & vtxIn, Vertex3D & vtxOut);
   static void crossProduct(const Vertex3D & vtxA, const Vertex3D & vtxB, Vertex3D & vtxOut);
   // static void getCameraMatrix(Matrix & mtx, const Vertex3D & trans, Vertex3D & front, 
   // Vertex3D & up, float fov, float aspect);
-  static void getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT, const Vertex3D & vtxR);
-  static void getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT, const Quaternion & qRot);
+  static void getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT, 
+                                      const Vertex3D & vtxR, const Vertex3D & vtxS);
+  static void getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT, 
+                                      const Quaternion & qRot, const Vertex3D & vtxS);
   static void inverse(const Matrix & mtx, Matrix & inv);
   static void matrixMulti(const Matrix & mtxA, const Matrix & mtxB, Matrix & mtxOut);
 

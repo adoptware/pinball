@@ -11,7 +11,7 @@
 #include "Cube.h"
 #include "KeyRotBehavior.h"
 #include "Keyboard.h"
-#include "Cylinder.h"
+//#include "Cylinder.h"
 
 /** Main */
 int main(int argc, char *argv[]) {
@@ -29,8 +29,8 @@ int main(int argc, char *argv[]) {
 	groupCamera->setTranslation(0, 0, 3);
 	engine->setEngineCamera(groupCamera);
 	// Add a cube.
-	//Cube* cube = new Cube(1.0, 1.0, 1.0, 0.0, 1.0);
-	Shape3D * cube = new Cylinder(1.0f, 32, 1.0f, 1.0f, 0.0f, 1.0f);
+	Cube* cube = new Cube(1.0, 1.0, 1.0, 0.0, 1.0);
+	//Shape3D * cube = new Cylinder(1.0f, 32, 1.0f, 1.0f, 0.0f, 1.0f);
 	Group* groupCube = new Group();
 	engine->add(groupCube);
 	groupCube->addShape3D(cube);

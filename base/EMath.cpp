@@ -40,12 +40,6 @@ EMath::~EMath() {
 //   vtxOut.z = vtxIn.x * mtx.v[2][0] + vtxIn.y * mtx.v[2][1] + vtxIn.z * mtx.v[2][2] + mtx.t[2];
 // }
 
-void EMath::applyMatrixRot(const Matrix & mtx, const Vertex3D & vtxIn, Vertex3D & vtxOut) {
-	vtxOut.x = vtxIn.x * mtx.v[0][0] + vtxIn.y * mtx.v[0][1] + vtxIn.z * mtx.v[0][2];
-	vtxOut.y = vtxIn.x * mtx.v[1][0] + vtxIn.y * mtx.v[1][1] + vtxIn.z * mtx.v[1][2];
-	vtxOut.z = vtxIn.x * mtx.v[2][0] + vtxIn.y * mtx.v[2][1] + vtxIn.z * mtx.v[2][2];
-}
-
 void EMath::applyMatrixTrans(const Matrix & mtx, const Vertex3D & vtxIn, Vertex3D & vtxOut) {
 	vtxOut.x = vtxIn.x + mtx.t[0];
 	vtxOut.y = vtxIn.y + mtx.t[1];
@@ -95,7 +89,8 @@ float EMath::emPow(float x, float y) {
 }
 
 /* */
-void EMath::getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT, const Vertex3D & vtxR) {
+void EMath::getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT, 
+                                    const Vertex3D & vtxR, const Vertex3D & vtxS) {
 	float sin_x = EMath::emSin(vtxR.x);
   float cos_x = EMath::emCos(vtxR.x);
 
@@ -108,40 +103,41 @@ void EMath::getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT, const V
   float sinx_siny = sin_x * sin_y;
   float cosx_siny = cos_x * sin_y;
 
-  mtx.v[0][0] = cos_y * cos_z;
+  mtx.v[0][0] = cos_y * cos_z * vtxS.x;
   mtx.v[0][1] = cos_y * sin_z;
   mtx.v[0][2] = -sin_y;
 
   mtx.v[1][0] = (sinx_siny * cos_z) - (cos_x * sin_z);
-  mtx.v[1][1] = (sinx_siny * sin_z) + (cos_x * cos_z);
+  mtx.v[1][1] = (sinx_siny * sin_z) + (cos_x * cos_z) * vtxS.y;
   mtx.v[1][2] = sin_x * cos_y;
 
   mtx.v[2][0] = (cosx_siny * cos_z) + (sin_x * sin_z);
   mtx.v[2][1] = (cosx_siny * sin_z) - (sin_x * cos_z);
-  mtx.v[2][2] = cos_x * cos_y;
+  mtx.v[2][2] = cos_x * cos_y * vtxS.z;
 
   mtx.t[0] = vtxT.x;
   mtx.t[1] = vtxT.y;
   mtx.t[2] = vtxT.z;
 }
 
-void EMath::getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT, const Quaternion & qRot) {
+void EMath::getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT, 
+                                    const Quaternion & qRot, const Vertex3D & vtxS) {
   // a lean function for filling m[16] with
   // a 4x4 transformation matrix based on 
   // translation v and rotation q
   // This routine would likely be used by an opengl
   // programmer calling glmultmatrix()
-  mtx.v[0][0] = 1 - 2*(qRot.y*qRot.y + qRot.z*qRot.z);
+  mtx.v[0][0] = 1 - 2*(qRot.y*qRot.y + qRot.z*qRot.z) * vtxS.x;
   mtx.v[0][1] = 2*(qRot.x*qRot.y + qRot.w*qRot.z);
   mtx.v[0][2] = 2*(qRot.x*qRot.z - qRot.w*qRot.y);
 
   mtx.v[1][0] = 2*(qRot.x*qRot.y - qRot.w*qRot.z);	
-  mtx.v[1][1] = 1 - 2*(qRot.x*qRot.x + qRot.z*qRot.z);
+  mtx.v[1][1] = 1 - 2*(qRot.x*qRot.x + qRot.z*qRot.z) * vtxS.y;
   mtx.v[1][2] = 2*(qRot.y*qRot.z + qRot.w*qRot.x);
 
   mtx.v[2][0] = 2*(qRot.x*qRot.z + qRot.w*qRot.y); 
   mtx.v[2][1] = 2*(qRot.y*qRot.z - qRot.w*qRot.x); 
-  mtx.v[2][2] = 1-2*(qRot.x*qRot.x + qRot.y*qRot.y);
+  mtx.v[2][2] = 1-2*(qRot.x*qRot.x + qRot.y*qRot.y) * vtxS.z;
   /*
   mtx.v[0][0] = 1 - 2*(qRot.y*qRot.y + qRot.z*qRot.z);
   mtx.v[1][0] = 2*(qRot.x*qRot.y + qRot.w*qRot.z);

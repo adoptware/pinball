@@ -18,6 +18,9 @@ Node::Node() {
   m_vtxR.x = 0;
   m_vtxR.y = 0;
   m_vtxR.z = 0;
+  m_vtxS.x = 1;
+  m_vtxS.y = 1;
+  m_vtxS.z = 1;
 }
 
 Node::~Node() {
@@ -30,7 +33,7 @@ void Node::setTransform(float tx, float ty, float tz, float rx, float ry, float 
   m_vtxR.x = rx;
   m_vtxR.y = ry;
   m_vtxR.z = rz;
-  EMath::getTransformationMatrix(m_mtxSrc, m_vtxT, m_vtxR);
+  EMath::getTransformationMatrix(m_mtxSrc, m_vtxT, m_vtxR, m_vtxS);
 }
 
 void Node::addTransform(float tx, float ty, float tz, float rx, float ry, float rz) {
@@ -40,14 +43,14 @@ void Node::addTransform(float tx, float ty, float tz, float rx, float ry, float 
   m_vtxR.x += rx;
   m_vtxR.y += ry;
   m_vtxR.z += rz;
-  EMath::getTransformationMatrix(m_mtxSrc, m_vtxT, m_vtxR);
+  EMath::getTransformationMatrix(m_mtxSrc, m_vtxT, m_vtxR, m_vtxS);
 }
 
 void Node::setRotation(float x, float y, float z) {
   m_vtxR.x = x;
   m_vtxR.y = y;
   m_vtxR.z = z;
-  EMath::getTransformationMatrix(m_mtxSrc, m_vtxT, m_vtxR);
+  EMath::getTransformationMatrix(m_mtxSrc, m_vtxT, m_vtxR, m_vtxS);
 }
 
 void Node::getRotation(float & x, float & y, float & z) {
@@ -60,7 +63,27 @@ void Node::addRotation(float x, float y, float z) {
   m_vtxR.x += x;
   m_vtxR.y += y;
   m_vtxR.z += z;
-  EMath::getTransformationMatrix(m_mtxSrc, m_vtxT, m_vtxR);
+  EMath::getTransformationMatrix(m_mtxSrc, m_vtxT, m_vtxR, m_vtxS);
+}
+
+void Node::setScale(float x, float y, float z) {
+  m_vtxS.x = x;
+  m_vtxS.y = y;
+  m_vtxS.z = z;
+  EMath::getTransformationMatrix(m_mtxSrc, m_vtxT, m_vtxR, m_vtxS);
+}
+
+void Node::getScale(float & x, float & y, float & z) {
+  x = m_vtxS.x;
+  y = m_vtxS.y;
+  z = m_vtxS.z;
+}
+
+void Node::addScale(float x, float y, float z) {
+  m_vtxS.x += x;
+  m_vtxS.y += y;
+  m_vtxS.z += z;
+  EMath::getTransformationMatrix(m_mtxSrc, m_vtxT, m_vtxR, m_vtxS);
 }
 
 void Node::setTranslation(float x, float y, float z) {
