@@ -4,6 +4,7 @@
  The arrow keys rotates the cube.
  ***************************************************************************/
 
+#include "Private.h"
 #include "Engine.h"
 #include "Camera.h"
 #include "Cube.h"
@@ -49,12 +50,16 @@ int main(int argc, char *argv[]) {
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
 		engine->tick();
 		engine->render();
-		font->print("the brown fox jumped over", -1, 1);
-		font->print("the lazy dog :;<=>?@ {}", -1, 1-EM_FONTSIZE_Y*2);
-		font->print("1234567890 !\"#$\%&'()*+,-./", -1, 1-EM_FONTSIZE_Y*3);
-		font->print("press esc to quit", -1, 1-EM_FONTSIZE_Y*4);
+		font->printRow("the brown fox jumped over",  0);
+		font->printRow("the lazy dog :;<=>?@ {}", 1);
+		font->printRow("1234567890 !\"#$%&'()*+,-./", 2);
+		font->printRow("press esc to quit", 3);
 		engine->swap();
 	}
 	delete(engine);
 	return 0;
 }
+
+#if EM_USE_ALLEGRO
+END_OF_MAIN();
+#endif

@@ -1,35 +1,56 @@
 /***************************************************************************
- Sound test.
+ Simple test. A cube should be visible in the middle of the screen.
+ The arrow keys rotates the cube.
  ***************************************************************************/
 
+#include "Private.h"
 #include "Engine.h"
 #include "Camera.h"
+#include "Cube.h"
+#include "KeyRotBehavior.h"
 #include "Keyboard.h"
 #include "SoundUtil.h"
 
-/**
- * Main
- */
+/** Main */
 int main(int argc, char *argv[]) {
-	cerr << "Simple emilia test." << endl;
+	cerr << "Sound test." << endl;
 
-	if (argc < 2) {
-		cerr << "Usage: sound <wave-file>>" << endl;
-		return 0;
+	if (argc < 3) {
+		cerr << "Usage: sound <file.wav> <file.mid>" << endl;
+		return -1;
 	}
-
 	// Create the engine.
 	Engine* engine = new Engine(argc, argv);
 
-	// Load waves
-	EmSound wave = SoundUtil::loadSample(argv[1]);
-
-	SoundUtil::play(wave, true);
-
-	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
-		engine->tick();
+	if (argc < 3) {
+		cerr << "Usage: sound <file.wav> <file.mid>" << endl;
+		return -1;
 	}
 
-	delete(engine);
+	int sound = SoundUtil::getInstance()->loadSample(argv[1]);
+	if (sound < 0) {
+		cerr << "Sound not loaded" << endl;
+		return -1;
+	}
+
+	int music = SoundUtil::getInstance()->loadMusic(argv[2]);
+	if (music < 0) {
+		cerr << "Sound not loaded" << endl;
+		return -1;
+	}
+	SoundUtil::getInstance()->playMusic(music, true);
+
+	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
+		if (Keyboard::isKeyDown(SDLK_SPACE)) {
+			SoundUtil::getInstance()->playSample(sound, false);
+		}
+		engine->tick();
+		engine->delay(20);
+	}
+	//delete(engine);
 	return 0;
 }
+
+#if EM_USE_ALLEGRO
+END_OF_MAIN();
+#endif

@@ -1,12 +1,12 @@
 /***************************************************************************
-                          BouBeh.cpp  -  description
+                          BumperBehavopr.cpp  -  description
                              -------------------
     begin                : Thu Mar 9 2000
     copyright            : (C) 2000 by 
     email                : 
  ***************************************************************************/
 
-
+#include "Private.h"
 #include "BumperBehavior.h"
 #include "Group.h"
 #include "Pinball.h"
@@ -18,7 +18,6 @@
 BumperBehavior::BumperBehavior() : Behavior() {
 	m_iLightCounter = -1;
 	m_iSound = -1;
-	p_Light = NULL;
 	this->setType(PBL_TYPE_BUMPERBEH);
 }
 
@@ -39,7 +38,8 @@ void BumperBehavior::StdOnCollision() {
 		}
 		m_iLightCounter = 20;
 		SetLightOn(true);
+		SendSignal(PBL_SIG_BUMPER_ON, 0, this->getParent(), NULL);
 		Score::getInstance()->addScore(450);
-		SoundUtil::getInstance()->play(m_iSound, false);
+		SoundUtil::getInstance()->playSample(m_iSound, false);
 	}
 }

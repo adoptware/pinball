@@ -9,12 +9,15 @@
 #ifndef STDANIMATION_H
 #define STDANIMATION_H
 
+#define EM_TYPE_STDANIMATION 1001
+
 #define EM_ROTATION		1
 #define EM_TRANSLATION	2
 #define EM_LIGHT 4
 #define EM_BILLBOARD_SIZE 8
 
-#include "Private.h"
+#include <vector>
+
 #include "EMath.h"
 #include "Behavior.h"
 #include "StateMachine.h"
@@ -37,15 +40,15 @@ class Group;
  * to the animation.
  *
  * Example:
- * 	Group* group = new Group(1);
- *	Animation anim = new Animation(20, E_TRANSLATION);
+ * 	Group* group = new Group();
+ *	StdAnimation anim = new StdAnimation(20, E_TRANSLATION);
  *	
  *  anim->add(0, 0, 0);
  *	anim->add(100, 0, 0);
  *	anim->add(0, 100, 0);
  *  anim->setEnd(0, 0, 0);
  *	
- *  group->setAnimation(anim);
+ *  group->addBehavior(anim);
  *
  * This example will create an animation which moves the group from origo to (100, 0 ,0) 
  * and then to (0, 100, 0) and back towards origo. Each movement will last for 20 engine 
@@ -60,9 +63,11 @@ class StdAnimation : public Behavior {
 		void onTick();
 		void add(float, float, float);
 		void setEnd(float, float, float);
-		/** <p>Sets the end point to the first point.</p> */
+		/** Sets the end point to the first point. */
 		void setEndStart();
-
+		inline void setStep(int s) {	m_iStep = s; };
+		inline void setAnimType(int t) { m_iAnimType = t; };
+		inline void clear() { m_vVertex.clear(); };
 		void StdOnSignal() {};
 		void StdOnCollision() {};
 	private:
@@ -70,7 +75,7 @@ class StdAnimation : public Behavior {
 		int m_iStep;
 		int m_iTick;
 		int m_iIndex;
-		int m_iType;
+		int m_iAnimType;
 		Vertex3D m_vtxEnd;
 };
 

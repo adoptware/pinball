@@ -1,9 +1,9 @@
 /***************************************************************************
-                          KeyBeh.h  -  description
+                          EyeBehavior.h  -  description
                              -------------------
     begin                : Wed Jan 26 2000
-    copyright            : (C) 2000 by 
-    email                : 
+    copyright            : (C) 2000 by Henrik Enqvist
+    email                : henqvist@excite.com
  ***************************************************************************/
 
 #ifndef EYEBEHAVIOR_H
@@ -24,7 +24,7 @@ class EyeBehavior : public Behavior {
 	void onTick();
 	void StdOnSignal();
 	void StdOnCollision() { EmAssert(false, "EyeBehavior::StdOnCollision() not implemented"); };
-	void setSound(int s) { m_iSound = s; };
+	inline void setSound(int s) { m_iSound = s; };
  private:
 	int m_iNudgeTick;
 	int m_iNudgeType;

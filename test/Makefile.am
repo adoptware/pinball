@@ -1,28 +1,40 @@
 AUTOMAKE_OPTIONS = gnu
 
-noinst_PROGRAMS = simple light texture load explode collision signal billboard font thread menu
+noinst_PROGRAMS = simple light texture load explode collision signal billboard font thread menu joy sound trans math misc varray unittest
+dnl noinst_PROGRAMS = unittest
 
-INCLUDES = -I../base -I../addon -I../visitor
-LDADD = ../base/libemilia_base.a ../addon/libemilia_addon.a ../visitor/libemilia_visitor.a
+INCLUDES = -I../base -I../addon -I../visitor -I../src @INCLTDL@
+dnl LDADD = ../src/libemilia_pin.la ../addon/libemilia_addon.la ../base/libemilia_base.la
+LDADD = ../src/libemilia_pin.a ../addon/libemilia_addon.a ../base/libemilia_base.a @LIBLTDL@
 
-simple_SOURCES = simple.cpp
+noinst_LTLIBRARIES = libemilia_module_test.la
 
-light_SOURCES = light.cpp
+libemilia_module_test_la_LDFLAGS = -module
+libemilia_module_test_la_SOURCES = moduletest.cpp
 
-texture_SOURCES = texture.cpp
-
-load_SOURCES = load.cpp
-
-explode_SOURCES = explode.cpp
-
-collision_SOURCES = collision.cpp
-
-signal_SOURCES = signal.cpp
+unittest_LDFLAGS += -export-dynamic
+load_LDFLAGS += -export-dynamic
 
 billboard_SOURCES = billboard.cpp
-
+collision_SOURCES = collision.cpp
+explode_SOURCES = explode.cpp
 font_SOURCES = font.cpp
-
-thread_SOURCES = thread.cpp
-
+joy_SOURCES = joy.cpp
+light_SOURCES = light.cpp
+load_SOURCES = load.cpp
+math_SOURCES = math.cpp
 menu_SOURCES = menu.cpp
+misc_SOURCES = misc.cpp
+signal_SOURCES = signal.cpp
+simple_SOURCES = simple.cpp
+sound_SOURCES = sound.cpp
+texture_SOURCES = texture.cpp
+thread_SOURCES = thread.cpp
+trans_SOURCES = trans.cpp
+unittest_SOURCES = unittest.cpp
+varray_SOURCES = varray.cpp
+
+EXTRA_DIST = \
+module.txt \
+script.txt \
+token.txt
