@@ -63,6 +63,12 @@ void OpenGLVisitor::visit(Group* g) {
 			glAlphaFunc(GL_GREATER, 0.05);
 		}
 
+		if (EM_SHAPE3D_FLAT & (*shapeIter)->m_iProperties) {
+			glShadeModel(GL_FLAT);
+		} else {
+			glShadeModel(GL_SMOOTH);
+		}
+
 		EM_COUT("OpenGLVisitor::visit() "<< (*shapeIter)->m_vPolygon.size() 
 						<<" polygons", 0);
 		// Clip, project and draw all polygons in Shape3D.

@@ -16,7 +16,7 @@
 
 
 void Shape3DUtil::readUnknown(ifstream & file) {
-	EM_COUT("loading unknown", 1);
+	EM_COUT("loading unknown", 0);
 	string str;
 	file >> str; if (str != "{") throw string("parse error");
 
@@ -26,6 +26,36 @@ void Shape3DUtil::readUnknown(ifstream & file) {
 		if (str == "{") brackets++;
 		if (str == "}") brackets--;
 	}
+}
+
+void Shape3DUtil::readTrans(ifstream & file, Shape3D* shape) {
+	EM_COUT("loading transparent", 1);
+	string str;
+	file >> str; 
+	if (str != "{") throw string("parse error");
+	file >> str; 
+	if (str != "}") throw string("parse error");
+	shape->setProperty(EM_SHAPE3D_TRANS);
+}
+
+void Shape3DUtil::readDouble(ifstream & file, Shape3D* shape) {
+	EM_COUT("loading double sided", 1);
+	string str;
+	file >> str; 
+	if (str != "{") throw string("parse error");
+	file >> str; 
+	if (str != "}") throw string("parse error");
+	//shape->setProperty(EM_SHAPE3D_DOUBLE);
+}
+
+void Shape3DUtil::readFlat(ifstream & file, Shape3D* shape) {
+	EM_COUT("loading flat", 1);
+	string str;
+	file >> str; 
+	if (str != "{") throw string("parse error");
+	file >> str; 
+	if (str != "}") throw string("parse error");
+	shape->setProperty(EM_SHAPE3D_FLAT);
 }
 
 void Shape3DUtil::readPolygon(ifstream & file, Shape3D* shape) {
@@ -101,6 +131,12 @@ void Shape3DUtil::readShape3D(ifstream & file, Shape3D* shape) {
 			Shape3DUtil::readVertex(file, shape);
 		} else if (str == "ply") {
 			Shape3DUtil::readPolygon(file, shape);
+		} else if (str == "tpt") {
+			Shape3DUtil::readTrans(file, shape);
+		} else if (str == "dbl") {
+			Shape3DUtil::readDouble(file, shape);
+		} else if (str == "flt") {
+			Shape3DUtil::readFlat(file, shape);
 		} else {
 			Shape3DUtil::readUnknown(file);
 		}

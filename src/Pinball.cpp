@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
 	engine->setEngineCamera(groupCR);
 
 	// Load from file
-	loadFile("data/pinballtmp.pbl", engine);
+	newloadFile("data/pinballnew.pbl", engine);
 
 	// Add pinball floor
 	Group* groupG = new Group();
@@ -164,7 +164,7 @@ int main(int argc, char *argv[]) {
 			Keyboard::waitForKey();
 			Keyboard::clear();
 		}
-		engine->limitFPS(25);
+		engine->limitFPS(20);
 	}
 
 	extern float em_groups_m, em_shapes_m, em_bounds_m, em_polygons_m;
