@@ -9,10 +9,10 @@
 #ifndef MENU_H
 #define MENU_H
 
-class Meny;
+class MenuItem;
 class Engine;
 
-Meny* createMenus(Engine* e);
+MenuItem* createMenus(Engine* e);
 
 #endif // MENU_H
 

@@ -15,7 +15,7 @@
 #include "Light.h"
 #include "Score.h"
 
-LockBehavior::LockBehavior(int as, int us, int ls, bool lock) {
+LockBehavior::LockBehavior(int as, int us, int ls, bool lock) : Behavior() {
 	m_iActiveSignal = as;
   m_iUnActiveSignal = us;
   m_iLockSignal = ls;

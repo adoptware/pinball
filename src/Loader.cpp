@@ -36,6 +36,7 @@
 #include "TriggerBehavior.h"
 #include "SwitchBehavior.h"
 #include "TextureUtil.h"
+#include "SoundUtil.h"
 #include "Score.h"
 #include "StdAnimation.h"
 #include "Config.h"
@@ -68,6 +69,11 @@ void loadProperties(ifstream & file, Group * g) {
 		} else if (str == "no_light") {
 			g->setProperty(EM_GROUP_NO_LIGHT);
 			EM_COUT("--no light", 1);
+		} else if (str == "behind") {
+			for (int a=0; a<g->getShape3DSize(); a++) {
+				g->getShape3D(a)->setProperty(EM_SHAPE3D_BEHIND);
+			}
+			EM_COUT("--behind", 1);
 		} else if (str == "light_once") {
 			g->setProperty(EM_GROUP_LIGHT_ONCE);
 			EM_COUT("--light once", 1);
@@ -110,14 +116,28 @@ void loadArmBehavior(ifstream & file, Group * group) {
 	EM_COUT("arm", 1);
 
 	string str;
-
+	ArmBehavior* beh = NULL;
+	
 	EM_READ_CMP(file, str, "{");
-
+	
 	EM_READ(file, str);
 	if (str == "right") {
-		group->addBehavior(new ArmBehavior(true));
+		beh = new ArmBehavior(true);
 	} else {
-		group->addBehavior(new ArmBehavior(false));
+		beh = new ArmBehavior(false);
+	}
+	group->addBehavior(beh);	
+
+	EM_READ(file, str);
+	if (str == "sound") {
+		char soundname[256], filename[256];
+		EM_READ(file, soundname);
+		sprintf(filename, "%s/%s", Config::getInstance()->getDataDir(), soundname);
+		int sound = SoundUtil::getInstance()->loadSample(filename);
+		beh->setSound(sound);
+	} else if (str == "no_sound"){
+	} else {
+		throw string("No sound field in ArmBehavior");
 	}
 
 	EM_READ_CMP(file, str, "}");
@@ -200,8 +220,20 @@ void loadCaveBehavior(ifstream & file, Engine * engine, Group* group) {
 
 	EM_READ_CMP(file, str, "{");
 
-	Behavior* b = new CaveBehavior();
-	group->addBehavior(b);
+	CaveBehavior* beh = new CaveBehavior();
+	group->addBehavior(beh);
+
+	EM_READ(file, str);
+	if (str == "sound") {
+		char soundname[256], filename[256];
+		EM_READ(file, soundname);
+		sprintf(filename, "%s/%s", Config::getInstance()->getDataDir(), soundname);
+		int sound = SoundUtil::getInstance()->loadSample(filename);
+		beh->setSound(sound);
+	} else if (str == "no_sound"){
+	} else {
+		throw string("No sound field in CaveBehavior");
+	}
 
 	Shape3D* shape = new Grid(NULL, 2, 2, 1, 0, 1, 1, 0, 1);
 	group->addShape3D(shape);
@@ -209,7 +241,7 @@ void loadCaveBehavior(ifstream & file, Engine * engine, Group* group) {
 	bounds->setShape3D(shape, 0); 
 	group->setCollisionBounds(bounds);
 
-	loadMisc(file, engine, group, b);
+	loadMisc(file, engine, group, beh);
 }
 /*
 void loadLockBehavior(ifstream & file, Engine * engine, Group* group) {
@@ -243,10 +275,22 @@ void loadBumperBehavior(ifstream & file, Engine * engine, Group * group) {
 
 	EM_READ_CMP(file, str, "{");
 
-	Behavior* b = new BumperBehavior();
-	group->addBehavior(b);
+	BumperBehavior* beh = new BumperBehavior();
+	group->addBehavior(beh);
 
-	loadMisc(file, engine, group, b);
+	EM_READ(file, str);
+	if (str == "sound") {
+		char soundname[256], filename[256];
+		EM_READ(file, soundname);
+		sprintf(filename, "%s/%s", Config::getInstance()->getDataDir(), soundname);
+		int sound = SoundUtil::getInstance()->loadSample(filename);
+		beh->setSound(sound);
+	} else if (str == "no_sound"){
+	} else {
+		throw string("No sound field in BumperBehavior");
+	}
+
+	loadMisc(file, engine, group, beh);
 }
 
 void loadTriggerBehavior(ifstream & file, Engine * engine, Group * group) {
@@ -261,12 +305,12 @@ void loadTriggerBehavior(ifstream & file, Engine * engine, Group * group) {
 	EM_READ(file, asigout); EM_READ(file, usigout);
 	EM_READ(file, init);
 	
-	TriggerBehavior* b = new TriggerBehavior(asig, usig, asigout, usigout, (init==1));
-	group->addBehavior(b);
+	TriggerBehavior* beh = new TriggerBehavior(asig, usig, asigout, usigout, (init==1));
+	group->addBehavior(beh);
 
 	EM_READ(file, str);
 	if (str == "texcoord") {
-		b->useTexCoord(true);
+		beh->useTexCoord(true);
 		char texname[256], filename[256];
 		EM_READ(file, texname);
 		Shape3D * shape = group->getShape3D(0);
@@ -283,24 +327,24 @@ void loadTriggerBehavior(ifstream & file, Engine * engine, Group * group) {
 			float u, v;
 			EM_READ(file, u); 
 			EM_READ(file, v);
-			b->addTexCoordAct(u, v);
+			beh->addTexCoordAct(u, v);
 		}
 		EM_READ(file, count);
 		for (int a=0; a<count; a++) {
 			float u, v;
 			EM_READ(file, u); EM_READ(file, v);
-			b->addTexCoordUn(u, v);
+			beh->addTexCoordUn(u, v);
 		}
 		if (init==1) {
-			b->setTexCoordAct();
+			beh->setTexCoordAct();
 		} else {
-			b->setTexCoordUn();
+			beh->setTexCoordUn();
 		}
 	}
 	
 	EM_READ(file, str);
 	if (str == "move") {
-		b->useMove(true);
+		beh->useMove(true);
 		float tx, ty, tz, rx, ry, rz;
 		EM_READ(file, tx); 
 		EM_READ(file, ty); 
@@ -308,17 +352,17 @@ void loadTriggerBehavior(ifstream & file, Engine * engine, Group * group) {
 		EM_READ(file, rx); 
 		EM_READ(file, ry); 
 		EM_READ(file, rz);
-		b->setActiveTransform(tx, ty, tz, rx, ry, rz);
+		beh->setActiveTransform(tx, ty, tz, rx, ry, rz);
 		EM_READ(file, tx); 
 		EM_READ(file, ty);
 		EM_READ(file, tz);
 		EM_READ(file, rx); 
 		EM_READ(file, ry); 
 		EM_READ(file, rz);
-		b->setUnActiveTransform(tx, ty, tz, rx, ry, rz);
+		beh->setUnActiveTransform(tx, ty, tz, rx, ry, rz);
 	} 
 
-	loadMisc(file, engine, group, b);
+	loadMisc(file, engine, group, beh);
 }
 
 void loadStateItem(ifstream & file, Engine * engine, Group * group, Behavior * beh) {
@@ -363,6 +407,18 @@ void loadStateItem(ifstream & file, Engine * engine, Group * group, Behavior * b
 		stateitem->setLight(false);
 	} else {
 		throw string("No light field in StateItem");
+	}
+
+	EM_READ(file, str);
+	if (str == "sound") {
+		char soundname[256], filename[256];
+		EM_READ(file, soundname);
+		sprintf(filename, "%s/%s", Config::getInstance()->getDataDir(), soundname);
+		int sound = SoundUtil::getInstance()->loadSample(filename);
+		stateitem->setSound(sound);
+	} else if (str == "no_sound"){
+	} else {
+		throw string("No sound field in StateItem");
 	}
 
 	EM_READ(file, str);
@@ -435,7 +491,7 @@ void loadSwitchBehavior(ifstream & file, Engine * engine, Group * group) {
 	loadMisc(file, engine, group, b);
 }
 */
-/* thins added to object, e.g. lights, animation, behavior*/
+/* Things added to objects, e.g. lights, animation, behavior*/
 void loadMisc(ifstream & file, Engine * engine, Group * group, Behavior * beh) {
 	EM_COUT("misc", 1);
 
@@ -476,29 +532,32 @@ void loadMisc(ifstream & file, Engine * engine, Group * group, Behavior * beh) {
 	}
 }
 
-/* Normal Object */
+/* Top level object */
 Group * loadStdObject(ifstream & file, Engine * engine) {
-	EM_COUT("object", 1);
-
 	char fn[256], filename[256];
 	string str;
+
+	EM_READ(file, str);
+	EM_COUT("object " << str, 1);
 
 	EM_READ_CMP(file, str, "{");
 
 	Group* group = new Group();
 	Shape3D* shape = NULL;
 
-	EM_READ(file, fn);
+	EM_READ(file, str);
 	// load shape
-	if (strstr(fn, "?") == NULL) {
+	if (str == "visual") {
+		EM_READ(file, fn);
 		sprintf(filename, "%s/%s", Config::getInstance()->getDataDir(), fn);
 		shape = Shape3DUtil::loadShape3D(filename);
 		if (shape == NULL) {
 			throw string("File not found");
 		}
 		group->addShape3D(shape);
-		// TODO remove
-		//shape3d->setProperty(EM_SHAPE3D_HIDDEN);
+	} else if (str == "no_visual") {
+	} else {
+		throw string("Parse error: visual missing");
 	}
 
 	EM_READ(file, str);

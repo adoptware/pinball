@@ -16,22 +16,21 @@
 /** A behavior for the pinball demo. */
 
 class BounceBehavior : public Behavior {
-	public:
-		BounceBehavior(int ball);
-		~BounceBehavior();
-		void onTick();
-		void StdOnSignal();
-		void onCollision(const Vertex3D & vtx, const Vertex3D & vtx, Group* g);
-		void getDirection(Vertex3D & vtx);
-		bool isAlive() {return m_bAlive;};
-	private:
-		bool m_bAlive;
-		int m_iKnock;
-		int m_iBall;
-		Vertex3D m_vtxDir;
-		Vertex3D m_vtxOldDir;
-		int m_iDirFactor;
-		int m_iCollisionPrio;
+ public:
+	BounceBehavior(int ball);
+	~BounceBehavior();
+	void onTick();
+	void StdOnSignal();
+	void onCollision(const Vertex3D & vtx, const Vertex3D & vtx, Group* g);
+	void getDirection(Vertex3D & vtx);
+	bool isAlive() {return m_bAlive;};
+ private:
+	bool m_bAlive;
+	int m_iBall;
+	Vertex3D m_vtxDir;
+	Vertex3D m_vtxOldDir;
+	int m_iDirFactor;
+	int m_iCollisionPrio;
 };
 
 #endif // BounceBehavior

@@ -40,7 +40,7 @@ void TexAnimation::add(float u, float v) {
 void TexAnimation::onTick() {
 	EmAssert(p_Parent != NULL, "Parent not allowed to be null");
 	
-	float sU, sV, eU, eV, k, u, v;
+	float sU, sV, eU, eV, u, v;
   int size = (int)(m_vTexCoord.size()/m_iTexCoord);
 	
 	if (m_iTick >= size*m_iStep) {

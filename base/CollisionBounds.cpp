@@ -69,8 +69,7 @@ void CollisionBounds::add(Polygon* p, int i, bool* pabPolygon) {
 }
 
 /* Does a fast conservative polygon-box intersection test.
- * May return intersection == true even if polygon-box does not intersect.
- */
+ * May return intersection == true even if polygon-box does not intersect. */
 int CollisionBounds::intersect(Polygon* poly) {
 	if (poly == NULL) return 0;
 	if (poly->p_Shape3D == NULL) return 0;

@@ -1,0 +1,22 @@
+0.0.3
+	- Polygon intersection speed up.
+	- Command line parse error fix.
+	- OpenGL polygon state switch speed up (speed up ~30).
+	- Textured polygon instead of rasters for fonts, (speed up ~20%).
+	- New font file type, 256x256 png-file.
+	- Experimental, not compiled by default: Threaded rendering, (speed down/up -10% -> +10%).
+	- Cache in SoundUtil.
+	- Behaviors loads sounds instead of Score.
+	- 'Screen goes black'-bug fixed.
+	- New sounds.
+	- Extra ball.
+	- Fixed png check in configure.in.
+	
+0.0.2
+	Multiball.
+	Right ramp.
+	Jackpot.
+	Cache in TextureUtil.
+	
+0.0.1
+	First alpha release

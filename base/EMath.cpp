@@ -40,9 +40,9 @@ void EMath::applyMatrixRot(const Matrix & mtx, const Vertex3D & vtxIn, Vertex3D 
 }
 
 void EMath::applyMatrixTrans(const Matrix & mtx, const Vertex3D & vtxIn, Vertex3D & vtxOut) {
-	vtxOut.x = mtx.t[0];
-	vtxOut.y = mtx.t[1];
-	vtxOut.z = mtx.t[2];
+	vtxOut.x = vtxIn.x + mtx.t[0];
+	vtxOut.y = vtxIn.y + mtx.t[1];
+	vtxOut.z = vtxIn.z + mtx.t[2];
 }
 
 void EMath::crossProduct(const Vertex3D & vtxA, const Vertex3D & vtxB, Vertex3D & vtxOut) {
@@ -119,15 +119,15 @@ void EMath::getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT, const V
   mtx.t[2] = vtxT.z;
 }
 
-/*
+/* Stolen from allegro. Thanks to allegro.
  */
 void EMath::inverse(const Matrix & mtx, Matrix & inv) {
 	Matrix mtxTmp = mtx;
 	inv = identityMatrix;
 
-  unsigned int cc;
-  unsigned int rowMax; // Points to max abs value row in this column
-  unsigned int row;
+  int cc;
+  int rowMax; // Points to max abs value row in this column
+  int row;
   float tmp;
 
   // Go through columns

@@ -11,8 +11,13 @@
 #define OPENGLVISITOR_H
 
 #include "Private.h"
-
 #include "Visitor.h"
+
+#define EM_GL_GCOL        0 
+#define EM_GL_TEX         1
+#define EM_GL_GCOL_TRANS  2
+#define EM_GL_TEX_TRANS   3
+#define EM_GL_CLEAN   4
 
 class Group;
 class Shape3D;
@@ -26,7 +31,12 @@ class OpenGLVisitor : public Visitor  {
 	~OpenGLVisitor();
 	static OpenGLVisitor * getInstance();
 	void visit(Group* g);
+	void empty();
+	int getMode() { return m_iMode; };
+	void setMode(int m) { m_iMode = m; };
  private:
+	int m_iMode;
+	bool m_bOffset;
 	void visit(Shape3D* s, Group* g);
 	static OpenGLVisitor * p_OpenGLVisitor;
 };

@@ -43,9 +43,17 @@ class Engine : public Group {
 		void setLightning(float diffuse, float ambient);
 		void addLight(Light*);
 		/** Use this function to limit the main loop to a desired frame rate.
-		 * Returns false if the thread is behind schedule else true. 
-		 * Available FSP 100, 50, 40, 33, 25, 20 */
+		 ** Returns false if the thread is behind schedule else true. 
+		 ** Available FSP 100, 50, 40, 33, 25, 20 */
 		bool limitFPS(int fps);
+#if EM_THREADS
+		/** When using threaded ticks you must use this function instead of render(). */
+		void renderThreadSafe();
+		void startTickThread();
+		void pauseTickThread();
+		void resumeTickThread();
+		void endTickThread();
+#endif
 	private:
 		EmImage* m_Background;
 

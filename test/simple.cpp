@@ -34,11 +34,14 @@ int main(int argc, char *argv[]) {
 	KeyRotBehavior* keyRBeh = new KeyRotBehavior();
 	groupCube->addBehavior(keyRBeh);
 		
+	bool render = true;
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
 		engine->tick();
-		engine->render();
-		engine->swap();
-		engine->limitFPS(50); // 33 FPS
+		if (render) {
+			engine->render();
+			engine->swap();
+		}
+		render = engine->limitFPS(100); // 33 FPS
 	}
 	delete(engine);
 	return 0;
