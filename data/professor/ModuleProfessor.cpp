@@ -39,33 +39,33 @@ public:
 				if (table->isBallDead(0) ) {
 					SendSignal( loader->getSignal("game_start"), 0, this->getParent(), NULL );
 					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-					table->activateBall(0);	
+					table->activateBall(0, 19.5f, 0.0f, 30.0f);	
 					//score->clearText();
 					break;
 				}	
       case 1 :
 				if (table->isBallDead(1)) {
 					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-					table->activateBall(1);
+					table->activateBall(1, 19.5f, 0.0f, 30.0f);
 					//score->clearText();
 					break;
 				}
       case 2 :
 				if (table->isBallDead(2)) {
 					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-					table->activateBall(2);
+					table->activateBall(2, 19.5f, 0.0f, 30.0f);
 					//score->clearText();
 					break;
 				}
 				if (table->isBallDead(0)) {
 					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-					table->activateBall(0);	
+					table->activateBall(0, 19.5f, 0.0f, 30.0f);	
 					//score->clearText();
 					break;
 				}	
 				if (table->isBallDead(1)) {
 					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-					table->activateBall(1);
+					table->activateBall(1, 19.5f, 0.0f, 30.0f);
 					//score->clearText();
 					break;
 				}

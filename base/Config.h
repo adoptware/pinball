@@ -58,8 +58,12 @@ class Config {
   inline void setShowFPS(bool const fps) { m_bShowFPS = fps; };
   inline bool getShowFPS() { return m_bShowFPS; };
   /** This will NOT set the engine to full screen. You have to do
-   * that manually. */
+   * that manually. It only updates the config class, (ie, reading writing
+	 * to config file). */
   inline void setFullScreen(bool const f) { m_bFullScreen = f; };
+  /** This will NOT set the volume. You have to do that manually. 
+	 * It only updates the config class, (ie, reading writing
+	 * to config file). */
   inline void setSound(int const s) { m_iSound = EM_MIN( EM_MAX(s, 0), 8); };
   inline void setMusic(int const m) { m_iMusic = EM_MIN( EM_MAX(m, 0), 8); };
   inline void setFire(bool const f) { m_bFire = f; };

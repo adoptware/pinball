@@ -77,6 +77,8 @@ extern "C" {
 
 float Engine::m_fFps = 0.0f;
 
+Engine * Engine::p_Engine = NULL;
+
 Engine::Engine(int & argc, char *argv[]) {
   Config * config = Config::getInstance();
   config->loadArgs(argc, argv);
@@ -110,9 +112,11 @@ Engine::Engine(int & argc, char *argv[]) {
   // 	}
 
   srand((unsigned int)time((time_t *)NULL));
+	p_Engine = this;
 }
 
 Engine::~Engine() {
+	p_Engine = NULL;
   this->stopEngine();
 }
 

@@ -61,9 +61,9 @@ void BounceBehavior::getDirection(Vertex3D & vtx) {
   vtx.z = m_vtxOldDir.z;
 }
 
-void BounceBehavior::activateBall() {
+void BounceBehavior::activateBall(float x, float y, float z) {
   m_bAlive = true;
-  this->getParent()->setTranslation(19.5f, 0.0f, 30.0f);
+  this->getParent()->setTranslation(x, y, z);
   m_vtxDir.x = 0;
   m_vtxDir.y = 0;
   m_vtxDir.z = 0;
@@ -187,7 +187,7 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
 
     EMath::reflectionDamp(m_vtxOldDir, vtxW, m_vtxDir, (float)1.0, 
 			  (float)SPEED_FCT*power, 1, true);
-    EM_COUT("BounceBehavior.onCollision() plunger " << power << "\n", 1);
+    EM_COUT("BounceBehavior.onCollision() plunger " << power, 0);
     
   } else if (pGroup->getUserProperties() & (PBL_LOCK | PBL_TRAP)) {
     // trap in
@@ -197,8 +197,8 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
 		
     if (beh->getType() == PBL_TYPE_STATEBEH) {
       if (((StateBehavior*)beh)->getOwnerBall() != m_iBall) {
-	EM_COUT(((StateBehavior*)beh)->getOwnerBall() << " != " << m_iBall, 1);
-	return;
+				EM_COUT(((StateBehavior*)beh)->getOwnerBall() << " != " << m_iBall, 0);
+				return;
       }
     } else {
       throw string("StateBehavior expected");
@@ -270,9 +270,9 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     EMath::applyMatrixRot(mtxArmRotInv, vtxBall, vtxBallRot);
     EMath::projection(vtxBallRot, vtxRight, vtxProj);
 		
-    EM_COUT("arm " << vtxArmTr.x <<" "<< vtxArmTr.y <<" "<< vtxArmTr.z, 1);
-    EM_COUT("bal " << vtxBall.x <<" "<< vtxBall.y <<" "<< vtxBall.z, 1);
-    EM_COUT("pro " << vtxProj.x <<" "<< vtxProj.y <<" "<< vtxProj.z, 1);
+    EM_COUT("arm " << vtxArmTr.x <<" "<< vtxArmTr.y <<" "<< vtxArmTr.z, 0);
+    EM_COUT("bal " << vtxBall.x <<" "<< vtxBall.y <<" "<< vtxBall.z, 0);
+    EM_COUT("pro " << vtxProj.x <<" "<< vtxProj.y <<" "<< vtxProj.z, 0);
 
     // find the new speed and angle from the lookup table
     float length = EM_ABS(vtxProj.x);
@@ -305,7 +305,7 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     EMath::applyMatrixRot(mtxArmRot, vtxDir, m_vtxDir);
     // move the ball slightly off the arm TODO - fix this to something better
     EMath::applyMatrixRot(mtxArmRot, vtxSlightUp, vtxDir);
-    EM_COUT("sli " << vtxDir.x <<" "<< vtxDir.y <<" "<< vtxDir.z, 1);
+    EM_COUT("sli " << vtxDir.x <<" "<< vtxDir.y <<" "<< vtxDir.z, 0);
     this->getParent()->addTranslation(vtxDir);
     EM_COUT("BounceBehavior.onCollision() active arm\n", 0);
 
@@ -316,8 +316,8 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     // use the trap polygon as base
     // Bbounce ball out of cave, 0 means ignore old speed
     EMath::reflectionDamp(m_vtxOldDir, vtxW, m_vtxDir, (float)0, (float)SPEED_FCT, 1, true);
-    EM_COUT("BounceBehavior.onCollision() cave bounce\n", 1);
-    EM_COUT(vtxW.x << " " << vtxW.y << " " << vtxW.z, 1);
+    EM_COUT("BounceBehavior.onCollision() cave bounce", 0);
+    EM_COUT(vtxW.x << " " << vtxW.y << " " << vtxW.z, 0);
 
   } else if (pGroup->getUserProperties() & PBL_WALLS_ONE) {
     // oneway wall
@@ -327,6 +327,8 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     EMath::reflectionDamp(m_vtxOldDir, vtxW, m_vtxDir, (float)0.5, 0, 1);
     // move the ball slightly off the wall
     this->getParent()->addTranslation(vtxW.x * BORDER, vtxW.y * BORDER, vtxW.z * BORDER);
+
+    EM_COUT("BounceBehavior.onCollision() walls one", 0);
 
   } else if (pGroup->getUserProperties() & PBL_UNACTIVE_ARM) {
     // unactive arm
@@ -340,7 +342,7 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     EMath::reflectionDamp(m_vtxOldDir, vtxWall, m_vtxDir, (float)0.2, 0, 1);
     // move the ball slightly off the wall
     this->getParent()->addTranslation(vtxWall.x * BORDER, vtxWall.y * BORDER, vtxWall.z * BORDER);
-    EM_COUT("BounceBehavior.onCollision() unactive arm\n", 0);
+    EM_COUT("BounceBehavior.onCollision() unactive arm", 0);
 
   } else if (pGroup->getUserProperties() & PBL_WALLS) {
     // walls
@@ -368,9 +370,10 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     // move the ball slightly off the wall
     this->getParent()->addTranslation(vtxWall.x * BORDER, vtxWall.y * BORDER, 
 				      vtxWall.z * BORDER);
-    EM_COUT("BounceBehavior.onCollision() walls\n" , 0);
+    EM_COUT("BounceBehavior.onCollision() walls" , 0);
 
   } else if (pGroup->getUserProperties() & PBL_BALL) {
+    EM_COUT("BounceBehavior.onCollision() ball", 0);
     // ball
     if (m_iCollisionPrio > 0) return;
     m_iCollisionPrio = 0;
@@ -396,12 +399,12 @@ void BounceBehavior::onCollision(const Vertex3D & vtxW, const Vertex3D & vtxOwn,
     m_vtxDir.x += (vtxPrj2.x - vtxPrj1.x);
     m_vtxDir.y += (vtxPrj2.y - vtxPrj1.y);
     m_vtxDir.z += (vtxPrj2.z - vtxPrj1.z);
-    EM_COUT("BounceBehavior.onCollision() ball\n", 0);
+    EM_COUT("BounceBehavior.onCollision() ball", 0);
     // move the ball slightly away the other
     this->getParent()->addTranslation(vtxWall.x * BORDER, vtxWall.y * BORDER, vtxWall.z * BORDER);
 
   } else {
-    EM_COUT("BounceBehavior.onCollision() unknown\n" ,0);
+    EM_COUT("BounceBehavior.onCollision() unknown", 0);
   }
 	
   //	this->getParent()->addTranslation(m_vtxDir.x, m_vtxDir.y, m_vtxDir.z);
