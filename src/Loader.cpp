@@ -605,7 +605,7 @@ void Loader::loadStateBehavior(ifstream & file, istringstream & ist, Engine * en
 }
 
 /****************************************************************
- ** Script loading
+ ** Script loading - deprecated
  ****************************************************************/
 
 void Loader::loadScript(ifstream & file, istringstream & ist, Engine *, Group * group) {
@@ -734,6 +734,9 @@ void Loader::loadMisc(ifstream & file, istringstream & ist, Engine * engine, Gro
       this->loadScript(file, ist, engine, group);
     } else if (str == "module") {
       this->loadModule(file, ist, engine, group);
+		} else if (str == "sub_object") {
+			Group * g = this->loadStdObject(file, ist, engine);
+			group->add(g);
     } else {
       cerr << str << endl;
       throw string("UNKNOWN in misc block");
@@ -771,7 +774,8 @@ Group * Loader::loadStdObject(ifstream & file, istringstream & ist, Engine * eng
  ** Shape specific loads
  ****************************************************************/
 
-void Loader::loadShape(ifstream & file, istringstream & ist, Engine *, Group * group, Behavior * beh) {
+void Loader::loadShape(ifstream & file, istringstream & ist, Engine *, 
+											 Group * group, Behavior *) {
   EM_COUT("Loader::loadShape", 0);
   
   string str;
@@ -959,8 +963,8 @@ int Loader::loadFile(const char* fn, Engine * engine) {
     this->readNextToken(file, ist, str);
     while (file) {
       if (str == "object") {
-	Group * group = this->loadStdObject(file, ist, engine); 
-	engine->add(group);
+				Group * group = this->loadStdObject(file, ist, engine); 
+				engine->add(group);
       }
       this->readNextToken(file, ist, str);
       //cerr << str << endl;
