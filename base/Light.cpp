@@ -18,7 +18,7 @@ Light::Light(float c, float l, float q, float r, float g, float b) {
 	m_fLinear = EM_MAX(l, 0.0);
 	m_fQuadratic = EM_MAX(q, 0.0);
 	m_fBounds = 1.0;
-	m_iProperties = 0;
+	m_iProperties = EM_USE_DIFFUSE + EM_USE_SPECULAR;
 	m_fR = EM_MAX(EM_MIN(1.0, r), 0.0);
 	m_fG = EM_MAX(EM_MIN(1.0, g), 0.0);
 	m_fB = EM_MAX(EM_MIN(1.0, b), 0.0);
