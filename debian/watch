@@ -1,2 +1,2 @@
-version=2
-ftp://ftp2.sf.net/pub/sourceforge/p/pi/pinball/pinball-([\d+\.]+|\d+)(\.tar|\.tgz)(\.gz|\.bz2|) debian uupdate
+version=3
+http://sf.net/pinball/pinball-([\d+\.]+|\d+)\.tar\.gz
