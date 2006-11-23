@@ -1,55 +1,3 @@
-pinball (0.0.0-0) UNRELEASED; urgency=low
-
-  * Non-maintainer upload.
-
- -- Philippe Coval <rzr@gna.org>  Sat, 06 Mar 2010 22:50:29 +0100
-
-pinball (0.3.1-12) unstable; urgency=low
-
-  * Refresh patch 05_system_ltdl.patch. Some autobuilders didn't like
-    it for some unknown reason.
-  * Remove build dependency on quilt.
-
- -- Jochen Friedrich <jochen@scram.de>  Thu, 14 Jan 2010 17:42:16 +0100
-
-pinball (0.3.1-11) unstable; urgency=low
-
-  * Replace macro AC_LIBLTDL_CONVENIENCE with LTDL_INIT. This will make
-    pinball link against the system libltdl instead of the private one.
-  * Switch to dpkg-source 3.0 (quilt) format
-
- -- Jochen Friedrich <jochen@scram.de>  Thu, 07 Jan 2010 16:56:37 +0100
-
-pinball (0.3.1-10) unstable; urgency=low
-
-  * Build-depend on libltdl-dev (>= 2.2.6b) as earlier versions were 
-    vulnerable to a priviledge escalation. (Closes: #559825)
-    Fixes priviledge escalation vulnerability CVE-2009-3736.
-
- -- Jochen Friedrich <jochen@scram.de>  Thu, 10 Dec 2009 18:57:19 +0100
-
-pinball (0.3.1-9) unstable; urgency=low
-
-  * Fix .desktop file (Closes: #549643). Thanks to Pino Toscano
-    <pino@kde.org> for the patch.
-  * Fix eglibc 2.10 build (Closes: #549984). Thanks to Ilya Barygin
-    <baryin@gmail.com> for the patch.
-  * Add README.source for quilt patch management.
-
- -- Jochen Friedrich <jochen@scram.de>  Tue, 13 Oct 2009 18:41:23 +0200
-
-pinball (0.3.1-8) unstable; urgency=low
-
-  * Bump Standards-Version to 3.8.3
-  * Replace glut with freeglut (Closes: #543701)
-  * Correct license to be GPL-2
-  * Switch to debhelper 7
-  * Use current autotools instead of shipped versions (Closes: #401852, 
-    #401853)
-  * Fix depends for non-Linux platforms (Closes: #451113)
-
- -- Jochen Friedrich <jochen@scram.de>  Wed, 02 Sep 2009 14:11:01 +0200
-
 pinball (0.3.1-7) unstable; urgency=low
 
   * Acknowledge NMU from Matthias Klose <doko@debian.org>.
@@ -174,3 +122,4 @@ pinball (0.0.6-1) unstable; urgency=low
   * This is my second Debian Package, :)
 
  -- Didier Dhollande <dholland@free.fr>  Fri,  7 Jun 2002 12:24:42 +0200
+

@@ -1,0 +1,31 @@
+pinball (0.3.1-1) unstable; urgency=low
+
+  * New upstream release (Closes: #172599, #210505, #230053)
+    (Also closes: #150140, #212219, #180957, #230733, #149858)
+  * New maintainer (Closes: #236233)
+  * Cleaned up debian dir (Closes: #230732)
+  * Fixed build dependencies (Closes: #180957)
+  * Added man page (Closes: #230741)
+  * Fixed compile options for Alpha (Closes: #175896)
+
+ -- Jochen Friedrich <jochen@scram.de>  Sat,  6 Mar 2004 11:30:07 +0100
+
+pinball (0.0.7-1) unstable; urgency=low
+
+  * New Release.
+
+ -- Didier Dhollande <dholland@free.fr>  Sun, 16 Jun 2002 19:38:07 +0200
+
+pinball (0.0.6-2) unstable; urgency=low
+
+  * Split data in arch-all package.
+
+ -- Yann Dirson <dirson@debian.org>  Fri,  7 Jun 2002 15:08:44 +0200
+
+pinball (0.0.6-1) unstable; urgency=low
+
+  * Initial Release.
+  * This is my second Debian Package, :)
+
+ -- Didier Dhollande <dholland@free.fr>  Fri,  7 Jun 2002 12:24:42 +0200
+

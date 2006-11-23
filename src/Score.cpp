@@ -1,4 +1,4 @@
-//#ident "$Id: Score.cpp,v 1.28 2003/07/16 20:02:04 rzr Exp $"
+//#ident "$Id: Score.cpp,v 1.27 2003/06/18 10:43:44 henqvist Exp $"
 /***************************************************************************
                           Score.cpp  -  description
                              -------------------
@@ -13,21 +13,17 @@
 ***************************************************************************/
 
 #include <cstdio>
+#include <iostream>
 #include <cstring>
-
-
 #include "Private.h"
 #include "Score.h"
-#include "Config.h"
-
-#include <iostream>
-
 #include "Group.h"
 #include "Pinball.h"
 #include "Keyboard.h"
 //#include "SoundUtil.h"
 //#include "TextureUtil.h"
 #include "EmFont.h"
+#include "Config.h"
 #include "Table.h"
 #include "Loader.h"
 #include "Engine.h"
