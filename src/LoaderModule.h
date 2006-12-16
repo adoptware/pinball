@@ -40,6 +40,9 @@ public:
   /// portable dyn lib loading
   Behavior* readLibDynamic(string & filename);
 
+private:
+  void SanitizePath(std::string&str );
+
 protected:
   ///
   map<char* const, Behavior* , ltstr> m_hMods;

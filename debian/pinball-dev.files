@@ -1,0 +1,5 @@
+usr/include
+usr/games/pinball-config
+usr/lib/pinball/libemilia_addon.a
+usr/lib/pinball/libemilia_base.a
+usr/lib/pinball/libemilia_pin.a
