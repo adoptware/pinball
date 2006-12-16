@@ -1,0 +1,3 @@
+usr/games/pinball
+usr/lib/pinball/*.so.*
+usr/lib/pinball/*.la
