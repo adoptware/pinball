@@ -1,0 +1,97 @@
+pinball (0.3.1-3.sarge1) stable; urgency=high
+
+  * Non-maintainer upload by the Stable Release team.
+  * Fix uninstallability on powerpc.
+
+ -- Martin Zobel-Helas <zobel@ftbfs.de>  Sat, 16 Dec 2006 16:11:43 +0100
+
+pinball (0.3.1-3sarge1) stable-security; urgency=high
+
+  * Non-maintainer upload by The Security Team.
+  * Avoid loading levels and compiled plugins from user-controllable 
+    locations.
+    [CVE-2006-2196]
+
+ -- Steve Kemp <skx@debian.org>  Tue, 13 Jun 2006 19:02:28 +0000
+
+pinball (0.3.1-3) unstable; urgency=low
+
+  * Add "libtiff4-dev" to build dependencies to force recompile
+    against 3.6.1 with changed API.
+  * Included watch file.
+
+ -- Jochen Friedrich <jochen@scram.de>  Fri, 30 Jul 2004 20:17:35 +0200
+
+pinball (0.3.1-2) unstable; urgency=low
+
+  * Add "aalib1-dev" and "libasound2-dev" to the build dependencies
+    Thanks to Helge Kreutzmann for testing this and pointing me
+    to #240120 (Closes: #239696)
+
+ -- Jochen Friedrich <jochen@scram.de>  Sun,  4 Apr 2004 19:44:27 +0200
+
+pinball (0.3.1-1) unstable; urgency=low
+
+  * New upstream release
+    (Closes: #150140, #180957, #230733, #149858)
+  * New maintainer (Closes: #236233)
+  * Cleaned up debian dir (Closes: #230732)
+  * Fixed build dependencies (Closes: #180957)
+  * Acknowledge NMUs (Closes: #230741, #175896, #172599, #230053)
+    (Also closes: #210505, #212219)
+
+ -- Jochen Friedrich <jochen@scram.de>  Fri, 26 Mar 2004 00:37:42 +0100
+
+pinball (0.3.1-0.2) unstable; urgency=low
+
+  * Non-maintainer upload (sponsored upload of 0.3.1-0.1 with changes)
+  * Add xlibmesa-gl-dev as preferred alternative for libgl-dev
+  * Lintian stuff:
+    - Quote strings in debian/pinball.menu
+    - Bump debhelper build-dependency to 4.0.0 to match debian/compat
+  * Remove config.log in clean target
+
+ -- Matt Zimmerman <mdz@debian.org>  Fri, 12 Mar 2004 18:50:15 -0800
+
+pinball (0.3.1-0.1) unstable; urgency=low
+
+  * Non-Maintainer Upload.
+  * New upstream version (Closes: #172599) which starts on alpha
+    (Closes: #230053) and fixes menu display (Closes: #212219).
+  * Now includes man page (Closes: #230741).
+  * Recompiled with gcc 3.3 (Closes: #210505).
+  * Removed "The" and "." in short description to make linda/lintian happy.
+  * There are now two tables/levels. Updated the description.
+  * Support noopt for DEB_BUILD_OPTIONS and make "-g" the default.
+  * Compile with -mieee on alpha, so it now runs on this platform as well.
+    This Closes: #175896.
+  * Create highscore-directories in /var/games/pinball; this does not work
+    yet, unfortunately.
+  * Removed the .ex-files in the debian/-directory, Closes: FIXME.
+  * There are now binary dependent libs for each table which are therefore
+    in pinball, so that pinball-data remains arch=all. This is an intrim
+    solution, which should be fixed on the next upload by either integrating
+    the tables into the main packages, or switching the -data package into
+    arch=any.
+
+ -- Helge Kreutzmann <kreutzm@itp.uni-hannover.de>  Mon,  16 Feb 2004 20:41:10 +0100
+
+pinball (0.0.7-1) unstable; urgency=low
+
+  * New Release.
+
+ -- Didier Dhollande <dholland@free.fr>  Sun, 16 Jun 2002 19:38:07 +0200
+
+pinball (0.0.6-2) unstable; urgency=low
+
+  * Split data in arch-all package.
+
+ -- Yann Dirson <dirson@debian.org>  Fri,  7 Jun 2002 15:08:44 +0200
+
+pinball (0.0.6-1) unstable; urgency=low
+
+  * Initial Release.
+  * This is my second Debian Package, :)
+
+ -- Didier Dhollande <dholland@free.fr>  Fri,  7 Jun 2002 12:24:42 +0200
+
