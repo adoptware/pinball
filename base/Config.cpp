@@ -1,4 +1,4 @@
-//#ident "$Id: Config.cpp,v 1.30 2003/07/16 20:02:04 rzr Exp $"
+//#ident "$Id: Config.cpp,v 1.31 2009/03/06 14:19:40 rzr Exp $"
 /***************************************************************************
                           Config.cpp  -  description
                              -------------------
@@ -359,13 +359,6 @@ void Config::loadArgs(int & argc, char *argv[]) {
       }
       EM_COUT("Using " << m_iBpp << " bpp", 1);
       REMOVEARG(a, argc, argv);
-    } else if (strcmp(argv[a], "-data") == 0) {
-      if (argc > a) {
-	EM_COUT("Using datapath: " << argv[a+1], 1);
-	this->setDataDir(argv[a+1]);
-	REMOVEARG(a, argc, argv);
-      }
-      REMOVEARG(a, argc, argv);
     } else if (strcmp(argv[a], "-nosound") == 0) {
       this->setSound(0);
       this->setMusic(0);
@@ -458,4 +451,4 @@ void Config::setPaths(char const * const argv0) {
   // EM_CERR("- Config::setPath"); // EM_CERR( m_sExeDir); EM_CERR( m_sDataDir);
 } //!-rzr
 
-//EOF:$Id: Config.cpp,v 1.30 2003/07/16 20:02:04 rzr Exp $
+//EOF:$Id: Config.cpp,v 1.31 2009/03/06 14:19:40 rzr Exp $

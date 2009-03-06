@@ -1,4 +1,4 @@
-//#ident "$Id: LoaderModule.h,v 1.2 2003/04/09 12:19:07 rzr Exp $" 
+//#ident "$Id: LoaderModule.h,v 1.3 2009/03/06 14:19:40 rzr Exp $" 
 #ifndef LoaderModule_h_ 
 #define LoaderModule_h_ 
 #include <string> 
@@ -40,6 +40,9 @@ public:
   /// portable dyn lib loading
   Behavior* readLibDynamic(string & filename);
 
+private:
+  void SanitizePath(std::string&str );
+
 protected:
   ///
   map<char* const, Behavior* , ltstr> m_hMods;
@@ -47,4 +50,4 @@ protected:
   static LoaderModule * p_Instance;
 };
 #endif //_h_ inclusion 
-//$Id: LoaderModule.h,v 1.2 2003/04/09 12:19:07 rzr Exp $
+//$Id: LoaderModule.h,v 1.3 2009/03/06 14:19:40 rzr Exp $
