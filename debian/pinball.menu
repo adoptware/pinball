@@ -1,6 +1,8 @@
-?package(pinball):needs=X11 section=Games/Arcade\
-  title="pinball" command="/usr/games/pinball"
+?package(pinball):needs="X11" section="Games/Arcade"\
+  title="Pinball" command="/usr/games/pinball"\
+  icon="/usr/share/pixmaps/pinball.xpm"
 
-?package(pinball):needs=vc section=Games/Arcade\
-  title="pinball" command="/usr/games/pinball"
+?package(pinball):needs="vc" section="Games/Arcade"\
+  title="Pinball" command="/usr/games/pinball"\
+  icon="/usr/share/pixmaps/pinball.xpm"
 
