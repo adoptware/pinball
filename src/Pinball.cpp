@@ -1,4 +1,4 @@
-//#ident "$Id: Pinball.cpp,v 1.46 2003/07/25 01:01:56 rzr Exp $"
+//#ident "$Id: Pinball.cpp,v 1.47 2009/08/02 00:50:56 rzr Exp $"
 /***************************************************************************
                           Pinball.cpp  -  description
                              -------------------
@@ -174,7 +174,7 @@ public:
 protected:
   int perform () {
     Config* config = Config::getInstance();
-    TextureUtil * textureutil = TextureUtil::getInstance();
+    //TextureUtil * textureutil = TextureUtil::getInstance();
     // sound
     switch (menusnd->getCurrent()) {
     case 0: config->setSound(0); break;
@@ -881,4 +881,5 @@ int WINAPI WinMain( HINSTANCE hInst,  HINSTANCE hPreInst,
   return main(argc,argv);
 }
 #endif
-// EOF $Id: Pinball.cpp,v 1.46 2003/07/25 01:01:56 rzr Exp $
+
+//#eof "$Id: Pinball.cpp,v 1.47 2009/08/02 00:50:56 rzr Exp $"

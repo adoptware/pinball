@@ -1,4 +1,4 @@
-//#ident "$Id: LoaderModule.cpp,v 1.4 2009/03/06 14:19:40 rzr Exp $" 
+//#ident "$Id: LoaderModule.cpp,v 1.5 2009/08/02 00:50:56 rzr Exp $" 
 #ifndef LoaderModule_cpp_ 
 #define LoaderModule_cpp_
 /**
@@ -134,4 +134,5 @@ Behavior* LoaderModule::read(string  & filename)
   EM_COUT("- LoaderModule::read",0);
 }
 #endif // inclusion
-//$Id: LoaderModule.cpp,v 1.4 2009/03/06 14:19:40 rzr Exp $
+
+//#eof "$Id: LoaderModule.cpp,v 1.5 2009/08/02 00:50:56 rzr Exp $"

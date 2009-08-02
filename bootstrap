@@ -1,6 +1,11 @@
-libtoolize --ltdl
+#! /bin/sh -x 
+set -e
+aclocal
+libtoolize --ltdl --force
 autoheader
 automake --add-missing
 aclocal
 autoconf
 autoheader
+
+#eof "$Id: bootstrap,v 1.5 2009/08/02 00:50:56 rzr Exp $"

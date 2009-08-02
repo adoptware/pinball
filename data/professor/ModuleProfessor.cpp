@@ -1,4 +1,4 @@
-//#ident "$Id: ModuleProfessor.cpp,v 1.8 2003/07/16 20:02:04 rzr Exp $"
+//#ident "$Id: ModuleProfessor.cpp,v 1.9 2009/08/02 00:50:56 rzr Exp $"
 /***************************************************************************
                           Score.cpp  -  description
                              -------------------
@@ -27,7 +27,7 @@ public:
   
   void onTick() {
     Table * table = Table::getInstance();
-    Score * score = table->getScore();
+    //Score * score = table->getScore();
     Loader * loader = Loader::getInstance();
     // init signals
     EmAssert(score != NULL, "ProfessorBehavior::onTick socre NULL");
@@ -120,3 +120,4 @@ extern "C"  void * new_object_fct(void) {
   return new ProfessorBehavior();
 }
 
+//#eof "$Id: ModuleProfessor.cpp,v 1.9 2009/08/02 00:50:56 rzr Exp $"

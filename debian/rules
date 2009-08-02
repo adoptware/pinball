@@ -7,6 +7,8 @@
 DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
+package?=pinball
+
 export DH_OPTIONS
 
 ifneq (,$(findstring debug,$(DEB_BUILD_OPTIONS)))
@@ -44,8 +46,8 @@ build-stamp:  config.status
 
 	# Add here commands to compile the package.
 	$(MAKE)
-	#/usr/bin/docbook-to-man debian/pinball.sgml > pinball.1
-	nsgmls debian/pinball.sgml | sgmlspl sgmlspl-specs/docbook2man-spec.pl
+	#/usr/bin/docbook-to-man debian/${package}.sgml > ${package}.1
+	nsgmls debian/${package}.sgml | sgmlspl sgmlspl-specs/docbook2man-spec.pl
 
 	touch build-stamp
 
@@ -60,7 +62,7 @@ clean:
 	  cp -f /usr/share/misc/config.sub config.sub
 	-test -r /usr/share/misc/config.guess && \
 	  cp -f /usr/share/misc/config.guess config.guess
-	rm -f pinball.6 manpage.links manpage.refs manpage.log config.log
+	rm -f ${package}.6 manpage.links manpage.refs manpage.log config.log
 
 	dh_clean
 
@@ -71,14 +73,15 @@ install: build
 	dh_clean -k
 	dh_installdirs
 
-	# Add here commands to install the package into debian/pinball.
+	# Add here commands to install the package into debian/${package}.
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
 
 	install -d $(CURDIR)/debian/tmp/usr/share/applications
 	install -d $(CURDIR)/debian/tmp/usr/share/pixmaps
-	install -m 644 pinball.desktop $(CURDIR)/debian/tmp/usr/share/applications
-	install -m 644 data/pinball.xpm $(CURDIR)/debian/tmp/usr/share/pixmaps
-	dh_movefiles
+#TODO#	install -m 644 ${package}.desktop $(CURDIR)/debian/tmp/usr/share/applications
+	install -m 644 data/${package}.xpm $(CURDIR)/debian/tmp/usr/share/pixmaps
+	dh_install --sourcedir="debian/tmp"
+#	dh_movefiles
 
 
 # Build architecture-independent files here.
@@ -103,16 +106,16 @@ binary-arch: build install
 	dh_installdocs -a
 	dh_installexamples -a
 	dh_installmenu -a
-	dh_installman -ppinball pinball.6
-	dh_installman -ppinball-dev debian/pinball-config.6
+	dh_installman -p${package} "debian/${package}.6"
+	dh_installman -p${package}-dev "debian/${package}-config.6"
 	dh_installinfo -a
 	dh_installchangelogs -a ChangeLog
 	dh_link -a
 	dh_strip -a
 	dh_compress -a
 	dh_fixperms -a
-	chown root:games debian/pinball/usr/games/pinball
-	chmod 2755 debian/pinball/usr/games/pinball
+	chown root:games "debian/${package}/usr/games/${package}"
+	chmod 2755 "debian/${package}/usr/games/${package}"
 	dh_installdeb -a
 	dh_shlibdeps -a
 	dh_gencontrol -a
@@ -121,3 +124,9 @@ binary-arch: build install
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install 
+
+###
+configure: bootstrap
+	sh $<
+
+#eof "$Id: rules,v 1.4 2009/08/02 00:50:56 rzr Exp $"
