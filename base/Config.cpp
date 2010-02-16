@@ -434,12 +434,12 @@ void Config::setPaths(char const * const argv0) {
   m_sDataDir = string(EM_DATADIR) + "/";
   m_sExeDir = "./";
   if ( *( m_sDataDir.c_str() ) != '/' ) {
-    const char* ptr=0;
-    char* ptrw = 0;
     //cout<<"relative to exe file"<<endl;
-    ptr = (strrchr(argv0,'/')); // unix /cygwin / check win32 
+    char const * ptr = (strrchr(argv0,'/')); // unix /cygwin / check win32 
 #ifdef WIN32
-    ptrw = (strrchr(argv0,'\\')); 
+    char const * const ptrw = 0;    ptrw = (strrchr(argv0,'\\')); 
+#else 
+    char const * const ptrw = 0;
 #endif //TODO: MacOS file sep ':'   
     if ( ptrw > ptr ) ptr = ptrw;
     //    assert( (*ptr != 0) );
