@@ -1,4 +1,4 @@
-//#ident "$Id: Config.cpp,v 1.31 2009/03/06 14:19:40 rzr Exp $"
+//#ident "$Id: Config.cpp,v 1.32 2010/02/16 17:42:17 rzr Exp $"
 /***************************************************************************
                           Config.cpp  -  description
                              -------------------
@@ -417,12 +417,12 @@ void Config::setPaths(char const * const argv0) {
   m_sDataDir = string(EM_DATADIR) + "/";
   m_sExeDir = "./";
   if ( *( m_sDataDir.c_str() ) != '/' ) {
-    char* ptr=0; 
-    char* ptrw = 0;
     //cout<<"relative to exe file"<<endl;
-    ptr = (strrchr(argv0,'/')); // unix /cygwin / check win32 
+    char const * ptr = (strrchr(argv0,'/')); // unix /cygwin / check win32 
 #ifdef WIN32
-    ptrw = (strrchr(argv0,'\\')); 
+    char const * const ptrw = 0;    ptrw = (strrchr(argv0,'\\')); 
+#else 
+    char const * const ptrw = 0;
 #endif //TODO: MacOS file sep ':'   
     if ( ptrw > ptr ) ptr = ptrw;
     //    assert( (*ptr != 0) );
@@ -451,4 +451,4 @@ void Config::setPaths(char const * const argv0) {
   // EM_CERR("- Config::setPath"); // EM_CERR( m_sExeDir); EM_CERR( m_sDataDir);
 } //!-rzr
 
-//EOF:$Id: Config.cpp,v 1.31 2009/03/06 14:19:40 rzr Exp $
+//#eof "$Id: Config.cpp,v 1.32 2010/02/16 17:42:17 rzr Exp $"
