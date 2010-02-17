@@ -1,4 +1,4 @@
-#$Id: Makefile.am,v 1.12 2003/06/18 10:44:19 henqvist Exp $
+#$Id: Makefile.am,v 1.13 2010/02/17 13:22:08 rzr Exp $
 AUTOMAKE_OPTIONS = gnu
 
 highscoredir = $(DESTDIR)/$(EM_BUILD_ROOT)/$(EM_HIGHSCORE_DIR)/tux
@@ -25,7 +25,6 @@ floor2.png.pcx \
 floor3.png \
 game.ogg \
 gameover.wav \
-intro.mid \
 lock.wav \
 loop.wav \
 floor.pbl \
