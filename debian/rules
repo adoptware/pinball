@@ -74,7 +74,7 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/${package}.
-	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/${package}
 
 	install -d $(CURDIR)/debian/tmp/usr/share/applications
 	install -d $(CURDIR)/debian/tmp/usr/share/pixmaps
@@ -129,4 +129,4 @@ binary: binary-indep binary-arch
 configure: bootstrap
 	sh $<
 
-#eof "$Id: rules,v 1.4 2009/08/02 00:50:56 rzr Exp $"
+#eof "$Id: rules,v 1.5 2010/02/17 13:36:57 rzr Exp $"
