@@ -2,11 +2,11 @@ Source: pinball
 Section: games
 Priority: optional
 Maintainer: Jochen Friedrich <jochen@scram.de>
-Build-Depends: debhelper (>> 4.0.0),
+Build-Depends: debhelper (>> 4.0.0), automake
  libgl1-mesa-dev | xlibmesa-gl-dev | libgl-dev,
  libpng-dev, libsdl1.2-dev, glutg3-dev, libsdl-image1.2-dev, libsdl-mixer1.2-dev, libogg-dev, libvorbis-dev, sp, sgmlspl, docbook-utils, libaa1-dev, libasound2-dev [!kfreebsd-i386], libtiff4-dev, libsvga1-dev [i386]
-Standards-Version: 3.7.2
- Homepage: http://pinball.sf.net
+Standards-Version: 3.8.3
+Homepage: http://pinball.sf.net
 
 Package: pinball
 Architecture: any
@@ -17,7 +17,7 @@ Description: Emilia Pinball Emulator
 
 Package: pinball-dev
 Architecture: any
-Depends: libc6-dev, pinball (= ${Source-Version}), c++abi2-dev | libstdc++6-4.1-dev
+Depends: libc6-dev, pinball (= ${Source-Version}), c++abi2-dev | libstdc++6-4.1-dev, ${misc:Depends}
 Description: Development files for the Emilia Pinball Emulator
  The Emilia Pinball Project is a pinball simulator for Linux and other Unix
  systems. There are only two levels to play with, but they are very addictive.
