@@ -13,8 +13,8 @@ endif
 
 .PHONY: clean
 clean:
-	-dh clean
-#	rm -rf libltdl
+	dh clean
+	rm -rf libltdl
 
 .PHONY: override_dh_auto_configure
 override_dh_auto_configure:
