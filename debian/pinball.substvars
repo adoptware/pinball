@@ -1,1 +1,2 @@
-shlibs:Depends=libc6 (>= 2.3.2.ds1-4), libgcc1 (>= 1:3.3.2-1), libjpeg62, libogg0 (>= 1.1.0), libpng12-0 (>= 1.2.5.0-4), libsdl-image1.2 (>= 1.2.3), libsdl-mixer1.2 (>= 1.2.5), libsdl1.2debian (>> 1.2.6-0), libsmpeg0 (>= 0.4.4-7), libstdc++5 (>= 1:3.3.2-1), libtiff3g, libvorbis0a (>= 1.0.1), libvorbisfile3 (>= 1.0.1), xlibmesa4-gl | libgl1, xlibmesa4-glu | libglu1, xlibs (>> 4.1.0), zlib1g (>= 1:1.2.1)
+shlibs:Depends=libc6 (>= 2.3), libc6 (>= 2.3.6-6~), libgcc1 (>= 1:4.1.1), libgl1-mesa-glx | libgl1, libglu1-mesa | libglu1, libice6 (>= 1:1.0.0), libsdl-image1.2 (>= 1.2.10), libsdl-mixer1.2 (>= 1.2.6), libsdl1.2debian (>= 1.2.10-1), libsm6, libstdc++6 (>= 4.4.0)
+misc:Depends=

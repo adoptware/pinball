@@ -1,22 +1,54 @@
 pinball (0.0.0-0) UNRELEASED; urgency=low
 
-  * TODO: REMOVE this entry on release 
+  * Non-maintainer upload.
 
- -- Philippe Coval <rzr@gna.org>  Sun, 02 Aug 2009 01:22:33 +0200
+ -- Philippe Coval <rzr@gna.org>  Sat, 06 Mar 2010 22:50:29 +0100
 
-pinball (0.3.1-7ubuntu2) intrepid; urgency=low
+pinball (0.3.1-12) unstable; urgency=low
 
-  * debian/control:
-    - Update Maintainer field as per spec (LP: #230350).
+  * Refresh patch 05_system_ltdl.patch. Some autobuilders didn't like
+    it for some unknown reason.
+  * Remove build dependency on quilt.
 
- -- Luca Falavigna <dktrkranz@ubuntu.com>  Fri, 23 May 2008 06:49:49 +0000
+ -- Jochen Friedrich <jochen@scram.de>  Thu, 14 Jan 2010 17:42:16 +0100
 
-pinball (0.3.1-7ubuntu1) feisty; urgency=low
+pinball (0.3.1-11) unstable; urgency=low
 
-  * Synchronize with Debian unstable; remaining change:
-    - Added libsvga1-dev to Build-Depends for i386.
+  * Replace macro AC_LIBLTDL_CONVENIENCE with LTDL_INIT. This will make
+    pinball link against the system libltdl instead of the private one.
+  * Switch to dpkg-source 3.0 (quilt) format
 
- -- Sarah Hobbs <hobbsee@ubuntu.com>  Tue, 28 Nov 2006 00:47:00 +1100
+ -- Jochen Friedrich <jochen@scram.de>  Thu, 07 Jan 2010 16:56:37 +0100
+
+pinball (0.3.1-10) unstable; urgency=low
+
+  * Build-depend on libltdl-dev (>= 2.2.6b) as earlier versions were 
+    vulnerable to a priviledge escalation. (Closes: #559825)
+    Fixes priviledge escalation vulnerability CVE-2009-3736.
+
+ -- Jochen Friedrich <jochen@scram.de>  Thu, 10 Dec 2009 18:57:19 +0100
+
+pinball (0.3.1-9) unstable; urgency=low
+
+  * Fix .desktop file (Closes: #549643). Thanks to Pino Toscano
+    <pino@kde.org> for the patch.
+  * Fix eglibc 2.10 build (Closes: #549984). Thanks to Ilya Barygin
+    <baryin@gmail.com> for the patch.
+  * Add README.source for quilt patch management.
+
+ -- Jochen Friedrich <jochen@scram.de>  Tue, 13 Oct 2009 18:41:23 +0200
+
+pinball (0.3.1-8) unstable; urgency=low
+
+  * Bump Standards-Version to 3.8.3
+  * Replace glut with freeglut (Closes: #543701)
+  * Correct license to be GPL-2
+  * Switch to debhelper 7
+  * Use current autotools instead of shipped versions (Closes: #401852, 
+    #401853)
+  * Fix depends for non-Linux platforms (Closes: #451113)
+
+ -- Jochen Friedrich <jochen@scram.de>  Wed, 02 Sep 2009 14:11:01 +0200
 
 pinball (0.3.1-7) unstable; urgency=low
 
@@ -26,26 +58,12 @@ pinball (0.3.1-7) unstable; urgency=low
 
  -- Jochen Friedrich <jochen@scram.de>  Wed, 23 Nov 2006 12:30:53 +0100
 
-pinball (0.3.1-6.1ubuntu1) edgy; urgency=low
-
-  * Merge from debian unstable.
-  * Keep Ubuntu changes
-
- -- Sarah Hobbs <hobbsee@ubuntu.com>  Sat, 16 Sep 2006 08:29:32 -0500
-
 pinball (0.3.1-6.1) unstable; urgency=high
 
   * NMU.
   * pinball-dev: Fix libstdc++-dev dependency.
 
  -- Matthias Klose <doko@debian.org>  Mon,  4 Sep 2006 02:20:07 +0200
-
-pinball (0.3.1-6ubuntu1) edgy; urgency=low
-
-  * Synchronize with Debian unstable; remaining change:
-    - Added libsvga1-dev to Build-Depends for i386.
-
- -- Matthias Klose <doko@ubuntu.com>  Tue, 11 Jul 2006 09:58:42 +0200
 
 pinball (0.3.1-6) unstable; urgency=high
 
