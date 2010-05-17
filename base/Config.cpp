@@ -358,6 +358,13 @@ void Config::loadArgs(int & argc, char *argv[]) {
       }
       EM_COUT("Using " << m_iBpp << " bpp", 1);
       REMOVEARG(a, argc, argv);
+    } else if (strcmp(argv[a], "-data") == 0) {
+      if (argc > a) {
+	EM_COUT("Using datapath: " << argv[a+1], 1);
+	this->setDataDir(argv[a+1]);
+	REMOVEARG(a, argc, argv);
+      }
+      REMOVEARG(a, argc, argv);
     } else if (strcmp(argv[a], "-nosound") == 0) {
       this->setSound(0);
       this->setMusic(0);
