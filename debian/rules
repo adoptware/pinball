@@ -1,123 +1,44 @@
 #!/usr/bin/make -f
-# Sample debian/rules that uses debhelper.
-# GNU copyright 1997 to 1999 by Joey Hess.
 
-# These are used for cross-compiling and for saving the configure script
-# from having to guess our platform (since we know it already)
 DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
-
-export DH_OPTIONS
-
-ifneq (,$(findstring debug,$(DEB_BUILD_OPTIONS)))
-	CFLAGS += -g
-	CXXFLAGS += -g
-endif
-
-ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
-	CFLAGS += -O0
-	CXXFLAGS += -O0
-else
-	CFLAGS += -O2
-	CXXFLAGS += -O2
-endif
-
-ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
-	INSTALL_PROGRAM += -s
-endif
 
 ifneq (,$(findstring alpha,$(DEB_BUILD_GNU_TYPE)))
 	CFLAGS += -mieee
 	CXXFLAGS += -mieee
 endif
 
-config.status: configure
-	dh_testdir
-	# Add here commands to configure the package.
-	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --bindir=/usr/games --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --datadir=/usr/share/games --with-cflags="$(CFLAGS)" --with-cxxflags="$(CXXFLAGS)"
+%:
+	dh $@
 
-
-build: build-stamp
-
-build-stamp:  config.status
-	dh_testdir
-
-	# Add here commands to compile the package.
-	$(MAKE)
-	#/usr/bin/docbook-to-man debian/pinball.sgml > pinball.1
-	nsgmls debian/pinball.sgml | sgmlspl sgmlspl-specs/docbook2man-spec.pl
-
-	touch build-stamp
-
+.PHONY: clean
 clean:
-	dh_testdir
-	dh_testroot
-	rm -f build-stamp 
+	dh clean
+	rm -rf libltdl
 
-	# Add here commands to clean up after the build process.
-	-$(MAKE) distclean
-	-test -r /usr/share/misc/config.sub && \
-	  cp -f /usr/share/misc/config.sub config.sub
-	-test -r /usr/share/misc/config.guess && \
-	  cp -f /usr/share/misc/config.guess config.guess
-	rm -f pinball.6 manpage.links manpage.refs manpage.log config.log
+.PHONY: override_dh_auto_configure
+override_dh_auto_configure:
+	libtoolize --install --copy
+	aclocal
+	autoheader
+	automake --add-missing
+	autoconf
+	dh_auto_configure -- --bindir=/usr/games --datadir=/usr/share/games --with-cflags="$(CFLAGS)" --with-cxxflags="$(CXXFLAGS)"
 
-	dh_clean
-
-install: DH_OPTIONS=
-install: build
-	dh_testdir
-	dh_testroot
-	dh_clean -k
-	dh_installdirs
-
-	# Add here commands to install the package into debian/pinball.
-	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
-
+.PHONY: override_dh_install
+override_dh_install:
 	install -d $(CURDIR)/debian/tmp/usr/share/applications
 	install -d $(CURDIR)/debian/tmp/usr/share/pixmaps
 	install -m 644 pinball.desktop $(CURDIR)/debian/tmp/usr/share/applications
 	install -m 644 data/pinball.xpm $(CURDIR)/debian/tmp/usr/share/pixmaps
-	dh_movefiles
+	nsgmls debian/pinball.sgml | sgmlspl sgmlspl-specs/docbook2man-spec.pl
+	dh_install
 
-
-# Build architecture-independent files here.
-binary-indep: DH_OPTIONS= -i
-binary-indep: build install
-	dh_testdir
-	dh_testroot
-	dh_installdocs
-	dh_installchangelogs ChangeLog
-	dh_compress
+.PHONY: override_dh_fixperms
+override_dh_fixperms:
 	dh_fixperms
-	dh_installdeb
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
-
-# Build architecture-dependent files here.
-binary-arch: DH_OPTIONS=
-binary-arch: build install
-	dh_testdir -a
-	dh_testroot -a
-	dh_installdocs -a
-	dh_installexamples -a
-	dh_installmenu -a
-	dh_installman -ppinball pinball.6
-	dh_installman -ppinball-dev debian/pinball-config.6
-	dh_installinfo -a
-	dh_installchangelogs -a ChangeLog
-	dh_link -a
-	dh_strip -a
-	dh_compress -a
-	dh_fixperms -a
 	chown root:games debian/pinball/usr/games/pinball
 	chmod 2755 debian/pinball/usr/games/pinball
-	dh_installdeb -a
-	dh_shlibdeps -a
-	dh_gencontrol -a
-	dh_md5sums -a
-	dh_builddeb -a
 
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install 
+.PHONY: override_dh_makeshlibs
+override_dh_makeshlibs:
