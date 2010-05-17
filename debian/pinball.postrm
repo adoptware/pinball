@@ -1,0 +1,13 @@
+#! /bin/sh
+ 
+set -e
+ 
+if [ "$1" = "purge" ] ; then
+ 
+if [ -d /var/games/pinball ]; then
+        rm -rf /var/games/pinball
+fi
+ 
+fi
+
+#DEBHELPER#
