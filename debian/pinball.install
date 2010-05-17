@@ -1,5 +1,5 @@
 usr/games/pinball
-usr/lib/pinball/*.so.*
 usr/lib/pinball/*.la
+usr/lib/pinball/*.so.*
 usr/share/applications/pinball.desktop
 usr/share/pixmaps/pinball.xpm
