@@ -1,0 +1,76 @@
+--- pinball-0.3.1.orig/base/Config.cpp
++++ pinball-0.3.1/base/Config.cpp
+@@ -358,13 +358,6 @@
+       }
+       EM_COUT("Using " << m_iBpp << " bpp", 1);
+       REMOVEARG(a, argc, argv);
+-    } else if (strcmp(argv[a], "-data") == 0) {
+-      if (argc > a) {
+-	EM_COUT("Using datapath: " << argv[a+1], 1);
+-	this->setDataDir(argv[a+1]);
+-	REMOVEARG(a, argc, argv);
+-      }
+-      REMOVEARG(a, argc, argv);
+     } else if (strcmp(argv[a], "-nosound") == 0) {
+       this->setSound(0);
+       this->setMusic(0);
+--- pinball-0.3.1.orig/src/LoaderModule.h
++++ pinball-0.3.1/src/LoaderModule.h
+@@ -40,6 +40,9 @@
+   /// portable dyn lib loading
+   Behavior* readLibDynamic(string & filename);
+ 
++private:
++  void SanitizePath(std::string&str );
++
+ protected:
+   ///
+   map<char* const, Behavior* , ltstr> m_hMods;
+--- pinball-0.3.1.orig/src/LoaderModule.cpp
++++ pinball-0.3.1/src/LoaderModule.cpp
+@@ -61,6 +61,23 @@
+ }
+ //-----------------------------------------------------------------------------
+ 
++void LoaderModule::SanitizePath(std::string&str )
++{
++  // String to remove.
++  std::string sub = "../";
++
++  typedef std::string::size_type st;
++  typedef std::string::iterator it;
++  st npos = std::string::npos;
++  st pos = 0;
++    
++  while((pos = str.find(sub)) != npos) {
++    it first = str.begin() + pos;
++    it last = first + sub.size();
++    str.erase(first, last);
++  }
++}
++
+ /// is it possible to do something 
+ /// like in java.lang.reflexion instead of protypes ?
+ Behavior* LoaderModule::readLibStatic(string & filename) 
+@@ -82,6 +99,10 @@
+ {
+   EM_COUT("+ LoaderModule::readLibDynamic",0);
+   Behavior * beh =0;
++
++  // Disallow directory traversal
++  SanitizePath( filename );
++
+ #ifndef RZR_LIBSTATIC
+   lt_dlhandle handle = lt_dlopen(filename.c_str());
+   if (handle == NULL) {
+--- pinball-0.3.1.orig/src/Table.cpp
++++ pinball-0.3.1/src/Table.cpp
+@@ -140,7 +140,7 @@
+   Loader::getInstance()->clearSignalVariable();
+   if (Loader::getInstance()->loadFile(filename.c_str(), engine) != 0) {
+     cerr << "Error loading level: " << m_sTableName << endl;
+-    cerr << "Try reinstalling the game or use the -data switch to specify the data directory"
++    cerr << "Try reinstalling the game"
+          << endl;
+     this->clear(engine);
+     return -1;
