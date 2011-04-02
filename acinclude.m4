@@ -5,7 +5,7 @@ dnl #######################################################
 dnl AM_PATH_SDL([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
 dnl Test for SDL, and define SDL_CFLAGS and SDL_LIBS
 dnl
-AC_DEFUN(AM_PATH_SDL,
+AC_DEFUN([AM_PATH_SDL],
 [dnl 
 dnl Get the cflags and libraries from the sdl-config script
 dnl
@@ -176,7 +176,7 @@ dnl #######################################################
 dnl
 dnl AM_PATH_CPPUNIT([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
 dnl
-AC_DEFUN(AM_PATH_CPPUNIT,
+AC_DEFUN([AM_PATH_CPPUNIT],
 [
 
 AC_ARG_WITH(cppunit-prefix,[  --with-cppunit-prefix=PFX   Prefix where CppUnit is installed (optional)],
@@ -262,7 +262,7 @@ dnl work if I copy the sdl.m4 and replace all 'sdl' with 'allegro' :P
 dnl AM_PATH_ALLEGRO([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
 dnl Test for ALLEGRO, and define ALLEGRO_CFLAGS and ALLEGRO_LIBS
 dnl
-AC_DEFUN(AM_PATH_ALLEGRO,
+AC_DEFUN([AM_PATH_ALLEGRO],
 [dnl 
 dnl Get the cflags and libraries from the allegro-config script
 dnl

@@ -1,5 +1,5 @@
 #! /bin/sh
-
+touch config.h.in pinconfig.h.in
 libtoolize --ltdl --force
 autoheader
 automake --add-missing

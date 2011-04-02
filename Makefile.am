@@ -9,3 +9,5 @@ pinincludedir = $(includedir)/pinball
 pininclude_HEADERS = pinconfig.h
 
 bin_SCRIPTS = pinball-config
+
+ACLOCAL_AMFLAGS= -I libltdl/m4
