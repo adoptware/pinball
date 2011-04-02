@@ -11,7 +11,12 @@ AC_CONFIG_AUX_DIR([libltdl/config])
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 
-AM_INIT_AUTOMAKE
+dnl Checks for programs.
+AC_PROG_CC
+AC_PROG_CXX
+AC_PROG_INSTALL
+AC_PROG_LIBTOOL
+
 
 dnl this is a c++ program
 dnl CFLAGS="-g -W -Wall -O2"
@@ -25,17 +30,14 @@ AC_ARG_WITH(cxxflags,
 [  --with-cxxflags=CXXFLAGS        use CXXFLAGS as compile time arguments.],
     [CXXFLAGS=$with_cxxflags; export CXXFLAGS])
 
-dnl Checks for programs.
-AC_PROG_CC
-AC_PROG_CXX
-AC_PROG_INSTALL
-AC_PROG_LIBTOOL
 
 AC_LIBTOOL_DLOPEN
 LT_CONFIG_LTDL_DIR([libltdl])
 LT_INIT
 LTDL_INIT
 
+
+AM_INIT_AUTOMAKE
 
 AC_CONFIG_MACRO_DIR([libltdl/m4])
 
