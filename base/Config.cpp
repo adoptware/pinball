@@ -358,13 +358,6 @@ void Config::loadArgs(int & argc, char *argv[]) {
       }
       EM_COUT("Using " << m_iBpp << " bpp", 1);
       REMOVEARG(a, argc, argv);
-    } else if (strcmp(argv[a], "-data") == 0) {
-      if (argc > a) {
-	EM_COUT("Using datapath: " << argv[a+1], 1);
-	this->setDataDir(argv[a+1]);
-	REMOVEARG(a, argc, argv);
-      }
-      REMOVEARG(a, argc, argv);
     } else if (strcmp(argv[a], "-nosound") == 0) {
       this->setSound(0);
       this->setMusic(0);
@@ -423,7 +416,7 @@ void Config::setPaths(char const * const argv0) {
   m_sDataDir = string(EM_DATADIR) + "/";
   m_sExeDir = "./";
   if ( *( m_sDataDir.c_str() ) != '/' ) {
-    char* ptr=0; 
+    const char* ptr=0;
     char* ptrw = 0;
     //cout<<"relative to exe file"<<endl;
     ptr = (strrchr(argv0,'/')); // unix /cygwin / check win32 
