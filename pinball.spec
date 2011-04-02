@@ -33,14 +33,14 @@ There is only one level to play with but it is however very addictive.
 #%patch3 -p0
 #%patch4 -p0
 [ -e configure ] || ./bootstrap
-rm -fr libltdl
+# rm -fr libltdl
 # sigh stop autoxxx from rerunning because of our patches above.
 touch aclocal.m4
 touch configure
-touch pinconfig.h.in `find -name Makefile.in`
+# touch pinconfig.h.in `find -name Makefile.in`
 
 # cleanup a bit
-chmod -x ChangeLog */*.h */*.cpp data/*/Module*.cpp
+# chmod -x ChangeLog */*.h */*.cpp data/*/Module*.cpp
 
 
 %build
@@ -55,12 +55,12 @@ ln -s opengl-game-wrapper.sh $RPM_BUILD_ROOT%{_bindir}/%{name}-wrapper
 # remove unused global higescorefiles:
 rm -fr $RPM_BUILD_ROOT%{_localstatedir}
 # remove unused test module
-rm $RPM_BUILD_ROOT%{_libdir}/%{name}/libModuleTest.*
+rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/libModuleTest.*
 # .la files are needed for ltdl
-rm $RPM_BUILD_ROOT%{_libdir}/%{name}/lib*.{a,so}
+rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/lib*.{a,so}
 # remove bogus development files
-rm $RPM_BUILD_ROOT%{_bindir}/%{name}-config
-rm -r $RPM_BUILD_ROOT%{_includedir}/%{name}
+rm -f $RPM_BUILD_ROOT%{_bindir}/%{name}-config
+rm -rf $RPM_BUILD_ROOT%{_includedir}/%{name}
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
@@ -100,6 +100,10 @@ fi
 
 
 %changelog
+* Sun Apr  03 2011 Philippe Coval <rzrtgna.org> - 0.0.0-0
+- http://rzr.online.fr/q/pinball# (work in progress)
+- please remove this entry on release
+
 * Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.3.1-17
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 

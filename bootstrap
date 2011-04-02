@@ -2,7 +2,10 @@
 touch config.h.in pinconfig.h.in
 libtoolize --ltdl --force
 autoheader
-automake --add-missing
 aclocal
+automake --add-missing
+
 autoconf
 autoheader
+
+echo "# ./configure && make && make install"
