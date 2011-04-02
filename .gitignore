@@ -94,3 +94,9 @@ test/unittest
 config.h
 config.h.in
 stamp-h2
+autoscan.log
+confdefs.h
+configure.scan
+conftest
+conftest.c
+conftest.err

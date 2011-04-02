@@ -1,8 +1,7 @@
-dnl Process this file with autoconf 2.53 to produce a configure script.
-
+dnl #                                               -*- Autoconf -*-
+dbl # Process this file with autoconf 2.53 to produce a configure script.
 dnl init autoconf and automake
-AC_INIT(pinball, 0.0.0, [[pinball.sf.net]])
-
+AC_INIT
 
 AC_CONFIG_HEADERS(pinconfig.h)
 AM_CONFIG_HEADER(config.h)
@@ -12,11 +11,11 @@ AC_CONFIG_AUX_DIR([libltdl/config])
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE(pinball, 0.0.0, [[pinball.sf.net]])
 
-dnl Checks for programs.
-AC_PROG_CC
+dnl # Checks for programs.
 AC_PROG_CXX
+AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_LIBTOOL
 
@@ -238,6 +237,18 @@ dnl Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS(sys/stat.h, : ,AC_MSG_ERROR([*** Header sys/stat.h not found. Not able to save config]))
 AC_CHECK_HEADERS(sys/types.h, : ,AC_MSG_ERROR([*** Header sys/types.h not found. Not able to save config]))
+
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_HEADER_STDBOOL
+AC_C_INLINE
+
+# Checks for library functions.
+AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK
+AC_FUNC_MALLOC
+AC_FUNC_REALLOC
+AC_CHECK_FUNCS([getcwd gettimeofday memset mkdir pow sqrt strchr strrchr strstr])
+
 
 dnl ********************************************
 dnl Debug and Config ***************************
