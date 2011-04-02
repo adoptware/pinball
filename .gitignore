@@ -99,3 +99,25 @@ test/thread
 test/trans
 test/varray
 
+Makefile
+Makefile.in
+aclocal.m4
+addon/Makefile
+addon/Makefile.in
+base/Makefile
+base/Makefile.in
+config.guess
+config.sub
+configure
+data/Makefile.in
+data/professor/Makefile.in
+data/tux/Makefile.in
+install-sh
+libltdl/
+ltmain.sh
+missing
+pinconfig.h
+pinconfig.h.in
+src/Makefile.in
+test/Makefile.in
+test/unittest
