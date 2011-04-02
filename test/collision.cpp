@@ -151,8 +151,9 @@ int main(int argc, char *argv[]) {
 		//engine->limitFPS(10);
 	}
 
-#if EM_DEBUG
 	extern float em_groups_m, em_shapes_m, em_bounds_m, em_polygons_m;
+
+#if EM_DEBUG
 	cerr << "Groups " << em_groups_m << endl;
 	cerr << "Shapes " << em_shapes_m << endl;
 	cerr << "Bounds " << em_bounds_m << endl;
@@ -166,5 +167,3 @@ int main(int argc, char *argv[]) {
 #if EM_USE_ALLEGRO
 END_OF_MAIN();
 #endif
-
-//#eof "$Id: collision.cpp,v 1.11 2009/08/02 00:50:56 rzr Exp $"

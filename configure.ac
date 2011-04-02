@@ -1,7 +1,7 @@
 dnl Process this file with autoconf 2.53 to produce a configure script.
 
 dnl init autoconf and automake
-AC_INIT(pinball, 0.3.0, [[henqvist@users.sourceforge.net]])
+AC_INIT(pinball, 0.3.1, [[henqvist@users.sourceforge.net]])
 
 AM_CONFIG_HEADER(pinconfig.h)
 
@@ -11,21 +11,10 @@ AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE
 
 dnl this is a c++ program
-dnl CFLAGS="-g -W -Wall -O2"
-dnl CXXFLAGS="-g -W -Wall -O2"
-
-AC_ARG_WITH(cflags,
-[  --with-cflags=CFLAGS            use CFLAGS as compile time arguments.],
-    [CFLAGS=$with_cflags; export CFLAGS])
-
-AC_ARG_WITH(cxxflags,
-[  --with-cxxflags=CXXFLAGS        use CXXFLAGS as compile time arguments.],
-    [CXXFLAGS=$with_cxxflags; export CXXFLAGS])
+CFLAGS="-g -W -Wall -O2"
+CXXFLAGS="-g -W -Wall -O2"
 
 AC_CONFIG_SUBDIRS(libltdl)
-AC_CONFIG_MACRO_DIR([libltdl/m4])
-
-LT_CONFIG_LTDL_DIR([libltdl])
 
 dnl Checks for programs.
 AC_PROG_CC
@@ -37,7 +26,6 @@ AC_PROG_LIBTOOL
 
 AC_SUBST(INCLTDL)
 AC_SUBST(LIBLTDL)
-
 
 dnl *******************************************
 dnl PATHS AND DIRS ****************************
@@ -251,6 +239,3 @@ dnl AC_SUBST(pkgincludedir)
 AC_CONFIG_FILES([Makefile addon/Makefile base/Makefile data/Makefile data/tux/Makefile data/professor/Makefile src/Makefile test/Makefile pinball-config])
 
 AC_OUTPUT
-
-dnl #eof "$Id: configure.ac,v 1.8 2010/03/06 22:41:04 rzr Exp $"
-

@@ -1,11 +1,10 @@
-//#ident "$Id: Group.h,v 1.10 2003/07/16 20:02:04 rzr Exp $"
 /***************************************************************************
                           Group.h  -  description
                              -------------------
     begin                : Wed Jan 26 2000
     copyright            : (C) 2000 by Henrik Enqvist
     email                : henqvist@excite.com
-***************************************************************************/
+ ***************************************************************************/
 
 #ifndef GROUP_H
 #define GROUP_H
@@ -69,7 +68,7 @@ class BillBoard;
  ** Animation -- lwGroup   rwGroup -- Animation
  ** </pre> */
 class Group : public Node {
-public:
+ public:
   Group();
   virtual ~Group();
   void setName(const char * name);
@@ -79,9 +78,9 @@ public:
   /** Removes the group from the tree. You must call 'delete group' after 
    * this function if you wish to deallocate the group. */
   void removeGroup(Group * g);
-  //    void addBehavior(Behavior * b, bool signal=true);
+  //	void addBehavior(Behavior * b, bool signal=true);
   void setBehavior(Behavior * b, bool signal = true);
-  //    void removeBehavior(Behavior * b);
+  //	void removeBehavior(Behavior * b);
   void addShape3D(Shape3D * s);
   /** Removes the shape from the tree. You must call 'delete shape' after 
    * this function if you wish to deallocate the shape. */
@@ -91,9 +90,9 @@ public:
   void setLight(Light * l);
   void setCollisionBounds(CollisionBounds * cb);
   void setSound(Sound * s);
-  //    int getBehaviorSize();
-  int getShape3DSize() const;
-  //    Behavior * getBehavior(int i);
+  //	int getBehaviorSize();
+  int getShape3DSize();
+  //	Behavior * getBehavior(int i);
   Behavior * getBehavior();
   Group * getGroup(int i);
   Shape3D * getShape3D(int i);
@@ -116,10 +115,10 @@ public:
   void unsetPropertyRecursive(int p);
   void unsetUserProperty(int p);
 
-  inline int getCollisionGroup() { return m_iCollisionGroup; };
-  inline void setCollisionGroup(int c) { m_iCollisionGroup = c; };
+	inline int getCollisionGroup() { return m_iCollisionGroup; };
+	inline void setCollisionGroup(int c) { m_iCollisionGroup = c; };
   
-private:
+ private:
   friend class BehaviorVisitor;
   friend class AlignVisitor;
   friend class AllegroVisitor;
@@ -145,16 +144,16 @@ private:
   Group* p_Parent;
   vector<Group*> m_vChildren;
   vector<Shape3D*> m_vShape3D;
-  //    vector<Behavior*> m_vBehavior;
+  //	vector<Behavior*> m_vBehavior;
   Behavior * p_Behavior;
   
-  char m_Name[256]; //todo: replace with string
+  char m_Name[256];
   
   int m_iProperties;
   int m_iUserProperties;
-  int m_iCollisionGroup;
+	int m_iCollisionGroup;
   
-  //            void propagateSignal(int signal, Group* sender);
+  //		void propagateSignal(int signal, Group* sender);
   void setParent(Group* g);
 };
 

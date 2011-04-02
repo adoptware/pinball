@@ -1,9 +1,12 @@
 [Desktop Entry]
-Categories=Game;ArcadeGame;X-Red-Hat-Extra;
+Encoding=UTF-8
+Categories=Application;Game;ArcadeGame;X-Red-Hat-Extra
 X-Desktop-File-Install-Version=0.2
 Name=Emilia Pinball
 Comment=OpenGL pinball game
 Exec=pinball
 Icon=pinball.xpm
-Terminal=false
+Terminal=0
 Type=Application
+                                                                                                                                                             
+                                                                                                                                                             

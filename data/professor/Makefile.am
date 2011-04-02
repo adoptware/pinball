@@ -1,6 +1,6 @@
 AUTOMAKE_OPTIONS = gnu
 
-highscoredir = $(EM_BUILD_ROOT)/$(EM_HIGHSCORE_DIR)/professor
+highscoredir = $(DESTDIR)/$(EM_BUILD_ROOT)/$(EM_HIGHSCORE_DIR)/professor
 
 professorlibdir = $(EM_LIBDIR)
 professordatadir = $(datadir)/pinball/professor
@@ -19,9 +19,11 @@ bumpsoft.wav \
 flip.wav \
 floor.png \
 floor.png.pcx \
+gameover.wav \
+introp.ogg \
 nudge.wav \
 pinball.pbl \
-professor.mid \
+professor.ogg \
 professor.png
 
 # This will create a new empty highscores file

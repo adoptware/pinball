@@ -1,4 +1,4 @@
-//#ident "$Id: Config.cpp,v 1.32 2010/02/16 17:42:17 rzr Exp $"
+//#ident "$Id: Config.cpp,v 1.29 2003/06/13 13:39:44 rzr Exp $"
 /***************************************************************************
                           Config.cpp  -  description
                              -------------------
@@ -26,7 +26,6 @@
 #endif
 
 #ifdef WIN32
-//#include <fcntl.h>
 //#include <io.h> 
 #include <direct.h>  // mkdir @ msvc+mingw32
 //#define mkdir(name, modes) mkdir(name)
@@ -57,7 +56,7 @@ void Config::setDefault() {
   // Default values
   this->setSize(640, 480);
   this->setSound(8);
-  this->setMusic(4);
+  this->setMusic(8);
   this->setBpp(16);
   this->setGLFilter(EM_LINEAR);
   this->setView(0);
@@ -359,6 +358,13 @@ void Config::loadArgs(int & argc, char *argv[]) {
       }
       EM_COUT("Using " << m_iBpp << " bpp", 1);
       REMOVEARG(a, argc, argv);
+    } else if (strcmp(argv[a], "-data") == 0) {
+      if (argc > a) {
+	EM_COUT("Using datapath: " << argv[a+1], 1);
+	this->setDataDir(argv[a+1]);
+	REMOVEARG(a, argc, argv);
+      }
+      REMOVEARG(a, argc, argv);
     } else if (strcmp(argv[a], "-nosound") == 0) {
       this->setSound(0);
       this->setMusic(0);
@@ -417,12 +423,12 @@ void Config::setPaths(char const * const argv0) {
   m_sDataDir = string(EM_DATADIR) + "/";
   m_sExeDir = "./";
   if ( *( m_sDataDir.c_str() ) != '/' ) {
+    char* ptr=0; 
+    char* ptrw = 0;
     //cout<<"relative to exe file"<<endl;
-    char const * ptr = (strrchr(argv0,'/')); // unix /cygwin / check win32 
+    ptr = (strrchr(argv0,'/')); // unix /cygwin / check win32 
 #ifdef WIN32
-    char const * const ptrw = 0;    ptrw = (strrchr(argv0,'\\')); 
-#else 
-    char const * const ptrw = 0;
+    ptrw = (strrchr(argv0,'\\')); 
 #endif //TODO: MacOS file sep ':'   
     if ( ptrw > ptr ) ptr = ptrw;
     //    assert( (*ptr != 0) );
@@ -451,4 +457,4 @@ void Config::setPaths(char const * const argv0) {
   // EM_CERR("- Config::setPath"); // EM_CERR( m_sExeDir); EM_CERR( m_sDataDir);
 } //!-rzr
 
-//#eof "$Id: Config.cpp,v 1.32 2010/02/16 17:42:17 rzr Exp $"
+//EOF:$Id: Config.cpp,v 1.29 2003/06/13 13:39:44 rzr Exp $

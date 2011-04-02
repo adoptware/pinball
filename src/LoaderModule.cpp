@@ -1,4 +1,4 @@
-//#ident "$Id: LoaderModule.cpp,v 1.5 2009/08/02 00:50:56 rzr Exp $" 
+//#ident "$Id: LoaderModule.cpp,v 1.3 2003/07/16 20:02:04 rzr Exp $" 
 #ifndef LoaderModule_cpp_ 
 #define LoaderModule_cpp_
 /**
@@ -61,23 +61,6 @@ LoaderModule* LoaderModule::getInstance()
 }
 //-----------------------------------------------------------------------------
 
-void LoaderModule::SanitizePath(std::string&str )
-{
-  // String to remove.
-  std::string sub = "../";
-
-  typedef std::string::size_type st;
-  typedef std::string::iterator it;
-  st npos = std::string::npos;
-  st pos = 0;
-    
-  while((pos = str.find(sub)) != npos) {
-    it first = str.begin() + pos;
-    it last = first + sub.size();
-    str.erase(first, last);
-  }
-}
-
 /// is it possible to do something 
 /// like in java.lang.reflexion instead of protypes ?
 Behavior* LoaderModule::readLibStatic(string & filename) 
@@ -99,10 +82,6 @@ Behavior* LoaderModule::readLibDynamic(string & filename)
 {
   EM_COUT("+ LoaderModule::readLibDynamic",0);
   Behavior * beh =0;
-
-  // Disallow directory traversal
-  SanitizePath( filename );
-
 #ifndef RZR_LIBSTATIC
   lt_dlhandle handle = lt_dlopen(filename.c_str());
   if (handle == NULL) {
@@ -134,5 +113,4 @@ Behavior* LoaderModule::read(string  & filename)
   EM_COUT("- LoaderModule::read",0);
 }
 #endif // inclusion
-
-//#eof "$Id: LoaderModule.cpp,v 1.5 2009/08/02 00:50:56 rzr Exp $"
+//$Id: LoaderModule.cpp,v 1.3 2003/07/16 20:02:04 rzr Exp $

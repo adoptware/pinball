@@ -1,11 +1,10 @@
-//#ident "$Id: Keyboard.h,v 1.9 2003/07/16 20:02:04 rzr Exp $"
 /***************************************************************************
                           Keyboard.h  -  description
                              -------------------
     begin                : Thu Feb 1 2001
     copyright            : (C) 2001 by Henrik Enqvist
     email                : henqvist@excite.com
-***************************************************************************/
+ ***************************************************************************/
 
 
 #ifndef KEYBOARD_H
@@ -102,14 +101,14 @@
 #define SDLK_RCTRL KEY_RCONTROL
 #define SDLK_COMPOSE KEY_ALTGR
 
-#define SDLK_F1 KEY_F1 //!rzr+ bug fixed
+#define SDLK_F1 KEY_F1
 #define SDLK_F2 KEY_F2
 #define SDLK_F3 KEY_F3
-#define SDLK_F4 KEY_F4 
-#define SDLK_F5 KEY_F5
-#define SDLK_F6 KEY_F6
-#define SDLK_F7 KEY_F7
-#define SDLK_F8 KEY_F8 //!rzr-
+#define SDLK_F3 KEY_F4
+#define SDLK_F1 KEY_F5
+#define SDLK_F2 KEY_F6
+#define SDLK_F3 KEY_F7
+#define SDLK_F3 KEY_F8
 
 #endif // EM_USE_ALLEGRO
 
@@ -120,7 +119,7 @@
 /** @author Henrik Enqvist */
 
 class Keyboard {
-public:
+ public:
   Keyboard();
   ~Keyboard();
   static void clear();
@@ -128,7 +127,7 @@ public:
   static bool isKeyDown(int piKey);
   static EMKey waitForKey();
 #if EM_USE_SDL
-private:
+ private:
   static bool m_abKey[KEY_MAX];
 #endif
 };

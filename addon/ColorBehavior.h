@@ -1,11 +1,10 @@
-//#ident "$Id: ColorBehavior.h,v 1.3 2003/07/26 22:13:41 rzr Exp $"
 /***************************************************************************
                           ColorBehavior.h  -  description
                              -------------------
     begin                : Tue Feb 15 2000
     copyright            : (C) 2000 by Henrik Enqvist
     email                : henqvist@excite.com
-***************************************************************************/
+ ***************************************************************************/
 
 #ifndef COLORBEHAVIOR_H
 #define COLORBEHAVIOR_H
@@ -19,13 +18,12 @@
  * The collision example uses this to demonstrate when collision is
  * detected between two Shape3Ds. */
 class ColorBehavior : public Behavior {
-public:
-  ColorBehavior();
-  ~ColorBehavior();
-  void onCollision(const Vertex3D & vtxWall, const Vertex3D & vtxOwn, 
-                   Group * g);
-  void onTick();
-  void StdOnSignal() {} // was just declared //!rzr
+ public:
+	ColorBehavior();
+	~ColorBehavior();
+	void onCollision(const Vertex3D & vtxWall, const Vertex3D & vtxOwn, Group * g);
+	void onTick();
+	void StdOnSignal();
 };
 
 #endif // COLORBEHAVIOR_H

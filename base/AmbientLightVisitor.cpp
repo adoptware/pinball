@@ -1,4 +1,3 @@
-//#ident "$Id: AmbientLightVisitor.cpp,v 1.4 2003/07/25 01:01:54 rzr Exp $"
 /***************************************************************************
                           AmbientLightVisitor.cpp  -  description
                              -------------------
@@ -203,7 +202,7 @@ void AmbientLightVisitor::visitPoint(Shape3D * s) {
 	    ((*lightIter)->m_iProperties & EM_USE_SPECULAR)) {
 	  float specular;
 	  Vertex3D vtxRef = {0.0f ,0.0f , -1.0f};
-	  Vertex3D vtxDir = {0.0f ,0.0f , 0.0f}; //!rzr UMR
+	  Vertex3D vtxDir;
 	  vtxDir.x = (*vtxAlignIter).x - (*lightIter)->m_vtxAlign.x;
 	  vtxDir.y = (*vtxAlignIter).y - (*lightIter)->m_vtxAlign.y;
 	  vtxDir.z = (*vtxAlignIter).z - (*lightIter)->m_vtxAlign.z;

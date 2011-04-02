@@ -1,4 +1,4 @@
-//#Ident "$Id: TextureUtil.cpp,v 1.19 2003/08/29 23:33:03 rzr Exp $"
+//#Ident "$Id: TextureUtil.cpp,v 1.15 2003/06/18 10:43:45 henqvist Exp $"
 /***************************************************************************
                           TextureUtil.cpp  -  description
                              -------------------
@@ -27,7 +27,7 @@ extern "C" {
   struct_image* loadP(const char * filename);
 
   struct_image* loadP(const char * filename) {
-    SDL_Surface* surface = IMG_Load(filename); //MLK
+    SDL_Surface* surface = IMG_Load(filename);
     if (surface == NULL) {
       cerr << "::loadP could not load: " << filename << endl;
       return NULL;
@@ -42,7 +42,7 @@ extern "C" {
       image->channels = 4;
     } else {
       cerr << "::loadP Only 32 bit RGBA and 24 bit RGB images supported"<<endl;
-      // TODO free surface struct or COPY texels ?
+      // TODO free surface struct
       free(image);
       return NULL;
     }
@@ -69,7 +69,7 @@ TextureUtil::TextureUtil() {
 }
 
 TextureUtil::~TextureUtil() {
-  freeTextures(); // TODO: check mem leaks here //!rzr
+  //freeTextures(); // TODO: check mem leaks here //!rzr
   //EM_COUT("TextureUtil::~TextureUtil",0);
 }
 
@@ -89,7 +89,7 @@ void TextureUtil::freeTextures()  {
         i != m_hEmTexture.end();
         i++) {
     glDeleteTextures (1, (GLuint*) ((*i).second) ); //is that correct ?
-    free((*i).second);  // malloc -> free, warning those are not pixels but ids
+    free((*i).second);  // malloc -> free
     (*i).second = 0;
   }
   m_hEmTexture.clear();
@@ -139,8 +139,7 @@ void TextureUtil::initGrx() {
   }
 
   if (SDL_InitSubSystem(SDL_INIT_JOYSTICK) < 0) {
-    cerr << "Couldn't initialize SDL joystick: " 
-         <<  SDL_GetError() << endl << endl;
+    cerr << "Couldn't initialize SDL joystick: " <<  SDL_GetError() << endl << endl;
   } else {
     int njoystick = SDL_NumJoysticks();
     cerr << njoystick << " joysticks were found." << endl;
@@ -325,8 +324,7 @@ EmImage* TextureUtil::loadImage(const char* filename) {
   RGB pal[256];
   BITMAP * bm = load_bitmap(filename, pal);
   if (bm == NULL) {
-    cerr << "TextureUtil::loadImage unable to load " 
-         << filename << " : " << allegro_error << endl;
+    cerr << "TextareUtil::loadImage unable to load " << filename << " : " << allegro_error << endl;
   }
   return bm;
 #endif // EM_USE_ALLEGRO
@@ -335,18 +333,16 @@ int TextureUtil::genTexture( char const * const filename,
                              EmTexture * const texture)
 {
   //cout<<"+ Texture::genTexture : "<<filename<<endl;
-  if ( ( filename == 0 ) || ( texture == 0 ) ) return -1;
-  //*texture = 0;
+  *texture = 0;
 
 #if EM_USE_SDL
   // Load Texture
   struct_image* image = 0;
 
   // load the texture
-  image = loadP(filename); //!MLK ?
+  image = loadP(filename);
   if (image == NULL) {
-    cerr << "TextureUtil::loadTexture error loading file \"" << filename <<"\""
-         << string( SDL_GetError() ) <<endl;
+    cerr << "TextureUtil::loadTexture error loading file " << filename << endl;
     return -1;
   }
   //TODO : Pad texture != 2^n x 2^n //!rzr
@@ -354,6 +350,7 @@ int TextureUtil::genTexture( char const * const filename,
   //cout<<" Create Texture"<<endl;
   glGenTextures(1, texture);
   glBindTexture(GL_TEXTURE_2D, *texture);
+
 
   // 2d texture, level of detail 0 (normal), 3 components (red, green, blue),
   // x size from image, y size from image,
@@ -368,12 +365,12 @@ int TextureUtil::genTexture( char const * const filename,
     return -1;
   }
 
+
   glTexImage2D(GL_TEXTURE_2D, 0, comp, image->width, image->height, 0, comp,
                GL_UNSIGNED_BYTE, image->pixels);
-  
+
   EM_COUT("loaded texture: " << filename, 1);
   EM_COUT("size " << image->width <<" "<< image->height, 1);
-  free(image); image = 0; //! that is were we delete Textures 
   //    EM_COUT("bytes per pixel " << (int)image->format->BytesPerPixel, 1);
   //    EM_COUT("bits per pixel " << (int)image->format->BitsPerPixel, 1);
 
@@ -435,4 +432,4 @@ const char * TextureUtil::getTextureName(EmTexture * tex) {
   }
 */
 
-//EOF: $Id: TextureUtil.cpp,v 1.19 2003/08/29 23:33:03 rzr Exp $
+//EOF: $Id: TextureUtil.cpp,v 1.15 2003/06/18 10:43:45 henqvist Exp $
