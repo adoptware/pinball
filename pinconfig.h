@@ -2,7 +2,7 @@
 /* pinconfig.h.in.  Generated from configure.ac by autoheader.  */
 
 /* The data dir /usr/local/share/pinball */
-#define EM_DATADIR "/usr/share/games/pinball"
+#define EM_DATADIR "/usr/local/share/pinball"
 
 /* Shall we use debug features such as profiling and keyboard ball steering */
 /* #undef EM_DEBUG */
@@ -11,7 +11,7 @@
 #define EM_HIGHSCORE_DIR "/var/games/pinball"
 
 /* The library or plugin dir /usr/local/lib/pinball */
-#define EM_LIBDIR "/usr/lib/pinball"
+#define EM_LIBDIR "/usr/local/lib/pinball"
 
 /* Shall we compile unittests */
 /* #undef EM_UNIT_TEST */
@@ -153,7 +153,7 @@
 /* #undef LTDL_DLOPEN_DEPLIBS */
 
 /* Define to the system default library search path. */
-#define LT_DLSEARCH_PATH "/lib:/usr/lib:/usr/lib/mesa:/usr/lib32/mesa:/usr/lib32/alsa-lib:/usr/lib/alsa-lib:/usr/local/lib:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu"
+#define LT_DLSEARCH_PATH "/lib:/usr/lib:/usr/lib/tracker-0.9"
 
 /* The archive extension */
 #define LT_LIBEXT ""

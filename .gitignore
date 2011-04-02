@@ -132,9 +132,8 @@ test/texture.o
 test/thread
 test/thread.o
 test/trans
-test/trans.o
-test/unittest
-test/unittest.o
 test/varray
 
 
+**/.deps/**
+.deps/
