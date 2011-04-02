@@ -6,6 +6,7 @@
     email                : henqvist@excite.com
  ***************************************************************************/
 
+#include <cstddef>
 #include "Private.h"
 #include "Behavior.h"
 #include "Group.h"

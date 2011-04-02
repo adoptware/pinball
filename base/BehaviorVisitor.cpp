@@ -6,6 +6,7 @@
     email                : henqvist@excite.com
  ***************************************************************************/
 
+#include <cstddef>
 #include "BehaviorVisitor.h"
 #include "Behavior.h"
 #include "Group.h"

@@ -1,6 +1,6 @@
 Name:           pinball
-Version:        0.3.1
-Release:        17%{?dist}
+Version:        0.0.0
+Release:        0%{?dist}
 Summary:        Emilia arcade game
 Group:          Amusements/Games
 License:        GPL+
@@ -8,13 +8,13 @@ URL:            http://pinball.sourceforge.net
 Source0:        http://downloads.sourceforge.net/pinball/%{name}-%{version}.tar.gz
 Source1:        %{name}.desktop
 Source2:        %{name}.png
-Patch0:         pinball-0.3.1-sys-ltdl.patch
-Patch1:         pinball-0.3.1-hiscore.patch
-Patch2:		pinball-0.3.1-strictproto.patch
-Patch3:		pinball-0.3.1-lacomment.patch
-Patch4:		pinball-0.3.1-cstddef.patch
+#Patch0:         pinball-0.3.1-sys-ltdl.patch
+#Patch1:         pinball-0.3.1-hiscore.patch
+#Patch2:		pinball-0.3.1-strictproto.patch
+#Patch3:		pinball-0.3.1-lacomment.patch
+#Patch4:		pinball-0.3.1-cstddef.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires:  libXt-devel freeglut-devel SDL_image-devel SDL_mixer-devel
+BuildRequires:  libXt-devel SDL_image-devel SDL_mixer-devel
 BuildRequires:  libpng-devel libvorbis-devel libtool-ltdl-devel
 BuildRequires:  desktop-file-utils
 Requires:       hicolor-icon-theme opengl-games-utils
@@ -27,11 +27,12 @@ There is only one level to play with but it is however very addictive.
 
 %prep
 %setup -q
-%patch0 -p1 -z .sys-ltdl
-%patch1 -p1 -z .hiscore
-%patch2 -p0
-%patch3 -p0
-%patch4 -p0
+#%patch0 -p1 -z .sys-ltdl
+#%patch1 -p1 -z .hiscore
+#%patch2 -p0
+#%patch3 -p0
+#%patch4 -p0
+[ -e configure ] || ./bootstrap
 rm -fr libltdl
 # sigh stop autoxxx from rerunning because of our patches above.
 touch aclocal.m4

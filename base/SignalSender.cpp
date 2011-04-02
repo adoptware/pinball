@@ -7,6 +7,7 @@
  ***************************************************************************/
 
 
+#include <cstddef>
 #include "Private.h"
 #include "SignalSender.h"
 #include "Group.h"

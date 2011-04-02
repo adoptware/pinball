@@ -1,6 +1,6 @@
 AUTOMAKE_OPTIONS = gnu
 
-SUBDIRS = libltdl addon base data src test
+SUBDIRS = addon base data src test
 
 EXTRA_DIST = bootstrap pinball.spec clean pinball.desktop
 

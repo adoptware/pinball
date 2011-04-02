@@ -7,9 +7,9 @@ bin_PROGRAMS = pinball
 
 pinlib_LIBRARIES = libemilia_pin.a
 
-INCLUDES = -I../base -I../addon @INCLTDL@
+INCLUDES = -I../base -I../addon
 
-pinball_LDADD = ../src/libemilia_pin.a ../addon/libemilia_addon.a ../base/libemilia_base.a @LIBLTDL@
+pinball_LDADD = ../src/libemilia_pin.a ../addon/libemilia_addon.a ../base/libemilia_base.a -lltdl
 pinball_LDFLAGS = -export-dynamic
 
 pinball_SOURCES = Pinball.cpp

@@ -247,14 +247,9 @@ bool Table::readHighScoresFile() {
   // Clear old high scores
   m_mapHighScores.clear();
 
-  //!rzr+ : fix w32
-  string sFileName =  m_sTableName + "/" + HIGH_SCORES_FILENAME;
-#ifdef RZR_PATHRELATIVE
-  sFileName = string( Config::getInstance()->getExeDir() )
-    +"/"+ m_sTableName +".cfg";
-#else
-  sFileName = string(EM_HIGHSCORE_DIR) + "/" + sFileName;
-#endif //!rzr-
+  char *home = getenv("HOME");
+  string sFileName = string(home? home:".") + "/.emilia/" + m_sTableName +
+    ".hiscore";
 
   ifstream file(sFileName.c_str());
   if (!file) {
@@ -308,14 +303,10 @@ bool Table::writeHighScoresFile() {
     cerr << "No current table name! (the first time is normal...)" << endl;
     return false;
   }
-  //!rzr+ : fix w32
-  string sFileName =  m_sTableName + "/" + HIGH_SCORES_FILENAME;
-#ifdef RZR_PATHRELATIVE
-  sFileName = string( Config::getInstance()->getExeDir() )
-    +"/"+ m_sTableName +".cfg";
-#else
-  sFileName = string(EM_HIGHSCORE_DIR) + "/" + sFileName;
-#endif //!rzr-
+
+  char *home = getenv("HOME");
+  string sFileName = string(home? home:".") + "/.emilia/" + m_sTableName +
+    ".hiscore";
 
   ofstream file(sFileName.c_str());//, ios_base::out | ios_base::trunc);
   if (!file) {
