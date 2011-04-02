@@ -3,6 +3,7 @@ dnl Process this file with autoconf 2.53 to produce a configure script.
 dnl init autoconf and automake
 AC_INIT(pinball, 0.0.0, [[pinball.sf.net]])
 
+
 AC_CONFIG_HEADERS(pinconfig.h)
 AM_CONFIG_HEADER(config.h)
 
@@ -10,6 +11,8 @@ AC_CONFIG_AUX_DIR([libltdl/config])
 
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
+
+AM_INIT_AUTOMAKE
 
 dnl Checks for programs.
 AC_PROG_CC
@@ -37,7 +40,7 @@ LT_INIT
 LTDL_INIT
 
 
-AM_INIT_AUTOMAKE
+
 
 AC_CONFIG_MACRO_DIR([libltdl/m4])
 
