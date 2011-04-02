@@ -1,8 +1,9 @@
 dnl Process this file with autoconf 2.53 to produce a configure script.
 
 dnl init autoconf and automake
-AC_INIT(pinball, 0.3.1, [[henqvist@users.sourceforge.net]])
+AC_INIT(pinball, 0.0.0, [[pinball.sf.net]])
 
+#AC_CONFIG_HEADERS(pinconfig.h)
 AM_CONFIG_HEADER(pinconfig.h)
 
 AC_CANONICAL_HOST
@@ -27,7 +28,9 @@ AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_INSTALL
 AC_LIBTOOL_DLOPEN
+LT_INIT
 LTDL_INIT
+LT_CONFIG_LTDL_DIR([libltdl])
 AC_PROG_LIBTOOL
 
 AC_SUBST(INCLTDL)

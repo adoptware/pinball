@@ -37,8 +37,8 @@ rm -fr libltdl
 # sigh stop autoxxx from rerunning because of our patches above.
 touch aclocal.m4
 touch configure
-touch `find -name Makefile.in`
-touch pinconfig.h.in
+touch pinconfig.h.in `find -name Makefile.in`
+
 # cleanup a bit
 chmod -x ChangeLog */*.h */*.cpp data/*/Module*.cpp
 
