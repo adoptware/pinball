@@ -48,7 +48,7 @@ class Config {
   inline const int getHeight() { return m_iHeight; };
   inline const int getWidthDiv2() { return m_iWidthDiv2; };
   inline const int getHeightDiv2() { return m_iHeightDiv2; };
-  inline const int getRatio() { return m_fRatio; };
+  inline const float getRatio() { return m_fRatio; };
   inline const int getBpp() { return m_iBpp; };
   inline const int getGLFilter() { return m_iGLFilter; };
   inline const int getView() { return m_iView; };
@@ -59,7 +59,8 @@ class Config {
   inline const bool getFire() { return m_bFire; };
   inline const bool useExternGL() { return m_bExternGL; };
   inline const bool useLights() { return m_bLights; };
-  void setSize(int const w, int const h);
+  void setRatio(float ratio=4/3.) { m_fRatio = ratio; }
+  void setSize(int const w=512, int h=0);
   inline void setBpp(int const bpp) { m_iBpp = bpp; };
   inline void setGLFilter(int const filter) { m_iGLFilter = filter; };
   inline void setView(int const view) { m_iView = view; };

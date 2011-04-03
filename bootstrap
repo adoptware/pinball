@@ -3,12 +3,10 @@ set -e
 touch config.h.in pinconfig.h.in
 libtoolize --ltdl --force
 [ -e config.h.in ] || touch config.h.in
-autoheader
+
 aclocal
-automake --add-missing
-
-autoconf
 autoheader
-./configure
+automake --add-missing
+autoconf
 
-echo "# ./configure && make && make install"
+echo "# $0 && ./configure && make && make install && src/pinball"

@@ -65,6 +65,12 @@
 
 void get_config(void);
 
+float g_RatioArray[] 
+= { 1./2. , 1./1.  , 5./4. , 4./3. , 3./2. , 16/10. , 16./9. , 9./5, 2./1. };
+
+int g_WidthArray[] 
+= { 320, 400, 512, 640, 800 , 864, 1024, 1280 , 1680 , 1920};
+
 /****************************************************************************
  * Menus
  ***************************************************************************/
@@ -244,24 +250,20 @@ protected:
       // scren ratio
       float ratio=4./3.;
       {
-	float array[] 
-	  = { 1./2. , 1./1. , 5./4. , 4./3. , 16/10, 16./9. , 9./5, 2./1. };
 	int index = menuratio->getCurrent();
-	if ( index < ( sizeof(array) / sizeof(array[0]) ) ) {
-	  ratio = array[ index ];
+	if ( index < ( sizeof(g_RatioArray) / sizeof( g_RatioArray[0]) ) ) {
+	  ratio = g_RatioArray[ index ];
 	}
+	config->setRatio( ratio );
       }
      
       // screen size
       int w=640, h=480;
       {
-	int array[] 
-	  = { 320, 400, 512, 640, 800 , 864, 
-	      1024, 1280 , 1680 , 1920};
       
 	int index = menusize->getCurrent();
-	if ( index < ( sizeof(array) / sizeof(array[0]) ) ) {
-	  w = array[ index ];
+	if ( index < ( sizeof(g_WidthArray) / sizeof(g_WidthArray[0]) ) ) {
+	  w = g_WidthArray[ index ];
 	}
 	h=w/ratio;
       }
@@ -437,28 +439,24 @@ void get_config(void)
     menubright->setCurrent(5);
   }
 
-  {  
-    float array[] 
-      = { 1./2. , 1./1. , 5./4. , 4./3. , 16/10., 16./9. , 9./5., 2./1. };
-    int array_size = sizeof( array ) / sizeof( array[0] );
-    menuratio->setCurrent(1);
-    for (int i=array_size-1; (i>0) ; i-- ) {
-      if (Config::getInstance()->getRatio() == array[i]) {
+  { cerr<<"// screen ratio="<<Config::getInstance()->getRatio()<<endl;
+    int array_size = sizeof( g_RatioArray ) / sizeof( g_RatioArray[0] );
+    menuratio->setCurrent(3);
+    for (int i=array_size-1; (i>=0) ; i-- ) {
+      if (Config::getInstance()->getRatio() == g_RatioArray[i]) {
 	menuratio->setCurrent(i);
+	i=0;
       }
     }
   }
-      
-  // screen size
-  {
-    int array[] 
-      = { 320, 400, 512, 640, 800 , 864, 
-	  1024, 1280 , 1680 , 1920};
-    int array_size = sizeof( array ) / sizeof( array[0] );
+
+  { // screen size
+    int array_size = sizeof( g_WidthArray ) / sizeof( g_WidthArray[0] );
     menusize->setCurrent(0);
-    for (int i=array_size-1; (i>0) ; i-- ) {
-      if (Config::getInstance()->getWidth() == array[i]) {
+    for (int i=array_size-1; (i>=0) ; i-- ) {
+      if (Config::getInstance()->getWidth() == g_WidthArray[i]) {
 	menusize->setCurrent(i);
+	i=0;
       }    
     }
   }
@@ -622,36 +620,38 @@ MenuItem* createMenus(Engine * engine) {
   menugfx->addMenuItem(menuscreen);
 
   menubright = new MenuChoose(engine);
-  menubright->addText("brightness:    =.....");
-  menubright->addText("brightness:    ==....");
-  menubright->addText("brightness:    ===...");
-  menubright->addText("brightness:    ====..");
-  menubright->addText("brightness:    =====.");
-  menubright->addText("brightness:    ======");
+  menubright->addText( "brightness:    =.....");
+  menubright->addText( "brightness:    ==....");
+  menubright->addText( "brightness:    ===...");
+  menubright->addText( "brightness:    ====..");
+  menubright->addText( "brightness:    =====.");
+  menubright->addText( "brightness:    ======");
   menugfx->addMenuItem(menubright);
 
-  menusize = new MenuChoose(engine);
-  menusize->addText(  "screen width:  340");
-  menusize->addText(  "screen width:  400");
-  menusize->addText(  "screen width:  512");
-  menusize->addText(  "screen width:  640");
-  menusize->addText(  "screen width:  800");
-  menusize->addText(  "screen width:  864");
-  menusize->addText(  "screen width: 1024");
-  menusize->addText(  "screen width: 1280");
-  menusize->addText(  "screen width: 1920");
-  menugfx->addMenuItem(menusize);
-  
+  {
+    menusize = new MenuChoose(engine);
+    menusize->addText(   "screen width:     340");
+    menusize->addText(   "screen width:     400");
+    menusize->addText(   "screen width:     512");
+    menusize->addText(   "screen width:     640");
+    menusize->addText(   "screen width:     800");
+    menusize->addText(   "screen width:     864");
+    menusize->addText(   "screen width:    1024");
+    menusize->addText(   "screen width:    1280");
+    menusize->addText(   "screen width:    1920");
+    menugfx->addMenuItem(menusize);
+  }
   {
     menuratio = new MenuChoose(engine);
-    menuratio->addText(  "ratio: 0.5 (1/2)");
-    menuratio->addText(  "ratio: 1. (1/1)");
-    menuratio->addText(  "ratio: 1.2 (5/4)");
-    menuratio->addText(  "ratio: 1.3 (4/3)");
-    menuratio->addText(  "ratio: 1.6 (16/10)");
-    menuratio->addText(  "ratio: 1.7 (16/9)");
-    menuratio->addText(  "ratio: 1.8 (9/5)");
-    menuratio->addText(  "ratio: 2 (2/1)");
+    menuratio->addText( "ratio:      0.5 (1/2)");
+    menuratio->addText( "ratio:       1. (1/1)");
+    menuratio->addText( "ratio:      1.2 (5/4)");
+    menuratio->addText( "ratio:      1.3 (4/3)");
+    menuratio->addText( "ratio:      1.5 (3/2)");
+    menuratio->addText( "ratio:    1.6 (16/10)");
+    menuratio->addText( "ratio:     1.7 (16/9)");
+    menuratio->addText( "ratio:      1.8 (9/5)");
+    menuratio->addText( "ratio:        2 (2/1)");
     menugfx->addMenuItem(menuratio);
   }
 
