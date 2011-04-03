@@ -45,7 +45,7 @@ LoaderModule * LoaderModule::p_Instance = NULL;
 LoaderModule::LoaderModule()
 {
   lt_dlinit();
-  m_hMods["libModuleTux.la"] = new TuxBehavior; //TODO:
+  m_hMods["libModuleTux.la"] = new TuxBehavior; //TODO: warning: deprecated conversion from string constant to ‘char*’
   m_hMods["libModuleProfessor.la"] = new ProfessorBehavior;
 }
 LoaderModule::~LoaderModule()
