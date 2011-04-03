@@ -398,20 +398,13 @@ protected:
  * Menu functions
  ***************************************************************************/
 
-/** Update the current meny with the configuration. */
-void get_config(void) {
+/** Update the current menu with the configuration. */
+void get_config(void) 
+{
   // sound
-  switch (Config::getInstance()->getSound()) {
-  case 0: menusnd->setCurrent(0); break;
-  case 1: menusnd->setCurrent(1); break;
-  case 2: menusnd->setCurrent(2); break;
-  case 3: menusnd->setCurrent(3); break;
-  case 4: menusnd->setCurrent(4); break;
-  case 5: menusnd->setCurrent(5); break;
-  case 6: menusnd->setCurrent(6); break;
-  case 7: menusnd->setCurrent(7); break;
-  case 8: menusnd->setCurrent(8); break;
-  }
+ 
+  menusnd->setCurrent( Config::getInstance()->getSound() );
+
   switch (Config::getInstance()->getMusic()) {
   case 0: menumusic->setCurrent(0); break;
   case 1: menumusic->setCurrent(1); break;
@@ -448,11 +441,10 @@ void get_config(void) {
     float array[] 
       = { 1./2. , 1./1. , 5./4. , 4./3. , 16/10., 16./9. , 9./5., 2./1. };
     int array_size = sizeof( array ) / sizeof( array[0] );
+    menuratio->setCurrent(1);
     for (int i=array_size-1; (i>0) ; i-- ) {
       if (Config::getInstance()->getRatio() == array[i]) {
 	menuratio->setCurrent(i);
-      }  else {
-	menuratio->setCurrent(1);
       }
     }
   }
@@ -463,13 +455,11 @@ void get_config(void) {
       = { 320, 400, 512, 640, 800 , 864, 
 	  1024, 1280 , 1680 , 1920};
     int array_size = sizeof( array ) / sizeof( array[0] );
+    menusize->setCurrent(0);
     for (int i=array_size-1; (i>0) ; i-- ) {
       if (Config::getInstance()->getWidth() == array[i]) {
 	menusize->setCurrent(i);
-	i = 0;
-      }  else {
-	menusize->setCurrent(0);
-      }
+      }    
     }
   }
 

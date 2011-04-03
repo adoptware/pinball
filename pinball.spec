@@ -62,7 +62,17 @@ rm -rf %{buildroot}
 # >> install post
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 
+install -d %{buildroot}%{_libdir}/%{name}/
+install ./data/tux/libModuleTux.la  %{buildroot}%{_libdir}/%{name}/
+install ./data/professor/libModuleProfessor.la  %{buildroot}%{_libdir}/%{name}/
+
+
+# remove unused global higescorefiles:
+rm -fr $RPM_BUILD_ROOT%{_localstatedir}
+# remove unused test module
 rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/libModuleTest.*
+# .la files are needed for ltdl
+rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/lib*.{a,so}
 # remove bogus development files
 rm -f $RPM_BUILD_ROOT%{_bindir}/%{name}-config
 rm -rf $RPM_BUILD_ROOT%{_includedir}/%{name}
@@ -87,12 +97,12 @@ desktop-file-install  \
 %defattr(-,root,root,-)
 # >> files
 #doc README ChangeLog
-%{_bindir}/%{name}*
+%{_bindir}/%{name}
 %{_libdir}/%{name}
-%{_libdir}/lib*
+%{_libdir}/%{name}/lib*.la
 %{_datadir}/%{name}
 %{_datadir}/applications/*.desktop
-/var/games/%{name}/*/*
+#/var/games/%{name}/*/*
 #%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 # << files
 

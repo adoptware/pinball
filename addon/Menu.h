@@ -80,8 +80,12 @@ class MenuChoose : public MenuItem {
   int perform();
   int next();
   int prev();
-  inline int getCurrent() { return m_iCurrent; };
-  inline void setCurrent(int c) { m_iCurrent = c; m_iPrevious = c; };
+  
+  inline int getCurrent() { return m_iCurrent; }
+  
+  inline void setCurrent(int c) {
+    if ( c < m_vText.size() ) { m_iCurrent = c; m_iPrevious = c; }
+  }
  protected:
   int m_iCurrent;
   /** Previous is the currently active alternative in the engine. */
