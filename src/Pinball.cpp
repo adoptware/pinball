@@ -439,7 +439,7 @@ void get_config(void)
     menubright->setCurrent(5);
   }
 
-  { cerr<<"// screen ratio="<<Config::getInstance()->getRatio()<<endl;
+  { //cerr<<"// screen ratio="<<Config::getInstance()->getRatio()<<endl;
     int array_size = sizeof( g_RatioArray ) / sizeof( g_RatioArray[0] );
     menuratio->setCurrent(3);
     for (int i=array_size-1; (i>=0) ; i-- ) {
@@ -638,6 +638,7 @@ MenuItem* createMenus(Engine * engine) {
     menusize->addText(   "screen width:     864");
     menusize->addText(   "screen width:    1024");
     menusize->addText(   "screen width:    1280");
+    menusize->addText(   "screen width:    1680");
     menusize->addText(   "screen width:    1920");
     menugfx->addMenuItem(menusize);
   }
