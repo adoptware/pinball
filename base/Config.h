@@ -31,6 +31,11 @@
 #define EM_NEAREST 1
 #endif
 
+#define CONFIG_LOCAL_HEIGHT_DEFAULT 480
+#define CONFIG_LOCAL_RATIO_DEFAULT 4./3.
+#define CONFIG_LOCAL_WIDTH_DEFAULT CONFIG_LOCAL_HEIGHT_DEFAULT * CONFIG_LOCAL_RATIO_DEFAULT
+
+
 /** */
 class Config {
  protected:
@@ -43,6 +48,7 @@ class Config {
   inline const int getHeight() { return m_iHeight; };
   inline const int getWidthDiv2() { return m_iWidthDiv2; };
   inline const int getHeightDiv2() { return m_iHeightDiv2; };
+  inline const int getRatio() { return m_fRatio; };
   inline const int getBpp() { return m_iBpp; };
   inline const int getGLFilter() { return m_iGLFilter; };
   inline const int getView() { return m_iView; };
@@ -94,6 +100,7 @@ class Config {
   int m_iHeight;
   int m_iWidthDiv2;
   int m_iHeightDiv2;
+  float m_fRatio;
   int m_iBpp;
   int m_iGLFilter;
   int m_iView;
@@ -104,7 +111,7 @@ class Config {
   int m_iMusic;
   bool m_bShowFPS;
   bool m_bFullScreen;
-  /// executable dir (maindir on w32)
+  /** executable dir (maindir on w32) **/
   string m_sExeDir;
   string m_sDataDir;
   string m_sSubDir;

@@ -45,7 +45,7 @@ private:
 
 protected:
   ///
-  map<char* const, Behavior* , ltstr> m_hMods;
+  map<char*, Behavior* , ltstr> m_hMods;
   ///
   static LoaderModule * p_Instance;
 };

@@ -1,7 +1,7 @@
 dnl #                                               -*- Autoconf -*-
-dbl # Process this file with autoconf 2.53 to produce a configure script.
+dnl # Process this file with autoconf 2.53 to produce a configure script.
 dnl init autoconf and automake
-AC_INIT
+AC_INIT(pinball, 0.0.0, [[pinball.sf.net]])
 
 AC_CONFIG_HEADERS(pinconfig.h)
 AM_CONFIG_HEADER(config.h)

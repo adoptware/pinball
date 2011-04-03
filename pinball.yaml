@@ -1,0 +1,32 @@
+Name: pinball
+Summary: Emilia arcade game
+Version: 0.0.0
+Release: 0
+Group: Amusements/Games
+License: GPLv2+
+URL: http://pinball.sourceforge.net
+Prefix: /opt/pinball
+Sources:
+    - http://downloads.sourceforge.net/pinball/%{name}-%{version}.tar.gz
+    - "%{name}.desktop"
+    - "%{name}.png"
+Description: |
+    The Emilia Pinball project is an open source pinball simulator for linux
+    and other unix systems. The current release is a stable and mature alpha.
+    There is only one level to play with but it is however very addictive.
+SetupOptions: [ -e configure ] || ./bootstrap
+
+Requires:
+    - hicolor-icon-theme
+    - opengl-games-utils
+PkgBR:
+    - libXt-devel
+    - SDL_image-devel
+    - SDL_mixer-devel
+    - libpng-devel
+    - libvorbis-devel
+    - libtool-ltdl-devel
+    - desktop-file-utils
+
+Configure: configure
+Builder: make

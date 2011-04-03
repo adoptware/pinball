@@ -31,6 +31,10 @@
 //#define mkdir(name, modes) mkdir(name)
 #endif //!-rzr
 
+#ifndef MAX_PATH
+# define MAX_PATH 255
+#endif
+
 
 Config * Config::p_Instance = NULL;
 
@@ -54,7 +58,7 @@ Config * Config::getInstance() {
 
 void Config::setDefault() {
   // Default values
-  this->setSize(640, 480);
+  this->setSize( CONFIG_LOCAL_WIDTH_DEFAULT, CONFIG_LOCAL_HEIGHT_DEFAULT );
   this->setSound(8);
   this->setMusic(8);
   this->setBpp(16);
@@ -218,6 +222,8 @@ void Config::saveConfig() {
   for (; iter != end; ++iter) {
     file << "keyboard: " << (*iter).first <<" "<< (*iter).second << endl;
   }  
+
+  file << "ratio: " << m_fRatio<< endl;
 }
 
 void Config::loadConfig() {
@@ -305,6 +311,8 @@ void Config::loadConfig() {
       file >> keyname;
       file >> key;
       this->setKey(keyname, (EMKey)key);
+    } else if (str == "ratio:") {
+      file >> m_fRatio;
     }
   }
   //EM_CERR("- Config::loadConfig");
@@ -431,8 +439,8 @@ void Config::setPaths(char const * const argv0) {
       m_sExeDir = path ;
     } else {  
       //EM_COUT("relative path from cwd",42);
-      char cwd[256]; 
-      getcwd(cwd,256); // TODO check for buffer overflow
+      char cwd[MAX_PATH];  // TODO check for buffer overflow
+      char* status = getcwd(cwd,MAX_PATH); 
       m_sExeDir = string(cwd) + '/' +  path ;
     }
     m_sDataDir = m_sExeDir + '/' + string(EM_DATADIR) ;

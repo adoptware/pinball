@@ -1,4 +1,5 @@
 #! /bin/sh
+set -e
 touch config.h.in pinconfig.h.in
 libtoolize --ltdl --force
 autoheader
@@ -7,5 +8,6 @@ automake --add-missing
 
 autoconf
 autoheader
+./configure
 
 echo "# ./configure && make && make install"

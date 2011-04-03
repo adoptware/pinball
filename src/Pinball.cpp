@@ -9,9 +9,10 @@
 
 #include <fstream>
 #include <string>
-//#include <sstream>
-#include <strstream>
 #include <iostream>
+
+//#include <sstream>
+#include <strstream> //TODO:
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -73,6 +74,7 @@ MenuChoose* menumusic = NULL;
 MenuChoose* menubright = NULL;
 MenuChoose* menuscreen = NULL;
 MenuChoose* menusize = NULL;
+MenuChoose* menuratio = NULL;
 MenuChoose* menuview = NULL;
 MenuChoose* menufilter = NULL;
 MenuChoose* menufps = NULL;
@@ -141,7 +143,7 @@ protected:
     return EM_MENU_NOP;
   }
   const char * getText() {
-    ostrstream stm;
+    ostrstream stm; //TODO
     stm.clear();
     string name(m_Name);
     const char * keyname = Config::getInstance()->getKeyCommonName(Config::getInstance()->getKey(name));
@@ -237,40 +239,55 @@ protected:
       menubright->getEngine()->setLightning(0.5f, AMBIENT);
       Config::getInstance()->setBrightness(0.5f); break;
     }
-    // screen size
-    int w, h;
-    switch (menusize->getCurrent()) {
-    case 0: w = 320; h = 240; break;
-    case 1: w = 400; h = 300; break;
-    case 2: w = 512; h = 384; break;
-    case 3: w = 640; h = 480; break;
-    case 4: w = 800; h = 600; break;
-    case 5: w = 1024; h = 768; break;
-    case 6: w = 1280; h = 1024; break;
-    default: w = 640; h = 480;
-    }
-    if (config->getWidth() != w) {
-#ifdef  EM_USE_SDL
-      SDL_SetVideoMode(w, h, config->getBpp(),
-                       SDL_OPENGL
-                       | (config->useFullScreen() ? SDL_FULLSCREEN : 0));
-#endif // SDL
-      TextureUtil::getInstance()->resizeView(w, h);
-      //!rzr!+   //cout<<("Workround bug (for WIN32) + macosx etc");
-#ifdef WIN32 ////TODO : check @w32  //need help FINISH
-      //TextureUtil::getInstance()->reloadTextures(); //TODO: fix the w32 bug
-      TextureUtil::getInstance()->freeTextures(); // "hide" the w32 bug
-      string filename =
-        Config::getInstance()->getDataDir() + string("/font_34.png");
-      EmFont::getInstance()->loadFont(filename.c_str());
-      //cout<<"may not be  driver bug cos it also happends under wine"<<endl;
-      // unload level and textures //TODO: Reload Splash Screen
-      Table::getInstance()->clear(Engine::getCurrentEngine() );
-      // SDL bug ?
-#endif //!rzr!- //cout<<"@w32 / resizing unreference textures (mipmaping?)"<<endl;
-    }//!rzr!-
 
-    config->setSize(w, h);
+    {
+      // scren ratio
+      float ratio=4./3.;
+      {
+	float array[] 
+	  = { 1./2. , 1./1. , 5./4. , 4./3. , 16/10, 16./9. , 9./5, 2./1. };
+	int index = menuratio->getCurrent();
+	if ( index < ( sizeof(array) / sizeof(array[0]) ) ) {
+	  ratio = array[ index ];
+	}
+      }
+     
+      // screen size
+      int w=640, h=480;
+      {
+	int array[] 
+	  = { 320, 400, 512, 640, 800 , 864, 
+	      1024, 1280 , 1680 , 1920};
+      
+	int index = menusize->getCurrent();
+	if ( index < ( sizeof(array) / sizeof(array[0]) ) ) {
+	  w = array[ index ];
+	}
+	h=w/ratio;
+      }
+      
+      if (  (config->getWidth() != w)  || (config->getHeight() != h) ) {
+#ifdef  EM_USE_SDL
+	SDL_SetVideoMode(w, h, config->getBpp(),
+			 SDL_OPENGL
+			 | (config->useFullScreen() ? SDL_FULLSCREEN : 0));
+#endif // SDL
+	TextureUtil::getInstance()->resizeView(w, h);
+	
+#ifdef WIN32 //~rzr:{  //cout<<("Workround bug (for WIN32) + macosx etc");
+	//TextureUtil::getInstance()->reloadTextures(); //TODO: fix the w32 bug
+	TextureUtil::getInstance()->freeTextures(); // "hide" the w32 bug
+	string filename =
+	  Config::getInstance()->getDataDir() + string("/font_34.png");
+	EmFont::getInstance()->loadFont(filename.c_str());
+	//cout<<"may not be  driver bug cos it also happends under wine"<<endl;
+	// unload level and textures //TODO: Reload Splash Screen
+	Table::getInstance()->clear(Engine::getCurrentEngine() );
+#endif //~rzr:} //cout<<"@w32 / resizing unreference textures (mipmaping?)"<<endl;
+      }
+
+      config->setSize(w, h);
+    }
 
     switch (menuview->getCurrent()) {
     case 1: config->setView(1); break;
@@ -426,24 +443,36 @@ void get_config(void) {
   } else {
     menubright->setCurrent(5);
   }
-  // screen size
-  if (Config::getInstance()->getWidth() == 320) {
-    menusize->setCurrent(0);
-  } else        if (Config::getInstance()->getWidth() == 400) {
-    menusize->setCurrent(1);
-  } else        if (Config::getInstance()->getWidth() == 512) {
-    menusize->setCurrent(2);
-  } else        if (Config::getInstance()->getWidth() == 640) {
-    menusize->setCurrent(3);
-  } else        if (Config::getInstance()->getWidth() == 800) {
-    menusize->setCurrent(4);
-  } else        if (Config::getInstance()->getWidth() == 1024) {
-    menusize->setCurrent(5);
-  } else 	if (Config::getInstance()->getWidth() == 1280) {
-    menusize->setCurrent(6);
-  } else {
-    menusize->setCurrent(3);
+
+  {  
+    float array[] 
+      = { 1./2. , 1./1. , 5./4. , 4./3. , 16/10., 16./9. , 9./5., 2./1. };
+    int array_size = sizeof( array ) / sizeof( array[0] );
+    for (int i=array_size-1; (i>0) ; i-- ) {
+      if (Config::getInstance()->getRatio() == array[i]) {
+	menuratio->setCurrent(i);
+      }  else {
+	menuratio->setCurrent(1);
+      }
+    }
   }
+      
+  // screen size
+  {
+    int array[] 
+      = { 320, 400, 512, 640, 800 , 864, 
+	  1024, 1280 , 1680 , 1920};
+    int array_size = sizeof( array ) / sizeof( array[0] );
+    for (int i=array_size-1; (i>0) ; i-- ) {
+      if (Config::getInstance()->getWidth() == array[i]) {
+	menusize->setCurrent(i);
+	i = 0;
+      }  else {
+	menusize->setCurrent(0);
+      }
+    }
+  }
+
   // view mode
   switch(Config::getInstance()->getView()) {
   case 1: menuview->setCurrent(1); break;
@@ -540,20 +569,24 @@ MenuItem* createMenus(Engine * engine) {
     struct dirent * entry;
     struct stat statbuf;
     //cerr<<  Config::getInstance()->getDataDir() <<endl; //!+rzr
-    chdir(Config::getInstance()->getDataDir());
-    while ((entry = readdir(datadir)) != NULL) {
-      lstat(entry->d_name, &statbuf);
-      if (S_ISDIR(statbuf.st_mode) &&
-          strcmp(".", entry->d_name) != 0 &&
-          strcmp("..", entry->d_name) != 0) {
-        MenuFct * menufct = new MyMenuLoad(entry->d_name, NULL, engine);
-        menuload->addMenuItem(menufct);
-        if (tex != NULL) {
-          menufct->setBackground(tex);
-        }
+    int status = chdir(Config::getInstance()->getDataDir());
+    if ( status == 0 ) {
+      while ((entry = readdir(datadir)) != NULL) {
+	lstat(entry->d_name, &statbuf);
+	if (S_ISDIR(statbuf.st_mode) &&
+	    strcmp(".", entry->d_name) != 0 &&
+	    strcmp("..", entry->d_name) != 0) {
+	  MenuFct * menufct = new MyMenuLoad(entry->d_name, NULL, engine);
+	  menuload->addMenuItem(menufct);
+	  if (tex != NULL) {
+	    menufct->setBackground(tex);
+	  }
+	}
       }
+      chdir(cwd);
+    } else {
+      cerr<<"error: io: datadir "<<endl;
     }
-    chdir(cwd);
     closedir(datadir);
   }
 #else
@@ -608,14 +641,29 @@ MenuItem* createMenus(Engine * engine) {
   menugfx->addMenuItem(menubright);
 
   menusize = new MenuChoose(engine);
-  menusize->addText(  "screen size:  340x240");
-  menusize->addText(  "screen size:  400x300");
-  menusize->addText(  "screen size:  512x384");
-  menusize->addText(  "screen size:  640x480");
-  menusize->addText(  "screen size:  800x600");
-  menusize->addText(  "screen size: 1024x768");
-  menusize->addText(  "screen size:1280x1024");
+  menusize->addText(  "screen width:  340");
+  menusize->addText(  "screen width:  400");
+  menusize->addText(  "screen width:  512");
+  menusize->addText(  "screen width:  640");
+  menusize->addText(  "screen width:  800");
+  menusize->addText(  "screen width:  864");
+  menusize->addText(  "screen width: 1024");
+  menusize->addText(  "screen width: 1280");
+  menusize->addText(  "screen width: 1920");
   menugfx->addMenuItem(menusize);
+  
+  {
+    menuratio = new MenuChoose(engine);
+    menuratio->addText(  "ratio: 0.5 (1/2)");
+    menuratio->addText(  "ratio: 1. (1/1)");
+    menuratio->addText(  "ratio: 1.2 (5/4)");
+    menuratio->addText(  "ratio: 1.3 (4/3)");
+    menuratio->addText(  "ratio: 1.6 (16/10)");
+    menuratio->addText(  "ratio: 1.7 (16/9)");
+    menuratio->addText(  "ratio: 1.8 (9/5)");
+    menuratio->addText(  "ratio: 2 (2/1)");
+    menugfx->addMenuItem(menuratio);
+  }
 
   menufilter = new MenuChoose(engine);
   menufilter->addText("texture:       nicest"); //was linear // gamers  //!rzr
