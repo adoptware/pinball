@@ -1,0 +1,170 @@
+diff -c -b -r pinball-0.1.3-orig/src/Score.cpp pinball-0.1.3/src/Score.cpp
+*** pinball-0.1.3-orig/src/Score.cpp	2003-01-19 15:26:32.000000000 +0100
+--- pinball-0.1.3/src/Score.cpp	2003-03-24 23:27:59.000000000 +0100
+***************
+*** 24,29 ****
+--- 24,31 ----
+  Score::Score() {
+  	m_Font = EmFont::getInstance();
+  	this->clear();
++ 
++ 	m_iHighScore = Config::getInstance()->getHighScore();
+  }
+  
+  Score::~Score(){
+***************
+*** 37,48 ****
+   	return p_Score;
+  }
+  
+! void Score::addScore(int s, bool multi) {
+! 	if (multi) {
+  		m_iScore += (s*m_iFactor);
+! 	} else {
+  		m_iScore += s;
+  	}
+  }
+  
+  void Score::setText1(const char * text) {
+--- 39,58 ----
+   	return p_Score;
+  }
+  
+! void Score::addScore(int s, bool multi)
+! {
+!   if (multi)
+!   {
+      m_iScore += (s*m_iFactor);
+!   }
+!   else
+!   {
+      m_iScore += s;
+    }
++ 
++   // Check if score is above HighScore, if it is then save it!
++   if (m_iHighScore < m_iScore)
++     m_iHighScore = m_iScore;
+  }
+  
+  void Score::setText1(const char * text) {
+***************
+*** 154,165 ****
+  }
+  
+  
+! void Score::onTick() {
+! 	if (this->active() == 0 && this->getCurrentBall() < 4) {
+  		strcpy(m_Text1, "   press enter to launch ball");
+! 	} else if (this->getCurrentBall() > 3) {
+  		strcpy(m_Text1, "   press r to start new game");
+! 	} else {
+  		strcpy(m_Text1, "");
+  	}
+  
+--- 164,184 ----
+  }
+  
+  
+! void Score::onTick()
+! {
+!   if (this->active() == 0 && this->getCurrentBall() < 4)
+!   {
+      strcpy(m_Text1, "   press enter to launch ball");
+!   }
+!   else if (this->getCurrentBall() > 3)
+!   {
+      strcpy(m_Text1, "   press r to start new game");
+! 
+!     // The game ended, set the high score to be saved with config info
+!     Config::getInstance()->setHighScore(m_iHighScore);
+!   }
+!   else
+!   {
+      strcpy(m_Text1, "");
+    }
+  
+***************
+*** 302,316 ****
+  extern volatile float em_poly_m;
+  #endif
+  
+! void Score::draw() {
+    char buffer[256];
+!   if (this->getCurrentBall() < 4) {
+!     sprintf(buffer, "SCORE %d BALL %d\n", m_iScore, m_iBall);
+!   } else {
+!     sprintf(buffer, "SCORE %d", m_iScore);
+    }
+    m_Font->printRow(buffer, 0);
+!   if (Config::getInstance()->getShowFPS()) {
+  #if EM_DEBUG
+      sprintf(buffer, "FPS %.1f %d\n", g_fFps, (int)em_poly_m);
+  #else
+--- 321,344 ----
+  extern volatile float em_poly_m;
+  #endif
+  
+! void Score::draw()
+! {
+    char buffer[256];
+! 
+!   if (this->getCurrentBall() < 4)
+!   {
+!     sprintf(buffer, "SCORE %d HighScore %d BALL %d\n",
+! 		    m_iScore, m_iHighScore, m_iBall);
+!   }
+!   else
+!   {
+!     sprintf(buffer, "SCORE %d HighScore %d", m_iScore, m_iHighScore);
+    }
++ 
+    m_Font->printRow(buffer, 0);
+! 
+!   if (Config::getInstance()->getShowFPS())
+!   {
+  #if EM_DEBUG
+      sprintf(buffer, "FPS %.1f %d\n", g_fFps, (int)em_poly_m);
+  #else
+***************
+*** 318,323 ****
+--- 346,352 ----
+  #endif
+      m_Font->printRow(buffer, 1);
+    }
++ 
+    m_Font->printRowCenter(m_Text1, 6);
+    m_Font->printRowCenter(m_Text2, 7);
+    m_Font->printRowCenter(m_Text3, 8);
+***************
+*** 334,337 ****
+    m_iScore = 0;
+    m_iFactor = 1;
+  }
+- 
+--- 363,365 ----
+diff -c -b -r pinball-0.1.3-orig/src/Score.h pinball-0.1.3/src/Score.h
+*** pinball-0.1.3-orig/src/Score.h	2002-10-23 08:07:18.000000000 +0200
+--- pinball-0.1.3/src/Score.h	2003-03-24 23:09:41.000000000 +0100
+***************
+*** 53,58 ****
+--- 53,61 ----
+  	bool getShowFPS() { return m_bShowFPS; };
+  	void setMultiplier(int m) { m_iFactor = m; };
+  	int getMultiplier() { return m_iFactor; };
++ 
++ 	int getHighScore() { return m_iHighScore; };
++ 
+   private:
+  	char m_Text1[64];
+  	char m_Text2[64];
+***************
+*** 71,76 ****
+--- 74,81 ----
+  	int m_aBall[4];
+  
+  	static Score* p_Score;
++ 
++ 	int m_iHighScore;
+  };
+  
+  #endif // SCORE_H
