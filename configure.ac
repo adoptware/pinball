@@ -267,6 +267,10 @@ AC_DEFINE(EM_USE_SHARED_COLOR, [1], [One color per vertex])
 dnl AC_SUBST(pkglibdir)
 dnl AC_SUBST(pkgincludedir)
 
-AC_CONFIG_FILES([Makefile addon/Makefile base/Makefile data/Makefile data/tux/Makefile data/professor/Makefile src/Makefile test/Makefile pinball-config])
+AC_CONFIG_FILES([Makefile 
+ addon/Makefile base/Makefile data/Makefile
+ data/tux/Makefile data/professor/Makefile
+ data/hurd/Makefile
+ src/Makefile test/Makefile pinball-config])
 
 AC_OUTPUT

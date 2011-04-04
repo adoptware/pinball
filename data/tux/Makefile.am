@@ -1,4 +1,4 @@
-#$Id: Makefile.am,v 1.12 2003/06/18 10:44:19 henqvist Exp $
+#$Id: Makefile.am $
 AUTOMAKE_OPTIONS = gnu
 
 highscoredir = $(DESTDIR)/$(EM_BUILD_ROOT)/$(EM_HIGHSCORE_DIR)/tux
