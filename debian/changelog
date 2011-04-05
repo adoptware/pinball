@@ -1,9 +1,3 @@
-pinball (0.0.20110404-0ubuntu0~rzr0+karmic0) karmic; urgency=low
-
-  * WIP: http://rzr.online.fr/q/snapshot#pinball
-
- -- Philippe Coval <rzr@gna.org>  Mon, 04 Apr 2011 08:59:49 +0200
-
 pinball (0.0.0-0) unstable; urgency=low
 
   *  remove on release
