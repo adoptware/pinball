@@ -2,10 +2,10 @@
 Categories=Game;ArcadeGame;X-Red-Hat-Extra
 X-Desktop-File-Install-Version=0.2
 Name=Emilia Pinball
-Comment=OpenGL pinball game
+Comment=3D pinball game
 Exec=pinball
 Icon=pinball.xpm
 Terminal=false
 Type=Application
 Keywords=Game, ArcadeGame, Pinball
-                                                                                                                                                            
+Comment[fr]=Jeu de flipper 3D
