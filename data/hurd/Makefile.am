@@ -14,13 +14,13 @@ libModuleHurd_la_LDFLAGS = -module
 libModuleHurd_la_SOURCES = ModuleHurd.cpp
 
 hurddata_DATA = \
- $(wildcard *.wav) \
- $(wildcard *.png) \
+ $(wildcard *.pbl) \
  $(wildcard *.pcx) \
+ $(wildcard *.png) \
+ $(wildcard *.jpg) \
+ $(wildcard *.wav) \
  $(wildcard *.ogg) \
  $(wildcard *.mid) \
- $(wildcard *.pbl) \
- $(wildcard *.jpg) \
  #
 
 # This will create a new empty highscores file
