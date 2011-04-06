@@ -18,12 +18,7 @@ clean:
 
 .PHONY: override_dh_auto_configure
 override_dh_auto_configure:
-	libtoolize --install #--copy
-	[ -e config.h.in ] || touch config.h.in
-	aclocal
-	autoheader
-	automake --add-missing
-	autoconf
+	./bootstrap
 	dh_auto_configure -- --bindir=/usr/games --datadir=/usr/share/games --with-cflags="$(CFLAGS)" --with-cxxflags="$(CXXFLAGS)"
 
 .PHONY: override_dh_install

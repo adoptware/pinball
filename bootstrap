@@ -1,14 +1,12 @@
 #! /bin/sh
 set -e
 touch config.h.in pinconfig.h.in
-libtoolize --ltdl --force
+libtoolize --ltdl --force --copy
 [ -e config.h.in ] || touch config.h.in
 
 aclocal
 autoheader
 automake --add-missing
 autoconf
-
-$@
 
 echo "# $0 && ./configure && make && make install && src/pinball"
