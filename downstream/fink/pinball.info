@@ -1,0 +1,20 @@
+Package: pinball
+Version: 0.3.1
+Revision: 1002
+Depends: libjpeg-shlibs (>= 6b-17), libogg-shlibs (>= 1.1.4-1), libpng3-shlibs (>= 1:1.2.35-2), libtiff-shlibs (>= 3.8.2-1002), libvorbis0-shlibs (>= 1.2.3-1), sdl-image-shlibs (>= 1.2.6-1002), sdl-mixer-shlibs (>= 1.2.8-13), sdl-shlibs (>= 1.2.13-svn4819-1), smpeg-shlibs (>= 0.4.4-1027)
+BuildDepends: libjpeg (>= 6b-17), libogg (>= 1.1.4-1), libpng3 (>= 1:1.2.35-2), libtiff (>= 3.8.2-1002), libvorbis0 (>= 1.2.3-1), sdl-image (>= 1.2.6-1002), sdl-mixer (>= 1.2.8-13), sdl (>= 1.2.13-svn4819-1), smpeg (>= 0.4.4-1027), x11-dev
+Source: http://archive.ubuntu.com/ubuntu/pool/universe/p/%n/%n_%v.orig.tar.gz
+Source-MD5: f28e8f49e0db8e9491e4d9f0c13c36c6
+SourceDirectory: %n-%v
+SetCPPFLAGS: -I/usr/X11R6/include
+SetLDFLAGS: -framework OpenGL
+PatchScript: perl -pi -e 's,\#include "config-rzr.h",,' base/Private.h
+ConfigureParams: --mandir=%p/share/man --disable-dependency-tracking --disable-sdltest
+InstallScript: make install DESTDIR=%d
+DocFiles: AUTHORS COPYING ChangeLog NEWS README
+License: GPL
+GCC: 4.0
+Homepage: http://pinball.sourceforge.net
+Maintainer: Jack Fink <jackfink@users.sourceforge.net>
+Description: Pinball simulator
+
