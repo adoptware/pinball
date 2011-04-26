@@ -5,7 +5,7 @@
     begin                : Wed Jan 26 2000
     copyright            : (C) 2000 by Henrik Enqvist
     email                : henqvist@excite.com
- ***************************************************************************/
+***************************************************************************/
 
 #ifndef CONFIG_H
 #define CONFIG_H
@@ -37,28 +37,33 @@
 
 
 /** */
-class Config {
- protected:
+class Config
+{
+protected:
   Config();
- public:
+
+public:
   ~Config();
+
   static Config * getInstance();
   void loadArgs(int & argc, char* argv[]);
-  inline const int getWidth() { return m_iWidth; };
-  inline const int getHeight() { return m_iHeight; };
-  inline const int getWidthDiv2() { return m_iWidthDiv2; };
-  inline const int getHeightDiv2() { return m_iHeightDiv2; };
-  inline const float getRatio() { return m_fRatio; };
-  inline const int getBpp() { return m_iBpp; };
-  inline const int getGLFilter() { return m_iGLFilter; };
-  inline const int getView() { return m_iView; };
-  inline const float getBrightness() { return m_fBrightness; };
-  inline const bool useFullScreen() { return m_bFullScreen; };
-  inline const int getSound() { return m_iSound; };
-  inline const int getMusic() { return m_iMusic; };
-  inline const bool getFire() { return m_bFire; };
-  inline const bool useExternGL() { return m_bExternGL; };
-  inline const bool useLights() { return m_bLights; };
+
+  inline int getWidth() const { return m_iWidth; };
+  inline int getHeight() const { return m_iHeight; };
+  inline int getWidthDiv2() const { return m_iWidthDiv2; };
+  inline int getHeightDiv2() const { return m_iHeightDiv2; };
+  inline float getRatio() const { return m_fRatio; };
+  inline int getBpp() const { return m_iBpp; };
+  inline int getGLFilter() const { return m_iGLFilter; };
+  inline int getView() const { return m_iView; };
+  inline float getBrightness() const { return m_fBrightness; };
+  inline bool useFullScreen() const { return m_bFullScreen; };
+  inline int getSound() const { return m_iSound; };
+  inline int getMusic() const { return m_iMusic; };
+  inline bool getFire() const { return m_bFire; };
+  inline bool useExternGL() const { return m_bExternGL; };
+  inline bool useLights() const { return m_bLights; };
+
   void setRatio(float ratio=4/3.) { m_fRatio = ratio; }
   void setSize(int const w=512, int h=0);
   inline void setBpp(int const bpp) { m_iBpp = bpp; };
@@ -68,11 +73,11 @@ class Config {
   inline bool getShowFPS() { return m_bShowFPS; };
   /** This will NOT set the engine to full screen. You have to do
    * that manually. It only updates the config class, (ie, reading writing
-	 * to config file). */
+   * to config file). */
   inline void setFullScreen(bool const f) { m_bFullScreen = f; };
-  /** This will NOT set the volume. You have to do that manually. 
-	 * It only updates the config class, (ie, reading writing
-	 * to config file). */
+  /** This will NOT set the volume. You have to do that manually.
+   * It only updates the config class, (ie, reading writing
+   * to config file). */
   inline void setSound(int const s) { m_iSound = EM_MIN( EM_MAX(s, 0), 8); };
   inline void setMusic(int const m) { m_iMusic = EM_MIN( EM_MAX(m, 0), 8); };
   inline void setFire(bool const f) { m_bFire = f; };
@@ -83,7 +88,8 @@ class Config {
   /** Gets the key code from a key identifier. (e.g. "leftnudge" -> 306)*/
   EMKey getKey(string const & str);
   /** Gets the common name from a key code. (e.g. 306 -> "left ctrl") */
-  char const *  const getKeyCommonName(EMKey);
+  char const * const getKeyCommonName(EMKey);
+
   void setKey(string const & str, EMKey key);
   void setDataDir(const char * ch);
   void setSubDir(const char * ch);
@@ -96,7 +102,7 @@ class Config {
   /// set RELATIVE path according to current work directory of exec
   void setPaths(char const * const argv0);  //!+rzr
 
- private:
+private:
   int m_iWidth;
   int m_iHeight;
   int m_iWidthDiv2;
