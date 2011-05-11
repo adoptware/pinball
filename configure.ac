@@ -32,13 +32,10 @@ AC_ARG_WITH(cxxflags,
 [  --with-cxxflags=CXXFLAGS        use CXXFLAGS as compile time arguments.],
     [CXXFLAGS=$with_cxxflags; export CXXFLAGS])
 
-
 AC_LIBTOOL_DLOPEN
 LT_CONFIG_LTDL_DIR([libltdl])
 LT_INIT
 LTDL_INIT
-
-
 
 
 AC_CONFIG_MACRO_DIR([libltdl/m4])
@@ -145,13 +142,13 @@ dnl Check for OpenGL
 AC_MSG_CHECKING(for OpenGL support)
 AC_TRY_COMPILE([
 #ifdef WIN32
-#define WINAPI
+# define WINAPI
 #endif
 
  #if defined(__APPLE__) && defined(__MACH__)
- #include <OpenGL/gl.h>
-  #else
- #include <GL/gl.h>
+ # include <OpenGL/gl.h>
+ #else
+ # include <GL/gl.h>
  #endif
 ], , , AC_MSG_ERROR([*** OpenGL not found on system!]))
 AC_MSG_RESULT(yes)
@@ -267,6 +264,9 @@ AC_DEFINE(EM_USE_SHARED_COLOR, [1], [One color per vertex])
 dnl AC_SUBST(pkglibdir)
 dnl AC_SUBST(pkgincludedir)
 
-AC_CONFIG_FILES([Makefile addon/Makefile base/Makefile data/Makefile data/tux/Makefile data/professor/Makefile src/Makefile test/Makefile pinball-config])
+AC_CONFIG_FILES([Makefile addon/Makefile base/Makefile data/Makefile
+ src/Makefile test/Makefile pinball-config
+ data/tux/Makefile data/professor/Makefile data/hurd/Makefile
+])
 
 AC_OUTPUT
