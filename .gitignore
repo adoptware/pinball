@@ -4,6 +4,8 @@
 *.a
 *.lo
 *.la
+*.tmp
+
 
 **/.deps/**
 .deps/

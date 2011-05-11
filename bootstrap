@@ -1,6 +1,18 @@
 #! /bin/sh
+
 set -e
+set -x
+
+rm -rf libltdl
+
 touch config.h.in pinconfig.h.in
+
+libtoolize --version
+aclocal --version
+autoheader --version 
+automake --version
+autoconf --version
+
 libtoolize --ltdl --force --copy
 [ -e config.h.in ] || touch config.h.in
 
