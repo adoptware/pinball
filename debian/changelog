@@ -1,3 +1,11 @@
+pinball (0.3.1-13.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Add missing C++ headers to fix FTBFS. Closes: #624953, #640726.
+  * Empty dependency_libs field in la files. Closes: #633208.
+
+ -- Regis Boudin <regis@debian.org>  Thu, 22 Sep 2011 21:16:50 +0100
+
 pinball (0.3.1-13) unstable; urgency=low
 
   * Depend on virtual libstdc++-dev in addition to libstdc++6-4.4-dev
