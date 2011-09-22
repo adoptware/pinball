@@ -27,6 +27,7 @@ override_dh_auto_configure:
 
 .PHONY: override_dh_install
 override_dh_install:
+	sed -i "/dependency_libs/s/'.*'/''/" $(CURDIR)/debian/tmp/usr/lib/pinball/*.la
 	install -d $(CURDIR)/debian/tmp/usr/share/applications
 	install -d $(CURDIR)/debian/tmp/usr/share/pixmaps
 	install -m 644 pinball.desktop $(CURDIR)/debian/tmp/usr/share/applications
