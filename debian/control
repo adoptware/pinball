@@ -30,21 +30,17 @@ Description: Data files for the Emilia Pinball Emulator
  .
  This package contains various data files used by the pinball emulator.
 
-Package: pinball-snapshot
-Architecture: all
-Section: sound
-Depends: pinball (= ${source:Version})
-Suggests: rzr
-Priority: extra
-Description: unreleased snapshot version
- TODO: Remove on issue and upgrade pinball
- http://rzr.online.fr/q/snapshot#pinball Feedback welcome
-
 
 Package: pinball-data-extra
 Architecture: all
 Section: sound
 Depends: pinball-snapshot (= ${source:Version})
+
+
+Package: pinball-snapshot
+Architecture: all
+Section: sound
+Depends: pinball (= ${source:Version}), ${misc:Depends}
 Suggests: rzr
 Priority: extra
 Description: unreleased snapshot version

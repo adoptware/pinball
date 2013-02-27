@@ -102,3 +102,6 @@ conftest.c
 conftest.err
 conftest.cpp
 conf*/
+
+debian/*.substvars
+debian/*-snapshot/
