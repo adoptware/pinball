@@ -1,0 +1,56 @@
+This file describes the origin of media files used in this pinball table.
+
+Images:
+
+The GNU head of gnu.png and gnu2b.png comes from:
+http://commons.wikimedia.org/wiki/File:Official_gnu.svg
+and is modified by Ben Asselstine to include a modified version of the open mouth located here:
+http://openclipart.org/detail/14581
+The metadata for the file lists it as being in the public domain.
+
+The fancy GNU letters come from the old thanx gnu t-shirt design, with the lettering inside the letters removed, and modified more in the gimp.
+http://ftp.gnu.org/gnu/button.N.MM.shar
+
+tiles.png comes from tiles.png of the tux pinball table and is modified to change colours.
+The bullseye graphics were created by Ben Asselstine in the gimp.
+The font for the lettering is Unibit, as found in the gimp.
+The yellow arrow comes from mystica_Arrow_set_(Smooth).svg in: http://packages.debian.org/sid/openclipart2-svg
+
+tiles2.png comes from tiles.png of the tux pinball table, with other graphics created by Ben Asselstine in the gimp. 
+
+tiles3.png was created by Ben Asselstine.  The stars come from the Common section of the unicode character set, rendered in the Sans font in the gimp.
+
+
+Sounds:
+
+The various beeping sounds come from:
+https://github.com/dozingcat/Vector-Pinball/blob/master/assets/audio/misc/startup1.ogg
+and the project is licensed under GPLv3.
+The beeping sounds were modified in audacity and appear in various sound files for this pinball table.
+
+The voice clips were performed and recorded by Ben Asselstine.
+
+The music.ogg comes from:
+http://www.jamendo.com/en/track/229792/the-money-ran-out-rudy
+and it is licensed under a Creative Commons Attribution Share-Alike license.
+
+
+Various sounds came from:
+http://code.google.com/p/xtremme-pinball/
+A java pinball game, licensed gplv3.
+
+The round bumper sound (bump.ogg) file comes from bump.wav of xtremme, but modified in audacity.
+
+The flipper sound (flip2b.ogg) file comes from flipperMove.wav of xtremme, but modified in audacity. flip2br.ogg is just the same file with a reduced amplitude.
+
+The shoot sound (shoot.ogg) file comes from newBall.wav of xtremme. it is not modified.
+
+The plunger sound (plunger.wav) file comes from plungerRelease.wav of xtremme, but it has been modified in audacity.
+
+The knockdown sound (knockdown.ogg) file is a heavily modified sound taken from tile.wav of xtremme.  so is is reset_knockdowns.ogg.
+
+The multiball siren sound (multiball.wav) file comes from tilt-abuse.wav of xtremme, and has been modified in audacity.
+
+the rising stopper sound (raise-stopper.ogg) file also comes from tilt-abuse.wav from xtremme, and has been modified heavily in audacity.
+
+
