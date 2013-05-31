@@ -20,7 +20,7 @@
 
 BallGroup::BallGroup(float r, float g, float b, int pbl) : Group() {
   m_iBall = pbl;
-  Shape3D* ballSphere = new BigSphere(1, 2, r, g, b, 1);
+  Shape3D* ballSphere = new BigSphere(1, 4, r, g, b, 1);
   ballSphere->setProperty(EM_SHAPE3D_SPECULAR);
   CollisionBounds* ballBounds = new CollisionBounds(1.0f/EM_SQRT_3);
 
