@@ -621,7 +621,7 @@ uninstall-am: uninstall-info-am uninstall-testlibLTLIBRARIES
 	mostlyclean-generic mostlyclean-libtool tags uninstall \
 	uninstall-am uninstall-info-am uninstall-testlibLTLIBRARIES
 
-dnl noinst_PROGRAMS = unittest
+# noinst_PROGRAMS = unittest
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
