@@ -1,3 +1,15 @@
+pinball (0.3.1-13.2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Build-depend on libtiff-dev instead of libtiff4-dev because the latter is
+    going to disappear soon. (Closes: #736039)
+  * Add missing-separators.patch.
+    - Replace spaces with TABS in Makefiles and thus fix a FTBFS with newer
+      versions of GNU Make which are less fault tolerant. Thanks to Michael
+      Tautschnig for the report. (Closes: #750082)
+
+ -- Markus Koschany <apo@gambaru.de>  Sat, 23 Aug 2014 14:16:37 +0200
+
 pinball (0.3.1-13.1) unstable; urgency=low
 
   * Non-maintainer upload.
