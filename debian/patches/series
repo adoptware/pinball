@@ -4,3 +4,4 @@
 04_fix_const.patch
 05_system_ltdl.patch
 06_missing_cstddef.patch
+missing-separators.patch
