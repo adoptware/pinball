@@ -1,6 +1,6 @@
 AUTOMAKE_OPTIONS = gnu
 
-SUBDIRS = tux professor hurd
+SUBDIRS = tux professor hurd gnu
 
 pindatadir = $(datadir)/pinball
 

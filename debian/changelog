@@ -1,3 +1,15 @@
+pinball (0.0.20130227rzr1-0~rzr1) quantal; urgency=low
+
+  * Imported gnu table : http://pastefile.com/uploads/gnu.tar.gz
+
+ -- Philippe Coval <rzr@gna.org>  Wed, 27 Feb 2013 22:35:08 +0100
+
+pinball (0.0.20110404rzr2-0ubuntu0~rzr1) maverick; urgency=low
+
+  * WIP: http://rzr.online.fr/q/snapshot#pinball
+
+ -- Philippe Coval <rzr@gna.org>  Mon, 04 Apr 2011 08:59:49 +0200
+
 pinball (0.0.0-0) unstable; urgency=low
 
   *  remove on release

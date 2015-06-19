@@ -13,18 +13,14 @@ libModuleProfessor_la_LDFLAGS = -module
 libModuleProfessor_la_SOURCES = ModuleProfessor.cpp
 
 professordata_DATA = \
-bump.wav \
-bumphard.wav \
-bumpsoft.wav \
-flip.wav \
-floor.png \
-floor.png.pcx \
-gameover.wav \
-introp.ogg \
-nudge.wav \
-pinball.pbl \
-professor.ogg \
-professor.png
+ $(wildcard *.pbl) \
+ $(wildcard *.pcx) \
+ $(wildcard *.png) \
+ $(wildcard *.jpg) \
+ $(wildcard *.wav) \
+ $(wildcard *.ogg) \
+ $(wildcard *.mid) \
+ #
 
 # This will create a new empty highscores file
 # NOTE! The user games must exist!

@@ -21,4 +21,6 @@ autoheader
 automake --add-missing
 autoconf
 
+$@
+
 echo "# $0 && ./configure && make && make install && src/pinball"
