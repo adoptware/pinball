@@ -1,0 +1,6869 @@
+version { 0 3 0 }
+
+object house {
+  14.5 -2 7.7
+  0 0 0
+  1 1 1
+    group_include_3ds_ascii { house-3d.asc }
+}
+
+
+object walls {
+  0 0 0
+  0 0 0
+  1 1 1
+
+  shape_include_3ds_ascii { floor-walls-side.asc }
+
+  shape_include_3ds_ascii { floor-walls-top.asc }
+
+  properties {
+    collision
+    transform_once
+    wall
+    group_1
+  }
+}
+
+
+
+object left_arm_up {
+  -16.7 0 -0.383333
+  0 0.19875 0
+1 1 1
+    shape {
+    vts { 8 }
+    pls { 2 }
+    hid { }
+    vtx {
+      -0.5 1 0.875
+        1 1 1 1
+        0 0
+        }
+    vtx {
+      5.125 1 0.375
+        1 1 1 1
+        0 0
+        }
+    vtx {
+      5.125 -1 0.375
+        1 1 1 1
+        0 0
+        }
+    vtx {
+      -0.5 -1 0.875
+        1 1 1 1
+        0 0
+        }
+    vtx {
+      -0.5 1 -0.875
+        1 1 1 1
+        0 0
+        }
+    vtx {
+      -0.5 -1 -0.875
+        1 1 1 1
+        0 0
+        }
+    vtx {
+      5.12 -1 -0.375
+        1 1 1 1
+        0 0
+        }
+    vtx {
+      5.125 1 -0.375
+        1 1 1 1
+        0 0
+        }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      ple { 4 }
+      ple { 5 }
+      ple { 6 }
+      ple { 7 }
+    }
+  }
+  shape_include_3ds_ascii { arm-left.asc }
+
+  arm_behavior {
+    left
+      sound flip.wav
+      }
+
+ properties {
+    collision
+      group_1
+      }
+}
+
+
+object right_arm_up {
+    13 0 -10.2
+  0 -0.172 0
+1 1 1
+    shape {
+    vts { 8 }
+    pls { 2 }
+    hid { }
+    vtx {
+      0.5 1 0.875
+        1 1 1 1
+        0 0
+        }
+    vtx {
+      0.5 -1 0.875
+        1 1 1 1
+        0 0
+        }
+    vtx {
+      -5.125 -1 0.375
+        1 1 1 1
+        0 0
+        }
+    vtx {
+      -5.125 1 0.375
+        1 1 1 1
+        0 0
+        }
+    vtx {
+      -5.125 1 -0.375
+        1 1 1 1
+        0 0
+        }
+    vtx {
+      0.5 1 -0.875
+        1 1 1 1
+        0 0
+        }
+    vtx {
+      0.5 -1 -0.875
+        1 1 1 1
+        0 0
+        }
+    vtx {
+      -5.125 -1 -0.375
+        1 1 1 1
+        0 0
+        }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      ple { 7 }
+      ple { 6 }
+      ple { 5 }
+      ple { 4 }
+    }
+  }
+  shape_include_3ds_ascii { arm-right.asc }
+
+  arm_behavior {
+    right
+      sound flip.wav
+      }
+  properties {
+    collision
+      group_1
+      }
+}
+
+object left_arm {
+  -8.5 0 30.0167
+  0 0.05 0
+  1 1 1
+  shape {
+    vts { 8 }
+    pls { 2 }
+    hid { }
+    vtx { 
+      -0.5 1 0.875
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      5.125 1 0.375
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      5.125 -1 0.375
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -0.5 -1 0.875
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -0.5 1 -0.875
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -0.5 -1 -0.875
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      5.12 -1 -0.375
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      5.125 1 -0.375
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      ple { 4 }
+      ple { 5 }
+      ple { 6 }
+      ple { 7 }
+    }
+  }
+  shape_include_3ds_ascii { arm-left.asc }
+
+  arm_behavior {
+    left
+    sound flip.wav
+  }
+  properties {
+    collision
+    group_1
+  }
+}
+object right_arm {
+  5.5 0 30
+  0 -0.05 0
+  1 1 1
+  shape {
+    vts { 8 }
+    pls { 2 }
+    hid { }
+    vtx { 
+      0.5 1 0.875
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      0.5 -1 0.875
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -5.125 -1 0.375
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -5.125 1 0.375
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -5.125 1 -0.375
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      0.5 1 -0.875
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      0.5 -1 -0.875
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -5.125 -1 -0.375
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      ple { 7 }
+      ple { 6 }
+      ple { 5 }
+      ple { 4 }
+    }
+  }
+shape_include_3ds_ascii  { arm-right.asc }
+
+  arm_behavior {
+    right
+    sound flip.wav
+  }
+  properties {
+    collision
+    group_1
+  }
+}
+object left_stopper {
+  -6.36667 0 -40.2
+  0 -0.281 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    vtx { 
+      -1 0.5 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0.5 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 1 0
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 3 }
+      ple { 2 }
+      ple { 1 }
+      ple { 0 }
+    }
+  }
+  state_behavior {
+    state_item {
+      null null 1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 50
+      no_move
+        light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    light {
+      1 1 0
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    wall_one_way
+    group_1
+  }
+}
+object right_stopper {
+  11.0833 0 -40.0333
+  0 0.266 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    vtx { 
+      -1 0.5 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0.5 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 1 0
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 3 }
+      ple { 2 }
+      ple { 1 }
+      ple { 0 }
+    }
+  }
+  state_behavior {
+    state_item {
+      null null 1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 50
+      no_move
+        light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    light {
+      1 1 0
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    wall_one_way
+    group_1
+  }
+}
+object right_loop_cave {
+  12.0349 0 -1.07273
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 0 1
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      null null 1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      user_property 65536
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 2 50
+      no_move
+        light
+      no_sound
+      no_music
+      user_property 65536
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      user_property 2048
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    light {
+      1 1 0
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object flat_bumper {
+  -12.45 0 19.95
+  0 -0.313 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    vtx { 
+      -3 0.5 0
+      1 0 0 1
+      0 0
+    }
+    vtx { 
+      3 0.5 0
+      1 0 0 1
+      0 0
+    }
+    vtx { 
+      3 -0.5 0
+      1 0 0 1
+      0 0
+    }
+    vtx { 
+      -3 -0.5 0
+      1 0 0 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  bumper_behavior {
+    0.2
+    sound bumpsoft.wav
+    light {
+      1 0 0
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object flat_bumper {
+  9.46667 0 19.8167
+  0 0.32 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    vtx { 
+      -3 0.5 0
+      1 0 0 1
+      0 0
+    }
+    vtx { 
+      3 0.5 0
+      1 0 0 1
+      0 0
+    }
+    vtx { 
+      3 -0.5 0
+      1 0 0 1
+      0 0
+    }
+    vtx { 
+      -3 -0.5 0
+      1 0 0 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  bumper_behavior {
+    0.2
+    sound bumpsoft.wav
+    light {
+      1 0 0
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object cave {
+  -19.4 1.19209e-07 -9.4667
+  0.002 -0.25 -0.252
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 0 1
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      null cave 1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      user_property 65536
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 2 100
+      no_move
+        light
+      no_sound
+      no_music
+      user_property 65536
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 100
+      no_move
+        no_light
+      sound shoot.wav
+      no_music
+      user_property 2048
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    light {
+      1 1 0
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object lock1 {
+  13.5 0 -31.4
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 -1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 -1 0
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      releaselock null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      head0 lock1 2 -1 -1
+      no_move
+        light
+      no_sound
+      no_music
+      user_property 1
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 -1 -1
+      no_move
+        no_light
+      sound lock.wav
+      no_music
+      user_property 1
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    light {
+      0 1 0
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object lock2 {
+  13.5667 0 -29.4833
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 -1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 -1 0
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      releaselock null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      lock1 lock2 2 -1 -1
+      no_move
+        light
+      no_sound
+      no_music
+      user_property 1
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 -1 -1
+      no_move
+        no_light
+      sound lock.wav
+      no_music
+      user_property 1
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    light {
+      0 1 0
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object releaselock {
+  -5.96046e-08 0.0999999 -19.9667
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    lit { }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 0
+      1 1 1 1
+      0.5 0.375
+    }
+    vtx { 
+      1 -1 0
+      1 1 1 1
+      0.625 0.375
+    }
+    vtx { 
+      1 1 0
+      1 1 1 1
+      0.625 0.25
+    }
+    vtx { 
+      -1 1 0
+      1 1 1 1
+      0.5 0.25
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 3 }
+      ple { 2 }
+      ple { 1 }
+      ple { 0 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    lit { }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 0
+      1 1 1 1
+      0.5 0.5
+    }
+    vtx { 
+      1 -1 0
+      1 1 1 1
+      0.625 0.5
+    }
+    vtx { 
+      1 1 0
+      1 1 1 1
+      0.625 0.375
+    }
+    vtx { 
+      -1 1 0
+      1 1 1 1
+      0.5 0.375
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 3 }
+      ple { 2 }
+      ple { 1 }
+      ple { 0 }
+    }
+  }
+  state_behavior {
+    state_item {
+      null null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 4
+        1
+        0
+        0
+        0
+    }
+    state_item {
+      lock2 releaselock 0 -1 -1
+      no_move
+        light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 4
+        0
+        1
+        0
+        0
+    }
+    light {
+      0 1 0
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object head {
+  12.6333 0 -26.1333
+  0 0.053 0
+  1 1 1
+  shape {
+    vts { 8 }
+    pls { 3 }
+    hid { }
+    vtx { 
+      0.0999999 0 4
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      0.0999999 1 4
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      3.1 0 3
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      3.1 1 3
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -2.9 0 3
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -2.9 1 3
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -3.9 0 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -3.9 1 0
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 3 }
+      ple { 2 }
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 4 }
+      ple { 5 }
+      ple { 1 }
+    }
+    ply {
+      pes { 4 }
+      ple { 4 }
+      ple { 6 }
+      ple { 7 }
+      ple { 5 }
+    }
+  }
+  shape_include_3ds_ascii { face.asc }
+
+  state_behavior {
+    state_item {
+      multiball_off head0 1 -1 -1
+      move
+        0
+        0 0 0
+        0 0 0
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 -1 -1
+      move
+        280
+        0 0 0
+        0.1 0 0
+        no_light
+      sound opentux.wav
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      releaselock null -1 -1 -1
+      move
+        280
+        0 0 0
+        0 0 0
+        no_light
+      sound opentux.wav
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    wall_one_way
+    group_1
+  }
+}
+object bumper {
+  -6.55 0 -30.8
+  0 0 0
+  1 1 1
+  shape_include_3ds_ascii { bumper-base.asc }
+
+  shape_include_3ds_ascii { bumper.asc }
+
+  bumper_behavior {
+    0.5
+    sound bump.wav
+    light {
+      1 0 0
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object bumper {
+  0.51667 0 -28.6667
+  0 0 0
+  1 1 1
+  shape_include_3ds_ascii { bumper-base.asc }
+
+  shape_include_3ds_ascii { bumper.asc }
+
+  bumper_behavior {
+    0.5
+    sound bump.wav
+    light {
+      1 0 0
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object bumper {
+  0.0833299 0 -22.8333
+  0 0 0
+  1 1 1
+  shape_include_3ds_ascii { bumper-base.asc }
+
+  shape_include_3ds_ascii { bumper.asc }
+
+  bumper_behavior {
+    0.5
+    sound bump.wav
+    light {
+      1 0 0
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object floor_lane_o {
+  -16.2 0 21.0667
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 0 1
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -1
+      1 1 1 1
+      0.125 0.375
+    }
+    vtx { 
+      1 -1 -1
+      1 1 1 1
+      0.25 0.375
+    }
+    vtx { 
+      1 -1 1
+      1 1 1 1
+      0.25 0.5
+    }
+    vtx { 
+      -1 -1 1
+      1 1 1 1
+      0.125 0.5
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      booto_off booto -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      booto_on booto -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      boot_all null -1 3 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object floor {
+  0 -0.04 0
+  0 0 0
+  1 1 1
+  shape_include_3ds_ascii { floor.asc }
+
+
+  properties {
+    transform_once
+    group_1
+  }
+}
+object floor_lane_b {
+  -19.6 0 21.0667
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 0 1
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -1
+      1 1 1 1
+      0 0.375
+    }
+    vtx { 
+      1 -1 -1
+      1 1 1 1
+      0.125 0.375
+    }
+    vtx { 
+      1 -1 1
+      1 1 1 1
+      0.125 0.5
+    }
+    vtx { 
+      -1 -1 1
+      1 1 1 1
+      0 0.5
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      bootb_off bootb -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      bootb_on bootb -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      boot_all null -1 3 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object floor_lane_oo {
+  13.3 0 21
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 0 1
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -1
+      1 1 1 1
+      0.25 0.375
+    }
+    vtx { 
+      1 -1 -1
+      1 1 1 1
+      0.375 0.375
+    }
+    vtx { 
+      1 -1 1
+      1 1 1 1
+      0.375 0.5
+    }
+    vtx { 
+      -1 -1 1
+      1 1 1 1
+      0.25 0.5
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      bootoo_off bootoo -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      bootoo_on bootoo -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      boot_all null -1 3 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object floor_lane_t {
+  16.8 0 21.0167
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 0 1
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -1
+      1 1 1 1
+      0.375 0.375
+    }
+    vtx { 
+      1 -1 -1
+      1 1 1 1
+      0.5 0.375
+    }
+    vtx { 
+      1 -1 1
+      1 1 1 1
+      0.5 0.5
+    }
+    vtx { 
+      -1 -1 1
+      1 1 1 1
+      0.375 0.5
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      boott_off boott -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      boott_on boott -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      boot_all null -1 3 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object music {
+  0 0 0
+  0 0 0
+  1 1 1
+  state_behavior {
+    state_item {
+      null null -1 1 1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      table_start null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      music intro.mid
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      game_start null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      music game.mid
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      releaselock null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      music multiball.mid
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      multiball_off null -1 2 1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      table_pause null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      game_over null -1 1 80
+      no_move
+        no_light
+      sound gameover.wav
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object floor_top_l {
+  -4.76667 0 -35.8
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 0 1
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -1
+      1 1 1 1
+      0 0.125
+    }
+    vtx { 
+      1 -1 -1
+      1 1 1 1
+      0.125 0.125
+    }
+    vtx { 
+      1 -1 1
+      1 1 1 1
+      0.125 0.25
+    }
+    vtx { 
+      -1 -1 1
+      1 1 1 1
+      0 0.25
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      linuxl_off linuxl -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      linuxl_on linuxl -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      linux_all null -1 3 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object floor_top_i {
+  -1.2 0 -35.9
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 0 1
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -1
+      1 1 1 1
+      0.125 0.125
+    }
+    vtx { 
+      1 -1 -1
+      1 1 1 1
+      0.25 0.125
+    }
+    vtx { 
+      1 -1 1
+      1 1 1 1
+      0.25 0.25
+    }
+    vtx { 
+      -1 -1 1
+      1 1 1 1
+      0.125 0.25
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      linuxi_off linuxi -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      linuxi_on linuxi -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      linux_all null -1 3 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object floor_top_n {
+  2.4 0 -36
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 0 1
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -1
+      1 1 1 1
+      0.25 0.125
+    }
+    vtx { 
+      1 -1 -1
+      1 1 1 1
+      0.375 0.125
+    }
+    vtx { 
+      1 -1 1
+      1 1 1 1
+      0.375 0.25
+    }
+    vtx { 
+      -1 -1 1
+      1 1 1 1
+      0.25 0.25
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      linuxn_off linuxn -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      linuxn_on linuxn -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      linux_all null -1 3 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object floor_top_u {
+  5.8 0 -36
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 0 1
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -1
+      1 1 1 1
+      0.375 0.125
+    }
+    vtx { 
+      1 -1 -1
+      1 1 1 1
+      0.5 0.125
+    }
+    vtx { 
+      1 -1 1
+      1 1 1 1
+      0.5 0.25
+    }
+    vtx { 
+      -1 -1 1
+      1 1 1 1
+      0.375 0.25
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      linuxu_off linuxu -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      linuxu_on linuxu -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      linux_all null -1 3 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object floor_top_x {
+  9.3 0 -36
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 0 1
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -1
+      1 1 1 1
+      0.5 0.125
+    }
+    vtx { 
+      1 -1 -1
+      1 1 1 1
+      0.625 0.125
+    }
+    vtx { 
+      1 -1 1
+      1 1 1 1
+      0.625 0.25
+    }
+    vtx { 
+      -1 -1 1
+      1 1 1 1
+      0.5 0.25
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      linuxx_off linuxx -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      linuxx_on linuxx -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      linux_all null -1 3 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object floor_target_t {
+  -14.5 0 -1
+  0 -0.25 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 1 -2
+      1 1 1 1
+      0.375 0.25
+    }
+    vtx { 
+      1 1 -2
+      1 1 1 1
+      0.5 0.25
+    }
+    vtx { 
+      1 -1 -2
+      1 1 1 1
+      0.5 0.375
+    }
+    vtx { 
+      -1 -1 -2
+      1 1 1 1
+      0.375 0.375
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 8 }
+    pls { 2 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -1
+      1 1 1 1
+      0.375 0.375
+    }
+    vtx { 
+      1 -1 -1
+      1 1 1 1
+      0.5 0.375
+    }
+    vtx { 
+      1 -1 1
+      1 1 1 1
+      0.5 0.5
+    }
+    vtx { 
+      -1 -1 1
+      1 1 1 1
+      0.375 0.5
+    }
+    vtx { 
+      -1 1 -2
+      1 1 1 1
+      0.375 0.375
+    }
+    vtx { 
+      1 1 -2
+      1 1 1 1
+      0.5 0.375
+    }
+    vtx { 
+      1 -1 -2
+      1 1 1 1
+      0.5 0.5
+    }
+    vtx { 
+      -1 -1 -2
+      1 1 1 1
+      0.375 0.5
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 4 }
+      ple { 5 }
+      ple { 6 }
+      ple { 7 }
+    }
+  }
+  state_behavior {
+    state_item {
+      tuxt_off tuxt -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      tuxt_on tuxt -1 -1 -1
+      no_move
+        no_light
+      sound bumphard.wav
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      tux_all null -1 3 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object floor_target_u {
+  -14.5 0 -3.9
+  0 -0.25 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 1 -2
+      1 1 1 1
+      0.375 0.25
+    }
+    vtx { 
+      1 1 -2
+      1 1 1 1
+      0.5 0.25
+    }
+    vtx { 
+      1 -1 -2
+      1 1 1 1
+      0.5 0.375
+    }
+    vtx { 
+      -1 -1 -2
+      1 1 1 1
+      0.375 0.375
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 8 }
+    pls { 2 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -1
+      1 1 1 1
+      0.375 0.125
+    }
+    vtx { 
+      1 -1 -1
+      1 1 1 1
+      0.5 0.125
+    }
+    vtx { 
+      1 -1 1
+      1 1 1 1
+      0.5 0.25
+    }
+    vtx { 
+      -1 -1 1
+      1 1 1 1
+      0.375 0.25
+    }
+    vtx { 
+      -1 1 -2
+      1 1 1 1
+      0.375 0.125
+    }
+    vtx { 
+      1 1 -2
+      1 1 1 1
+      0.5 0.125
+    }
+    vtx { 
+      1 -1 -2
+      1 1 1 1
+      0.5 0.25
+    }
+    vtx { 
+      -1 -1 -2
+      1 1 1 1
+      0.375 0.25
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 4 }
+      ple { 5 }
+      ple { 6 }
+      ple { 7 }
+    }
+  }
+  state_behavior {
+    state_item {
+      tuxu_off tuxu -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      tuxu_on tuxu -1 -1 -1
+      no_move
+        no_light
+      sound bumphard.wav
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      tux_all null -1 3 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object floor_target_x {
+  -14.45 0 -7
+  0 -0.25 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 1 -2
+      1 1 1 1
+      0.375 0.25
+    }
+    vtx { 
+      1 1 -2
+      1 1 1 1
+      0.5 0.25
+    }
+    vtx { 
+      1 -1 -2
+      1 1 1 1
+      0.5 0.375
+    }
+    vtx { 
+      -1 -1 -2
+      1 1 1 1
+      0.375 0.375
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 8 }
+    pls { 2 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -1
+      1 1 1 1
+      0.5 0.125
+    }
+    vtx { 
+      1 -1 -1
+      1 1 1 1
+      0.625 0.125
+    }
+    vtx { 
+      1 -1 1
+      1 1 1 1
+      0.625 0.25
+    }
+    vtx { 
+      -1 -1 1
+      1 1 1 1
+      0.5 0.25
+    }
+    vtx { 
+      -1 1 -2
+      1 1 1 1
+      0.5 0.125
+    }
+    vtx { 
+      1 1 -2
+      1 1 1 1
+      0.625 0.125
+    }
+    vtx { 
+      1 -1 -2
+      1 1 1 1
+      0.625 0.25
+    }
+    vtx { 
+      -1 -1 -2
+      1 1 1 1
+      0.5 0.25
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 4 }
+      ple { 5 }
+      ple { 6 }
+      ple { 7 }
+    }
+  }
+  state_behavior {
+    state_item {
+      tuxx_off tuxx -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      tuxx_on tuxx -1 -1 -1
+      no_move
+        no_light
+      sound bumphard.wav
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      tux_all null -1 3 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 35
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object module {
+  0 0 0
+  0 0 0
+  1 1 1
+  module {
+      libModuleTux.la
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object left_loop {
+  -7 3.9 -31.8
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 0 1
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      null leftloop 1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null leftloop 1 0 100
+      no_move
+        light
+      sound up.wav
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    light {
+      1 1 0
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object right_loop {
+  8.7 4 3.6
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 0 1
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      null rightloop 1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null rightloop 1 0 100
+      no_move
+        no_light
+      sound shoot.wav
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object jackpot_light {
+  -15 0 -16.1
+  0 -0.089 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -2 -1 -1
+      1 1 1 1
+      0.75 0
+    }
+    vtx { 
+      2 -1 -1
+      1 1 1 1
+      1 0
+    }
+    vtx { 
+      2 -1 1
+      1 1 1 1
+      1 0.125
+    }
+    vtx { 
+      -2 -1 1
+      1 1 1 1
+      0.75 0.125
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -2 -1 -1
+      1 1 1 1
+      0.75 0.125
+    }
+    vtx { 
+      2 -1 -1
+      1 1 1 1
+      1 0.125
+    }
+    vtx { 
+      2 -1 1
+      1 1 1 1
+      1 0.25
+    }
+    vtx { 
+      -2 -1 1
+      1 1 1 1
+      0.75 0.25
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      multiball_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 4
+        1
+        0
+        0
+        0
+    }
+    state_item {
+      releaselock null -1 -1 -1
+      no_move
+        light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 4
+        0
+        1
+        0
+        0
+    }
+    light {
+      1 0 0
+      0 3 0
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object extraball_light {
+  10.95 0 1.1
+  0 0.0835 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1
+      1 1 1 1
+      0.78125 0.25
+    }
+    vtx { 
+      1.5 -1 -1
+      1 1 1 1
+      0.96875 0.25
+    }
+    vtx { 
+      1.5 -1 1
+      1 1 1 1
+      0.96875 0.375
+    }
+    vtx { 
+      -1.5 -1 1
+      1 1 1 1
+      0.78125 0.375
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1
+      1 1 1 1
+      0.78125 0.375
+    }
+    vtx { 
+      1.5 -1 -1
+      1 1 1 1
+      0.96875 0.375
+    }
+    vtx { 
+      1.5 -1 1
+      1 1 1 1
+      0.96875 0.5
+    }
+    vtx { 
+      -1.5 -1 1
+      1 1 1 1
+      0.78125 0.5
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      rightloop null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 4
+        1
+        0
+        0
+        0
+    }
+    state_item {
+      tux_all null -1 -1 -1
+      no_move
+        light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 4
+        0
+        1
+        0
+        0
+    }
+    light {
+      1 0 0
+      0 3 0
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object extraball_on {
+  -1.5 0 30.55
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1.5
+      1 1 1 1
+      0 0.625
+    }
+    vtx { 
+      1.5 -1 -1.5
+      1 1 1 1
+      0.125 0.625
+    }
+    vtx { 
+      1.5 -1 1.5
+      1 1 1 1
+      0.125 0.75
+    }
+    vtx { 
+      -1.5 -1 1.5
+      1 1 1 1
+      0 0.75
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1.5
+      1 1 1 1
+      0 0.75
+    }
+    vtx { 
+      1.5 -1 -1.5
+      1 1 1 1
+      0.125 0.75
+    }
+    vtx { 
+      1.5 -1 1.5
+      1 1 1 1
+      0.125 0.875
+    }
+    vtx { 
+      -1.5 -1 1.5
+      1 1 1 1
+      0 0.875
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      allballs_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 4
+        1
+        0
+        0
+        0
+    }
+    state_item {
+      extraball null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 4
+        0
+        1
+        0
+        0
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object multiplier {
+  -4.4 0 -26.1
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    lit { }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -2 -1 -2
+      1 1 1 1
+      0 0.5
+    }
+    vtx { 
+      2 -1 -2
+      1 1 1 1
+      0.125 0.5
+    }
+    vtx { 
+      2 -1 2
+      1 1 1 1
+      0.125 0.625
+    }
+    vtx { 
+      -2 -1 2
+      1 1 1 1
+      0 0.625
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    lit { }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -2 -1 -2
+      1 1 1 1
+      0.125 0.5
+    }
+    vtx { 
+      2 -1 -2
+      1 1 1 1
+      0.25 0.5
+    }
+    vtx { 
+      2 -1 2
+      1 1 1 1
+      0.25 0.625
+    }
+    vtx { 
+      -2 -1 2
+      1 1 1 1
+      0.125 0.625
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    lit { }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -2 -1 -2
+      1 1 1 1
+      0.25 0.5
+    }
+    vtx { 
+      2 -1 -2
+      1 1 1 1
+      0.375 0.5
+    }
+    vtx { 
+      2 -1 2
+      1 1 1 1
+      0.375 0.625
+    }
+    vtx { 
+      -2 -1 2
+      1 1 1 1
+      0.25 0.625
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    lit { }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -2 -1 -2
+      1 1 1 1
+      0.375 0.5
+    }
+    vtx { 
+      2 -1 -2
+      1 1 1 1
+      0.5 0.5
+    }
+    vtx { 
+      2 -1 2
+      1 1 1 1
+      0.5 0.625
+    }
+    vtx { 
+      -2 -1 2
+      1 1 1 1
+      0.375 0.625
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    lit { }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -2 -1 -2
+      1 1 1 1
+      0.5 0.5
+    }
+    vtx { 
+      2 -1 -2
+      1 1 1 1
+      0.625 0.5
+    }
+    vtx { 
+      2 -1 2
+      1 1 1 1
+      0.625 0.625
+    }
+    vtx { 
+      -2 -1 2
+      1 1 1 1
+      0.5 0.625
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      null null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      multiplier2 null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      multiplier3 null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      multiplier4 null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        0
+        0
+        1
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      multiplier5 null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        0
+        0
+        0
+        1
+        0
+        0
+        0
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object left_shoot {
+  -19.5 0 29.1
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 -1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 -1 0
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 3 }
+      ple { 2 }
+      ple { 1 }
+      ple { 0 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -2
+      1 1 1 1
+      0.75 0.625
+    }
+    vtx { 
+      1 -1 -2
+      1 1 1 1
+      0.875 0.625
+    }
+    vtx { 
+      1 -1 0
+      1 1 1 1
+      0.875 0.75
+    }
+    vtx { 
+      -1 -1 0
+      1 1 1 1
+      0.75 0.75
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      null null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      boot_all null 2 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 50
+      no_move
+        light
+      sound shoot.wav
+      no_music
+      user_property 2048
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    light {
+      1 1 1
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object right_shoot {
+  16.5 0 29
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 -1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 -1 0
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 3 }
+      ple { 2 }
+      ple { 1 }
+      ple { 0 }
+    }
+  }
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -2
+      1 1 1 1
+      0.75 0.625
+    }
+    vtx { 
+      1 -1 -2
+      1 1 1 1
+      0.875 0.625
+    }
+    vtx { 
+      1 -1 0
+      1 1 1 1
+      0.875 0.75
+    }
+    vtx { 
+      -1 -1 0
+      1 1 1 1
+      0.75 0.75
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      null null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      boot_all null 2 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 50
+      no_move
+        light
+      sound shoot.wav
+      no_music
+      user_property 2048
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    light {
+      1 1 1
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object plunger {
+  19.55 0 31.5
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 -1 0
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 -1 0
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 3 }
+      ple { 2 }
+      ple { 1 }
+      ple { 0 }
+    }
+  }
+  shape_include_3ds_ascii { plunger.asc } 
+
+  plunger_behavior {
+    no_sound
+  }
+  properties {
+    collision
+    group_1
+  }
+}
+object side_target_1 {
+  -12.6667 0 -18.6167
+  0 -0.02 0
+  1 1 1
+  shape {
+    vts { 8 }
+    pls { 6 }
+    vtx { 
+      0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 3 }
+      ple { 2 }
+    }
+    ply {
+      pes { 4 }
+      ple { 4 }
+      ple { 0 }
+      ple { 2 }
+      ple { 6 }
+    }
+    ply {
+      pes { 4 }
+      ple { 5 }
+      ple { 4 }
+      ple { 6 }
+      ple { 7 }
+    }
+    ply {
+      pes { 4 }
+      ple { 1 }
+      ple { 5 }
+      ple { 7 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 4 }
+      ple { 5 }
+      ple { 1 }
+    }
+    ply {
+      pes { 4 }
+      ple { 2 }
+      ple { 3 }
+      ple { 7 }
+      ple { 6 }
+    }
+  }
+  state_behavior {
+    state_item {
+      side_target_1_off side_target_1 1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 50
+      no_move
+        light
+      sound bumphard.wav
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      side_target_1_blink side_target_1 5 3 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null side_target_1 5 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      side_target_1_on side_target_1 5 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 4 50
+      no_move
+        light
+      sound bumphard.wav
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    light {
+      0 0 1
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object side_target_2 {
+  -8.93333 0 -25.75
+  0 -0.0155 0
+  1 1 1
+  shape {
+    vts { 8 }
+    pls { 6 }
+    vtx { 
+      0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 3 }
+      ple { 2 }
+    }
+    ply {
+      pes { 4 }
+      ple { 4 }
+      ple { 0 }
+      ple { 2 }
+      ple { 6 }
+    }
+    ply {
+      pes { 4 }
+      ple { 5 }
+      ple { 4 }
+      ple { 6 }
+      ple { 7 }
+    }
+    ply {
+      pes { 4 }
+      ple { 1 }
+      ple { 5 }
+      ple { 7 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 4 }
+      ple { 5 }
+      ple { 1 }
+    }
+    ply {
+      pes { 4 }
+      ple { 2 }
+      ple { 3 }
+      ple { 7 }
+      ple { 6 }
+    }
+  }
+  state_behavior {
+    state_item {
+      side_target_2_off side_target_2 1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 50
+      no_move
+        light
+      sound bumphard.wav
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      side_target_2_blink side_target_2 5 3 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null side_target_2 5 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      side_target_2_on side_target_2 5 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 4 50
+      no_move
+        light
+      sound bumphard.wav
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    light {
+      0 0 1
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object side_target_3 {
+  9.25 0 -0.866667
+  0 0.0865 0
+  1 1 1
+  shape {
+    vts { 8 }
+    pls { 6 }
+    vtx { 
+      0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 3 }
+      ple { 2 }
+    }
+    ply {
+      pes { 4 }
+      ple { 4 }
+      ple { 0 }
+      ple { 2 }
+      ple { 6 }
+    }
+    ply {
+      pes { 4 }
+      ple { 5 }
+      ple { 4 }
+      ple { 6 }
+      ple { 7 }
+    }
+    ply {
+      pes { 4 }
+      ple { 1 }
+      ple { 5 }
+      ple { 7 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 4 }
+      ple { 5 }
+      ple { 1 }
+    }
+    ply {
+      pes { 4 }
+      ple { 2 }
+      ple { 3 }
+      ple { 7 }
+      ple { 6 }
+    }
+  }
+  state_behavior {
+    state_item {
+      side_target_3_off side_target_3 1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 50
+      no_move
+        light
+      sound bumphard.wav
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      side_target_3_blink side_target_3 5 3 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null side_target_3 5 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      side_target_3_on side_target_3 5 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 4 50
+      no_move
+        light
+      sound bumphard.wav
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    light {
+      0 0 1
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object side_target_4 {
+  13.3667 0 1.3
+  0 0.0663333 0
+  1 1 1
+  shape {
+    vts { 8 }
+    pls { 6 }
+    vtx { 
+      0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 -0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    vtx { 
+      -0.25 -1 0.125
+      0 0 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 3 }
+      ple { 2 }
+    }
+    ply {
+      pes { 4 }
+      ple { 4 }
+      ple { 0 }
+      ple { 2 }
+      ple { 6 }
+    }
+    ply {
+      pes { 4 }
+      ple { 5 }
+      ple { 4 }
+      ple { 6 }
+      ple { 7 }
+    }
+    ply {
+      pes { 4 }
+      ple { 1 }
+      ple { 5 }
+      ple { 7 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 4 }
+      ple { 5 }
+      ple { 1 }
+    }
+    ply {
+      pes { 4 }
+      ple { 2 }
+      ple { 3 }
+      ple { 7 }
+      ple { 6 }
+    }
+  }
+  state_behavior {
+    state_item {
+      side_target_4_off side_target_4 1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 0 50
+      no_move
+        light
+      sound bumphard.wav
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      side_target_4_blink side_target_4 5 3 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null side_target_4 5 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      side_target_4_on side_target_4 5 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 4 50
+      no_move
+        light
+      sound bumphard.wav
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    light {
+      0 0 1
+      0 3 0
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object big_tux_1 {
+  -16.7 0 6.55
+  0 -0.082 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1.5
+      1 1 1 1
+      0.5 0.75
+    }
+    vtx { 
+      1.5 -1 -1.5
+      1 1 1 1
+      0.75 0.75
+    }
+    vtx { 
+      1.5 -1 1.5
+      1 1 1 1
+      0.75 1
+    }
+    vtx { 
+      -1.5 -1 1.5
+      1 1 1 1
+      0.5 1
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      big_tux_1_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      big_tux_1_blink null -1 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 1 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      big_tux_1_on null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object big_tux_2 {
+  -18.3 0 3
+  0 -0.054 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1.5
+      1 1 1 1
+      0.5 0.75
+    }
+    vtx { 
+      1.5 -1 -1.5
+      1 1 1 1
+      0.75 0.75
+    }
+    vtx { 
+      1.5 -1 1.5
+      1 1 1 1
+      0.75 1
+    }
+    vtx { 
+      -1.5 -1 1.5
+      1 1 1 1
+      0.5 1
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      big_tux_2_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      big_tux_2_blink null -1 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 1 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      big_tux_2_on null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object big_tux_3 {
+  -19.2 0 -0.7
+  0 -0.021 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1.5
+      1 1 1 1
+      0.5 0.75
+    }
+    vtx { 
+      1.5 -1 -1.5
+      1 1 1 1
+      0.75 0.75
+    }
+    vtx { 
+      1.5 -1 1.5
+      1 1 1 1
+      0.75 1
+    }
+    vtx { 
+      -1.5 -1 1.5
+      1 1 1 1
+      0.5 1
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      big_tux_3_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      big_tux_3_blink null -1 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 1 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      big_tux_3_on null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object big_tux_4 {
+  -19.5 0 -4.4
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1.5 -1 -1.5
+      1 1 1 1
+      0.5 0.75
+    }
+    vtx { 
+      1.5 -1 -1.5
+      1 1 1 1
+      0.75 0.75
+    }
+    vtx { 
+      1.5 -1 1.5
+      1 1 1 1
+      0.75 1
+    }
+    vtx { 
+      -1.5 -1 1.5
+      1 1 1 1
+      0.5 1
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      big_tux_4_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      big_tux_4_blink null -1 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 1 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      big_tux_4_on null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object arrow_1 {
+  -11.5667 0 -25.7333
+  0 -0.038 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -2
+      1 1 1 1
+      0.625 0
+    }
+    vtx { 
+      1 -1 -2
+      1 1 1 1
+      0.75 0
+    }
+    vtx { 
+      1 -1 2
+      1 1 1 1
+      0.75 0.25
+    }
+    vtx { 
+      -1 -1 2
+      1 1 1 1
+      0.625 0.25
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      arrow_1_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      arrow_1_blink null -1 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 1 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      arrow_1_on null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object arrow_2 {
+  15.0375 0 3.4
+  0 0.084 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -2
+      1 1 1 1
+      0.625 0
+    }
+    vtx { 
+      1 -1 -2
+      1 1 1 1
+      0.75 0
+    }
+    vtx { 
+      1 -1 2
+      1 1 1 1
+      0.75 0.25
+    }
+    vtx { 
+      -1 -1 2
+      1 1 1 1
+      0.625 0.25
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      arrow_2_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      arrow_2_blink null -1 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 1 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      arrow_2_on null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object arrow_1_switch {
+  -11.2 0 -38.45
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 0 1
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      null arrow_1 -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object arrow_2_switch {
+  15.65 0 -6.45
+  0 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    hid { }
+    vtx { 
+      -1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 -1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      1 0 1
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      -1 0 1
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      null arrow_2 -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    collision
+    transform_once
+    group_1
+  }
+}
+object arrow_3 {
+  -16.6 0.160526 -20.2684
+  -0.0123947 -0.054 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -2
+      1 1 1 1
+      0.625 0
+    }
+    vtx { 
+      1 -1 -2
+      1 1 1 1
+      0.75 0
+    }
+    vtx { 
+      1 -1 2
+      1 1 1 1
+      0.75 0.25
+    }
+    vtx { 
+      -1 -1 2
+      1 1 1 1
+      0.625 0.25
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      arrow_3_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      arrow_3_blink null -1 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 1 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      arrow_3_on null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object arrow_4 {
+  -17.6667 0.65 -24.9333
+  -0.0325 0 0
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -2
+      1 1 1 1
+      0.625 0
+    }
+    vtx { 
+      1 -1 -2
+      1 1 1 1
+      0.75 0
+    }
+    vtx { 
+      1 -1 2
+      1 1 1 1
+      0.75 0.25
+    }
+    vtx { 
+      -1 -1 2
+      1 1 1 1
+      0.625 0.25
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      arrow_4_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      arrow_4_blink null -1 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 1 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      arrow_4_on null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object arrow_5 {
+  -16.65 2.15 -29.4
+  -0.0810001 0.08 -0.0325
+  1 1 1
+  shape {
+    vts { 4 }
+    pls { 1 }
+    tex { 
+      tiles.png
+    }
+    vtx { 
+      -1 -1 -2
+      1 1 1 1
+      0.625 0
+    }
+    vtx { 
+      1 -1 -2
+      1 1 1 1
+      0.75 0
+    }
+    vtx { 
+      1 -1 2
+      1 1 1 1
+      0.75 0.25
+    }
+    vtx { 
+      -1 -1 2
+      1 1 1 1
+      0.625 0.25
+    }
+    ply {
+      pes { 4 }
+      tpt { }
+      ple { 0 }
+      ple { 1 }
+      ple { 2 }
+      ple { 3 }
+    }
+  }
+  state_behavior {
+    state_item {
+      arrow_5_off null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      arrow_5_blink null -1 2 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      null null -1 1 50
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      no_shape
+    }
+    state_item {
+      arrow_5_on null -1 -1 -1
+      no_move
+        no_light
+      no_sound
+      no_music
+      no_user_property
+      shape_property 64
+      no_texcoord
+      no_shape
+    }
+  }
+  properties {
+    transform_once
+    group_1
+  }
+}
+object pipes {
+  0 0 0
+  0 0 0
+  1 1 1
+  shape {
+    vts { 116 }
+    pls { 108 }
+    hid { }
+    vtx { 
+      -12.2865 4.94545 -33.9141
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -12.1865 4.94545 -31.0141
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -12.2865 2.5 -33.9141
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -12.1865 2.5 -31.0141
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      11.2885 2.7 -2.76405
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      13.7885 2.7 -1.38905
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      10.8385 4.175 -1.76405
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      13.3385 4.175 -0.389054
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      9.54684 2.3 0.719276
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      9.93851 4.95227 0.0359459
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      12.4385 4.95227 1.28595
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      11.9468 2.2 2.06928
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      8.73018 2.525 1.92762
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      8.73018 4.94545 1.92762
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      10.8302 4.94545 3.97762
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      10.8302 2.525 3.97762
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      7.70518 2.525 2.72762
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      7.70518 4.94545 2.72762
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      8.89684 4.94545 5.21925
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      8.88018 2.4 5.21925
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -15.2115 2.4 11.3609
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -15.2032 4.94545 11.3609
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -13.8365 4.94545 13.3609
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -13.8365 2.5 13.3609
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -16.9615 2.4 12.8609
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -16.9615 4.94545 12.8609
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -14.7115 4.94545 14.3609
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -14.7115 2.5 14.3609
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -17.5865 2.4 14.9859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -17.5865 4.94545 14.9859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -15.0865 4.94545 15.2359
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -15.0865 2.4 15.2359
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -17.5865 2.4 16.4859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -17.5865 4.94545 16.4859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -15.0865 4.94545 16.4859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -15.0865 2.4 16.4859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -17.5865 2.4 18.9859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -17.5865 4.94545 18.9859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -15.0865 4.94545 18.9859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      -15.0865 2.4 18.9859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      2.91351 4.94545 -32.4641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      2.61351 4.94545 -29.2641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      2.91351 2.4 -32.4641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      2.61351 2.4 -29.2641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      5.91351 4.94545 -31.3641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      3.91351 4.94545 -28.6641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      5.91351 2.4 -31.3641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      3.91351 2.4 -28.6641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      7.76351 4.94545 -28.7391
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      5.01351 4.94545 -27.6641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      7.76351 2.4 -28.7391
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      5.01351 2.4 -27.6641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      10.0135 4.94545 -20.6641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      7.10101 4.94545 -19.5641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      10.0135 2.4 -20.6641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      7.10101 2.4 -19.5641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      11.4885 4.94545 -18.7766
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      9.81351 4.94545 -16.2641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      11.4885 2.4 -18.7766
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      9.81351 2.4 -16.2641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      18.2635 4.94545 -14.5641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      16.6135 4.94545 -11.7641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      18.2635 2.4 -14.5641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      16.6135 2.4 -11.7641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      20.301 4.94545 -12.7266
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      17.8135 4.94545 -10.7641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      20.301 2.4 -12.7266
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      17.8135 2.4 -10.7641
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      21.0135 4.94545 -9.81406
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      18.1135 4.94545 -9.71406
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      21.0135 2.4 -9.81406
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      18.1135 2.4 -9.71406
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      20.9135 4.94545 7.98595
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      17.9135 4.94545 7.98595
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      20.9135 2.4 7.98595
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      17.9135 2.4 7.98595
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      20.4135 4.94545 10.7359
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      17.801 4.94545 8.88594
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      20.4135 2.4 10.7359
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      17.801 2.4 8.88594
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      18.3135 4.94545 12.1359
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      17.201 4.94545 9.38594
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      18.3135 2.4 12.1359
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      17.201 2.4 9.38594
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      15.051 4.94545 12.8609
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      13.8885 4.94545 10.6359
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      15.051 2.4 12.8609
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      13.8885 2.4 10.6359
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      14.5135 4.94545 13.3859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      12.2885 4.94545 11.8359
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      14.5135 2.4 13.3859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      12.2885 2.4 11.8359
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      14.4135 4.94545 13.9859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      11.9135 4.94545 13.8859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      14.4135 2.4 13.9859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      11.9135 2.4 13.8859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      14.4135 4.94545 16.4859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      11.9135 4.94545 16.4859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      14.4135 2.4 16.4859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      11.9135 2.4 16.4859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      14.4135 4.94545 18.9859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      11.9135 4.94545 18.9859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      14.4135 2.4 18.9859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      11.9135 2.4 18.9859
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      10.551 4.94545 -19.7516
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      8.16351 4.94545 -17.7516
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      10.551 2.4 -19.7516
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      8.16351 2.4 -17.7516
+      0.2 0.2 1 0.3
+      0 0
+    }
+    vtx { 
+      10.2385 1.35 -0.539054
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      11.4885 1.35 -3.06405
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      13.9885 1.35 -1.68905
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      12.7385 1.35 0.710946
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      10.2385 1.725 -0.439054
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      12.7385 1.725 0.810946
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      9.98018 2.025 -0.0307243
+      1 1 1 1
+      0 0
+    }
+    vtx { 
+      12.4802 2.025 1.21928
+      1 1 1 1
+      0 0
+    }
+    ply {
+      pes { 4 }
+      ple { 108 }
+      ple { 112 }
+      ple { 4 }
+      ple { 109 }
+    }
+    ply {
+      pes { 4 }
+      ple { 111 }
+      ple { 113 }
+      ple { 112 }
+      ple { 108 }
+    }
+    ply {
+      pes { 4 }
+      ple { 109 }
+      ple { 4 }
+      ple { 5 }
+      ple { 110 }
+    }
+    ply {
+      pes { 4 }
+      ple { 110 }
+      ple { 5 }
+      ple { 113 }
+      ple { 111 }
+    }
+    ply {
+      pes { 4 }
+      ple { 112 }
+      ple { 114 }
+      ple { 6 }
+      ple { 4 }
+    }
+    ply {
+      pes { 4 }
+      ple { 113 }
+      ple { 115 }
+      ple { 114 }
+      ple { 112 }
+    }
+    ply {
+      pes { 4 }
+      ple { 4 }
+      ple { 6 }
+      ple { 7 }
+      ple { 5 }
+    }
+    ply {
+      pes { 4 }
+      ple { 5 }
+      ple { 7 }
+      ple { 115 }
+      ple { 113 }
+    }
+    ply {
+      pes { 4 }
+      ple { 114 }
+      ple { 8 }
+      ple { 9 }
+      ple { 6 }
+    }
+    ply {
+      pes { 4 }
+      ple { 115 }
+      ple { 11 }
+      ple { 8 }
+      ple { 114 }
+    }
+    ply {
+      pes { 4 }
+      ple { 6 }
+      ple { 9 }
+      ple { 10 }
+      ple { 7 }
+    }
+    ply {
+      pes { 4 }
+      ple { 7 }
+      ple { 10 }
+      ple { 11 }
+      ple { 115 }
+    }
+    ply {
+      pes { 4 }
+      ple { 8 }
+      ple { 12 }
+      ple { 13 }
+      ple { 9 }
+    }
+    ply {
+      pes { 4 }
+      ple { 11 }
+      ple { 15 }
+      ple { 12 }
+      ple { 8 }
+    }
+    ply {
+      pes { 4 }
+      ple { 9 }
+      ple { 13 }
+      ple { 14 }
+      ple { 10 }
+    }
+    ply {
+      pes { 4 }
+      ple { 10 }
+      ple { 14 }
+      ple { 15 }
+      ple { 11 }
+    }
+    ply {
+      pes { 4 }
+      ple { 12 }
+      ple { 16 }
+      ple { 17 }
+      ple { 13 }
+    }
+    ply {
+      pes { 4 }
+      ple { 15 }
+      ple { 19 }
+      ple { 16 }
+      ple { 12 }
+    }
+    ply {
+      pes { 4 }
+      ple { 13 }
+      ple { 17 }
+      ple { 18 }
+      ple { 14 }
+    }
+    ply {
+      pes { 4 }
+      ple { 14 }
+      ple { 18 }
+      ple { 19 }
+      ple { 15 }
+    }
+    ply {
+      pes { 4 }
+      ple { 16 }
+      ple { 20 }
+      ple { 21 }
+      ple { 17 }
+    }
+    ply {
+      pes { 4 }
+      ple { 19 }
+      ple { 23 }
+      ple { 20 }
+      ple { 16 }
+    }
+    ply {
+      pes { 4 }
+      ple { 17 }
+      ple { 21 }
+      ple { 22 }
+      ple { 18 }
+    }
+    ply {
+      pes { 4 }
+      ple { 18 }
+      ple { 22 }
+      ple { 23 }
+      ple { 19 }
+    }
+    ply {
+      pes { 4 }
+      ple { 20 }
+      ple { 24 }
+      ple { 25 }
+      ple { 21 }
+    }
+    ply {
+      pes { 4 }
+      ple { 23 }
+      ple { 27 }
+      ple { 24 }
+      ple { 20 }
+    }
+    ply {
+      pes { 4 }
+      ple { 21 }
+      ple { 25 }
+      ple { 26 }
+      ple { 22 }
+    }
+    ply {
+      pes { 4 }
+      ple { 22 }
+      ple { 26 }
+      ple { 27 }
+      ple { 23 }
+    }
+    ply {
+      pes { 4 }
+      ple { 24 }
+      ple { 28 }
+      ple { 29 }
+      ple { 25 }
+    }
+    ply {
+      pes { 4 }
+      ple { 27 }
+      ple { 31 }
+      ple { 28 }
+      ple { 24 }
+    }
+    ply {
+      pes { 4 }
+      ple { 25 }
+      ple { 29 }
+      ple { 30 }
+      ple { 26 }
+    }
+    ply {
+      pes { 4 }
+      ple { 26 }
+      ple { 30 }
+      ple { 31 }
+      ple { 27 }
+    }
+    ply {
+      pes { 4 }
+      ple { 28 }
+      ple { 32 }
+      ple { 33 }
+      ple { 29 }
+    }
+    ply {
+      pes { 4 }
+      ple { 31 }
+      ple { 35 }
+      ple { 32 }
+      ple { 28 }
+    }
+    ply {
+      pes { 4 }
+      ple { 29 }
+      ple { 33 }
+      ple { 34 }
+      ple { 30 }
+    }
+    ply {
+      pes { 4 }
+      ple { 30 }
+      ple { 34 }
+      ple { 35 }
+      ple { 31 }
+    }
+    ply {
+      pes { 4 }
+      ple { 32 }
+      ple { 36 }
+      ple { 37 }
+      ple { 33 }
+    }
+    ply {
+      pes { 4 }
+      ple { 33 }
+      ple { 37 }
+      ple { 38 }
+      ple { 34 }
+    }
+    ply {
+      pes { 4 }
+      ple { 34 }
+      ple { 38 }
+      ple { 39 }
+      ple { 35 }
+    }
+    ply {
+      pes { 4 }
+      ple { 39 }
+      ple { 38 }
+      ple { 37 }
+      ple { 36 }
+    }
+    ply {
+      pes { 4 }
+      ple { 1 }
+      ple { 41 }
+      ple { 40 }
+      ple { 0 }
+    }
+    ply {
+      pes { 4 }
+      ple { 0 }
+      ple { 40 }
+      ple { 42 }
+      ple { 2 }
+    }
+    ply {
+      pes { 4 }
+      ple { 3 }
+      ple { 43 }
+      ple { 41 }
+      ple { 1 }
+    }
+    ply {
+      pes { 4 }
+      ple { 2 }
+      ple { 42 }
+      ple { 43 }
+      ple { 3 }
+    }
+    ply {
+      pes { 4 }
+      ple { 41 }
+      ple { 45 }
+      ple { 44 }
+      ple { 40 }
+    }
+    ply {
+      pes { 4 }
+      ple { 40 }
+      ple { 44 }
+      ple { 46 }
+      ple { 42 }
+    }
+    ply {
+      pes { 4 }
+      ple { 43 }
+      ple { 47 }
+      ple { 45 }
+      ple { 41 }
+    }
+    ply {
+      pes { 4 }
+      ple { 42 }
+      ple { 46 }
+      ple { 47 }
+      ple { 43 }
+    }
+    ply {
+      pes { 4 }
+      ple { 45 }
+      ple { 49 }
+      ple { 48 }
+      ple { 44 }
+    }
+    ply {
+      pes { 4 }
+      ple { 44 }
+      ple { 48 }
+      ple { 50 }
+      ple { 46 }
+    }
+    ply {
+      pes { 4 }
+      ple { 47 }
+      ple { 51 }
+      ple { 49 }
+      ple { 45 }
+    }
+    ply {
+      pes { 4 }
+      ple { 46 }
+      ple { 50 }
+      ple { 51 }
+      ple { 47 }
+    }
+    ply {
+      pes { 4 }
+      ple { 49 }
+      ple { 53 }
+      ple { 52 }
+      ple { 48 }
+    }
+    ply {
+      pes { 4 }
+      ple { 48 }
+      ple { 52 }
+      ple { 54 }
+      ple { 50 }
+    }
+    ply {
+      pes { 4 }
+      ple { 51 }
+      ple { 55 }
+      ple { 53 }
+      ple { 49 }
+    }
+    ply {
+      pes { 4 }
+      ple { 50 }
+      ple { 54 }
+      ple { 55 }
+      ple { 51 }
+    }
+    ply {
+      pes { 4 }
+      ple { 57 }
+      ple { 61 }
+      ple { 60 }
+      ple { 56 }
+    }
+    ply {
+      pes { 4 }
+      ple { 56 }
+      ple { 60 }
+      ple { 62 }
+      ple { 58 }
+    }
+    ply {
+      pes { 4 }
+      ple { 59 }
+      ple { 63 }
+      ple { 61 }
+      ple { 57 }
+    }
+    ply {
+      pes { 4 }
+      ple { 58 }
+      ple { 62 }
+      ple { 63 }
+      ple { 59 }
+    }
+    ply {
+      pes { 4 }
+      ple { 61 }
+      ple { 65 }
+      ple { 64 }
+      ple { 60 }
+    }
+    ply {
+      pes { 4 }
+      ple { 60 }
+      ple { 64 }
+      ple { 66 }
+      ple { 62 }
+    }
+    ply {
+      pes { 4 }
+      ple { 63 }
+      ple { 67 }
+      ple { 65 }
+      ple { 61 }
+    }
+    ply {
+      pes { 4 }
+      ple { 62 }
+      ple { 66 }
+      ple { 67 }
+      ple { 63 }
+    }
+    ply {
+      pes { 4 }
+      ple { 65 }
+      ple { 69 }
+      ple { 68 }
+      ple { 64 }
+    }
+    ply {
+      pes { 4 }
+      ple { 64 }
+      ple { 68 }
+      ple { 70 }
+      ple { 66 }
+    }
+    ply {
+      pes { 4 }
+      ple { 67 }
+      ple { 71 }
+      ple { 69 }
+      ple { 65 }
+    }
+    ply {
+      pes { 4 }
+      ple { 66 }
+      ple { 70 }
+      ple { 71 }
+      ple { 67 }
+    }
+    ply {
+      pes { 4 }
+      ple { 69 }
+      ple { 73 }
+      ple { 72 }
+      ple { 68 }
+    }
+    ply {
+      pes { 4 }
+      ple { 68 }
+      ple { 72 }
+      ple { 74 }
+      ple { 70 }
+    }
+    ply {
+      pes { 4 }
+      ple { 71 }
+      ple { 75 }
+      ple { 73 }
+      ple { 69 }
+    }
+    ply {
+      pes { 4 }
+      ple { 70 }
+      ple { 74 }
+      ple { 75 }
+      ple { 71 }
+    }
+    ply {
+      pes { 4 }
+      ple { 73 }
+      ple { 77 }
+      ple { 76 }
+      ple { 72 }
+    }
+    ply {
+      pes { 4 }
+      ple { 72 }
+      ple { 76 }
+      ple { 78 }
+      ple { 74 }
+    }
+    ply {
+      pes { 4 }
+      ple { 75 }
+      ple { 79 }
+      ple { 77 }
+      ple { 73 }
+    }
+    ply {
+      pes { 4 }
+      ple { 74 }
+      ple { 78 }
+      ple { 79 }
+      ple { 75 }
+    }
+    ply {
+      pes { 4 }
+      ple { 77 }
+      ple { 81 }
+      ple { 80 }
+      ple { 76 }
+    }
+    ply {
+      pes { 4 }
+      ple { 76 }
+      ple { 80 }
+      ple { 82 }
+      ple { 78 }
+    }
+    ply {
+      pes { 4 }
+      ple { 79 }
+      ple { 83 }
+      ple { 81 }
+      ple { 77 }
+    }
+    ply {
+      pes { 4 }
+      ple { 78 }
+      ple { 82 }
+      ple { 83 }
+      ple { 79 }
+    }
+    ply {
+      pes { 4 }
+      ple { 81 }
+      ple { 85 }
+      ple { 84 }
+      ple { 80 }
+    }
+    ply {
+      pes { 4 }
+      ple { 80 }
+      ple { 84 }
+      ple { 86 }
+      ple { 82 }
+    }
+    ply {
+      pes { 4 }
+      ple { 83 }
+      ple { 87 }
+      ple { 85 }
+      ple { 81 }
+    }
+    ply {
+      pes { 4 }
+      ple { 82 }
+      ple { 86 }
+      ple { 87 }
+      ple { 83 }
+    }
+    ply {
+      pes { 4 }
+      ple { 85 }
+      ple { 89 }
+      ple { 88 }
+      ple { 84 }
+    }
+    ply {
+      pes { 4 }
+      ple { 84 }
+      ple { 88 }
+      ple { 90 }
+      ple { 86 }
+    }
+    ply {
+      pes { 4 }
+      ple { 87 }
+      ple { 91 }
+      ple { 89 }
+      ple { 85 }
+    }
+    ply {
+      pes { 4 }
+      ple { 86 }
+      ple { 90 }
+      ple { 91 }
+      ple { 87 }
+    }
+    ply {
+      pes { 4 }
+      ple { 89 }
+      ple { 93 }
+      ple { 92 }
+      ple { 88 }
+    }
+    ply {
+      pes { 4 }
+      ple { 88 }
+      ple { 92 }
+      ple { 94 }
+      ple { 90 }
+    }
+    ply {
+      pes { 4 }
+      ple { 91 }
+      ple { 95 }
+      ple { 93 }
+      ple { 89 }
+    }
+    ply {
+      pes { 4 }
+      ple { 90 }
+      ple { 94 }
+      ple { 95 }
+      ple { 91 }
+    }
+    ply {
+      pes { 4 }
+      ple { 93 }
+      ple { 97 }
+      ple { 96 }
+      ple { 92 }
+    }
+    ply {
+      pes { 4 }
+      ple { 92 }
+      ple { 96 }
+      ple { 98 }
+      ple { 94 }
+    }
+    ply {
+      pes { 4 }
+      ple { 95 }
+      ple { 99 }
+      ple { 97 }
+      ple { 93 }
+    }
+    ply {
+      pes { 4 }
+      ple { 94 }
+      ple { 98 }
+      ple { 99 }
+      ple { 95 }
+    }
+    ply {
+      pes { 4 }
+      ple { 97 }
+      ple { 101 }
+      ple { 100 }
+      ple { 96 }
+    }
+    ply {
+      pes { 4 }
+      ple { 96 }
+      ple { 100 }
+      ple { 102 }
+      ple { 98 }
+    }
+    ply {
+      pes { 4 }
+      ple { 99 }
+      ple { 103 }
+      ple { 101 }
+      ple { 97 }
+    }
+    ply {
+      pes { 4 }
+      ple { 100 }
+      ple { 101 }
+      ple { 103 }
+      ple { 102 }
+    }
+    ply {
+      pes { 4 }
+      ple { 53 }
+      ple { 105 }
+      ple { 104 }
+      ple { 52 }
+    }
+    ply {
+      pes { 4 }
+      ple { 52 }
+      ple { 104 }
+      ple { 106 }
+      ple { 54 }
+    }
+    ply {
+      pes { 4 }
+      ple { 55 }
+      ple { 107 }
+      ple { 105 }
+      ple { 53 }
+    }
+    ply {
+      pes { 4 }
+      ple { 54 }
+      ple { 106 }
+      ple { 107 }
+      ple { 55 }
+    }
+    ply {
+      pes { 4 }
+      ple { 59 }
+      ple { 57 }
+      ple { 105 }
+      ple { 107 }
+    }
+    ply {
+      pes { 4 }
+      ple { 56 }
+      ple { 58 }
+      ple { 106 }
+      ple { 104 }
+    }
+    ply {
+      pes { 4 }
+      ple { 58 }
+      ple { 59 }
+      ple { 107 }
+      ple { 106 }
+    }
+    ply {
+      pes { 4 }
+      ple { 104 }
+      ple { 105 }
+      ple { 57 }
+      ple { 56 }
+    }
+  }
+
+  shape_include_3ds_ascii { rails.asc }
+
+  properties {
+    collision
+    transform_once
+    wall
+    group_1
+  }
+}
