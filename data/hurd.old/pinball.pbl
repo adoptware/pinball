@@ -7648,7 +7648,7 @@ object music {
       no_move
         no_light
       no_sound
-      music game.ogg
+      music freesoftwaresong.ogg
       no_user_property
       no_shape_property
       no_texcoord
@@ -57310,7 +57310,7 @@ object floorleft {
     vts { 32 }
     pls { 21 }
     tex { 
-      floor3.png
+      floor4.png
     }
     vtx { 
       -30.0946 -1 0
@@ -57625,7 +57625,7 @@ object floorleft {
   }
 }
 object floorleftup {
-  0 0 0
+  0.0476189 0 0
   0 0 0
   1 1 1
   shape {
@@ -63363,7 +63363,7 @@ object out_table {
     vts { 24 }
     pls { 20 }
     tex { 
-      Wood.jpg
+      wood.jpg
     }
     vtx { 
       -103.8 -30 -59.4
