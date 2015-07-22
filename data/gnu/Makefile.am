@@ -36,6 +36,8 @@ free_all.ogg \
 knockdown.ogg \
 reset_knockdowns.ogg \
 raise-stopper.ogg \
+hit-freeball-target.ogg \
+hit-freedom-target.ogg \
 plunger.wav \
 music.ogg \
 pinball.pbl \

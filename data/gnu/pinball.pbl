@@ -23971,7 +23971,7 @@ object floor_bottom_v123_3 {
       v123_3_announce null -1 -1 -1
       no_move
         no_light
-      no_sound
+      sound gplv3.ogg
       no_music
       no_user_property
       shape_property 64
@@ -25593,7 +25593,7 @@ object knockdown_below_gpl_l {
   }
 }
 object freeball_target {
-  12.5059 0 -1.16222
+  12.4059 0 -1.06222
   0 0.146845 0
   1 1 1
   shape {
@@ -25691,6 +25691,25 @@ object freeball_target {
       no_move
         light
       no_sound
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
+    state_item {
+      freeball_target_announce null -1 -1 -1
+      no_move
+        light
+      sound hit-freeball-target.ogg
       no_music
       no_user_property
       no_shape_property
@@ -25828,6 +25847,25 @@ object freedom_target {
         0
         0
     }
+    state_item {
+      freedom_target_announce null -1 -1 -1
+      no_move
+        light
+      sound hit-freedom-target.ogg
+      no_music
+      no_user_property
+      no_shape_property
+      no_texcoord
+      shape 8
+        0
+        1
+        0
+        0
+        0
+        0
+        0
+        0
+    }
     light {
       0 0 1
       0 3 0
@@ -25835,6 +25873,7 @@ object freedom_target {
   }
   properties {
     collision
+    wall_one_way
     group_1
   }
 }
