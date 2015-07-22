@@ -47,7 +47,7 @@ The shoot sound (shoot.ogg) file comes from newBall.wav of xtremme. it is not mo
 
 The plunger sound (plunger.wav) file comes from plungerRelease.wav of xtremme, but it has been modified in audacity.
 
-The knockdown sound (knockdown.ogg) file is a heavily modified sound taken from tile.wav of xtremme.  so is is reset_knockdowns.ogg.
+The knockdown sound (knockdown.ogg) file is a heavily modified sound taken from tilt.wav of xtremme.  so is is reset_knockdowns.ogg.
 
 The multiball siren sound (multiball.wav) file comes from tilt-abuse.wav of xtremme, and has been modified in audacity.
 
