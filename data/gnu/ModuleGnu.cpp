@@ -196,6 +196,8 @@ public:
     m_sigv123On[3] = loader->getSignal("v123_freeball_on");
     m_sigv123Off[3] = loader->getSignal("v123_freeball_off");
     m_sigv123Announce[3] = loader->getSignal("v123_freeball_announce");
+    m_sigFreedomTargetAnnounce = loader->getSignal("freedom_target_announce");
+    m_sigFreeBallTargetAnnounce = loader->getSignal("freeball_target_announce");
     for (i = 0; i < 6; i++) {
       snprintf (name, sizeof (name), "lock_arrow_%d_on", i+1);
       m_sigLockArrowOn[i][0] = loader->getSignal(name);
@@ -677,7 +679,7 @@ public:
           SendSignal (m_sigv123On[3], 0, this->getParent(), NULL);
           m_bFreeBall = true;
           m_bFreeBallTargetOn = false;
-          SendSignal (m_sigv123On[0], 2500, this->getParent(), NULL);
+          SendSignal (m_sigv123On[0], 1000, this->getParent(), NULL);
           SendSignal (m_sigv123Off[1], 0, this->getParent(), NULL);
           SendSignal (m_sigv123Off[2], 0, this->getParent(), NULL);
           SendSignal (m_sigv123Announce[3], 0, this->getParent(), NULL);
@@ -746,8 +748,12 @@ public:
         SendSignal (m_sigLightOn[12], 650, this->getParent(), NULL);
         SendSignal (m_sigLightOn[13], 650, this->getParent(), NULL);
         if (m_bFreeBallTargetOn)
+          SendSignal (m_sigLightOn[9], 650, this->getParent(), NULL);
+        else
           SendSignal (m_sigLightOff[9], 650, this->getParent(), NULL);
         if (m_bFreedomTargetOn)
+          SendSignal (m_sigLightOn[10], 650, this->getParent(), NULL);
+        else
           SendSignal (m_sigLightOff[10], 650, this->getParent(), NULL);
         for (int i = 0; i < 4; i++)
           SendSignal (m_sig0123Off[i], 0, this->getParent(), NULL);
@@ -779,7 +785,7 @@ public:
           SendSignal (m_sigv123On[i], 185 + (i+1)*15, this->getParent(), NULL);
         for (int i = 0; i < 4; i++)
           SendSignal (m_sigv123Off[i], 260, this->getParent(), NULL);
-        for (int i = 0; i < m_iGplVersionLevel; i++)
+        for (int i = 0; i < m_iGplVersionLevel+1; i++)
           SendSignal (m_sigv123On[i], 275, this->getParent(), NULL);
       }
     }
@@ -794,7 +800,6 @@ public:
         {
           if (m_aKnockdown[i])
             {
-              printf("sending sigKnocking[%d][1] now\n", i);
               SendSignal(m_sigKnocking[i][1], 250, this->getParent(), NULL);
               m_aKnockdown[i] = false;
             }
@@ -811,6 +816,7 @@ public:
         if (m_iMultiplier == 3 && m_bFreedomStopperOn == false) {
           m_bFreedomTargetOn = true;
           SendSignal (m_sigFreedomTargetOn, 0, this->getParent(), NULL);
+          SendSignal (m_sigFreedomTargetAnnounce, 0, this->getParent(), NULL);
         }
     }
 
@@ -827,25 +833,34 @@ public:
             }
         }
 	SendSignal(m_sigGplKnockdownReset, 300, this->getParent(), NULL);
-        if (m_iGplVersionLevel < 2)
-          {
-            m_iGplVersionLevel++;
-            for (int i = 0; i <= m_iGplVersionLevel; i++)
-              {
-                printf("turning %d on\n", i);
-              SendSignal(m_sigv123On[i], 50, this->getParent(), NULL);
-              }
+        if (m_iGplVersionLevel < 2) {
+          m_iGplVersionLevel++;
+          for (int i = 0; i <= m_iGplVersionLevel; i++)
+            SendSignal(m_sigv123On[i], 50, this->getParent(), NULL);
+
           SendSignal (m_sigv123Announce[m_iGplVersionLevel], 0, this->getParent(), NULL);
           }
         
-        if (m_iGplVersionLevel == 2 && m_bFreeBallTargetOn == false)
-          {
-            //to get to the last GplVersionLevel we have to shoot a target.
-            //(freeball)
-            SendSignal (m_sigFreeballTargetOn, 0, this->getParent(), NULL);
-            SendSignal (m_sigLightCrazyBlink[10], 0, this->getParent(), NULL);
-            m_bFreeBallTargetOn = true;
-          }
+        if (m_iGplVersionLevel == 2 && m_bFreeBallTargetOn == false && 
+            m_bFreeBall == false) {
+          //to get to the last GplVersionLevel we have to shoot a target.
+          //(freeball)
+          SendSignal (m_sigFreeballTargetOn, 0, this->getParent(), NULL);
+          SendSignal (m_sigLightCrazyBlink[10], 0, this->getParent(), NULL);
+          m_bFreeBallTargetOn = true;
+          SendSignal (m_sigFreeBallTargetAnnounce, 0, this->getParent(), NULL);
+        }
+        else if (m_iGplVersionLevel == 2 && m_bFreeBallTargetOn == false  &&
+                 m_bFreeBall == true) {
+          //okay, very special case here.  we wrapped around on the v123s
+          //while we got a free ball on this same ball.
+          m_iGplVersionLevel = 0;
+          SendSignal (m_sigv123Announce[m_iGplVersionLevel], 0, this->getParent(), NULL);
+          for (int i = 1; i < 4; i++)
+            SendSignal(m_sigv123Off[i], 60, this->getParent(), NULL);
+          SendSignal(m_sigv123On[0], 60, this->getParent(), NULL);
+        }
+
     }
   }
   
@@ -991,6 +1006,8 @@ private:
   bool m_bFreeBallTargetOn;
   bool m_bFreedomStopperOn;
   bool m_bRunIt;
+  int m_sigFreedomTargetAnnounce;
+  int m_sigFreeBallTargetAnnounce;
 };
 
 extern "C"  void * new_object_fct(void) {
