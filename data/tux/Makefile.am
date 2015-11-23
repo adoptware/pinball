@@ -8,7 +8,7 @@ tuxdatadir = $(datadir)/pinball/tux
 
 tuxlib_LTLIBRARIES = libModuleTux.la
 
-INCLUDES = -I../../base -I.../../addon -I../../src
+AM_CPPFLAGS = -I../../base -I.../../addon -I../../src
 
 libModuleTux_la_LDFLAGS = -module
 libModuleTux_la_SOURCES = ModuleTux.cpp

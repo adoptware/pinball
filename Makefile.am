@@ -1,6 +1,6 @@
 AUTOMAKE_OPTIONS = gnu
 
-SUBDIRS = addon base data src test
+SUBDIRS = libltdl addon base data src test
 
 EXTRA_DIST = bootstrap pinball.spec clean pinball.desktop
 
@@ -10,4 +10,4 @@ pininclude_HEADERS = pinconfig.h
 
 bin_SCRIPTS = pinball-config
 
-ACLOCAL_AMFLAGS= -I libltdl/m4
+ACLOCAL_AMFLAGS = -I m4

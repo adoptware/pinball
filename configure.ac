@@ -1,11 +1,12 @@
 dnl #                                               -*- Autoconf -*-
 dnl # Process this file with autoconf 2.53 to produce a configure script.
 dnl init autoconf and automake
-AC_INIT(pinball, 0.0.0, [[pinball.sf.net]])
+AC_INIT(pinball, 0.3.3.1)
 
 AC_CONFIG_HEADERS(pinconfig.h)
-
-AC_CONFIG_AUX_DIR([libltdl/config])
+LT_CONFIG_LTDL_DIR([libltdl])
+AC_CONFIG_AUX_DIR([config])
+AC_CONFIG_MACRO_DIRS([m4])
 
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
@@ -32,15 +33,7 @@ AC_ARG_WITH(cxxflags,
     [CXXFLAGS=$with_cxxflags; export CXXFLAGS])
 
 AC_LIBTOOL_DLOPEN
-LT_CONFIG_LTDL_DIR([libltdl])
-LT_INIT
 LTDL_INIT
-
-
-AC_CONFIG_MACRO_DIR([libltdl/m4])
-
-AC_SUBST(INCLTDL)
-AC_SUBST(LIBLTDL)
 
 dnl *******************************************
 dnl PATHS AND DIRS ****************************

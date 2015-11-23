@@ -5,7 +5,7 @@ pinincludedir = $(includedir)/pinball
 
 pinlib_LIBRARIES = libemilia_base.a
 
-INCLUDES = -I../addon
+AM_CPPFLAGS = -I../addon
 
 libemilia_base_a_SOURCES = \
 AlignVisitor.cpp \

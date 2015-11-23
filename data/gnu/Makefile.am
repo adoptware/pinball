@@ -7,7 +7,7 @@ gnudatadir = $(datadir)/pinball/gnu
 
 gnulib_LTLIBRARIES = libModuleGnu.la
 
-INCLUDES = -I../../base -I.../../addon -I../../src
+AM_CPPFLAGS = -I../../base -I.../../addon -I../../src
 
 libModuleGnu_la_LDFLAGS = -module
 libModuleGnu_la_SOURCES = ModuleGnu.cpp

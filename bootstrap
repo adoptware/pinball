@@ -3,24 +3,12 @@
 set -e
 set -x
 
-rm -rf libltdl
+rm -rf libltdl/ m4/ config/
 
-touch config.h.in pinconfig.h.in
+#avoid warning
+mkdir -p m4
 
-libtoolize --version
-aclocal --version
-autoheader --version 
-automake --version
-autoconf --version
+autoreconf -i
 
-libtoolize --ltdl --force --copy
-[ -e config.h.in ] || touch config.h.in
-
-aclocal
-autoheader
-automake --add-missing
-autoconf
-
-$@
-
-echo "# $0 && ./configure && make && make install && src/pinball"
+echo "Now you may do: ./configure && make "
+echo "and: make install (as root) or src/pinball"

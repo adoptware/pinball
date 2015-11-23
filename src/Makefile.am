@@ -7,10 +7,10 @@ pinlib_LIBRARIES = libemilia_pin.a
 
 bin_PROGRAMS = pinball
 
-INCLUDES = -I../base -I../addon
+AM_CPPFLAGS = -I../base -I../addon @INCLTDL@
 
 pinball_LDADD = \
- libemilia_pin.a ../addon/libemilia_addon.a ../base/libemilia_base.a -lltdl
+ libemilia_pin.a ../addon/libemilia_addon.a ../base/libemilia_base.a @LIBLTDL@
 
 pinball_LDFLAGS = -export-dynamic
 
@@ -31,7 +31,6 @@ Script.cpp \
 StateBehavior.cpp \
 Table.cpp
 
-dnl libemilia_pin_la_SOURCES = $(libemilia_pin_a_SOURCES)
 
 pininclude_HEADERS = \
 ArmBehavior.h \

@@ -8,12 +8,12 @@ rm -rf `find . -name "*.al"`
 rm -rf `find . -name ".libs"`
 rm -rf `find . -name ".deps"`
 rm -rf `find . -name "*~"`
-rm -rf autom4te-2.53.cache
+rm -rf autom4te.cache/
 rm -rf config.*
 rm -rf stamp-h
 rm -rf ltmain*
 rm -rf libtool
-rm -rf libltdl
+rm -rf libltdl/
 rm -rf configure
 rm -rf missing*
 rm -rf mkinstall*
