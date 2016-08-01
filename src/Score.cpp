@@ -3,7 +3,7 @@
                           Score.cpp  -  description
                              -------------------
     begin                : Fri Jan 26 2001
-    copyright            : (C) 2001 by Henrik Enqvist
+    copyright            : (C) 2001-2016 by Henrik Enqvist
     email                : henqvist@excite.com
 
     modifs
@@ -15,6 +15,7 @@
 #include <cstdio>
 #include <iostream>
 #include <cstring>
+#include <libintl.h>
 #include "Private.h"
 #include "Score.h"
 #include "Group.h"
@@ -84,17 +85,17 @@ void Score::StdOnSignal() {
 
   OnSignal( PBL_SIG_RESET_ALL ) {
     this->clear();
-    this->setText1("press enter to launch ball");
+    this->setText1(gettext("press enter to launch ball"));
     SendSignal( PBL_SIG_CLEAR_TEXT, 400, this->getParent(), NULL );
   } 
   ElseOnSignal( PBL_SIG_TILT ) {
     this->clearText();
-    this->setText1("tilt");
+    this->setText1(gettext("tilt"));
     SendSignal( PBL_SIG_RESET_ALL, 600, this->getParent(), NULL );
   }
   ElseOnSignal( PBL_SIG_TILT_WARNING ) {
     this->clearText();
-    this->setText1("warning");
+    this->setText1(gettext("warning"));
     SendSignal( PBL_SIG_CLEAR_TEXT, 400, this->getParent(), NULL );
   }
   ElseOnSignal( PBL_SIG_CLEAR_TEXT ) {
@@ -113,16 +114,16 @@ void Score::StdOnSignal() {
     this->clearText();
 
     //cout<<" TODO:give (only) one extra ball if high score"<<endl; //!rzr
-    
+
     if(this->testForHighScore()) {
-      this->setText1("last score was a High Score!");
+      this->setText1(gettext("Last score was a High Score!"));
     } else {
       this->setText1("");
     }
 
     this->setText2("");
-    this->setText3("game over");
-    this->setText4("press r to start new game");
+    this->setText3(gettext("game over"));
+    this->setText4(gettext("press r to start new game"));
   }
 }
 
@@ -132,12 +133,12 @@ void Score::draw() {
   int nCurrentBall = Table::getInstance()->getCurrentBall() + 1;
   if (nCurrentBall < 4) {
     if (m_bExtraBall) {
-      sprintf(buffer, "SCORE %d BALL %d ExtraBall", m_iScore, nCurrentBall);
+      sprintf(buffer, gettext("SCORE %d BALL %d ExtraBall"), m_iScore, nCurrentBall);
     } else {
-      sprintf(buffer, "SCORE %d BALL %d", m_iScore, nCurrentBall);
+      sprintf(buffer, gettext("SCORE %d BALL %d"), m_iScore, nCurrentBall);
     }
   } else {
-    sprintf(buffer, "SCORE %d", m_iScore);
+    sprintf(buffer, gettext("SCORE %d"), m_iScore);
   }
 
   m_Font->printRow(buffer, 0);
@@ -177,7 +178,7 @@ bool Score::testForHighScore() {
     EmAssert(Engine::getCurrentEngine() != NULL,
 	     "Score::testForHighScore Engine NULL");
     //TODO: get : env var  $USER@$HOSTNAME-$(date +%Y%m%d)
-    MenuInput input("new highscore! enter name:", Engine::getCurrentEngine());
+    MenuInput input(gettext(gettext("new highscore! enter name:")), Engine::getCurrentEngine());
     input.perform();
 
     Table::getInstance()->saveNewHighScore(m_iScore, input.getInput());

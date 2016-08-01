@@ -3,7 +3,7 @@
                           Menu.cpp  -  description
                              -------------------
     begin                : Tue Feb 15 2000
-    copyright            : (C) 2000 by Henrik Enqvist
+    copyright            : (C) 2000-2016 by Henrik Enqvist
     email                : henqvist@excite.com
 ***************************************************************************/
 
@@ -14,7 +14,7 @@
 #include "EmFont.h"
 #include "Keyboard.h"
 #include "Engine.h"
-
+    
 
 MenuItem::MenuItem(Engine * e, int type) {
   EmAssert(e != NULL, "Engine not created");
@@ -47,23 +47,23 @@ void MenuSub::addMenuItem(MenuItem * menu) {
 
 int MenuSub::perform() {
   EM_COUT("MenuSub::perform() " << this->getText(), 1);
-  
+
   if (m_vMenuItem.size() == 0) {
     return m_iAction;
   }
-  
+
   int ret = 0;
-  
+
   EMKey key = SDLK_a;
   while(true) {
     if (key == SDLK_DOWN) m_iCurrent++;
     if (key == SDLK_UP) m_iCurrent--;
-    
+
     if (m_iCurrent < 0) m_iCurrent = m_vMenuItem.size()-1;
     if (m_iCurrent >= (signed)m_vMenuItem.size()) m_iCurrent = 0;
-    
+
     this->draw();
-    
+
     key = Keyboard::waitForKey();
     // escape, exit current menu (go back to previous)
     if (key == SDLK_ESCAPE) {
@@ -106,10 +106,10 @@ void MenuSub::draw() {
   EM_COUT("MenuSub::draw() " << this->getText(), 1);
   p_Engine->clearScreen();
   if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
-  
+
   int size = this->size() + m_vInfoText.size() + 2;
   float yoffset = 10 - ((float)size)/2;
-  
+
   p_EmFont->printRowCenter(this->getText(), 0 + yoffset);
   vector<char*>::iterator iter = m_vInfoText.begin();
   vector<char*>::iterator end = m_vInfoText.end();
@@ -117,7 +117,7 @@ void MenuSub::draw() {
     p_EmFont->printRowCenter((*iter), a + yoffset);
   }
   p_EmFont->printRowCenter(m_BottomText, -2);
-  
+
   vector<MenuItem*>::iterator menuIter = m_vMenuItem.begin();
   vector<MenuItem*>::iterator menuEnd = m_vMenuItem.end();
   { for (int a=0; menuIter != menuEnd; menuIter++, a++) {
@@ -131,7 +131,7 @@ void MenuSub::draw() {
       p_EmFont->printRowCenter((*menuIter)->getText(), a+2 + yoffset);
     }
   } }
-  
+
   p_Engine->swap();
 }
 
@@ -160,6 +160,10 @@ const char* MenuChoose::getText() {
       return m_vText[m_iCurrent];
     }
   }
+}
+
+const char* MenuChoose::getTextDisplay() {
+    return MenuChoose::getText();
 }
 
 void MenuChoose::addText(const char * text) {
@@ -200,9 +204,10 @@ int MenuChoose::prev() {
 /***************************************************************************
  * A menu that performs a function when choosen */
 
-MenuFct::MenuFct(const char * name, int (*fct)(void), Engine* e)
+MenuFct::MenuFct(const char * name, const char* nameDisplay, int (*fct)(void), Engine* e)
   : MenuItem(e, EM_MENU_FCT) {
   strncpy(m_Name, name, MAX_MENU_NAME);
+  strncpy(m_NameDisplay, nameDisplay, MAX_MENU_NAME);
   p_Fct = fct;
 }
 

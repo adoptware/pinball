@@ -2,7 +2,7 @@
                           Menu.h  -  description
                              -------------------
     begin                : Tue Feb 15 2000
-    copyright            : (C) 2000 by Henrik Enqvist
+    copyright            : (C) 2000-2016 by Henrik Enqvist
     email                : henqvist@excite.com
  ***************************************************************************/
 
@@ -35,6 +35,7 @@ class MenuItem {
   MenuItem(Engine* e, int type);
   virtual ~MenuItem();
   virtual const char* getText() = 0;
+  virtual const char* getTextDisplay() = 0;
   virtual int perform() = 0;
   inline int getType() { return m_iType; };
   inline Engine * getEngine() { return p_Engine; };
@@ -58,6 +59,7 @@ class MenuSub : public MenuItem {
   inline int size() { return m_vMenuItem.size(); };
   inline void setAction(int a) { m_iAction = a; };
   inline const char* getText() { return m_Name; };
+  inline const char* getTextDisplay() { return m_Name; };
   /** Add a text which is to appear under the name when the item is selected. TODO */
   void addInfoText(const char * text);
   /** Add a text which is to appear under the name when the item is selected */
@@ -77,6 +79,7 @@ class MenuChoose : public MenuItem {
   ~MenuChoose();
   void addText(const char * text);
   const char* getText();
+  const char* getTextDisplay();
   int perform();
   int next();
   int prev();
@@ -108,6 +111,7 @@ class MenuInput : public MenuItem
 	int perform();
 	void draw();
 	inline const char* getText() { return m_Name; };
+    inline const char* getTextDisplay() { return m_Name; };
   inline void setAction(int a) { m_iAction = a; };
 	const char * getInput();
  protected:
@@ -121,12 +125,14 @@ class MenuInput : public MenuItem
  * The perform function should return EM_MENU_BACK, EM_MENU_NOP or EM_MENU_QUIT. */
 class MenuFct : public MenuItem {
  public:
-  MenuFct(const char * name, int (*fct)(void), Engine* e);
+  MenuFct(const char * name, const char* nameDisplay, int (*fct)(void), Engine* e);
   ~MenuFct();
   int perform();
   virtual const char* getText() { return m_Name; };
+  virtual const char* getTextDisplay() { return m_NameDisplay; };
  protected:
   char m_Name[MAX_MENU_NAME + 1];
+  char m_NameDisplay[MAX_MENU_NAME + 1];
   int (*p_Fct)(void);
 };
 
