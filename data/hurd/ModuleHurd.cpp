@@ -10,7 +10,7 @@
                           ModuleTux.cpp  -  description
                              -------------------
     begin                : Fri Jan 26 2001
-    copyright            : (C) 2001 by Henrik Enqvist
+    copyright            : (C) 2001-2016 by Henrik Enqvist
     email                : henqvist@excite.com
  ***************************************************************************/
 
@@ -24,6 +24,8 @@
 #include "Keyboard.h"
 #include "Table.h"
 #include "Config.h"
+
+#include <locale>
 
 #define MISSION_TEXT_TIMEOUT 6000
 #define INFO_TEXT_TIME 600
@@ -256,25 +258,25 @@ public:
       case MISSION_THIRD_BUMP:
       case MISSION_FOURTH_BUMP:
       case MISSION_FIFTH_BUMP:
-	score->setInfoText("hit bumpers", INFO_TEXT_TIME); break;
+	score->setInfoText(gettext("hit bumpers"), INFO_TEXT_TIME); break;
       case MISSION_FIRST_CAVE: 
       case MISSION_SECOND_CAVE:
       case MISSION_THIRD_CAVE:
       case MISSION_FOURTH_CAVE:
       case MISSION_FIFTH_CAVE:
-	score->setInfoText("shoot cave to turn a square of hurd", INFO_TEXT_TIME); break; 
+	score->setInfoText(gettext("shoot cave to turn a square of hurd"), INFO_TEXT_TIME); break; 
       case MISSION_ARROW:
-	score->setInfoText("follow arrows", INFO_TEXT_TIME); break;
+	score->setInfoText(gettext("follow arrows"), INFO_TEXT_TIME); break;
       case MISSION_ARROWS:
-	score->setInfoText("follow arrows in the hurd logo", INFO_TEXT_TIME); break;
+	score->setInfoText(gettext("follow arrows in the hurd logo"), INFO_TEXT_TIME); break;
       case MISSION_RAMP_ARROWS:
-	score->setInfoText("follow arrows, hurry up", INFO_TEXT_TIME); break;
+	score->setInfoText(gettext("follow arrows, hurry up"), INFO_TEXT_TIME); break;
       case MISSION_FOURTH_ARROWS:
-	score->setInfoText("follow arrows, hurry up", INFO_TEXT_TIME); break;
+	score->setInfoText(gettext("follow arrows, hurry up"), INFO_TEXT_TIME); break;
       case MISSION_FIFTH_ALL:
-	score->setInfoText("follow all arrows", INFO_TEXT_TIME); break;
+	score->setInfoText(gettext("follow all arrows"), INFO_TEXT_TIME); break;
       case MISSION_ALL:
-	score->setInfoText("you did it, GNU is complete", INFO_TEXT_TIME); break;
+	score->setInfoText(gettext("you did it, GNU is complete"), INFO_TEXT_TIME); break;
       }
     }
   };
@@ -313,16 +315,16 @@ public:
     } 
     // multiball
     ElseOnSignal( m_sigHead ) {
-      score->setInfoText("shoot to lock ball", INFO_TEXT_TIME);
+      score->setInfoText(gettext("shoot to lock ball"), INFO_TEXT_TIME);
     }		
     ElseOnSignal( m_sigLock[0] ) {
-      score->setInfoText("first ball locked", INFO_TEXT_TIME);
+      score->setInfoText(gettext("first ball locked"), INFO_TEXT_TIME);
     }		
     ElseOnSignal( m_sigLock[1] ) {
-      score->setInfoText("second ball locked", INFO_TEXT_TIME);
+      score->setInfoText(gettext("second ball locked"), INFO_TEXT_TIME);
     }		
     ElseOnSignal( m_sigReleaseLock ) {
-      score->setInfoText("multiball", INFO_TEXT_TIME);
+      score->setInfoText(gettext("multiball"), INFO_TEXT_TIME);
       table->unLockBall(0);
       table->unLockBall(1);
       table->unLockBall(2);
@@ -397,28 +399,28 @@ public:
     ElseOnSignal(m_sigCave) {
       if (m_iMission == MISSION_FIRST_CAVE) {
 	SendSignal( m_sigBigHurdOn[0], 0, this->getParent(), NULL );
-	score->setInfoText("first develop of hurd", INFO_TEXT_TIME);
+	score->setInfoText(gettext("first develop of hurd"), INFO_TEXT_TIME);
 	score->addScore(40000);
 	m_iMission = MISSION_SECOND_BUMP;
 	m_iMissionTick = MISSION_TEXT_TIMEOUT - INFO_TEXT_TIME;
       }
       if (m_iMission == MISSION_SECOND_CAVE) {
 	SendSignal( m_sigBigHurdOn[1], 0, this->getParent(), NULL );
-	score->setInfoText("second develop of hurd", INFO_TEXT_TIME);
+	score->setInfoText(gettext("second develop of hurd"), INFO_TEXT_TIME);
 	score->addScore(50000);
 	m_iMission = MISSION_THIRD_BUMP;
 	m_iMissionTick = MISSION_TEXT_TIMEOUT - INFO_TEXT_TIME;
       } 
       if (m_iMission == MISSION_THIRD_CAVE) {
 	SendSignal( m_sigBigHurdOn[2], 0, this->getParent(), NULL );
-	score->setInfoText("third develop of hurd", INFO_TEXT_TIME);
+	score->setInfoText(gettext("third develop of hurd"), INFO_TEXT_TIME);
 	score->addScore(60000);
 	m_iMission = MISSION_FOURTH_BUMP;
 	m_iMissionTick = MISSION_TEXT_TIMEOUT - INFO_TEXT_TIME;
       }
       if (m_iMission == MISSION_FOURTH_CAVE) {
 	SendSignal( m_sigBigHurdOn[3], 0, this->getParent(), NULL );
-	score->setInfoText("fourth develop of hurd", INFO_TEXT_TIME);
+	score->setInfoText(gettext("fourth develop of hurd"), INFO_TEXT_TIME);
 	score->addScore(70000);
 	m_iMission = MISSION_FIFTH_BUMP;
 	m_iMissionTick = MISSION_TEXT_TIMEOUT - INFO_TEXT_TIME;
@@ -427,7 +429,7 @@ public:
 	SendSignal( m_sigMissionAll, 0, this->getParent(), NULL );
 	//SendSignal( m_sigStopBalls, 0, this->getParent(), NULL );
 	//SendSignal( m_sigResumeBalls, 1000, this->getParent(), NULL );
-	score->setInfoText("hurd is stable", INFO_TEXT_TIME);
+	score->setInfoText(gettext("hurd is stable"), INFO_TEXT_TIME);
 	score->addScore(500000);
 	m_iMission = MISSION_ALL;
 	m_iMissionTick = MISSION_TEXT_TIMEOUT - INFO_TEXT_TIME;

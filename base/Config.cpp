@@ -3,7 +3,7 @@
                           Config.cpp  -  description
                              -------------------
     begin                : Wed Jan 26 2000
-    copyright            : (C) 2000 by Henrik Enqvist
+    copyright            : (C) 2000-2016 by Henrik Enqvist
     email                : henqvist@excite.com
 ***************************************************************************/
 
@@ -159,12 +159,14 @@ char const * const Config::getKeyCommonName(EMKey key) {
   case SDLK_7: return "7";
   case SDLK_8: return "8";
   case SDLK_9: return "9";
-  case SDLK_RETURN: return "return";
-  case SDLK_SPACE: return "space";
-  case SDLK_LSHIFT: return "left shift";
-  case SDLK_RSHIFT: return "right shift";
+  case SDLK_RETURN: return gettext("return");
+  case SDLK_SPACE: return gettext("space");
+  case SDLK_LSHIFT: return gettext("left shift");
+  case SDLK_RSHIFT: return gettext("right shift");
+  case SDLK_LCTRL: return gettext("left ctrl");
+  case SDLK_RCTRL: return gettext("right ctrl");
   }
-  return "unknown";
+  return gettext("unknown");
 #endif
 }
 

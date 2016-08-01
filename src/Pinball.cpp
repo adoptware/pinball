@@ -3,7 +3,7 @@
                           Pinball.cpp  -  description
                              -------------------
     begin                : Thu Mar 9 2000
-    copyright            : (C) 2000 by Henrik Enqvist
+    copyright            : (C) 2000-2016 by Henrik Enqvist
     email                : henqvist@excite.com
 ***************************************************************************/
 
@@ -19,6 +19,8 @@
 #include <cstring>
 #include <cstdlib>
 #include <ctime>
+#include <libintl.h>
+#include <locale.h>
 
 #ifdef _MSC_VER //!+rzr : maybe we can use a portable IO lib such as physicfs
 #include <io.h> //find
@@ -94,7 +96,7 @@ MenuChoose* menulights = NULL;
 // Menu item to display high scores - pnf
 class MyMenuHighScores : public MenuFct {
 public:
-  MyMenuHighScores(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, fct, e) {};
+  MyMenuHighScores(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, name, fct, e) {};
 protected:
   int perform() {
     p_Engine->clearScreen();
@@ -102,8 +104,8 @@ protected:
     if (p_Texture != NULL)
       p_Engine->drawSplash(p_Texture);
 
-    p_EmFont->printRowCenter("- High Scores -", 2);
-    string sHeader = string("table: ") + Table::getInstance()->getTableName();
+    p_EmFont->printRowCenter(string(string("- ") + gettext("High Scores") +  string(" -")).c_str(), 2);
+    string sHeader = string(gettext("table: ")) + Table::getInstance()->getTableName();
     p_EmFont->printRowCenter(sHeader.c_str(), 3);
 
     int nStartRow = 5;
@@ -121,10 +123,10 @@ protected:
         p_EmFont->printRowCenter(sRow.c_str(), nStartRow + i);
       }
     } else {
-      p_EmFont->printRowCenter("No Table Loaded!", 10);
+      p_EmFont->printRowCenter(gettext("No Table Loaded!"), 10);
     }
 
-    p_EmFont->printRowCenter("Hit any key for main menu...", 20);
+    p_EmFont->printRowCenter(gettext("Hit any key for main menu..."), 20);
 
     p_Engine->swap();
     Keyboard::waitForKey();
@@ -136,12 +138,12 @@ protected:
 /** Menu item for changing a key binding. */
 class MyMenuKey : public MenuFct {
 public:
-  MyMenuKey(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, fct, e) {};
+  MyMenuKey(const char * name, const char* nameDisplay, int (*fct)(void), Engine *e) : MenuFct(name, nameDisplay, fct, e) {};
 protected:
   int perform () {
     p_Engine->clearScreen();
     if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
-    p_EmFont->printRowCenter("press a key", 10);
+    p_EmFont->printRowCenter(gettext("press a key"), 10);
     p_Engine->swap();
     EMKey key = Keyboard::waitForKey();
     string name(m_Name);
@@ -157,9 +159,9 @@ protected:
     if (keyname != NULL) {
       key = string(keyname);
     } else {
-      key = string("unknown");
+      key = string(gettext("unknown"));
     }
-    name = name + ":";
+    name = string(m_NameDisplay) + ":";
     while (name.size() < 12) {
       name = name + " ";
     }
@@ -176,7 +178,7 @@ protected:
 /** The apply meny item. */
 class MyMenuApply : public MenuFct {
 public:
-  MyMenuApply(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, fct, e) {};
+  MyMenuApply(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, name, fct, e) {};
 protected:
   int perform () {
     Config* config = Config::getInstance();
@@ -351,7 +353,7 @@ protected:
 /** The back button. */
 class MyMenuCancel : public MenuFct {
 public:
-  MyMenuCancel(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, fct, e) {};
+  MyMenuCancel(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, name, fct, e) {};
 protected:
   int perform () {
     get_config();
@@ -362,14 +364,14 @@ protected:
 /** Button for loading a table. */
 class MyMenuLoad : public MenuFct {
 public:
-  MyMenuLoad(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, fct, e) {
+  MyMenuLoad(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, name, fct, e) {
 
   };
 protected:
   int perform () {
     p_Engine->clearScreen();
     if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
-    p_EmFont->printRowCenter("LOADING", 10);
+    p_EmFont->printRowCenter(gettext("LOADING"), 10);
     p_Engine->swap();
 
     // Save the high scores of current table, if any - pnf
@@ -381,13 +383,13 @@ protected:
 
       p_Engine->clearScreen();
       if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
-      p_EmFont->printRowCenter("OK", 10);
+      p_EmFont->printRowCenter(gettext("OK"), 10);
       p_Engine->swap();
       p_Engine->delay(500);
     } else {
       p_Engine->clearScreen();
       if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
-      p_EmFont->printRowCenter("ERROR", 10);
+      p_EmFont->printRowCenter(gettext("ERROR"), 10);
       p_Engine->swap();
       p_Engine->delay(1000);
     }
@@ -499,36 +501,36 @@ void get_config(void)
 /* Create some menus */
 MenuItem* createMenus(Engine * engine) {
   // Create the meny
-  MenuSub* menu = new MenuSub("main menu", engine);
+  MenuSub* menu = new MenuSub(gettext("main menu"), engine);
   menu->setBottomText("http://pinball.sourceforge.net");
 
-  MenuSub* menuresume = new MenuSub("play", engine);
+  MenuSub* menuresume = new MenuSub(gettext("play"), engine);
   menuresume->setAction(EM_MENU_RESUME);
   menu->addMenuItem(menuresume);
 
-  MenuSub* menuload = new MenuSub("load table", engine);
+  MenuSub* menuload = new MenuSub(gettext("load table"), engine);
   menu->addMenuItem(menuload);
 
   // Show high scores for current loadad table - pnf
-  MyMenuHighScores* menuhighscores = new MyMenuHighScores("High Scores", NULL,
+  MyMenuHighScores* menuhighscores = new MyMenuHighScores(gettext("High Scores"), NULL,
                                                           engine);
   menu->addMenuItem(menuhighscores);
 
-  MenuSub* menucfg = new MenuSub("config", engine);
+  MenuSub* menucfg = new MenuSub(gettext("config"), engine);
   menu->addMenuItem(menucfg);
 
-  MenuSub* menuexit = new MenuSub("exit", engine);
+  MenuSub* menuexit = new MenuSub(gettext("exit"), engine);
   menuexit->setAction(EM_MENU_EXIT);
   menu->addMenuItem(menuexit);
 
-  MenuSub* menugfx = new MenuSub("graphics", engine);
+  MenuSub* menugfx = new MenuSub(gettext("graphics"), engine);
   menucfg->addMenuItem(menugfx);
 
-  MenuSub* menuaudio = new MenuSub("audio", engine);
+  MenuSub* menuaudio = new MenuSub(gettext("audio"), engine);
   menucfg->addMenuItem(menuaudio);
 
-  MenuSub* menukey = new MenuSub("keyboard", engine);
-  menukey->setBottomText("shorcuts for view change F5-F8");
+  MenuSub* menukey = new MenuSub(gettext("keyboard"), engine);
+  menukey->setBottomText(gettext("shortcuts for view change F5-F8"));
   menucfg->addMenuItem(menukey);
 
   string filename = string(Config::getInstance()->getDataSubDir()) + "/splash.png";
@@ -608,126 +610,126 @@ MenuItem* createMenus(Engine * engine) {
 #endif //!+rzr
 
   menuview = new MenuChoose(engine);
-  menuview->addText(  "view:         classic");
-  menuview->addText(  "view:   softly moving");
-  menuview->addText(  "view:          moving");
-  menuview->addText(  "view:             top");
+  menuview->addText(gettext("view:         classic"));
+  menuview->addText(gettext("view:   softly moving"));
+  menuview->addText(gettext("view:          moving"));
+  menuview->addText(gettext("view:             top"));
   menugfx->addMenuItem(menuview);
 
   menuscreen = new MenuChoose(engine);
-  menuscreen->addText("screen:    fullscreen");
-  menuscreen->addText("screen:      windowed");
+  menuscreen->addText(gettext("screen:    fullscreen"));
+  menuscreen->addText(gettext("screen:      windowed"));
   menugfx->addMenuItem(menuscreen);
 
   menubright = new MenuChoose(engine);
-  menubright->addText( "brightness:    =.....");
-  menubright->addText( "brightness:    ==....");
-  menubright->addText( "brightness:    ===...");
-  menubright->addText( "brightness:    ====..");
-  menubright->addText( "brightness:    =====.");
-  menubright->addText( "brightness:    ======");
+  menubright->addText(gettext("brightness:    =....."));
+  menubright->addText(gettext("brightness:    ==...."));
+  menubright->addText(gettext("brightness:    ===..."));
+  menubright->addText(gettext("brightness:    ====.."));
+  menubright->addText(gettext("brightness:    =====."));
+  menubright->addText(gettext("brightness:    ======"));
   menugfx->addMenuItem(menubright);
 
   {
     menusize = new MenuChoose(engine);
-    menusize->addText(   "screen width:     340");
-    menusize->addText(   "screen width:     400");
-    menusize->addText(   "screen width:     512");
-    menusize->addText(   "screen width:     640");
-    menusize->addText(   "screen width:     800");
-    menusize->addText(   "screen width:     864");
-    menusize->addText(   "screen width:    1024");
-    menusize->addText(   "screen width:    1280");
-    menusize->addText(   "screen width:    1680");
-    menusize->addText(   "screen width:    1920");
+    menusize->addText(gettext("screen width:     340"));
+    menusize->addText(gettext("screen width:     400"));
+    menusize->addText(gettext("screen width:     512"));
+    menusize->addText(gettext("screen width:     640"));
+    menusize->addText(gettext("screen width:     800"));
+    menusize->addText(gettext("screen width:     864"));
+    menusize->addText(gettext("screen width:    1024"));
+    menusize->addText(gettext("screen width:    1280"));
+    menusize->addText(gettext("screen width:    1680"));
+    menusize->addText(gettext("screen width:    1920"));
     menugfx->addMenuItem(menusize);
   }
   {
     menuratio = new MenuChoose(engine);
-    menuratio->addText( "ratio:      0.5 (1/2)");
-    menuratio->addText( "ratio:       1. (1/1)");
-    menuratio->addText( "ratio:      1.2 (5/4)");
-    menuratio->addText( "ratio:      1.3 (4/3)");
-    menuratio->addText( "ratio:      1.5 (3/2)");
-    menuratio->addText( "ratio:    1.6 (16/10)");
-    menuratio->addText( "ratio:     1.7 (16/9)");
-    menuratio->addText( "ratio:      1.8 (9/5)");
-    menuratio->addText( "ratio:        2 (2/1)");
+    menuratio->addText(gettext("ratio:      0.5 (1/2)"));
+    menuratio->addText(gettext("ratio:        1 (1/1)"));
+    menuratio->addText(gettext("ratio:      1.2 (5/4)"));
+    menuratio->addText(gettext("ratio:      1.3 (4/3)"));
+    menuratio->addText(gettext("ratio:      1.5 (3/2)"));
+    menuratio->addText(gettext("ratio:    1.6 (16/10)"));
+    menuratio->addText(gettext("ratio:     1.7 (16/9)"));
+    menuratio->addText(gettext("ratio:      1.8 (9/5)"));
+    menuratio->addText(gettext("ratio:        2 (2/1)"));
     menugfx->addMenuItem(menuratio);
   }
 
   menufilter = new MenuChoose(engine);
-  menufilter->addText("texture:       nicest"); //was linear // gamers  //!rzr
-  menufilter->addText("texture:      fastest"); //was nearest // vocabulary :)
-  menufilter->addText("texture:         none");
+  menufilter->addText(gettext("texture:       nicest")); //was linear // gamers  //!rzr
+  menufilter->addText(gettext("texture:      fastest")); //was nearest // vocabulary :)
+  menufilter->addText(gettext("texture:         none"));
   menugfx->addMenuItem(menufilter);
 
   menufps = new MenuChoose(engine);
-  menufps->addText(   "show fps:          no");
-  menufps->addText(   "show fps:         yes");
+  menufps->addText(gettext("show fps:          no"));
+  menufps->addText(gettext("show fps:         yes"));
   menugfx->addMenuItem(menufps);
 
   menufire = new MenuChoose(engine);
-  menufire->addText(  "fire effect:       no");
-  menufire->addText(  "fire effect:      yes");
+  menufire->addText(gettext("fire effect:       no"));
+  menufire->addText(gettext("fire effect:      yes"));
   menugfx->addMenuItem(menufire);
 
   menulights = new MenuChoose(engine);
-  menulights->addText("dynamic lights:   yes");
-  menulights->addText("dynamic lights:    no");
+  menulights->addText(gettext("dynamic lights:   yes"));
+  menulights->addText(gettext("dynamic lights:    no"));
   menugfx->addMenuItem(menulights);
 
   //   menumaxfps = new MenuChoose(engine);
-  //   menumaxfps->addText("max fps            50");
-  //   menumaxfps->addText("max fps           100");
+  //   menumaxfps->addText(gettext("max fps            50"));
+  //   menumaxfps->addText(gettext("max fps           100"));
   //   menugfx->addMenuItem(menumaxfps);
 
   menusnd = new MenuChoose(engine);
-  menusnd->addText(   "sound:            off");
-  menusnd->addText(   "sound:       =.......");
-  menusnd->addText(   "sound:       ==......");
-  menusnd->addText(   "sound:       ===.....");
-  menusnd->addText(   "sound:       ====....");
-  menusnd->addText(   "sound:       =====...");
-  menusnd->addText(   "sound:       ======..");
-  menusnd->addText(   "sound:       =======.");
-  menusnd->addText(   "sound:       ========");
+  menusnd->addText(gettext("sound:            off"));
+  menusnd->addText(gettext("sound:       =......."));
+  menusnd->addText(gettext("sound:       ==......"));
+  menusnd->addText(gettext("sound:       ===....."));
+  menusnd->addText(gettext("sound:       ====...."));
+  menusnd->addText(gettext("sound:       =====..."));
+  menusnd->addText(gettext("sound:       ======.."));
+  menusnd->addText(gettext("sound:       =======."));
+  menusnd->addText(gettext("sound:       ========"));
   menuaudio->addMenuItem(menusnd);
 
   menumusic = new MenuChoose(engine);
-  menumusic->addText( "music:            off");
-  menumusic->addText( "music:       =.......");
-  menumusic->addText( "music:       ==......");
-  menumusic->addText( "music:       ===.....");
-  menumusic->addText( "music:       ====....");
-  menumusic->addText( "music:       =====...");
-  menumusic->addText( "music:       ======..");
-  menumusic->addText( "music:       =======.");
-  menumusic->addText( "music:       ========");
+  menumusic->addText(gettext("music:            off"));
+  menumusic->addText(gettext("music:       =......."));
+  menumusic->addText(gettext("music:       ==......"));
+  menumusic->addText(gettext("music:       ===....."));
+  menumusic->addText(gettext("music:       ====...."));
+  menumusic->addText(gettext("music:       =====..."));
+  menumusic->addText(gettext("music:       ======.."));
+  menumusic->addText(gettext("music:       =======."));
+  menumusic->addText(gettext("music:       ========"));
   menuaudio->addMenuItem(menumusic);
 
-  MyMenuKey * menuleftflip = new MyMenuKey("leftflip", NULL, engine);
+  MyMenuKey * menuleftflip = new MyMenuKey("leftflip", gettext("leftflip"), NULL, engine);
   menukey->addMenuItem(menuleftflip);
-  MyMenuKey * menurightflip = new MyMenuKey("rightflip", NULL, engine);
+  MyMenuKey * menurightflip = new MyMenuKey("rightflip", gettext("rightflip"), NULL, engine);
   menukey->addMenuItem(menurightflip);
-  MyMenuKey * menuleftnudge = new MyMenuKey("leftnudge", NULL, engine);
+  MyMenuKey * menuleftnudge = new MyMenuKey("leftnudge", gettext("leftnudge"), NULL, engine);
   menukey->addMenuItem(menuleftnudge);
-  MyMenuKey * menurightnudge = new MyMenuKey("rightnudge", NULL, engine);
+  MyMenuKey * menurightnudge = new MyMenuKey("rightnudge", gettext("rightnudge"), NULL, engine);
   menukey->addMenuItem(menurightnudge);
-  MyMenuKey * menubottomnudge = new MyMenuKey("bottomnudge", NULL, engine);
+  MyMenuKey * menubottomnudge = new MyMenuKey("bottomnudge", gettext("bottomnudge"), NULL, engine);
   menukey->addMenuItem(menubottomnudge);
-  MyMenuKey * menulaunch = new MyMenuKey("launch", NULL, engine);
+  MyMenuKey * menulaunch = new MyMenuKey("launch", gettext("launch"), NULL, engine);
   menukey->addMenuItem(menulaunch);
-  MyMenuKey * menureset = new MyMenuKey("reset", NULL, engine);
+  MyMenuKey * menureset = new MyMenuKey("reset", gettext("reset"), NULL, engine);
   menukey->addMenuItem(menureset);
 
-  MenuFct* menuapply = new MyMenuApply("apply", NULL, engine);
+  MenuFct* menuapply = new MyMenuApply(gettext("apply"), NULL, engine);
   menuaudio->addMenuItem(menuapply);
   //menucfg->addMenuItem(menuapply);
   menugfx->addMenuItem(menuapply);
   //menukey->addMenuItem(menuapply);
 
-  MenuFct* menucancel = new MyMenuCancel("back", NULL, engine);
+  MenuFct* menucancel = new MyMenuCancel(gettext("back"), NULL, engine);
   menucfg->addMenuItem(menucancel);
   menugfx->addMenuItem(menucancel);
   menuaudio->addMenuItem(menucancel);
@@ -742,6 +744,15 @@ MenuItem* createMenus(Engine * engine) {
 /** Main */
 int main(int argc, char *argv[]) {
   //cerr<<"+ Pinball::main"<<endl;
+
+  setlocale(LC_ALL, "");
+  bindtextdomain("pinball", EM_LOCALIZATION_DIR);
+  textdomain("pinball");
+  // No support for UTF-8 implemented.
+  //bind_textdomain_codeset("pinball", "UTF-8");
+
+  cerr << "table: " << endl;
+
   try {
     // Create a engine and parse emilia arguments
     Config::getInstance()->loadConfig();
@@ -810,8 +821,8 @@ int main(int argc, char *argv[]) {
           Table::getInstance()->getScore()->draw();
         }
         if (engine->getGroup(0) == NULL) {
-          EmFont::getInstance()->printRowCenter("no table loaded", 6);
-          EmFont::getInstance()->printRowCenter("press esc", 8);
+          EmFont::getInstance()->printRowCenter(gettext("no table loaded"), 6);
+          EmFont::getInstance()->printRowCenter(gettext("press esc"), 8);
         }
         engine->swap();
       }

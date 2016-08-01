@@ -30,7 +30,7 @@ int Script::getVariable(int i) {
 }
 
 void Script::interpret(QueryItem * queryitem, int signal, Group * group) {
-	EmAssert(queryitem != NULL, "Scrip::interpret queryitem NULL");
+	EmAssert(queryitem != NULL, "Script::interpret queryitem NULL");
 
 	switch (queryitem->m_iQuery) {
 	case EM_SCRIPT_ONSIGNAL: {
