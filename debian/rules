@@ -2,6 +2,7 @@
 
 DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+DEB_HOST_MULTIARCH  ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 ifneq (,$(findstring alpha,$(DEB_BUILD_GNU_TYPE)))
 	CFLAGS += -mieee
@@ -18,6 +19,7 @@ clean:
 
 .PHONY: override_dh_auto_configure
 override_dh_auto_configure:
+	$(RM) depcomp
 	libtoolize --install --copy
 	aclocal
 	autoheader
@@ -27,16 +29,16 @@ override_dh_auto_configure:
 
 .PHONY: override_dh_install
 override_dh_install:
-	sed -i "/dependency_libs/s/'.*'/''/" $(CURDIR)/debian/tmp/usr/lib/pinball/*.la
+	sed -i "/dependency_libs/s/'.*'/''/" $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/pinball/*.la
 	install -d $(CURDIR)/debian/tmp/usr/share/applications
 	install -d $(CURDIR)/debian/tmp/usr/share/pixmaps
 	install -m 644 pinball.desktop $(CURDIR)/debian/tmp/usr/share/applications
 	install -m 644 data/pinball.xpm $(CURDIR)/debian/tmp/usr/share/pixmaps
-	nsgmls debian/pinball.sgml | sgmlspl sgmlspl-specs/docbook2man-spec.pl
+	onsgmls debian/pinball.sgml | sgmlspl sgmlspl-specs/docbook2man-spec.pl
 	dh_install
 
-.PHONY: override_dh_fixperms
-override_dh_fixperms:
+.PHONY: override_dh_fixperms-arch
+override_dh_fixperms-arch:
 	dh_fixperms
 	chown root:games debian/pinball/usr/games/pinball
 	chmod 2755 debian/pinball/usr/games/pinball

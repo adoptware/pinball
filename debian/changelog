@@ -1,3 +1,38 @@
+pinball (0.3.1-13.6) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Change build dependency from obsolete sp to newer opensp.
+
+ -- Neil Roeth <neil@debian.org>  Sat, 10 Sep 2016 22:32:11 -0400
+
+pinball (0.3.1-13.5) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Do not remove executable bit from /usr/lib/$DEB_HOST_MULTIARCH/pinball
+    directory. Thanks to Helga Schlossmacher for the report. (Closes: #818736)
+
+ -- Markus Koschany <apo@debian.org>  Sun, 20 Mar 2016 15:10:37 +0100
+
+pinball (0.3.1-13.4) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Use compat level 9 and require debhelper >= 9 because the syntax for
+    override_dh_fixperms-arch is only valid since compat level 9.
+  * Install libraries into multiarch directories.
+
+ -- Markus Koschany <apo@debian.org>  Mon, 14 Mar 2016 13:32:00 +0100
+
+pinball (0.3.1-13.3) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Remove depcomp in dh_auto_configure override and prevent the FTBFS.
+    Thanks to Tobias Frost for the report. (Closes: #816108)
+  * Use dh_fixperms override for arch-only and fix building with
+    dpkg-buildflag -A.
+    Thanks to Santiago Vila for the report. (Closes: #806093)
+
+ -- Markus Koschany <apo@debian.org>  Sun, 13 Mar 2016 23:34:47 +0100
+
 pinball (0.3.1-13.2) unstable; urgency=medium
 
   * Non-maintainer upload.
