@@ -1,5 +1,5 @@
 /***************************************************************************
- Simple meny test. A cube should be visible in the middle of the screen.
+ Simple menu test. A cube should be visible in the middle of the screen.
  The arrow keys rotates the cube.
 ***************************************************************************/
 
@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
   menuchoose->addText("third");
   menusub->addMenuItem(menuchoose);
 
-  MenuFct* menuapply = new MenuFct("apply", fctApply, engine);
+  MenuFct* menuapply = new MenuFct("apply", "apply", fctApply, engine);
   menusub->addMenuItem(menuapply);
 
   MenuSub* menuback = new MenuSub("back", engine);
