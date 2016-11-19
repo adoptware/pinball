@@ -39,13 +39,4 @@ tiles.png \
 tiles.png.pcx \
 up.wav
 
-# This will create a new empty highscores file
-# NOTE! The user games must exist!
-install-data-hook:
-	-mkdir -p $(highscoredir) # - if not root #!rzr
-	-touch $(highscoredir)/highscores
-	-if test `whoami` = root; then chown games $(highscoredir)/highscores; fi
-	-if test `whoami` = root; then chgrp games $(highscoredir)/highscores; fi
-	-chmod 666 $(highscoredir)/highscores
-
 EXTRA_DIST = $(tuxdata_DATA)
