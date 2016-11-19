@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="desktop">
+  <id>pinball.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  <name>Emilia Pinball</name>
+  <summary>3D Pinball Game</summary>
+  <description>
+    <p>
+      The Emilia Pinball project is an open source pinball simulator
+      by Henrik Enqvist. 
+    </p>
+    <p>
+      The current release features a number of tables:
+      tux, professor, professor2, gnu and hurd and is very addictive.
+    </p>
+  </description>
+  <url type="homepage">http://pinball.sourceforge.net/</url>
+  <screenshots>
+    <screenshot type="default">http://repo.openpandora.org/files/pnd/pinball_ptitseb/preview1.png</screenshot>
+  </screenshots>
+  <updatecontact>jwrdegoede_at_fedoraproject.org</updatecontact>
+</component>
