@@ -7,19 +7,23 @@ professordatadir = $(datadir)/pinball/professor
 
 professorlib_LTLIBRARIES = libModuleProfessor.la
 
-INCLUDES = -I../../base -I.../../addon -I../../src
+AM_CPPFLAGS = -I../../base -I.../../addon -I../../src
 
 libModuleProfessor_la_LDFLAGS = -module
 libModuleProfessor_la_SOURCES = ModuleProfessor.cpp
 
 professordata_DATA = \
- $(wildcard *.pbl) \
- $(wildcard *.pcx) \
- $(wildcard *.png) \
- $(wildcard *.jpg) \
- $(wildcard *.wav) \
- $(wildcard *.ogg) \
- $(wildcard *.mid) \
- #
+bump.wav \
+bumphard.wav \
+bumpsoft.wav \
+flip.wav \
+floor.png \
+floor.png.pcx \
+gameover.wav \
+introp.ogg \
+nudge.wav \
+pinball.pbl \
+professor.ogg \
+professor.png
 
 EXTRA_DIST = $(professordata_DATA)
