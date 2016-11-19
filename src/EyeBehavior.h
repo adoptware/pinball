@@ -44,6 +44,23 @@
 #define RY3 0.0f
 #define RZ3 0.0f
 
+// top-down
+//#define TX4 0.0f  //Table posistion from center
+#define TX4 -1.75f  //Table posistion from center
+#define TY4 70.0f //Camera Distance from Table
+#define TZ4 0.0f //Distance from bottom of screen
+#define RX4 0.25f //rotation of table top-bottom
+#define RY4 0.0f //rotation of table left to right
+#define RZ4 0.0f //rotation of table on X- axis (clock)
+
+// top-down-rotated
+#define TX5 0.0f  //Table posistion from center
+#define TY5 70.0f //Camera Distance from Table
+#define TZ5 0.0f //Distance from bottom of screen
+#define RX5 0.25f //rotation of table top-bottom
+#define RY5 0.0f //rotation of table left to right
+#define RZ5 0.25f //rotation of table on X- axis (clock)
+
 class Score;
 
 /**

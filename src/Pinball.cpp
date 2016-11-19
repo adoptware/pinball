@@ -68,10 +68,10 @@
 void get_config(void);
 
 float g_RatioArray[] 
-= { 1./2. , 1./1.  , 5./4. , 4./3. , 3./2. , 16/10. , 16./9. , 9./5, 2./1. };
+= { 1./2. , 5./9. , 9./16. , 10./16. , 2./3. , 3./4. , 4./5. , 1./1. , 5./4. , 4./3. , 3./2. , 16./10. , 16./9. , 9./5., 2./1. };
 
 int g_WidthArray[] 
-= { 320, 400, 512, 640, 800 , 864, 1024, 1280 , 1680 , 1920};
+= { 320, 400, 512, 640, 720, 800 , 864, 900, 1024, 1080, 1280 , 1680 , 1920};
 
 /****************************************************************************
  * Menus
@@ -297,6 +297,8 @@ protected:
     case 1: config->setView(1); break;
     case 2: config->setView(2); break;
     case 3: config->setView(3); break;
+    case 4: config->setView(4); break;
+    case 5: config->setView(5); break;
     default: config->setView(0);
     }
     // texture filter
@@ -443,7 +445,7 @@ void get_config(void)
 
   { //cerr<<"// screen ratio="<<Config::getInstance()->getRatio()<<endl;
     int array_size = sizeof( g_RatioArray ) / sizeof( g_RatioArray[0] );
-    menuratio->setCurrent(3);
+    menuratio->setCurrent(9);
     for (int i=array_size-1; (i>=0) ; i-- ) {
       if (Config::getInstance()->getRatio() == g_RatioArray[i]) {
 	menuratio->setCurrent(i);
@@ -468,6 +470,8 @@ void get_config(void)
   case 1: menuview->setCurrent(1); break;
   case 2: menuview->setCurrent(2); break;
   case 3: menuview->setCurrent(3); break;
+  case 4: menuview->setCurrent(4); break;
+  case 5: menuview->setCurrent(5); break;
   default: menuview->setCurrent(0);
   }
   // texture filter
@@ -503,7 +507,6 @@ MenuItem* createMenus(Engine * engine) {
   // Create the meny
   MenuSub* menu = new MenuSub(gettext("main menu"), engine);
   menu->setBottomText("http://pinball.sourceforge.net");
-
   MenuSub* menuresume = new MenuSub(gettext("play"), engine);
   menuresume->setAction(EM_MENU_RESUME);
   menu->addMenuItem(menuresume);
@@ -614,6 +617,8 @@ MenuItem* createMenus(Engine * engine) {
   menuview->addText(gettext("view:   softly moving"));
   menuview->addText(gettext("view:          moving"));
   menuview->addText(gettext("view:             top"));
+  menuview->addText(  "view:        top-down");
+  menuview->addText(  "view: top-down-rotated");
   menugfx->addMenuItem(menuview);
 
   menuscreen = new MenuChoose(engine);
@@ -632,13 +637,16 @@ MenuItem* createMenus(Engine * engine) {
 
   {
     menusize = new MenuChoose(engine);
-    menusize->addText(gettext("screen width:     340"));
+    menusize->addText(gettext("screen width:     320"));
     menusize->addText(gettext("screen width:     400"));
     menusize->addText(gettext("screen width:     512"));
     menusize->addText(gettext("screen width:     640"));
+    menusize->addText(gettext("screen width:     720"));
     menusize->addText(gettext("screen width:     800"));
     menusize->addText(gettext("screen width:     864"));
+    menusize->addText(gettext("screen width:     900"));
     menusize->addText(gettext("screen width:    1024"));
+    menusize->addText(gettext("screen width:    1080"));
     menusize->addText(gettext("screen width:    1280"));
     menusize->addText(gettext("screen width:    1680"));
     menusize->addText(gettext("screen width:    1920"));
@@ -647,6 +655,12 @@ MenuItem* createMenus(Engine * engine) {
   {
     menuratio = new MenuChoose(engine);
     menuratio->addText(gettext("ratio:      0.5 (1/2)"));
+    menuratio->addText( "ratio:  0.55 (5/9)");
+    menuratio->addText( "ratio:  0.56 (9/16)");
+    menuratio->addText( "ratio:  0.62 (10/16)");
+    menuratio->addText( "ratio:  0.66 (2/3)");
+    menuratio->addText( "ratio:  0.75 (3/4)");
+    menuratio->addText( "ratio:  0.8 (4/5)");
     menuratio->addText(gettext("ratio:        1 (1/1)"));
     menuratio->addText(gettext("ratio:      1.2 (5/4)"));
     menuratio->addText(gettext("ratio:      1.3 (4/3)"));
