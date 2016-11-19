@@ -506,7 +506,7 @@ void get_config(void)
 MenuItem* createMenus(Engine * engine) {
   // Create the meny
   MenuSub* menu = new MenuSub(gettext("main menu"), engine);
-  menu->setBottomText("http://pinball.sourceforge.net");
+  menu->setBottomText("github.com/sergiomb2/pinball");
   MenuSub* menuresume = new MenuSub(gettext("play"), engine);
   menuresume->setAction(EM_MENU_RESUME);
   menu->addMenuItem(menuresume);
