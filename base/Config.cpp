@@ -172,7 +172,7 @@ char const * const Config::getKeyCommonName(EMKey key) {
 
 void Config::saveConfig() {
 
-  string dirname = string(".emilia/"); 
+  string dirname = string(".config/emilia/"); 
   string filename = string(PACKAGE_NAME);
 
 #if HAVE_SYS_STAT_H && HAVE_SYS_TYPES_H
@@ -232,7 +232,7 @@ void Config::loadConfig() {
   // loading default fixes possible problems with missing values in config file
   this->setDefault();
 
-  string dirname = string(".emilia/"); 
+  string dirname = string(".config/emilia/"); 
   string filename = string(PACKAGE_NAME);
 
 #if HAVE_SYS_STAT_H && HAVE_SYS_TYPES_H
