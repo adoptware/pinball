@@ -1,0 +1,18 @@
+  Pinball source code
+  ~~~~~~~~~~~~~~~~~
+  License for use and distribution
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Pinball Copyright (C) 2000-2016 by Henrik Enqvist
+
+  Licenses for files are:
+
+    1) Core license is GPL+
+    2) gnu table licenses are (GFDL or Free Art or CC-BY-SA) and GPLv3 and
+    CC-BY-SA
+    3) hurd table license is GPLv2+
+
+  Full package could be License as GPL+ and (GFDL or Free Art or CC-BY-SA) and GPLv3 and CC-BY-SA and GPLv2+
+
+We have a review here: https://bugzilla.redhat.com/show_bug.cgi?id=1290935 if
+something is not correct please let us know to fix it..
