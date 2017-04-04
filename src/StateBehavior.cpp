@@ -4,6 +4,13 @@
     begin                : Thu Jan 25 2001
     copyright            : (C) 2001 by Henrik Enqvist
     email                : henqvist@excite.com
+
+
+    ========================= Modifications =========================
+
+        Apr. 4, 2017:
+            Clear the keyboard on game reset. (c30zD)
+
 ***************************************************************************/
 
 #include "Private.h"
@@ -16,6 +23,7 @@
 #include "SoundUtil.h"
 #include "BallGroup.h"
 #include "Loader.h"
+#include "Keyboard.h"
 
 StateItem::StateItem() {
   m_iActSig = -1;
@@ -280,6 +288,7 @@ void StateBehavior::StdOnSignal() {
 				      m_vtxRot.z + p_CurrentStateItem->m_vtxRot.z);
 			
     }
+    Keyboard::clear();
   } else {
     vector<StateItem*>::iterator iter = m_vStateItem.begin();
     vector<StateItem*>::iterator end = m_vStateItem.end();
