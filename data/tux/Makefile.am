@@ -25,7 +25,6 @@ floor2.png.pcx \
 floor3.png \
 game.ogg \
 gameover.wav \
-intro.mid \
 lock.wav \
 loop.wav \
 floor.pbl \
