@@ -7,12 +7,30 @@
 
   Licenses for files are:
 
-    1) Core license is GPL+
+    1) Core license is GPLv2+
     2) gnu table licenses are (GFDL or Free Art or CC-BY-SA) and GPLv3 and
-    CC-BY-SA
-    3) hurd table license is GPLv2+
+    CC-BY-SA (data/gnu/README)
+    3) hurd table license is GPLv2+ (data/hurd/README.txt)
+    4) professor table license is GPLv2+ (data/professor2/README.txt)
 
   Full package could be License as GPL+ and (GFDL or Free Art or CC-BY-SA) and GPLv3 and CC-BY-SA and GPLv2+
 
 We have a review here: https://bugzilla.redhat.com/show_bug.cgi?id=1290935 if
 something is not correct please let us know to fix it..
+
+
+References:
+https://github.com/sergiomb2/pinball/pull/3#commitcomment-20063738
+
+The core license is GPLv2+, not GPL+.
+I have released hurd and professor2 on the same license on purpose to avoid creating problems with versions of the GPL.
+
+The gnu table can create problem with a next release of GPL (a hypothetical GPLv4).
+
+however, the full package including gnu must be released under GPLv3.
+Or gnu should be kept separate.
+
+It would be a good idea to contact Ben Asselstine for verify if it's possible to port gnu on GPLv3+.
+So the entire project can be GPLv3+.
+
+in fact also https://sourceforge.net/projects/pinball/ says License: GNU General Public License version 2.0 (GPLv2)
