@@ -4,6 +4,13 @@
     begin                : Wed Jan 26 2000
     copyright            : (C) 2000 by 
     email                : 
+
+
+    ========================= Modifications =========================
+
+        Apr. 6, 2017:
+            Replace name of "m_bOn" with "m_bActive". (c30zD)
+
  ***************************************************************************/
 
 #ifndef ARMBEHAVIOR_H
@@ -33,7 +40,7 @@ class ArmBehavior : public Behavior {
   Vertex3D m_vtxRot;
   bool m_bRight;
   int m_iCount;
-  bool m_bOn;
+  bool m_bActive;
   int m_iSound;
   bool m_bFirst;
   bool m_bTilt;

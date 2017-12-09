@@ -5,6 +5,13 @@
     begin                : Thu Mar 9 2000
     copyright            : (C) 2000-2016 by Henrik Enqvist
     email                : henqvist@excite.com
+
+
+    ========================= Modifications =========================
+
+        Dec. 9, 2017:
+            Reset key is no longer hard-coded. (c30zD)
+
 ***************************************************************************/
 
 #include <fstream>
@@ -823,7 +830,7 @@ int main(int argc, char *argv[]) {
         SoundUtil::getInstance()->resumeMusic();
       }
 
-      if (Keyboard::isKeyDown(SDLK_r)) {
+      if (Keyboard::isKeyDown(Config::getInstance()->getKey("reset"))) {
         SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
       }
 

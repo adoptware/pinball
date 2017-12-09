@@ -6,6 +6,13 @@
     copyright            : (C) 2001 by Henrik Enqvist
                            (C) 2013 Ben Asselstine
     email                : henqvist@excite.com
+
+
+    ========================= Modifications =========================
+
+        Apr. 6, 2017:
+            Send the "game_start" signal. (c30zD)
+
 ***************************************************************************/
 
 #include "Private.h"
@@ -334,6 +341,7 @@ public:
         //which ball do we activate if we just locked a ball?
         int i = getFirstDeadBall();
         if (i > -1) {
+          if (i == 0) SendSignal(loader->getSignal("game_start"), 0, this->getParent(), NULL);
           SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
           table->activateBall(i, 19.5f, 0.0f, 30.0f);   
           m_iCurrentBallSlot = i;
