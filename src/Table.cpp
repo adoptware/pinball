@@ -257,9 +257,9 @@ bool Table::readHighScoresFile() {
 //#endif //!rzr-
 
 
- char *home = getenv("HOME");
- string sFileName = string(home? home:".") + "/.emilia/" + m_sTableName +
-    "."+HIGH_SCORES_FILENAME;
+  char *home = getenv("HOME");
+  string sFileName = string(home? home:".") + "/.config/emilia/" + m_sTableName +
+   "."+HIGH_SCORES_FILENAME;
 
   ifstream file(sFileName.c_str());
   if (!file) {
@@ -323,7 +323,7 @@ bool Table::writeHighScoresFile() {
 //#endif //!rzr-*/
 
  char *home = getenv("HOME");
- string sFileName = string(home? home:".") + "/.emilia/" + m_sTableName +
+ string sFileName = string(home? home:".") + "/.config/emilia/" + m_sTableName +
     "."+HIGH_SCORES_FILENAME;
 
   ofstream file(sFileName.c_str());//, ios_base::out | ios_base::trunc);
