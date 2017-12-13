@@ -10,6 +10,7 @@
     20030510  pnf        : Display message ExtraBall when flag activated
                             for current ball.
     20171209  c30zD      : Correctly display the "reset" and "launch" keys.
+    20171213  c30zD      : Fix previous strings for gettext usage.
 
 ***************************************************************************/
 
@@ -84,13 +85,12 @@ void Score::onTick() {
 void Score::StdOnSignal() {
   EM_COUT((int)em_signal, 1);
   Config *cfg = Config::getInstance();
+  char pStrMsg[35];
 
   OnSignal( PBL_SIG_RESET_ALL ) {
     this->clear();
-    std::string txt = "press ";
-    txt += string(cfg->getKeyCommonName(cfg->getKey("launch")));
-    txt += string(" to launch ball");
-    this->setText1(gettext(txt.c_str()));
+    sprintf(pStrMsg, gettext("press %s to launch ball"), cfg->getKeyCommonName(cfg->getKey("launch")));
+    this->setText1(pStrMsg);
     SendSignal( PBL_SIG_CLEAR_TEXT, 400, this->getParent(), NULL );
   } 
   ElseOnSignal( PBL_SIG_TILT ) {
@@ -117,9 +117,7 @@ void Score::StdOnSignal() {
   }
   ElseOnSignal( PBL_SIG_GAME_OVER ) {
     this->clearText();
-    std::string txt = "press ";
-    txt += string(cfg->getKeyCommonName(cfg->getKey("reset")));
-    txt += string(" to start new game");
+    sprintf(pStrMsg, gettext("press %s to start new game"), cfg->getKeyCommonName(cfg->getKey("reset")));
 
     //cout<<" TODO:give (only) one extra ball if high score"<<endl; //!rzr
 
@@ -131,7 +129,7 @@ void Score::StdOnSignal() {
 
     this->setText2("");
     this->setText3(gettext("game over"));
-    this->setText4(gettext(txt.c_str()));
+    this->setText4(pStrMsg);
   }
 }
 
