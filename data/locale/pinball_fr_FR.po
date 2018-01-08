@@ -1,5 +1,5 @@
-# German translations for Emilia Pinball.
-# Copyright (C) 2016 Stephan Kreutzer <skreutzer@fsfe.org>
+# French translations for Emilia Pinball.
+# Copyright (C) 2018 José Jorge <lists.jjorge@free.fr>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,12 +16,6 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 #
-#
-#
-# Changed on Dec. 13, 2017 by c30zD
-#
-#   Some strings were removed by the tools when automatically updating this
-#   file, so they were manually fixed.
 #
 msgid ""
 msgstr ""
@@ -452,131 +446,131 @@ msgstr "Espace"
 
 #: ../../base/Config.cpp:164
 msgid "left shift"
-msgstr "Shift links"
+msgstr "Maj gauche"
 
 #: ../../base/Config.cpp:165
 msgid "right shift"
-msgstr "Shift rechts"
+msgstr "Maj droite"
 
 #: ../../base/Config.cpp:166
 msgid "left ctrl"
-msgstr "Strg links"
+msgstr "Ctrl gauche"
 
 #: ../../base/Config.cpp:167
 msgid "right ctrl"
-msgstr "Strg rechts"
+msgstr "Ctrl droite"
 
 #: ../tux/ModuleTux.cpp:268 ../hurd/ModuleHurd.cpp:261
 msgid "hit bumpers"
-msgstr "Triff die Bumper"
+msgstr "Touche les pare-chocs"
 
 #: ../tux/ModuleTux.cpp:274
 msgid "shoot left cave to release tux"
-msgstr "Linke Hoehle, um Tux freizusetzen"
+msgstr "Vise la grotte pour libérer Tux"
 
 #: ../tux/ModuleTux.cpp:276
 msgid "follow blue arrows"
-msgstr "Folge den blauen Pfeilen"
+msgstr "Suis les flèches bleues"
 
 #: ../tux/ModuleTux.cpp:278
 msgid "hit blue targets"
-msgstr "Triff blaue Ziele"
+msgstr "Touche les cibles bleues"
 
 #: ../tux/ModuleTux.cpp:281
 msgid "follow blue arrows, hurry up"
-msgstr "Folge den blauen Pfeilen, Beeilung"
+msgstr "Vite, suis les flèches bleues"
 
 #: ../tux/ModuleTux.cpp:283
 msgid "hit all of them"
-msgstr "Triff alle davon"
+msgstr "Abats-les tous"
 
 #: ../tux/ModuleTux.cpp:285
 msgid "you did it, all penguins released!"
-msgstr "Geschafft, alle Pinguine freigesetzt!"
+msgstr "Victoire, les manchots sont libérés!"
 
 #: ../tux/ModuleTux.cpp:324
 msgid "shoot head to lock ball"
-msgstr "Kopf treffen, um Ball einzusperren"
+msgstr "Vise la tête pour bloquer la balle"
 
 #: ../tux/ModuleTux.cpp:327 ../hurd/ModuleHurd.cpp:321
 msgid "first ball locked"
-msgstr "Erster Ball eingesperrt"
+msgstr "Première balle bloquée"
 
 #: ../tux/ModuleTux.cpp:330 ../hurd/ModuleHurd.cpp:324
 msgid "second ball locked"
-msgstr "Zweiter Ball eingesperrt"
+msgstr "Deuxième balle bloquée"
 
 #: ../tux/ModuleTux.cpp:333 ../hurd/ModuleHurd.cpp:327
 msgid "multiball"
-msgstr "Multiball"
+msgstr "Multiballes"
 
 #: ../tux/ModuleTux.cpp:414
 msgid "first tux saved"
-msgstr "Erster Tux gerettet"
+msgstr "Premier Tux sauvé"
 
 #: ../tux/ModuleTux.cpp:421
 msgid "second tux saved"
-msgstr "Zweiter Tux gerettet"
+msgstr "Second Tux sauvé"
 
 #: ../tux/ModuleTux.cpp:428
 msgid "third tux saved"
-msgstr "Dritter Tux gerettet"
+msgstr "Troisième Tux sauvé"
 
 #: ../tux/ModuleTux.cpp:435
 msgid "fourth tux saved"
-msgstr "Vierter Tux gerettet"
+msgstr "Quatrième Tux sauvé"
 
 #: ../tux/ModuleTux.cpp:444
 msgid "all tuxes saved"
-msgstr "Alle Tux gerettet"
+msgstr "Tous les manchots sont sauvés"
 
 #: ../hurd/ModuleHurd.cpp:267
 msgid "shoot cave to turn a square of hurd"
-msgstr "Hoehle, um ein Hurd-Quadrat zu drehen"
+msgstr "Vise la grotte pour basculer un carré de Hurd"
 
 #: ../hurd/ModuleHurd.cpp:269
 msgid "follow arrows"
-msgstr "Folge den Pfeilen"
+msgstr "Suis les flèches"
 
 #: ../hurd/ModuleHurd.cpp:271
 msgid "follow arrows in the hurd logo"
-msgstr "Folge den Pfeilen im Hurd-Logo"
+msgstr "Suis les flèches dans le logo Hurd"
 
 #: ../hurd/ModuleHurd.cpp:273 ../hurd/ModuleHurd.cpp:275
 msgid "follow arrows, hurry up"
-msgstr "Folge den Pfeilen, Beeilung"
+msgstr "Vite, suis les flèches"
 
 #: ../hurd/ModuleHurd.cpp:277
 msgid "follow all arrows"
-msgstr "Folge allen Pfeilen"
+msgstr "Suis toutes les flèches"
 
 #: ../hurd/ModuleHurd.cpp:279
 msgid "you did it, GNU is complete"
-msgstr "Geschafft, GNU ist vollstaendig"
+msgstr "Victoire, GNU est complet"
 
 #: ../hurd/ModuleHurd.cpp:318
 msgid "shoot to lock ball"
-msgstr "Schiesse, um Ball einzusperren"
+msgstr "Tire pour bloquer la balle"
 
 #: ../hurd/ModuleHurd.cpp:402
 msgid "first develop of hurd"
-msgstr "Erste Hurd-Entwicklung"
+msgstr "Premier développement du Hurd"
 
 #: ../hurd/ModuleHurd.cpp:409
 msgid "second develop of hurd"
-msgstr "Zweite Hurd-Entwicklung"
+msgstr "Second développement du Hurd"
 
 #: ../hurd/ModuleHurd.cpp:416
 msgid "third develop of hurd"
-msgstr "Dritte Hurd-Entwicklung"
+msgstr "Troisième développement du Hurd"
 
 #: ../hurd/ModuleHurd.cpp:423
 msgid "fourth develop of hurd"
-msgstr "Vierte Hurd-Entwicklung"
+msgstr "Quatrième développement du Hurd"
 
 #: ../hurd/ModuleHurd.cpp:432
 msgid "hurd is stable"
-msgstr "Hurd ist stabil"
+msgstr "Hurd est stable"
 
 #~ msgid "screen width:     340"
 #~ msgstr "Largeur d'écran:    340"
