@@ -1,5 +1,5 @@
 # French translations for Emilia Pinball.
-# Copyright (C) 2018 José Jorge <lists.jjorge@free.fr>
+# Copyright (C) 2018 Jose Jorge <lists.jjorge@free.fr>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-13 19:33+0100\n"
 "PO-Revision-Date: 2016-07-25 00:51+0200\n"
-"Last-Translator: José Jorge <lists.jjorge@free.fr>\n"
+"Last-Translator: Jose Jorge <lists.jjorge@free.fr>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgstr ""
 
 #: ../../src/Pinball.cpp:114 ../../src/Pinball.cpp:525
 msgid "High Scores"
-msgstr "Résultats"
+msgstr "Meilleurs Points"
 
 #: ../../src/Pinball.cpp:115
 msgid "table: "
@@ -41,7 +41,7 @@ msgstr "Table: "
 
 #: ../../src/Pinball.cpp:133
 msgid "No Table Loaded!"
-msgstr "Aucune table chargée!"
+msgstr "Aucune table chargee!"
 
 #: ../../src/Pinball.cpp:136
 msgid "Hit any key for main menu..."
@@ -121,87 +121,87 @@ msgstr "Vue:        d'en haut"
 
 #: ../../src/Pinball.cpp:632
 msgid "screen:    fullscreen"
-msgstr "Mode:     Plein Écran"
+msgstr "Mode:     Plein Ecran"
 
 #: ../../src/Pinball.cpp:633
 msgid "screen:      windowed"
-msgstr "Mode:         Fenêtré"
+msgstr "Mode:         Fenêtre"
 
 #: ../../src/Pinball.cpp:637
 msgid "brightness:    =....."
-msgstr "Luminosité:       =....."
+msgstr "Luminosite:       =....."
 
 #: ../../src/Pinball.cpp:638
 msgid "brightness:    ==...."
-msgstr "Luminosité:       ==...."
+msgstr "Luminosite:       ==...."
 
 #: ../../src/Pinball.cpp:639
 msgid "brightness:    ===..."
-msgstr "Luminosité:       ===..."
+msgstr "Luminosite:       ===..."
 
 #: ../../src/Pinball.cpp:640
 msgid "brightness:    ====.."
-msgstr "Luminosité:       ====.."
+msgstr "Luminosite:       ====.."
 
 #: ../../src/Pinball.cpp:641
 msgid "brightness:    =====."
-msgstr "Luminosité:       =====."
+msgstr "Luminosite:       =====."
 
 #: ../../src/Pinball.cpp:642
 msgid "brightness:    ======"
-msgstr "Luminosité:       ======"
+msgstr "Luminosite:       ======"
 
 #: ../../src/Pinball.cpp:647
 msgid "screen width:     320"
-msgstr "Largeur d'écran:    320"
+msgstr "Largeur d'ecran:    320"
 
 #: ../../src/Pinball.cpp:648
 msgid "screen width:     400"
-msgstr "Largeur d'écran:    400"
+msgstr "Largeur d'ecran:    400"
 
 #: ../../src/Pinball.cpp:649
 msgid "screen width:     512"
-msgstr "Largeur d'écran:    512"
+msgstr "Largeur d'ecran:    512"
 
 #: ../../src/Pinball.cpp:650
 msgid "screen width:     640"
-msgstr "Largeur d'écran:    640"
+msgstr "Largeur d'ecran:    640"
 
 #: ../../src/Pinball.cpp:651
 msgid "screen width:     720"
-msgstr "Largeur d'écran:    720"
+msgstr "Largeur d'ecran:    720"
 
 #: ../../src/Pinball.cpp:652
 msgid "screen width:     800"
-msgstr "Largeur d'écran:    800"
+msgstr "Largeur d'ecran:    800"
 
 #: ../../src/Pinball.cpp:653
 msgid "screen width:     864"
-msgstr "Largeur d'écran:    864"
+msgstr "Largeur d'ecran:    864"
 
 #: ../../src/Pinball.cpp:654
 msgid "screen width:     900"
-msgstr "Largeur d'écran:    900"
+msgstr "Largeur d'ecran:    900"
 
 #: ../../src/Pinball.cpp:655
 msgid "screen width:    1024"
-msgstr "Largeur d'écran:   1024"
+msgstr "Largeur d'ecran:   1024"
 
 #: ../../src/Pinball.cpp:656
 msgid "screen width:    1080"
-msgstr "Largeur d'écran:   1080"
+msgstr "Largeur d'ecran:   1080"
 
 #: ../../src/Pinball.cpp:657
 msgid "screen width:    1280"
-msgstr "Largeur d'écran:   1280"
+msgstr "Largeur d'ecran:   1280"
 
 #: ../../src/Pinball.cpp:658
 msgid "screen width:    1680"
-msgstr "Largeur d'écran:   1680"
+msgstr "Largeur d'ecran:   1680"
 
 #: ../../src/Pinball.cpp:659
 msgid "screen width:    1920"
-msgstr "Largeur d'écran:   1920"
+msgstr "Largeur d'ecran:   1920"
 
 #: ../../src/Pinball.cpp:664
 msgid "ratio:      0.5 (1/2)"
@@ -269,11 +269,11 @@ msgstr "Effet flamme:     oui"
 
 #: ../../src/Pinball.cpp:699
 msgid "dynamic lights:   yes"
-msgstr "Éclairage dynamique: oui"
+msgstr "Eclairage dynamique: oui"
 
 #: ../../src/Pinball.cpp:700
 msgid "dynamic lights:    no"
-msgstr "Éclairage dynamique: non"
+msgstr "Eclairage dynamique: non"
 
 #: ../../src/Pinball.cpp:709
 msgid "sound:            off"
@@ -373,7 +373,7 @@ msgstr "Lancer"
 
 #: ../../src/Pinball.cpp:744
 msgid "reset"
-msgstr "Réinitialiser"
+msgstr "Reinitialiser"
 
 #: ../../src/Pinball.cpp:747
 msgid "apply"
@@ -385,11 +385,11 @@ msgstr "Retour"
 
 #: ../../src/Pinball.cpp:845
 msgid "no table loaded"
-msgstr "Aucune table chargée"
+msgstr "Aucune table chargee"
 
 #: ../../src/Pinball.cpp:846
 msgid "press esc"
-msgstr "Appuyer sur Échap"
+msgstr "Appuyer sur Echap"
 
 #: ../../src/Score.cpp:91
 #, c-format
@@ -407,11 +407,11 @@ msgstr "Attention"
 #: ../../src/Score.cpp:119
 #, c-format
 msgid "press %s to start new game"
-msgstr "Appuyer sur %s, pour démarrer une nouvelle partie"
+msgstr "Appuyer sur %s, pour demarrer une nouvelle partie"
 
 #: ../../src/Score.cpp:124
 msgid "Last score was a High Score!"
-msgstr "Excellent Résultat!"
+msgstr "Excellent Resultat!"
 
 #: ../../src/Score.cpp:130
 msgid "game over"
@@ -434,11 +434,11 @@ msgstr "POINTS %d"
 
 #: ../../src/Score.cpp:186
 msgid "new highscore! enter name:"
-msgstr "Nouveau meilleur résultat! Écrivez votre nom:"
+msgstr "Nouveau meilleur resultat! Ecrivez votre nom:"
 
 #: ../../base/Config.cpp:162
 msgid "return"
-msgstr "Entrée"
+msgstr "Entree"
 
 #: ../../base/Config.cpp:163
 msgid "space"
@@ -466,11 +466,11 @@ msgstr "Touche les pare-chocs"
 
 #: ../tux/ModuleTux.cpp:274
 msgid "shoot left cave to release tux"
-msgstr "Vise la grotte pour libérer Tux"
+msgstr "Vise la grotte pour liberer Tux"
 
 #: ../tux/ModuleTux.cpp:276
 msgid "follow blue arrows"
-msgstr "Suis les flèches bleues"
+msgstr "Suis les fleches bleues"
 
 #: ../tux/ModuleTux.cpp:278
 msgid "hit blue targets"
@@ -478,7 +478,7 @@ msgstr "Touche les cibles bleues"
 
 #: ../tux/ModuleTux.cpp:281
 msgid "follow blue arrows, hurry up"
-msgstr "Vite, suis les flèches bleues"
+msgstr "Vite, suis les fleches bleues"
 
 #: ../tux/ModuleTux.cpp:283
 msgid "hit all of them"
@@ -486,7 +486,7 @@ msgstr "Abats-les tous"
 
 #: ../tux/ModuleTux.cpp:285
 msgid "you did it, all penguins released!"
-msgstr "Victoire, les manchots sont libérés!"
+msgstr "Victoire, les manchots sont liberes!"
 
 #: ../tux/ModuleTux.cpp:324
 msgid "shoot head to lock ball"
@@ -494,11 +494,11 @@ msgstr "Vise la tête pour bloquer la balle"
 
 #: ../tux/ModuleTux.cpp:327 ../hurd/ModuleHurd.cpp:321
 msgid "first ball locked"
-msgstr "Première balle bloquée"
+msgstr "Premiere balle bloquee"
 
 #: ../tux/ModuleTux.cpp:330 ../hurd/ModuleHurd.cpp:324
 msgid "second ball locked"
-msgstr "Deuxième balle bloquée"
+msgstr "Deuxieme balle bloquee"
 
 #: ../tux/ModuleTux.cpp:333 ../hurd/ModuleHurd.cpp:327
 msgid "multiball"
@@ -506,43 +506,43 @@ msgstr "Multiballes"
 
 #: ../tux/ModuleTux.cpp:414
 msgid "first tux saved"
-msgstr "Premier Tux sauvé"
+msgstr "Premier Tux sauve"
 
 #: ../tux/ModuleTux.cpp:421
 msgid "second tux saved"
-msgstr "Second Tux sauvé"
+msgstr "Second Tux sauve"
 
 #: ../tux/ModuleTux.cpp:428
 msgid "third tux saved"
-msgstr "Troisième Tux sauvé"
+msgstr "Troisieme Tux sauve"
 
 #: ../tux/ModuleTux.cpp:435
 msgid "fourth tux saved"
-msgstr "Quatrième Tux sauvé"
+msgstr "Quatrieme Tux sauve"
 
 #: ../tux/ModuleTux.cpp:444
 msgid "all tuxes saved"
-msgstr "Tous les manchots sont sauvés"
+msgstr "Tous les manchots sont sauves"
 
 #: ../hurd/ModuleHurd.cpp:267
 msgid "shoot cave to turn a square of hurd"
-msgstr "Vise la grotte pour basculer un carré de Hurd"
+msgstr "Vise la grotte pour basculer un carre de Hurd"
 
 #: ../hurd/ModuleHurd.cpp:269
 msgid "follow arrows"
-msgstr "Suis les flèches"
+msgstr "Suis les fleches"
 
 #: ../hurd/ModuleHurd.cpp:271
 msgid "follow arrows in the hurd logo"
-msgstr "Suis les flèches dans le logo Hurd"
+msgstr "Suis les fleches dans le logo Hurd"
 
 #: ../hurd/ModuleHurd.cpp:273 ../hurd/ModuleHurd.cpp:275
 msgid "follow arrows, hurry up"
-msgstr "Vite, suis les flèches"
+msgstr "Vite, suis les fleches"
 
 #: ../hurd/ModuleHurd.cpp:277
 msgid "follow all arrows"
-msgstr "Suis toutes les flèches"
+msgstr "Suis toutes les fleches"
 
 #: ../hurd/ModuleHurd.cpp:279
 msgid "you did it, GNU is complete"
@@ -554,23 +554,23 @@ msgstr "Tire pour bloquer la balle"
 
 #: ../hurd/ModuleHurd.cpp:402
 msgid "first develop of hurd"
-msgstr "Premier développement du Hurd"
+msgstr "Premier developpement du Hurd"
 
 #: ../hurd/ModuleHurd.cpp:409
 msgid "second develop of hurd"
-msgstr "Second développement du Hurd"
+msgstr "Second developpement du Hurd"
 
 #: ../hurd/ModuleHurd.cpp:416
 msgid "third develop of hurd"
-msgstr "Troisième développement du Hurd"
+msgstr "Troisieme developpement du Hurd"
 
 #: ../hurd/ModuleHurd.cpp:423
 msgid "fourth develop of hurd"
-msgstr "Quatrième développement du Hurd"
+msgstr "Quatrieme developpement du Hurd"
 
 #: ../hurd/ModuleHurd.cpp:432
 msgid "hurd is stable"
 msgstr "Hurd est stable"
 
 #~ msgid "screen width:     340"
-#~ msgstr "Largeur d'écran:    340"
+#~ msgstr "Largeur d'ecran:    340"
