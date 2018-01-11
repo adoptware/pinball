@@ -101,7 +101,7 @@ msgstr "Clavier"
 
 #: ../../src/Pinball.cpp:543
 msgid "shortcuts for view change F5-F8"
-msgstr "Raccourcis pour changer de vue F5-F8"
+msgstr "touches pour changer de vue F5-F8"
 
 #: ../../src/Pinball.cpp:623
 msgid "view:         classic"
@@ -277,7 +277,7 @@ msgstr "Eclairage dynamique: non"
 
 #: ../../src/Pinball.cpp:709
 msgid "sound:            off"
-msgstr "Son:           muet"
+msgstr "Son:             muet"
 
 #: ../../src/Pinball.cpp:710
 msgid "sound:       =......."
@@ -313,7 +313,7 @@ msgstr "Son:         ========"
 
 #: ../../src/Pinball.cpp:721
 msgid "music:            off"
-msgstr "Musique:          aus"
+msgstr "Musique:          non"
 
 #: ../../src/Pinball.cpp:722
 msgid "music:       =......."
@@ -357,11 +357,11 @@ msgstr "Flipper Droit"
 
 #: ../../src/Pinball.cpp:736
 msgid "leftnudge"
-msgstr "Pousser à gauche"
+msgstr "Pousser a gauche"
 
 #: ../../src/Pinball.cpp:738
 msgid "rightnudge"
-msgstr "Pousser à droite"
+msgstr "Pousser a droite"
 
 #: ../../src/Pinball.cpp:740
 msgid "bottomnudge"
@@ -420,12 +420,12 @@ msgstr "Fin du Jeu"
 #: ../../src/Score.cpp:141
 #, c-format
 msgid "SCORE %d BALL %d ExtraBall"
-msgstr "POINTS %d BALLES %d Extra-Balles"
+msgstr "POINTS %d BALLE %d Extra-Balle"
 
 #: ../../src/Score.cpp:143
 #, c-format
 msgid "SCORE %d BALL %d"
-msgstr "POINTS %d BALLES %d"
+msgstr "POINTS %d BALLE %d"
 
 #: ../../src/Score.cpp:146
 #, c-format
@@ -434,7 +434,7 @@ msgstr "POINTS %d"
 
 #: ../../src/Score.cpp:186
 msgid "new highscore! enter name:"
-msgstr "Nouveau record! Ecrivez votre nom:"
+msgstr "Nouveau record! votre nom:"
 
 #: ../../base/Config.cpp:162
 msgid "return"
@@ -490,7 +490,7 @@ msgstr "Victoire, les manchots sont liberes!"
 
 #: ../tux/ModuleTux.cpp:324
 msgid "shoot head to lock ball"
-msgstr "Vise la tête pour bloquer la balle"
+msgstr "Vise la tete pour bloquer la balle"
 
 #: ../tux/ModuleTux.cpp:327 ../hurd/ModuleHurd.cpp:321
 msgid "first ball locked"
@@ -526,7 +526,7 @@ msgstr "Tous les manchots sont sauves"
 
 #: ../hurd/ModuleHurd.cpp:267
 msgid "shoot cave to turn a square of hurd"
-msgstr "Vise la grotte pour basculer un carre de Hurd"
+msgstr "Vise la grotte pour tourner un carre de Hurd"
 
 #: ../hurd/ModuleHurd.cpp:269
 msgid "follow arrows"
