@@ -6,13 +6,13 @@
 *.la
 *.tmp
 *.so
+*.mo
 
 **/.deps/**
 .deps/
 MANIFEST
 *.rej
 *.orig
-*.in
 .libs
 
 autom4te.cache/

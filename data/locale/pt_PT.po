@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pinball 0.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-13 19:33+0100\n"
+"POT-Creation-Date: 2018-02-04 23:19+0000\n"
 "PO-Revision-Date: 2016-07-25 00:51+0200\n"
 "Last-Translator: Jose Jorge <lists.jjorge@free.fr>\n"
 "Language-Team: Portuguese\n"
@@ -31,434 +31,410 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../../src/Pinball.cpp:114 ../../src/Pinball.cpp:525
+#: ../../src/Pinball.cpp:111 ../../src/Pinball.cpp:515
 msgid "High Scores"
 msgstr "Pontuacao"
 
-#: ../../src/Pinball.cpp:115
+#: ../../src/Pinball.cpp:112
 msgid "table: "
 msgstr "mesa: "
 
-#: ../../src/Pinball.cpp:133
+#: ../../src/Pinball.cpp:130
 msgid "No Table Loaded!"
 msgstr "Nenhuma mesa carregada!"
 
-#: ../../src/Pinball.cpp:136
+#: ../../src/Pinball.cpp:133
 msgid "Hit any key for main menu..."
 msgstr "Carregar numa tecla..."
 
-#: ../../src/Pinball.cpp:153
+#: ../../src/Pinball.cpp:150
 msgid "press a key"
 msgstr "Carregar numa tecla"
 
-#: ../../src/Pinball.cpp:169 ../../base/Config.cpp:169
+#: ../../src/Pinball.cpp:164
 msgid "unknown"
 msgstr "desconhecido"
 
-#: ../../src/Pinball.cpp:383
+#: ../../src/Pinball.cpp:373
 msgid "LOADING"
 msgstr "CARREGAMENTO"
 
-#: ../../src/Pinball.cpp:395
+#: ../../src/Pinball.cpp:385
 msgid "OK"
 msgstr "OK"
 
-#: ../../src/Pinball.cpp:401
+#: ../../src/Pinball.cpp:391
 msgid "ERROR"
 msgstr "ERRO"
 
-#: ../../src/Pinball.cpp:515
+#: ../../src/Pinball.cpp:505
 msgid "main menu"
 msgstr "Menu principal"
 
-#: ../../src/Pinball.cpp:517
+#: ../../src/Pinball.cpp:507
 msgid "play"
 msgstr "Jogar"
 
-#: ../../src/Pinball.cpp:521
+#: ../../src/Pinball.cpp:511
 msgid "load table"
 msgstr "Carregar uma mesa"
 
-#: ../../src/Pinball.cpp:529
+#: ../../src/Pinball.cpp:519
 msgid "config"
 msgstr "Configuracao"
 
-#: ../../src/Pinball.cpp:532
+#: ../../src/Pinball.cpp:522
 msgid "exit"
 msgstr "Sair"
 
-#: ../../src/Pinball.cpp:536
+#: ../../src/Pinball.cpp:526
 msgid "graphics"
 msgstr "Video"
 
-#: ../../src/Pinball.cpp:539
+#: ../../src/Pinball.cpp:529
 msgid "audio"
 msgstr "Som"
 
-#: ../../src/Pinball.cpp:542
+#: ../../src/Pinball.cpp:532
 msgid "keyboard"
 msgstr "Teclado"
 
-#: ../../src/Pinball.cpp:543
+#: ../../src/Pinball.cpp:533
 msgid "shortcuts for view change F5-F8"
 msgstr "Teclas para mudar de vista F5-F8"
 
-#: ../../src/Pinball.cpp:623
+#: ../../src/Pinball.cpp:611
 msgid "view:         classic"
 msgstr "vista:       classica"
 
-#: ../../src/Pinball.cpp:624
+#: ../../src/Pinball.cpp:612
 msgid "view:   softly moving"
 msgstr "vista: movimento lento"
 
-#: ../../src/Pinball.cpp:625
+#: ../../src/Pinball.cpp:613
 msgid "view:          moving"
 msgstr "vista: movimento rapido"
 
-#: ../../src/Pinball.cpp:626
+#: ../../src/Pinball.cpp:614
 msgid "view:             top"
 msgstr "vista:        por cima"
 
-#: ../../src/Pinball.cpp:632
+#: ../../src/Pinball.cpp:620
 msgid "screen:    fullscreen"
 msgstr "modo:     Tela cheia"
 
-#: ../../src/Pinball.cpp:633
+#: ../../src/Pinball.cpp:621
 msgid "screen:      windowed"
 msgstr "modo:         Janela"
 
-#: ../../src/Pinball.cpp:637
+#: ../../src/Pinball.cpp:625
 msgid "brightness:    =....."
 msgstr "Luminosidade:       =....."
 
-#: ../../src/Pinball.cpp:638
+#: ../../src/Pinball.cpp:626
 msgid "brightness:    ==...."
 msgstr "Luminosidade:       ==...."
 
-#: ../../src/Pinball.cpp:639
+#: ../../src/Pinball.cpp:627
 msgid "brightness:    ===..."
 msgstr "Luminosidade:       ===..."
 
-#: ../../src/Pinball.cpp:640
+#: ../../src/Pinball.cpp:628
 msgid "brightness:    ====.."
 msgstr "Luminosidade:       ====.."
 
-#: ../../src/Pinball.cpp:641
+#: ../../src/Pinball.cpp:629
 msgid "brightness:    =====."
 msgstr "Luminosidade:       =====."
 
-#: ../../src/Pinball.cpp:642
+#: ../../src/Pinball.cpp:630
 msgid "brightness:    ======"
 msgstr "Luminosidade:       ======"
 
-#: ../../src/Pinball.cpp:647
+#: ../../src/Pinball.cpp:635
 msgid "screen width:     320"
 msgstr "Largura do ecra:  320"
 
-#: ../../src/Pinball.cpp:648
+#: ../../src/Pinball.cpp:636
 msgid "screen width:     400"
 msgstr "Largura do ecra:  400"
 
-#: ../../src/Pinball.cpp:649
+#: ../../src/Pinball.cpp:637
 msgid "screen width:     512"
 msgstr "Largura do ecra:  512"
 
-#: ../../src/Pinball.cpp:650
+#: ../../src/Pinball.cpp:638
 msgid "screen width:     640"
 msgstr "Largura do ecra:  640"
 
-#: ../../src/Pinball.cpp:651
+#: ../../src/Pinball.cpp:639
 msgid "screen width:     720"
 msgstr "Largura do ecra:  720"
 
-#: ../../src/Pinball.cpp:652
+#: ../../src/Pinball.cpp:640
 msgid "screen width:     800"
 msgstr "Largura do ecra:  800"
 
-#: ../../src/Pinball.cpp:653
+#: ../../src/Pinball.cpp:641
 msgid "screen width:     864"
 msgstr "Largura do ecra:  864"
 
-#: ../../src/Pinball.cpp:654
+#: ../../src/Pinball.cpp:642
 msgid "screen width:     900"
 msgstr "Largura do ecra:  900"
 
-#: ../../src/Pinball.cpp:655
+#: ../../src/Pinball.cpp:643
 msgid "screen width:    1024"
 msgstr "Largura do ecra: 1024"
 
-#: ../../src/Pinball.cpp:656
+#: ../../src/Pinball.cpp:644
 msgid "screen width:    1080"
 msgstr "Largura do ecra: 1080"
 
-#: ../../src/Pinball.cpp:657
+#: ../../src/Pinball.cpp:645
 msgid "screen width:    1280"
 msgstr "Largura do ecra: 1280"
 
-#: ../../src/Pinball.cpp:658
+#: ../../src/Pinball.cpp:646
 msgid "screen width:    1680"
 msgstr "Largura do ecra: 1680"
 
-#: ../../src/Pinball.cpp:659
+#: ../../src/Pinball.cpp:647
 msgid "screen width:    1920"
 msgstr "Largura do ecra: 1920"
 
-#: ../../src/Pinball.cpp:664
+#: ../../src/Pinball.cpp:652
 msgid "ratio:      0.5 (1/2)"
 msgstr "Proporcoes: 0,5 (1/2)"
 
-#: ../../src/Pinball.cpp:671
+#: ../../src/Pinball.cpp:659
 msgid "ratio:        1 (1/1)"
 msgstr "Proporcoes:   1 (1/1)"
 
-#: ../../src/Pinball.cpp:672
+#: ../../src/Pinball.cpp:660
 msgid "ratio:      1.2 (5/4)"
 msgstr "Proporcoes: 1,2 (5/4)"
 
-#: ../../src/Pinball.cpp:673
+#: ../../src/Pinball.cpp:661
 msgid "ratio:      1.3 (4/3)"
 msgstr "Proporcoes: 1,3 (4/3)"
 
-#: ../../src/Pinball.cpp:674
+#: ../../src/Pinball.cpp:662
 msgid "ratio:      1.5 (3/2)"
 msgstr "Proporcoes: 1,5 (3/2)"
 
-#: ../../src/Pinball.cpp:675
+#: ../../src/Pinball.cpp:663
 msgid "ratio:    1.6 (16/10)"
 msgstr "Proporcoes: 1,6 (16/10)"
 
-#: ../../src/Pinball.cpp:676
+#: ../../src/Pinball.cpp:664
 msgid "ratio:     1.7 (16/9)"
 msgstr "Proporcoes: 1,7 (16/9)"
 
-#: ../../src/Pinball.cpp:677
+#: ../../src/Pinball.cpp:665
 msgid "ratio:      1.8 (9/5)"
 msgstr "Proporcoes: 1,8 (9/5)"
 
-#: ../../src/Pinball.cpp:678
+#: ../../src/Pinball.cpp:666
 msgid "ratio:        2 (2/1)"
 msgstr "Proporcoes:   2 (2/1)"
 
-#: ../../src/Pinball.cpp:683
+#: ../../src/Pinball.cpp:671
 msgid "texture:       nicest"
 msgstr "Texturas:     Bonitas"
 
-#: ../../src/Pinball.cpp:684
+#: ../../src/Pinball.cpp:672
 msgid "texture:      fastest"
 msgstr "Texturas:     Simples"
 
-#: ../../src/Pinball.cpp:685
+#: ../../src/Pinball.cpp:673
 msgid "texture:         none"
 msgstr "Texturas:     Nenhuma"
 
-#: ../../src/Pinball.cpp:689
+#: ../../src/Pinball.cpp:677
 msgid "show fps:          no"
 msgstr "Mostrar as IPS:   nao"
 
-#: ../../src/Pinball.cpp:690
+#: ../../src/Pinball.cpp:678
 msgid "show fps:         yes"
 msgstr "Mostrar as IPS:   sim"
 
-#: ../../src/Pinball.cpp:694
+#: ../../src/Pinball.cpp:682
 msgid "fire effect:       no"
 msgstr "Effeito ardente:  nao"
 
-#: ../../src/Pinball.cpp:695
+#: ../../src/Pinball.cpp:683
 msgid "fire effect:      yes"
 msgstr "Effeito ardente:  sim"
 
-#: ../../src/Pinball.cpp:699
+#: ../../src/Pinball.cpp:687
 msgid "dynamic lights:   yes"
 msgstr "Luzes dinamicas:  sim"
 
-#: ../../src/Pinball.cpp:700
+#: ../../src/Pinball.cpp:688
 msgid "dynamic lights:    no"
 msgstr "Luzes dinamicas:  nao"
 
-#: ../../src/Pinball.cpp:709
+#: ../../src/Pinball.cpp:697
 msgid "sound:            off"
 msgstr "Som:             mudo"
 
-#: ../../src/Pinball.cpp:710
+#: ../../src/Pinball.cpp:698
 msgid "sound:       =......."
 msgstr "Som:         =......."
 
-#: ../../src/Pinball.cpp:711
+#: ../../src/Pinball.cpp:699
 msgid "sound:       ==......"
 msgstr "Som:         ==......"
 
-#: ../../src/Pinball.cpp:712
+#: ../../src/Pinball.cpp:700
 msgid "sound:       ===....."
 msgstr "Som:         ===....."
 
-#: ../../src/Pinball.cpp:713
+#: ../../src/Pinball.cpp:701
 msgid "sound:       ====...."
 msgstr "Som:         ====...."
 
-#: ../../src/Pinball.cpp:714
+#: ../../src/Pinball.cpp:702
 msgid "sound:       =====..."
 msgstr "Som:         =====..."
 
-#: ../../src/Pinball.cpp:715
+#: ../../src/Pinball.cpp:703
 msgid "sound:       ======.."
 msgstr "Som:         ======.."
 
-#: ../../src/Pinball.cpp:716
+#: ../../src/Pinball.cpp:704
 msgid "sound:       =======."
 msgstr "Som:         =======."
 
-#: ../../src/Pinball.cpp:717
+#: ../../src/Pinball.cpp:705
 msgid "sound:       ========"
 msgstr "Som:         ========"
 
-#: ../../src/Pinball.cpp:721
+#: ../../src/Pinball.cpp:709
 msgid "music:            off"
 msgstr "Musica:          muda"
 
-#: ../../src/Pinball.cpp:722
+#: ../../src/Pinball.cpp:710
 msgid "music:       =......."
 msgstr "Musica:      =......."
 
-#: ../../src/Pinball.cpp:723
+#: ../../src/Pinball.cpp:711
 msgid "music:       ==......"
 msgstr "Musica:      ==......"
 
-#: ../../src/Pinball.cpp:724
+#: ../../src/Pinball.cpp:712
 msgid "music:       ===....."
 msgstr "Musica:      ===....."
 
-#: ../../src/Pinball.cpp:725
+#: ../../src/Pinball.cpp:713
 msgid "music:       ====...."
 msgstr "Musica:      ====...."
 
-#: ../../src/Pinball.cpp:726
+#: ../../src/Pinball.cpp:714
 msgid "music:       =====..."
 msgstr "Musica:      =====..."
 
-#: ../../src/Pinball.cpp:727
+#: ../../src/Pinball.cpp:715
 msgid "music:       ======.."
 msgstr "Musica:      ======.."
 
-#: ../../src/Pinball.cpp:728
+#: ../../src/Pinball.cpp:716
 msgid "music:       =======."
 msgstr "Musica:      =======."
 
-#: ../../src/Pinball.cpp:729
+#: ../../src/Pinball.cpp:717
 msgid "music:       ========"
 msgstr "Musica:      ========"
 
-#: ../../src/Pinball.cpp:732
+#: ../../src/Pinball.cpp:720
 msgid "leftflip"
 msgstr "Flipper Esquerdo"
 
-#: ../../src/Pinball.cpp:734
+#: ../../src/Pinball.cpp:722
 msgid "rightflip"
 msgstr "Flipper Direito"
 
-#: ../../src/Pinball.cpp:736
+#: ../../src/Pinball.cpp:724
 msgid "leftnudge"
 msgstr "emp esq"
 
-#: ../../src/Pinball.cpp:738
+#: ../../src/Pinball.cpp:726
 msgid "rightnudge"
 msgstr "emp dir"
 
-#: ../../src/Pinball.cpp:740
+#: ../../src/Pinball.cpp:728
 msgid "bottomnudge"
 msgstr "emp baixo"
 
-#: ../../src/Pinball.cpp:742
+#: ../../src/Pinball.cpp:730
 msgid "launch"
 msgstr "Lancar"
 
-#: ../../src/Pinball.cpp:744
+#: ../../src/Pinball.cpp:732
 msgid "reset"
 msgstr "Recomecar"
 
-#: ../../src/Pinball.cpp:747
+#: ../../src/Pinball.cpp:735
 msgid "apply"
 msgstr "Aplicar"
 
-#: ../../src/Pinball.cpp:753
+#: ../../src/Pinball.cpp:741
 msgid "back"
 msgstr "voltar"
 
-#: ../../src/Pinball.cpp:845
+#: ../../src/Pinball.cpp:828
 msgid "no table loaded"
 msgstr "Nenhuma mesa carragada"
 
-#: ../../src/Pinball.cpp:846
+#: ../../src/Pinball.cpp:829
 msgid "press esc"
 msgstr "carregar em esc"
 
-#: ../../src/Score.cpp:91
+#: ../../src/Score.cpp:92
 #, c-format
 msgid "press %s to launch ball"
 msgstr "Carregar em %s, para lancar a bola"
 
-#: ../../src/Score.cpp:97
+#: ../../src/Score.cpp:98
 msgid "tilt"
 msgstr "Tilt"
 
-#: ../../src/Score.cpp:102
+#: ../../src/Score.cpp:103
 msgid "warning"
 msgstr "cuidado"
 
-#: ../../src/Score.cpp:119
+#: ../../src/Score.cpp:120
 #, c-format
 msgid "press %s to start new game"
 msgstr "carregar em %s, para comecar um novo jogo"
 
-#: ../../src/Score.cpp:124
+#: ../../src/Score.cpp:125
 msgid "Last score was a High Score!"
 msgstr "Excelente pontuacao!"
 
-#: ../../src/Score.cpp:130
+#: ../../src/Score.cpp:131
 msgid "game over"
 msgstr "Fim do Jogo"
 
-#: ../../src/Score.cpp:141
+#: ../../src/Score.cpp:142
 #, c-format
 msgid "SCORE %d BALL %d ExtraBall"
 msgstr "PONTOS %d BOLA %d ExtraBola"
 
-#: ../../src/Score.cpp:143
+#: ../../src/Score.cpp:144
 #, c-format
 msgid "SCORE %d BALL %d"
 msgstr "PONTOS %d BOLA %d"
 
-#: ../../src/Score.cpp:146
+#: ../../src/Score.cpp:147
 #, c-format
 msgid "SCORE %d"
 msgstr "PONTOS %d"
 
-#: ../../src/Score.cpp:186
+#: ../../src/Score.cpp:187
 msgid "new highscore! enter name:"
 msgstr "novo record! escreve um nome:"
-
-#: ../../base/Config.cpp:162
-msgid "return"
-msgstr "entrada"
-
-#: ../../base/Config.cpp:163
-msgid "space"
-msgstr "espaco"
-
-#: ../../base/Config.cpp:164
-msgid "left shift"
-msgstr "Maj esquerda"
-
-#: ../../base/Config.cpp:165
-msgid "right shift"
-msgstr "Maj direita"
-
-#: ../../base/Config.cpp:166
-msgid "left ctrl"
-msgstr "Ctrl esq"
-
-#: ../../base/Config.cpp:167
-msgid "right ctrl"
-msgstr "Ctrl dir"
 
 #: ../tux/ModuleTux.cpp:268 ../hurd/ModuleHurd.cpp:261
 msgid "hit bumpers"
@@ -571,6 +547,24 @@ msgstr "quarto desenvolvimento do hurd"
 #: ../hurd/ModuleHurd.cpp:432
 msgid "hurd is stable"
 msgstr "Hurd esta estavel"
+
+#~ msgid "return"
+#~ msgstr "entrada"
+
+#~ msgid "space"
+#~ msgstr "espaco"
+
+#~ msgid "left shift"
+#~ msgstr "Maj esquerda"
+
+#~ msgid "right shift"
+#~ msgstr "Maj direita"
+
+#~ msgid "left ctrl"
+#~ msgstr "Ctrl esq"
+
+#~ msgid "right ctrl"
+#~ msgstr "Ctrl dir"
 
 #~ msgid "screen width:     340"
 #~ msgstr "Largura do ecra:  340"

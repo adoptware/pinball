@@ -1,12 +1,12 @@
 dnl #                                               -*- Autoconf -*-
 dnl # Process this file with autoconf 2.53 to produce a configure script.
 dnl init autoconf and automake
-AC_INIT(pinball, 0.3.3.1)
+AC_INIT(pinball, 0.3.4.1)
 
 AC_CONFIG_HEADERS(pinconfig.h)
 LT_CONFIG_LTDL_DIR([libltdl])
-AC_CONFIG_AUX_DIR([config])
-AC_CONFIG_MACRO_DIRS([m4])
+AC_CONFIG_AUX_DIR([libltdl/config])
+AC_CONFIG_MACRO_DIR([libltdl/m4])
 
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
@@ -18,8 +18,10 @@ AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_LIBTOOL
-
-
+AC_PROG_MKDIR_P
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION(0.19.8)
+#0.17
 dnl this is a c++ program
 dnl CFLAGS="-g -W -Wall -O2"
 dnl CXXFLAGS="-g -W -Wall -O2"
@@ -259,7 +261,7 @@ dnl AC_SUBST(pkgincludedir)
 AC_CONFIG_FILES([Makefile addon/Makefile base/Makefile data/Makefile
  src/Makefile test/Makefile pinball-config
  data/tux/Makefile data/professor/Makefile data/hurd/Makefile
- data/gnu/Makefile data/professor2/Makefile
+ data/gnu/Makefile data/professor2/Makefile data/locale/Makefile.in
 ])
 
 AC_OUTPUT

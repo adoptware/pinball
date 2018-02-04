@@ -1,0 +1,5 @@
+# List of source files which contain translatable strings.
+data/hurd/ModuleHurd.cpp
+data/tux/ModuleTux.cpp
+src/Pinball.cpp
+src/Score.cpp
