@@ -13,7 +13,7 @@
     3) hurd table license is GPLv2+ (data/hurd/README.txt)
     4) professor table license is GPLv2+ (data/professor2/README.txt)
 
-  Full package could be License as GPL+ and (GFDL or Free Art or CC-BY-SA) and GPLv3 and CC-BY-SA and GPLv2+
+  Full package could be License as GPLv2+ and (GFDL or Free Art or CC-BY-SA) and GPLv3 and CC-BY-SA
 
 We have a review here: https://bugzilla.redhat.com/show_bug.cgi?id=1290935 if
 something is not correct please let us know to fix it..
