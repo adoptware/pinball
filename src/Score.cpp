@@ -11,6 +11,7 @@
                             for current ball.
     20171209  c30zD      : Correctly display the "reset" and "launch" keys.
     20171213  c30zD      : Fix previous strings for gettext usage.
+    20170209  sergiomb2  : Fix previous not use array with limited size
 
 ***************************************************************************/
 
@@ -85,11 +86,11 @@ void Score::onTick() {
 void Score::StdOnSignal() {
   EM_COUT((int)em_signal, 1);
   Config *cfg = Config::getInstance();
-  char pStrMsg[35];
+  char *pStrMsg;
 
   OnSignal( PBL_SIG_RESET_ALL ) {
     this->clear();
-    sprintf(pStrMsg, gettext("press %s to launch ball"), cfg->getKeyCommonName(cfg->getKey("launch")));
+    asprintf(&pStrMsg, gettext("press %s to launch ball"), cfg->getKeyCommonName(cfg->getKey("launch")));
     this->setText1(pStrMsg);
     SendSignal( PBL_SIG_CLEAR_TEXT, 400, this->getParent(), NULL );
   } 
@@ -117,7 +118,6 @@ void Score::StdOnSignal() {
   }
   ElseOnSignal( PBL_SIG_GAME_OVER ) {
     this->clearText();
-    sprintf(pStrMsg, gettext("press %s to start new game"), cfg->getKeyCommonName(cfg->getKey("reset")));
 
     //cout<<" TODO:give (only) one extra ball if high score"<<endl; //!rzr
 
@@ -129,6 +129,7 @@ void Score::StdOnSignal() {
 
     this->setText2("");
     this->setText3(gettext("game over"));
+    asprintf(&pStrMsg, gettext("press %s to start new game"), cfg->getKeyCommonName(cfg->getKey("reset")));
     this->setText4(pStrMsg);
   }
 }
