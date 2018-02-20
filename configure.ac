@@ -20,8 +20,10 @@ AC_PROG_INSTALL
 AC_PROG_LIBTOOL
 AC_PROG_MKDIR_P
 AM_GNU_GETTEXT([external])
+#For rhel6 but rhel6 doesn't have SDL2
+#AM_GNU_GETTEXT_VERSION(0.17)
 AM_GNU_GETTEXT_VERSION(0.19.8)
-#0.17
+
 dnl this is a c++ program
 dnl CFLAGS="-g -W -Wall -O2"
 dnl CXXFLAGS="-g -W -Wall -O2"
