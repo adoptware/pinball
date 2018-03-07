@@ -13,23 +13,25 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 #
 #
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+# José Jorge <lists.jjorge@free.fr>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: pinball 0.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-04 23:19+0000\n"
-"PO-Revision-Date: 2016-07-25 00:51+0200\n"
-"Last-Translator: Jose Jorge <lists.jjorge@free.fr>\n"
-"Language-Team: Portuguese\n"
+"PO-Revision-Date: 2018-03-07 09:59+0100\n"
+"Last-Translator: José Jorge <lists.jjorge@free.fr>\n"
+"Language-Team: Portuguese"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 2.0\n"
 
 #: ../../src/Pinball.cpp:111 ../../src/Pinball.cpp:515
 msgid "High Scores"
@@ -407,7 +409,7 @@ msgstr "cuidado"
 #: ../../src/Score.cpp:120
 #, c-format
 msgid "press %s to start new game"
-msgstr "carregar em %s, para comecar um novo jogo"
+msgstr "tecla %s, para jogar de novo"
 
 #: ../../src/Score.cpp:125
 msgid "Last score was a High Score!"
@@ -446,7 +448,7 @@ msgstr "a caverna na esquerda salva tux"
 
 #: ../tux/ModuleTux.cpp:276
 msgid "follow blue arrows"
-msgstr "segue as flechas azuis"
+msgstr "segue as setas azuis"
 
 #: ../tux/ModuleTux.cpp:278
 msgid "hit blue targets"
@@ -454,7 +456,7 @@ msgstr "toca as metas azuis"
 
 #: ../tux/ModuleTux.cpp:281
 msgid "follow blue arrows, hurry up"
-msgstr "depressa, segue as flechas azuis"
+msgstr "depressa, segue as setas azuis"
 
 #: ../tux/ModuleTux.cpp:283
 msgid "hit all of them"
@@ -466,7 +468,7 @@ msgstr "vitoria, os penguins estao livres!"
 
 #: ../tux/ModuleTux.cpp:324
 msgid "shoot head to lock ball"
-msgstr "aponta a cabeca para bloquear a bola"
+msgstr "toca a cara para bloquear a bola"
 
 #: ../tux/ModuleTux.cpp:327 ../hurd/ModuleHurd.cpp:321
 msgid "first ball locked"

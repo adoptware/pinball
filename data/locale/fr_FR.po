@@ -13,23 +13,25 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 #
 #
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+# José Jorge <lists.jjorge@free.fr>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: pinball 0.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-04 23:19+0000\n"
-"PO-Revision-Date: 2016-07-25 00:51+0200\n"
-"Last-Translator: Jose Jorge <lists.jjorge@free.fr>\n"
-"Language-Team: French\n"
+"PO-Revision-Date: 2018-03-07 10:03+0100\n"
+"Last-Translator: José Jorge <lists.jjorge@free.fr>\n"
+"Language-Team: French <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 2.0\n"
 
 #: ../../src/Pinball.cpp:111 ../../src/Pinball.cpp:515
 msgid "High Scores"
@@ -117,7 +119,7 @@ msgstr "Vue: mouvement rapide"
 
 #: ../../src/Pinball.cpp:614
 msgid "view:             top"
-msgstr "Vue:        d'en haut"
+msgstr "Vue:        au dessus"
 
 #: ../../src/Pinball.cpp:620
 msgid "screen:    fullscreen"
@@ -125,7 +127,7 @@ msgstr "Mode:     Plein Ecran"
 
 #: ../../src/Pinball.cpp:621
 msgid "screen:      windowed"
-msgstr "Mode:         Fenêtre"
+msgstr "Mode:         Fenetre"
 
 #: ../../src/Pinball.cpp:625
 msgid "brightness:    =....."
@@ -407,7 +409,7 @@ msgstr "Attention"
 #: ../../src/Score.cpp:120
 #, c-format
 msgid "press %s to start new game"
-msgstr "Appuyer sur %s, pour demarrer une nouvelle partie"
+msgstr "Touche %s pour rejouer"
 
 #: ../../src/Score.cpp:125
 msgid "Last score was a High Score!"
@@ -462,7 +464,7 @@ msgstr "Abats-les tous"
 
 #: ../tux/ModuleTux.cpp:285
 msgid "you did it, all penguins released!"
-msgstr "Victoire, les manchots sont liberes!"
+msgstr "Victoire, tous les manchots sont libres!"
 
 #: ../tux/ModuleTux.cpp:324
 msgid "shoot head to lock ball"
