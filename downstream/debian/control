@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Philippe Coval <rzr@gna.org>
 X-Original-Maintainer: Jochen Friedrich <jochen@scram.de>
 Build-Depends: debhelper (>= 5),
- autoconf, automake, libtool, sp, sgmlspl, docbook, docbook-utils,
+ autoconf, automake, libtool, gettext, sp, sgmlspl, docbook, docbook-utils,
  libltdl-dev (>= 2.2.6b),
  libgl1-mesa-dev | xlibmesa-gl-dev | mesag-dev | libgl-dev, libpng-dev,
  libsdl1.2-dev, freeglut3-dev,
