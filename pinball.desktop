@@ -9,3 +9,6 @@ Terminal=false
 Type=Application
 Keywords=Game, ArcadeGame, Pinball
 Comment[fr]=Jeu de flipper 3D
+Comment[ca]=Pinball 3D
+Comment[es]=Pinball 3D
+Keywords=Game;Arcade;Pinball;
