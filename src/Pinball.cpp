@@ -842,8 +842,41 @@ int main(int argc, char *argv[]) {
           Table::getInstance()->getScore()->draw();
         }
         if (engine->getGroup(0) == NULL) {
-          EmFont::getInstance()->printRowCenter(gettext("no table loaded"), 6);
-          EmFont::getInstance()->printRowCenter(gettext("press esc"), 8);
+           //EmFont::getInstance()->printRowCenter("no table loaded", 6);
+          //EmFont::getInstance()->printRowCenter("press esc", 8);
+	srand (time(NULL));
+	int iTable ; 
+	iTable = rand() % 5 +1;
+	if (iTable == 1){
+		if (Table::getInstance()->loadLevel(engine, "tux") == 0) {
+      			Table::getInstance()->readHighScoresFile();	
+      			Table::getInstance()->getScore()->draw();
+    		}
+	     }
+	else if (iTable == 2){
+		if (Table::getInstance()->loadLevel(engine, "professor") == 0) {
+      			Table::getInstance()->readHighScoresFile();	
+      			Table::getInstance()->getScore()->draw();
+    		}
+	     }
+	else if (iTable == 3){
+		if (Table::getInstance()->loadLevel(engine, "gnu") == 0) {
+      			Table::getInstance()->readHighScoresFile();	
+      			Table::getInstance()->getScore()->draw();
+    		}
+	     }
+	else if (iTable == 4){
+		if (Table::getInstance()->loadLevel(engine, "professor2") == 0) {
+      			Table::getInstance()->readHighScoresFile();	
+      			Table::getInstance()->getScore()->draw();
+    		}
+	     }
+	else if (iTable == 5){
+		if (Table::getInstance()->loadLevel(engine, "hurd") == 0) {
+      			Table::getInstance()->readHighScoresFile();	
+      			Table::getInstance()->getScore()->draw();
+    		}
+	     }
         }
         engine->swap();
       }
