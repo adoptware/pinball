@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pinball 0.3.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-26 01:34+0100\n"
+"POT-Creation-Date: 2018-03-26 03:59+0100\n"
 "PO-Revision-Date: 2018-03-25 17:08+0200\n"
 "Last-Translator: Innocent De Marchi <tangram.peces@gmail.com>\n"
 "Language-Team: \n"
@@ -385,14 +385,6 @@ msgstr "aplicar"
 msgid "back"
 msgstr "volver"
 
-#: ../../src/Pinball.cpp:828
-msgid "no table loaded"
-msgstr "sin tablero cargado"
-
-#: ../../src/Pinball.cpp:829
-msgid "press esc"
-msgstr "presionar ESC"
-
 #: ../../src/Score.cpp:93
 #, c-format
 msgid "press %s to launch ball"
@@ -549,6 +541,12 @@ msgstr "cuarto desarrollo de hurd"
 #: ../hurd/ModuleHurd.cpp:432
 msgid "hurd is stable"
 msgstr "hurd es estable"
+
+#~ msgid "no table loaded"
+#~ msgstr "sin tablero cargado"
+
+#~ msgid "press esc"
+#~ msgstr "presionar ESC"
 
 #~ msgid "return"
 #~ msgstr "Entree"

@@ -54,6 +54,7 @@ data/locale/en@quot.header
 data/locale/insert-header.sin
 data/locale/quot.sed
 data/locale/remove-potcdate.sin
+data/locale/pinball.pot
 
 debian/files
 debian/*.debhelper.log
