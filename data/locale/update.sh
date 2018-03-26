@@ -6,4 +6,8 @@ msgmerge --update --backup=off --no-fuzzy-matching fr_FR.po pinball.pot
 msgfmt -c -v -o fr_FR.mo fr_FR.po
 msgmerge --update --backup=off --no-fuzzy-matching pt_PT.po pinball.pot
 msgfmt -c -v -o pt_PT.mo pt_PT.po
+msgmerge --update --backup=off --no-fuzzy-matching ca_ES.po pinball.pot
+msgfmt -c -v -o ca_ES.mo ca_ES.po
+msgmerge --update --backup=off --no-fuzzy-matching es_ES.po pinball.pot
+msgfmt -c -v -o es_ES.mo es_ES.po
 #sudo cp pinball_de_DE.mo /usr/share/locale/de_DE/LC_MESSAGES/pinball.mo
