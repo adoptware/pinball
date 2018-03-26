@@ -1,4 +1,86 @@
 
+n.n.n / 2018-03-26
+==================
+
+  * Update ChangeLog with git changelog -a
+  * pinball.desktop set keywords
+  * 01-random-table-load.patch
+  * Translations for Catalan and Spanish
+  * Deleted clean file, clean is done with git
+  * Add gettext to debian package depends
+  * Add generated files by gettext to .gitignore
+  * delete data/locale/update_utf8.sh and update po files
+
+0.3.4 / 2018-03-24
+==================
+
+  * Move debian folder to downstream folder
+  * fix long strings
+  * We may require just gettext-0.17 to build in RHEL6
+  * Use charset=UTF-8 in translations
+  * Fix commit 1f16f06 not use array with limited size
+  * Add AM_GNU_GETTEXT and bump release.
+  * Correct one sentence
+  * corrected french translation
+  * portuguese translation
+  * fix french texts to fit on screen
+  * ascii only french text as pinball font only understands that
+  * Finish french translation, removed bogus references to de_DE translator.
+  * Started french translation
+  * Fix gettext strings in Score.cpp and update localization files.
+  * Simulate behavior of flippers when the game has ended (i.e. they cannot be used)
+  * Save .hiscore in ~/.config/emilia
+  * Do not install midi version of the intro
+  * Keyboard is now cleared on reset.
+
+0.3.3.3 / 2017-11-09
+====================
+
+  * Update License.txt
+
+0.3.3 / 2016-11-20
+==================
+
+  * Add License.txt
+  * Fedora pinball.spec
+  * Upgrade README file on my table
+  * upgrade Professor2 to the last version
+  * Move configuration to ~/.config
+  * Bring back old professor table
+  * Don't create highscores files.
+  * Update urls of homepage to advertise new releases.
+  * Add more screen ratios and add a test of setScale
+  * data/hurd.old/ equal to pinball.rzr/data/hurd
+  * Added pinball.appdata.xml
+  * Fix and update autotools
+  * Add missing file for RZR_PATCHES
+  * deleted: depcomp
+  * Fixed the permissions of all files.
+  * Updated pinball.desktop
+  * Removed Debian patches, also already committed.
+  * cp data/hurd.old/up.wav data/hurd
+  * Removed patches that are already applied
+  * Update gnu table to gnu-3.1-20130301.tar.gz
+  * The incomplete and mysterious table named house.
+  * Try update hurd table.
+  * Increase drawing quality of the ball
+  * Deleted:    data/gnu/.README.swp
+  * Merge github.com:rzr/pinball
+  * Merge pull request #1 from skreutzer/master
+  * I18n and translation into German added.
+  * Merge branch 'pinball-data-extra'
+  * delete mkinstalldirs
+  * import: http://pastefile.com/uploads/gnu.tar.gz [Ben Asselstine]
+  * imported gnu table from Paolo Caroni archive see 'data/hurd/README.txt'
+  * verbose version
+  * fix: const
+  * merge: http://pdb.finkproject.org/pdb/package.php/pinball
+  * revert: deb
+  * add: comment fr
+  * build: maemo: freemantle (x86)
+  * merge: professor form  Paolo Caroni
+  * branch: pinball-data-extra provide a hurd table
+
 0.1.3
      - Fixed collision bug.
 
