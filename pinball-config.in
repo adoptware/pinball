@@ -1,0 +1,76 @@
+#! /bin/sh
+# @configure_input@
+#
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+
+usage()
+{
+	cat <<EOF
+Usage: pinball-config [OPTION]
+Options:
+		[--version]
+		[--libs]
+		[--cflags]
+		[--datadir]
+		[--libdir]
+		[--prefix]
+		[--exec-prefix]
+EOF
+	exit $1
+}
+
+if test $# -eq 0; then
+	usage 1 1>&2
+fi
+
+while test $# -gt 0; do
+  case $1 in
+    --version)
+      echo @PACKAGE_VERSION@
+      ;;
+    --cflags)
+      echo_cflags=yes
+      ;;
+    --libs)
+      echo_libs=yes
+      ;;
+    --datadir)
+      echo_datadir=yes
+      ;;
+    --libdir)
+      echo_libdir=yes
+      ;;
+    --prefix)
+      echo_prefix=yes
+      ;;
+    --exec-prefix)
+      echo_execprefix=yes
+      ;;
+    *)
+      usage 1 1>&2
+      ;;
+  esac
+  shift
+done
+
+if test "$echo_cflags" = "yes"; then
+      echo -I@includedir@/pinball
+fi
+
+if test "$echo_libs" = "yes"; then
+      echo -L@libdir@/pinball
+fi      
+if test "$echo_datadir" = "yes"; then
+      echo @datadir@/pinball
+fi
+if test "$echo_libdir" = "yes"; then
+      echo @EM_LIBDIR@
+fi      
+if test "$echo_prefix" = "yes"; then
+      echo @prefix@
+fi      
+if test "$echo_execprefix" = "yes"; then
+      echo @execprefix@
+fi      

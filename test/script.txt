@@ -1,0 +1,4 @@
+{
+  onsignal 1 11 setvar 101 1
+  onsignal 1 22 setvar 101 2
+}
