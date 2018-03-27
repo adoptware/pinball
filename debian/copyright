@@ -1,0 +1,42 @@
+Format:  https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Pinball
+Upstream-Contact: Henrik Enqvist <henqvist@excite.com>
+Source: https://sourceforge.net/projects/pinball/files/
+Comment: This package was debianized by Didier Dhollande <dholland@free.fr> on
+ Sun, 17 Jun 2002
+ It is currently maintained by Innocent De Marchi <tangram.peces@gmail.com>
+
+Files: *
+Copyright: 2000 Henrik Enqvist <henqvist@excite.com>
+License: GPL-2
+
+Files: debian/*
+Copyright: 2002 Didier Dhollande <dholland@free.fr>
+	2002 Yann Dirson <dirson@debian.org>
+	2004 Helge Kreutzmann <kreutzm@itp.uni-hannover.de>
+	2004 Matt Zimmerman <mdz@debian.org>
+	2004-2010 Jochen Friedrich <jochen@scram.de>
+	2006 Matthias Klose <doko@debian.org>
+	2011 Regis Boudin <regis@debian.org>
+	2014-2016 Markus Koschany <apo@gambaru.de>
+	2016 Neil Roeth <neil@debian.org>
+	2018 Innocent De Marchi <tangram.peces@gmail.com>
+License: GPL-2
+
+License: GPL-2
+   This package is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; version 2 dated June, 1991.
+   .
+   This package is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   .
+   You should have received a copy of the GNU General Public License
+   along with this package; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA
+   02110-1301, USA.
+   .
+   On Debian GNU/Linux systems, the complete text of the GNU General
+   Public License can be found in `/usr/share/common-licenses/GPL-2'.

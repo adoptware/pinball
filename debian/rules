@@ -1,0 +1,52 @@
+#!/usr/bin/make -f
+
+DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+DEB_HOST_MULTIARCH  ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+ifneq (,$(findstring alpha,$(DEB_BUILD_GNU_TYPE)))
+	CFLAGS += -mieee
+	CXXFLAGS += -mieee
+endif
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+CFLAGS += -Wall
+
+%:
+	dh $@
+
+.PHONY: clean
+clean:
+	dh clean
+	rm -rf libltdl
+
+.PHONY: override_dh_auto_configure
+override_dh_auto_configure:
+	$(RM) depcomp
+	libtoolize --install --copy --force
+	aclocal
+	autoheader
+	automake --add-missing
+	autoconf
+	dh_auto_configure -- --bindir=/usr/games --datadir=/usr/share/games --with-cflags="$(CFLAGS)" --with-cxxflags="$(CXXFLAGS)"
+
+.PHONY: override_dh_install
+override_dh_install:
+	sed -i "/dependency_libs/s/'.*'/''/" $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/pinball/*.la
+	install -d $(CURDIR)/debian/tmp/usr/share/applications
+	install -d $(CURDIR)/debian/tmp/usr/share/pixmaps
+	install -m 644 pinball.desktop $(CURDIR)/debian/tmp/usr/share/applications
+	install -m 644 data/pinball.xpm $(CURDIR)/debian/tmp/usr/share/pixmaps
+	onsgmls debian/pinball.sgml | sgmlspl sgmlspl-specs/docbook2man-spec.pl
+	dh_install
+
+.PHONY: override_dh_fixperms-arch
+override_dh_fixperms-arch:
+	dh_fixperms
+	chown root:games debian/pinball/usr/games/pinball
+	chmod 2755 debian/pinball/usr/games/pinball
+
+.PHONY: override_dh_makeshlibs
+override_dh_makeshlibs:
