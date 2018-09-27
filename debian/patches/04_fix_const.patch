@@ -1,3 +1,7 @@
+Author: unknown
+Description: Fix constant.
+Last-Update: 2018-01-21 
+
 Index: pinball-0.3.1/base/Config.cpp
 ===================================================================
 --- pinball-0.3.1.orig/base/Config.cpp	2009-10-13 18:33:38.000000000 +0200

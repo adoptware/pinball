@@ -1,0 +1,9 @@
+Description: Add author to AUTHORS upstream file.
+Author: Innocent De Marchi <tangram.peces@gmail.com>
+Last-Update: 2018-03-07
+
+--- /dev/null
++++ b/AUTHORS
+@@ -0,0 +2 @@
++Henrik Enqvist <henqvist@excite.com>
+

@@ -1,3 +1,40 @@
+pinball (0.3.1-14.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Fix the Makefile dependencies. (Closes: #908953)
+
+ -- Adrian Bunk <bunk@debian.org>  Thu, 27 Sep 2018 21:17:18 +0300
+
+pinball (0.3.1-14) unstable; urgency=medium
+
+  * New Maintainer (Closes: #891762).
+  * Update Standards-Version.
+  * Set Rules-Requires-Root: binary-targets.
+  * Added homepage field on debian/control.
+  * Added description on some patch files.
+  * Fix spelling error in patch description on 06_missing_cstddef.patch file.
+  * Removed patch file not-mentioned in series: replace-sp-with-opensp.patch.
+  * Added hardering flags on debian/rules.
+  * Removed and rewrite 03_desktop.patch file.
+  * Removed pinball.menu file.
+  * Added secure URI on debian/watch.
+  * Completed rewrite debian/copyright file.
+  * Changed negated list of architectures by dpkg architecture wildcards.
+    Thanks to Robert Millan (Closes: #634705).
+  * Adds OpenGL constraint on debian/control. Thanks to Yann Dirson
+    (Closes: #150082).
+  * Added support to 1920x1200 screen with a patch (Closes: #555251).
+  * Added random table loading function: thanks to joblack (Closes: ##555256).
+  * Cancel the closing of the program with the insert key (Closes: #450763).
+  * Fix error on configuring of keys (Closes: #858627).
+  * Added one new patch to activate left Alt
+    key to close program (Closes: #442809).
+  * Changed the storage directory of the high scores.
+  * Added one new patch to add author name on
+    upstream AUTHORS file (it was empty).
+
+ -- Innocent De Marchi <tangram.peces@gmail.com>  Sat, 03 Mar 2018 18:55:03 +0100
+
 pinball (0.3.1-13.6) unstable; urgency=medium
 
   * Non-maintainer upload.
@@ -80,7 +117,7 @@ pinball (0.3.1-11) unstable; urgency=low
 
 pinball (0.3.1-10) unstable; urgency=low
 
-  * Build-depend on libltdl-dev (>= 2.2.6b) as earlier versions were 
+  * Build-depend on libltdl-dev (>= 2.2.6b) as earlier versions were
     vulnerable to a priviledge escalation. (Closes: #559825)
     Fixes priviledge escalation vulnerability CVE-2009-3736.
 
@@ -102,7 +139,7 @@ pinball (0.3.1-8) unstable; urgency=low
   * Replace glut with freeglut (Closes: #543701)
   * Correct license to be GPL-2
   * Switch to debhelper 7
-  * Use current autotools instead of shipped versions (Closes: #401852, 
+  * Use current autotools instead of shipped versions (Closes: #401852,
     #401853)
   * Fix depends for non-Linux platforms (Closes: #451113)
 
