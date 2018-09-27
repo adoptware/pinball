@@ -1,0 +1,57 @@
+Description: Changed the storage directory of the high scores.
+Author: Innocent De Marchi <tangram.peces@gmail.com>
+Last-Update: 2018-03-07
+
+--- pinball-0.3.1.orig/src/Table.cpp	2003-11-20 17:46:17.000000000 +0100
++++ pinball-0.3.1/scr/Table.cpp	2018-03-07 17:35:32.229317000 +0100
+@@ -248,13 +248,18 @@
+   m_mapHighScores.clear();
+ 
+   //!rzr+ : fix w32
+-  string sFileName =  m_sTableName + "/" + HIGH_SCORES_FILENAME;
+-#ifdef RZR_PATHRELATIVE
+-  sFileName = string( Config::getInstance()->getExeDir() )
+-    +"/"+ m_sTableName +".cfg";
+-#else
+-  sFileName = string(EM_HIGHSCORE_DIR) + "/" + sFileName;
+-#endif //!rzr-
++//  string sFileName =  m_sTableName + "/" + HIGH_SCORES_FILENAME;
++//#ifdef RZR_PATHRELATIVE
++//  sFileName = string( Config::getInstance()->getExeDir() )
++//    +"/"+ m_sTableName +".cfg";
++//#else
++//  sFileName = string(EM_HIGHSCORE_DIR) + "/" + sFileName;
++//#endif //!rzr-
++
++
++ char *home = getenv("HOME");
++ string sFileName = string(home? home:".") + "/.emilia/" + m_sTableName +
++    "."+HIGH_SCORES_FILENAME;
+ 
+   ifstream file(sFileName.c_str());
+   if (!file) {
+@@ -309,13 +314,17 @@
+     return false;
+   }
+   //!rzr+ : fix w32
+-  string sFileName =  m_sTableName + "/" + HIGH_SCORES_FILENAME;
+-#ifdef RZR_PATHRELATIVE
+-  sFileName = string( Config::getInstance()->getExeDir() )
+-    +"/"+ m_sTableName +".cfg";
+-#else
+-  sFileName = string(EM_HIGHSCORE_DIR) + "/" + sFileName;
+-#endif //!rzr-
++//  string sFileName =  m_sTableName + "/" + HIGH_SCORES_FILENAME;
++//#ifdef RZR_PATHRELATIVE
++//  sFileName = string( Config::getInstance()->getExeDir() )
++//    +"/"+ m_sTableName +".cfg";
++//#else
++//  sFileName = string(EM_HIGHSCORE_DIR) + "/" + sFileName;
++//#endif //!rzr-*/
++
++ char *home = getenv("HOME");
++ string sFileName = string(home? home:".") + "/.emilia/" + m_sTableName +
++    "."+HIGH_SCORES_FILENAME;
+ 
+   ofstream file(sFileName.c_str());//, ios_base::out | ios_base::trunc);
+   if (!file) {

@@ -1,7 +1,15 @@
+menu-cpp.patch
+add-autor-to-AUTHORS.patch
+table-cpp.patch
+pinball-desktop.patch
 01_cflags.patch
 02_datadir.patch
-03_desktop.patch
 04_fix_const.patch
 05_system_ltdl.patch
 06_missing_cstddef.patch
 missing-separators.patch
+random-table-load.patch
+canceled-insert-key.patch
+add-suport-1920x1200-screens.patch
+fix-config-keys.patch
+makefile-dependencies.patch
