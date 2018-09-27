@@ -1,0 +1,33 @@
+Description: Load table game for default.
+Author: Innocent De Marchi <tangram.peces@gmail.com>
+Bug-Debian: http://bugs.debian.org/555256
+Last-Update: 2018-03-16
+
+--- pinball-0.3.1.orig/src/Pinball.cpp	2003-11-20 17:46:17.000000000 +0100
++++ pinball-0.3.1/scr/Pinball.cpp	2018-03-16 19:00:50.014691897 +0100
+@@ -771,8 +771,23 @@
+           Table::getInstance()->getScore()->draw();
+         }
+         if (engine->getGroup(0) == NULL) {
+-          EmFont::getInstance()->printRowCenter("no table loaded", 6);
+-          EmFont::getInstance()->printRowCenter("press esc", 8);
++          //EmFont::getInstance()->printRowCenter("no table loaded", 6);
++          //EmFont::getInstance()->printRowCenter("press esc", 8);
++	srand (time(NULL));
++	int iTable ; 
++	iTable = rand() % 100 +1;
++	if (iTable < 51){
++		if (Table::getInstance()->loadLevel(engine, "tux") == 0) {
++      			Table::getInstance()->readHighScoresFile();	
++      			Table::getInstance()->getScore()->draw();
++    		}
++	     }
++	else {
++		if (Table::getInstance()->loadLevel(engine, "professor") == 0) {
++      			Table::getInstance()->readHighScoresFile();	
++      			Table::getInstance()->getScore()->draw();
++    		}
++	     }
+         }
+         engine->swap();
+       }
