@@ -1,3 +1,7 @@
+Author: unknown
+Description: Add flags to configure.
+Last-Update: 2018-01-21 
+
 --- pinball-0.3.1.orig/configure.ac
 +++ pinball-0.3.1/configure.ac
 @@ -11,8 +11,16 @@

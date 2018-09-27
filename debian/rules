@@ -9,6 +9,11 @@ ifneq (,$(findstring alpha,$(DEB_BUILD_GNU_TYPE)))
 	CXXFLAGS += -mieee
 endif
 
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+CFLAGS += -Wall
+
 %:
 	dh $@
 
@@ -20,7 +25,7 @@ clean:
 .PHONY: override_dh_auto_configure
 override_dh_auto_configure:
 	$(RM) depcomp
-	libtoolize --install --copy
+	libtoolize --install --copy --force
 	aclocal
 	autoheader
 	automake --add-missing

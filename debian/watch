@@ -1,2 +1,2 @@
 version=3
-http://sf.net/pinball/pinball-([\d+\.]+|\d+)\.tar\.gz
+https://sf.net/pinball/pinball-([\d+\.]+|\d+)\.tar\.gz
