@@ -1,4 +1,4 @@
-Description: Add missing inlcudes of cstddef, fixing FTBFS13.1
+Description: Add missing includes of cstddef, fixing FTBFS13.1
 Author: Regis Boudin <regis@debian.org>
 Bug-Debian: http://bugs.debian.org/624953
 Bug-Debian: http://bugs.debian.org/640726

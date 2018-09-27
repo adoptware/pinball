@@ -1,0 +1,14 @@
+Description: Fix the src/Makefile.am dependencies
+Author: Adrian Bunk <bunk@debian.org>
+
+--- pinball-0.3.1.orig/src/Makefile.am
++++ pinball-0.3.1/src/Makefile.am
+@@ -9,7 +9,7 @@ pinlib_LIBRARIES = libemilia_pin.a
+ 
+ INCLUDES = -I../base -I../addon @INCLTDL@
+ 
+-pinball_LDADD = ../src/libemilia_pin.a ../addon/libemilia_addon.a ../base/libemilia_base.a @LIBLTDL@
++pinball_LDADD = libemilia_pin.a ../addon/libemilia_addon.a ../base/libemilia_base.a @LIBLTDL@
+ pinball_LDFLAGS = -export-dynamic
+ 
+ pinball_SOURCES = Pinball.cpp

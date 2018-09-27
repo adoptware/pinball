@@ -1,3 +1,7 @@
+Author: unknown
+Description: Changes on data dir.
+Last-Update: 2018-01-21 
+
 --- pinball-0.3.1.orig/base/Config.cpp
 +++ pinball-0.3.1/base/Config.cpp
 @@ -358,13 +358,6 @@
