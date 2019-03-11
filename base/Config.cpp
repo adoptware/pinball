@@ -322,8 +322,8 @@ void Config::loadConfig() {
 
 void Config::setSize(int const w, int h) { 
   if ( h == 0 ) { h = w; }
-  m_iWidth = EM_MIN(1600, EM_MAX(100,w)); 
-  m_iHeight = EM_MIN(1200, EM_MAX(100,h)); 
+  m_iWidth = EM_MIN(8000, EM_MAX(100,w)); 
+  m_iHeight = EM_MIN(4000, EM_MAX(100,h)); 
   m_iWidthDiv2 = m_iWidth/2;
   m_iHeightDiv2 = m_iHeight/2;
 }
