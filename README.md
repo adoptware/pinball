@@ -1,11 +1,9 @@
-######################################################
 # Emilia Pinball README
-######################################################
+
 
 Emilia Pinball is a open source pinball game for linux.
 
 ## Requirements
------
 
 **Hardware rendering:**
 * 300 Mhz cpu.
@@ -18,7 +16,6 @@ Emilia Pinball is a open source pinball game for linux.
 *  Latest SDL libaries, old libraries may have bugs.
 
 ## Installing and building
------
 
 It is best to remove any previous version of pinball before installing a new 
 version. If you have used a rpm-package write as root user 'rpm -e pinball'. 
@@ -48,7 +45,6 @@ make clean (if you want to save some disc space)
 The game is startet with 'pinball'.
 
 ## Default Keys
------
 
 **Esc:** Meny
 **Enter:** Launch Ball
@@ -65,7 +61,6 @@ Send bug reports (after reading faq) and comments to
 henqvist@users.sourceforge.net.
 
 ## FAQ
------
 
 Graphics card known to work: Voodoo3, Matrox G450, GeForce4.
 Compiles without problems on: RedHat 7.3, 8.0, 9.0, Debian 3.0.
