@@ -1,7 +1,7 @@
 Source: pinball
 Section: games
 Priority: optional
-Maintainer: Philippe Coval <rzr@gna.org>
+Maintainer: Philippe Coval <rzr@users.sf.net>
 X-Original-Maintainer: Jochen Friedrich <jochen@scram.de>
 Build-Depends: debhelper (>= 5),
  autoconf, automake, libtool, sp, sgmlspl, docbook, docbook-utils,
