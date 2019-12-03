@@ -13,6 +13,8 @@
 #include "Group.h"
 #include "Behavior.h"
 
+#include <cstddef>
+
 SignalSender * SignalSender::p_SignalSender = NULL;
 
 SignalSender::SignalSender() {

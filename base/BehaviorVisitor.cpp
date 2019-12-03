@@ -11,6 +11,8 @@
 #include "Behavior.h"
 #include "Group.h"
 
+#include <cstddef>
+
 BehaviorVisitor * BehaviorVisitor::p_BehaviorVisitor = NULL;
 
 BehaviorVisitor::BehaviorVisitor() {
