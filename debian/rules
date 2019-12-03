@@ -27,7 +27,7 @@ override_dh_install:
 	install -d $(CURDIR)/debian/tmp/usr/share/pixmaps
 	install -m 644 pinball.desktop $(CURDIR)/debian/tmp/usr/share/applications
 	install -m 644 data/pinball.xpm $(CURDIR)/debian/tmp/usr/share/pixmaps
-	nsgmls debian/pinball.sgml | sgmlspl sgmlspl-specs/docbook2man-spec.pl
+	onsgmls debian/pinball.sgml | sgmlspl sgmlspl-specs/docbook2man-spec.pl
 	dh_install
 
 .PHONY: override_dh_fixperms
