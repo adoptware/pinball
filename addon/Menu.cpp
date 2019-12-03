@@ -8,6 +8,7 @@
 ***************************************************************************/
 
 #include <cstring>
+#include <iostream>
 
 #include "Private.h"
 #include "Menu.h"
