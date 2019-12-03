@@ -29,7 +29,7 @@ Script.cpp \
 StateBehavior.cpp \
 Table.cpp
 
-dnl libemilia_pin_la_SOURCES = $(libemilia_pin_a_SOURCES)
+# libemilia_pin_la_SOURCES = $(libemilia_pin_a_SOURCES)
 
 pininclude_HEADERS = \
 ArmBehavior.h \
