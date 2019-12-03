@@ -12,7 +12,8 @@ Emilia Pinball is a open source pinball game for linux.
 
 **Recommended:**
 * 450 Mhz PIII.
-* Decent graphics card, voodoo3, tnt2, geforce, matrox g450 (you do not need anything superfast).
+* Decent graphics card, voodoo3, tnt2, geforce, matrox g450 (you do not need anything superfast),
+ just need be capable of hardware accelerated 3D.
 *  Latest SDL libaries, old libraries may have bugs.
 
 ## Installing and building
@@ -24,7 +25,8 @@ write as root user 'make uninstall'.
 
 _NOTE:_ A user and group named 'games' must exist before installation, this
 user and group exist by defualt on most systems else:
-useradd 'games' (as root user)
+useradd 'games' (as root user). Since hiscores as global to the system doesn't
+work you don't need user games anymore.
 
 After checking that you have the necessary libraries (SDL, SDL_IMAGE and
 SDL_MIXER) installed you are ready to install. If you have an rpm-package 
@@ -37,12 +39,16 @@ sdl-devel.x.x.x.rpm. Then install with the usual:
 Did you remember to install the development packages of SDL? Did you remember
 to install also SDL_Image and SDL_Mixer?
 
-configure
-make 
-make install (as root user)
+./bootstrap
+./configure
+make
+make install (as root ) or src/pinball
 make clean (if you want to save some disc space)
 
-The game is startet with 'pinball'.
+Note: 
+Multithread make ( make -j3 ) fixed in version 0.3.3.1
+
+The game is started with 'pinball'.
 
 ## Default Keys
 
