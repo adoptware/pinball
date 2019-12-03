@@ -43,6 +43,7 @@ class Config {
   inline const int getHeight() { return m_iHeight; };
   inline const int getWidthDiv2() { return m_iWidthDiv2; };
   inline const int getHeightDiv2() { return m_iHeightDiv2; };
+  inline float getRatio() const { return m_fRatio; };
   inline const int getBpp() { return m_iBpp; };
   inline const int getGLFilter() { return m_iGLFilter; };
   inline const int getView() { return m_iView; };
@@ -94,6 +95,7 @@ class Config {
   int m_iHeight;
   int m_iWidthDiv2;
   int m_iHeightDiv2;
+  float m_fRatio;
   int m_iBpp;
   int m_iGLFilter;
   int m_iView;

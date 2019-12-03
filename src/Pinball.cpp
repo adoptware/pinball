@@ -296,6 +296,7 @@ protected:
     case 1: config->setView(1); break;
     case 2: config->setView(2); break;
     case 3: config->setView(3); break;
+    case 4: config->setView(4); break;
     default: config->setView(0);
     }
     // texture filter
@@ -471,6 +472,7 @@ void get_config(void) {
   case 1: menuview->setCurrent(1); break;
   case 2: menuview->setCurrent(2); break;
   case 3: menuview->setCurrent(3); break;
+  case 4: menuview->setCurrent(4); break;
   default: menuview->setCurrent(0);
   }
   // texture filter
@@ -614,6 +616,7 @@ MenuItem* createMenus(Engine * engine) {
   menuview->addText(  "view:   softly moving");
   menuview->addText(  "view:          moving");
   menuview->addText(  "view:             top");
+  menuview->addText(  "view:            full");
   menugfx->addMenuItem(menuview);
 
   menuscreen = new MenuChoose(engine);
