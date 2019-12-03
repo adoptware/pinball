@@ -25,6 +25,7 @@ data/professor/libModuleProfessor.la
 data/tux/.libs/
 data/tux/Makefile
 debian/files
+debian/.debhelper/
 debian/*.debhelper.log
 debian/pinball-data.substvars
 debian/pinball-data/
@@ -37,6 +38,7 @@ debian/pinball.postrm.debhelper
 debian/pinball.substvars
 debian/pinball/
 debian/tmp/
+
 libltdl/*
 libtool
 manpage.links
