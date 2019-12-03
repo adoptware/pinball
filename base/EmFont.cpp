@@ -170,16 +170,20 @@ void EmFont::print(const char * buffer, float x, float y) {
     float u = (float)(c & 0x7)/8;
     float v = (float)(c >> 3)/8;
     //cerr << b <<" "<< c <<" "<< (char)b <<" "<< u <<" "<< v << endl;
-    
+
+    float ratio = Config::getInstance()->getRatio();
+    if (ratio >= 1 || ratio <=0) { ratio = 1.; }
+    float xbottom = (x + a*EM_FONTSIZE_X)*ratio;
+    float xtop = (x + (a+1)*EM_FONTSIZE_X)*ratio;
     glBegin(GL_QUADS);
     glTexCoord2f(u, v);
-    glVertex3f(x + a*EM_FONTSIZE_X , y, -1); 
+    glVertex3f(xbottom, y, -1); 
     glTexCoord2f(u+0.125, v);
-    glVertex3f(x + (a+1)*EM_FONTSIZE_X, y, -1); 
+    glVertex3f(xtop, y, -1); 
     glTexCoord2f(u+0.125, v+0.125);
-    glVertex3f(x + (a+1)*EM_FONTSIZE_X, y-EM_FONTSIZE_Y, -1);
+    glVertex3f(xtop, y-EM_FONTSIZE_Y, -1);
     glTexCoord2f(u, v+0.125);
-    glVertex3f(x + a*EM_FONTSIZE_X, y-EM_FONTSIZE_Y, -1);
+    glVertex3f(xbottom, y-EM_FONTSIZE_Y, -1);
     glEnd();
     //			cerr << "sork" << buffer[a] << endl;
   }

@@ -44,6 +44,14 @@
 #define RY3 0.0f
 #define RZ3 0.0f
 
+// full view
+#define TX4 0.f
+#define TY4 70.05f ///< With ratio:0.384 for 0.75 screen (768x1024)
+#define TZ4 0.0f
+#define RX4 0.25f
+#define RY4 0.0f
+#define RZ4 0.0f
+
 class Score;
 
 /**

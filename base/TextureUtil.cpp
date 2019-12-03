@@ -1,4 +1,5 @@
-//#Ident "$Id: TextureUtil.cpp,v 1.15 2003/06/18 10:43:45 henqvist Exp $"
+// -*- mode: C++; c-basic-offset: 2; indent-tabs-mode: nil -*-
+// #ident "$Id: TextureUtil.cpp $"
 /***************************************************************************
                           TextureUtil.cpp  -  description
                              -------------------
@@ -300,7 +301,12 @@ void TextureUtil::resizeView(unsigned int w, unsigned int h) {
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glFrustum(-EM_RIGHT*EM_NEAR, EM_RIGHT*EM_NEAR, -EM_UP*EM_NEAR, EM_UP*EM_NEAR,
+
+  float ratio = Config::getInstance()->getRatio();
+  if (ratio>=1 || ratio<=0) ratio=1; //TODO
+
+  glFrustum(-EM_RIGHT*EM_NEAR*ratio, EM_RIGHT*EM_NEAR*ratio,
+	    -EM_UP*EM_NEAR, EM_UP*EM_NEAR,
             EM_NEAR, EM_FAR);
   glMatrixMode(GL_MODELVIEW);
 
@@ -432,4 +438,4 @@ const char * TextureUtil::getTextureName(EmTexture * tex) {
   }
 */
 
-//EOF: $Id: TextureUtil.cpp,v 1.15 2003/06/18 10:43:45 henqvist Exp $
+// #eof "$Id: TextureUtil.cpp $
