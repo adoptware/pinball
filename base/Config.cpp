@@ -217,7 +217,8 @@ void Config::saveConfig() {
   map<string, EMKey>::iterator end = m_hKey.end();
   for (; iter != end; ++iter) {
     file << "keyboard: " << (*iter).first <<" "<< (*iter).second << endl;
-  }  
+  }
+  file << "ratio: " << m_fRatio << endl;
 }
 
 void Config::loadConfig() {
@@ -305,12 +306,15 @@ void Config::loadConfig() {
       file >> keyname;
       file >> key;
       this->setKey(keyname, (EMKey)key);
+    } else if (str == "ratio:") {
+      file >> m_fRatio;
     }
   }
   //EM_CERR("- Config::loadConfig");
 }
 
-void Config::setSize(int const w, int const h) { 
+void Config::setSize(int const w, int h) { 
+  if ( h == 0 ) { h = w; }
   m_iWidth = EM_MIN(1600, EM_MAX(100,w)); 
   m_iHeight = EM_MIN(1200, EM_MAX(100,h)); 
   m_iWidthDiv2 = m_iWidth/2;

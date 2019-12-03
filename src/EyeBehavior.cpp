@@ -1,4 +1,5 @@
-//#ident "$Id: EyeBehavior.cpp,v 1.15 2003/06/13 13:39:46 rzr Exp $"
+// -*- mode: C++; c-basic-offset: 2; indent-tabs-mode: nil -*-
+// #ident "$Id: EyeBehavior.cpp $"
 /***************************************************************************
                           EyeBehavior.cpp  -  description
                              -------------------
@@ -205,6 +206,13 @@ void EyeBehavior::onTick() {
     dz = (TZ3+bz*0.6+m_fZNudge) - cz;
     this->getParent()->addTranslation(dx*DIFF_FACTOR, dy*DIFF_FACTOR, dz*DIFF_FACTOR);
     this->getParent()->setRotation(RX3, RY3, RZ3);
+    break;
+  case 4: // full view
+    dx = (TX4+m_fXNudge) - cx;
+    dy = (TY4) - cy;
+    dz = (TZ4+m_fZNudge) - cz;
+    this->getParent()->addTranslation(dx*DIFF_FACTOR, dy*DIFF_FACTOR, dz*DIFF_FACTOR);
+    this->getParent()->setRotation(RX4, RY4, RZ4);
     break;
   default:
   case 0: // classic view
