@@ -6,6 +6,7 @@
     email                : henqvist@excite.com
  ***************************************************************************/
 
+#include <cassert>
 #include <cstring>
 #include "Private.h"
 #include "Keyboard.h"
@@ -25,11 +26,35 @@ void Keyboard::poll() {
 #if EM_USE_SDL
   SDL_Event event;
   while(SDL_PollEvent(&event)) {
-    if (event.type == SDL_KEYDOWN) {
+    switch(event.type) {
+
+    case SDL_MOUSEBUTTONDOWN:
+    case SDL_MOUSEBUTTONUP:
+      SDL_Event newEvent;
+
+      newEvent.type = (event.type == SDL_MOUSEBUTTONDOWN) ? SDL_KEYDOWN : SDL_KEYUP;
+
+      switch (event.button.button) {
+      case SDL_BUTTON_RIGHT:
+	newEvent.key.keysym.sym = SDLK_RSHIFT;
+	break;
+      case SDL_BUTTON_LEFT:
+	newEvent.key.keysym.sym = SDLK_LSHIFT;
+	break;
+      case SDL_BUTTON_MIDDLE:
+	newEvent.key.keysym.sym = SDLK_RETURN;
+	break;
+      }
+      SDL_PushEvent(&newEvent);
+      return;
+      break;
+
+    case SDL_KEYDOWN:
       m_abKey[event.key.keysym.sym] = true;
-    }
-    if (event.type == SDL_KEYUP) {
+      break;
+    case SDL_KEYUP:
       m_abKey[event.key.keysym.sym] = false;
+      break;
     }
   }
 #endif
