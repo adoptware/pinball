@@ -155,10 +155,17 @@ LIBS="$GL_LIBS $LIBS"
 
 dnl *******************************************
 dnl SDL ***************************************
-AM_PATH_SDL(1.2.0, : , AC_MSG_ERROR([*** SDL version 1.2.0 not found! Make sure you have the development package of SDL installed - (www.libsdl.org) - or try to use the --with-sdl-prefix option]))
-CFLAGS="$CFLAGS $SDL_CFLAGS"
-CPPFLAGS="$CPPFLAGS $SDL_CFLAGS"
+PKG_CHECK_MODULES([SDL],
+	[sdl >= 1.2.0],
+	[],
+	[SDL_VERSION=1.2.0
+	 AM_PATH_SDL($SDL_VERSION, :,
+		AC_MSG_ERROR([SDL version $SDL_VERSION not found! http://www.libsdl.org]))])
+
+CFLAGS="$CFLAGS $SDL_CFLAGS" 
+CPPFLAGS="$CPPFLAGS $SDL_CFLAGS" 
 LIBS="$LIBS $SDL_LIBS"
+DEP_PKGS="$DEP_PKGS sdl >= 1.2.0"
 
 dnl SDL_image *********************************
 AC_ARG_WITH(sdlimage-prefix, [  --with-sdlimage-prefix=PFX prefix where SDL_image library is installed], sdlimage_prefix="$withval", sdlimage_prefix="") 
@@ -172,9 +179,17 @@ if test x"$sdlimage_prefix" != "x"; then
 fi
 
 if test x"$enable_libtest" = x"yes"; then
-  AC_CHECK_LIB(SDL_image, IMG_Load, : ,AC_MSG_ERROR([*** libSDL_image not found! Make sure you have the development package of SDL_image installed - (www.libsdl.org) - or try to use the --with-sdlimage-prefix option]), )
+
+  PKG_CHECK_MODULES([SDL_IMAGE],
+	[SDL_image],
+	[],
+	[AC_MSG_NOTICE([SDL_image not located by pkg-config, checking with AC CHECK LIB:])
+	 AC_CHECK_LIB([SDL_image],
+		[IMG_Load],
+		[],
+		[AC_MSG_ERROR([SDL_image not found! http://www.libsdl.org/projects/SDL_image])])])
+  LIBS="$LIBS -lSDL_image"
 fi
-LIBS="$LIBS -lSDL_image"
 
 dnl SDL_mixer **********************************
 AC_ARG_WITH(sdlmixer-prefix, [  --with-sdlmixer-prefix=PFX prefix where SDL_mixer library is installed], sdlmixer_prefix="$withval", sdlmixer_prefix="")
