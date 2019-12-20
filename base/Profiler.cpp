@@ -12,7 +12,7 @@
 #include <cstdlib>
 
 #if EM_USE_SDL
-#include "SDL.h"
+#include <SDL.h>
 #endif
 
 #if EM_USE_ALLEGRO
