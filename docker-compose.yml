@@ -1,0 +1,13 @@
+# -*- coding: utf-8 -*-
+# SPDX-License-Identifier: GPL-2.0
+
+version: "2"
+
+services:
+  default:
+    build: .
+    environment:
+      - DISPLAY=unix:0
+    privileged: true      
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
