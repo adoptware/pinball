@@ -1,0 +1,29 @@
+#! /bin/sh
+# SPDX-License-Identifier: GPL-2
+set -e
+set -x
+
+[ -r acinclude.m4 ] \
+    || curl -o acinclude.m4 \
+	   https://hg.libsdl.org/SDL/raw-file/d4d66a1891fc/sdl.m4 
+
+libtoolize --version
+aclocal --version
+autoheader --version 
+automake --version
+autoconf --version
+
+rm -rf libltdl
+
+[ -r AUTHORS ] || touch AUTHORS
+[ -r ChangeLog ] || touch ChangeLog
+[ -r NEWS ] || touch NEWS
+[ -r README ] || ln -fs README.md README
+[ -r README.md ] || touch README.md
+
+libtoolize --ltdl --force --copy
+
+aclocal
+autoheader
+automake --add-missing
+autoconf
