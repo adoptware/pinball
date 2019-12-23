@@ -1,0 +1,5 @@
+pinball-table-hurd (0.0.0-1) unstable; urgency=medium
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Philippe Coval <rzr@users.sf.net>  Mon, 23 Dec 2019 23:51:35 +0100
