@@ -7,7 +7,10 @@ gnudatadir = $(datadir)/pinball/gnu
 
 gnulib_LTLIBRARIES = libModuleGnu.la
 
-AM_CPPFLAGS = -I../../base -I.../../addon -I../../src
+pinconfig = /usr/games/pinball-config
+
+AM_CPPFLAGS =
+AM_CPPFLAGS += $(shell ${pinconfig} --cflags)
 
 libModuleGnu_la_LDFLAGS = -module
 libModuleGnu_la_SOURCES = ModuleGnu.cpp
