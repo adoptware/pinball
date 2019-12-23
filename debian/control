@@ -1,0 +1,22 @@
+Source: pinball-table-gnu
+Priority: optional
+Maintainer: Philippe Coval <rzr@users.sf.net>
+Build-Depends: debhelper (>= 11)
+Standards-Version: 4.1.3
+Section: games
+Homepage: https://github.com/rzr/pinball-table-gnu
+
+Package: pinball-table-gnu
+Enhances: pinball
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends},
+ libsdl1.2-dev,
+ pinball-table-gnu-data (= ${binary:Version})
+Description: GNU Pinball table for emilia pinball
+ An other table to have fun, behaviour plugin.
+
+Package: pinball-table-gnu-data
+Architecture: all
+Depends: ${misc:Depends}
+Description: GNU Pinball table data used by plugin
+ Visual and sounds for Emilia's pinball's GNU table.
