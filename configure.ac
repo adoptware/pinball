@@ -29,10 +29,17 @@ AC_LIBTOOL_DLOPEN
 LTDL_INIT
 
 # Checks for libraries.
-AM_PATH_SDL(1.2.0, : , AC_MSG_ERROR([*** SDL version 1.2.0 not found! Make sure you have the development package of SDL installed - (www.libsdl.org) - or try to use the --with-sdl-prefix option]))
-CFLAGS="$CFLAGS $SDL_CFLAGS"
-CPPFLAGS="$CPPFLAGS $SDL_CFLAGS"
+PKG_CHECK_MODULES([SDL],
+	[sdl >= 1.2.0],
+	[],
+	[SDL_VERSION=1.2.0
+	 AM_PATH_SDL($SDL_VERSION, :,
+		AC_MSG_ERROR([SDL version $SDL_VERSION not found! http://www.libsdl.org]))])
+
+CFLAGS="$CFLAGS $SDL_CFLAGS" 
+CPPFLAGS="$CPPFLAGS $SDL_CFLAGS" 
 LIBS="$LIBS $SDL_LIBS"
+DEP_PKGS="$DEP_PKGS sdl >= 1.2.0"
 
 # Checks for header files.
 
