@@ -14,16 +14,16 @@
     email                : henqvist@excite.com
  ***************************************************************************/
 
-#include "Private.h"
-#include "Behavior.h"
-#include "Group.h"
-#include "Pinball.h"
-#include "Loader.h"
-#include "StateMachine.h"
-#include "Score.h"
-#include "Keyboard.h"
-#include "Table.h"
-#include "Config.h"
+#include <pinball/Private.h>
+#include <pinball/Behavior.h>
+#include <pinball/Group.h>
+#include <pinball/Pinball.h>
+#include <pinball/Loader.h>
+#include <pinball/StateMachine.h>
+#include <pinball/Score.h>
+#include <pinball/Keyboard.h>
+#include <pinball/Table.h>
+#include <pinball/Config.h>
 
 #define MISSION_TEXT_TIMEOUT 6000
 #define INFO_TEXT_TIME 600
