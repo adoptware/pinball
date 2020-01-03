@@ -15,18 +15,18 @@
 
 ***************************************************************************/
 
-#include "Private.h"
-//#include "Keyboard.h"
-#include "Config.h"
-#include "Behavior.h"
-#include "Group.h"
-#include "Pinball.h"
-#include "Loader.h"
-#include "StateMachine.h"
-#include "Table.h"
-#include "Score.h"
-#include "BallGroup.h"
-#include "Shape3D.h"
+#include <pinball/Private.h>
+//#include <pinball/Keyboard.h>
+#include <pinball/Config.h>
+#include <pinball/Behavior.h>
+#include <pinball/Group.h>
+#include <pinball/Pinball.h>
+#include <pinball/Loader.h>
+#include <pinball/StateMachine.h>
+#include <pinball/Table.h>
+#include <pinball/Score.h>
+#include <pinball/BallGroup.h>
+#include <pinball/Shape3D.h>
 
 /*
  *
@@ -37,8 +37,7 @@
  * 3. knock down the letters GPL.  this makes the v1, v2, v3 light up.
  * 4. fill in FREE at the bottom.  when both balls are locked in the spinners, 
  * it triggers multiball.
- *
- * when the 0, 1, 2, 3 lights are all lit up, the freedom target lights up.
+ * * when the 0, 1, 2, 3 lights are all lit up, the freedom target lights up.
  * upon hitting this target, a cylinder pops up in between the flippers.  the
  * cylinder stays up for the remainder of the game.
  *
