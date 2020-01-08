@@ -1,11 +1,11 @@
-# PINBALL-TABLE #
+# PINBALL-TABLE-GNU #
 
 
 ## INFOS ##
 
 For more details check file:
 
-  * data/*/README.txt
+  * data/gnu/README
 
 
 ## USAGE ##
