@@ -32,4 +32,4 @@ install-data-hook:
 	-if test `whoami` = root; then chgrp games $(highscoredir)/highscores; fi
 	-chmod 666 $(highscoredir)/highscores
 
-EXTRA_DIST = $(gnudata_DATA)
+EXTRA_DIST = $(hurddata_DATA)
