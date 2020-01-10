@@ -24,8 +24,7 @@ default: rule/debuild
 .PHONY: override_dh_auto_configure
 
 override_dh_autoreconf: bootstrap
-	${<D}/${<F}
-	dh_autoreconf
+	dh_autoreconf ${<D}/${<F}
 
 override_dh_auto_configure:
 	dh_auto_configure -- \
