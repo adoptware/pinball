@@ -1,4 +1,4 @@
-pinball-table-hurd (0.0.0-1) unstable; urgency=medium
+pinball-table-hurd (0.0.0-0) unstable; urgency=medium
 
   * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
 
