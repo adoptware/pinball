@@ -5,6 +5,11 @@ Upstream-Contact: https://github.com/rzr/pinball-table-hurd,
  Paolo Caroni <kenren89@gmail.com>
 Source: <https://github.com/rzr/pinball-table-hurd>
  
+Files: *
+Copyright: 2001 Henrik Enqvist <henqvist@excite.com>
+	   2019 Philippe Coval <rzr@users.sf.net>
+License: GPL-2+
+
 Files: data/hurd/bump.wav
        data/hurd/bumphard.wav
        data/hurd/bumpsoft.wav
@@ -35,7 +40,7 @@ Copyright: 2010 Paolo Caroni <kenren89@gmail.com>
            1997 Stephen McCamant
 License: CC-BY-SA-3.0
 
-       data/hurd/freesoftwaresong.*
+Files: data/hurd/freesoftwaresong.*
 Copyright: 2010 Paolo Caroni <kenren89@gmail.com>
            1993 Richard M. Stallman
 License: GPL-2+
