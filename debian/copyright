@@ -1,5 +1,8 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: pinball-table-hurd
+Upstream-Contact: https://github.com/rzr/pinball-table-hurd,
+ Philippe Coval <rzr@users.sf.net>,
+ Paolo Caroni <kenren89@gmail.com>
 Source: <https://github.com/rzr/pinball-table-hurd>
  
 Files: data/hurd/bump.wav
@@ -40,11 +43,11 @@ License: GPL-2+
 Files: data/hurd/floor.png
        data/hurd/floor3.png
        data/hurd/floor4.png
-       data/hurd/floor-room.png
+       data/hurd/floor-room.jpg
        data/hurd/floortotal.xcf
        data/hurd/sub.png
        data/hurd/tiles2.png
-       data/hurd/Wood.jpg
+       data/hurd/wood.jpg
        data/hurd/pinball.pbl
 Copyright: 2010 Paolo Caroni <kenren89@gmail.com>
 License: GPL-2+
