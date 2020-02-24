@@ -1,0 +1,3 @@
+version=4
+https://github.com/rzr/@PACKAGE@/releases \
+/rzr/@PACKAGE@/archive/@ANY_VERSION@@ARCHIVE_EXT@
