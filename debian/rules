@@ -51,6 +51,7 @@ rule/setup: /etc/debian_version
 build-essential \
 dpkg-dev \
 devscripts \
+debhelper \
 \
 autoconf \
 automake \
