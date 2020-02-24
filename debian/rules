@@ -1,5 +1,6 @@
 #!/usr/bin/make -f
 export DH_VERBOSE = 1
+DEB_BUILD_MAINT_OPTIONS += hardening=+all
 
 project?=pinball-table-gnu
 sudo?=sudo
