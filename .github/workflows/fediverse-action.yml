@@ -6,6 +6,10 @@ jobs:
   post:
     runs-on: ubuntu-latest
     steps:
-      - uses: rzr/fediverse-action@master
+      - uses: actions/checkout@v1
+      - id: log
+        run: echo "::set-output name=message::$(git log --no-merges -1 --oneline)"
+      - if: "contains(steps.log.outputs.message, 'Release ')"
+        uses: rzr/fediverse-action@master
         with:
           access-token: ${{ secrets.MASTODON_ACCESS_TOKEN }}
