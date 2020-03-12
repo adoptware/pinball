@@ -13,3 +13,4 @@ jobs:
         uses: rzr/fediverse-action@master
         with:
           access-token: ${{ secrets.MASTODON_ACCESS_TOKEN }}
+          message: "https://github.com/rzr/pinball-table-hurd/# #PinballTableHurd released ${{ steps.log.outputs.message }} ! ~ #FediVerseAction"
