@@ -4,7 +4,7 @@ DEB_BUILD_MAINT_OPTIONS += hardening=+all
 
 project?=pinball-table-gnu
 sudo?=sudo
-tarball?=${CURDIR}/../${project}_${version}.orig.tar.xz
+tarball?=${CURDIR}/../${project}_${version}.orig.tar.gz
 export tarball
 
 version?=$(shell [ -r debian/changelog ] \
@@ -36,7 +36,7 @@ override_dh_auto_configure:
 
 
 ${tarball}:
-	 tar cvfJ "$@" \
+	 tar cvfz "$@" \
 --transform "s|^./|${project}-${version}/|" \
 --exclude 'debian' --exclude-vcs \
 .
