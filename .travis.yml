@@ -1,7 +1,5 @@
 dist: bionic
 sudo: required
-addons:
-    apt:
 services:
   docker
 script:
