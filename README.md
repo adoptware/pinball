@@ -46,7 +46,7 @@ It's easy build table assuming that Emilia pinball headers installed in system.
 For Debian users building a package can be automated using:
 
 ```sh
-./debian/rules rule/setup && ./debian/rules && sudo debi
+./debian/Makefile rule/setup && ./debian/Makefile && sudo debi
 ```
 
 Then new table should be listed when you run pinball game.

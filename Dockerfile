@@ -31,17 +31,18 @@ ENV project pinball-table-gnu
 ENV workdir /usr/local/opt/${project}/src/${project}
 
 ADD debian/rules ${workdir}/debian/rules
+ADD debian/Makefile ${workdir}/debian/Makefile
 WORKDIR ${workdir}
 RUN echo "# log: ${project}: Preparing sources" \
   && set -x \
-  && ./debian/rules rule/setup \
+  && ./debian/Makefile rule/setup \
   && sync
 
 ADD . ${workdir}/
 WORKDIR ${workdir}
 RUN echo "# log: ${project}: Building sources" \
   && set -x \
-  && ./debian/rules \
+  && ./debian/Makefile \
   && sudo debi \
   && dpkg -L ${project} \
   && dpkg -L ${project}-data \
