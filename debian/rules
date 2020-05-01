@@ -34,6 +34,10 @@ override_dh_auto_configure:
 --with-cxxflags="$(CXXFLAGS)" \
 #EOL
 
+override_dh_missing:
+	rm -f debian/tmp/var/games/*/*/highscores
+	rm -f debian/tmp/usr/lib/*/*/lib*.a
+	dh_missing --fail-missing
 
 ${tarball}:
 	 tar cvfz "$@" \
