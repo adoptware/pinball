@@ -1,10 +1,12 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: pinball-table-gnu
 Source: <https://github.com/rzr/pinball-table-gnu>
+Upstream-Contact: https://github.com/rzr/pinball-table-gnu,
+ Philippe Coval <rzr@users.sf.net>,
 
 Files: *
-Copyright: <years> <put author's name and email here>
-           <years> <likewise for another author>
+Copyright: 2001 Henrik Enqvist <henqvist@excite.com>
+	   2019 Philippe Coval <rzr@users.sf.net>
 License: (GFDL or Free Art or CC-BY-SA) and GPLv3 and CC-BY-SA
  See data/gnu/README
  .
@@ -27,4 +29,3 @@ License: GPL-2+
  .
  On Debian systems, the complete text of the GNU General
  Public License version 2 can be found in "/usr/share/common-licenses/GPL-2".
- 
