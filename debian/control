@@ -6,7 +6,7 @@ Build-Depends: debhelper (>= 11),
  autoconf,
  automake,
  libtool,
- libltdl-dev (>= 2.2.6b),
+ libltdl-dev,
  libsdl1.2-dev,
  pinball-dev
 Standards-Version: 4.1.3
