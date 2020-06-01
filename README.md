@@ -1,5 +1,16 @@
 # PINBALL-TABLE-GNU #
 
+[![GitHub forks](
+https://img.shields.io/github/forks/rzr/pinball-table-gnu.svg?style=social&label=Fork&maxAge=2592000
+)](
+https://github.com/rzr/pinball-table-gnu
+)
+[![Fediverse](
+https://mastodon.social/@rzr/103765397111911239#pinball-table-gnu#
+)](
+https://img.shields.io/mastodon/follow/279303?domain=https%3A%2F%2Fmastodon.social&style=social#
+)
+
 ## INFOS ##
 
 GNU Pinball table for emilia pinball
@@ -49,5 +60,6 @@ docker-compose up --build
 ## RESOURCES ##
 
 - <https://pinball.sf.net>
+- <https://purl.org/rzr/pinball>
 - <https://github.com/rzr/pinball/issues/4>
 - <https://mastodon.social/@rzr/103448015175182101>
