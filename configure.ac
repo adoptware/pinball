@@ -4,7 +4,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT(pinball-table-gnu, 0.0.0, [[pinball.sf.net]])
+AC_INIT(pinball-table-gnu, 0.0.20200601, [[pinball.sf.net]])
 AC_CONFIG_SRCDIR([data/gnu/ModuleGnu.cpp])
 AC_CONFIG_HEADERS([config.h])
 LT_CONFIG_LTDL_DIR([libltdl])
