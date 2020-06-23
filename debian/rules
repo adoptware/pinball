@@ -20,21 +20,18 @@ CFLAGS += -Wall
 .PHONY: clean
 clean:
 	dh clean
-	rm -rf libltdl
+	rm -rf libltdl 
+	rm -f compile depcomp
+
+override_dh_autoreconf: bootstrap
+	dh_autoreconf ${<D}/${<F}
 
 .PHONY: override_dh_auto_configure
 override_dh_auto_configure:
-	$(RM) depcomp
-	libtoolize --install --copy --force
-	aclocal
-	autoheader
-	automake --add-missing
-	autoconf
 	dh_auto_configure -- --bindir=/usr/games --datadir=/usr/share/games --with-cflags="$(CFLAGS)" --with-cxxflags="$(CXXFLAGS)"
 
 .PHONY: override_dh_install
 override_dh_install:
-	sed -i "/dependency_libs/s/'.*'/''/" $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/pinball/*.la
 	install -d $(CURDIR)/debian/tmp/usr/share/applications
 	install -d $(CURDIR)/debian/tmp/usr/share/pixmaps
 	install -m 644 pinball.desktop $(CURDIR)/debian/tmp/usr/share/applications
