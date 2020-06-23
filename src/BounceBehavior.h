@@ -49,6 +49,7 @@ class BounceBehavior : public Behavior {
   int m_iDirFactor;
   int m_iCollisionPrio;
   bool m_bFire;
+  bool m_bStopped; 
 };
 
 #endif // BounceBehavior

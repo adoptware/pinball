@@ -101,6 +101,14 @@
 #define SDLK_RCTRL KEY_RCONTROL
 #define SDLK_COMPOSE KEY_ALTGR
 
+#define SDLK_F1 KEY_F1
+#define SDLK_F2 KEY_F2
+#define SDLK_F3 KEY_F3
+#define SDLK_F3 KEY_F4
+#define SDLK_F1 KEY_F5
+#define SDLK_F2 KEY_F6
+#define SDLK_F3 KEY_F7
+#define SDLK_F3 KEY_F8
 
 #endif // EM_USE_ALLEGRO
 

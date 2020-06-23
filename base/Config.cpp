@@ -1,4 +1,4 @@
-//#ident "$Id: Config.cpp,v 1.27 2003/05/28 05:21:25 henqvist Exp $"
+//#ident "$Id: Config.cpp,v 1.29 2003/06/13 13:39:44 rzr Exp $"
 /***************************************************************************
                           Config.cpp  -  description
                              -------------------
@@ -38,6 +38,7 @@ Config::Config() {
   m_sDataDir = "";
   m_sSubDir = "";
   m_sDataSubDir = "";
+  m_sExeDir = "";
 }
 
 Config::~Config() {
@@ -55,13 +56,15 @@ void Config::setDefault() {
   // Default values
   this->setSize(640, 480);
   this->setSound(8);
-  this->setMusic(4);
+  this->setMusic(8);
   this->setBpp(16);
   this->setGLFilter(EM_LINEAR);
   this->setView(0);
   this->setFullScreen(false);
   m_bExternGL = false;
-  this->setDataDir(EM_DATADIR);
+#ifndef RZR_PATHRELATIVE
+  this->setDataDir(EM_DATADIR);  //!rzr is it usefull, ! belongs to user cfg?
+#endif
   this->setLights(true);
   this->setBrightness(0.5f);
   this->setShowFPS(false);
@@ -74,13 +77,14 @@ void Config::setDefault() {
   string const rightnudge("rightnudge");
   string const launch("launch");
   string const reset("reset");
+
   this->setKey(leftflip, SDLK_LSHIFT);
   this->setKey(rightflip, SDLK_RSHIFT);
   this->setKey(bottomnudge, SDLK_SPACE);
   this->setKey(leftnudge, SDLK_LCTRL);
   this->setKey(rightnudge, SDLK_RCTRL);
   this->setKey(launch, SDLK_RETURN);
-  this->setKey(reset, SDLK_r);
+  this->setKey(reset, SDLK_r); // !rzr why not use Return
 }
 
 void Config::setDataDir(const char* ch) { 
@@ -114,68 +118,76 @@ char const * const Config::getKeyCommonName(EMKey key) {
   return SDL_GetKeyName(key);
 #endif // EM_USESDL
 #if EM_USE_ALLEGRO
-	switch(key) {
-	case SDLK_a: return "a";
-	case SDLK_b: return "b";
-	case SDLK_c: return "c";
-	case SDLK_d: return "d";
-	case SDLK_e: return "e";
-	case SDLK_f: return "f";
-	case SDLK_g: return "g";
-	case SDLK_h: return "h";
-	case SDLK_i: return "i";
-	case SDLK_j: return "j";
-	case SDLK_k: return "k";
-	case SDLK_l: return "l";
-	case SDLK_m: return "m";
-	case SDLK_n: return "n";
-	case SDLK_o: return "o";
-	case SDLK_p: return "p";
-	case SDLK_q: return "q";
-	case SDLK_r: return "r";
-	case SDLK_s: return "s";
-	case SDLK_t: return "t";
-	case SDLK_u: return "u";
-	case SDLK_v: return "v";
-	case SDLK_w: return "w";
-	case SDLK_x: return "x";
-	case SDLK_y: return "y";
-	case SDLK_z: return "z";
-	case SDLK_0: return "0";
-	case SDLK_1: return "1";
-	case SDLK_2: return "2";
-	case SDLK_3: return "3";
-	case SDLK_4: return "4";
-	case SDLK_5: return "5";
-	case SDLK_6: return "6";
-	case SDLK_7: return "7";
-	case SDLK_8: return "8";
-	case SDLK_9: return "9";
-	case SDLK_RETURN: return "return";
-	case SDLK_SPACE: return "space";
-	case SDLK_LSHIFT: return "left shift";
-	case SDLK_RSHIFT: return "right shift";
-	}
+  switch(key) {
+  case SDLK_a: return "a";
+  case SDLK_b: return "b";
+  case SDLK_c: return "c";
+  case SDLK_d: return "d";
+  case SDLK_e: return "e";
+  case SDLK_f: return "f";
+  case SDLK_g: return "g";
+  case SDLK_h: return "h";
+  case SDLK_i: return "i";
+  case SDLK_j: return "j";
+  case SDLK_k: return "k";
+  case SDLK_l: return "l";
+  case SDLK_m: return "m";
+  case SDLK_n: return "n";
+  case SDLK_o: return "o";
+  case SDLK_p: return "p";
+  case SDLK_q: return "q";
+  case SDLK_r: return "r";
+  case SDLK_s: return "s";
+  case SDLK_t: return "t";
+  case SDLK_u: return "u";
+  case SDLK_v: return "v";
+  case SDLK_w: return "w";
+  case SDLK_x: return "x";
+  case SDLK_y: return "y";
+  case SDLK_z: return "z";
+  case SDLK_0: return "0";
+  case SDLK_1: return "1";
+  case SDLK_2: return "2";
+  case SDLK_3: return "3";
+  case SDLK_4: return "4";
+  case SDLK_5: return "5";
+  case SDLK_6: return "6";
+  case SDLK_7: return "7";
+  case SDLK_8: return "8";
+  case SDLK_9: return "9";
+  case SDLK_RETURN: return "return";
+  case SDLK_SPACE: return "space";
+  case SDLK_LSHIFT: return "left shift";
+  case SDLK_RSHIFT: return "right shift";
+  }
   return "unknown";
 #endif
 }
 
 void Config::saveConfig() {
-  string filename;
+
+  string dirname = string(".emilia/"); 
+  string filename = string(PACKAGE_NAME);
 
 #if HAVE_SYS_STAT_H && HAVE_SYS_TYPES_H
   char const * const home = getenv("HOME");
   if (home != NULL) {
     // TODO unsafe
-    filename = string(home) + string("/.emilia");
-    mkdir(filename.c_str(), S_IRUSR | S_IWUSR |S_IXUSR);
-    filename = string(home) + string("/.emilia/") + string(PACKAGE_NAME); 
+    dirname = string(home) + '/' + dirname;
+    mkdir(dirname.c_str(), S_IRUSR | S_IWUSR |S_IXUSR);
   } else {
+#ifdef RZR_PATHRELATIVE //!rzr: check w32 config save (TODO)
+    dirname = m_sExeDir + '/' ;
+    filename = string(PACKAGE_NAME) + ".cfg";
+#else
     cerr << "Could not find environment variable HOME." << endl;
     cerr << "Not able to read or write config file" << endl;
     return;
+#endif
   }
 #endif
+
+  filename = dirname  + filename;
 
   ofstream file(filename.c_str());
   if (!file) {
@@ -212,23 +224,31 @@ void Config::loadConfig() {
   // loading default fixes possible problems with missing values in config file
   this->setDefault();
 
-  string filename;
+  string dirname = string(".emilia/"); 
+  string filename = string(PACKAGE_NAME);
+
+#if HAVE_SYS_STAT_H && HAVE_SYS_TYPES_H
   char const * const home = getenv("HOME");
-  if (home != NULL) {
-    // TODO unsafe
-    filename = string(home) + string("/.emilia");
-    mkdir(filename.c_str(), S_IRUSR | S_IWUSR | S_IXUSR);
-    filename = string(home) + string("/.emilia/") + string(PACKAGE_NAME);
+  if (home != NULL) {    // TODO unsafe
+    dirname = string(home) + '/' + dirname;
   } else {
+#ifdef RZR_PATHRELATIVE //!rzr: check w32 config save (TODO)
+    dirname = m_sExeDir + '/' ;
+    filename = string(PACKAGE_NAME) + ".cfg";
+#else
     cerr << "Could not find environment variable HOME." << endl;
     cerr << "Not able to read or write config file" << endl;
     return;
+#endif
   }
+#endif
+
+  filename = dirname  + filename;
 
   ifstream file(filename.c_str());
   if (!file) {
-    //cerr << "Couldn't open config file: " << filename << endl;
-    //cerr << "Using default values" <<  endl;
+    cerr << "Couldn't open config file: " << filename << endl;
+    cerr << "Using default values" <<  endl;
     return;
   }
 
@@ -287,6 +307,7 @@ void Config::loadConfig() {
       this->setKey(keyname, (EMKey)key);
     }
   }
+  //EM_CERR("- Config::loadConfig");
 }
 
 void Config::setSize(int const w, int const h) { 
@@ -304,7 +325,7 @@ void Config::loadArgs(int & argc, char *argv[]) {
 
 
 #ifdef RZR_PATHRELATIVE
-//!+rzr this workaround Full path to relative ones, usefull for windows port
+  //!+rzr this workaround Full path to relative ones, usefull for windows port
   setPaths( argv[0] );
 #endif //!-rzr
 
@@ -372,6 +393,7 @@ void Config::loadArgs(int & argc, char *argv[]) {
   //   em_width_div2_ = m_iWidth/2;
   //   em_height_div2_ = m_iHeight/2;
 #undef REMOVEARG
+  //EM_CERR("- Config::loadArgs");
 }
 
 ///!+rzr this workaround Full path to relative ones, usefull for windows port
@@ -379,51 +401,60 @@ bool isAbsolutePath(char const * const argv0 ) ;
 bool isAbsolutePath(char const * const argv0 ) 
 {
   //EM_COUT(" check root drive c:\\ // absolute path -  check for wine ?", 42);
+  bool t = false;
 #ifdef WIN32
-	// assert (strlen (argv0) > 3 );
+  // assert (strlen (argv0) > 3 );
   if ( ( *(argv0 +1) == ':' ) && ( *(argv0 +2)  == '\\' ) )
     return  true;
 #endif 
   if ( *argv0  == '/' )  // WIN32 @ unix wine/ cygwine
-    return true;
+    t = true;
   // check for macs, amigas  etc
-  return false;
+  //cout<<"- isAbsolutePath"<<endl;
+  return t;
 }
 /// TODO; make it more robust for stranges paths 
 /// (ie "c:\\d/i//r\like\\\\this/\\/") , wine virtual pc etc
 void Config::setPaths(char const * const argv0) {
-  EM_COUT("+ Config::getFullPath",0); 
+  // EM_CERR("+ Config::setPath"); 
   //!+rzr : make it work also in relative paths use
-  // and "/long path/brackets" etc
+  // and "/long path/quoted/paths/" etc
   //EM_COUT( argv0 , 0);
-  m_sDataDir = EM_DATADIR;
-  
+  m_sDataDir = string(EM_DATADIR) + "/";
+  m_sExeDir = "./";
   if ( *( m_sDataDir.c_str() ) != '/' ) {
     char* ptr=0; 
-    EM_COUT("relative to exe file",42);
+    char* ptrw = 0;
+    //cout<<"relative to exe file"<<endl;
+    ptr = (strrchr(argv0,'/')); // unix /cygwin / check win32 
 #ifdef WIN32
-    ptr = (strrchr(argv0,'\\')); 
-#endif
-    if ( ptr == 0 ) ptr = (strrchr(argv0,'/')); // unix /cygwin / check win32 
+    ptrw = (strrchr(argv0,'\\')); 
+#endif //TODO: MacOS file sep ':'   
+    if ( ptrw > ptr ) ptr = ptrw;
     //    assert( (*ptr != 0) );
     string path( argv0 , ptr - argv0 );
-    EM_COUT( path , 42);    
+    //EM_COUT( path , 42);    
     if ( isAbsolutePath( argv0 ) ) {
-      m_sDataDir = path + "/" + EM_DATADIR; 
+      m_sExeDir = path ;
     } else {  
-      EM_COUT("relative path from cwd",42);
+      //EM_COUT("relative path from cwd",42);
       char cwd[256]; 
-			getcwd(cwd,256); // TODO check for buffer overflow
-      m_sDataDir = string(cwd) + "/" +  path + "/" + EM_DATADIR;
+      getcwd(cwd,256); // TODO check for buffer overflow
+      m_sExeDir = string(cwd) + '/' +  path ;
     }
-  } else { m_sDataDir =  EM_DATADIR; }
-  m_sDataSubDir = m_sDataDir + "/" + m_sSubDir;
+    m_sDataDir = m_sExeDir + '/' + string(EM_DATADIR) ;
+  } else {  // cout<<"absolute path"<<endl;
+    m_sDataDir =  string(EM_DATADIR) ;
+  }
+  m_sDataSubDir = m_sDataDir  + "/"  + m_sSubDir ;
+  
 #ifdef WIN32 // !+rzr Path are backlashed 
   // but works fine that way on wine and win98
   // m_sDataSubDir.replace (  m_sDataSubDir.find(/,0) , 1,   \\  );
   // m_sDataDir.replace (  m_sDataDir.find(\\,0) , 1,   /  );
 #endif 
-  EM_COUT( m_sDataDir, 42);
-  EM_COUT("- Config::getFullPath",0);
+ 
+  // EM_CERR("- Config::setPath"); // EM_CERR( m_sExeDir); EM_CERR( m_sDataDir);
 } //!-rzr
 
+//EOF:$Id: Config.cpp,v 1.29 2003/06/13 13:39:44 rzr Exp $

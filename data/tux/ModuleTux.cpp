@@ -18,6 +18,7 @@
 #include "Config.h"
 
 #define MISSION_TEXT_TIMEOUT 6000
+#define INFO_TEXT_TIME 600
 
 enum {
   MISSION_FIRST_BUMP=1,
@@ -29,8 +30,12 @@ enum {
   MISSION_THIRD_BUMP,
   MISSION_RAMP_ARROWS,
   MISSION_THIRD_CAVE,
-	MISSION_FOURTH_BUMP,
+  MISSION_FOURTH_BUMP,
   MISSION_FOURTH_CAVE,
+  MISSION_FOURTH_ARROWS,
+  MISSION_FIFTH_BUMP,
+  MISSION_FIFTH_ALL,
+  MISSION_FIFTH_CAVE,
   MISSION_ALL
 };
 
@@ -95,6 +100,7 @@ public:
     m_sigMultiplier[2] = loader->getSignal("multiplier3");
     m_sigMultiplier[3] = loader->getSignal("multiplier4");
     m_sigMultiplier[4] = loader->getSignal("multiplier5");
+    m_sigMissionAll = loader->getSignal("mission_all");
     m_sigBigTuxOn[0] = loader->getSignal("big_tux_1_on");
     m_sigBigTuxOn[1] = loader->getSignal("big_tux_2_on");
     m_sigBigTuxOn[2] = loader->getSignal("big_tux_3_on");
@@ -129,21 +135,36 @@ public:
     m_sigArrow[2] = loader->getSignal("arrow_3");
     m_sigArrow[3] = loader->getSignal("arrow_4");
     m_sigArrow[4] = loader->getSignal("arrow_5");
+    m_sigArrow[5] = loader->getSignal("arrow_6");
+    m_sigArrow[6] = loader->getSignal("arrow_7");
+    m_sigArrow[7] = loader->getSignal("arrow_8");
     m_sigArrowOn[0] = loader->getSignal("arrow_1_on");
     m_sigArrowOn[1] = loader->getSignal("arrow_2_on");
     m_sigArrowOn[2] = loader->getSignal("arrow_3_on");
     m_sigArrowOn[3] = loader->getSignal("arrow_4_on");
     m_sigArrowOn[4] = loader->getSignal("arrow_5_on");
+    m_sigArrowOn[5] = loader->getSignal("arrow_6_on");
+    m_sigArrowOn[6] = loader->getSignal("arrow_7_on");
+    m_sigArrowOn[7] = loader->getSignal("arrow_8_on");
     m_sigArrowOff[0] = loader->getSignal("arrow_1_off");
     m_sigArrowOff[1] = loader->getSignal("arrow_2_off");
     m_sigArrowOff[2] = loader->getSignal("arrow_3_off");
     m_sigArrowOff[3] = loader->getSignal("arrow_4_off");
     m_sigArrowOff[4] = loader->getSignal("arrow_5_off");
+    m_sigArrowOff[5] = loader->getSignal("arrow_6_off");
+    m_sigArrowOff[6] = loader->getSignal("arrow_7_off");
+    m_sigArrowOff[7] = loader->getSignal("arrow_8_off");
     m_sigArrowBlink[0] = loader->getSignal("arrow_1_blink");
     m_sigArrowBlink[1] = loader->getSignal("arrow_2_blink");
     m_sigArrowBlink[2] = loader->getSignal("arrow_3_blink");
     m_sigArrowBlink[3] = loader->getSignal("arrow_4_blink");
     m_sigArrowBlink[4] = loader->getSignal("arrow_5_blink");
+    m_sigArrowBlink[5] = loader->getSignal("arrow_6_blink");
+    m_sigArrowBlink[6] = loader->getSignal("arrow_7_blink");
+    m_sigArrowBlink[7] = loader->getSignal("arrow_8_blink");
+    m_sigMissionCave = loader->getSignal("mission_cave");
+    m_sigStopBalls = loader->getSignal("stop_balls");
+    m_sigResumeBalls = loader->getSignal("resume_balls");
 
     this->clear();
   };
@@ -157,44 +178,44 @@ public:
     // launch ball
     string launch("launch");
     if (table->active() == 0 && 
-				table->getCurrentBall() < MAX_BALL) {
+	table->getCurrentBall() < MAX_BALL) {
       switch (table->getCurrentBall()) {
       case 0 :
-				if (table->isBallDead(0) ) {
-					SendSignal( m_sigGameStart, 0, this->getParent(), NULL );
-					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-					table->activateBall(0, 19.5f, 0.0f, 30.0f);	
-					//score->clearText();
-					break;
-				}	
+	if (table->isBallDead(0) ) {
+	  SendSignal( m_sigGameStart, 0, this->getParent(), NULL );
+	  SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
+	  table->activateBall(0, 19.5f, 0.0f, 30.0f);	
+	  //score->clearText();
+	  break;
+	}	
       case 1 :
-				if (table->isBallDead(1)) {
-					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-					table->activateBall(1, 19.5f, 0.0f, 30.0f);
-					//score->clearText();
-					break;
-				}
+	if (table->isBallDead(1)) {
+	  SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
+	  table->activateBall(1, 19.5f, 0.0f, 30.0f);
+	  //score->clearText();
+	  break;
+	}
       case 2 :
-				if (table->isBallDead(2)) {
-					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-					table->activateBall(2, 19.5f, 0.0f, 30.0f);
-					//score->clearText();
-					break;
-				}
-				if (table->isBallDead(0) ) {
-					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-					table->activateBall(0, 19.5f, 0.0f, 30.0f);	
-					//score->clearText();
-					break;
-				}	
-				if (table->isBallDead(1)) {
-					SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
-					table->activateBall(1, 19.5f, 0.0f, 30.0f);
-					//score->clearText();
-					break;
-				}
+	if (table->isBallDead(2)) {
+	  SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
+	  table->activateBall(2, 19.5f, 0.0f, 30.0f);
+	  //score->clearText();
+	  break;
+	}
+	if (table->isBallDead(0) ) {
+	  SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
+	  table->activateBall(0, 19.5f, 0.0f, 30.0f);	
+	  //score->clearText();
+	  break;
+	}	
+	if (table->isBallDead(1)) {
+	  SendSignal( PBL_SIG_BALL_ON, 0, this->getParent(), NULL );
+	  table->activateBall(1, 19.5f, 0.0f, 30.0f);
+	  //score->clearText();
+	  break;
+	}
       default:
-				throw string("TuxBehavior::onTick() all balls busy");
+	throw string("TuxBehavior::onTick() all balls busy");
       }
       EM_COUT("ModuleTux::onTick() new ball", 1);
     }
@@ -203,41 +224,65 @@ public:
     if (m_iMission == MISSION_RAMP_ARROWS) {
       ++m_iRampTick;
       if (m_iRampTick >= 2000) {
-				if (m_aArrow[3]) {
-					m_aArrow[3] = false;
-					SendSignal( m_sigArrowOff[4], 0, this->getParent(), NULL );
-					SendSignal( m_sigArrowBlink[3], 0, this->getParent(), NULL );
-					m_iRampTick = 0;
-				} else if (m_aArrow[2]) {
-					m_aArrow[2] = false;
-					SendSignal( m_sigArrowOff[3], 0, this->getParent(), NULL );
-					SendSignal( m_sigArrowBlink[2], 0, this->getParent(), NULL );
-					m_iRampTick = 0;
-				}
+	if (m_aArrow[3]) {
+	  m_aArrow[3] = false;
+	  SendSignal( m_sigArrowOff[4], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowBlink[3], 0, this->getParent(), NULL );
+	  m_iRampTick = 0;
+	} else if (m_aArrow[2]) {
+	  m_aArrow[2] = false;
+	  SendSignal( m_sigArrowOff[3], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowBlink[2], 0, this->getParent(), NULL );
+	  m_iRampTick = 0;
+	}
       }      
     }
-		++m_iMissionTick;
-		if (m_iMissionTick >= MISSION_TEXT_TIMEOUT) {
-			m_iMissionTick = 0;
-			switch (m_iMission) {
-			case MISSION_FIRST_BUMP: 
-			case MISSION_SECOND_BUMP:
-			case MISSION_THIRD_BUMP:
-			case MISSION_FOURTH_BUMP:
-				score->setInfoText("hit bumpers", 600); break;
-			case MISSION_FIRST_CAVE: 
-			case MISSION_SECOND_CAVE:
-			case MISSION_THIRD_CAVE:
-			case MISSION_FOURTH_CAVE:
-				score->setInfoText("shoot left cave to release tux", 600); break;
-			case MISSION_ARROWS:
-				score->setInfoText("follow blue arrows", 600); break;
-			case MISSION_SIDETARGETS:
-				score->setInfoText("hit blue targets", 600); break;
-			case MISSION_RAMP_ARROWS:
-				score->setInfoText("follow blue arrows, hurry up", 600); break;
-			}
-		}
+    if (m_iMission == MISSION_FOURTH_ARROWS) {
+      ++m_iRampTick;
+      if (m_iRampTick >= 2000) {
+	if (m_aArrow[6]) {
+	  m_aArrow[6] = false;
+	  SendSignal( m_sigArrowOff[7], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowBlink[6], 0, this->getParent(), NULL );
+	  m_iRampTick = 0;
+	} else if (m_aArrow[5]) {
+	  m_aArrow[5] = false;
+	  SendSignal( m_sigArrowOff[6], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowBlink[5], 0, this->getParent(), NULL );
+	  m_iRampTick = 0;
+	}
+      }      
+    }
+
+    ++m_iMissionTick;
+    if (m_iMissionTick >= MISSION_TEXT_TIMEOUT) {
+      m_iMissionTick = 0;
+      switch (m_iMission) {
+      case MISSION_FIRST_BUMP: 
+      case MISSION_SECOND_BUMP:
+      case MISSION_THIRD_BUMP:
+      case MISSION_FOURTH_BUMP:
+      case MISSION_FIFTH_BUMP:
+	score->setInfoText("hit bumpers", INFO_TEXT_TIME); break;
+      case MISSION_FIRST_CAVE: 
+      case MISSION_SECOND_CAVE:
+      case MISSION_THIRD_CAVE:
+      case MISSION_FOURTH_CAVE:
+      case MISSION_FIFTH_CAVE:
+	score->setInfoText("shoot left cave to release tux", INFO_TEXT_TIME); break; 
+      case MISSION_ARROWS:
+	score->setInfoText("follow blue arrows", INFO_TEXT_TIME); break;
+      case MISSION_SIDETARGETS:
+	score->setInfoText("hit blue targets", INFO_TEXT_TIME); break;
+      case MISSION_RAMP_ARROWS:
+      case MISSION_FOURTH_ARROWS:
+	score->setInfoText("follow blue arrows, hurry up", INFO_TEXT_TIME); break;
+      case MISSION_FIFTH_ALL:
+	score->setInfoText("hit all of them", INFO_TEXT_TIME); break;
+      case MISSION_ALL:
+	score->setInfoText("you did it, all penguins released!", INFO_TEXT_TIME); break;
+      }
+    }
   };
   
   void StdEmptyOnCollision() {};
@@ -254,36 +299,36 @@ public:
     // ball dead
     ElseOnSignal( PBL_SIG_BALL_OFF ) {
       if (table->active() == 1) {
-				// multiball is dead
-				SendSignal( m_sigMultiballOff, 0, this->getParent(), NULL );
-				m_bMultiBallOn = false;
+	// multiball is dead
+	SendSignal( m_sigMultiballOff, 0, this->getParent(), NULL );
+	m_bMultiBallOn = false;
       }
       if (table->active() == 0) {
-				// no active ball
-				SendSignal( m_sigAllBallsOff, 0, this->getParent(), NULL );
-				if (m_bExtraBall) {
-					m_bExtraBall = false;
-				} else if (table->getCurrentBall() < MAX_BALL) {
-					table->setCurrentBall(table->getCurrentBall()+1);
-					if (table->getCurrentBall() == MAX_BALL) {
-						SendSignal( PBL_SIG_GAME_OVER, 0, this->getParent(), NULL );
-						EM_COUT("game over", 1);
-					}
-				}
+	// no active ball
+	SendSignal( m_sigAllBallsOff, 0, this->getParent(), NULL );
+	if (m_bExtraBall) {
+	  m_bExtraBall = false;
+	} else if (table->getCurrentBall() < MAX_BALL) {
+	  table->setCurrentBall(table->getCurrentBall()+1);
+	  if (table->getCurrentBall() == MAX_BALL) {
+	    SendSignal( PBL_SIG_GAME_OVER, 0, this->getParent(), NULL );
+	    EM_COUT("game over", 1);
+	  }
+	}
       }
     } 
     // multiball
-		ElseOnSignal( m_sigHead ) {
-			score->setInfoText("shoot head to lock ball", 600);
-		}		
-		ElseOnSignal( m_sigLock[0] ) {
-			score->setInfoText("first ball locked", 600);
-		}		
-		ElseOnSignal( m_sigLock[1] ) {
-			score->setInfoText("second ball locked", 600);
-		}		
+    ElseOnSignal( m_sigHead ) {
+      score->setInfoText("shoot head to lock ball", INFO_TEXT_TIME);
+    }		
+    ElseOnSignal( m_sigLock[0] ) {
+      score->setInfoText("first ball locked", INFO_TEXT_TIME);
+    }		
+    ElseOnSignal( m_sigLock[1] ) {
+      score->setInfoText("second ball locked", INFO_TEXT_TIME);
+    }		
     ElseOnSignal( m_sigReleaseLock ) {
-			score->setInfoText("multiball", 600);
+      score->setInfoText("multiball", INFO_TEXT_TIME);
       table->unLockBall(0);
       table->unLockBall(1);
       table->unLockBall(2);
@@ -295,62 +340,109 @@ public:
       score->addScore(350 * m_iMultiplier);
       // missions
       if (m_iMission == MISSION_FIRST_BUMP) {
-				++m_iBumpCounter;
-				if (m_iBumpCounter == 10) {
-					m_iBumpCounter = 0;
-					m_iMission = MISSION_ARROWS;
-					SendSignal( m_sigArrowBlink[0], 0, this->getParent(), NULL );
-					SendSignal( m_sigArrowBlink[1], 0, this->getParent(), NULL );
-					//cerr << "side arrows blink" << endl;
-					m_iMissionTick = MISSION_TEXT_TIMEOUT;
-				}
+	++m_iBumpCounter;
+	if (m_iBumpCounter == 10) {
+	  m_iBumpCounter = 0;
+	  m_iMission = MISSION_ARROWS;
+	  SendSignal( m_sigArrowBlink[0], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowBlink[1], 0, this->getParent(), NULL );
+	  //cerr << "side arrows blink" << endl;
+	  m_iMissionTick = MISSION_TEXT_TIMEOUT;
+	}
       }
       if (m_iMission == MISSION_SECOND_BUMP) {
-				++m_iBumpCounter;
-				if (m_iBumpCounter == 10) {
-					m_iBumpCounter = 0;
-					m_iMission = MISSION_SIDETARGETS;
-					SendSignal( m_sigSideTargetBlink[0], 0, this->getParent(), NULL );
-					SendSignal( m_sigSideTargetBlink[1], 0, this->getParent(), NULL );
-					SendSignal( m_sigSideTargetBlink[2], 0, this->getParent(), NULL );
-					SendSignal( m_sigSideTargetBlink[3], 0, this->getParent(), NULL );
-					//cerr << "side targets blink" << endl;
-					m_iMissionTick = MISSION_TEXT_TIMEOUT;
-				}
+	++m_iBumpCounter;
+	if (m_iBumpCounter == 10) {
+	  m_iBumpCounter = 0;
+	  m_iMission = MISSION_SIDETARGETS;
+	  SendSignal( m_sigSideTargetBlink[0], 0, this->getParent(), NULL );
+	  SendSignal( m_sigSideTargetBlink[1], 0, this->getParent(), NULL );
+	  SendSignal( m_sigSideTargetBlink[2], 0, this->getParent(), NULL );
+	  SendSignal( m_sigSideTargetBlink[3], 0, this->getParent(), NULL );
+	  //cerr << "side targets blink" << endl;
+	  m_iMissionTick = MISSION_TEXT_TIMEOUT;
+	}
       }
       if (m_iMission == MISSION_THIRD_BUMP) {
-				++m_iBumpCounter;
-				if (m_iBumpCounter == 10) {
-					m_iBumpCounter = 0;
-					m_iMission = MISSION_RAMP_ARROWS;
-					SendSignal( m_sigArrowBlink[2], 0, this->getParent(), NULL );
-					//cerr << "side ramp arrows blink" << endl;
-					m_iMissionTick = MISSION_TEXT_TIMEOUT;
-				}
+	++m_iBumpCounter;
+	if (m_iBumpCounter == 10) {
+	  m_iBumpCounter = 0;
+	  m_iMission = MISSION_RAMP_ARROWS;
+	  SendSignal( m_sigArrowBlink[2], 0, this->getParent(), NULL );
+	  //cerr << "side ramp arrows blink" << endl;
+	  m_iMissionTick = MISSION_TEXT_TIMEOUT;
+	}
+      }
+      if (m_iMission == MISSION_FOURTH_BUMP) {
+	++m_iBumpCounter;
+	if (m_iBumpCounter == 10) {
+	  m_iBumpCounter = 0;
+	  m_iMission = MISSION_FOURTH_ARROWS;
+	  SendSignal( m_sigArrowBlink[5], 0, this->getParent(), NULL );
+	  //cerr << "right ramp arrows blink" << endl;
+	  m_iMissionTick = MISSION_TEXT_TIMEOUT;
+	}
+      }
+      if (m_iMission == MISSION_FIFTH_BUMP) {
+	++m_iBumpCounter;
+	if (m_iBumpCounter == 10) {
+	  m_iBumpCounter = 0;
+	  m_iMission = MISSION_FIFTH_ALL;
+	  SendSignal( m_sigSideTargetBlink[0], 0, this->getParent(), NULL );
+	  SendSignal( m_sigSideTargetBlink[1], 0, this->getParent(), NULL );
+	  SendSignal( m_sigSideTargetBlink[2], 0, this->getParent(), NULL );
+	  SendSignal( m_sigSideTargetBlink[3], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowBlink[0], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowBlink[1], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowBlink[2], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowBlink[3], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowBlink[4], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowBlink[5], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowBlink[6], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowBlink[7], 0, this->getParent(), NULL );
+	  //cerr << "right ramp arrows blink" << endl;
+	  m_iMissionTick = MISSION_TEXT_TIMEOUT;
+	}
       }
     }
     // cave
     ElseOnSignal(m_sigCave) {
       if (m_iMission == MISSION_FIRST_CAVE) {
-				SendSignal( m_sigBigTuxOn[0], 0, this->getParent(), NULL );
-				score->setInfoText("first tux saved", 600);
-				score->addScore(30000);
-				m_iMission = MISSION_SECOND_BUMP;
-				m_iMissionTick = MISSION_TEXT_TIMEOUT;
+	SendSignal( m_sigBigTuxOn[0], 0, this->getParent(), NULL );
+	score->setInfoText("first tux saved", INFO_TEXT_TIME);
+	score->addScore(40000);
+	m_iMission = MISSION_SECOND_BUMP;
+	m_iMissionTick = MISSION_TEXT_TIMEOUT - INFO_TEXT_TIME;
       }
       if (m_iMission == MISSION_SECOND_CAVE) {
-				SendSignal( m_sigBigTuxOn[1], 0, this->getParent(), NULL );
-				score->setInfoText("second tux saved", 600);
-				score->addScore(6000);
-				m_iMission = MISSION_THIRD_BUMP;
-				m_iMissionTick = MISSION_TEXT_TIMEOUT;
-      }
+	SendSignal( m_sigBigTuxOn[1], 0, this->getParent(), NULL );
+	score->setInfoText("second tux saved", INFO_TEXT_TIME);
+	score->addScore(50000);
+	m_iMission = MISSION_THIRD_BUMP;
+	m_iMissionTick = MISSION_TEXT_TIMEOUT - INFO_TEXT_TIME;
+      } 
       if (m_iMission == MISSION_THIRD_CAVE) {
-				SendSignal( m_sigBigTuxOn[2], 0, this->getParent(), NULL );
-				score->setInfoText("third tux saved", 600);
-				score->addScore(50000);
-				m_iMission = MISSION_ALL;
-				m_iMissionTick = MISSION_TEXT_TIMEOUT;
+	SendSignal( m_sigBigTuxOn[2], 0, this->getParent(), NULL );
+	score->setInfoText("third tux saved", INFO_TEXT_TIME);
+	score->addScore(60000);
+	m_iMission = MISSION_FOURTH_BUMP;
+	m_iMissionTick = MISSION_TEXT_TIMEOUT - INFO_TEXT_TIME;
+      }
+      if (m_iMission == MISSION_FOURTH_CAVE) {
+	SendSignal( m_sigBigTuxOn[3], 0, this->getParent(), NULL );
+	score->setInfoText("fourth tux saved", INFO_TEXT_TIME);
+	score->addScore(70000);
+	m_iMission = MISSION_FIFTH_BUMP;
+	m_iMissionTick = MISSION_TEXT_TIMEOUT - INFO_TEXT_TIME;
+      }
+      if (m_iMission == MISSION_FIFTH_CAVE) {
+	SendSignal( m_sigMissionAll, 0, this->getParent(), NULL );
+	//SendSignal( m_sigStopBalls, 0, this->getParent(), NULL );
+	//SendSignal( m_sigResumeBalls, 1000, this->getParent(), NULL );
+	score->setInfoText("all tuxes saved", INFO_TEXT_TIME);
+	score->addScore(500000);
+	m_iMission = MISSION_ALL;
+	m_iMissionTick = MISSION_TEXT_TIMEOUT - INFO_TEXT_TIME;
       }
       score->addScore(1750);
     }
@@ -520,6 +612,33 @@ public:
 	m_bExtraBallWaiting = false;
       }
       score->addScore(2500);
+      if (m_iMission == MISSION_FOURTH_ARROWS) {
+	m_iRampTick = 0;
+	if (m_aArrow[6]) {
+	  SendSignal( m_sigArrowOff[5], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowOff[6], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowOff[7], 0, this->getParent(), NULL );
+	  SendSignal( m_sigBigTuxBlink[3], 0, this->getParent(), NULL );
+	  m_iMission = MISSION_FOURTH_CAVE;
+	  SendSignal( m_sigMissionCave, 0, this->getParent(), NULL );
+	  m_iMissionTick = MISSION_TEXT_TIMEOUT;
+	  m_aArrow[5] = m_aArrow[6] = m_aArrow[7] = false;
+	} else if (m_aArrow[5]) {
+	  m_aArrow[6] = true;
+	  SendSignal( m_sigArrowBlink[7], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowOn[6], 0, this->getParent(), NULL );
+	} else {
+	  m_aArrow[5] = true;
+	  SendSignal( m_sigArrowBlink[6], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowOn[5], 0, this->getParent(), NULL );
+	}
+      }
+      if (m_iMission == MISSION_FIFTH_ALL) {
+	SendSignal( m_sigArrowOn[5], 0, this->getParent(), NULL );
+	SendSignal( m_sigArrowOn[6], 0, this->getParent(), NULL );
+	SendSignal( m_sigArrowOn[7], 0, this->getParent(), NULL );
+	m_aArrow[5] = m_aArrow[6] = m_aArrow[7] = true;
+      }
     } 
     ElseOnSignal(m_sigLeftLoop) {
       if (m_bMultiBallOn) {
@@ -528,63 +647,70 @@ public:
       }
       score->addScore(2500);
       if (m_iMission == MISSION_RAMP_ARROWS) {
-				m_iRampTick = 0;
-				if (m_aArrow[3]) {
-					SendSignal( m_sigArrowOff[2], 0, this->getParent(), NULL );
-					SendSignal( m_sigArrowOff[3], 0, this->getParent(), NULL );
-					SendSignal( m_sigArrowOff[4], 0, this->getParent(), NULL );
-					SendSignal( m_sigBigTuxBlink[2], 0, this->getParent(), NULL );
-					m_iMission = MISSION_THIRD_CAVE;
-					m_iMissionTick = MISSION_TEXT_TIMEOUT;
-					m_aArrow[2] = m_aArrow[3] = m_aArrow[4] = false;
-				} else if (m_aArrow[2]) {
-					m_aArrow[3] = true;
-					SendSignal( m_sigArrowBlink[4], 0, this->getParent(), NULL );
-					SendSignal( m_sigArrowOn[3], 0, this->getParent(), NULL );
-				} else {
-					m_aArrow[2] = true;
-					SendSignal( m_sigArrowBlink[3], 0, this->getParent(), NULL );
-					SendSignal( m_sigArrowOn[2], 0, this->getParent(), NULL );
-				}
+	m_iRampTick = 0;
+	if (m_aArrow[3]) {
+	  SendSignal( m_sigArrowOff[2], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowOff[3], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowOff[4], 0, this->getParent(), NULL );
+	  SendSignal( m_sigBigTuxBlink[2], 0, this->getParent(), NULL );
+	  m_iMission = MISSION_THIRD_CAVE;
+	  SendSignal( m_sigMissionCave, 0, this->getParent(), NULL );
+	  m_iMissionTick = MISSION_TEXT_TIMEOUT;
+	  m_aArrow[2] = m_aArrow[3] = m_aArrow[4] = false;
+	} else if (m_aArrow[2]) {
+	  m_aArrow[3] = true;
+	  SendSignal( m_sigArrowBlink[4], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowOn[3], 0, this->getParent(), NULL );
+	} else {
+	  m_aArrow[2] = true;
+	  SendSignal( m_sigArrowBlink[3], 0, this->getParent(), NULL );
+	  SendSignal( m_sigArrowOn[2], 0, this->getParent(), NULL );
+	}
+      }
+      if (m_iMission == MISSION_FIFTH_ALL) {
+	SendSignal( m_sigArrowOn[2], 0, this->getParent(), NULL );
+	SendSignal( m_sigArrowOn[3], 0, this->getParent(), NULL );
+	SendSignal( m_sigArrowOn[4], 0, this->getParent(), NULL );
+	m_aArrow[2] = m_aArrow[3] = m_aArrow[4] = true;
       }
     }
     // Side Targets
     ElseOnSignal(m_sigSideTarget[0]) {
-      if (m_iMission == MISSION_SIDETARGETS) {
-				m_aSideTarget[0] = true;
+      if (m_iMission == MISSION_SIDETARGETS || m_iMission == MISSION_FIFTH_ALL) {
+	m_aSideTarget[0] = true;
       }
       score->addScore(350*m_iMultiplier);
     }
     ElseOnSignal(m_sigSideTarget[1]) {
-      if (m_iMission == MISSION_SIDETARGETS) {
-				m_aSideTarget[1] = true;
+      if (m_iMission == MISSION_SIDETARGETS || m_iMission == MISSION_FIFTH_ALL) {
+	m_aSideTarget[1] = true;
       }
       score->addScore(350*m_iMultiplier);
     }
     ElseOnSignal(m_sigSideTarget[2]) {
-      if (m_iMission == MISSION_SIDETARGETS) {
-				m_aSideTarget[2] = true;
+      if (m_iMission == MISSION_SIDETARGETS || m_iMission == MISSION_FIFTH_ALL) {
+	m_aSideTarget[2] = true;
       }
       score->addScore(350*m_iMultiplier);
     }
     ElseOnSignal(m_sigSideTarget[3]) {
-      if (m_iMission == MISSION_SIDETARGETS) {
-				m_aSideTarget[3] = true;
+      if (m_iMission == MISSION_SIDETARGETS || m_iMission == MISSION_FIFTH_ALL) {
+	m_aSideTarget[3] = true;
       }
       score->addScore(350*m_iMultiplier);
     }
     // Arrows
     ElseOnSignal(m_sigArrow[0]) {
-      if (m_iMission == MISSION_ARROWS) {
-				SendSignal( m_sigArrowOn[0], 0, this->getParent(), NULL );
-				m_aArrow[0] = true;
+      if (m_iMission == MISSION_ARROWS || m_iMission == MISSION_FIFTH_ALL) {
+	SendSignal( m_sigArrowOn[0], 0, this->getParent(), NULL );
+	m_aArrow[0] = true;
       }
       score->addScore(750);
     }
     ElseOnSignal(m_sigArrow[1]) {
-      if (m_iMission == MISSION_ARROWS) {
-				SendSignal( m_sigArrowOn[1], 0, this->getParent(), NULL );
-				m_aArrow[1] = true;
+      if (m_iMission == MISSION_ARROWS || m_iMission == MISSION_FIFTH_ALL) {
+	SendSignal( m_sigArrowOn[1], 0, this->getParent(), NULL );
+	m_aArrow[1] = true;
       }
       score->addScore(750);
     }
@@ -596,12 +722,13 @@ public:
       SendSignal( m_sigBigTuxBlink[0], 0, this->getParent(), NULL );
       m_aArrow[0] = m_aArrow[1] = false;
       m_iMission = MISSION_FIRST_CAVE;
-			m_iMissionTick = MISSION_TEXT_TIMEOUT;
+      SendSignal( m_sigMissionCave, 0, this->getParent(), NULL );
+      m_iMissionTick = MISSION_TEXT_TIMEOUT;
     }
 
     // Side targets all
     if (m_aSideTarget[0] && m_aSideTarget[1] && m_aSideTarget[2] && m_aSideTarget[3] &&
-				m_iMission == MISSION_SIDETARGETS) {
+	m_iMission == MISSION_SIDETARGETS) {
       SendSignal( m_sigSideTargetOff[0], 0, this->getParent(), NULL );
       SendSignal( m_sigSideTargetOff[1], 0, this->getParent(), NULL );
       SendSignal( m_sigSideTargetOff[2], 0, this->getParent(), NULL );
@@ -609,9 +736,34 @@ public:
       SendSignal( m_sigBigTuxBlink[1], 0, this->getParent(), NULL );
       m_aSideTarget[0] = m_aSideTarget[1] = m_aSideTarget[2] = m_aSideTarget[3] = false;
       m_iMission = MISSION_SECOND_CAVE;
-			m_iMissionTick = MISSION_TEXT_TIMEOUT;
+      SendSignal( m_sigMissionCave, 0, this->getParent(), NULL );
+      m_iMissionTick = MISSION_TEXT_TIMEOUT;
     }
     
+    // last mission all
+    if (m_iMission == MISSION_FIFTH_ALL &&
+	m_aSideTarget[0] && m_aSideTarget[1] && m_aSideTarget[2] && m_aSideTarget[3] &&
+	m_aArrow[0] && m_aArrow[1] && m_aArrow[2] && m_aArrow[3] && 
+	m_aArrow[4] && m_aArrow[5] && m_aArrow[6] && m_aArrow[7]) {
+      SendSignal( m_sigSideTargetOff[0], 0, this->getParent(), NULL );
+      SendSignal( m_sigSideTargetOff[1], 0, this->getParent(), NULL );
+      SendSignal( m_sigSideTargetOff[2], 0, this->getParent(), NULL );
+      SendSignal( m_sigSideTargetOff[3], 0, this->getParent(), NULL );
+      SendSignal( m_sigArrowOff[0], 0, this->getParent(), NULL );
+      SendSignal( m_sigArrowOff[1], 0, this->getParent(), NULL );
+      SendSignal( m_sigArrowOff[2], 0, this->getParent(), NULL );
+      SendSignal( m_sigArrowOff[3], 0, this->getParent(), NULL );
+      SendSignal( m_sigArrowOff[4], 0, this->getParent(), NULL );
+      SendSignal( m_sigArrowOff[5], 0, this->getParent(), NULL );
+      SendSignal( m_sigArrowOff[6], 0, this->getParent(), NULL );
+      SendSignal( m_sigArrowOff[7], 0, this->getParent(), NULL );
+      m_aSideTarget[0] = m_aSideTarget[1] = m_aSideTarget[2] = m_aSideTarget[3] = false;
+      m_aArrow[0] = m_aArrow[1] = m_aArrow[2] = m_aArrow[3] =
+	m_aArrow[4] = m_aArrow[5] = m_aArrow[6] = m_aArrow[7] = false;
+      m_iMission = MISSION_FIFTH_CAVE;
+      SendSignal( m_sigMissionCave, 0, this->getParent(), NULL );
+    }
+
     // TUX all
     if (m_aTux[0] && m_aTux[1] && m_aTux[2]) {
       SendSignal(m_sigTuxAll, 0, this->getParent(), NULL);
@@ -626,21 +778,21 @@ public:
       m_aLinux[0] = m_aLinux[1] = m_aLinux[2] = m_aLinux[3] = m_aLinux[4] = false;
       switch (m_iMultiplier) {
       case 1: 
-				m_iMultiplier = 2;
-				SendSignal(m_sigMultiplier[1], 0, this->getParent(), NULL);
-				break;
+	m_iMultiplier = 2;
+	SendSignal(m_sigMultiplier[1], 0, this->getParent(), NULL);
+	break;
       case 2: 
-				m_iMultiplier = 3;
-				SendSignal(m_sigMultiplier[2], 0, this->getParent(), NULL);
-				break;
+	m_iMultiplier = 3;
+	SendSignal(m_sigMultiplier[2], 0, this->getParent(), NULL);
+	break;
       case 3: 
-				m_iMultiplier = 4;
-				SendSignal(m_sigMultiplier[3], 0, this->getParent(), NULL);
-				break;
+	m_iMultiplier = 4;
+	SendSignal(m_sigMultiplier[3], 0, this->getParent(), NULL);
+	break;
       case 4: 
-				m_iMultiplier = 5;
-				SendSignal(m_sigMultiplier[4], 0, this->getParent(), NULL);
-				break;
+	m_iMultiplier = 5;
+	SendSignal(m_sigMultiplier[4], 0, this->getParent(), NULL);
+	break;
       }
       score->addScore(5000);
     }
@@ -676,15 +828,18 @@ public:
     m_aArrow[2] = false;
     m_aArrow[3] = false;
     m_aArrow[4] = false;
+    m_aArrow[5] = false;
+    m_aArrow[6] = false;
+    m_aArrow[7] = false;
     m_bExtraBall = false;
     m_bExtraBallWaiting = false;
     m_bMultiBallOn = false;
     m_iMission = MISSION_FIRST_BUMP;
-    //m_iMission = MISSION_THIRD_BUMP;
+    //m_iMission = MISSION_FIFTH_BUMP;
     m_iMissionTextCounter = 0;
     m_iBumpCounter = 0;
     m_iRampTick = 0;
-		m_iMissionTick = 0;
+    m_iMissionTick = 0;
   };
 
 private:
@@ -713,6 +868,7 @@ private:
   int m_sigBootOn[4];
   int m_sigBootOff[4];
   int m_sigMultiplier[5];
+  int m_sigMissionAll;
   int m_sigBigTuxOn[4];
   int m_sigBigTuxOff[4];
   int m_sigBigTuxBlink[4];
@@ -721,15 +877,18 @@ private:
   int m_sigSideTargetOff[4];
   int m_sigSideTargetBlink[4];
   int m_sigCave;
-  int m_sigArrow[5];
-  int m_sigArrowOn[5];
-  int m_sigArrowOff[5];
-  int m_sigArrowBlink[5];
+  int m_sigArrow[8];
+  int m_sigArrowOn[8];
+  int m_sigArrowOff[8];
+  int m_sigArrowBlink[8];
+  int m_sigMissionCave;
+  int m_sigStopBalls;
+  int m_sigResumeBalls;
   bool m_aLinux[5];
   bool m_aBoot[4];
   bool m_aTux[3];
   bool m_aSideTarget[4];
-  bool m_aArrow[5];
+  bool m_aArrow[8];
   bool m_bExtraBall;
   bool m_bExtraBallWaiting;
   bool m_bMultiBallOn;
@@ -737,7 +896,7 @@ private:
   int m_iMissionTextCounter;
   int m_iBumpCounter;
   int m_iRampTick;
-	int m_iMissionTick;
+  int m_iMissionTick;
 };
 
 extern "C"  void * new_object_fct(void) {

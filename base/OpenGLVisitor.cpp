@@ -102,113 +102,118 @@ void OpenGLVisitor::visit(Group* g) {
       if (EM_SHAPE3D_HIDDEN & (*shapeIter)->m_iProperties) continue;
 
       if ((*shapeIter)->m_iProperties & EM_SHAPE3D_BEHIND) {
-	glEnable(GL_POLYGON_OFFSET_FILL);
-	glPolygonOffset(1.0, 1.0);
+        glEnable(GL_POLYGON_OFFSET_FILL);
+        glPolygonOffset(1.0, 1.0);
       } else if ((*shapeIter)->m_iProperties & EM_SHAPE3D_BEHIND2) {
-	glEnable(GL_POLYGON_OFFSET_FILL);
-	glPolygonOffset(1.0, 2.0);
+        glEnable(GL_POLYGON_OFFSET_FILL);
+        glPolygonOffset(1.0, 2.0);
       } else {
-	glDisable(GL_POLYGON_OFFSET_FILL);
+        glDisable(GL_POLYGON_OFFSET_FILL);
       }
 
-      vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
-      vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
-
       if ((*shapeIter)->m_Texture != NULL && filter != -1) { // textured polygons	
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, *((*shapeIter)->m_Texture));
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, *((*shapeIter)->m_Texture));
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) { // EM_SHAPE3D_ALWAYSLIT
-	  for ( ; polyIter != polyEnd; ++polyIter) {
-	    if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
+        if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) { // EM_SHAPE3D_ALWAYSLIT
+          vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
+          vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
+          for ( ; polyIter != polyEnd; ++polyIter) {
+            if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
 #if EM_DEBUG
-	    ++m_iPoly;
+            ++m_iPoly;
 #endif
-	    vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
-	    vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
-	    glBegin(GL_POLYGON);
-	    for ( ; indexIter != indexEnd; ++indexIter) {
-	      glTexCoord2f((*shapeIter)->m_vTexCoord[(*indexIter)].u,
-			   (*shapeIter)->m_vTexCoord[(*indexIter)].v);
-	      glColor3f((*shapeIter)->m_vColor[(*indexIter)].r,
-			(*shapeIter)->m_vColor[(*indexIter)].g,
-			(*shapeIter)->m_vColor[(*indexIter)].b);
-	      glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
-			 (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
-			 (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
-	    }
-	    glEnd();
-	  }
-	} else { // ! EM_SHAPE3D_ALWAYSLIT
-	  for ( ; polyIter != polyEnd; ++polyIter) {
-	    if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
+            vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
+            vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
+            glBegin(GL_POLYGON);
+            for ( ; indexIter != indexEnd; ++indexIter) {
+              glTexCoord2f((*shapeIter)->m_vTexCoord[(*indexIter)].u,
+                           (*shapeIter)->m_vTexCoord[(*indexIter)].v);
+              glColor3f((*shapeIter)->m_vColor[(*indexIter)].r,
+                        (*shapeIter)->m_vColor[(*indexIter)].g,
+                        (*shapeIter)->m_vColor[(*indexIter)].b);
+              glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
+                         (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
+                         (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
+            }
+            glEnd();
+          }
+        } else { // ! EM_SHAPE3D_ALWAYSLIT
+          vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
+          vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
+          for ( ; polyIter != polyEnd; ++polyIter) {
+            if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
 #if EM_DEBUG
-	    ++m_iPoly;
+            ++m_iPoly;
 #endif
-	    vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
-	    vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
-	    glBegin(GL_POLYGON);
-	    for ( ; indexIter != indexEnd; ++indexIter) {
-	      glTexCoord2f((*shapeIter)->m_vTexCoord[(*indexIter)].u,
-			   (*shapeIter)->m_vTexCoord[(*indexIter)].v);
-	      // Question should textured polygons have specular?
-	      glColor3f((*shapeIter)->m_vLight[(*indexIter)].r,
-			(*shapeIter)->m_vLight[(*indexIter)].g,
-			(*shapeIter)->m_vLight[(*indexIter)].b);
-	      glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
-			 (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
-			 (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
-	    }
-	    glEnd();
-	  }
-	}
+            vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
+            vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
+            glBegin(GL_POLYGON);
+            for ( ; indexIter != indexEnd; ++indexIter) {
+              glTexCoord2f((*shapeIter)->m_vTexCoord[(*indexIter)].u,
+                           (*shapeIter)->m_vTexCoord[(*indexIter)].v);
+              // Question should textured polygons have specular?
+              glColor3f((*shapeIter)->m_vLight[(*indexIter)].r,
+                        (*shapeIter)->m_vLight[(*indexIter)].g,
+                        (*shapeIter)->m_vLight[(*indexIter)].b);
+              glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
+                         (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
+                         (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
+            }
+            glEnd();
+          }
+        }
       } else { // if ((*shapeIter)->m_Texture... // color polygons
-	glDisable(GL_TEXTURE_2D);
-	// if statement moved outside for loop for performance
-	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) { // EM_SHAPE3D_ALWAYSLIT
-	  for ( ; polyIter != polyEnd; ++polyIter) {
-	    if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
+        glDisable(GL_TEXTURE_2D);
+        // if statement moved outside for loop for performance
+        if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) { // EM_SHAPE3D_ALWAYSLIT
+          vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
+          vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
+          for ( ; polyIter != polyEnd; ++polyIter) {
+            if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
 #if EM_DEBUG
-	    ++m_iPoly;
+            ++m_iPoly;
 #endif
-	    vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
-	    vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
-	    glBegin(GL_POLYGON);
-	    for (; indexIter != indexEnd; ++indexIter) {
-	      glColor3f((*shapeIter)->m_vColor[(*indexIter)].r, 
-			(*shapeIter)->m_vColor[(*indexIter)].g, 
-			(*shapeIter)->m_vColor[(*indexIter)].b);
-	      glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
-			 (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
-			 (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
-	    }
-	    glEnd();
-	  }
-	} else { // ! EM_SHAPE3D_ALWAYSLIT
-	  for ( ; polyIter != polyEnd; ++polyIter) {
-	    if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
+            vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
+            vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
+            glBegin(GL_POLYGON);
+            for (; indexIter != indexEnd; ++indexIter) {
+              glColor3f((*shapeIter)->m_vColor[(*indexIter)].r, 
+                        (*shapeIter)->m_vColor[(*indexIter)].g, 
+                        (*shapeIter)->m_vColor[(*indexIter)].b);
+              glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
+                         (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
+                         (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
+            }
+            glEnd();
+          }
+        } else { // ! EM_SHAPE3D_ALWAYSLIT
+          vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
+          vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
+          for ( ; polyIter != polyEnd; ++polyIter) {
+            if ((*polyIter)->m_iProperties & EM_POLY_TRANS) continue;
 #if EM_DEBUG
-	    ++m_iPoly;
+            ++m_iPoly;
 #endif
-	    vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
-	    vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
-	    glBegin(GL_POLYGON);
-	    for (; indexIter != indexEnd; ++indexIter) {
-	      glColor3f((*shapeIter)->m_vLitColor[(*indexIter)].r, 
-			(*shapeIter)->m_vLitColor[(*indexIter)].g, 
-			(*shapeIter)->m_vLitColor[(*indexIter)].b);
-	      glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
-			 (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
-			 (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
-	    }
-	    glEnd();
-	  }
-	}
+            vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
+            vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
+            glBegin(GL_POLYGON);
+            for (; indexIter != indexEnd; ++indexIter) {
+              glColor3f((*shapeIter)->m_vLitColor[(*indexIter)].r, 
+                        (*shapeIter)->m_vLitColor[(*indexIter)].g, 
+                        (*shapeIter)->m_vLitColor[(*indexIter)].b);
+              glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
+                         (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
+                         (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
+            }
+            glEnd();
+          }
+        }
       }
     }
     // billboard
@@ -228,148 +233,176 @@ void OpenGLVisitor::visit(Group* g) {
       glBegin(GL_POLYGON);
       glTexCoord2f(0, 0);
       glVertex3f(b->m_vtxAlign.x - b->m_fSizexD2, 
-		 b->m_vtxAlign.y + b->m_fSizeyD2, 
-		 b->m_vtxAlign.z);
+                 b->m_vtxAlign.y + b->m_fSizeyD2, 
+                 b->m_vtxAlign.z);
       glTexCoord2f(1, 0);
       glVertex3f(b->m_vtxAlign.x + b->m_fSizexD2, 
-		 b->m_vtxAlign.y + b->m_fSizeyD2, 
-		 b->m_vtxAlign.z);
+                 b->m_vtxAlign.y + b->m_fSizeyD2, 
+                 b->m_vtxAlign.z);
       glTexCoord2f(1, 1);
       glVertex3f(b->m_vtxAlign.x + b->m_fSizexD2, 
-		 b->m_vtxAlign.y - b->m_fSizeyD2, 
-		 b->m_vtxAlign.z);
+                 b->m_vtxAlign.y - b->m_fSizeyD2, 
+                 b->m_vtxAlign.z);
       glTexCoord2f(0, 1);
       glVertex3f(b->m_vtxAlign.x - b->m_fSizexD2, 
-		 b->m_vtxAlign.y - b->m_fSizeyD2, 
-		 b->m_vtxAlign.z);
+                 b->m_vtxAlign.y - b->m_fSizeyD2, 
+                 b->m_vtxAlign.z);
       glEnd();
 			
       EM_COUT_D("OpenGLVisitor::visit() BillBoard at " << b->m_vtxAlign.x <<" "<<
-		b->m_vtxAlign.y <<" "<< b->m_vtxAlign.z, 0);
+                b->m_vtxAlign.y <<" "<< b->m_vtxAlign.z, 0);
     }
   } break;
   case EM_GL_GCOL_TEX_TRANS: {
     vector<Shape3D*>::iterator shapeIter = g->m_vShape3D.begin();
     vector<Shape3D*>::iterator shapeEnd = g->m_vShape3D.end();
     for ( ; shapeIter != shapeEnd; shapeIter++) {
+
       if (EM_SHAPE3D_HIDDEN & (*shapeIter)->m_iProperties) continue;
       if (!(EM_SHAPE3D_USE_TRANS & (*shapeIter)->m_iProperties)) continue;
+#if 0 // I used wireframes when showing some demos in school
+      {
+        // wireframe
+        glEnable(GL_POLYGON_OFFSET_FILL);
+        glPolygonOffset(1.0, -1.0);
+        vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
+        vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
+        for ( ; polyIter != polyEnd; ++polyIter) {
+          ++m_iPoly;
+          glColor3f(0.0f, 0.0f, 0.0f);
+          vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
+          vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
+          glBegin(GL_LINE_LOOP);
+          for ( ; indexIter != indexEnd; ++indexIter) {
+            glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
+                       (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
+                       (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
+          }
+          glEnd();
+        }
+        glDisable(GL_POLYGON_OFFSET_FILL);
+      }
+#endif
 
       if ((*shapeIter)->m_iProperties & EM_SHAPE3D_BEHIND) {
-	glEnable(GL_POLYGON_OFFSET_FILL);
-	glPolygonOffset(1.0, 1.0);
+        glEnable(GL_POLYGON_OFFSET_FILL);
+        glPolygonOffset(1.0, 1.0);
       } else if ((*shapeIter)->m_iProperties & EM_SHAPE3D_BEHIND2) {
-	glEnable(GL_POLYGON_OFFSET_FILL);
-	glPolygonOffset(1.0, 2.0);
+        glEnable(GL_POLYGON_OFFSET_FILL);
+        glPolygonOffset(1.0, 2.0);
       } else {
-	glDisable(GL_POLYGON_OFFSET_FILL);
+        glDisable(GL_POLYGON_OFFSET_FILL);
       }
 
-      vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
-      vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
       if ((*shapeIter)->m_Texture != NULL && filter != -1) { // textured polygon
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, *((*shapeIter)->m_Texture));
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, *((*shapeIter)->m_Texture));
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 				
-	vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
-	vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
-	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) { // EM_SHAPE3D_ALWAYSLIT
-	  for ( ; polyIter != polyEnd; polyIter++) {
-	    if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
+        if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) { // EM_SHAPE3D_ALWAYSLIT
+          vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
+          vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
+          for ( ; polyIter != polyEnd; polyIter++) {
+            if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
 #if EM_DEBUG
-	    ++m_iPoly;
+            ++m_iPoly;
 #endif
-	    // textured polygon
-	    vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
-	    vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
-	    glBegin(GL_POLYGON);
-	    for ( ; indexIter != indexEnd; indexIter++) {
-	      glTexCoord2f((*shapeIter)->m_vTexCoord[(*indexIter)].u, 
-			   (*shapeIter)->m_vTexCoord[(*indexIter)].v);
-	      glColor4f((*shapeIter)->m_vColor[(*indexIter)].r,
-			(*shapeIter)->m_vColor[(*indexIter)].g,
-			(*shapeIter)->m_vColor[(*indexIter)].b,
-			(*shapeIter)->m_vColor[(*indexIter)].a);
-	      glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
-			 (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
-			 (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
-	    }
-	    glEnd();
-	  }
-	} else { // ! EM_SHAPE3D_ALWAYSLIT
-	  for ( ; polyIter != polyEnd; polyIter++) {
-	    if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
+            // textured polygon
+            vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
+            vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
+            glBegin(GL_POLYGON);
+            for ( ; indexIter != indexEnd; indexIter++) {
+              glTexCoord2f((*shapeIter)->m_vTexCoord[(*indexIter)].u, 
+                           (*shapeIter)->m_vTexCoord[(*indexIter)].v);
+              glColor4f((*shapeIter)->m_vColor[(*indexIter)].r,
+                        (*shapeIter)->m_vColor[(*indexIter)].g,
+                        (*shapeIter)->m_vColor[(*indexIter)].b,
+                        (*shapeIter)->m_vColor[(*indexIter)].a);
+              glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
+                         (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
+                         (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
+            }
+            glEnd();
+          }
+        } else { // ! EM_SHAPE3D_ALWAYSLIT
+          vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
+          vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
+          for ( ; polyIter != polyEnd; polyIter++) {
+            if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
 #if EM_DEBUG
-	    ++m_iPoly;
+            ++m_iPoly;
 #endif
-	    // textured polygon
-	    vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
-	    vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
-	    glBegin(GL_POLYGON);
-	    for ( ; indexIter != indexEnd; indexIter++) {
-	      glTexCoord2f((*shapeIter)->m_vTexCoord[(*indexIter)].u, 
-			   (*shapeIter)->m_vTexCoord[(*indexIter)].v);
-	      glColor4f((*shapeIter)->m_vLight[(*indexIter)].r,
-			(*shapeIter)->m_vLight[(*indexIter)].g,
-			(*shapeIter)->m_vLight[(*indexIter)].b,
-			(*shapeIter)->m_vLight[(*indexIter)].a);
-	      glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
-			 (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
-			 (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
-	    }
-	    glEnd();
-	  }
-	}
+            // textured polygon
+            vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
+            vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
+            glBegin(GL_POLYGON);
+            for ( ; indexIter != indexEnd; indexIter++) {
+              glTexCoord2f((*shapeIter)->m_vTexCoord[(*indexIter)].u, 
+                           (*shapeIter)->m_vTexCoord[(*indexIter)].v);
+              glColor4f((*shapeIter)->m_vLight[(*indexIter)].r,
+                        (*shapeIter)->m_vLight[(*indexIter)].g,
+                        (*shapeIter)->m_vLight[(*indexIter)].b,
+                        (*shapeIter)->m_vLight[(*indexIter)].a);
+              glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
+                         (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
+                         (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
+            }
+            glEnd();
+          }
+        }
       } else { // color polygon
-	glDisable(GL_TEXTURE_2D);
-	if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) {
-	  for ( ; polyIter != polyEnd; polyIter++) {
-	    if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
+        glDisable(GL_TEXTURE_2D);
+        if ((*shapeIter)->m_iProperties & EM_SHAPE3D_ALWAYSLIT) {
+          vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
+          vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
+          for ( ; polyIter != polyEnd; polyIter++) {
+            if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
 #if EM_DEBUG
-	    ++m_iPoly;
+            ++m_iPoly;
 #endif
-	    vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
-	    vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
-	    glBegin(GL_POLYGON);
-	    for ( ; indexIter != indexEnd; indexIter++) {
-	      // transparent polygons should not be lit, or ?
-	      glColor4f((*shapeIter)->m_vColor[(*indexIter)].r,
-			(*shapeIter)->m_vColor[(*indexIter)].g,
-			(*shapeIter)->m_vColor[(*indexIter)].b,
-			(*shapeIter)->m_vColor[(*indexIter)].a);
-	      glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
-			 (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
-			 (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
-	    }
-	    glEnd();
-	  }
-	} else { // EM_SHAPE3D_ALWAYSLIT
-	  for ( ; polyIter != polyEnd; polyIter++) {
-	    if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
+            vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
+            vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
+            glBegin(GL_POLYGON);
+            for ( ; indexIter != indexEnd; indexIter++) {
+              // transparent polygons should not be lit, or ?
+              glColor4f((*shapeIter)->m_vColor[(*indexIter)].r,
+                        (*shapeIter)->m_vColor[(*indexIter)].g,
+                        (*shapeIter)->m_vColor[(*indexIter)].b,
+                        (*shapeIter)->m_vColor[(*indexIter)].a);
+              glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
+                         (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
+                         (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
+            }
+            glEnd();
+          }
+        } else { // EM_SHAPE3D_ALWAYSLIT
+          vector<Polygon3D*>::iterator polyIter = (*shapeIter)->m_vPolygon.begin();
+          vector<Polygon3D*>::iterator polyEnd = (*shapeIter)->m_vPolygon.end();
+          for ( ; polyIter != polyEnd; polyIter++) {
+            if (!((*polyIter)->m_iProperties & EM_POLY_TRANS)) continue;
 #if EM_DEBUG
-	    ++m_iPoly;
+            ++m_iPoly;
 #endif
-	    vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
-	    vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
-	    glBegin(GL_POLYGON);
-	    for ( ; indexIter != indexEnd; indexIter++) {
-	      // transparent polygons should not be lit, or ?
-	      glColor4f((*shapeIter)->m_vLitColor[(*indexIter)].r,
-			(*shapeIter)->m_vLitColor[(*indexIter)].g,
-			(*shapeIter)->m_vLitColor[(*indexIter)].b,
-			(*shapeIter)->m_vLitColor[(*indexIter)].a);
-	      glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
-			 (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
-			 (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
-	    }
-	    glEnd();
-	  }
-	}
+            vector<int>::iterator indexIter = (*polyIter)->m_vIndex.begin();
+            vector<int>::iterator indexEnd = (*polyIter)->m_vIndex.end();
+            glBegin(GL_POLYGON);
+            for ( ; indexIter != indexEnd; indexIter++) {
+              // transparent polygons should not be lit, or ?
+              glColor4f((*shapeIter)->m_vLitColor[(*indexIter)].r,
+                        (*shapeIter)->m_vLitColor[(*indexIter)].g,
+                        (*shapeIter)->m_vLitColor[(*indexIter)].b,
+                        (*shapeIter)->m_vLitColor[(*indexIter)].a);
+              glVertex3f((*shapeIter)->m_vVtxAlign[(*indexIter)].x,
+                         (*shapeIter)->m_vVtxAlign[(*indexIter)].y,
+                         (*shapeIter)->m_vVtxAlign[(*indexIter)].z);
+            }
+            glEnd();
+          }
+        }
       }
     }
     // billboard
@@ -389,24 +422,24 @@ void OpenGLVisitor::visit(Group* g) {
       glBegin(GL_POLYGON);
       glTexCoord2f(0, 0);
       glVertex3f(b->m_vtxAlign.x - b->m_fSizexD2, 
-		 b->m_vtxAlign.y + b->m_fSizeyD2, 
-		 b->m_vtxAlign.z);
+                 b->m_vtxAlign.y + b->m_fSizeyD2, 
+                 b->m_vtxAlign.z);
       glTexCoord2f(1, 0);
       glVertex3f(b->m_vtxAlign.x + b->m_fSizexD2, 
-		 b->m_vtxAlign.y + b->m_fSizeyD2, 
-		 b->m_vtxAlign.z);
+                 b->m_vtxAlign.y + b->m_fSizeyD2, 
+                 b->m_vtxAlign.z);
       glTexCoord2f(1, 1);
       glVertex3f(b->m_vtxAlign.x + b->m_fSizexD2, 
-		 b->m_vtxAlign.y - b->m_fSizeyD2, 
-		 b->m_vtxAlign.z);
+                 b->m_vtxAlign.y - b->m_fSizeyD2, 
+                 b->m_vtxAlign.z);
       glTexCoord2f(0, 1);
       glVertex3f(b->m_vtxAlign.x - b->m_fSizexD2, 
-		 b->m_vtxAlign.y - b->m_fSizeyD2, 
-		 b->m_vtxAlign.z);
+                 b->m_vtxAlign.y - b->m_fSizeyD2, 
+                 b->m_vtxAlign.z);
       glEnd();
 			
       EM_COUT_D("OpenGLVisitor::visit() BillBoard at " << b->m_vtxAlign.x <<" "<<
-		b->m_vtxAlign.y <<" "<< b->m_vtxAlign.z, 0);
+                b->m_vtxAlign.y <<" "<< b->m_vtxAlign.z, 0);
     }
   } break;
 

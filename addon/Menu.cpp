@@ -1,3 +1,4 @@
+//#ident "$Id: Menu.cpp,v 1.14 2003/06/18 10:43:45 henqvist Exp $"
 /***************************************************************************
                           Menu.cpp  -  description
                              -------------------
@@ -45,11 +46,11 @@ void MenuSub::addMenuItem(MenuItem * menu) {
 }
 
 int MenuSub::perform() {
-  EM_COUT("MenuSub::perform() " << this->getText(), 1)
-    
-    if (m_vMenuItem.size() == 0) {
-      return m_iAction;
-    }
+  EM_COUT("MenuSub::perform() " << this->getText(), 1);
+  
+  if (m_vMenuItem.size() == 0) {
+    return m_iAction;
+  }
   
   int ret = 0;
   
@@ -64,6 +65,11 @@ int MenuSub::perform() {
     this->draw();
     
     key = Keyboard::waitForKey();
+    // escape, exit current menu (go back to previous)
+    if (key == SDLK_ESCAPE) {
+      return EM_MENU_NOP;
+    }
+    // menu chossen, do something
     if (key == SDLK_RETURN) {
       ret = m_vMenuItem[m_iCurrent]->perform();
       switch (ret) {
@@ -99,7 +105,6 @@ void MenuSub::setBottomText(const char * text) {
 void MenuSub::draw() {
   EM_COUT("MenuSub::draw() " << this->getText(), 1);
   p_Engine->clearScreen();
-
   if (p_Texture != NULL) p_Engine->drawSplash(p_Texture);
   
   int size = this->size() + m_vInfoText.size() + 2;
@@ -115,7 +120,7 @@ void MenuSub::draw() {
   
   vector<MenuItem*>::iterator menuIter = m_vMenuItem.begin();
   vector<MenuItem*>::iterator menuEnd = m_vMenuItem.end();
-  for (int a=0; menuIter != menuEnd; menuIter++, a++) {
+  { for (int a=0; menuIter != menuEnd; menuIter++, a++) {
     if (a == m_iCurrent) {
       char str[256];
       strncpy(str, "> ", 16);
@@ -125,7 +130,7 @@ void MenuSub::draw() {
     } else {
       p_EmFont->printRowCenter((*menuIter)->getText(), a+2 + yoffset);
     }
-  }
+  } }
   
   p_Engine->swap();
 }
@@ -287,3 +292,4 @@ int MenuInput::perform() {
 
   return m_iAction;;
 }
+//EOF: $Id: Menu.cpp,v 1.14 2003/06/18 10:43:45 henqvist Exp $

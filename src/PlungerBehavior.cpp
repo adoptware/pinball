@@ -41,74 +41,61 @@ PlungerBehavior::~PlungerBehavior() {
 void PlungerBehavior::StdEmptyOnCollision() {
 }
 
-void PlungerBehavior::onTick()
-{
+void PlungerBehavior::onTick() {
   EM_COUT("PlungerBehavior::onTick()", 0);
 
-  if (m_bFirst)
-  {
+  if (m_bFirst) {
     this->getParent()->getTranslation(m_vtxTr.x, m_vtxTr.y, m_vtxTr.z);
     m_bFirst = false;
   }
-
+  
   string launch("launch");
-
-  if (Keyboard::isKeyDown(Config::getInstance()->getKey(launch)))
-  {
+  
+  if (Keyboard::isKeyDown(Config::getInstance()->getKey(launch))) {
     // return pressed, pull plunger back
     m_iCounter = -1;
     m_iLaunchState = 1;
-    m_fPower += 0.01f;
-
+    if (m_fPower < 1.0f) {
+      m_fPower += 0.005f;
+    }
     EM_COUT("PlungerBehavior::onTick " << m_fPower, 0);
-  }
-  else
-  {
-    if (m_iLaunchState == 1)
-    {
+  } else {
+    if (m_iLaunchState == 1) {
       // return released, fire ball
       m_iLaunchState = 2;
-      m_iCounter = 10;
+      m_iCounter = 50;
       SendSignal(m_sigPlunger, 0, this->getParent(), NULL);
       SoundUtil::getInstance()->playSample(m_iSound, false);
-
+      
       // If the key was pressed momentanily
-      if (m_fPower <= 0.1)
-      {
+      if (m_fPower <= 0.1) {
 	// If the flag is already active give medium power to ball
-	if (m_bDoublePress)
-	{
-	  m_fPower = 5;
-	  m_bDoublePress = false;
-	}
-	else
-	  m_bDoublePress = true;
+        if (m_bDoublePress) {
+          m_fPower = 1.0f;
+          m_bDoublePress = false;
+          m_iLaunchState = 2;
+          m_iCounter = 50;
+        } else {
+          m_bDoublePress = true;
+        }
+      } else {
+        m_bDoublePress = false;
       }
-      else
-	m_bDoublePress = false;
-    }
-    else if (m_iLaunchState == 2)
-    {
-      if (m_iCounter > -1)
-      {
-	// short delay after launching
-	--m_iCounter;
-      }
-      else
-      {
-	// reset
-	m_iLaunchState = 0;
-	m_fPower = 0.0f;
+    } else if (m_iLaunchState == 2) {
+      if (m_iCounter > -1)  {
+        // short delay after launching
+        --m_iCounter;
+      } else {
+        // reset
+        m_iLaunchState = 0;
+        m_fPower = 0.0f;
       }
     }
   }
-
-  if (m_iLaunchState == 1)
-  {
-    this->getParent()->setTranslation(m_vtxTr.x, m_vtxTr.y, m_vtxTr.z + m_fPower);
-  }
-  else
-  {
+  
+  if (m_iLaunchState == 1) {
+    this->getParent()->setTranslation(m_vtxTr.x, m_vtxTr.y, m_vtxTr.z + m_fPower*2.0f);
+  } else {
     this->getParent()->setTranslation(m_vtxTr.x, m_vtxTr.y, m_vtxTr.z);
   }
 }

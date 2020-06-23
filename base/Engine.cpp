@@ -82,7 +82,7 @@ Engine * Engine::p_Engine = NULL;
 Engine::Engine(int & argc, char *argv[]) {
   Config * config = Config::getInstance();
   config->loadArgs(argc, argv);
-
+  
   if (!config->useExternGL()) {
 #if EM_USE_SDL
     SDL_Init(SDL_INIT_TIMER);
@@ -185,6 +185,7 @@ void Engine::drawSplash(EmTexture * tex) {
 	int filter = Config::getInstance()->getGLFilter();
 	if (filter == -1) return;
 	glDisable(GL_DEPTH_TEST);
+  glDepthMask(GL_FALSE);
 	glDisable(GL_ALPHA_TEST);
   glDisable(GL_BLEND);
 	glDepthMask(GL_FALSE);

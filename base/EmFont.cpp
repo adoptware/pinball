@@ -137,6 +137,8 @@ void EmFont::print(const char * buffer, float x, float y) {
   int filter = Config::getInstance()->getGLFilter();
   if (filter == -1) filter = GL_NEAREST;
   
+	glDisable(GL_DEPTH_TEST);
+  glDepthMask(GL_FALSE);
   glEnable(GL_ALPHA_TEST);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

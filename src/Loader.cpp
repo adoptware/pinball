@@ -1,4 +1,4 @@
-//#ident "$Id: Loader.cpp,v 1.31 2003/05/27 11:53:32 rzr Exp $"
+//#ident "$Id: Loader.cpp,v 1.33 2003/06/16 13:06:12 rzr Exp $"
 /***************************************************************************
                             Loader.cpp -  description
                              -------------------
@@ -64,16 +64,16 @@ Loader::Loader() {
   m_iNextVariable = LOADER_FIRSTVARIABLE;
   m_bModules = true;
   m_LoaderModule = 0;
-  //#ifdef RZR_PATCHES_RZR
-  //m_Obj3dsUtil = 0;
-  //#endif
+#ifdef RZR_PATCHES_3DS
+  m_Obj3dsUtil = 0;
+#endif
 }
 
 Loader::~Loader() {
   delete m_LoaderModule;
-  //#ifdef RZR_PATCHES_RZR
-  //delete m_Obj3dsUtil;
-  //#endif
+#ifdef RZR_PATCHES_3DS
+  delete m_Obj3dsUtil;
+#endif
 };
 
 Loader * Loader::getInstance() {
@@ -1034,7 +1034,6 @@ int Loader::loadFile(const char* fn, Engine * engine) {
 void Loader::loadShape3dsAscii(ifstream & file, istringstream & ist, 
 			       Engine *, Group * group, Behavior *) 
 {
-  EM_COUT("Loader::loadShape3dsAscii", 0);
   string str;
   EmReadCmp(file, ist, str, "{");
   this->readNextToken(file, ist, str);
@@ -1046,24 +1045,27 @@ void Loader::loadShape3dsAscii(ifstream & file, istringstream & ist,
   shape = new Shape3D;
   t =  Obj3dsUtil::read(  *shape , filename.c_str());
   if ( t < 0 || shape == 0 ) { delete shape; return;}
-  shape->countNormals();
-  group->addShape3D(shape);
 
   if ( shape->m_sMaterialName != "" ) {
-    EM_COUT( shape->m_sMaterialName , 1);
+    //EM_COUT( shape->m_sMaterialName , 1);
     filename = string(Config::getInstance()->getDataSubDir())
       + "/" + shape->m_sMaterialName;
     EmTexture * tex =
       TextureUtil::getInstance()->loadTexture(filename.c_str());
-    if (tex != NULL) { shape->setTexture(tex);  } 
+    if (tex != NULL) { 
+      shape->setTexture(tex); 
+      shape->setColor(1,1,1,0);
+      //EM_COUT("loaded and asssigned :"<<filename,1);
+    } 
   } 
+  shape->countNormals();
+  group->addShape3D(shape);
   
   this->readNextToken(file, ist, str);
   while (str != "}") {
     this->readNextToken(file, ist, str);
   }
-
-  EM_COUT("-Loader::loadShape3dsAscii", 0);
+  //EM_COUT("- Loader::loadShape3dsAscii", 0);
 }
 
 
@@ -1128,7 +1130,7 @@ void Loader::loadGroup3dsAscii(ifstream & file, istringstream & ist,
         + "/" + shape->m_sMaterialName;
       EmTexture * tex =
         TextureUtil::getInstance()->loadTexture(filename.c_str());
-      if (tex != NULL) { shape->setTexture(tex);  } 
+      if (tex != NULL) { shape->setTexture(tex); shape->setColor(1,1,1,0); } 
     }
   }
 
@@ -1158,4 +1160,4 @@ void Loader::loadGroup3dsAscii(ifstream & file, istringstream & ist,
   EM_COUT("-Loader::loadShape3dsAscii", 0);
 }
 #endif //--------------------------------------------------------------------
-//EOF $Id: Loader.cpp,v 1.31 2003/05/27 11:53:32 rzr Exp $
+//EOF $Id: Loader.cpp,v 1.33 2003/06/16 13:06:12 rzr Exp $

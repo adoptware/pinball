@@ -1,4 +1,4 @@
-//#ident "$Id: Pinball.cpp,v 1.39 2003/05/28 05:21:22 henqvist Exp $"
+//#ident "$Id: Pinball.cpp,v 1.44 2003/06/18 10:43:44 henqvist Exp $"
 /***************************************************************************
                           Pinball.cpp  -  description
                              -------------------
@@ -24,11 +24,10 @@
 #include <direct.h> //getcwd
 #else
 #include <dirent.h>
-#endif 
-
+#endif
 #include "Private.h" // macro flags defined here
 
-#ifdef HAVE_UNISTD_H 
+#ifdef HAVE_UNISTD_H
 #include <unistd.h> // not in msvc (replaced by io.h)
 #endif //!-rzr
 
@@ -162,14 +161,14 @@ protected:
     stm << name << key << '\0';
     string text = stm.str();
     return text.c_str();
-  }    
+  }
 };
 
 
-/** The apply meny item. */	
+/** The apply meny item. */
 class MyMenuApply : public MenuFct {
 public:
-  MyMenuApply(const char * name, int (*fct)(void), Engine *e) :	MenuFct(name, fct, e) {};
+  MyMenuApply(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, fct, e) {};
 protected:
   int perform () {
     Config* config = Config::getInstance();
@@ -202,39 +201,39 @@ protected:
     if (menuscreen->getCurrent() == 0) {
       if (config->useFullScreen() == false) {
 #if EM_USE_SDL
-	SDL_WM_ToggleFullScreen(SDL_GetVideoSurface());
+        SDL_WM_ToggleFullScreen(SDL_GetVideoSurface());
 #endif
       }
       config->setFullScreen(true);
     } else {
       if (config->useFullScreen() == true) {
 #if EM_USE_SDL
-	SDL_WM_ToggleFullScreen(SDL_GetVideoSurface());
+        SDL_WM_ToggleFullScreen(SDL_GetVideoSurface());
 #endif
       }
       config->setFullScreen(false);
     }
     // brightness
     switch (menubright->getCurrent()) {
-    case 0: 
-      menubright->getEngine()->setLightning(0.3f, AMBIENT); 
+    case 0:
+      menubright->getEngine()->setLightning(0.3f, AMBIENT);
       Config::getInstance()->setBrightness(0.3); break;
-    case 1: 
+    case 1:
       menubright->getEngine()->setLightning(0.4f, AMBIENT);
       Config::getInstance()->setBrightness(0.4f); break;
-    case 2: 
+    case 2:
       menubright->getEngine()->setLightning(0.5f, AMBIENT);
       Config::getInstance()->setBrightness(0.5f); break;
-    case 3: 
+    case 3:
       menubright->getEngine()->setLightning(0.6f, AMBIENT);
       Config::getInstance()->setBrightness(0.6f); break;
-    case 4: 
+    case 4:
       menubright->getEngine()->setLightning(0.7f, AMBIENT);
       Config::getInstance()->setBrightness(0.7f); break;
-    case 5: 
+    case 5:
       menubright->getEngine()->setLightning(0.8f, AMBIENT);
       Config::getInstance()->setBrightness(0.8f); break;
-    default: 
+    default:
       menubright->getEngine()->setLightning(0.5f, AMBIENT);
       Config::getInstance()->setBrightness(0.5f); break;
     }
@@ -247,27 +246,32 @@ protected:
     case 3: w = 640; h = 480; break;
     case 4: w = 800; h = 600; break;
     case 5: w = 1024; h = 768; break;
+    case 6: w = 1280; h = 1024; break;
     default: w = 640; h = 480;
     }
     if (config->getWidth() != w) {
-#ifdef WIN32  //!+-rzr 
-      //cout<<("Workround bug (for WIN32) + macosx etc");
-      textureutil->freeTextures();
-#endif
-#if EM_USE_SDL
-      SDL_SetVideoMode(w, h, config->getBpp(), 
-		       SDL_OPENGL | (config->useFullScreen() ? SDL_FULLSCREEN : 0));
-
+#ifdef  EM_USE_SDL
+      SDL_SetVideoMode(w, h, config->getBpp(),
+                       SDL_OPENGL
+                       | (config->useFullScreen() ? SDL_FULLSCREEN : 0));
 #endif // SDL
-      textureutil->resizeView(w, h);
-#ifdef WIN32
-      string filename = Config::getInstance()->getDataDir() + string("/font_34.png");
-      //cout<<filename<<endl;
+      TextureUtil::getInstance()->resizeView(w, h);
+      //!rzr!+   //cout<<("Workround bug (for WIN32) + macosx etc");
+#ifdef WIN32 ////TODO : check @w32  //need help FINISH
+      //TextureUtil::getInstance()->reloadTextures(); //TODO: fix the w32 bug
+      TextureUtil::getInstance()->freeTextures(); // "hide" the w32 bug
+      string filename =
+        Config::getInstance()->getDataDir() + string("/font_34.png");
       EmFont::getInstance()->loadFont(filename.c_str());
-#endif //!-rzr
-    }
+      //cout<<"may not be  driver bug cos it also happends under wine"<<endl;
+      // unload level and textures //TODO: Reload Splash Screen
+      Table::getInstance()->clear(Engine::getCurrentEngine() );
+      // SDL bug ?
+#endif //!rzr!- //cout<<"@w32 / resizing unreference textures (mipmaping?)"<<endl;
+    }//!rzr!-
+
     config->setSize(w, h);
-		
+
     switch (menuview->getCurrent()) {
     case 1: config->setView(1); break;
     case 2: config->setView(2); break;
@@ -296,7 +300,7 @@ protected:
         if (bg != NULL) {
           Behavior * beh = bg->getBehavior();
           EmAssert(beh != NULL, "MyMenuApply::perform behavior NULL");
-          EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
+          EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH,
                    "MyMenuApply::perform behavior not bouncebehavior");
           ((BounceBehavior*)beh)->setFire(false);
         }
@@ -308,7 +312,7 @@ protected:
         if (bg != NULL) {
           Behavior * beh = bg->getBehavior();
           EmAssert(beh != NULL, "MyMenuApply::perform behavior NULL");
-          EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH, 
+          EmAssert(beh->getType() == PBL_TYPE_BOUNCEBEH,
                    "MyMenuApply::perform behavior not bouncebehavior");
           ((BounceBehavior*)beh)->setFire(true);
         }
@@ -340,7 +344,7 @@ protected:
 class MyMenuLoad : public MenuFct {
 public:
   MyMenuLoad(const char * name, int (*fct)(void), Engine *e) : MenuFct(name, fct, e) {
-		
+
   };
 protected:
   int perform () {
@@ -425,18 +429,20 @@ void get_config(void) {
   // screen size
   if (Config::getInstance()->getWidth() == 320) {
     menusize->setCurrent(0);
-  } else 	if (Config::getInstance()->getWidth() == 400) {
+  } else        if (Config::getInstance()->getWidth() == 400) {
     menusize->setCurrent(1);
-  } else 	if (Config::getInstance()->getWidth() == 512) {
+  } else        if (Config::getInstance()->getWidth() == 512) {
     menusize->setCurrent(2);
-  } else 	if (Config::getInstance()->getWidth() == 640) {
+  } else        if (Config::getInstance()->getWidth() == 640) {
     menusize->setCurrent(3);
-  } else 	if (Config::getInstance()->getWidth() == 800) {
+  } else        if (Config::getInstance()->getWidth() == 800) {
     menusize->setCurrent(4);
-  } else 	if (Config::getInstance()->getWidth() == 1024) {
+  } else        if (Config::getInstance()->getWidth() == 1024) {
     menusize->setCurrent(5);
+  } else 	if (Config::getInstance()->getWidth() == 1280) {
+    menusize->setCurrent(6);
   } else {
-    menusize->setCurrent(0);
+    menusize->setCurrent(3);
   }
   // view mode
   switch(Config::getInstance()->getView()) {
@@ -505,13 +511,13 @@ MenuItem* createMenus(Engine * engine) {
   menucfg->addMenuItem(menuaudio);
 
   MenuSub* menukey = new MenuSub("keyboard", engine);
-  menukey->setBottomText("shorcuts for view change F1-F4");
+  menukey->setBottomText("shorcuts for view change F5-F8");
   menucfg->addMenuItem(menukey);
 
   string filename = string(Config::getInstance()->getDataSubDir()) + "/splash.png";
 #if EM_USE_ALLEGRO
   filename += ".pcx";
-#endif	
+#endif
   EmTexture * tex = TextureUtil::getInstance()->loadTexture(filename.c_str());
   if (tex != NULL) {
     menu->setBackground(tex);
@@ -526,8 +532,8 @@ MenuItem* createMenus(Engine * engine) {
   }
 
   // create one entry for each directory
-  // TODO scrolling text if to many tables
-#if ( HAVE_UNISTD_H ) // __GNUC__ //!+rzr 
+  // TODO scrolling text if too many tables
+#if ( HAVE_UNISTD_H ) // __GNUC__ //!+rzr
   DIR * datadir = opendir(Config::getInstance()->getDataDir());
   char cwd[256];
   if (datadir != NULL && getcwd(cwd, 256) != NULL) {
@@ -538,13 +544,13 @@ MenuItem* createMenus(Engine * engine) {
     while ((entry = readdir(datadir)) != NULL) {
       lstat(entry->d_name, &statbuf);
       if (S_ISDIR(statbuf.st_mode) &&
-	  strcmp(".", entry->d_name) != 0 &&
-	  strcmp("..", entry->d_name) != 0) {
-	MenuFct * menufct = new MyMenuLoad(entry->d_name, NULL, engine);
-	menuload->addMenuItem(menufct);
-	if (tex != NULL) {
-	  menufct->setBackground(tex);
-	}
+          strcmp(".", entry->d_name) != 0 &&
+          strcmp("..", entry->d_name) != 0) {
+        MenuFct * menufct = new MyMenuLoad(entry->d_name, NULL, engine);
+        menuload->addMenuItem(menufct);
+        if (tex != NULL) {
+          menufct->setBackground(tex);
+        }
       }
     }
     chdir(cwd);
@@ -559,14 +565,14 @@ MenuItem* createMenus(Engine * engine) {
     chdir(Config::getInstance()->getDataDir());
     if( (hFile = _findfirst( "*", &dirFile )) != NULL ) {
       do {
-        if ((dirFile.attrib & _A_SUBDIR) != 0) 	{
-          if (strcmp(".", dirFile.name) != 0 
+        if ((dirFile.attrib & _A_SUBDIR) != 0)  {
+          if (strcmp(".", dirFile.name) != 0
               && strcmp("..", dirFile.name) != 0) {
             MenuFct * menufct = new MyMenuLoad(dirFile.name, NULL, engine);
             menuload->addMenuItem(menufct);
-	    if (tex != NULL) {
-	      menufct->setBackground(tex);
-	    }
+            if (tex != NULL) {
+              menufct->setBackground(tex);
+            }
           }
         }
       }
@@ -576,7 +582,7 @@ MenuItem* createMenus(Engine * engine) {
     }
   }
 #else
-  //#warning "check your compiler here"  
+#warning "check your compiler here"
 #endif
 #endif //!+rzr
 
@@ -608,11 +614,12 @@ MenuItem* createMenus(Engine * engine) {
   menusize->addText(  "screen size:  640x480");
   menusize->addText(  "screen size:  800x600");
   menusize->addText(  "screen size: 1024x768");
+  menusize->addText(  "screen size:1280x1024");
   menugfx->addMenuItem(menusize);
 
   menufilter = new MenuChoose(engine);
-  menufilter->addText("texture:       linear");
-  menufilter->addText("texture:      nearest");
+  menufilter->addText("texture:       nicest"); //was linear // gamers  //!rzr
+  menufilter->addText("texture:      fastest"); //was nearest // vocabulary :)
   menufilter->addText("texture:         none");
   menugfx->addMenuItem(menufilter);
 
@@ -700,7 +707,7 @@ int main(int argc, char *argv[]) {
     // Create a engine and parse emilia arguments
     Config::getInstance()->loadConfig();
     Engine * engine = new Engine(argc, argv);
-    
+
     float direct = 0.0f;
     if (Config::getInstance()->getBrightness() < 0.35f) {
       direct = 0.3f;
@@ -716,23 +723,26 @@ int main(int argc, char *argv[]) {
       direct = 0.8f;
     }
     engine->setLightning(direct, AMBIENT);
-    
+
 #if EM_USE_SDL
     string filename = Config::getInstance()->getDataDir() + string("/font_34.png");
 #endif
 #if EM_USE_ALLEGRO
     string filename = Config::getInstance()->getDataDir() + string("/font_35.pcx");
 #endif
-    
+
     EmFont::getInstance()->loadFont(filename.c_str());
-    
+
     // Add a score board and a menu.
     MenuItem* menu = createMenus(engine);
-    
+
     // Draw to the screen.
     int all = 0;
+
     engine->resetTick();
-    while (!Keyboard::isKeyDown(SDLK_INSERT)) {
+
+    while (! (  SDL_QuitRequested()  //cout<<"catch close win"<<endl; //!rzr
+                || Keyboard::isKeyDown(SDLK_INSERT)))  {
 #if EM_DEBUG
       if (Keyboard::isKeyDown(SDLK_p)) {
         Keyboard::waitForKey();
@@ -748,13 +758,13 @@ int main(int argc, char *argv[]) {
         engine->resetTick();
         SoundUtil::getInstance()->resumeMusic();
       }
-      
+
       if (Keyboard::isKeyDown(SDLK_r)) {
         SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
       }
-      
+
       if (engine->nextTickFPS(200)) {
-        engine->tick(); 
+        engine->tick();
       } else {
         engine->render();
         if (Table::getInstance()->getScore() != NULL) {
@@ -766,20 +776,21 @@ int main(int argc, char *argv[]) {
         }
         engine->swap();
       }
+
       all++;
       //engine->limitFPS(100);
     }
-    
+
     Config::getInstance()->saveConfig();
-    
+
     // Write high scores to disk - pnf
     Table::getInstance()->writeHighScoresFile();
-    
+
     delete(engine);
   } catch (string str) {
     cerr << "EXCEPTION: " << str << endl;
   }
-  return 0;
+  return EXIT_SUCCESS;
 }
 
 #if EM_USE_ALLEGRO
@@ -788,17 +799,79 @@ END_OF_MAIN();
 
 
 /// entry point function (main) for w32 codewarrior
-#if( (defined WIN32 ) && ( defined __MWERKS__ ) ) 
-int WINAPI WinMain( HINSTANCE hInst,  HINSTANCE hPreInst, 
+#if( (defined WIN32 ) && ( defined __MWERKS__ ) )
+
+extern "C" {
+  /**
+   * @author: www.Philippe.COVAL.free.FR - $rev: $author
+   * Was need to convert win32 args to ansi way :
+   * int argc; char** argv;
+   * convertStringWords( GetCommandLine(), &argc, &argv);
+   * TODO : check if quotes are wanted or not ?
+   **/
+
+  void convertStringWords( char * arg,
+                           int *argc, char*** argv);
+
+
+  void convertStringWords( char * arg,
+                           int *argc, char*** argv)
+  {
+    char *b, *e, *q;
+    int i=0;
+    int n;
+    b = arg;
+    q = e  = b ;
+    //debug("+ convertStringWords");  debug(arg);
+    *argc=0;
+    *argv = (char**) malloc( sizeof(char*));
+
+    do {
+      while ( *b == ' ' ) b++;
+      q=e=b-1;
+
+      do { q = strchr( q + 1 , '"'); }
+      while ( (q != NULL) && ( *(q-1) == '\\' ) );
+
+      do { e = strchr( e + 1 , ' '); }
+      while ( (e != NULL) && ( *(e-1) == '\\' ) );
+      //debugf("%u<%u ?\n",&q,&e);
+
+      if ( (q != NULL) && ( e != NULL) && ( q < e ) ) {
+        //debug("quoted");
+        do { q = strchr( q + 1 , '"'); }
+        while ( (q != NULL) && ( *(q-1) == '\\' ) );
+        e = ++q;
+      }
+
+      if ( e != NULL) n = (e) - b; else n = strlen(b);
+      //debugf("n=%d=%s;\n", n,b);
+
+
+      *argv = (char**) realloc( *argv, ( (*argc) + 1 ) * sizeof(char*) );
+      (*argv)[ *argc ] = (char*) malloc ( n +1);
+      strncpy( (*argv)[ *argc ], b , n);
+      *( (*argv)[ *argc ] + n ) = '\0';
+      //debug( (*argv)[ *argc ] );
+
+      b = e;
+      (*argc)++;
+
+    } while ( e != NULL );
+    //debug("- convertStringWords");
+  }
+
+} //extern "C"
+
+int WINAPI WinMain( HINSTANCE hInst,  HINSTANCE hPreInst,
                     LPSTR lpszCmdLine,  int nCmdShow )
 {
-//   CreateMutex(); //allows only one instance of game
-//   if ( GetLastError() == ERROR_ALLREADY_EXISTS )  return ERROR_ALLREADY_EXISTS;
-  // TODO: get argc argv with 
-//  int argc=0; char** argv=0;
-   int argc = 1;   char* argv[1] = { 0 };
-   argv[0] = GetCommandLine(); //cut on space
-  return main(argc,argv); 
+  int argc=0; char** argv = 0;
+  convertStringWords( GetCommandLine(), &argc, &argv);
+
+  //int argc = 1;   char* argv[1] = { 0 };
+  //argv[0] = GetCommandLine(); //cut on space
+  return main(argc,argv);
 }
 #endif
-// EOF $Id: Pinball.cpp,v 1.39 2003/05/28 05:21:22 henqvist Exp $
+// EOF $Id: Pinball.cpp,v 1.44 2003/06/18 10:43:44 henqvist Exp $

@@ -1,7 +1,7 @@
 dnl Process this file with autoconf 2.53 to produce a configure script.
 
 dnl init autoconf and automake
-AC_INIT(pinball, 0.3.0, [[henqvist@users.sourceforge.net]])
+AC_INIT(pinball, 0.3.1, [[henqvist@users.sourceforge.net]])
 
 AM_CONFIG_HEADER(pinconfig.h)
 
@@ -81,7 +81,7 @@ dnl Allegro or SDL version ********************
 
 AC_ARG_WITH(allegro, [  --with-allegro          use allegro (software rendering) instead of SDL and OpenGL], use_allegro="yes", use_allegro="no")
 
-if test x"$use_allegro" == "xno"; then
+if test x"$use_allegro" = "xno"; then
 
 AC_DEFINE(EM_USE_SDL, [1], [Shall we use SDL and OpenGL])
 
@@ -201,7 +201,7 @@ dnl CPP_UNIT ***********************************
 
 AC_ARG_WITH(unittest, [  --with-unittest         Try to use unitest], use_unittest="yes", use_unittest="no")
 
-if test x"$use_unittest" == "xyes"; then
+if test x"$use_unittest" = "xyes"; then
 
 AM_PATH_CPPUNIT(1.8.0, [
   AC_DEFINE(EM_UNIT_TEST, [1], [Shall we compile unittests]) 
@@ -223,7 +223,7 @@ dnl ********************************************
 dnl Debug and Config ***************************
 AC_ARG_WITH(debug, [  --with-debug            Compile debug version], use_debug="yes", use_debug="no")
 
-if test x"$use_debug" == "xyes"; then
+if test x"$use_debug" = "xyes"; then
 AC_DEFINE(EM_DEBUG, [1], [Shall we use debug features such as profiling and keyboard ball steering])
 fi
 
