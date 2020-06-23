@@ -1,3 +1,19 @@
+pinball (0.0.0-0) unstable; urgency=medium
+
+  * WIP:
+    https://launchpad.net/~rzr/+archive/ubuntu/snapshot/+packages#${pack
+    age}
+
+ -- Philippe Coval <rzr@users.sf.net>  Tue, 23 Jun 2020 18:54:37 +0200
+
+pinball (0.0.0-0) unstable; urgency=medium
+
+  * wip:
+    https://launchpad.net/~rzr/+archive/ubuntu/snapshot/+packages#${pack
+    age}
+
+ -- Philippe Coval <rzr@users.sf.net>  Tue, 23 Jun 2020 18:54:36 +0200
+
 pinball (0.3.1-14.1) unstable; urgency=medium
 
   * Non-maintainer upload.
