@@ -10,6 +10,8 @@
 #include "Behavior.h"
 #include "Group.h"
 
+#include <cstddef>
+
 Behavior::Behavior() {
 	//EM_COUT("Behavior::Behavior", 1);
 	p_Light = NULL;
