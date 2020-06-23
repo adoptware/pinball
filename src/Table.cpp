@@ -140,7 +140,7 @@ int Table::loadLevel(Engine * engine, const char * subdir) {
   Loader::getInstance()->clearSignalVariable();
   if (Loader::getInstance()->loadFile(filename.c_str(), engine) != 0) {
     cerr << "Error loading level: " << m_sTableName << endl;
-    cerr << "Try reinstalling the game or use the -data switch to specify the data directory"
+    cerr << "Try reinstalling the game"
          << endl;
     this->clear(engine);
     return -1;
