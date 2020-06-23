@@ -11,8 +11,16 @@ AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE
 
 dnl this is a c++ program
-CFLAGS="-g -W -Wall -O2"
-CXXFLAGS="-g -W -Wall -O2"
+dnl CFLAGS="-g -W -Wall -O2"
+dnl CXXFLAGS="-g -W -Wall -O2"
+
+AC_ARG_WITH(cflags,
+[  --with-cflags=CFLAGS            use CFLAGS as compile time arguments.],
+    [CFLAGS=$with_cflags; export CFLAGS])
+
+AC_ARG_WITH(cxxflags,
+[  --with-cxxflags=CXXFLAGS        use CXXFLAGS as compile time arguments.],
+    [CXXFLAGS=$with_cxxflags; export CXXFLAGS])
 
 AC_CONFIG_SUBDIRS(libltdl)
 
