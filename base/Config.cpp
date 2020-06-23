@@ -57,7 +57,7 @@ void Config::setDefault() {
   // Default values
   this->setSize(640, 480);
   this->setSound(8);
-  this->setMusic(4);
+  this->setMusic(8);
   this->setBpp(16);
   this->setGLFilter(EM_LINEAR);
   this->setView(0);
