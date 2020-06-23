@@ -1,0 +1,22 @@
+rm -rf `find . -name "Makefile"`
+rm -rf `find . -name "Makefile.in"`
+rm -rf `find . -name "*.o"`
+rm -rf `find . -name "*.lo"`
+rm -rf `find . -name "*.a"`
+rm -rf `find . -name "*.la"`
+rm -rf `find . -name "*.al"`
+rm -rf `find . -name ".libs"`
+rm -rf `find . -name ".deps"`
+rm -rf `find . -name "*~"`
+rm -rf autom4te-2.53.cache
+rm -rf config.*
+rm -rf stamp-h
+rm -rf ltmain*
+rm -rf libtool
+rm -rf libltdl
+rm -rf configure
+rm -rf missing*
+rm -rf mkinstall*
+rm -rf install-sh*
+rm -rf pinconfig*
+rm -rf pinball-config
