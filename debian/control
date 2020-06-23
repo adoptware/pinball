@@ -2,7 +2,7 @@ Source: pinball
 Section: games
 Priority: optional
 Maintainer: Innocent De Marchi <tangram.peces@gmail.com>
-Build-Depends: debhelper (>= 9),
+Build-Depends: debhelper (>= 11),
 	 libgl1-mesa-dev,
 	 libpng-dev,
 	 libsdl1.2-dev,
