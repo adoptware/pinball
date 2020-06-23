@@ -8,6 +8,7 @@
 ***************************************************************************/
 
 #include <cstring>
+#include <iostream>
 
 #include "Private.h"
 #include "Menu.h"
@@ -69,6 +70,10 @@ int MenuSub::perform() {
     if (key == SDLK_ESCAPE) {
       return EM_MENU_NOP;
     }
+    if (key == SDLK_LALT) {
+	return EM_MENU_EXIT;
+    }
+
     // menu chossen, do something
     if (key == SDLK_RETURN) {
       ret = m_vMenuItem[m_iCurrent]->perform();
