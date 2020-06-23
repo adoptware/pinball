@@ -29,7 +29,7 @@ Script.cpp \
 StateBehavior.cpp \
 Table.cpp
 
-dnl libemilia_pin_la_SOURCES = $(libemilia_pin_a_SOURCES)
+# libemilia_pin_la_SOURCES = $(libemilia_pin_a_SOURCES)
 
 pininclude_HEADERS = \
 ArmBehavior.h \
@@ -56,10 +56,10 @@ Table.h
 # libemilia_pin.a libemilia_addon.a  libemilia_base.a libltdlc.a
 wpinball.exe:  ${pinball_OBJECTS} ${pinball_DEPENDENCIES}
 	${GCCLOCALDIR}g++ -g -W -Wall -O2 -o$@ $^ \
- -lSDL_mixer -lvorbisfile -lvorbis -logg -lsmpeg \
- -lSDL_image -lSDLmain -lSDL \
- -lglu32 -lopengl32 -ljpeg -lpng  \
- -lwinmm -luser32 -lgdi32 -ldxguid   \
- -lmingw32 -lSDLmain -lSDL  -mwindows \
- -L${GCCLOCALDIR}../lib
+	-lSDL_mixer -lvorbisfile -lvorbis -logg -lsmpeg \
+	-lSDL_image -lSDLmain -lSDL \
+	-lglu32 -lopengl32 -ljpeg -lpng \
+	-lwinmm -luser32 -lgdi32 -ldxguid \
+	-lmingw32 -lSDLmain -lSDL  -mwindows \
+	-L${GCCLOCALDIR}../lib
 # !-rzr : # have to solve it later # -lstdc++
