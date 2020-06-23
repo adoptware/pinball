@@ -778,8 +778,23 @@ int main(int argc, char *argv[]) {
           Table::getInstance()->getScore()->draw();
         }
         if (engine->getGroup(0) == NULL) {
-          EmFont::getInstance()->printRowCenter("no table loaded", 6);
-          EmFont::getInstance()->printRowCenter("press esc", 8);
+          //EmFont::getInstance()->printRowCenter("no table loaded", 6);
+          //EmFont::getInstance()->printRowCenter("press esc", 8);
+	srand (time(NULL));
+	int iTable ; 
+	iTable = rand() % 100 +1;
+	if (iTable < 51){
+		if (Table::getInstance()->loadLevel(engine, "tux") == 0) {
+      			Table::getInstance()->readHighScoresFile();	
+      			Table::getInstance()->getScore()->draw();
+    		}
+	     }
+	else {
+		if (Table::getInstance()->loadLevel(engine, "professor") == 0) {
+      			Table::getInstance()->readHighScoresFile();	
+      			Table::getInstance()->getScore()->draw();
+    		}
+	     }
         }
         engine->swap();
       }
