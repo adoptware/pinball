@@ -9,7 +9,7 @@ pinlib_LIBRARIES = libemilia_pin.a
 
 INCLUDES = -I../base -I../addon @INCLTDL@
 
-pinball_LDADD = ../src/libemilia_pin.a ../addon/libemilia_addon.a ../base/libemilia_base.a @LIBLTDL@
+pinball_LDADD = libemilia_pin.a ../addon/libemilia_addon.a ../base/libemilia_base.a @LIBLTDL@
 pinball_LDFLAGS = -export-dynamic
 
 pinball_SOURCES = Pinball.cpp
