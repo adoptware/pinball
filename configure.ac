@@ -22,14 +22,12 @@ AC_ARG_WITH(cxxflags,
 [  --with-cxxflags=CXXFLAGS        use CXXFLAGS as compile time arguments.],
     [CXXFLAGS=$with_cxxflags; export CXXFLAGS])
 
-AC_CONFIG_SUBDIRS(libltdl)
-
 dnl Checks for programs.
 AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_INSTALL
 AC_LIBTOOL_DLOPEN
-AC_LIBLTDL_CONVENIENCE
+LTDL_INIT
 AC_PROG_LIBTOOL
 
 AC_SUBST(INCLTDL)
