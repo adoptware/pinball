@@ -12,7 +12,7 @@
 #include "Keyboard.h"
 
 #if EM_USE_SDL
-bool Keyboard::m_abKey[KEY_MAX];
+std::map<int, bool> Keyboard::m_abKey;
 #endif
 
 Keyboard::Keyboard(){
@@ -65,7 +65,7 @@ void Keyboard::poll() {
 
 void Keyboard::clear() {
 #if EM_USE_SDL
-  memset(m_abKey, false, KEY_MAX*sizeof(bool));
+  m_abKey.clear();
 #endif
 #if EM_USE_ALLEGRO
   clear_keybuf();
@@ -96,7 +96,7 @@ EMKey Keyboard::waitForKey() {
 }
 
 bool Keyboard::isKeyDown(int piKey) {
-  if (piKey < 0 || piKey >= KEY_MAX) return false;
+ if (piKey < 0) return false;
 #if EM_USE_SDL
   return m_abKey[piKey];
 #endif
