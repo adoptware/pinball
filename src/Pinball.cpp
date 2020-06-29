@@ -223,14 +223,18 @@ protected:
     if (menuscreen->getCurrent() == 0) {
       if (config->useFullScreen() == false) {
 #if EM_USE_SDL
-        SDL_WM_ToggleFullScreen(SDL_GetVideoSurface());
+	SDL_SetWindowFullscreen(TextureUtil::getInstance()->getWindow(),
+				SDL_WINDOW_FULLSCREEN);
 #endif
       }
       config->setFullScreen(true);
     } else {
       if (config->useFullScreen() == true) {
 #if EM_USE_SDL
-        SDL_WM_ToggleFullScreen(SDL_GetVideoSurface());
+	SDL_SetWindowFullscreen(TextureUtil::getInstance()->getWindow(), 0);
+	SDL_SetWindowSize(TextureUtil::getInstance()->getWindow(),
+			  config->getWidth(), config->getHeight());
+        TextureUtil::getInstance()->resizeView(config->getWidth(), config->getHeight());
 #endif
       }
       config->setFullScreen(false);
@@ -273,10 +277,8 @@ protected:
     default: w = 640; h = 480;
     }
     if (config->getWidth() != w) {
-#ifdef  EM_USE_SDL
-      SDL_SetVideoMode(w, h, config->getBpp(),
-                       SDL_OPENGL
-                       | (config->useFullScreen() ? SDL_FULLSCREEN : 0));
+#if  EM_USE_SDL
+      SDL_SetWindowSize(TextureUtil::getInstance()->getWindow(), w, h);
 #endif // SDL
       TextureUtil::getInstance()->resizeView(w, h);
       //!rzr!+   //cout<<("Workround bug (for WIN32) + macosx etc");
