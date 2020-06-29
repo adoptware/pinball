@@ -45,6 +45,7 @@ libogg-dev \
 libvorbis-dev \
 libaa1-dev \
 libtiff-dev \
+libcppunit-dev \
 # EOL
 
 rule/version:
