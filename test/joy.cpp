@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 	if (njoystick != 0) {
 		cerr << "The names of the joysticks are:" << endl;
 		for(int a=0; a<njoystick; a++ ) {
-			cerr << "  " << SDL_JoystickName(a) << endl;
+			cerr << "  " << SDL_JoystickNameForIndex(a) << endl;
 		}
 	}
 
