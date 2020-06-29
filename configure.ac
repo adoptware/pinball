@@ -152,56 +152,56 @@ LIBS="$GL_LIBS $LIBS"
 dnl *******************************************
 dnl SDL ***************************************
 PKG_CHECK_MODULES([SDL],
-	[sdl >= 1.2.0],
+	[sdl2 >= 2.0.0],
 	[],
-	[SDL_VERSION=1.2.0
-	 AM_PATH_SDL($SDL_VERSION, :,
+	[SDL_VERSION=2.0.0
+	 AM_PATH_SDL2($SDL_VERSION, :,
 		AC_MSG_ERROR([SDL version $SDL_VERSION not found! http://www.libsdl.org]))])
 
 CFLAGS="$CFLAGS $SDL_CFLAGS" 
 CPPFLAGS="$CPPFLAGS $SDL_CFLAGS" 
 LIBS="$LIBS $SDL_LIBS"
-DEP_PKGS="$DEP_PKGS sdl >= 1.2.0"
+DEP_PKGS="$DEP_PKGS sdl2 >= 2.0.0"
 
 dnl SDL_image *********************************
-AC_ARG_WITH(sdlimage-prefix, [  --with-sdlimage-prefix=PFX prefix where SDL_image library is installed], sdlimage_prefix="$withval", sdlimage_prefix="") 
+AC_ARG_WITH(sdl2image-prefix, [  --with-sdl2image-prefix=PFX prefix where SDL2_image library is installed], sdl2image_prefix="$withval", sdl2image_prefix="") 
 
-if test x"$sdlimage_prefix" != "x"; then
-  SDLIMAGE_LIB="-L$sdlimage_prefix/lib"
-  SDLIMAGE_CFLAGS="-I$sdlimage_prefix/include"
-  LDFLAGS="$SDLIMAGE_LIB $LDFLAGS"
-  CPPFLAGS="$CPPFLAGS $SDLIMAGE_CFLAGS"
-  CFLAGS="$CFLAGS $SDLIMAGE_CFLAGS"
+if test x"$sdl2image_prefix" != "x"; then
+  SDL2IMAGE_LIB="-L$sdl2image_prefix/lib"
+  SDL2IMAGE_CFLAGS="-I$sdl2image_prefix/include"
+  LDFLAGS="$SDL2IMAGE_LIB $LDFLAGS"
+  CPPFLAGS="$CPPFLAGS $SDL2IMAGE_CFLAGS"
+  CFLAGS="$CFLAGS $SDL2IMAGE_CFLAGS"
 fi
 
 if test x"$enable_libtest" = x"yes"; then
 
-  PKG_CHECK_MODULES([SDL_IMAGE],
-	[SDL_image],
+  PKG_CHECK_MODULES([SDL2_IMAGE],
+	[SDL2_image],
 	[],
-	[AC_MSG_NOTICE([SDL_image not located by pkg-config, checking with AC CHECK LIB:])
-	 AC_CHECK_LIB([SDL_image],
+	[AC_MSG_NOTICE([SDL2_image not located by pkg-config, checking with AC CHECK LIB:])
+	 AC_CHECK_LIB([SDL2_image],
 		[IMG_Load],
 		[],
-		[AC_MSG_ERROR([SDL_image not found! http://www.libsdl.org/projects/SDL_image])])])
-  LIBS="$LIBS -lSDL_image"
+		[AC_MSG_ERROR([SDL2_image not found! http://www.libsdl.org/projects/SDL2_image])])])
+  LIBS="$LIBS -lSDL2_image"
 fi
 
 dnl SDL_mixer **********************************
-AC_ARG_WITH(sdlmixer-prefix, [  --with-sdlmixer-prefix=PFX prefix where SDL_mixer library is installed], sdlmixer_prefix="$withval", sdlmixer_prefix="")
+AC_ARG_WITH(sdl2mixer-prefix, [  --with-sdl2mixer-prefix=PFX prefix where SDL2_mixer library is installed], sdl2mixer_prefix="$withval", sdl2mixer_prefix="")
 
-if test x"$sdlmixer_prefix" != "x"; then
-  SDLMIXER_LIB="-L$sdlmixer_prefix/lib"
-  SDLMIXER_CFLAGS="-I$sdlmixer_prefix/include"
-  LDFLAGS="$SDLMIXER_LIB $LDFLAGS"
-  CPPLAGS="$CPPFLAGS $SDLMIXER_CFLAGS"
-  CFLAGS="$CFLAGS $SDLMIXER_CFLAGS"
+if test x"$sdl2mixer_prefix" != "x"; then
+  SDL2MIXER_LIB="-L$sdl2mixer_prefix/lib"
+  SDL2MIXER_CFLAGS="-I$sdl2mixer_prefix/include"
+  LDFLAGS="$SDL2MIXER_LIB $LDFLAGS"
+  CPPLAGS="$CPPFLAGS $SDL2MIXER_CFLAGS"
+  CFLAGS="$CFLAGS $SDL2MIXER_CFLAGS"
 fi
 
 if test x"enable_libtest" = x"yes"; then
-  AC_CHECK_LIB(SDL_mixer, Mix_OpenAudio, : ,AC_MSG_ERROR([*** libSDL_mixer not found. Make sure you have the development package of SDL_mixer installed - (www.libsdl.org) - or try to use --with-sdlmixer-prefix option]), )
+  AC_CHECK_LIB(SDL2_mixer, Mix_OpenAudio, : ,AC_MSG_ERROR([*** libSDL2_mixer not found. Make sure you have the development package of SDL2_mixer installed - (www.libsdl.org) - or try to use --with-sdl2mixer-prefix option]), )
 fi
-LIBS="$LIBS -lSDL_mixer"
+LIBS="$LIBS -lSDL2_mixer"
 
 dnl else use allegro instead of sdl
 
