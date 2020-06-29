@@ -55,7 +55,7 @@ int MenuSub::perform() {
   
   int ret = 0;
   
-  EMKey key = SDLK_a;
+  EMKey key = SDL_SCANCODE_UNKNOWN;
   while(true) {
     if (key == SDLK_DOWN) m_iCurrent++;
     if (key == SDLK_UP) m_iCurrent--;
