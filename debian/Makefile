@@ -45,10 +45,10 @@ autoconf \
 automake \
 libtool-bin \
 docbook-utils \
-libsdl1.2-dev \
+libsdl2-dev \
 freeglut3-dev \
-libsdl-image1.2-dev \
-libsdl-mixer1.2-dev \
+libsdl2-image-dev \
+libsdl2-mixer-dev \
 libogg-dev \
 libvorbis-dev \
 libaa1-dev \
