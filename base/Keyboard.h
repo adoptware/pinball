@@ -14,6 +14,8 @@
 #error Must include Private.h before Keyboard.h
 #endif
 
+#include <map>
+
 #if EM_USE_SDL
 #include <SDL.h>
 #define EMKey SDLKey
@@ -112,9 +114,6 @@
 
 #endif // EM_USE_ALLEGRO
 
-#ifndef KEY_MAX
-#define KEY_MAX 512
-#endif
 
 /** @author Henrik Enqvist */
 
@@ -127,8 +126,8 @@ class Keyboard {
   static bool isKeyDown(int piKey);
   static EMKey waitForKey();
 #if EM_USE_SDL
- private:
-  static bool m_abKey[KEY_MAX];
+private:
+  static std::map<int, bool> m_abKey;
 #endif
 };
 
