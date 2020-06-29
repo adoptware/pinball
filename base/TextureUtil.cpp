@@ -147,20 +147,25 @@ void TextureUtil::initGrx() {
     if (njoystick != 0) {
       cerr << "The names of the joysticks are:" << endl;
       for(int a=0; a<njoystick; a++ ) {
-        cerr << "  " << SDL_JoystickName(a) << endl;
+        cerr << "  " << SDL_JoystickNameForIndex(a) << endl;
       }
-      cerr << "Using " << SDL_JoystickName(0) << endl << endl;
+      cerr << "Using " << SDL_JoystickNameForIndex(0) << endl << endl;
       SDL_JoystickOpen(0);
       SDL_JoystickEventState(SDL_ENABLE);
     }
   }
-
   // See if we should detect the display depth
-  if ( SDL_GetVideoInfo()->vfmt->BitsPerPixel <= 8 ) {
+  int bitsPerPixel=24;
+  char *videoInfo = getenv("PINBALL_BITPERPIXEL");
+  if (videoInfo) {
+    bitsPerPixel= atoi(videoInfo);
+  }
+  
+  if (bitsPerPixel <= 8 ) {
     SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 2 );
     SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 3 );
     SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 3 );
-  } else        if ( SDL_GetVideoInfo()->vfmt->BitsPerPixel <= 16 ) {
+  } else if (bitsPerPixel <= 16 ) {
     SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 5 );
     SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 5 );
     SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 5 );
@@ -174,17 +179,23 @@ void TextureUtil::initGrx() {
   SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
 
   /* Initialize the display */
-  SDL_Surface* screen =
-    SDL_SetVideoMode(config->getWidth(), config->getHeight(), config->getBpp(),
-                     SDL_OPENGL
-                     | (config->useFullScreen() ? SDL_FULLSCREEN : 0));
+  SDL_Renderer *sdlRenderer;
+  Uint32 window_flags = SDL_WINDOW_OPENGL						\
+    | (config->useFullScreen() ? getenv("PINBALL_WINDOW_FULLSCREEN_DESKTOP") ?
+       SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_FULLSCREEN
+       : 0);
+  SDL_CreateWindowAndRenderer(0, 0, window_flags, &m_window, &sdlRenderer);
+  SDL_SetWindowSize(m_window, config->getWidth(), config->getHeight());
+  SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, 255);
+  SDL_RenderClear(sdlRenderer);
+  SDL_RenderPresent(sdlRenderer);
 
   //    if (config->useFullScreen()) {
   SDL_ShowCursor(SDL_DISABLE);
   //    }
-  SDL_WM_SetCaption("Emilia Pinball", NULL);
+  SDL_SetWindowTitle(m_window, "Emilia Pinball");
 
-  if (screen == NULL) {
+  if (m_window == NULL) {
     cerr << "Couldn't set video mode: " << SDL_GetError() << endl;
     exit(1);
   }

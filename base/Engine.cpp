@@ -283,7 +283,7 @@ void Engine::swap() {
   g_iLoops++;
   // Draw to screen.
 #if EM_USE_SDL
-  SDL_GL_SwapBuffers();
+  SDL_GL_SwapWindow(TextureUtil::getInstance()->getWindow());
   EM_GLERROR(" In Engine::swap ");
 #endif
 
