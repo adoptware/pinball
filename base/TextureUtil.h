@@ -16,6 +16,7 @@
 #endif
 
 #if EM_USE_SDL
+#include <SDL_video.h>
 #include <SDL_opengl.h>
 
 typedef struct {
@@ -67,6 +68,9 @@ public:
   const char * getTextureName(EmTexture * tex);
   void setClearColor(float r = 1, float g = 1, float b = 1, float a = 1);
   void getFilename(list<string>& filenames);
+#if EM_USE_SDL
+  SDL_Window* getWindow() { return m_window; }
+#endif
 private:
   /// load it also in openGL context
   int genTexture( char const * const filename, EmTexture * const texture);
@@ -74,6 +78,9 @@ private:
   map<string, EmTexture*> m_hEmTexture;
   static TextureUtil* p_TextureUtil;
   Color m_colClear;
+#if EM_USE_SDL
+  SDL_Window* m_window;
+#endif
 };
 
 #endif // TEXTUREUTIL_H
