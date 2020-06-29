@@ -18,7 +18,7 @@
 
 #if EM_USE_SDL
 #include <SDL.h>
-#define EMKey SDLKey
+#define EMKey SDL_Keycode
 #endif // EM_USE_SDL
 
 #if EM_USE_ALLEGRO
