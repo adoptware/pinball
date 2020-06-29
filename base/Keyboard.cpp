@@ -9,51 +9,82 @@
 #include <cassert>
 #include <cstring>
 #include "Private.h"
+
+#include <cassert>
+#include <cstring>
+#include <iostream>
+
 #include "Keyboard.h"
+#include "Config.h"
 
 #if EM_USE_SDL
-std::map<int, bool> Keyboard::m_abKey;
+std::map<EMKey, bool> Keyboard::m_abKey;
 #endif
 
 Keyboard::Keyboard(){
-	this->clear();
+  this->clear();
 }
 
 Keyboard::~Keyboard(){
 }
 
-void Keyboard::poll() {
+void Keyboard::poll()
+{
 #if EM_USE_SDL
   SDL_Event event;
   while(SDL_PollEvent(&event)) {
-    switch(event.type) {
-
-    case SDL_MOUSEBUTTONDOWN:
-    case SDL_MOUSEBUTTONUP:
-      SDL_Event newEvent;
-
-      newEvent.type = (event.type == SDL_MOUSEBUTTONDOWN) ? SDL_KEYDOWN : SDL_KEYUP;
-
-      switch (event.button.button) {
-      case SDL_BUTTON_RIGHT:
-	newEvent.key.keysym.sym = SDLK_RSHIFT;
-	break;
-      case SDL_BUTTON_LEFT:
-	newEvent.key.keysym.sym = SDLK_LSHIFT;
-	break;
-      case SDL_BUTTON_MIDDLE:
-	newEvent.key.keysym.sym = SDLK_RETURN;
-	break;
-      }
-      SDL_PushEvent(&newEvent);
-      return;
-      break;
-
+    switch(event.type) {      
     case SDL_KEYDOWN:
       m_abKey[event.key.keysym.sym] = true;
       break;
     case SDL_KEYUP:
       m_abKey[event.key.keysym.sym] = false;
+      break;
+    case SDL_MOUSEBUTTONDOWN:
+    case SDL_MOUSEBUTTONUP:
+      SDL_Event newEvent;
+      newEvent.type = (event.type == SDL_MOUSEBUTTONDOWN)
+	? SDL_KEYDOWN : SDL_KEYUP;
+      switch (event.button.button) {
+      case SDL_BUTTON_RIGHT:
+	if (! isKeyDown(Config::getInstance()->getKey("launch"))) {
+	  newEvent.key.keysym.sym
+	    = Config::getInstance()->getKey("rightflip");
+	} else {
+	  newEvent.key.keysym.sym
+	    = Config::getInstance()->getKey("rightnudge");
+	}	  
+	break;
+      case SDL_BUTTON_LEFT:
+	if (! isKeyDown(Config::getInstance()->getKey("launch"))) {
+	  newEvent.key.keysym.sym
+	    = Config::getInstance()->getKey("leftflip");
+	} else {
+	  newEvent.key.keysym.sym
+	    = Config::getInstance()->getKey("leftnudge");
+	}
+	break;
+      case SDL_BUTTON_MIDDLE:
+	if (isKeyDown(Config::getInstance()->getKey("rightflip"))
+	    && isKeyDown(Config::getInstance()->getKey("leftflip"))) {
+	  newEvent.key.keysym.sym
+	    = Config::getInstance()->getKey("bottomnudge");
+	} else if (isKeyDown(Config::getInstance()->getKey("rightflip"))) {
+	  newEvent.key.keysym.sym
+	    = Config::getInstance()->getKey("rightnudge");
+	} else if (isKeyDown(Config::getInstance()->getKey("leftflip"))) {
+	  newEvent.key.keysym.sym
+	    = Config::getInstance()->getKey("leftnudge");
+	} else {
+	  newEvent.key.keysym.sym
+	    = Config::getInstance()->getKey("launch");
+	}
+	      
+	break;
+      }
+      if (newEvent.key.keysym.sym !=0)
+	SDL_PushEvent(&newEvent);
+      return;
       break;
     }
   }
@@ -95,7 +126,8 @@ EMKey Keyboard::waitForKey() {
 #endif
 }
 
-bool Keyboard::isKeyDown(int piKey) {
+bool Keyboard::isKeyDown(EMKey piKey)
+{
  if (piKey < 0) return false;
 #if EM_USE_SDL
   return m_abKey[piKey];

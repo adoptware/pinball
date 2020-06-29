@@ -123,12 +123,12 @@ class Keyboard {
   ~Keyboard();
   static void clear();
   static void poll();
-  static bool isKeyDown(int piKey);
+  static bool isKeyDown(EMKey piKey);
   static EMKey waitForKey();
   static void generate(EMKey sym);
 #if EM_USE_SDL
 private:
-  static std::map<int, bool> m_abKey;
+  static std::map<EMKey, bool> m_abKey;
 #endif
 };
 
