@@ -10,7 +10,7 @@
 #include "KeyRotBehavior.h"
 #include "Keyboard.h"
 #include "EmFont.h"
-#include "SDL/SDL.h"
+#include <SDL.h>
 
 /** Main */
 int main(int argc, char *argv[]) {
