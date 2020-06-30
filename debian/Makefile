@@ -56,6 +56,8 @@ rule/version:
 	autoconf --version
 	automake --version
 	libtool --version
+	m4 --version
+	pkg-config --version
 
 rule/debuild: debian/rules
 	@which ${@F} || ${make} ${@D}/setup
