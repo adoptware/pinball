@@ -326,7 +326,7 @@ dnl work if I copy the sdl.m4 and replace all 'sdl' with 'allegro' :P
 dnl AM_PATH_ALLEGRO([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
 dnl Test for ALLEGRO, and define ALLEGRO_CFLAGS and ALLEGRO_LIBS
 dnl
-AC_DEFUN(AM_PATH_ALLEGRO,
+AC_DEFUN([AM_PATH_ALLEGRO],
 [dnl 
 dnl Get the cflags and libraries from the allegro-config script
 dnl
