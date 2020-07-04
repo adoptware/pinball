@@ -1,9 +1,17 @@
 #!/usr/bin/make -f
+# -*- makefile -*-
+# ex: set tabstop=4 noexpandtab:
+# -*- coding: utf-8 -*
+#
+# SPDX-License-Identifier: GPL-2+
+
 project?=pinball
 sudo?=sudo
 tarball?=${CURDIR}/../${project}_${version}.orig.tar.gz
 export tarball
 make?=${MAKE} -f debian/Makefile
+V?=1
+topdir?=..
 
 version?=$(shell [ -r debian/changelog ] \
   && which dpkg-parsechangelog > /dev/null 2>&1 \
@@ -70,4 +78,3 @@ rule/debuild: debian/rules
 	${@F} -S -us -uc
 	${@F} -us -uc
 
--include rules
