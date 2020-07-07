@@ -34,11 +34,13 @@ EMath::EMath() {
 EMath::~EMath() {
 }
 
-// void EMath::applyMatrix(const Matrix & mtx, const Vertex3D & vtxIn, Vertex3D & vtxOut) {
-//   vtxOut.x = vtxIn.x * mtx.v[0][0] + vtxIn.y * mtx.v[0][1] + vtxIn.z * mtx.v[0][2] + mtx.t[0];
-//   vtxOut.y = vtxIn.x * mtx.v[1][0] + vtxIn.y * mtx.v[1][1] + vtxIn.z * mtx.v[1][2] + mtx.t[1];
-//   vtxOut.z = vtxIn.x * mtx.v[2][0] + vtxIn.y * mtx.v[2][1] + vtxIn.z * mtx.v[2][2] + mtx.t[2];
-// }
+#ifdef PINBALL_TODO
+void EMath::applyMatrix(const Matrix & mtx, const Vertex3D & vtxIn, Vertex3D & vtxOut) {
+  vtxOut.x = vtxIn.x * mtx.v[0][0] + vtxIn.y * mtx.v[0][1] + vtxIn.z * mtx.v[0][2] + mtx.t[0];
+  vtxOut.y = vtxIn.x * mtx.v[1][0] + vtxIn.y * mtx.v[1][1] + vtxIn.z * mtx.v[1][2] + mtx.t[1];
+  vtxOut.z = vtxIn.x * mtx.v[2][0] + vtxIn.y * mtx.v[2][1] + vtxIn.z * mtx.v[2][2] + mtx.t[2];
+}
+#endif
 
 void EMath::applyMatrixTrans(const Matrix & mtx, const Vertex3D & vtxIn, Vertex3D & vtxOut) {
 	vtxOut.x = vtxIn.x + mtx.t[0];
@@ -138,7 +140,7 @@ void EMath::getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT,
   mtx.v[2][0] = 2*(qRot.x*qRot.z + qRot.w*qRot.y); 
   mtx.v[2][1] = 2*(qRot.y*qRot.z - qRot.w*qRot.x); 
   mtx.v[2][2] = 1-2*(qRot.x*qRot.x + qRot.y*qRot.y) * vtxS.z;
-  /*
+#ifdef PINBALL_TODO
   mtx.v[0][0] = 1 - 2*(qRot.y*qRot.y + qRot.z*qRot.z);
   mtx.v[1][0] = 2*(qRot.x*qRot.y + qRot.w*qRot.z);
   mtx.v[2][0] = 2*(qRot.x*qRot.z - qRot.w*qRot.y);
@@ -150,7 +152,7 @@ void EMath::getTransformationMatrix(Matrix & mtx, const Vertex3D & vtxT,
   mtx.v[0][2] = 2*(qRot.x*qRot.z + qRot.w*qRot.y); 
   mtx.v[1][2] = 2*(qRot.y*qRot.z - qRot.w*qRot.x); 
   mtx.v[2][2] = 1-2*(qRot.x*qRot.x + qRot.y*qRot.y);
-*/
+#endif
   mtx.t[0] = vtxT.x;
   mtx.t[1] = vtxT.y;
   mtx.t[2] = vtxT.z;
@@ -345,7 +347,7 @@ void EMath::reflectionDamp(const Vertex3D & vtxIn, const Vertex3D & vtxWall, Ver
   }
 }
 
-/*
+#ifdef PINBALL_TODO
 float EMath::vectorLength(const Vertex3D & vtx) {
 return EMath::emSqrt(vtx.x * vtx.x + vtx.y * vtx.y + vtx.z * vtx.z);
 }
@@ -353,7 +355,7 @@ return EMath::emSqrt(vtx.x * vtx.x + vtx.y * vtx.y + vtx.z * vtx.z);
 float EMath::vectorLengthSqr(const Vertex3D & vtx) {
 return (vtx.x * vtx.x + vtx.y * vtx.y + vtx.z * vtx.z);
 }
-*/
+#endif
 
 /* */
 float EMath::volume(const Vertex3D & vtxA, const Vertex3D & vtxB, const Vertex3D & vtxC) {
