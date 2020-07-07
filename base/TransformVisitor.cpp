@@ -59,7 +59,7 @@ void TransformVisitor::visit(Group* g) {
     EMath::matrixMulti(g->m_mtxSrc, g->p_Parent->m_mtxTrans, g->m_mtxTrans);
   }
 	
-  // Apple transform to all shapes.
+  // Apply transform to all shapes.
   vector<Shape3D*>::iterator shapeIter = g->m_vShape3D.begin();
   vector<Shape3D*>::iterator shapeEnd = g->m_vShape3D.end();
   for ( ; shapeIter != shapeEnd; ++shapeIter) {
