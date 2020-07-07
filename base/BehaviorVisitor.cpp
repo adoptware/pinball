@@ -10,6 +10,8 @@
 #include "Behavior.h"
 #include "Group.h"
 
+#include <cassert>
+#include <cstdio>
 #include <cstddef>
 
 BehaviorVisitor * BehaviorVisitor::p_BehaviorVisitor = NULL;
