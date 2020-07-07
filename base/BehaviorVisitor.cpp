@@ -5,7 +5,7 @@
     copyright            : (C) 2000 by Henrik Enqvist
     email                : henqvist@excite.com
  ***************************************************************************/
-
+#include "Private.h"
 #include "BehaviorVisitor.h"
 #include "Behavior.h"
 #include "Group.h"
@@ -31,12 +31,13 @@ BehaviorVisitor * BehaviorVisitor::getInstance() {
 void BehaviorVisitor::visit(Group* g) {
   // Check properties before applying behavior
   if (g->m_iProperties & EM_GROUP_NO_BEHAVIOR) return;
-  
-  // 	vector<Behavior*>::iterator iter = g->m_vBehavior.begin();
-  // 	vector<Behavior*>::iterator end = g->m_vBehavior.end();
-  // 	for(; iter != end; iter++) {
-// 		(*iter)->onTick();
-// 	}
+#ifdef PINBALL_TODO
+  vector<Behavior*>::iterator iter = g->m_vBehavior.begin();
+  vector<Behavior*>::iterator end = g->m_vBehavior.end();
+  for(; iter != end; iter++) {
+    (*iter)->onTick();
+  }
+#endif
   if (g->getBehavior() != NULL) {
     g->getBehavior()->onTick();
   }
