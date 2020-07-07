@@ -30,14 +30,16 @@
  */
 
 OpenGLVisitor * OpenGLVisitor::p_OpenGLVisitor = NULL;
-int OpenGLVisitor::m_iPoly = 0;
 
-OpenGLVisitor::OpenGLVisitor(){
+OpenGLVisitor::OpenGLVisitor()
+  : RenderVisitor()
+{
   m_iMode = EM_GL_GCOL_TEX;
   m_bOffset = false;
 }
 
-OpenGLVisitor::~OpenGLVisitor(){
+OpenGLVisitor::~OpenGLVisitor()
+{
   p_OpenGLVisitor = NULL;
 }
 

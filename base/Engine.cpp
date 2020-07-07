@@ -24,6 +24,7 @@
 #include "AmbientLightVisitor.h"
 #include "BehaviorVisitor.h"
 #include "CollisionVisitor.h"
+#include "RenderVisitor.h"
 #include "OpenGLVisitor.h"
 //#include "PointLightVisitor.h"
 //#include "PNormalVisitor.h"
@@ -258,14 +259,14 @@ void Engine::render() {
   EM_COUT("Engine::render() render", 0);
   StartProfile(RENDER);
 #if EM_USE_SDL
-  OpenGLVisitor::getInstance()->setMode(EM_GL_GCOL_TEX);
-  OpenGLVisitor::getInstance()->empty();
-  this->accept(OpenGLVisitor::getInstance());
-  OpenGLVisitor::getInstance()->setMode(EM_GL_GCOL_TEX_TRANS);
-  OpenGLVisitor::getInstance()->empty();
-  this->accept(OpenGLVisitor::getInstance());
-  OpenGLVisitor::getInstance()->setMode(EM_GL_CLEAN);
-  OpenGLVisitor::getInstance()->empty();
+  RenderVisitor::getInstance()->setMode(EM_GL_GCOL_TEX);
+  RenderVisitor::getInstance()->empty();
+  this->accept(RenderVisitor::getInstance());
+  RenderVisitor::getInstance()->setMode(EM_GL_GCOL_TEX_TRANS);
+  RenderVisitor::getInstance()->empty();
+  this->accept(RenderVisitor::getInstance());
+  RenderVisitor::getInstance()->setMode(EM_GL_CLEAN);
+  RenderVisitor::getInstance()->empty();
 #endif
 
 #if EM_USE_ALLEGRO
@@ -392,25 +393,24 @@ void Engine::renderThreadSafe() {
   // Draw screen
   EM_COUT("Engine::render() opengl", 0);
   this->clearScreen();
-  OpenGLVisitor::getInstance()->setMode(EM_GL_GCOL);
-  OpenGLVisitor::getInstance()->empty();
-  this->accept(OpenGLVisitor::getInstance());
-  OpenGLVisitor::getInstance()->setMode(EM_GL_TEX);
-  OpenGLVisitor::getInstance()->empty();
-  this->accept(OpenGLVisitor::getInstance());
+  RenderVisitor::getInstance()->setMode(EM_GL_GCOL);
+  RenderVisitor::getInstance()->empty();
+  this->accept(RenderVisitor::getInstance());
+  RenderVisitor::getInstance()->setMode(EM_GL_TEX);
+  RenderVisitor::getInstance()->empty();
+  this->accept(RenderVisitor::getInstance());
 
   this->resumeTickThread();
   this->pauseTickThread();
 
-  OpenGLVisitor::getInstance()->setMode(EM_GL_GCOL_TRANS);
-  OpenGLVisitor::getInstance()->empty();
-  this->accept(OpenGLVisitor::getInstance());
-  OpenGLVisitor::getInstance()->setMode(EM_GL_TEX_TRANS);
-  OpenGLVisitor::getInstance()->empty();
-  this->accept(OpenGLVisitor::getInstance());
-  OpenGLVisitor::getInstance()->setMode(EM_GL_CLEAN);
-  OpenGLVisitor::getInstance()->empty();
-	
+  RenderVisitor::getInstance()->setMode(EM_GL_GCOL_TRANS);
+  RenderVisitor::getInstance()->empty();
+  this->accept(RenderVisitor::getInstance());
+  RenderVisitor::getInstance()->setMode(EM_GL_TEX_TRANS);
+  RenderVisitor::getInstance()->empty();
+  this->accept(RenderVisitor::getInstance());
+  RenderVisitor::getInstance()->setMode(EM_GL_CLEAN);
+  RenderVisitor::getInstance()->empty();
 
   EM_COUT("Engine::render() opengltrans", 0);
   //OpenGLTransVisitor::getInstance()->empty();

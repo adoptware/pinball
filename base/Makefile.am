@@ -30,6 +30,7 @@ OpenGLVisitor.cpp \
 PointLightVisitor.cpp \
 Polygon.cpp \
 Profiler.cpp \
+RenderVisitor.cpp \
 Shape3D.cpp \
 SignalSender.cpp \
 Sound.cpp \
@@ -63,6 +64,7 @@ PointLightVisitor.h \
 Polygon.h \
 Private.h \
 Profiler.h \
+RenderVisitor.h \
 Shape3D.h \
 SignalSender.h \
 Sound.h \

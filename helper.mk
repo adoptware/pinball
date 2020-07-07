@@ -412,3 +412,9 @@ debos: debos/i386
 
 qemu: pinball-i386.img
 	kvm -m 512 -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::55522-:22 -net nic,model=ne2k_pci -net user -machine help -machine pc $<
+
+render/%: ${app}
+	PINBALL_RENDER_DRIVER=${@F} $<
+
+render: render/dummy
+	@echo "# $@: $^"
