@@ -4,7 +4,7 @@ Upstream-Contact: https://github.com/rzr/pinball-table-hurd,
  Philippe Coval <rzr@users.sf.net>,
  Paolo Caroni <kenren89@gmail.com>
 Source: <https://github.com/rzr/pinball-table-hurd>
- 
+
 Files: *
 Copyright: 2001 Henrik Enqvist <henqvist@excite.com>
 	   2019 Philippe Coval <rzr@users.sf.net>
@@ -29,11 +29,12 @@ Copyright: 2010 Paolo Caroni <kenren89@gmail.com>
            2001 Henrik Enqvist <henqvist@excite.com>
 License: GPL-2+
 
-Files: data/hurd/gnu.*
+Files: data/hurd/gnu*
        data/hurd/label.*
-Copyright: 2010 Paolo Caroni <kenren89@gmail.com>
-           2003 Free Software Foundation, Inc.
-License: CC-BY-SA-2.0
+Copyright: 2003 Free Software Foundation, Inc,
+           2003 Aurelio A. Heckert <aurium@gmail.com>,
+           2010 Paolo Caroni <kenren89@gmail.com>
+License: FAL-1.3
 
 Files: data/hurd/hurd.*
 Copyright: 2010 Paolo Caroni <kenren89@gmail.com>
@@ -60,93 +61,6 @@ License: GPL-2+
 Files: debian/*
 Copyright: 2019 Philippe Coval <rzr@users.sf.net>
 License: GPL-2+
-
-License: CC-BY-SA-2.0
- SPDX-Licence-URL: https://spdx.org/licenses/CC-BY-SA-2.0.txt
- Creative Commons Attribution-ShareAlike 2.0
- .
- License
- .
- THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
- .
- BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
- .
- 1. Definitions
- .
-     a. "Collective Work" means a work, such as a periodical issue, anthology or encyclopedia, in which the Work in its entirety in unmodified form, along with a number of other contributions, constituting separate and independent works in themselves, are assembled into a collective whole. A work that constitutes a Collective Work will not be considered a Derivative Work (as defined below) for the purposes of this License.
- .
-     b. "Derivative Work" means a work based upon the Work or upon the Work and other pre-existing works, such as a translation, musical arrangement, dramatization, fictionalization, motion picture version, sound recording, art reproduction, abridgment, condensation, or any other form in which the Work may be recast, transformed, or adapted, except that a work that constitutes a Collective Work will not be considered a Derivative Work for the purpose of this License. For the avoidance of doubt, where the Work is a musical composition or sound recording, the synchronization of the Work in timed-relation with a moving image ("synching") will be considered a Derivative Work for the purpose of this License.
- .
-     c. "Licensor" means the individual or entity that offers the Work under the terms of this License.
- .
-     d. "Original Author" means the individual or entity who created the Work.
- .
-     e. "Work" means the copyrightable work of authorship offered under the terms of this License.
- .
-     f. "You" means an individual or entity exercising rights under this License who has not previously violated the terms of this License with respect to the Work, or who has received express permission from the Licensor to exercise rights under this License despite a previous violation.
- .
-     g. "License Elements" means the following high-level license attributes as selected by Licensor and indicated in the title of this License: Attribution, ShareAlike.
- .
- 2. Fair Use Rights. Nothing in this license is intended to reduce, limit, or restrict any rights arising from fair use, first sale or other limitations on the exclusive rights of the copyright owner under copyright law or other applicable laws.
- .
- 3. License Grant. Subject to the terms and conditions of this License, Licensor hereby grants You a worldwide, royalty-free, non-exclusive, perpetual (for the duration of the applicable copyright) license to exercise the rights in the Work as stated below:
- .
-     a. to reproduce the Work, to incorporate the Work into one or more Collective Works, and to reproduce the Work as incorporated in the Collective Works;
- .
-     b. to create and reproduce Derivative Works; 
- .
-     c. to distribute copies or phonorecords of, display publicly, perform publicly, and perform publicly by means of a digital audio transmission the Work including as incorporated in Collective Works;
- .
-     d. to distribute copies or phonorecords of, display publicly, perform publicly, and perform publicly by means of a digital audio transmission Derivative Works.
- .
-     e. For the avoidance of doubt, where the work is a musical composition:
- .
-          i. Performance Royalties Under Blanket Licenses. Licensor waives the exclusive right to collect, whether individually or via a performance rights society (e.g. ASCAP, BMI, SESAC), royalties for the public performance or public digital performance (e.g. webcast) of the Work.
- .
-          ii. Mechanical Rights and Statutory Royalties. Licensor waives the exclusive right to collect, whether individually or via a music rights society or designated agent (e.g. Harry Fox Agency), royalties for any phonorecord You create from the Work ("cover version") and distribute, subject to the compulsory license created by 17 USC Section 115 of the US Copyright Act (or the equivalent in other jurisdictions).
- .
-     f. Webcasting Rights and Statutory Royalties. For the avoidance of doubt, where the Work is a sound recording, Licensor waives the exclusive right to collect, whether individually or via a performance-rights society (e.g. SoundExchange), royalties for the public digital performance (e.g. webcast) of the Work, subject to the compulsory license created by 17 USC Section 114 of the US Copyright Act (or the equivalent in other jurisdictions).
- .
- The above rights may be exercised in all media and formats whether now known or hereafter devised. The above rights include the right to make such modifications as are technically necessary to exercise the rights in other media and formats. All rights not expressly granted by Licensor are hereby reserved.
- .
- 4. Restrictions. The license granted in Section 3 above is expressly made subject to and limited by the following restrictions:
- .
-     a. You may distribute, publicly display, publicly perform, or publicly digitally perform the Work only under the terms of this License, and You must include a copy of, or the Uniform Resource Identifier for, this License with every copy or phonorecord of the Work You distribute, publicly display, publicly perform, or publicly digitally perform. You may not offer or impose any terms on the Work that alter or restrict the terms of this License or the recipients' exercise of the rights granted hereunder. You may not sublicense the Work. You must keep intact all notices that refer to this License and to the disclaimer of warranties. You may not distribute, publicly display, publicly perform, or publicly digitally perform the Work with any technological measures that control access or use of the Work in a manner inconsistent with the terms of this License Agreement. The above applies to the Work as incorporated in a Collective Work, but this does not require the Collective Work apart from the Work itself to be made subject to the terms of this License. If You create a Collective Work, upon notice from any Licensor You must, to the extent practicable, remove from the Collective Work any reference to such Licensor or the Original Author, as requested. If You create a Derivative Work, upon notice from any Licensor You must, to the extent practicable, remove from the Derivative Work any reference to such Licensor or the Original Author, as requested.
- .
-     b. You may distribute, publicly display, publicly perform, or publicly digitally perform a Derivative Work only under the terms of this License, a later version of this License with the same License Elements as this License, or a Creative Commons iCommons license that contains the same License Elements as this License (e.g. Attribution-ShareAlike 2.0 Japan). You must include a copy of, or the Uniform Resource Identifier for, this License or other license specified in the previous sentence with every copy or phonorecord of each Derivative Work You distribute, publicly display, publicly perform, or publicly digitally perform. You may not offer or impose any terms on the Derivative Works that alter or restrict the terms of this License or the recipients' exercise of the rights granted hereunder, and You must keep intact all notices that refer to this License and to the disclaimer of warranties. You may not distribute, publicly display, publicly perform, or publicly digitally perform the Derivative Work with any technological measures that control access or use of the Work in a manner inconsistent with the terms of this License Agreement. The above applies to the Derivative Work as incorporated in a Collective Work, but this does not require the Collective Work apart from the Derivative Work itself to be made subject to the terms of this License.
- .
-     c. If you distribute, publicly display, publicly perform, or publicly digitally perform the Work or any Derivative Works or Collective Works, You must keep intact all copyright notices for the Work and give the Original Author credit reasonable to the medium or means You are utilizing by conveying the name (or pseudonym if applicable) of the Original Author if supplied; the title of the Work if supplied; to the extent reasonably practicable, the Uniform Resource Identifier, if any, that Licensor specifies to be associated with the Work, unless such URI does not refer to the copyright notice or licensing information for the Work; and in the case of a Derivative Work, a credit identifying the use of the Work in the Derivative Work (e.g., "French translation of the Work by Original Author," or "Screenplay based on original Work by Original Author"). Such credit may be implemented in any reasonable manner; provided, however, that in the case of a Derivative Work or Collective Work, at a minimum such credit will appear where any other comparable authorship credit appears and in a manner at least as prominent as such other comparable authorship credit.
- .
- 5. Representations, Warranties and Disclaimer
- .
- UNLESS OTHERWISE AGREED TO BY THE PARTIES IN WRITING, LICENSOR OFFERS THE WORK AS-IS AND MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND CONCERNING THE MATERIALS, EXPRESS, IMPLIED, STATUTORY OR OTHERWISE, INCLUDING, WITHOUT LIMITATION, WARRANTIES OF TITLE, MERCHANTIBILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT, OR THE ABSENCE OF LATENT OR OTHER DEFECTS, ACCURACY, OR THE PRESENCE OF ABSENCE OF ERRORS, WHETHER OR NOT DISCOVERABLE. SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF IMPLIED WARRANTIES, SO SUCH EXCLUSION MAY NOT APPLY TO YOU.
- .
- 6. Limitation on Liability. EXCEPT TO THE EXTENT REQUIRED BY APPLICABLE LAW, IN NO EVENT WILL LICENSOR BE LIABLE TO YOU ON ANY LEGAL THEORY FOR ANY SPECIAL, INCIDENTAL, CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES ARISING OUT OF THIS LICENSE OR THE USE OF THE WORK, EVEN IF LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
- .
- 7. Termination
- .
-     a. This License and the rights granted hereunder will terminate automatically upon any breach by You of the terms of this License. Individuals or entities who have received Derivative Works or Collective Works from You under this License, however, will not have their licenses terminated provided such individuals or entities remain in full compliance with those licenses. Sections 1, 2, 5, 6, 7, and 8 will survive any termination of this License.
- .
-     b. Subject to the above terms and conditions, the license granted here is perpetual (for the duration of the applicable copyright in the Work). Notwithstanding the above, Licensor reserves the right to release the Work under different license terms or to stop distributing the Work at any time; provided, however that any such election will not serve to withdraw this License (or any other license that has been, or is required to be, granted under the terms of this License), and this License will continue in full force and effect unless terminated as stated above.
- .
- 8. Miscellaneous
- .
-     a. Each time You distribute or publicly digitally perform the Work or a Collective Work, the Licensor offers to the recipient a license to the Work on the same terms and conditions as the license granted to You under this License.
- .
-     b. Each time You distribute or publicly digitally perform a Derivative Work, Licensor offers to the recipient a license to the original Work on the same terms and conditions as the license granted to You under this License.
- .
-     c. If any provision of this License is invalid or unenforceable under applicable law, it shall not affect the validity or enforceability of the remainder of the terms of this License, and without further action by the parties to this agreement, such provision shall be reformed to the minimum extent necessary to make such provision valid and enforceable.
- .
-     d. No term or provision of this License shall be deemed waived and no breach consented to unless such waiver or consent shall be in writing and signed by the party to be charged with such waiver or consent.
- .
-     e. This License constitutes the entire agreement between the parties with respect to the Work licensed here. There are no understandings, agreements or representations with respect to the Work not specified here. Licensor shall not be bound by any additional provisions that may appear in any communication from You. This License may not be modified without the mutual written agreement of the Licensor and You. 
- .
- Creative Commons is not a party to this License, and makes no warranty whatsoever in connection with the Work. Creative Commons will not be liable to You or any party on any legal theory for any damages whatsoever, including without limitation any general, special, incidental or consequential damages arising in connection to this license. Notwithstanding the foregoing two (2) sentences, if Creative Commons has expressly identified itself as the Licensor hereunder, it shall have all rights and obligations of Licensor.
- .
- Except for the limited purpose of indicating to the public that the Work is licensed under the CCPL, neither party will use the trademark "Creative Commons" or any related trademark or logo of Creative Commons without the prior written consent of Creative Commons. Any permitted use will be in compliance with Creative Commons' then-current trademark usage guidelines, as may be published on its website or otherwise made available upon request from time to time.
- .
- Creative Commons may be contacted at https://creativecommons.org/ .
- .
 
 License: CC-BY-SA-3.0
  SPDX-Licence-URL: https://spdx.org/licenses/CC-BY-SA-3.0.txt
@@ -245,6 +159,188 @@ License: CC-BY-SA-3.0
  .
  Creative Commons may be contacted at https://creativecommons.org/ .
  .
+
+License: FAL-1.3
+ Free Art License 1.3 (FAL 1.3)
+ Preamble
+ The Free Art License grants the right to freely copy, distribute, and
+ transform creative works without infringing the author's rights.
+ .
+ The Free Art License recognizes and protects these rights. Their
+ implementation has been reformulated in order to allow everyone to use
+ creations of the human mind in a creative manner, regardless of their
+ types and ways of expression.
+ .
+ While the public's access to creations of the human mind usually is
+ restricted by the implementation of copyright law, it is favoured by
+ the Free Art License. This license intends to allow the use of a
+ work’s resources; to establish new conditions for creating in order to
+ increase creation opportunities. The Free Art License grants the right
+ to use a work, and acknowledges the right holder’s and the user’s
+ rights and responsibility.
+ .
+ The invention and development of digital technologies, Internet and
+ Free Software have changed creation methods: creations of the human
+ mind can obviously be distributed, exchanged, and transformed. They
+ allow to produce common works to which everyone can contribute to the
+ benefit of all.
+ .
+ The main rationale for this Free Art License is to promote and protect
+ these creations of the human mind according to the principles of
+ copyleft: freedom to use, copy, distribute, transform, and prohibition
+ of exclusive appropriation.
+ .
+ Definitions
+ .
+ “work” either means the initial work, the subsequent works or the
+ common work as defined hereafter:
+ .
+ “common work” means a work composed of the initial work and all
+ subsequent contributions to it (originals and copies). The initial
+ author is the one who, by choosing this license, defines the
+ conditions under which contributions are made.
+ .
+ “Initial work” means the work created by the initiator of the common
+ work (as defined above), the copies of which can be modified by
+ whoever wants to
+ .
+ “Subsequent works” means the contributions made by authors who
+ participate in the evolution of the common work by exercising the
+ rights to reproduce, distribute, and modify that are granted by the
+ license.
+ .
+ “Originals” (sources or resources of the work) means all copies of
+ either the initial work or any subsequent work mentioning a date and
+ used by their author(s) as references for any subsequent updates,
+ interpretations, copies or reproductions.
+ .
+ “Copy” means any reproduction of an original as defined by this
+ license.
+ .
+ 1. OBJECT
+ .
+ The aim of this license is to define the conditions under which one
+ can use this work freely.
+ .
+ 2. SCOPE
+ .
+ This work is subject to copyright law. Through this license its author
+ specifies the extent to which you can copy, distribute, and modify it.
+ .
+ 2.1 FREEDOM TO COPY (OR TO MAKE REPRODUCTIONS)
+ .
+ You have the right to copy this work for yourself, your friends or any
+ other person, whatever the technique used.
+ .
+ 2.2 FREEDOM TO DISTRIBUTE, TO PERFORM IN PUBLIC
+ .
+ You have the right to distribute copies of this work; whether modified
+ or not, whatever the medium and the place, with or without any charge,
+ provided that you: attach this license without any modification to the
+ copies of this work or indicate precisely where the license can be
+ found, specify to the recipient the names of the author(s) of the
+ originals, including yours if you have modified the work, specify to
+ the recipient where to access the originals (either initial or
+ subsequent).
+ .
+ The authors of the originals may, if they wish to, give you the right
+ to distribute the originals under the same conditions as the copies.
+ .
+ 2.3 FREEDOM TO MODIFY
+ .
+ You have the right to modify copies of the originals (whether initial
+ or subsequent) provided you comply with the following conditions: all
+ conditions in article 2.2 above, if you distribute modified copies;
+ indicate that the work has been modified and, if it is possible, what
+ kind of modifications have been made; distribute the subsequent work
+ under the same license or any compatible license.
+ .
+ The author(s) of the original work may give you the right to modify it
+ under the same conditions as the copies.
+ .
+ 3. RELATED RIGHTS
+ .
+ Activities giving rise to author’s rights and related rights shall not
+ challenge the rights granted by this license.
+ .
+ For example, this is the reason why performances must be subject to
+ the same license or a compatible license. Similarly, integrating the
+ work in a database, a compilation or an anthology shall not prevent
+ anyone from using the work under the same conditions as those defined
+ in this license.
+ .
+ 4. INCORPORATION OF THE WORK
+ .
+ Incorporating this work into a larger work that is not subject to the
+ Free Art License shall not challenge the rights granted by this
+ license.
+ .
+ If the work can no longer be accessed apart from the larger work in
+ which it is incorporated, then incorporation shall only be allowed
+ under the condition that the larger work is subject either to the Free
+ Art License or a compatible license.
+ .
+ 5. COMPATIBILITY
+ .
+ A license is compatible with the Free Art License provided: it gives
+ the right to copy, distribute, and modify copies of the work including
+ for commercial purposes and without any other restrictions than those
+ required by the respect of the other compatibility criteria; it
+ ensures proper attribution of the work to its authors and access to
+ previous versions of the work when possible; it recognizes the Free
+ Art License as compatible (reciprocity); it requires that changes made
+ to the work be subject to the same license or to a license which also
+ meets these compatibility criteria.
+ .
+ 6. YOUR INTELLECTUAL RIGHTS
+ .
+ This license does not aim at denying your author's rights in your
+ contribution or any related right. By choosing to contribute to the
+ development of this common work, you only agree to grant others the
+ same rights with regard to your contribution as those you were granted
+ by this license. Conferring these rights does not mean you have to
+ give up your intellectual rights.
+ .
+ 7. YOUR RESPONSIBILITIES
+ .
+ The freedom to use the work as defined by the Free Art License (right
+ to copy, distribute, modify) implies that everyone is responsible for
+ their own actions.
+ .
+ 8. DURATION OF THE LICENSE
+ .
+ This license takes effect as of your acceptance of its terms. The act
+ of copying, distributing, or modifying the work constitutes a tacit
+ agreement. This license will remain in effect for as long as the
+ copyright which is attached to the work. If you do not respect the
+ terms of this license, you automatically lose the rights that it
+ confers.
+ .
+ If the legal status or legislation to which you are subject makes it
+ impossible for you to respect the terms of this license, you may not
+ make use of the rights which it confers.
+ .
+ 9. VARIOUS VERSIONS OF THE LICENSE
+ .
+ This license may undergo periodic modifications to incorporate
+ improvements by its authors (instigators of the “Copyleft Attitude”
+ movement) by way of new, numbered versions.
+ .
+ You will always have the choice of accepting the terms contained in
+ the version under which the copy of the work was distributed to you,
+ or alternatively, to use the provisions of one of the subsequent
+ versions.
+ .
+ 10. SUB-LICENSING
+ .
+ Sub-licenses are not authorized by this license. Any person wishing to
+ make use of the rights that it confers will be directly bound to the
+ authors of the common work.
+ .
+ 11. LEGAL FRAMEWORK
+ .
+ This license is written with respect to both French law and the Berne
+ Convention for the Protection of Literary and Artistic Works.
 
 License: GPL-2+
  This package is free software; you can redistribute it and/or modify
