@@ -3,7 +3,7 @@ Author: Innocent De Marchi <tangram.peces@gmail.com>
 Last-Update: 2018-03-07
 
 --- pinball-0.3.1.orig/src/Table.cpp	2003-11-20 17:46:17.000000000 +0100
-+++ pinball-0.3.1/scr/Table.cpp	2018-03-07 17:35:32.229317000 +0100
++++ pinball-0.3.1/src/Table.cpp	2018-03-07 17:35:32.229317000 +0100
 @@ -248,13 +248,18 @@
    m_mapHighScores.clear();
  

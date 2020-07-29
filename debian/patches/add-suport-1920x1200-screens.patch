@@ -5,7 +5,7 @@ Bug-Debian: http://bugs.debian.org/555251
 Last-Update: 2018-03-16
 
 --- pinball-0.3.1.orig/src/Pinball.cpp	2003-11-20 17:46:17.000000000 +0100
-+++ pinball-0.3.1/scr/Pinball.cpp	2018-03-16 19:22:50.844304579 +0100
++++ pinball-0.3.1/src/Pinball.cpp	2018-03-16 19:22:50.844304579 +0100
 @@ -247,6 +247,7 @@
      case 4: w = 800; h = 600; break;
      case 5: w = 1024; h = 768; break;

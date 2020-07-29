@@ -4,7 +4,7 @@ Bug-Debian: http://bugs.debian.org/555256
 Last-Update: 2018-03-16
 
 --- pinball-0.3.1.orig/src/Pinball.cpp	2003-11-20 17:46:17.000000000 +0100
-+++ pinball-0.3.1/scr/Pinball.cpp	2018-03-16 19:00:50.014691897 +0100
++++ pinball-0.3.1/src/Pinball.cpp	2018-03-16 19:00:50.014691897 +0100
 @@ -771,8 +771,23 @@
            Table::getInstance()->getScore()->draw();
          }
