@@ -21,7 +21,8 @@ Build-Depends: debhelper (>= 9),
                autoconf,
                automake,
                libtool,
-               libltdl-dev
+               libltdl-dev,
+	       pkg-config
 Standards-Version: 4.3.0
 Homepage: https://sourceforge.net/projects/pinball/
 Rules-Requires-Root: binary-targets
