@@ -1,4 +1,6 @@
-//#ident "$Id: Pinball.h,v 1.16 2003/06/11 13:25:51 rzr Exp $"
+// -*- mode: C++; c-basic-offset: 2; indent-tabs-mode: nil -*-
+// #ident "$Id: Pinball.h $"
+
 #ifndef Pinball_h_
 #define Pinball_h_
 
@@ -56,8 +58,7 @@
 #define PBL_SIG_BALL_OFF         3102
 //#define PBL_SIG_ALLBALLS_OFF      3109
 
-/*
-
+#ifdef PINBALL_TODO
 #define PBL_SIG_HIT_CAVE    				1002
 #define PBL_SIG_CAVE_OUT 		    		1012
 #define PBL_SIG_ACTIVATE_EXTRABALL 	1003
@@ -91,6 +92,28 @@
 #define PBL_SIG_MISSION_2						5002
 
 #define PBL_LINUX_L_ON              6001
+#endif
 
-*/
+
+class Engine;
+class MenuItem;
+
+class Pinball
+{
+public:
+  static int main(int argc=0, char *argv[]=0);
+  int run(int argc=0, char *argv[]=0);
+protected:
+  Pinball() : mpMenu{}, mpEngine{}, miCount{} {}
+  int setup(int argc=0, char *argv[]=0);
+  int loop();
+  int finish(int status=0);
+private:
+  MenuItem* mpMenu;
+  Engine* mpEngine;
+  unsigned int miCount;
+};
+
 #endif //inclusion
+
+// #eof "$Id: Pinball.h $"
