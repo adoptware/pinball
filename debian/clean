@@ -1,9 +1,11 @@
+compile
 config.sub
 config.guess
 config.status
 config.log
 configure
 configure.tmp
+depcomp
 pinball.6
 manpage.links
 manpage.refs
