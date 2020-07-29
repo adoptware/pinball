@@ -125,6 +125,7 @@ class Keyboard {
   static void poll();
   static bool isKeyDown(int piKey);
   static EMKey waitForKey();
+  static void generate(EMKey sym);
 #if EM_USE_SDL
 private:
   static std::map<int, bool> m_abKey;

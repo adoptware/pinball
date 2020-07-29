@@ -1,4 +1,5 @@
-//#ident "$Id: Pinball.cpp,v 1.44 2003/06/18 10:43:44 henqvist Exp $"
+// -*- mode: C++; c-basic-offset: 2; indent-tabs-mode: nil -*-
+// #ident "$Id: Pinball.cpp $"
 /***************************************************************************
                           Pinball.cpp  -  description
                              -------------------
@@ -59,6 +60,8 @@
 #if EM_USE_SDL
 #include <SDL.h>
 #endif
+
+using namespace std;
 
 #define AMBIENT 0.05f
 
@@ -727,119 +730,168 @@ MenuItem* createMenus(Engine * engine) {
 }
 
 
-/** Main */
-int main(int argc, char *argv[]) {
-  //cerr<<"+ Pinball::main"<<endl;
+int Pinball::run(int argc, char *argv[])
+{
+  int status = 0;
   try {
-    // Create a engine and parse emilia arguments
-    Config::getInstance()->loadConfig();
-    Engine * engine = new Engine(argc, argv);
-
-    float direct = 0.0f;
-    if (Config::getInstance()->getBrightness() < 0.35f) {
-      direct = 0.3f;
-    } else if (Config::getInstance()->getBrightness() < 0.45f) {
-      direct = 0.4f;
-    } else if (Config::getInstance()->getBrightness() < 0.55f) {
-      direct = 0.5f;
-    } else if (Config::getInstance()->getBrightness() < 0.65f) {
-      direct = 0.6f;
-    } else if (Config::getInstance()->getBrightness() < 0.75f) {
-      direct = 0.7f;
-    } else {
-      direct = 0.8f;
+    status |= setup(argc, argv);
+    while (status == 0) {
+      status = loop();
     }
-    engine->setLightning(direct, AMBIENT);
+    switch (status) {
+    case -EM_MENU_EXIT:
+      status = EXIT_SUCCESS;
+      break;
+    default:
+      if (status!=0) { cout<<"log: run: status="<<status<<endl;}
+    }
+    if (status>0) status=0;
+  } catch(string error) {
+    status |= 0xF0;
+  }
+  status |= finish(status);
+  return status;
+}
+
+
+int Pinball::setup(int argc, char *argv[])
+{
+  // Create a engine and parse emilia arguments
+  Config::getInstance()->loadConfig();
+  mpEngine = new Engine(argc, argv);
+
+  float direct = 0.0f;
+  if (Config::getInstance()->getBrightness() < 0.35f) {
+    direct = 0.3f;
+  } else if (Config::getInstance()->getBrightness() < 0.45f) {
+    direct = 0.4f;
+  } else if (Config::getInstance()->getBrightness() < 0.55f) {
+    direct = 0.5f;
+  } else if (Config::getInstance()->getBrightness() < 0.65f) {
+    direct = 0.6f;
+  } else if (Config::getInstance()->getBrightness() < 0.75f) {
+    direct = 0.7f;
+  } else {
+    direct = 0.8f;
+  }
+  mpEngine->setLightning(direct, AMBIENT);
 
 #if EM_USE_SDL
-    string filename = Config::getInstance()->getDataDir() + string("/font_34.png");
+  string filename = Config::getInstance()->getDataDir() + string("/font_34.png");
 #endif
 #if EM_USE_ALLEGRO
-    string filename = Config::getInstance()->getDataDir() + string("/font_35.pcx");
+  string filename = Config::getInstance()->getDataDir() + string("/font_35.pcx");
 #endif
 
-    EmFont::getInstance()->loadFont(filename.c_str());
+  EmFont::getInstance()->loadFont(filename.c_str());
 
-    // Add a score board and a menu.
-    MenuItem* menu = createMenus(engine);
+  // Add a score board and a menu.
+  mpMenu = createMenus(mpEngine);
 
-    // Draw to the screen.
-    int all = 0;
+  // cerr<<"log: pinball: Draw to the screen"<<endl;
+  miCount = 0;
 
-    engine->resetTick();
+  mpEngine->resetTick();
+  mpEngine->swap();
 
-    while (! (  SDL_QuitRequested()  //cout<<"catch close win"<<endl; //!rzr
-//               || Keyboard::isKeyDown(SDLK_INSERT)
-		))  {
-#if EM_DEBUG
-      if (Keyboard::isKeyDown(SDLK_p)) {
-        Keyboard::waitForKey();
-        Keyboard::clear();
-        engine->resetTick();
-      }
+  char const * table = 0;
+  if (miCount == 0 && !mpEngine->getGroup(0)) {
+    if (table = getenv("PINBALL_TABLE")) {
+      if (table && !*table) {
+	int iTable = 0;
+#if ! EM_DEBUG
+	srand(time(NULL));
+	iTable = rand() % 100 +1; // TODO reload last table from config
 #endif
-      if (Keyboard::isKeyDown(SDLK_ESCAPE) || all == 0) {
-        SoundUtil::getInstance()->pauseMusic();
-        if (menu->perform() == EM_MENU_EXIT) {
-          break;
-        }
-        engine->resetTick();
-        SoundUtil::getInstance()->resumeMusic();
+	table = (iTable<51) ? "professor" : "tux";
       }
-
-      if (Keyboard::isKeyDown(SDLK_r)) {
-        SendSignal(PBL_SIG_RESET_ALL, 0, engine, NULL);
-      }
-
-      if (engine->nextTickFPS(200)) {
-        engine->tick();
-      } else {
-        engine->render();
-        if (Table::getInstance()->getScore() != NULL) {
-          Table::getInstance()->getScore()->draw();
-        }
-        if (engine->getGroup(0) == NULL) {
-          //EmFont::getInstance()->printRowCenter("no table loaded", 6);
-          //EmFont::getInstance()->printRowCenter("press esc", 8);
-	srand (time(NULL));
-	int iTable ; 
-	iTable = rand() % 100 +1;
-	if (iTable < 51){
-		if (Table::getInstance()->loadLevel(engine, "tux") == 0) {
-      			Table::getInstance()->readHighScoresFile();	
-      			Table::getInstance()->getScore()->draw();
-    		}
-	     }
-	else {
-		if (Table::getInstance()->loadLevel(engine, "professor") == 0) {
-      			Table::getInstance()->readHighScoresFile();	
-      			Table::getInstance()->getScore()->draw();
-    		}
-	     }
-        }
-        engine->swap();
-      }
-
-      all++;
-      //engine->limitFPS(100);
+      cout<<"log: pinball: Load table on init"<<endl;
+      if (Table::getInstance()->loadLevel(mpEngine, table) == 0)
+	Table::getInstance()->readHighScoresFile();
+      Keyboard::generate(SDLK_RETURN);
+      Keyboard::clear();
     }
-
-    Config::getInstance()->saveConfig();
-
-    // Write high scores to disk - pnf
-    Table::getInstance()->writeHighScoresFile();
-
-    delete(engine);
-  } catch (string str) {
-    cerr << "EXCEPTION: " << str << endl;
   }
+  return 0;
+}
+
+
+int Pinball::loop()
+{
+#if EM_USE_SDL
+  if (SDL_QuitRequested())
+    return 2;
+#if EM_DEBUG
+  if (Keyboard::isKeyDown(SDLK_INSERT))
+    return 3;
+#endif
+#endif
+#if EM_DEBUG
+  if (Keyboard::isKeyDown(SDLK_p)) {
+    Keyboard::waitForKey();
+    Keyboard::clear();
+    mpEngine->resetTick();
+  }
+#endif
+  if (mpEngine->getGroup(0)) {
+    if (miCount++ == 0) {
+      cerr<<"log: Start table if loaded: "<< miCount<<endl;
+      return 0;
+    }
+  }
+  
+  if (Keyboard::isKeyDown(SDLK_ESCAPE) || miCount == 0) {
+    SoundUtil::getInstance()->pauseMusic();
+    if (mpMenu->perform() == EM_MENU_EXIT) {
+      return -EM_MENU_EXIT;
+    }
+    mpEngine->resetTick();
+    SoundUtil::getInstance()->resumeMusic();
+  }
+
+  if (Keyboard::isKeyDown(SDLK_r)) {
+    SendSignal(PBL_SIG_RESET_ALL, 0, mpEngine, NULL);
+  }
+  if (mpEngine->nextTickFPS(200)) {
+    mpEngine->tick();
+  } else {
+    mpEngine->render();
+    if (Table::getInstance()->getScore() != NULL) {
+      Table::getInstance()->getScore()->draw();
+    } else {
+      EmFont::getInstance()->printRowCenter("no table loaded", 6);
+      EmFont::getInstance()->printRowCenter("press esc", 8);
+    }
+    mpEngine->swap();
+  }
+  miCount++;
+#if EM_DEBUG
+  //engine->limitFPS(100); // TODO: remove if no relevent
+#endif
   return EXIT_SUCCESS;
 }
 
-#if EM_USE_ALLEGRO
-END_OF_MAIN();
-#endif
+int Pinball::finish(int status)
+{
+  Config::getInstance()->saveConfig();
 
+    // Write high scores to disk - pnf
+  Table::getInstance()->writeHighScoresFile();
+  delete(mpEngine); mpEngine=0;
+  return EXIT_SUCCESS;
+}
+
+/// Main
+
+int Pinball::main(int argc, char *argv[])
+{
+  Pinball instance;
+  int status = instance.run(argc, argv);
+  cout<<"pinball: exit: "<<status<<endl;
+  return status;
+}
+
+int main(int argc=0, char *argv[]=0);
 
 /// entry point function (main) for w32 codewarrior
 #if( (defined WIN32 ) && ( defined __MWERKS__ ) )
@@ -917,4 +969,17 @@ int WINAPI WinMain( HINSTANCE hInst,  HINSTANCE hPreInst,
   return main(argc,argv);
 }
 #endif
-// EOF $Id: Pinball.cpp,v 1.44 2003/06/18 10:43:44 henqvist Exp $
+
+
+int main(int argc, char *argv[])
+{
+  int status = EXIT_SUCCESS;
+  status |=  Pinball::main(argc, argv);
+  return status;
+}
+
+#if EM_USE_ALLEGRO
+END_OF_MAIN();
+#endif
+
+// #eof "$Id: Pinball.cpp $"

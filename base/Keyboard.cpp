@@ -104,3 +104,20 @@ bool Keyboard::isKeyDown(int piKey) {
   return key[piKey];
 #endif
 }
+
+void Keyboard::generate(EMKey sym)
+{
+#if EM_USE_SDL
+  SDL_Event event = {};
+  event.type = SDL_KEYDOWN;
+  event.key.state = SDL_PRESSED;
+  event.key.keysym.sym = sym;
+  SDL_PushEvent(&event);
+  event.type = SDL_KEYDOWN;
+  event.key.state = SDL_RELEASED;
+  event.key.keysym.sym = sym;
+  SDL_PushEvent(&event);
+#else
+# warning "TODO"
+#endif
+}
