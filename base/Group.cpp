@@ -139,14 +139,19 @@ void Group::removeShape3D(Shape3D * s) {
   }
 }
 
-// void Group::addBehavior(Behavior * b, bool signal) {
-// 	if (b == NULL) return;
-// 	m_vBehavior.push_back(b);
-// 	b->setParent(this);
-// 	if (signal) SignalSender::getInstance()->addGroup(this);
-// }
 
-void Group::setBehavior(Behavior * b, bool signal) {
+#ifdef PINBALL_TODO
+void Group::addBehavior(Behavior * b, bool signal)
+{
+  PINBALL(FUNCT());
+ 	if (b == NULL) return;
+ 	m_vBehavior.push_back(b);
+ 	b->setParent(this);
+ 	if (signal) SignalSender::getInstance()->addGroup(this);
+ }
+#endif
+void Group::setBehavior(Behavior * b, bool signal)
+{
   p_Behavior = b;
   b->setParent(this);
   if (b != NULL && signal) {
@@ -154,17 +159,18 @@ void Group::setBehavior(Behavior * b, bool signal) {
   }
 }
 
-// void Group::removeBehavior(Behavior * b) {
-// 	if (b == NULL) return;
-// 	vector<Behavior*>::iterator iter = m_vBehavior.begin();
-// 	vector<Behavior*>::iterator end = m_vBehavior.end();
-// 	for (; iter != end; iter++) {
-// 		if ((*iter) == b) {
-// 			m_vBehavior.erase(iter);
-// 			return;
-// 		}
-// 	}
-// }
+#ifdef PINBALL_TODO
+void Group::removeBehavior(Behavior * b) {
+	if (b == NULL) return;
+	vector<Behavior*>::iterator iter = m_vBehavior.begin();	vector<Behavior*>::iterator end = m_vBehavior.end();
+	for (; iter != end; iter++) {
+		if ((*iter) == b) {
+			m_vBehavior.erase(iter);
+			return;
+		}
+	}
+}
+#endif
 
 Shape3D * Group::getShape3D(int i) {
   if (i < 0 || (signed) m_vShape3D.size() <=  i) return NULL;
@@ -176,14 +182,16 @@ int Group::getShape3DSize() {
 }
 
 
-// Behavior * Group::getBehavior(int i) {
-// 	if (i < 0 || (signed) m_vBehavior.size() <= i) return NULL;
-// 	return m_vBehavior[i];
-// }
+#ifdef PINBALL_TODO
+Behavior * Group::getBehavior(int i) {
+	if (i < 0 || (signed) m_vBehavior.size() <= i) return NULL;
+	return m_vBehavior[i];
+}
 
-// int Group::getBehaviorSize() {
-// 	return m_vBehavior.size();
-// }
+int Group::getBehaviorSize() {
+	return m_vBehavior.size();
+}
+#endif
 
 Behavior * Group::getBehavior() {
   return p_Behavior;
