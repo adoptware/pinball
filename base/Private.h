@@ -16,8 +16,16 @@
 #define RZR_PATCHES   
 #endif // msvc
 
-/// Add generic macro to be used with external tools (e.g. trako)
-#define PINBALL(cmd)
+/// TODO: Enable this flag for profiling app using external "trako" lib
+/// https://github.com/rzr/trako/
+#if defined(PINBALL_CONFIG_TRAKO) && PINBALL_CONFIG_TRAKO
+# include <trako/trako.h>
+# define PINBALL(cmd)                           \
+  TRAKO(cmd)
+#else
+# define PINBALL(cmd)
+#endif
+
 
 
 #ifndef unix
