@@ -41,7 +41,9 @@ enum {
 
 class TuxBehavior : public Behavior {
 public:
-  TuxBehavior() : Behavior() {
+  TuxBehavior() : Behavior()
+  {
+    PINBALL(FUNCT());
     Loader * loader = Loader::getInstance();
     // init shortcuts for signals
     m_sigGameStart = loader->getSignal("game_start");
@@ -168,9 +170,14 @@ public:
 
     this->clear();
   };
-  ~TuxBehavior() {};
+  ~TuxBehavior()
+  {
+    PINBALL(FUNCT());
+  };
   
-  void onTick() {
+  void onTick()
+  {
+    PINBALL(FUNCT());
     EM_COUT("TuxBehavior::onTick", 0);
     Table * table = Table::getInstance();
     Score * score = table->getScore();
@@ -215,7 +222,7 @@ public:
 	  break;
 	}
       default:
-	throw string("TuxBehavior::onTick() all balls busy");
+	throw string("all balls busy");
       }
       EM_COUT("ModuleTux::onTick() new ball", 1);
     }
@@ -285,9 +292,13 @@ public:
     }
   };
   
-  void StdEmptyOnCollision() {};
+  void StdEmptyOnCollision() {
+    PINBALL(FUNCT());
+  };
   
-  void StdOnSignal() {
+  void StdOnSignal()
+  {
+    PINBALL(FUNCT());
     Table * table = Table::getInstance();
     Score * score = table->getScore();
     EmAssert(score != NULL, "TuxBehavior::StdOnSignal score NULL");
@@ -805,7 +816,9 @@ public:
     }
   }
   
-  void clear() {
+  void clear()
+  {
+    PINBALL(FUNCT());
     m_iMultiplier = 1;
     m_aLinux[0] = false;
     m_aLinux[1] = false;
