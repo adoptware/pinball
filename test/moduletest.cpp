@@ -7,6 +7,7 @@
  ***************************************************************************/
 
 #include <stdlib.h>
+#include "Private.h"
 #include "Behavior.h"
 
 
