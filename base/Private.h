@@ -16,6 +16,10 @@
 #define RZR_PATCHES   
 #endif // msvc
 
+/// Add generic macro to be used with external tools (e.g. trako)
+#define PINBALL(cmd)
+
+
 #ifndef unix
 #undef  RZR_PATCHES   
 #define RZR_PATCHES   
