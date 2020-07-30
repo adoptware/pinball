@@ -8,6 +8,9 @@
 project ?= pinball
 app ?= src/${project}
 
+trako_url?=https://github.com/rzr/trako#master
+trako_branch?=0.2.0
+
 default: help all
 	@echo "# $@: @^"
 
@@ -45,3 +48,15 @@ configure: autogen.sh
 
 clean/libs:
 	find . -iname "lib*.a" -exec rm -v "{}" \;
+
+
+trako/%:
+	git clone --recursive --depth 1 ${trako_url}  --branch ${trako_branch} trako
+	@echo "export CXXFLAGS='-DPINBALL_CONFIG_TRAKO=1'"
+
+trako: trako/src/trako/macros.h trako/README.md
+	@grep TRAKO_VERSION "$<"
+	@echo "# $@: TODO: Pin version see $<"
+
+trako/remove:
+	rm -rf trako
