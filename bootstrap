@@ -1,4 +1,41 @@
-libtoolize --ltdl
+#! /bin/sh
+# SPDX-License-Identifier: GPL-2
+set -e
+set -x
+
+libtoolize --version
+aclocal --version
+autoheader --version 
+automake --version
+autoconf --version
+pkg-config --version
+
+
+if [ ! -r acinclude.m4 ] ; then
+    if [ -r '/usr/share/aclocal/sdl.m4' ]; then \
+	cat '/usr/share/aclocal/sdl.m4' >> acinclude.m4
+    else
+	curl -o acinclude.m4 \
+	     'https://hg.libsdl.org/SDL/raw-file/d4d66a1891fc/sdl.m4'
+    fi
+fi
+
+
+rm -rf libltdl
+
+[ -r AUTHORS ] || touch AUTHORS
+[ -r ChangeLog ] || touch ChangeLog
+[ -r NEWS ] || touch NEWS
+[ -r README.md ] || touch README.md
+[ -r README ] || ln -fs README.md README
+
+libtoolize --ltdl --force --copy
+
+[ -e config.h.in ] || touch config.h.in
+[ -e pinconfig.h.in ] || touch pinconfig.h.in
+
+aclocal
+[ "" = "$DEVEL" ] || autoupdate
 autoheader
 automake --add-missing
 aclocal
