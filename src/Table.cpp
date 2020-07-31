@@ -248,13 +248,18 @@ bool Table::readHighScoresFile() {
   m_mapHighScores.clear();
 
   //!rzr+ : fix w32
-  string sFileName =  m_sTableName + "/" + HIGH_SCORES_FILENAME;
-#ifdef RZR_PATHRELATIVE
-  sFileName = string( Config::getInstance()->getExeDir() )
-    +"/"+ m_sTableName +".cfg";
-#else
-  sFileName = string(EM_HIGHSCORE_DIR) + "/" + sFileName;
-#endif //!rzr-
+//  string sFileName =  m_sTableName + "/" + HIGH_SCORES_FILENAME;
+//#ifdef RZR_PATHRELATIVE
+//  sFileName = string( Config::getInstance()->getExeDir() )
+//    +"/"+ m_sTableName +".cfg";
+//#else
+//  sFileName = string(EM_HIGHSCORE_DIR) + "/" + sFileName;
+//#endif //!rzr-
+
+
+ char *home = getenv("HOME");
+ string sFileName = string(home? home:".") + "/.emilia/" + m_sTableName +
+    "."+HIGH_SCORES_FILENAME;
 
   ifstream file(sFileName.c_str());
   if (!file) {
@@ -309,13 +314,17 @@ bool Table::writeHighScoresFile() {
     return false;
   }
   //!rzr+ : fix w32
-  string sFileName =  m_sTableName + "/" + HIGH_SCORES_FILENAME;
-#ifdef RZR_PATHRELATIVE
-  sFileName = string( Config::getInstance()->getExeDir() )
-    +"/"+ m_sTableName +".cfg";
-#else
-  sFileName = string(EM_HIGHSCORE_DIR) + "/" + sFileName;
-#endif //!rzr-
+//  string sFileName =  m_sTableName + "/" + HIGH_SCORES_FILENAME;
+//#ifdef RZR_PATHRELATIVE
+//  sFileName = string( Config::getInstance()->getExeDir() )
+//    +"/"+ m_sTableName +".cfg";
+//#else
+//  sFileName = string(EM_HIGHSCORE_DIR) + "/" + sFileName;
+//#endif //!rzr-*/
+
+ char *home = getenv("HOME");
+ string sFileName = string(home? home:".") + "/.emilia/" + m_sTableName +
+    "."+HIGH_SCORES_FILENAME;
 
   ofstream file(sFileName.c_str());//, ios_base::out | ios_base::trunc);
   if (!file) {
