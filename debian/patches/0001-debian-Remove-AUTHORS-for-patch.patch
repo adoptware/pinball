@@ -1,0 +1,14 @@
+From: Philippe Coval <rzr@users.sf.net>
+Date: Wed, 29 Jul 2020 13:09:25 +0200
+Subject: debian: Remove AUTHORS for patch
+
+Signed-off-by: Philippe Coval <rzr@users.sf.net>
+Change-Id: I4554fd7eda3c258f686d97a4fc7418dfd88a8f16
+---
+ AUTHORS | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 AUTHORS
+
+diff --git a/AUTHORS b/AUTHORS
+deleted file mode 100644
+index e69de29..0000000
