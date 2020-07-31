@@ -26,8 +26,9 @@ rm -rf libltdl
 [ -r AUTHORS ] || touch AUTHORS
 [ -r ChangeLog ] || touch ChangeLog
 [ -r NEWS ] || touch NEWS
-[ -r README.md ] || touch README.md
-[ -r README ] || ln -fs README.md README
+if [ ! -r README ] ; then 
+[ -r README.md ] && ln -fs README.md README || touch README.md
+fi
 
 libtoolize --ltdl --force --copy
 
