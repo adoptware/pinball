@@ -25,3 +25,12 @@ data/professor/Makefile.in
 src/Makefile.in
 test/Makefile.in
 debian/stamp-patched
+*.o
+missing
+mkinstalldirs
+libltdl/*
+install-sh
+autom4te.cache/*
+compile
+config.log
+config.status
