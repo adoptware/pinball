@@ -742,7 +742,8 @@ int main(int argc, char *argv[]) {
     engine->resetTick();
 
     while (! (  SDL_QuitRequested()  //cout<<"catch close win"<<endl; //!rzr
-                || Keyboard::isKeyDown(SDLK_INSERT)))  {
+//               || Keyboard::isKeyDown(SDLK_INSERT)
+		))  {
 #if EM_DEBUG
       if (Keyboard::isKeyDown(SDLK_p)) {
         Keyboard::waitForKey();
