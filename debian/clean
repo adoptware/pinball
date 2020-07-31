@@ -28,9 +28,8 @@ debian/stamp-patched
 *.o
 missing
 mkinstalldirs
-libltdl/*
 install-sh
 autom4te.cache/*
 compile
-config.log
-config.status
+INSTALL
+depcomp
