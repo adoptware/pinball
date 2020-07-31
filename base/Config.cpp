@@ -1,4 +1,4 @@
-//#ident "$Id: Config.cpp,v 1.30 2003/07/16 20:02:04 rzr Exp $"
+//#ident "$Id: Config.cpp,v 1.29 2003/06/13 13:39:44 rzr Exp $"
 /***************************************************************************
                           Config.cpp  -  description
                              -------------------
@@ -26,7 +26,6 @@
 #endif
 
 #ifdef WIN32
-//#include <fcntl.h>
 //#include <io.h> 
 #include <direct.h>  // mkdir @ msvc+mingw32
 //#define mkdir(name, modes) mkdir(name)
@@ -57,7 +56,7 @@ void Config::setDefault() {
   // Default values
   this->setSize(640, 480);
   this->setSound(8);
-  this->setMusic(4);
+  this->setMusic(8);
   this->setBpp(16);
   this->setGLFilter(EM_LINEAR);
   this->setView(0);
@@ -458,4 +457,4 @@ void Config::setPaths(char const * const argv0) {
   // EM_CERR("- Config::setPath"); // EM_CERR( m_sExeDir); EM_CERR( m_sDataDir);
 } //!-rzr
 
-//EOF:$Id: Config.cpp,v 1.30 2003/07/16 20:02:04 rzr Exp $
+//EOF:$Id: Config.cpp,v 1.29 2003/06/13 13:39:44 rzr Exp $

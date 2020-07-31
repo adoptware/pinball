@@ -1,4 +1,4 @@
-//#Ident "$Id: TextureUtil.cpp,v 1.17 2003/07/25 01:01:54 rzr Exp $"
+//#Ident "$Id: TextureUtil.cpp,v 1.15 2003/06/18 10:43:45 henqvist Exp $"
 /***************************************************************************
                           TextureUtil.cpp  -  description
                              -------------------
@@ -69,7 +69,7 @@ TextureUtil::TextureUtil() {
 }
 
 TextureUtil::~TextureUtil() {
-  freeTextures(); // TODO: check mem leaks here //!rzr
+  //freeTextures(); // TODO: check mem leaks here //!rzr
   //EM_COUT("TextureUtil::~TextureUtil",0);
 }
 
@@ -89,7 +89,7 @@ void TextureUtil::freeTextures()  {
         i != m_hEmTexture.end();
         i++) {
     glDeleteTextures (1, (GLuint*) ((*i).second) ); //is that correct ?
-    free((*i).second);  // malloc -> free, warning those are not pixels but ids
+    free((*i).second);  // malloc -> free
     (*i).second = 0;
   }
   m_hEmTexture.clear();
@@ -333,15 +333,14 @@ int TextureUtil::genTexture( char const * const filename,
                              EmTexture * const texture)
 {
   //cout<<"+ Texture::genTexture : "<<filename<<endl;
-  if ( ( filename == 0 ) || ( texture == 0 ) ) return -1;
-  //*texture = 0;
+  *texture = 0;
 
 #if EM_USE_SDL
   // Load Texture
   struct_image* image = 0;
 
   // load the texture
-  image = loadP(filename); //!MLK ?
+  image = loadP(filename);
   if (image == NULL) {
     cerr << "TextureUtil::loadTexture error loading file " << filename << endl;
     return -1;
@@ -433,4 +432,4 @@ const char * TextureUtil::getTextureName(EmTexture * tex) {
   }
 */
 
-//EOF: $Id: TextureUtil.cpp,v 1.17 2003/07/25 01:01:54 rzr Exp $
+//EOF: $Id: TextureUtil.cpp,v 1.15 2003/06/18 10:43:45 henqvist Exp $

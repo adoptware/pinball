@@ -82,10 +82,7 @@ Engine * Engine::p_Engine = NULL;
 Engine::Engine(int & argc, char *argv[]) {
   Config * config = Config::getInstance();
   config->loadArgs(argc, argv);
-#ifdef RZR_PATHRELATIVE
-	Config::getInstance()->loadConfig();
-#endif
- 
+  
   if (!config->useExternGL()) {
 #if EM_USE_SDL
     SDL_Init(SDL_INIT_TIMER);

@@ -1,4 +1,4 @@
-//#ident "$Id: Table.cpp,v 1.19 2003/07/25 01:01:56 rzr Exp $"
+//#ident "$Id: Table.cpp,v 1.17 2003/06/13 13:39:48 rzr Exp $"
 /***************************************************************************
                             Table.cpp -  description
                              -------------------
@@ -14,9 +14,9 @@
 ***************************************************************************/
 
 #include "Private.h"
-#include "Config.h"
 #include "Table.h"
 #include "Engine.h"
+#include "Config.h"
 #include "Loader.h"
 #include "BallGroup.h"
 #include "Pinball.h"
@@ -169,7 +169,7 @@ int Table::loadLevel(Engine * engine, const char * subdir) {
   engine->add(p_Ball[1]);
   engine->add(p_Ball[2]);
 
-  EyeBehavior* eyebeh = new EyeBehavior(); //!rzr MLK
+  EyeBehavior* eyebeh = new EyeBehavior();
   filename = datadir + string("/nudge.wav");
   eyebeh->setSound(SoundUtil::getInstance()->loadSample(filename.c_str()));
   groupCT->setBehavior(eyebeh);
@@ -336,4 +336,4 @@ bool Table::writeHighScoresFile() {
 
   return true;
 }
-//EOF: $Id: Table.cpp,v 1.19 2003/07/25 01:01:56 rzr Exp $
+//EOF: $Id: Table.cpp,v 1.17 2003/06/13 13:39:48 rzr Exp $

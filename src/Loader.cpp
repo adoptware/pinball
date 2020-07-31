@@ -1,4 +1,4 @@
-//#ident "$Id: Loader.cpp,v 1.35 2003/07/25 01:01:56 rzr Exp $"
+//#ident "$Id: Loader.cpp,v 1.33 2003/06/16 13:06:12 rzr Exp $"
 /***************************************************************************
                             Loader.cpp -  description
                              -------------------
@@ -7,20 +7,16 @@
     email                : henqvist@excite.com
 ***************************************************************************/
 
+#include <fstream>
+#include <string>
+#include <sstream>
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
 #include <cstring>
+#include <iostream>
 
 #include "Private.h"
-#include "Config.h"
-
-#include <fstream>
-#include <string>
-#include <sstream>
-#include <iostream>
-using namespace std;
-
 #include "Loader.h"
 #include "Pinball.h"
 #include "Keyboard.h"
@@ -43,6 +39,7 @@ using namespace std;
 #include "SoundUtil.h"
 #include "Score.h"
 #include "StdAnimation.h"
+#include "Config.h"
 #include "StateBehavior.h"
 #include "Script.h"
 #include "FakeModuleBehavior.h"
@@ -331,7 +328,7 @@ void Loader::loadArmBehavior(ifstream & file, istringstream & ist, Group * group
   EmReadCmp(file, ist, str, "}");
 }
 
-void Loader::loadAnimation(ifstream & file, istringstream & ist, Engine * e, 
+void Loader::loadAnimation(ifstream & file, istringstream & ist, Engine *, 
                            Group * group, Behavior * beh) {
   EM_COUT("Loader::loadAnimation", 0);
 
@@ -485,7 +482,7 @@ void Loader::loadStateItem(ifstream & file, istringstream & ist, Engine * engine
   this->readNextToken(file, ist, cstate);
   this->readNextToken(file, ist, dstate);
   this->readNextToken(file, ist, delay);
-  StateItem* stateitem = new StateItem(); //!rzr+ MLK
+  StateItem* stateitem = new StateItem();
   stateitem->setActSig(this->getSignal(asig.c_str()));
   stateitem->setCollSig(this->getSignal(csig.c_str()));
   stateitem->setCollState(cstate);
@@ -625,7 +622,7 @@ void Loader::loadStateBehavior(ifstream & file, istringstream & ist, Engine * en
 
   EmReadCmp(file, ist, str, "{");
 		
-  StateBehavior* b = new StateBehavior(); //!+rzr MLK
+  StateBehavior* b = new StateBehavior();
   group->setBehavior(b);
 
   this->loadMisc(file, ist, engine, group, b);
@@ -720,7 +717,7 @@ void Loader::loadModule(ifstream & file, istringstream & ist, Engine *, Group * 
  ** Top level loading
  ****************************************************************/
 
-int Loader::cmpVersion(const FileVersion & version, const int major, const int minor, const int micro) const {
+int Loader::cmpVersion(const FileVersion & version, const int major, const int minor, const int micro) {
   if (version.major > major) return 1;
   else if (version.minor < major) return -1;
   else {
@@ -1035,9 +1032,8 @@ int Loader::loadFile(const char* fn, Engine * engine) {
 
 /// load all scene in one shape
 void Loader::loadShape3dsAscii(ifstream & file, istringstream & ist, 
-			       Engine *, Group * group, Behavior * b) 
+			       Engine *, Group * group, Behavior *) 
 {
-  EM_COUT("Loader::loadShape3dsAscii", 1);
   string str;
   EmReadCmp(file, ist, str, "{");
   this->readNextToken(file, ist, str);
@@ -1049,20 +1045,19 @@ void Loader::loadShape3dsAscii(ifstream & file, istringstream & ist,
   shape = new Shape3D;
   t =  Obj3dsUtil::read(  *shape , filename.c_str());
   if ( t < 0 || shape == 0 ) { delete shape; return;}
-  
-  filename = shape->m_sMaterialName; //debug("assign textures");
-  if ( ( filename != "" ) //&& ( filename.find(".",0) ) // name.ext = file ?
-       ) {
-    filename = string(Config::getInstance()->getDataSubDir() )+ "/" +filename ;
+
+  if ( shape->m_sMaterialName != "" ) {
+    //EM_COUT( shape->m_sMaterialName , 1);
+    filename = string(Config::getInstance()->getDataSubDir())
+      + "/" + shape->m_sMaterialName;
     EmTexture * tex =
       TextureUtil::getInstance()->loadTexture(filename.c_str());
     if (tex != NULL) { 
       shape->setTexture(tex); 
-      shape->setColor(1,1,1,0); //TODO: check if nedded
+      shape->setColor(1,1,1,0);
       //EM_COUT("loaded and asssigned :"<<filename,1);
     } 
-  } // this section my be placed in a shape visitor
-
+  } 
   shape->countNormals();
   group->addShape3D(shape);
   
@@ -1075,9 +1070,9 @@ void Loader::loadShape3dsAscii(ifstream & file, istringstream & ist,
 
 
 void Loader::loadGroup3dsAscii(ifstream & file, istringstream & ist, 
-			       Engine *, Group * group, Behavior * b) 
-{
-  EM_COUT("+ Loader::loadGroup3dsAscii", 1);
+			       Engine *, Group * group, Behavior *) 
+  {
+  EM_COUT("Loader::loadShape3dsAscii", 0);
   string str;
   EmReadCmp(file, ist, str, "{");
   this->readNextToken(file, ist, str);
@@ -1086,7 +1081,7 @@ void Loader::loadGroup3dsAscii(ifstream & file, istringstream & ist,
   string filename = string(Config::getInstance()->getDataSubDir()) + "/" + str;
   //EM_COUT( filename , 1);
   int t = 0;
-  int i=0;
+  
   t =  Obj3dsUtil::read(  *arg , filename.c_str());
   if ( t < 0 ) { delete arg; return;}
   EmReadCmp(file, ist, str, "}");
@@ -1095,7 +1090,7 @@ void Loader::loadGroup3dsAscii(ifstream & file, istringstream & ist,
 #if 1
   group->add(arg);
 #else
-  for(i=0;i<arg->getShape3DSize(); i++) {
+  for(int i=0;i<arg->getShape3DSize(); i++) {
     shape = arg->getShape3D(i);
     shape->countNormals();
     group->addShape3D( shape);
@@ -1126,23 +1121,19 @@ void Loader::loadGroup3dsAscii(ifstream & file, istringstream & ist,
   //this->readNextToken(file, ist, str);
 #endif
 
-  for(i=0;i<arg->getShape3DSize(); i++) {
+  //debug("assign textures");
+  for(int i=0; i < arg->getShape3DSize() ; i++) {
     shape = arg->getShape3D(i);
-  
-  filename = shape->m_sMaterialName; //debug("assign textures");
-  if ( ( filename != "" ) //&& ( filename.find('.',0) ) 
-       ) {
-    filename = string(Config::getInstance()->getDataSubDir()) + "/" +filename ;
-    EmTexture * tex =
-      TextureUtil::getInstance()->loadTexture(filename.c_str());
-    if (tex != NULL) { 
-      shape->setTexture(tex); 
-      shape->setColor(1,1,1,0); //TODO: check if nedded
-      //EM_COUT("loaded and asssigned :"<<filename,1);
-    } 
-  } // this section my be placed in a shape visitor
-
+    if ( shape->m_sMaterialName != "" ) {
+      EM_COUT( shape->m_sMaterialName , 1);
+      filename = string(Config::getInstance()->getDataSubDir())
+        + "/" + shape->m_sMaterialName;
+      EmTexture * tex =
+        TextureUtil::getInstance()->loadTexture(filename.c_str());
+      if (tex != NULL) { shape->setTexture(tex); shape->setColor(1,1,1,0); } 
+    }
   }
+
     
 #if 0 //collision part , need some help
   float size = group->getCollisionSize();
@@ -1166,7 +1157,7 @@ void Loader::loadGroup3dsAscii(ifstream & file, istringstream & ist,
   //debugf(". group collision slow\n");
   group->setCollisionBounds(bounds);
 #endif
-  EM_COUT("- Loader::loadGroup3dsAscii", 1);
+  EM_COUT("-Loader::loadShape3dsAscii", 0);
 }
 #endif //--------------------------------------------------------------------
-//EOF $Id: Loader.cpp,v 1.35 2003/07/25 01:01:56 rzr Exp $
+//EOF $Id: Loader.cpp,v 1.33 2003/06/16 13:06:12 rzr Exp $
