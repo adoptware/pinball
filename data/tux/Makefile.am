@@ -1,7 +1,7 @@
 #$Id: Makefile.am,v 1.12 2003/06/18 10:44:19 henqvist Exp $
 AUTOMAKE_OPTIONS = gnu
 
-highscoredir = $(EM_BUILD_ROOT)/$(EM_HIGHSCORE_DIR)/tux
+highscoredir = $(DESTDIR)/$(EM_BUILD_ROOT)/$(EM_HIGHSCORE_DIR)/tux
 
 tuxlibdir = $(EM_LIBDIR)
 tuxdatadir = $(datadir)/pinball/tux
@@ -23,14 +23,14 @@ flip.wav \
 floor2.png \
 floor2.png.pcx \
 floor3.png \
-game.mid \
+game.ogg \
 gameover.wav \
 intro.mid \
 lock.wav \
 loop.wav \
 floor.pbl \
-intro.mid \
-multiball.mid \
+intro.ogg \
+multiball.ogg \
 nudge.wav \
 opentux.wav \
 pinball.pbl \

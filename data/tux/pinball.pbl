@@ -14447,7 +14447,7 @@ object music {
       no_move
         no_light
       no_sound
-      music intro.mid
+      music intro.ogg
       no_user_property
       no_shape_property
       no_texcoord
@@ -14458,7 +14458,7 @@ object music {
       no_move
         no_light
       no_sound
-      music game.mid
+      music game.ogg
       no_user_property
       no_shape_property
       no_texcoord
@@ -14469,7 +14469,7 @@ object music {
       no_move
         no_light
       no_sound
-      music multiball.mid
+      music multiball.ogg
       no_user_property
       no_shape_property
       no_texcoord
