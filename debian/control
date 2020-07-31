@@ -1,7 +1,7 @@
 Source: pinball
 Section: games
 Priority: optional
-Maintainer: Innocent De Marchi <tangram.peces@gmail.com>
+Maintainer: Philippe Coval <rzr@users.sf.net>
 Build-Depends: debhelper (>= 9),
 	 libgl1-mesa-dev,
 	 libpng-dev,
