@@ -151,13 +151,32 @@ protected:
     } else {
       key = string("unknown");
     }
+
+	if (name.length() + key.length() > 15){  
+	    std::size_t found = name.find("leftflip");
+	if (found!=std::string::npos)
+	    name = "LF";
+	found = name.find("rightflip");
+	if (found!=std::string::npos)
+	    name = "RF";
+	found = name.find("leftnudge");
+	if (found!=std::string::npos)
+	     name = "LN";
+	found = name.find("rightnudge");
+	if (found!=std::string::npos)
+	     name = "RN";
+	found = name.find("bottomnudge");
+	if (found!=std::string::npos)
+	     name = "BN";
+	}
+
     name = name + ":";
-    while (name.size() < 12) {
+    /*while (name.size() < 12) {
       name = name + " ";
     }
     while (key.size() < 12) {
       key = " " + key;
-    }
+    }*/
     stm << name << key << '\0';
     string text = stm.str();
     return text.c_str();
