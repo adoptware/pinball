@@ -1,4 +1,5 @@
 #!/usr/bin/make -f
+export DH_VERBOSE = 1
 
 DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
@@ -23,13 +24,8 @@ clean:
 	rm -rf libltdl
 
 .PHONY: override_dh_auto_configure
-override_dh_auto_configure:
-	$(RM) depcomp
-	libtoolize --install --copy --force
-	aclocal
-	autoheader
-	automake --add-missing
-	autoconf
+override_dh_auto_configure: bootstrap
+	${<D}/${<F}
 	dh_auto_configure -- --bindir=/usr/games --datadir=/usr/share/games --with-cflags="$(CFLAGS)" --with-cxxflags="$(CXXFLAGS)"
 
 .PHONY: override_dh_install
