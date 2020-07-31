@@ -247,6 +247,7 @@ protected:
     case 4: w = 800; h = 600; break;
     case 5: w = 1024; h = 768; break;
     case 6: w = 1280; h = 1024; break;
+    case 7: w = 1920; h = 1200; break;
     default: w = 640; h = 480;
     }
     if (config->getWidth() != w) {
@@ -441,6 +442,8 @@ void get_config(void) {
     menusize->setCurrent(5);
   } else 	if (Config::getInstance()->getWidth() == 1280) {
     menusize->setCurrent(6);
+  } else 	if (Config::getInstance()->getWidth() == 1920) {
+    menusize->setCurrent(7);
   } else {
     menusize->setCurrent(3);
   }
@@ -511,7 +514,8 @@ MenuItem* createMenus(Engine * engine) {
   menucfg->addMenuItem(menuaudio);
 
   MenuSub* menukey = new MenuSub("keyboard", engine);
-  menukey->setBottomText("shorcuts for view change F5-F8");
+  //menukey->setBottomText("shorcuts for view change F5-F8");
+  menukey->setBottomText("L-eft R-ight B-ottom F-lip N-udge");
   menucfg->addMenuItem(menukey);
 
   string filename = string(Config::getInstance()->getDataSubDir()) + "/splash.png";
@@ -615,6 +619,7 @@ MenuItem* createMenus(Engine * engine) {
   menusize->addText(  "screen size:  800x600");
   menusize->addText(  "screen size: 1024x768");
   menusize->addText(  "screen size:1280x1024");
+  menusize->addText(  "screen size:1920x1200");
   menugfx->addMenuItem(menusize);
 
   menufilter = new MenuChoose(engine);
