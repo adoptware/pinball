@@ -1,12 +1,17 @@
-Author: unknown
-Description: System LTDL.
-Last-Update: 2018-01-21 
+From: Innocent De Marchi <tangram.peces@gmail.com>
+Date: Fri, 31 Jul 2020 12:18:31 +0200
+Subject: System LTDL.
 
-Index: pinball-0.3.1/configure.ac
-===================================================================
---- pinball-0.3.1.orig/configure.ac	2010-01-14 17:26:25.000000000 +0100
-+++ pinball-0.3.1/configure.ac	2010-01-14 17:26:25.000000000 +0100
-@@ -22,14 +22,12 @@
+Last-Update: 2018-01-21
+---
+ configure.ac | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index ee10a81..dbea598 100755
+--- a/configure.ac
++++ b/configure.ac
+@@ -22,14 +22,12 @@ AC_ARG_WITH(cxxflags,
  [  --with-cxxflags=CXXFLAGS        use CXXFLAGS as compile time arguments.],
      [CXXFLAGS=$with_cxxflags; export CXXFLAGS])
  

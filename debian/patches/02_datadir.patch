@@ -1,10 +1,20 @@
-Author: unknown
-Description: Changes on data dir.
-Last-Update: 2018-01-21 
+From: Innocent De Marchi <tangram.peces@gmail.com>
+Date: Fri, 31 Jul 2020 12:18:31 +0200
+Subject: Changes on data dir.
 
---- pinball-0.3.1.orig/base/Config.cpp
-+++ pinball-0.3.1/base/Config.cpp
-@@ -358,13 +358,6 @@
+Last-Update: 2018-01-21
+---
+ base/Config.cpp      |  7 -------
+ src/LoaderModule.cpp | 21 +++++++++++++++++++++
+ src/LoaderModule.h   |  3 +++
+ src/Table.cpp        |  2 +-
+ 4 files changed, 25 insertions(+), 8 deletions(-)
+
+diff --git a/base/Config.cpp b/base/Config.cpp
+index a494ef9..11ed53c 100755
+--- a/base/Config.cpp
++++ b/base/Config.cpp
+@@ -358,13 +358,6 @@ void Config::loadArgs(int & argc, char *argv[]) {
        }
        EM_COUT("Using " << m_iBpp << " bpp", 1);
        REMOVEARG(a, argc, argv);
@@ -18,21 +28,11 @@ Last-Update: 2018-01-21
      } else if (strcmp(argv[a], "-nosound") == 0) {
        this->setSound(0);
        this->setMusic(0);
---- pinball-0.3.1.orig/src/LoaderModule.h
-+++ pinball-0.3.1/src/LoaderModule.h
-@@ -40,6 +40,9 @@
-   /// portable dyn lib loading
-   Behavior* readLibDynamic(string & filename);
- 
-+private:
-+  void SanitizePath(std::string&str );
-+
- protected:
-   ///
-   map<char* const, Behavior* , ltstr> m_hMods;
---- pinball-0.3.1.orig/src/LoaderModule.cpp
-+++ pinball-0.3.1/src/LoaderModule.cpp
-@@ -61,6 +61,23 @@
+diff --git a/src/LoaderModule.cpp b/src/LoaderModule.cpp
+index 149df09..50903b4 100755
+--- a/src/LoaderModule.cpp
++++ b/src/LoaderModule.cpp
+@@ -61,6 +61,23 @@ LoaderModule* LoaderModule::getInstance()
  }
  //-----------------------------------------------------------------------------
  
@@ -56,7 +56,7 @@ Last-Update: 2018-01-21
  /// is it possible to do something 
  /// like in java.lang.reflexion instead of protypes ?
  Behavior* LoaderModule::readLibStatic(string & filename) 
-@@ -82,6 +99,10 @@
+@@ -82,6 +99,10 @@ Behavior* LoaderModule::readLibDynamic(string & filename)
  {
    EM_COUT("+ LoaderModule::readLibDynamic",0);
    Behavior * beh =0;
@@ -67,9 +67,25 @@ Last-Update: 2018-01-21
  #ifndef RZR_LIBSTATIC
    lt_dlhandle handle = lt_dlopen(filename.c_str());
    if (handle == NULL) {
---- pinball-0.3.1.orig/src/Table.cpp
-+++ pinball-0.3.1/src/Table.cpp
-@@ -140,7 +140,7 @@
+diff --git a/src/LoaderModule.h b/src/LoaderModule.h
+index 89e0ceb..222a691 100755
+--- a/src/LoaderModule.h
++++ b/src/LoaderModule.h
+@@ -40,6 +40,9 @@ public:
+   /// portable dyn lib loading
+   Behavior* readLibDynamic(string & filename);
+ 
++private:
++  void SanitizePath(std::string&str );
++
+ protected:
+   ///
+   map<char* const, Behavior* , ltstr> m_hMods;
+diff --git a/src/Table.cpp b/src/Table.cpp
+index 1976e2d..e98d573 100755
+--- a/src/Table.cpp
++++ b/src/Table.cpp
+@@ -140,7 +140,7 @@ int Table::loadLevel(Engine * engine, const char * subdir) {
    Loader::getInstance()->clearSignalVariable();
    if (Loader::getInstance()->loadFile(filename.c_str(), engine) != 0) {
      cerr << "Error loading level: " << m_sTableName << endl;

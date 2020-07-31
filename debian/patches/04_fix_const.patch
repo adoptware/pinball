@@ -1,12 +1,17 @@
-Author: unknown
-Description: Fix constant.
-Last-Update: 2018-01-21 
+From: Innocent De Marchi <tangram.peces@gmail.com>
+Date: Fri, 31 Jul 2020 12:18:31 +0200
+Subject: Fix constant.
 
-Index: pinball-0.3.1/base/Config.cpp
-===================================================================
---- pinball-0.3.1.orig/base/Config.cpp	2009-10-13 18:33:38.000000000 +0200
-+++ pinball-0.3.1/base/Config.cpp	2009-10-13 18:37:12.000000000 +0200
-@@ -416,7 +416,7 @@
+Last-Update: 2018-01-21
+---
+ base/Config.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/base/Config.cpp b/base/Config.cpp
+index 11ed53c..aafaf55 100755
+--- a/base/Config.cpp
++++ b/base/Config.cpp
+@@ -416,7 +416,7 @@ void Config::setPaths(char const * const argv0) {
    m_sDataDir = string(EM_DATADIR) + "/";
    m_sExeDir = "./";
    if ( *( m_sDataDir.c_str() ) != '/' ) {

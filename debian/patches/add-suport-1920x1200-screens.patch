@@ -1,12 +1,20 @@
-Description: Eliminated the exit with the insert key.
-  The change in line 514 is from the fix-config-keys.patch patch
-Author: Innocent De Marchi <tangram.peces@gmail.com>
+From: Innocent De Marchi <tangram.peces@gmail.com>
+Date: Fri, 31 Jul 2020 12:18:31 +0200
+Subject: Eliminated the exit with the insert key.
+
 Bug-Debian: http://bugs.debian.org/555251
 Last-Update: 2018-03-16
 
---- pinball-0.3.1.orig/src/Pinball.cpp	2003-11-20 17:46:17.000000000 +0100
-+++ pinball-0.3.1/src/Pinball.cpp	2018-03-16 19:22:50.844304579 +0100
-@@ -247,6 +247,7 @@
+ The change in line 514 is from the fix-config-keys.patch patch
+---
+ src/Pinball.cpp | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/src/Pinball.cpp b/src/Pinball.cpp
+index f128373..724b699 100755
+--- a/src/Pinball.cpp
++++ b/src/Pinball.cpp
+@@ -247,6 +247,7 @@ protected:
      case 4: w = 800; h = 600; break;
      case 5: w = 1024; h = 768; break;
      case 6: w = 1280; h = 1024; break;
@@ -14,7 +22,7 @@ Last-Update: 2018-03-16
      default: w = 640; h = 480;
      }
      if (config->getWidth() != w) {
-@@ -441,6 +442,8 @@
+@@ -441,6 +442,8 @@ void get_config(void) {
      menusize->setCurrent(5);
    } else 	if (Config::getInstance()->getWidth() == 1280) {
      menusize->setCurrent(6);
@@ -23,7 +31,7 @@ Last-Update: 2018-03-16
    } else {
      menusize->setCurrent(3);
    }
-@@ -511,7 +514,8 @@
+@@ -511,7 +514,8 @@ MenuItem* createMenus(Engine * engine) {
    menucfg->addMenuItem(menuaudio);
  
    MenuSub* menukey = new MenuSub("keyboard", engine);
@@ -33,7 +41,7 @@ Last-Update: 2018-03-16
    menucfg->addMenuItem(menukey);
  
    string filename = string(Config::getInstance()->getDataSubDir()) + "/splash.png";
-@@ -615,6 +619,7 @@
+@@ -615,6 +619,7 @@ MenuItem* createMenus(Engine * engine) {
    menusize->addText(  "screen size:  800x600");
    menusize->addText(  "screen size: 1024x768");
    menusize->addText(  "screen size:1280x1024");

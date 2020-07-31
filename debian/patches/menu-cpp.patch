@@ -1,12 +1,15 @@
-Description: Activate left Alt key to close program.
-	It seems that it is not possible to activate 
-	Alt+f4 in the main menu (if it works in the game table).
-Author: Innocent De Marchi <tangram.peces@gmail.com>
-Bug-Debian: http://bugs.debian.org/442809
-Last-Update: 2018-03-10
+From: Innocent De Marchi <tangram.peces@gmail.com>
+Date: Fri, 31 Jul 2020 12:18:30 +0200
+Subject: Activate left Alt key to close program.
 
---- pinball-0.3.1.orig/addon/Menu.cpp	2018-03-10 18:51:42.340704254 +0100
-+++ pinball-0.3.1/addon/Menu.cpp	2018-03-10 19:09:50.899042447 +0100
+---
+ addon/Menu.cpp | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/addon/Menu.cpp b/addon/Menu.cpp
+index b8b6919..d7bae88 100755
+--- a/addon/Menu.cpp
++++ b/addon/Menu.cpp
 @@ -8,6 +8,7 @@
  ***************************************************************************/
  
@@ -15,7 +18,7 @@ Last-Update: 2018-03-10
  
  #include "Private.h"
  #include "Menu.h"
-@@ -69,6 +70,10 @@
+@@ -69,6 +70,10 @@ int MenuSub::perform() {
      if (key == SDLK_ESCAPE) {
        return EM_MENU_NOP;
      }

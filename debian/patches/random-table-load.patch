@@ -1,11 +1,18 @@
-Description: Load table game for default.
-Author: Innocent De Marchi <tangram.peces@gmail.com>
+From: Innocent De Marchi <tangram.peces@gmail.com>
+Date: Fri, 31 Jul 2020 12:18:31 +0200
+Subject: Load table game for default.
+
 Bug-Debian: http://bugs.debian.org/555256
 Last-Update: 2018-03-16
+---
+ src/Pinball.cpp | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
---- pinball-0.3.1.orig/src/Pinball.cpp	2003-11-20 17:46:17.000000000 +0100
-+++ pinball-0.3.1/src/Pinball.cpp	2018-03-16 19:00:50.014691897 +0100
-@@ -771,8 +771,23 @@
+diff --git a/src/Pinball.cpp b/src/Pinball.cpp
+index 9d89fcc..c98a4ed 100755
+--- a/src/Pinball.cpp
++++ b/src/Pinball.cpp
+@@ -771,8 +771,23 @@ int main(int argc, char *argv[]) {
            Table::getInstance()->getScore()->draw();
          }
          if (engine->getGroup(0) == NULL) {

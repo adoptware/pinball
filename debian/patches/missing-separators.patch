@@ -3,7 +3,6 @@ Date: Sun, 3 Aug 2014 22:50:46 +0200
 Subject: missing separators
 
 Bug: https://bugs.debian.org/750082
-
 ---
  src/Makefile.am  | 14 +++++++-------
  src/Makefile.in  | 14 +++++++-------

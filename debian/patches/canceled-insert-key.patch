@@ -1,11 +1,18 @@
-Description: Eliminated the exit with the insert key.
-Author: Innocent De Marchi <tangram.peces@gmail.com>
+From: Innocent De Marchi <tangram.peces@gmail.com>
+Date: Fri, 31 Jul 2020 12:18:31 +0200
+Subject: Eliminated the exit with the insert key.
+
 Bug-Debian: http://bugs.debian.org/450763
 Last-Update: 2018-03-16
+---
+ src/Pinball.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- pinball-0.3.1.orig/src/Pinball.cpp	2003-11-20 17:46:17.000000000 +0100
-+++ pinball-0.3.1/src/Pinball.cpp	2018-03-16 19:15:24.893120287 +0100
-@@ -742,7 +742,8 @@
+diff --git a/src/Pinball.cpp b/src/Pinball.cpp
+index c98a4ed..f128373 100755
+--- a/src/Pinball.cpp
++++ b/src/Pinball.cpp
+@@ -742,7 +742,8 @@ int main(int argc, char *argv[]) {
      engine->resetTick();
  
      while (! (  SDL_QuitRequested()  //cout<<"catch close win"<<endl; //!rzr
