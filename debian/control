@@ -4,6 +4,7 @@ Section: games
 Priority: optional
 Build-Depends: debhelper (>= 9),
                libgl1-mesa-dev,
+	       libjpeg62-turbo-dev | libjpeg-dev,	       
                libpng-dev,
                libsdl1.2-dev,
                freeglut3-dev,
