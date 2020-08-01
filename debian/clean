@@ -35,3 +35,4 @@ autom4te.cache/*
 compile
 INSTALL
 depcomp
+README
