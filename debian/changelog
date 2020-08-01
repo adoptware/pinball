@@ -1,3 +1,10 @@
+pinball (0.0.3.1+90+g672bc8fa-0.3.1+90+g672bc8fa) unstable; urgency=medium
+
+  * WIP: debian: Release 0.0.3.1+90+g672bc8fa-0.3.1+90+g672bc8fa
+    (snapshot)
+
+ -- Philippe Coval <rzr@users.sf.net>  Sat, 01 Aug 2020 16:11:41 +0200
+
 pinball (0.0.0-0) unstable; urgency=medium
 
   * wip: https://purl.org/rzr
