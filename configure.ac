@@ -1,7 +1,7 @@
 dnl Process this file with autoconf 2.53 to produce a configure script.
 
 dnl init autoconf and automake
-AC_INIT(pinball, 0.3.1, [[henqvist@users.sourceforge.net]])
+AC_INIT([pinball],[0.3.1],[[henqvist@users.sourceforge.net]])
 
 AM_CONFIG_HEADER(pinconfig.h)
 
@@ -26,9 +26,12 @@ dnl Checks for programs.
 AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_INSTALL
-AC_LIBTOOL_DLOPEN
+_LT_SET_OPTION([LT_INIT],[dlopen])
+AC_DIAGNOSE([obsolete],[AC_LIBTOOL_DLOPEN: Remove this warning and the call to _LT_SET_OPTION when you
+put the 'dlopen' option into LT_INIT's first parameter.])
+
 LTDL_INIT
-AC_PROG_LIBTOOL
+LT_INIT
 
 AC_SUBST(INCLTDL)
 AC_SUBST(LIBLTDL)
@@ -108,7 +111,7 @@ case "$target" in
         SYS_GL_LIBS=""
         ;;
     *-*-aix*)
-        if test x$ac_cv_prog_gcc = xyes; then
+        if test x$ac_cv_c_compiler_gnu = xyes; then
             CFLAGS="-mthreads"
 				fi
         SYS_GL_LIBS=""
@@ -130,7 +133,7 @@ AC_SUBST(MATHLIB)
 
 dnl Check for OpenGL
 AC_MSG_CHECKING(for OpenGL support)
-AC_TRY_COMPILE([
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifdef WIN32
 #define WINAPI
 #endif
@@ -140,7 +143,7 @@ AC_TRY_COMPILE([
   #else
  #include <GL/gl.h>
  #endif
-], , , AC_MSG_ERROR([*** OpenGL not found on system!]))
+]], [[]])],[],[AC_MSG_ERROR(*** OpenGL not found on system!)])
 AC_MSG_RESULT(yes)
 GL_LIBS="$SYS_GL_LIBS"
 AC_SUBST(GL_LIBS)
