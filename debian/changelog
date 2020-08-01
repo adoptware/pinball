@@ -1,3 +1,10 @@
+pinball (0.0.3.1+94+ge9011777-0.3.1+96+gf84110ac) unstable; urgency=medium
+
+  * WIP: debian: Release 0.0.3.1+94+ge9011777-0.3.1+96+gf84110ac
+    (snapshot)
+
+ -- Philippe Coval <rzr@users.sf.net>  Sat, 01 Aug 2020 16:14:07 +0200
+
 pinball (0.0.3.1+90+g672bc8fa-0.3.1+90+g672bc8fa) unstable; urgency=medium
 
   * WIP: debian: Release 0.0.3.1+90+g672bc8fa-0.3.1+90+g672bc8fa
