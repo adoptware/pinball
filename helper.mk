@@ -11,6 +11,21 @@ app ?= src/${project}
 trako_url?=https://github.com/rzr/trako#master
 trako_branch?=0.2.0
 
+make ?= ./helper.mk
+
+autotools_files += configure
+autotools_files += Makefile
+autotools_files += Makefile.in
+autotools_files += aclocal.m4
+autotools_files += depcomp
+autotools_files += compile
+autotools_files += pinconfig.h
+autotools_files += stamp-h1
+autotools_files += config.status
+autotools_files += install-sh
+autotools_files += ltmain.sh
+autotools_files += confdefs.h
+
 default: help all
 	@echo "# $@: @^"
 
@@ -19,9 +34,21 @@ help: helper.mk
 	@echo "# ${<D}/${<F} help # This help"
 	@echo "# ${<D}/${<F} run # To run app"
 
+version:
+	${MAKE} --version
+	libtoolize --version
+	aclocal --version
+	autoheader --version 
+	automake --version
+	autoconf --version
+	pkg-config --version
 
-%: Makefile
-	${MAKE} $@
+.PHONY: bootstrap
+bootstrap: version
+	${make} clean/autotools configure
+
+helper/%: Makefile
+	${MAKE} ${@F}
 
 rule/make: Makefile
 	${MAKE}
@@ -31,8 +58,55 @@ run: ${app}
 
 start: run
 
-Makefile: configure
-	${<D}/${<F}
+Makefile config.status: configure
+	ls $@ || ${<D}/${<F}
+	ls $@
+
+acinclude.m4:
+	ls $@ && exit 0
+	${make} rule/acinclude.m4
+
+rule/acinclude.m4: /usr/share/aclocal/sdl.m4
+	cat $< >> ${@F}
+
+/usr/share/aclocal/sdl.m4:
+	echo "# TODO: $@ not found"
+	echo "# TODO: Please create acinclude.m4 from"
+	echo "# https://hg.libsdl.org/SDL/raw-file/d4d66a1891fc/sdl.m4"
+
+configure: Makefile.in
+	autoconf
+	ls $@
+
+depcomp install-sh: ltmain.sh pinconfig.h.in README
+	@echo "# log: $@: $<"
+	automake --add-missing
+	ls $@
+
+Makefile.in: Makefile.am install-sh
+	ls $@
+
+README: README.md
+	ln -fs $< $@
+	ls $@
+
+AUTHORS ChangeLog NEWS:
+	touch $@
+
+rule/autoupdate: configure.ac
+	${@F}
+
+aclocal.m4:
+	aclocal
+	ls $@
+
+pinconfig.h.in: aclocal.m4
+	autoheader
+	ls $@
+
+ltmain.sh:
+	libtoolize --ltdl --force --copy
+	ls $@
 
 devel: ${app}
 	$< || gdb -tui $<
@@ -43,11 +117,11 @@ ${app}: all
 all: rule/make
 	${MAKE} all
 
-configure: autogen.sh
-	${<D}/${<F}
-
+clean/autotools:
+	rm -rf ${autotools_files}
 clean/libs:
 	find . -iname "lib*.a" -exec rm -v "{}" \;
+
 
 
 trako/%:
