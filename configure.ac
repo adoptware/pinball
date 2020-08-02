@@ -1,7 +1,11 @@
 dnl Process this file with autoconf 2.53 to produce a configure script.
 
 dnl init autoconf and automake
-AC_INIT([pinball],[0.3.1],[[henqvist@users.sourceforge.net]])
+AC_INIT([pinball],
+	[0.0.0],
+	[[henqvist@users.sourceforge.net]],
+	[pinball],
+	[http://pinball.sf.net])
 
 AM_CONFIG_HEADER(pinconfig.h)
 
