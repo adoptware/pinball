@@ -31,8 +31,12 @@ Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          pinball-data (= ${source:Version})
+Suggests: pinball-table-gnu,
+          pinball-table-hurd,
+	  alsa-utils,
+	  xinit
 Description: Emilia Pinball Emulator
- The Emilia Pinball Project is a pinball simulator for Linux and other Unix
+ The Emilia Pinball Project is a pinball simulator for GNU/Linux and other Unix
  systems. There are only two levels to play with, but they are very addictive.
  .
  You can play with two types of boards and keep high scores.
