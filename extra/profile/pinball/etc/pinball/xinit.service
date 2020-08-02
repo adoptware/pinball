@@ -1,0 +1,12 @@
+[Unit]
+RequiresMountsFor=/run
+
+[Service]
+User=root
+EnvironmentFile=-/etc/pinball/pinball.env.sh
+ExecStart=/usr/bin/xinit ${XINIT_ARGS}
+
+# TODO
+[Install]
+Alias=display-manager.service
+WantedBy=graphical.target

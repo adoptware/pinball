@@ -1,0 +1,194 @@
+#! /bin/bash
+# -*- mode: Bash; tab-width: 2; indent-tabs-mode: nil; coding: utf-8 -*-
+# vim:shiftwidth=4:softtabstop=4:tabstop=4:
+# XPDX-License-Identifier: GPL-2.0+"
+set -e
+set -x
+
+project="pinball"
+profile="pincab"
+url="https://purl.org/rzr/pinball"
+git_url="https://github.com/rzr/pinball"
+git_branch="master"
+git_branch="sandbox/rzr/devel/master" # TODO
+sudo=$(which sudo || echo)
+
+. /etc/os-release ||:
+. /etc/pinball/pinball.env.sh ||:
+
+set
+
+echo "# Update repository"
+mount -o remount,rw /
+${sudo} sync
+${sudo} apt-get update
+${sudo} apt-get install --yes etckeeper
+
+echo "# Base OS"
+hostname=$(cat /etc/hostname)
+grep $hostname /etc/hosts \
+    || { echo "127.0.0.1 $hostname" | $sudo tee -a /etc/hosts ; }
+
+dpkg -L locales || ${sudo} apt-get install -y locales
+
+echo "# Main package"
+# Suggests: alsa-utils
+# Install: xterm x11-utils ...
+
+if [ -z $PINBALL_BRANCH ] ; then
+    ${sudo} apt-get install --yes pinball
+else
+    ${sudo} apt-get install --yes base-files gnupg curl
+
+    . /etc/os-release
+    distro="${ID}_${VERSION_ID}"
+    if [ "debian" = "${ID}" ] ; then
+        [ "${VERSION_ID}" != "" ] || VERSION_ID="10"
+        distro="${ID}_${VERSION_ID}"
+        [ "${VERSION_ID}" = "10" ] || distro="${distro}.0"
+    elif [ "ubuntu" = "$ID" ] ; then
+        distro="x${distro}"
+    fi
+    distro=$(echo "${distro}" | sed 's/.*/\u&/')
+    url="http://download.opensuse.org/repositories"
+    url="$url/home:/rzrfreefr"
+    [ "${PINBALL_BRANCH}" = "" ] || url="$url:/${PINBALL_BRANCH}"
+    url="${url}/${distro}"
+    list="/etc/apt/sources.list.d/${project}.list"
+    echo "deb [allow-insecure=yes] $url /" | ${sudo} tee "$list"
+    suffix="-snapshot"
+
+    curl -s "${url}/Release.key" | gpg --with-fingerprint
+    curl "${url}/Release.key" | ${sudo} apt-key add -v -
+
+    ${sudo} apt-get clean
+    ${sudo} apt-get update
+    ${sudo} apt-cache show ${project}
+    ${sudo} apt-cache show ${project}${suffix}
+
+    version=$(apt-cache show "${project}${suffix}" \
+                  | grep 'Version:' | cut -d' ' -f2 | sort -n | head -n1 \
+                  || echo 0)
+
+    echo  ${sudo} apt-get remove --yes pinball ||:
+
+    ${sudo} apt-get install --yes \
+          --allow-downgrades --allow-unauthenticated \
+          ${project}${suffix}=${version} \
+          ${project}=${version} \
+          ${project}-data=${version} \
+        ||:
+
+    apt-cache search pinball-table
+    ${sudo} apt-get install --yes \
+          --allow-downgrades --allow-unauthenticated \
+          pinball-table-gnu${suffix} \
+          pinball-table-hurd${suffix} ||:
+fi
+
+
+echo "# Hardware support"
+if ! true ; then
+    case ${HOST_TYPE} in
+        *)
+            ${sudo} apt-get install --yes \
+               linux-image-${HOSTYPE} grub-pc \
+               # EOL
+            ${sudo} apt-get install --yes \
+                grub-invaders memtest86+ \
+                # EOL
+            ;;
+    esac
+fi
+
+echo "# Audio"
+which aplay || ${sudo} apt-get install --yes alsa-utils
+
+echo "# Graphics system: ${PINBALL_DISPLAY_MANAGER}"
+if [ "${PINBALL_DISPLAY_MANAGER}" = "xinit" ]; then
+    ${sudo} apt-get install --yes \
+          xinit \
+          x11-xserver-utils \
+          xdotool \
+          xloadimage \
+          # EOL
+fi
+
+echo "# Readonly filesystem"
+mkdir -p ${HOME}/.emilia
+if [ ! -r /etc/fstab ] \
+       || grep '# UNCONFIGURED FSTAB FOR BASE SYSTEM' /etc/fstab ; then \
+    cat<<EOF | ${sudo} tee /etc/fstab ||:
+# file://etc/fstab # for pinball
+none /tmp tmpfs size=16M,mode=1777 0 0
+tmpfs /run tmpfs size=32M,nosuid,noexec,relatime,mode=755 0 0
+none /var/log tmpfs size=16M,mode=1777 0 0
+none /root/.emilia tmpfs size=1M,mode=1777 0 0
+EOF
+fi
+
+echo "# Maintenance mode"
+if ! false; then
+    ${sudo} apt-get install --yes \
+          aptitude \
+          avahi-daemon \
+          mosh \
+          network-manager \
+          openssh-server \
+          screen \
+          sudo \
+          time \
+          tmux \
+          make \
+          zile \
+          # EOL
+
+    line='PermitRootLogin yes'
+    grep "^$line" /etc/ssh/sshd_config \
+        || echo "$line" | ${sudo} tee -a /etc/ssh/sshd_config
+fi
+
+echo "# Add Sources for unpackaged file and legal info"
+rm -rf /usr/local/opt/${project}
+mkdir -p /usr/local/opt/${project}/src/${project}
+cd /usr/local/opt/${project}/src/${project}
+git clone --branch "${git_branch}" --depth 1 "${git_url}" .
+echo "# Extra processing from sources"
+./helper.mk debian/setup
+./helper.mk tmp/1024x1024/${project}.jpg
+
+echo "# Add launcher for profile=${profile}"
+cd /usr/local/opt/${project}/src/${project}
+cp -rfav extra/profile/pinball/etc/pinball /etc/
+[ "$profile" = "" ] || cp -rfav extra/profile/${profile}/etc/pinball /etc/
+bash -x -e /etc/pinball/configure.sh
+
+echo "# Theming"
+cat /etc/default/locale || ${sudo} apt-get install locale
+cat /etc/locale.gen ||:
+${sudo} apt-get install --yes localepurge # will install locale
+${sudo} dpkg-reconfigure locales # en_US.UTF-8
+cat /etc/default/locale
+cat /etc/environment
+cat /etc/issue.net
+for file in /etc/issue /etc/issue.net ; do
+    echo "$url # for more " $(cat $file) \
+        | ${sudo} tee $file.tmp && mv $file.tmp $file
+done
+
+echo "# Cleanup"
+${sudo} apt-get install --yes deborphan
+# remove all locales , en_US.UTF-8
+${sudo} apt-get clean
+${sudo} rm -rf /var/lib/apt/lists/*
+df -h
+# /dev/sdb1       3.7G 1020M  2.5G  30% /
+deborphan # bsdmainutils
+
+echo "# Reboot"
+history -c
+echo "# ${url} # for more"
+${sudo} apt-get update ; ${sudo} apt-get upgrade
+ip addr show
+mount -o remount,rw /
+echo reboot # TODO
