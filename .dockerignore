@@ -1,5 +1,6 @@
 # .dockerignore
 .git/
+Dockerfile
 
 # .gitignore
 *~
