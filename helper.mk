@@ -130,13 +130,22 @@ clean/autotools:
 clean/libs:
 	find . -iname "lib*.a" -exec rm -v "{}" \;
 
-install/config: extra/config/${project}
+config/bak:
+	-mv -f ${HOME}/.emilia/pinball ${HOME}/.emilia/pinball.bak
+
+config/install/etc: extra/config/${project}
 	${sudo} install -d ${DESTDIR}/etc/default/
 	${sudo} install $< ${DESTDIR}/etc/default/
 
-test/config: install/config
-	-mv -f ${HOME}/.emilia/pinball ${HOME}/.emilia/pinball.bak
-	${make} run
+config/install: extra/config/${project} config/bak
+	install -d ${HOME}/.emilia
+	install $< ${HOME}/.emilia/
+
+config/test: config/install/etc config/bak run
+	@echo "# log: $@: $<"
+
+config/run: config/install run
+	@echo "# log: $@: $<"
 
 trako/%:
 	git clone --recursive --depth 1 ${trako_url}  --branch ${trako_branch} trako
@@ -148,3 +157,4 @@ trako: trako/src/trako/macros.h trako/README.md
 
 trako/remove:
 	rm -rf trako
+
