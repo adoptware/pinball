@@ -104,7 +104,7 @@ public:
   static int main(int argc=0, char *argv[]=0);
   int run(int argc=0, char *argv[]=0);
 protected:
-  Pinball() : mpMenu{}, mpEngine{}, miCount{} {}
+  Pinball();
   int setup(int argc=0, char *argv[]=0);
   int loop();
   int finish(int status=0);
@@ -112,6 +112,7 @@ private:
   MenuItem* mpMenu;
   Engine* mpEngine;
   unsigned int miCount;
+  unsigned int miMaxCount;
 };
 
 #endif //inclusion

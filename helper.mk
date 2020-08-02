@@ -6,6 +6,13 @@
 # SPDX-License-Identifier: GPL-2+
 
 project ?= pinball
+
+PINBALL_TABLE ?= tux
+export PINBALL_TABLE
+
+PINBALL_QUIT=25000
+export PINBALL_QUIT
+
 app ?= src/${project}
 
 trako_url?=https://github.com/rzr/trako#master

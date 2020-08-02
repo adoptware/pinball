@@ -729,6 +729,15 @@ MenuItem* createMenus(Engine * engine) {
   return menu;
 }
 
+Pinball::Pinball()
+  : mpMenu{}, mpEngine{}, miCount{}, miMaxCount{}
+{
+  char* var= getenv("PINBALL_QUIT");
+  if (var) {
+    if (*var) { miMaxCount = atoi(var); }
+    else { miMaxCount = 1; }
+  }
+}
 
 int Pinball::run(int argc, char *argv[])
 {
@@ -818,6 +827,9 @@ int Pinball::setup(int argc, char *argv[])
 
 int Pinball::loop()
 {
+  if (miMaxCount && miCount >= miMaxCount) {
+    return 1;
+  }
 #if EM_USE_SDL
   if (SDL_QuitRequested())
     return 2;
