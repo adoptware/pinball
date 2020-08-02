@@ -1,7 +1,7 @@
-size: 768 1024
+size: 1024 768
 sound: 8
 music: 8
-view: 3
+view: 2
 bpp: 16
 fullscreen: 0
 lights: 1
@@ -16,4 +16,3 @@ keyboard: leftnudge 306
 keyboard: reset 114
 keyboard: rightflip 303
 keyboard: rightnudge 305
-
