@@ -11,6 +11,7 @@ app ?= src/${project}
 trako_url?=https://github.com/rzr/trako#master
 trako_branch?=0.2.0
 
+sudo ?= sudo
 make ?= ./helper.mk
 
 autotools_files += configure
@@ -122,7 +123,13 @@ clean/autotools:
 clean/libs:
 	find . -iname "lib*.a" -exec rm -v "{}" \;
 
+install/config: extra/config/${project}
+	${sudo} install -d ${DESTDIR}/etc/default/
+	${sudo} install $< ${DESTDIR}/etc/default/
 
+test/config: install/config
+	-mv -f ${HOME}/.emilia/pinball ${HOME}/.emilia/pinball.bak
+	${make} run
 
 trako/%:
 	git clone --recursive --depth 1 ${trako_url}  --branch ${trako_branch} trako

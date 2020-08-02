@@ -1,0 +1,19 @@
+size: 768 1024
+sound: 8
+music: 8
+view: 3
+bpp: 16
+fullscreen: 0
+lights: 1
+brightness: 0.5
+texture_filter: 0
+showfps: 1
+fire: 1
+keyboard: bottomnudge 32
+keyboard: launch 13
+keyboard: leftflip 304
+keyboard: leftnudge 306
+keyboard: reset 114
+keyboard: rightflip 303
+keyboard: rightnudge 305
+

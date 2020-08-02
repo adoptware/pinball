@@ -16,6 +16,10 @@
 #define RZR_PATCHES   
 #endif // msvc
 
+#ifndef PINBALL_CONFIG_FILE
+# define PINBALL_CONFIG_FILE "/etc/default/" PACKAGE_NAME
+#endif
+
 /// TODO: Enable this flag for profiling app using external "trako" lib
 /// https://github.com/rzr/trako/
 #if defined(PINBALL_CONFIG_TRAKO) && PINBALL_CONFIG_TRAKO
