@@ -248,6 +248,9 @@ void Config::loadConfig() {
 
   ifstream file(filename.c_str());
   if (!file) {
+    file.open(PINBALL_CONFIG_FILE);
+  }
+  if (!file) {
     cerr << "Couldn't open config file: " << filename << endl;
     cerr << "Using default values" <<  endl;
     return;
