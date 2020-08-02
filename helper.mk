@@ -13,6 +13,9 @@ export PINBALL_TABLE
 PINBALL_QUIT=25000
 export PINBALL_QUIT
 
+profile ?= ${project}
+export profile
+
 app ?= src/${project}
 
 trako_url?=https://github.com/rzr/trako#master
@@ -133,11 +136,11 @@ clean/libs:
 config/bak:
 	-mv -f ${HOME}/.emilia/pinball ${HOME}/.emilia/pinball.bak
 
-config/install/etc: extra/config/${project}
+config/install/etc: extra/config/${profile}
 	${sudo} install -d ${DESTDIR}/etc/default/
 	${sudo} install $< ${DESTDIR}/etc/default/
 
-config/install: extra/config/${project} config/bak
+config/install: extra/config/${profile} config/bak
 	install -d ${HOME}/.emilia
 	install $< ${HOME}/.emilia/
 
@@ -146,6 +149,10 @@ config/test: config/install/etc config/bak run
 
 config/run: config/install run
 	@echo "# log: $@: $<"
+
+
+pincab/run:
+	${make} config/run profile="${@D}"
 
 trako/%:
 	git clone --recursive --depth 1 ${trako_url}  --branch ${trako_branch} trako
