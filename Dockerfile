@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # SPDX-License-Identifier: GPL-2
 
-FROM debian:10
+FROM i386/debian:10
 LABEL maintainer="Philippe Coval (rzr@users.sf.net)"
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -30,21 +30,27 @@ RUN echo "# log: Setup build system" \
 ENV project pinball
 ENV workdir /usr/local/opt/${project}/src/${project}
 
-ADD debian/rules ${workdir}/debian/rules
+ADD debian/Makefile ${workdir}/debian/Makefile
 WORKDIR ${workdir}
 RUN echo "# log: ${project}: Preparing sources" \
   && set -x \
-  && ./debian/rules rule/setup \
+  && ./debian/Makefile rule/setup \
   && sync
 
 ADD . ${workdir}/
 WORKDIR ${workdir}
 RUN echo "# log: ${project}: Building sources" \
   && set -x \
-  && ./debian/rules \
+  && ./debian/Makefile \
   && sudo debi \
   && dpkg -L ${project} \
   && dpkg -L ${project}-data \
   && sync
+
+RUN echo "# log: ${project}: Listing sources" \
+  && set -x \
+  && cd .. && find ${PWD}/ -maxdepth 1 \
+  && sync
+
 
 ENTRYPOINT [ "/usr/games/pinball" ]
