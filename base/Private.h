@@ -17,7 +17,11 @@
 #endif // msvc
 
 #ifndef PINBALL_CONFIG_FILE
-# define PINBALL_CONFIG_FILE "/etc/default/" PACKAGE_NAME
+# ifdef __linux__
+#  define PINBALL_CONFIG_FILE "/etc/" PACKAGE_NAME "/" PACKAGE_NAME
+# else
+#  define PINBALL_CONFIG_FILE PACKAGE_NAME ".conf"
+# endif
 #endif
 
 /// TODO: Enable this flag for profiling app using external "trako" lib

@@ -15,6 +15,9 @@ export PINBALL_QUIT
 
 profile ?= ${project}
 export profile
+# profile=pincab # Or overload arg
+config_file ?= extra/profile/${profile}/etc/${project}/${project}
+config_destdir ?= ${DESTDIR}/etc/${project}
 
 app ?= src/${project}
 
@@ -44,6 +47,13 @@ help: helper.mk
 	@echo "## Usage:"
 	@echo "# ${<D}/${<F} help # This help"
 	@echo "# ${<D}/${<F} run # To run app"
+
+config/%: %/config
+	@echo "# log: $@: $<"
+
+test/%: %/test
+	@echo "# log: $@: $<"
+
 
 version:
 	${MAKE} --version
@@ -136,15 +146,21 @@ clean/libs:
 config/bak:
 	-mv -f ${HOME}/.emilia/pinball ${HOME}/.emilia/pinball.bak
 
-config/install/etc: extra/config/${profile}
-	${sudo} install -d ${DESTDIR}/etc/default/
-	${sudo} install $< ${DESTDIR}/etc/default/
+config/etc/install: ${config_destdir}/${project}
+	ls $<
 
-config/install: extra/config/${profile} config/bak
+config/etc/delete: 
+	${sudo} rm -fv ${config_destdir}/${project}
+
+${config_destdir}/${project}: ${config_file}
+	${sudo} install -d ${@D}
+	${sudo} install $< ${@}
+
+config/install: ${config_file} config/bak
 	install -d ${HOME}/.emilia
 	install $< ${HOME}/.emilia/
 
-config/test: config/install/etc config/bak run
+config/test: config/etc/delete config/etc/install config/bak run
 	@echo "# log: $@: $<"
 
 config/run: config/install run
