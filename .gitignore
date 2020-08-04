@@ -1,4 +1,12 @@
 # .gitignore
+
+# Git
+*~*
+
+# Temporary places
+**/tmp/
+
+# Generated files
 *.a
 *.o
 */.deps/*.Po
@@ -91,3 +99,4 @@ test/texture
 test/thread
 test/trans
 test/varray
+
