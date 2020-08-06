@@ -47,22 +47,12 @@ void Keyboard::poll()
 	? SDL_KEYDOWN : SDL_KEYUP;
       switch (event.button.button) {
       case SDL_BUTTON_RIGHT:
-	if (! isKeyDown(Config::getInstance()->getKey("launch"))) {
-	  newEvent.key.keysym.sym
-	    = Config::getInstance()->getKey("rightflip");
-	} else {
-	  newEvent.key.keysym.sym
-	    = Config::getInstance()->getKey("rightnudge");
-	}	  
+	newEvent.key.keysym.sym
+	  = Config::getInstance()->getKey("rightflip");
 	break;
       case SDL_BUTTON_LEFT:
-	if (! isKeyDown(Config::getInstance()->getKey("launch"))) {
-	  newEvent.key.keysym.sym
-	    = Config::getInstance()->getKey("leftflip");
-	} else {
-	  newEvent.key.keysym.sym
-	    = Config::getInstance()->getKey("leftnudge");
-	}
+	newEvent.key.keysym.sym
+	  = Config::getInstance()->getKey("leftflip");
 	break;
       case SDL_BUTTON_MIDDLE:
 	if (isKeyDown(Config::getInstance()->getKey("rightflip"))
