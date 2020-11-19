@@ -4,7 +4,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT(pinball-table-hurd, 0.0.20200312, [[pinball.sf.net]])
+AC_INIT(pinball-table-hurd, 0.0.20201119, [[pinball.sf.net]])
 AC_CONFIG_SRCDIR([data/hurd/ModuleHurd.cpp])
 AC_CONFIG_HEADERS([config.h])
 LT_CONFIG_LTDL_DIR([libltdl])
