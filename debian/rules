@@ -28,6 +28,10 @@ override_dh_auto_configure: bootstrap
 	${<D}/${<F}
 	dh_auto_configure -- --bindir=/usr/games --datadir=/usr/share/games --with-cflags="$(CFLAGS)" --with-cxxflags="$(CXXFLAGS)"
 
+.PHONY: override_dh_autoreconf
+override_dh_autoreconf: bootstrap
+	dh_autoreconf ${<D}/${<F}
+
 .PHONY: override_dh_install
 override_dh_install:
 	rm -rf ${CURDIR}/debian/tmp/var/games/pinball/*/highscores
