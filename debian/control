@@ -2,7 +2,7 @@ Source: pinball
 Maintainer: Philippe Coval <rzr@users.sf.net>
 Section: games
 Priority: optional
-Build-Depends: debhelper (>= 9),
+Build-Depends: debhelper-compat (= 13),
                libgl1-mesa-dev,
                libjpeg62-turbo-dev | libjpeg-dev,
                libpng-dev,
@@ -22,7 +22,7 @@ Build-Depends: debhelper (>= 9),
                libtool-bin,
                libltdl-dev,
                pkg-config
-Standards-Version: 4.3.0
+Standards-Version: 4.5.0
 Vcs-Browser: https://sourceforge.net/p/pinball/code/ci/master/tree/
 Vcs-Git: https://git.code.sf.net/p/pinball/code.git
 Homepage: https://sourceforge.net/projects/pinball/
