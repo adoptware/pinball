@@ -4,7 +4,7 @@ Section: games
 Priority: optional
 Build-Depends: debhelper (>= 9),
                libgl1-mesa-dev,
-	       libjpeg62-turbo-dev | libjpeg-dev,	       
+               libjpeg62-turbo-dev | libjpeg-dev,
                libpng-dev,
                libsdl1.2-dev,
                freeglut3-dev,
@@ -21,7 +21,7 @@ Build-Depends: debhelper (>= 9),
                automake,
                libtool,
                libltdl-dev,
-	       pkg-config
+               pkg-config
 Standards-Version: 4.3.0
 Homepage: https://sourceforge.net/projects/pinball/
 Rules-Requires-Root: binary-targets
@@ -33,8 +33,8 @@ Depends: ${shlibs:Depends},
          pinball-data (= ${source:Version})
 Suggests: pinball-table-gnu,
           pinball-table-hurd,
-	  alsa-utils,
-	  xinit
+          alsa-utils,
+          xinit
 Description: Emilia Pinball Emulator
  The Emilia Pinball Project is a pinball simulator for GNU/Linux and other Unix
  systems. There are only two levels to play with, but they are very addictive.
