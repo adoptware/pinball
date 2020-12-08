@@ -37,7 +37,7 @@ systems. There  is only one level to play with, but it is very addictive.
 <variablelist><title>Keys</title>
 <varlistentry><term><keycap>Esc</keycap></term>
 <listitem><para>
-Meny
+Menu
 </para></listitem></varlistentry>
 <varlistentry><term><keycap>Enter</keycap></term>
 <listitem><para>
@@ -76,10 +76,10 @@ Nudge
 <para>
 <itemizedlist>
 <listitem><para>
-Controls meny missing.
+Controls menu missing.
 </para></listitem>
 <listitem><para>
-Turning on sound in sound meny requires restart.
+Turning on sound in sound menu requires restart.
 </para></listitem>
 <listitem><para>
 Balls may pass through walls.
