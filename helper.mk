@@ -4,60 +4,73 @@
 # -*- coding: utf-8 -*
 #
 # SPDX-License-Identifier: GPL-2+
+# Copyright: Philippe Coval <https://purl.org/rzr/> - 2020+
+#
 
-project ?= pinball
+project?=pinball
+version?=0.0.0
 
-PINBALL_TABLE ?= tux
+V?=1
+
+PINBALL_TABLE?=tux
 export PINBALL_TABLE
 
-PINBALL_QUIT=25000
+PINBALL_QUIT?=25000
 export PINBALL_QUIT
 
-profile ?= ${project}
+profile?=${project}
 export profile
-resolution ?= 1024x1024
+resolution?=1024x1024
 export resolution
 
 # profile=pincab # Or overload arg
-config_file ?= extra/profile/${profile}/etc/${project}/${project}
-config_destdir ?= ${DESTDIR}/etc/${project}
+config_file?=extra/profile/${profile}/etc/${project}/${project}
+config_destdir?=${DESTDIR}/etc/${project}
 
-app ?= src/${project}
+app?=src/${project}
 
-PINBALL_TABLE ?= tux
+PINBALL_TABLE?=tux
 export PINBALL_TABLE
 
 trako_url?=https://github.com/rzr/trako#master
 trako_branch?=0.2.0
 
-sudo ?= sudo
-make ?= ./helper.mk
+sudo?=sudo
+make?=./helper.mk
 
-autotools_files += configure
-autotools_files += Makefile
-autotools_files += Makefile.in
-autotools_files += aclocal.m4
-autotools_files += depcomp
-autotools_files += compile
-autotools_files += pinconfig.h
-autotools_files += stamp-h1
-autotools_files += config.status
-autotools_files += install-sh
-autotools_files += ltmain.sh
-autotools_files += confdefs.h
+tarball?=${CURDIR}/../${project}_${version}.orig.tar.gz
+export tarball
+topdir?=.
+
+autotools_files+=Makefile
+autotools_files+=Makefile.in
+autotools_files+=aclocal.m4
+autotools_files+=compile
+autotools_files+=confdefs.h
+autotools_files+=config.status
+autotools_files+=configure
+autotools_files+=depcomp
+autotools_files+=install-sh
+autotools_files+=ltmain.sh
+autotools_files+=pinconfig.h
+autotools_files+=stamp-h1
 
 DESTDIR?=/
+
+
 
 default: help all
 	@echo "# $@: @^"
 
-%: Makefile
+%:
+	${make} Makefile
 	${MAKE} $@
 
 help: helper.mk
 	@echo "## Usage:"
 	@echo "# ${<D}/${<F} help # This help"
 	@echo "# ${<D}/${<F} run # To run app"
+	@echo "# ${<D}/${<F} debi # To install on debian"
 
 config/%: %/config
 	@echo "# log: $@: $<"
@@ -66,17 +79,23 @@ test/%: %/test
 	@echo "# log: $@: $<"
 
 
-version:
+rule/version:
+	@echo ${version}
+	-cat /etc/os-release
+	${CC} --version
 	${MAKE} --version
+	libtool --version
 	libtoolize --version
+	m4 --version
 	aclocal --version
 	autoheader --version
 	automake --version
 	autoconf --version
 	pkg-config --version
 
+
 .PHONY: bootstrap
-bootstrap: version
+bootstrap: rule/version
 	${make} clean/autotools
 	${make} configure
 
@@ -191,13 +210,24 @@ pincab/run:
 debian/setup/devel:
 	${sudo} apt-get update
 	${sudo} apt-get install -y \
+  build-essential \
+  dpkg-dev \
+  devscripts \
+\
+  autoconf \
+  automake \
+  libtool-bin \
   g++ \
   libtool \
   libsdl-image1.2-dev \
   libsdl-mixer1.2-dev \
   make \
   pkg-config \
-
+  libogg-dev \
+  libvorbis-dev \
+  libaa1-dev \
+  libtiff-dev \
+  libcppunit-dev \
 # EOL
 
 debian/setup/x11: /etc/debian_version
@@ -225,8 +255,33 @@ debian/setup/package: debian/setup/devel
 # EOL
 
 
-debi: debian/Makefile
-	./${<} $@
+${tarball}:
+	 tar cvfz "$@" \
+--transform "s|^./|${project}-${version}/|" \
+--exclude 'debian' --exclude-vcs \
+.
+	@ls -l $@
+
+rule/tarball: ${tarball}
+	@ls $^
+
+
+rule/debuild: debian/rules
+	@which ${@F} || ${make} ${@D}/setup
+	[ "" != "${tarball}" ] || ${make} ${@D}/tarball
+	@ls "${tarball}" 2>/dev/null || ${make} ${@D}/tarball
+	${make} ${@D}/version
+	${@F} -S -us -uc \
+|| echo "# error: Try './debian/rules rule/setup' first"
+	${@F} -S -us -uc
+	${@F} -us -uc
+
+
+rule/debi: rule/debuild
+	${sudo} ${@F}
+
+debi: rule/debi
+	@echo "# log: $@: $^"
 
 setup: /etc/os-release
 	${make} debian/setup || @echo "TODO: add support for $<"
@@ -287,3 +342,13 @@ trako: trako/src/trako/macros.h trako/README.md
 
 trako/remove:
 	rm -rf trako
+
+
+release/%: configure.ac
+	git tag -l "${@F}" \
+|| echo "# error: Please run: git tag -d ${@F}"
+	git tag -l "upstream/${@F}" \
+|| echo "error: Please run: git tag -d ${@F}"
+	sed -e "s|0.0.0|${@F}|g" -i $<
+	-git commit -sam "Release ${@F}"
+	git tag -sm "${project}-${@F}" "${@F}"
