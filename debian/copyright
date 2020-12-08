@@ -1,7 +1,9 @@
 Format:  https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: Pinball
-Upstream-Contact: Henrik Enqvist <henqvist@excite.com>
-Source: https://sourceforge.net/projects/pinball/files/
+Upstream-Name: pinball
+Upstream-Contact: https://sourceforge.net/projects/pinball/,
+ Philippe Coval <rzr@users.sf.net>,
+ Henrik Enqvist <henqvist@excite.com>
+Source: <https://sourceforge.net/p/pinball/code>
 Comment: This package was debianized by Didier Dhollande <dholland@free.fr> on
  Sun, 17 Jun 2002
  It is currently maintained by Philippe Coval <rzr@users.sf.net>
