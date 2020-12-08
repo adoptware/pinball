@@ -67,13 +67,3 @@ Description: Data files for the Emilia Pinball Emulator
  systems. There are only two levels to play with, but they are very addictive.
  .
  This package contains various data files used by the pinball emulator.
-
-Package: pinball-snapshot
-Architecture: all
-Section: utils
-Priority: extra
-Depends: ${misc:Depends},
-         pinball (= ${source:Version})
-Suggests: rzr
-Description: unreleased snapshot version
- TODO: Remove on issue and upgrade pinball
