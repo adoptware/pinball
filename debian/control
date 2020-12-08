@@ -19,7 +19,7 @@ Build-Depends: debhelper (>= 9),
                libasound2-dev [linux-any],
                autoconf,
                automake,
-               libtool,
+               libtool-bin,
                libltdl-dev,
                pkg-config
 Standards-Version: 4.3.0
