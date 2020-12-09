@@ -352,3 +352,10 @@ release/%: configure.ac
 	sed -e "s|0.0.0|${@F}|g" -i $<
 	-git commit -sam "Release ${@F}"
 	git tag -sm "${project}-${@F}" "${@F}"
+	git archive \
+--format=tar \
+--prefix="${project}-${@F}/" \
+${@F} \
+| gzip -9n \
+> ${project}-${@F}.tar.gz
+	sha256sum ${project}-${@F}.tar.gz > ${project}-${@F}.tar.gz.sha256sum
