@@ -1,0 +1,66 @@
+{{- $image := or .image "pinball-debian.img" -}}
+{{- $suite := or .suite "testing" -}}
+{{- $architecture := or .architecture "i386" -}}
+
+architecture: {{$architecture}}
+
+actions:
+  - action: debootstrap
+    suite: {{$suite}}
+    components:
+      - main
+      - non-free
+    mirror: https://deb.debian.org/debian
+    variant: minbase
+
+  - action: apt
+    packages: [systemd-sysv,
+               adduser,
+               pinball,
+               xinit,
+               xserver-xorg,
+               xterm,
+               sudo,
+               linux-image-generic,
+{{if eq $architecture "i386" "amd64"}}
+               grub-pc,
+{{end}}
+    ]
+
+  - action: run
+    chroot: true
+    command: echo pinball > /etc/hostname
+
+  - action: image-partition
+    imagename: {{$image}}
+    imagesize: 2GB
+    partitiontype: msdos
+    mountpoints:
+      - mountpoint: /
+        partition: root
+    partitions:
+      - name: root
+        fs: ext4
+        start: 512
+        end: 100%
+        flags: [boot]
+
+  - action: run
+    description: Set up user
+    chroot: true
+    command: >
+      /sbin/adduser --gecos user --disabled-password --shell /bin/bash user
+      && /sbin/adduser user sudo
+      && sh -c "echo 'user:user' | chpasswd"
+
+  - action: filesystem-deploy
+    description: Deploying filesystem onto image
+
+{{if eq $architecture "i386" "amd64"}}
+  - action: run
+    description: Install bootloader
+    chroot: true
+    command: >
+      grub-install /dev/disk/by-id/virtio-fakedisk-0
+      && updategrub
+{{end}}
