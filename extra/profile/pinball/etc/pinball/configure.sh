@@ -17,7 +17,7 @@ set
 ${sudo} chmod u+rx *.sh
 
 ${sudo} install -d /etc/default
-${sudo} install  pinball /etc/default/pinball
+${sudo} install pinball /etc/default/pinball
 
 ${sudo} systemctl get-default | grep 'graphical.target'
 
@@ -33,9 +33,10 @@ ${sudo} systemctl disable xinit ||:
 ${sudo} systemctl daemon-reload ||:
 # TODO install from /lib/systemd/system/ on debian
 ${sudo} systemctl enable ${PWD}/${PINBALL_DISPLAY_MANAGER}.service
-${sudo} systemctl restart ${PINBALL_DISPLAY_MANAGER}
 
 cat<<EOF
+# Hints for debuging
+${sudo} systemctl restart ${PINBALL_DISPLAY_MANAGER}
 ${sudo} journalctl -u ${PINBALL_DISPLAY_MANAGER} | tail
 ${sudo} journalctl -u ${PINBALL_DISPLAY_MANAGER} -f | less
 $sudo systemd-analyze --user critical-chain

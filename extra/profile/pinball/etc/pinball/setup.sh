@@ -10,13 +10,15 @@ profile="pincab"
 url="https://purl.org/rzr/pinball"
 git_url="https://github.com/rzr/pinball"
 git_branch="master"
-git_branch="sandbox/rzr/devel/master" # TODO
+# git_branch="sandbox/rzr/devel/master" # TODO
 sudo=$(which sudo || echo)
+export DEBIAN_FRONTEND=noninteractive
+
+
+find /etc/pinball ||:
 
 . /etc/os-release ||:
 . /etc/pinball/pinball.env.sh ||:
-
-set
 
 echo "# Update repository"
 mount -o remount,rw /
@@ -25,11 +27,28 @@ ${sudo} apt-get update
 ${sudo} apt-get install --yes etckeeper
 
 echo "# Base OS"
+echo 'debconf debconf/frontend select Noninteractive' | ${sudo} debconf-set-selections
+
 hostname=$(cat /etc/hostname)
 grep $hostname /etc/hosts \
     || { echo "127.0.0.1 $hostname" | $sudo tee -a /etc/hosts ; }
 
 dpkg -L locales || ${sudo} apt-get install -y locales
+${sudo} localectl set-keymap en_US.UTF-8 \
+    || echo 'en_US.UTF-8 UTF-8' | ${sudo} tee -a /etc/locale.gen
+cat /etc/locale.gen
+
+cat<<EOF | ${sudo} tee -a "/etc/default/keyboard"
+XKBMODEL="pc105"
+XKBLAYOUT="us"
+XKBVARIANT="altgr-intl"
+XKBOPTIONS=""
+BACKSPACE="guess"
+EOF
+
+${sudo} apt-get install -y keyboard-configuration
+cat "/etc/default/keyboard"
+
 
 echo "# Main package"
 # Suggests: alsa-utils
@@ -148,33 +167,41 @@ if ! false; then
         || echo "$line" | ${sudo} tee -a /etc/ssh/sshd_config
 fi
 
-echo "# Add Sources for unpackaged file and legal info"
-rm -rf /usr/local/opt/${project}
-mkdir -p /usr/local/opt/${project}/src/${project}
-cd /usr/local/opt/${project}/src/${project}
-git clone --branch "${git_branch}" --depth 1 "${git_url}" .
-echo "# Extra processing from sources"
-./helper.mk debian/setup
-./helper.mk tmp/1024x1024/${project}.jpg
+if ! true ; then
+    echo "# Add Sources for unpackaged file and legal info"
+    rm -rf /usr/local/opt/${project}
+    mkdir -p /usr/local/opt/${project}/src/${project}
+    cd /usr/local/opt/${project}/src/${project}
+    git clone --branch "${git_branch}" --depth 1 "${git_url}" .
+    echo "# Extra processing from sources"
+    ./helper.mk debian/setup
+    ./helper.mk tmp/1024x1024/${project}.jpg
 
-echo "# Add launcher for profile=${profile}"
-cd /usr/local/opt/${project}/src/${project}
-cp -rfav extra/profile/pinball/etc/pinball /etc/
-[ "$profile" = "" ] || cp -rfav extra/profile/${profile}/etc/pinball /etc/
-bash -x -e /etc/pinball/configure.sh
+    echo "# Add launcher for profile=${profile}"
+    cd /usr/local/opt/${project}/src/${project}
+    cp -rfav extra/profile/pinball/etc/pinball /etc/
+    [ "$profile" = "" ] || cp -rfav extra/profile/${profile}/etc/pinball /etc/
+    bash -x -e /etc/pinball/configure.sh
+fi
 
-echo "# Theming"
-cat /etc/default/locale || ${sudo} apt-get install locale
-cat /etc/locale.gen ||:
-${sudo} apt-get install --yes localepurge # will install locale
-${sudo} dpkg-reconfigure locales # en_US.UTF-8
-cat /etc/default/locale
-cat /etc/environment
-cat /etc/issue.net
-for file in /etc/issue /etc/issue.net ; do
-    echo "$url # for more " $(cat $file) \
-        | ${sudo} tee $file.tmp && mv $file.tmp $file
-done
+# TODO install from /lib/systemd/system/ on debian
+${sudo} systemctl enable /etc/pinball/${PINBALL_DISPLAY_MANAGER}.service
+
+
+if ! true ; then
+    echo "# Theming"
+    cat /etc/default/locale || ${sudo} apt-get install locale
+    cat /etc/locale.gen ||:
+    ${sudo} apt-get install --yes localepurge # will install locale
+    ${sudo} dpkg-reconfigure locales # en_US.UTF-8
+    cat /etc/default/locale
+    cat /etc/environment
+    cat /etc/issue.net
+    for file in /etc/issue /etc/issue.net ; do
+        echo "$url # for more " $(cat $file) \
+            | ${sudo} tee $file.tmp && mv $file.tmp $file
+    done
+fi
 
 echo "# Cleanup"
 ${sudo} apt-get install --yes deborphan
@@ -189,6 +216,6 @@ echo "# Reboot"
 history -c
 echo "# ${url} # for more"
 ${sudo} apt-get update ; ${sudo} apt-get upgrade
-ip addr show
+ip addr show ||:
 mount -o remount,rw /
 echo reboot # TODO

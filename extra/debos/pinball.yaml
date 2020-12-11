@@ -16,10 +16,6 @@ actions:
   - action: apt
     packages: [systemd-sysv,
                adduser,
-               pinball,
-               xinit,
-               xserver-xorg,
-               xterm,
                sudo,
                linux-image-generic,
 {{if eq $architecture "i386" "amd64"}}
@@ -52,6 +48,18 @@ actions:
       /sbin/adduser --gecos user --disabled-password --shell /bin/bash user
       && /sbin/adduser user sudo
       && sh -c "echo 'user:user' | chpasswd"
+
+  - action: overlay
+    source: ../../extra/profile/pinball/etc/pinball/
+    destination: /etc/pinball/
+
+  - action: overlay
+    source: ../../extra/profile/pincab/etc/pinball/
+    destination: /etc/pinball/
+
+  - action: run
+    chroot: true
+    script: ../../extra/profile/pinball/etc/pinball/setup.sh
 
   - action: filesystem-deploy
     description: Deploying filesystem onto image
