@@ -3,7 +3,8 @@
 
 PINBALL_PROFILE="pincab"
 
-# PINBALL_BRANCH="next" # Use developement packages
+# TODO: pin version
+PINBALL_BRANCH="latest"
 
 # Output screen
 PINBALL_SCREEN="DVI-I-1"
