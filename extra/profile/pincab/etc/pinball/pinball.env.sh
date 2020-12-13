@@ -3,7 +3,7 @@
 
 PINBALL_PROFILE="pincab"
 
-PINBALL_BRANCH="next" # TODO
+# PINBALL_BRANCH="next" # Use developement packages
 
 # Output screen
 PINBALL_SCREEN="DVI-I-1"
