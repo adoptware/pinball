@@ -98,17 +98,18 @@ dnl *******************************************
 dnl OPENGL ************************************
 dnl Figure out which math and GL library to use
 case "$target" in
-    *-*-cygwin* | *-*-mingw32*)
-        MATHLIB=""
-        SYS_GL_LIBS="-lopengl32"
-        ;;	
-    *-*-beos*)
-        MATHLIB=""
-        SYS_GL_LIBS="-lGL"
-        ;;
     *-*-darwin*)
         MATHLIB=""
-        SYS_GL_LIBS=""
+        AC_CHECK_HEADER(
+            [OpenGL/gl.h],
+            [ac_cv_search_glBegin="none required"],
+            [AC_MSG_ERROR(*** OpenGL headers not found on system!)]
+        )
+        AC_CHECK_HEADER(
+            [OpenGL/glu.h],
+            [ac_cv_search_gluScaleImage="none required"],
+            [AC_MSG_ERROR(*** GLU headers not found on system!)]
+        )
         ;;
     *-*-aix*)
         if test x$ac_cv_c_compiler_gnu = xyes; then
@@ -118,34 +119,21 @@ case "$target" in
         ;;
     *)
         MATHLIB="-lm"
-        AC_PATH_X
-        AC_PATH_XTRA
-        if test x$have_x = xyes; then
-            CFLAGS="$CFLAGS $X_CFLAGS"
-            SYS_GL_LIBS="$X_PRE_LIBS $X_LIBS $X_EXTRA_LIBS -lGL -lGLU"
-        else
-            SYS_GL_LIBS="-lGL -lGLU"
-        fi
+        AC_CHECK_HEADER(
+            [GL/gl.h],
+            AC_SEARCH_LIBS(glBegin, [opengl32 GL GL2 OpenGL], [test $ac_cv_search_glBegin = "none required" || GL_LIBS="$ac_cv_search_glBegin $GL_LIBS"], [AC_MSG_ERROR(*** OpenGL library not found on system!)]),
+            [AC_MSG_ERROR(*** OpenGL headers not found on system!)]
+        )
+        AC_CHECK_HEADER(
+            [GL/glu.h],
+            AC_SEARCH_LIBS(gluScaleImage, [glu32 GL GLU], [test $ac_cv_search_gluScaleImage = "none required" || GL_LIBS="$ac_cv_search_gluScaleImage $GL_LIBS"], [AC_MSG_ERROR(*** GLU library not found on system!)]),
+            [AC_MSG_ERROR(*** GLU headers not found on system!)]
+        )
         ;;
 esac
 
 AC_SUBST(MATHLIB)
-
-dnl Check for OpenGL
-AC_MSG_CHECKING(for OpenGL support)
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#ifdef WIN32
-#define WINAPI
-#endif
-
- #if defined(__APPLE__) && defined(__MACH__)
- #include <OpenGL/gl.h>
-  #else
- #include <GL/gl.h>
- #endif
-]], [[]])],[],[AC_MSG_ERROR(*** OpenGL not found on system!)])
-AC_MSG_RESULT(yes)
-GL_LIBS="$SYS_GL_LIBS"
+LIBS="$MATHLIB $LIBS"
 AC_SUBST(GL_LIBS)
 LIBS="$GL_LIBS $LIBS"
 
