@@ -1,0 +1,16 @@
+{{- $architecture := or .architecture "amd64" -}}
+{{- $image := or .image "pinball-amd64.img" -}}
+{{- $machine := or .machine "generic" -}}
+{{- $suite := or .suite "buster" -}}
+
+architecture: {{$architecture}}
+
+actions:
+
+  - action: recipe
+    recipe: ../../pinball.yaml
+    variables:
+       architecture: {{$architecture}}
+       image: {{$image}}
+       machine: {{$machine}}
+       suite: {{$suite}}

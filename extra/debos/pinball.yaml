@@ -1,6 +1,9 @@
-{{- $image := or .image "pinball-debian.img" -}}
-{{- $suite := or .suite "testing" -}}
 {{- $architecture := or .architecture "i386" -}}
+{{- $image := or .image "pinball-generic.img" -}}
+{{- $machine := or .machine "generic" -}}
+{{- $project := or .project "pinball" -}}
+{{- $suite := or .suite "buster" -}}
+{{- $uboot_machine := or .uboot_machine "generic" -}}
 
 architecture: {{$architecture}}
 
@@ -13,33 +16,41 @@ actions:
     mirror: https://deb.debian.org/debian
     variant: minbase
 
-  - action: apt
-    packages: [systemd-sysv,
-               adduser,
-               sudo,
-               linux-image-generic,
-{{if eq $architecture "i386" "amd64"}}
-               grub-pc,
-{{end}}
-    ]
+  - action: run
+    chroot: true
+    command: |
+      cat /etc/os-release
+      cat<<EOF
+      URL: https://purl.org/rzr/pinball#
+      
+      architecture: {{$architecture}}
+      image: {{$image}}
+      machine: {{$machine}}
+      suite: {{$suite}}
+      uboot_machine: {{$uboot_machine}}
+      EOF > /README.md
 
   - action: run
     chroot: true
-    command: echo pinball > /etc/hostname
+    command: apt-cache search linux-image
 
-  - action: image-partition
-    imagename: {{$image}}
-    imagesize: 2GB
-    partitiontype: msdos
-    mountpoints:
-      - mountpoint: /
-        partition: root
-    partitions:
-      - name: root
-        fs: ext4
-        start: 512
-        end: 100%
-        flags: [boot]
+  - action: apt
+    packages: [systemd-sysv,
+	       adduser,
+	       sudo,
+    ]
+
+  - action: recipe
+    recipe: machine/{{$machine}}/actions.yaml
+    variables:
+      architecture: {{$architecture}}
+      image: {{$image}}
+      machine: {{$machine}}
+      uboot_machine: {{$uboot_machine}}
+
+  - action: run
+    chroot: true
+    command: echo {{$project}} > /etc/hostname
 
   - action: run
     description: Set up user
@@ -60,15 +71,13 @@ actions:
   - action: run
     chroot: true
     script: ../../extra/profile/pinball/etc/pinball/setup.sh
-
   - action: filesystem-deploy
     description: Deploying filesystem onto image
 
-{{if eq $architecture "i386" "amd64"}}
-  - action: run
-    description: Install bootloader
-    chroot: true
-    command: >
-      grub-install /dev/disk/by-id/virtio-fakedisk-0
-      && updategrub
-{{end}}
+  - action: recipe
+    recipe: machine/{{$machine}}/image.yaml
+    variables:
+      architecture: {{$architecture}}
+      image: {{$image}}
+      machine: {{$machine}}
+      uboot_machine: {{$uboot_machine}}

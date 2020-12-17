@@ -1,0 +1,16 @@
+{{- $architecture := or .architecture "i386" -}}
+{{- $image := or .image "pinball-i386.img" -}}
+{{- $machine := or .machine "generic" -}}
+{{- $suite := or .suite "buster" -}}
+
+architecture: {{$architecture}}
+
+actions:
+
+  - action: recipe
+    recipe: ../../pinball.yaml
+    variables:
+       architecture: {{$architecture}}
+       image: {{$image}}
+       machine: {{$machine}}
+       suite: {{$suite}}

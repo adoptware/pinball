@@ -1,0 +1,13 @@
+{{- $architecture := or .architecture "i386" -}}
+
+architecture: {{$architecture}}
+
+actions:
+  - action: run
+    description: Install bootloader
+    chroot: true
+    command: >
+{{if eq $architecture "i386" "amd64"}}
+      update-grub
+      && grub-install /dev/disk/by-id/virtio-fakedisk-0
+{{end}}

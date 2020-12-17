@@ -1,0 +1,39 @@
+{{- $architecture := or .architecture "i386" -}}
+{{- $image := or .image "pinball-generic" -}}
+{{- $suite := or .suite "buster" -}}
+
+architecture: {{$architecture}}
+
+actions:
+
+  - action: image-partition
+    imagename: {{$image}}
+    imagesize: 2GB
+    partitiontype: msdos
+    mountpoints:
+      - mountpoint: /
+        partition: root
+    partitions:
+      - name: root
+        fs: ext4
+        start: 512
+        end: 100%
+        flags: [boot]
+
+  - action: apt
+    packages: [
+      {{if eq $architecture "i386" "amd64"}}
+      grub-pc,
+      {{end}}
+      {{if eq $suite "unstable" "sid" "testing" "bulleye"}}
+      linux-image-generic,
+      {{else}}
+      {{if eq $suite "buster" "stable"}}
+      {{if eq $architecture "i386"}}
+      linux-image-686
+      {{else}}
+      linux-image-{{$architecture}}
+      {{end}}
+      {{end}}
+      {{end}}   
+    ]
