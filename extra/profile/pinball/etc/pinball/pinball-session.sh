@@ -15,23 +15,30 @@ export XDG_RUNTIME_DIR
 
 echo "# Configure display manager"
 ls /sys/class/drm ||:
+cat /sys/class/drm/version ||:
+ls /sys/class/drm | grep "${PINBALL_SCREEN}" ||:
 
 if [ ! -z ${DISPLAY} ] ; then # X11
     xsetroot -solid "purple" ||:
-    [ ! -r "${PINBALL_XBM_IMAGE}" ] || xsetroot -bitmap  "${PINBALL_XBM_IMAGE}"
+    [ ! -r "${PINBALL_XBM_IMAGE}" ] || xsetroot -bitmap "${PINBALL_XBM_IMAGE}"
     [ ! -r "${PINBALL_IMAGE}" ] || xloadimage -onroot "${PINBALL_IMAGE}"
+
+    xrandr
+    xrandr --output ${PINBALL_SCREEN} || unset PINBALL_SCREEN
+
     list=$(xrandr -q \
                | grep '^[^ ].* ' | cut -d' ' -f1 | tail -n +2\
                || echo "")
+
     # Guess primary screen
     if [ "" = "$PINBALL_SCREEN" ] ; then
         for screen in $list ; do
             xrandr --output "${screen}" --primary ${PINBALL_XRANDR_ARGS} \
-                && PINBALL_SCREEN="$screen" \
+                && PINBALL_SCREEN="$screen" && break \
                     || echo "log: skip ${screen}"
         done
     fi
-
+    
     # Other screen(s)
     for screen in $list ; do
         if [ "${PINBALL_SCREEN}" != "$screen" ] ; then
