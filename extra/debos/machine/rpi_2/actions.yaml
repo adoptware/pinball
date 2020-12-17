@@ -1,0 +1,130 @@
+{{- $architecture := or .architecture "armhf" -}}
+{{- $firmware_version := or .firmware_version "1.20201201" -}}
+{{- $image := or .image "pinball-rpi_2b.img" -}}
+{{- $machine := or .machine "rpi_2" -}}
+{{- $project := or .project "pinball" -}}
+{{- $suite := or .suite "buster" -}}
+{{- $uboot_machine := or .uboot_machine "rpi_2" -}}
+
+architecture: {{$architecture}}
+
+actions:
+
+  - action: download
+    url: https://github.com/raspberrypi/firmware/archive/{{$firmware_version}}.tar.gz
+    unpack: true
+    name: firmware
+
+  - action: image-partition
+    imagename: {{$image}}
+    imagesize: 2GB
+    partitiontype: msdos
+    mountpoints:
+      - mountpoint: /
+        partition: root
+      - mountpoint: /boot/firmware
+        partition: firmware
+        options: [x-systemd.automount]
+    partitions:
+      - name: firmware
+        fs: fat32
+        start: 0%
+        end: 64MB
+      - name: root
+        fs: ext4
+        start: 64MB
+        end: 100%
+        flags: [boot]
+
+  - action: apt
+    packages: [
+      firmware-brcm80211,
+      {{if eq $suite "unstable" "sid" "testing" "bulleye"}}
+      linux-image-generic,
+      {{else}}
+      {{if eq $suite "stable" "buster" "stretch"}}
+      {{if eq $architecture "armhf"}}
+      linux-image-armmp,
+      {{else}}
+      linux-image-{{$architecture}},
+      {{end}}
+      {{end}}
+      {{end}}
+      {{if eq $suite "stretch"}}
+      {{else}}
+      u-boot-menu,
+      {{end}}
+      u-boot-rpi
+    ]
+
+  - action: overlay
+    origin: firmware
+    source: firmware-{{$firmware_version}}/boot
+    destination: /boot/firmware
+
+  - action: run
+    chroot: true
+    command: >
+      rm -rf /boot/firmware/kernel*.img /boot/firmware/*.dtb
+      && rm -rf /boot/firmware/overlays
+
+  - action: run
+    chroot: true
+    command: >
+      find /usr/lib/u-boot/
+      && cp -av /usr/lib/u-boot/{{$uboot_machine}}/* /boot/firmware/
+
+  - action: run
+    chroot: true
+    command: >
+      echo "# /boot/firmware/config.txt"
+      | tee /boot/firmware/config.txt \
+      {{if eq $architecture "arm64"}}
+      && echo 'arm_64bit=1'
+      | tee -a /boot/firmware/config.txt \
+      {{else}}
+      && echo 'arm_64bit=0'
+      | tee -a /boot/firmware/config.txt \
+      {{end}}
+      && echo 'enable_uart=1'
+      | tee -a /boot/firmware/config.txt
+      && echo 'kernel=u-boot.bin'
+      | tee -a /boot/firmware/config.txt
+      && cat /boot/firmware/config.txt
+
+  - action: run
+    chroot: true
+    command: echo 'console=ttyS0,115200' > /etc/kernel/cmdline
+
+  - action: run
+    chroot: true
+    command: >
+      echo "# /etc/default/u-boot" > /etc/default/u-boot
+      && echo 'U_BOOT_ALTERNATIVES="default recovery"' >> /etc/default/u-boot
+      && echo 'U_BOOT_DEFAULT="l0"' >> /etc/default/u-boot
+      && echo 'U_BOOT_ENTRIES="all"' >> /etc/default/u-boot \
+      {{if eq $machine "rpi_2"}} \
+      && echo 'U_BOOT_FDT="broadcom/bcm2836-rpi-2-b.dtb"' >> /etc/default/u-boot \
+      {{else}} \
+      {{if eq $machine "rpi_3_32b" "rpi_3_64b"}} \
+      && echo 'U_BOOT_FDT="broadcom/bcm2837-rpi-3-b.dtb"' >> /etc/default/u-boot \
+      {{else}} \
+      {{if eq $machine "rpi_4"}} \
+      && echo 'U_BOOT_FDT="broadcom/bcm2711-rpi-4-b.dtb"' >> /etc/default/u-boot \
+      {{end}} \
+      {{end}} \
+      {{end}} \
+      && echo 'U_BOOT_MENU_LABEL="Debian ({{$project}}) GNU/Linux: "' >> /etc/default/u-boot
+      && echo 'U_BOOT_PARAMETERS="root=/dev/mmcblk0p2 ro rootwait"' >> /etc/default/u-boot
+      && echo 'U_BOOT_ROOT=""' >> /etc/default/u-boot
+      && echo 'U_BOOT_TIMEOUT="50"' >> /etc/default/u-boot
+      && echo 'U_BOOT_UPDATE="true"' >> /etc/default/u-boot
+      && cat /etc/default/u-boot
+
+  {{if eq $suite "stretch"}}
+  {{else}}
+  - action: run
+    description: Update bootloader menu
+    chroot: true
+    command: u-boot-update
+  {{end}}

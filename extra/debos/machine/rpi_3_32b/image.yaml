@@ -1,0 +1,16 @@
+{{- $architecture := or .architecture "armhf" -}}
+{{- $image := or .image "pinball-rpi_3_32b.img" -}}
+{{- $machine := or .machine "rpi_3_32b" -}}
+{{- $suite := or .suite "buster" -}}
+
+architecture: {{$architecture}}
+
+actions:
+
+  - action: recipe
+    recipe: ../rpi_2/image.yaml
+    variables:
+      architecture: {{$architecture}}
+      machine: {{$machine}}
+      suite: {{$suite}}
+      image: {{$image}}

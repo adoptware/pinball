@@ -1,0 +1,18 @@
+{{- $architecture := or .architecture "armhf" -}}
+{{- $image := or .image "pinball-rpi_3_32b.img" -}}
+{{- $machine := or .machine "rpi_3_32b" -}}
+{{- $suite := or .suite "buster" -}}
+{{- $uboot_machine := or .uboot_machine "rpi3" -}}
+
+architecture: {{$architecture}}
+
+actions:
+
+  - action: recipe
+    recipe: ../rpi_2/actions.yaml
+    variables:
+      architecture: {{$architecture}}
+      machine: {{$machine}}
+      suite: {{$suite}}
+      image: {{$image}}
+      uboot_machine: {{$uboot_machine}}

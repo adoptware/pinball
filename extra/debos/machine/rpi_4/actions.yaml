@@ -1,0 +1,19 @@
+{{- $architecture := or .architecture "arm64" -}}
+{{- $image := or .image "pinball-rpi_4-arm64.img" -}}
+{{- $machine := or .machine "rpi_4" -}}
+{{- $suite := or .suite "buster" -}}
+{{- $uboot_machine := or .uboot_machine "rpi4" -}}
+
+architecture: {{$architecture}}
+
+actions:
+
+  - action: recipe
+    recipe: ../rpi_2/actions.yaml
+    variables:
+      architecture: {{$architecture}}
+      machine: {{$machine}}
+      suite: {{$suite}}
+      image: {{$image}}
+      uboot_machine: {{$uboot_machine}}
+      

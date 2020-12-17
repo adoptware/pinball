@@ -1,0 +1,16 @@
+{{- $architecture := or .architecture "armhf" -}}
+
+architecture: {{$architecture}}
+
+actions:
+  - action: run
+    description: Check bootloader
+    chroot: true
+    command: >
+      find /boot \
+        /boot/firmware \
+        /usr/lib/u-boot/ \
+      && ls /boot/firmware/u-boot.bin
+      && cat /boot/firmware/config.txt
+      && cat /boot/extlinux/extlinux.conf
+      && ls /boot/vmlinuz*
