@@ -1,88 +1,93 @@
-# Emilia Pinball README
+# EMILIA PINBALL #
 
+[![GitHub forks](
+https://img.shields.io/github/forks/rzr/pinball.svg?style=social&label=Fork&maxAge=2592000
+)](
+https://GitHub.com/rzr/pinball/network/
+)
+[![license](
+https://img.shields.io/badge/license-GPL-2.svg
+)](GPL-2)
+[![Build Status](
+https://travis-ci.org/rzr/pinball.svg?branch=master
+)](
+https://travis-ci.org/rzr/pinball
+)
+[![IRC Channel](
+https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg
+)](
+https://kiwiirc.com/client/irc.freenode.net/#iot
+)
+[![Fediverse](
+https://img.shields.io/mastodon/follow/279303?domain=https%3A%2F%2Fmastodon.social&style=social
+)](
+https://mastodon.social/@rzr/103448015175182101#:pinball:
+)
 
-Emilia Pinball is a open source pinball game for linux.
+## INTRODUCTION ##
 
-## Requirements
+Emilia Pinball is a libre pinball game simulator for GNU/Linux.
 
-**Hardware rendering:**
-* 300 Mhz cpu.
-* OpenGL compatible gfx card.
-* SDL 1.2.x, SDL_image and SDL_mixer libraries.
+It can be played on a regular computer or a DiY pincab device.
 
-**Recommended:**
-* 450 Mhz PIII.
-* Decent graphics card, voodoo3, tnt2, geforce, matrox g450 (you do not need anything superfast).
-*  Latest SDL libaries, old libraries may have bugs.
+[![pinball-video](
+https://raw.githubusercontent.com/rzr/pinball/master/extra/files/screenshot.png
+)](
+http://pinball.sf.net
+"pinball")
 
-## Installing and building
+More more details check [FAQ](FAQ.md), [BUILD](BUILD.md), [CONTRIBUTING](CONTRIBUTING.md)
+or linked resources from:
 
-It is best to remove any previous version of pinball before installing a new 
-version. If you have used a rpm-package write as root user 'rpm -e pinball'. 
-If you have installed from source code goto the pinball source directory and 
-write as root user 'make uninstall'.
-
-_NOTE:_ A user and group named 'games' must exist before installation, this
-user and group exist by defualt on most systems else:
-useradd 'games' (as root user)
-
-After checking that you have the necessary libraries (SDL, SDL_IMAGE and
-SDL_MIXER) installed you are ready to install. If you have an rpm-package 
-you write as root user 'rpm -i pinball-x.x.x.rpm'.
-
-If you compile from a source package check that you also have the have the 
-development libraries installed. They usually have a name like 
-sdl-devel.x.x.x.rpm. Then install with the usual:
-
-Did you remember to install the development packages of SDL? Did you remember
-to install also SDL_Image and SDL_Mixer?
-
-configure
-make 
-make install (as root user)
-make clean (if you want to save some disc space)
-
-The game is startet with 'pinball'.
-
-## Default Keys
-
-**Esc:** Meny
-**Enter:** Launch Ball
-**R:** Reset Game
-**Left Shift:** Left Flipper
-**Left Ctrl:** Nudge from left
-**Right Shift:** Right Flipper
-**Right Ctrl:** Nudge from right
-**Space:** Nudge
-
-Latest news and FAQ is found at http://pinball.sourceforge.net.
+* <http://pinball.sourceforge.net/>
 
 Send bug reports (after reading faq) and comments to
-henqvist@users.sourceforge.net.
 
-## FAQ
+* <https://sourceforge.net/projects/pinball/>
 
-Graphics card known to work: Voodoo3, Matrox G450, GeForce4.
-Compiles without problems on: RedHat 7.3, 8.0, 9.0, Debian 3.0.
+For latest updates subscribe:
 
-**Q:** The 'boot' and 'tux' lights on the floor blinks or have vertical
-lines?
-**A:** Some buggy implementations of OpenGL does not implement the polygon
-offset command - which is need by the game for correct rendering.
+* <https://purl.org/rzr/pinball>
 
-**Q:** Sounds are delayed with 0.5 seconds?
-**A:** You're either using arts, esd or have buggy audio drivers. Stop
-arts and esd, if that does not help install alsa drivers.
+## USAGE ##
 
-**Q:** The rpm doesn't fit my dist and the source won't compile?
-Search the web for rpms, e.g. Mandrake rpms seems to pop up on
-rpmfind a couple of weeks/months after my releases. For compiling:
-doublecheck that you the _development_ packages of OpenGL, X, SDL,
-SDL_image, SDL_mixer are installed.
+Controls:
 
-**Q:** Can I help?
-**A:** Yes, I would like to check that the physics model of the game is
-somewhat like a real pinball machine whitout putting all my money into
-the pinball games at the local game corner. So if you have a spare
-pinball machine send it to me (it don't think it will fit in the
-mail though...).
+* Back / Menu : Esc key
+* Launch ball : Enter key or mouse's middle button
+* Reset game : R key
+* Left/Right Flipper : Left/Right Shift key  or mouse's left/right button
+* Nudge from left/right : Left/Right Control key (or mouse's left/right + middle buttons)
+* Nudge: Space key (or mouse's left+right+middle buttons)
+
+
+## DEMO ##
+
+[![pinball-video](
+https://diode.zone/lazy-static/previews/b764fc94-b455-45f5-a62a-24ec6131112e.jpg
+)](
+https://rzr.github.io/rzr-presentations/docs/pinball/#/13
+"pinball")
+
+Watch video at:
+
+* <https://peertube.debian.social/videos/watch/c23f0709-4099-4302-b877-f7d2562b2880?start=11m26s#:my-diy-pinball-on-debian-2020-rzr>
+
+## RESOURCES ##
+
+* <http://pinball.sf.net/>
+* <https://purl.org/rzr/pinball>
+* <https://github.com/rzr/pinball/>
+* <https://purl.org/rzr/presentations>
+* <https://purl.org/rzr>
+* <https://rzr.github.io/rzr-presentations/docs/pinball/>
+* <https://mdco2.mini.debconf.org/talks/23-my-diy-pinball-on-debian/>
+* <https://peertube.debian.social/videos/watch/c23f0709-4099-4302-b877-f7d2562b2880#my-diy-pinball-on-debian>
+* <https://github.com/rzr/pinball-table-gnu/>
+* <https://github.com/rzr/pinball-table-hurd/>
+* <https://packages.qa.debian.org/p/pinball.html>
+* <https://libregamewiki.org/Emilia_Pinball>
+* <http://rzr.online.fr/game.htm>
+* <https://pdb.finkproject.org/pdb/package.php/pinball>
+* <https://aur.archlinux.org/packages/pinball/>
+* <https://www.pincabpassion.net/t12916-wip-pincab-libre-sous-gnu-linux-avec-emilia-pinball#210037>
