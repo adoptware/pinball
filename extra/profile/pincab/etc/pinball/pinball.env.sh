@@ -7,7 +7,7 @@ PINBALL_PROFILE="pincab"
 PINBALL_BRANCH="latest"
 
 # Output screen
-PINBALL_SCREEN="DVI-I-1"
+# PINBALL_SCREEN="DVI-I-1"
 
 # TODO: Use preferred resolution (align to /etc/default/pinball)
 PINBALL_RESOLUTION="1024x768"
