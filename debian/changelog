@@ -181,7 +181,7 @@ pinball (0.3.1-7) unstable; urgency=low
   * Fix menu entry (Closes: #386409)
   * Update watch file for new sourceforge support.
 
- -- Jochen Friedrich <jochen@scram.de>  Wed, 23 Nov 2006 12:30:53 +0100
+ -- Jochen Friedrich <jochen@scram.de>  Thu, 23 Nov 2006 12:30:53 +0100
 
 pinball (0.3.1-6.1) unstable; urgency=high
 
