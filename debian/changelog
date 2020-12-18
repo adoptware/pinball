@@ -1,4 +1,4 @@
-pinball (0.3.20201218-1) UNRELEASED; urgency=medium
+pinball (0.3.20201218-1) unstable; urgency=medium
 
   * New upstream release
     - debian/control: Adopt package (Closes: #922911)
@@ -25,8 +25,16 @@ pinball (0.3.20201218-1) UNRELEASED; urgency=medium
     - debian/control: Install libtool
     - debian/upstream/metadata: Update code URL
     - debian/copyright: Lint file
+  * Revert "debian: Add snapshot subpackage"
+  * debian/changelog: Adopt package for latest release (Closes: #922911)
+  * debian: Bump standards to current
+  * debian/watch: Update watch file version
+  * debian/copyright: use spaces rather than tabs to start continuation lines.
+  * debian/changelog: Fix day-of-week for changelog entry 0.3.1-7.
+  * debian/control: Fix maybe-not-arch-all-binnmuable lintian warning
+  * debian: Fix Repository URL
 
- -- Philippe Coval <rzr@users.sf.net>  Fri, 18 Dec 2020 19:36:41 +0100
+ -- Philippe Coval <rzr@users.sf.net>  Fri, 18 Dec 2020 22:43:37 +0100
 
 pinball (0.3.1-14.1) unstable; urgency=medium
 
