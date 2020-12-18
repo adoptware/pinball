@@ -32,7 +32,7 @@ Package: pinball
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         pinball-data (= ${source:Version})
+         pinball-data (>= ${source:Version})
 Suggests: pinball-table-gnu,
           pinball-table-hurd,
           alsa-utils,
