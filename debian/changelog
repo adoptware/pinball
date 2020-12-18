@@ -1,3 +1,33 @@
+pinball (0.3.20201218-1) UNRELEASED; urgency=medium
+
+  * New upstream release
+    - debian/control: Adopt package (Closes: #922911)
+    - debian: Drop applied patches
+    - debian/clean: Remove objects
+    - debian/clean: Clean generated files
+    - debian: Clean more files
+    - debian/copyright: List appdata copyright
+    - debian: Support gbp
+    - debian/control: Lint before upgrade
+    - debian/control: Remove non used libs
+    - debian/rules: use boostrap
+    - debian/control: Add pkg-config as dep
+    - debian/control: Drop libaa1-dev
+    - debian: Drop libtiff from deps
+    - debian: Prefer jpeg turbo
+    - debian: Clean README link
+    - debian/control: Suggests related packages
+    - debian: Add debian/upstream/metadata
+    - debian: Fix manual typos
+    - debian/copyright: Update upstream contact
+    - debian/control: Lint file
+    - debian/control: Update URL
+    - debian/control: Install libtool
+    - debian/upstream/metadata: Update code URL
+    - debian/copyright: Lint file
+
+ -- Philippe Coval <rzr@users.sf.net>  Fri, 18 Dec 2020 19:36:41 +0100
+
 pinball (0.3.1-14.1) unstable; urgency=medium
 
   * Non-maintainer upload.
@@ -269,4 +299,3 @@ pinball (0.0.6-1) unstable; urgency=low
   * This is my second Debian Package, :)
 
  -- Didier Dhollande <dholland@free.fr>  Fri,  7 Jun 2002 12:24:42 +0200
-
