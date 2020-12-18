@@ -55,7 +55,7 @@ echo "# Main package"
 # Install: xterm x11-utils ...
 
 if [ -z $PINBALL_BRANCH ] ; then
-    ${sudo} apt-get install --yes pinball
+    ${sudo} apt-get install --yes --install-suggests pinball 
 else
     ${sudo} apt-get install --yes base-files gnupg curl
 
@@ -82,27 +82,29 @@ else
 
     ${sudo} apt-get clean
     ${sudo} apt-get update
-    ${sudo} apt-cache show ${project}
-    ${sudo} apt-cache show ${project}${suffix}
 
-    version=$(apt-cache show "${project}${suffix}" \
-                  | grep 'Version:' | cut -d' ' -f2 | sort -n | head -n1 \
-                  || echo 0)
-
-    echo  ${sudo} apt-get remove --yes pinball ||:
-
-    ${sudo} apt-get install --yes \
-          --allow-downgrades --allow-unauthenticated \
-          ${project}${suffix}=${version} \
-          ${project}=${version} \
-          ${project}-data=${version} \
-        ||:
-
-    apt-cache search pinball-table
-    ${sudo} apt-get install --yes \
-          --allow-downgrades --allow-unauthenticated \
-          pinball-table-gnu${suffix} \
-          pinball-table-hurd${suffix} ||:
+    package_list="pinball \
+pinball-table-gnu \
+pinball-table-hurd \
+"
+    for package in ${package_list} ; do
+    
+        ${sudo} apt-cache show ${package}
+        ${sudo} apt-cache show ${package}${suffix}
+        
+        version=$(apt-cache show "${package}${suffix}" \
+                      | grep 'Version:' | cut -d' ' -f2 | sort -n | head -n1 \
+                      || echo 0)
+        
+        ${sudo} apt-get remove --yes ${package} ||:
+        
+        ${sudo} apt-get install --yes \
+                --allow-downgrades --allow-unauthenticated \
+                ${package}${suffix}=${version} \
+                ${package}=${version} \
+                ${package}-data=${version} \
+            ||:
+    done
 fi
 
 
