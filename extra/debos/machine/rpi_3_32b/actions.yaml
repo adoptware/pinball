@@ -2,7 +2,7 @@
 {{- $image := or .image "pinball-rpi_3_32b.img" -}}
 {{- $machine := or .machine "rpi_3_32b" -}}
 {{- $suite := or .suite "buster" -}}
-{{- $uboot_machine := or .uboot_machine "rpi3" -}}
+{{- $uboot_machine := or .uboot_machine "rpi_3_32b" -}}
 
 architecture: {{$architecture}}
 
