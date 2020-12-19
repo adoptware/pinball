@@ -219,8 +219,8 @@ debian/setup/devel:
   libtool-bin \
   g++ \
   libtool \
-  libsdl-image1.2-dev \
-  libsdl-mixer1.2-dev \
+  libsdl2-image-dev \
+  libsdl2-mixer-dev \
   make \
   pkg-config \
   libogg-dev \
