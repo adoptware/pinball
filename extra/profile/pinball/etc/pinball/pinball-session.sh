@@ -9,6 +9,8 @@ PATH=${PATH}:/usr/games
 
 . /etc/pinball/pinball.env.sh ||:
 
+[ "" != "${PINBALL_BGCOLOR}" ] || PINBALL_BGCOLOR="olive"
+
 cat<<EOF
 # DISPLAY="${DISPLAY}"
 # XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
@@ -21,7 +23,7 @@ export PINBALL_TABLE
 export HOME
 export XDG_RUNTIME_DIR
 
-
+mkdir -p "${HOME}"
 if [ "weston" = "${PINBALL_DISPLAY_MANAGER}" ] ; then
     t=0;
     while [ 0 -eq 0$t ] ; do
@@ -36,7 +38,7 @@ cat /sys/class/drm/version ||:
 ls /sys/class/drm | grep "${PINBALL_SCREEN}" ||:
 
 if [ ! -z ${DISPLAY} ] ; then # X11
-    xsetroot -solid "purple" ||:
+    xsetroot -solid "${PINBALL_BGCOLOR}" ||:
     [ ! -r "${PINBALL_XBM_IMAGE}" ] || xsetroot -bitmap "${PINBALL_XBM_IMAGE}"
     [ ! -r "${PINBALL_IMAGE}" ] || xloadimage -onroot "${PINBALL_IMAGE}"
 
