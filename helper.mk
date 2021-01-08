@@ -84,7 +84,6 @@ rule/version:
 	-cat /etc/os-release
 	${CC} --version
 	${MAKE} --version
-	libtool --version
 	libtoolize --version
 	m4 --version
 	aclocal --version
@@ -92,7 +91,7 @@ rule/version:
 	automake --version
 	autoconf --version
 	pkg-config --version
-
+	-libtool --version
 
 .PHONY: bootstrap
 bootstrap: rule/version
