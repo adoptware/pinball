@@ -5,7 +5,7 @@ pinincludedir = $(includedir)/pinball
 
 pinlib_LIBRARIES = libemilia_addon.a
 
-INCLUDES = -I../base
+AM_CPPFLAGS = -I../base
 
 libemilia_addon_a_SOURCES = \
 BigSphere.cpp \

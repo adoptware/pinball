@@ -6,7 +6,7 @@ testdatadir = $(pkgdatadir)
 noinst_PROGRAMS = scale simple light texture load explode collision signal billboard font thread menu joy sound trans math misc varray unittest
 # noinst_PROGRAMS = unittest
 
-INCLUDES = -I../base -I../addon -I../src @INCLTDL@
+AM_CPPFLAGS = -I../base -I../addon -I../src @INCLTDL@
 LDADD = ../src/libemilia_pin.a ../addon/libemilia_addon.a ../base/libemilia_base.a @LIBLTDL@
 
 testlib_LTLIBRARIES = libModuleTest.la

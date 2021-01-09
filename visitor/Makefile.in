@@ -75,7 +75,7 @@ AUTOMAKE_OPTIONS = gnu
 
 noinst_LIBRARIES = libemilia_visitor.a
 
-INCLUDES = -I../base -I../addon
+AM_CPPFLAGS = -I../base -I../addon
 
 libemilia_visitor_a_SOURCES =  AlignVisitor.cpp AmbientLightVisitor.cpp BehaviorVisitor.cpp CollisionVisitor.cpp OctTree.cpp OpenGLVisitor.cpp OpenGLTransVisitor.cpp PNormalVisitor.cpp PointLightVisitor.cpp SignalSender.cpp SoundVisitor.cpp TransformVisitor.cpp
 
