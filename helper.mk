@@ -118,18 +118,18 @@ Makefile config.status: configure
 	ls $@
 
 acinclude.m4:
-	ls $@ && exit 0
-	${make} rule/acinclude.m4
+	ls $@ || ${make} rule/acinclude.m4
+	ls -l $@
 
-rule/acinclude.m4: /usr/share/aclocal/sdl.m4
-	cat $< >> ${@F}
+rule/acinclude.m4: /usr/share/aclocal/sdl2.m4
+	cat $^ | tee -a ${@F}
 
-/usr/share/aclocal/sdl.m4:
+/usr/share/aclocal/sdl2.m4:
 	echo "# TODO: $@ not found"
 	echo "# TODO: Please create acinclude.m4 from"
 	echo "# https://hg.libsdl.org/SDL/raw-file/d4d66a1891fc/sdl.m4"
 
-configure: Makefile.in
+configure: acinclude.m4 Makefile.in 
 	autoconf
 	ls $@
 
