@@ -255,7 +255,6 @@ debian/setup/package: debian/setup/devel
 	${sudo} apt-get install -y \
   debhelper \
   docbook-utils \
-  freeglut3-dev \
   sgmlspl \
 # EOL
 
