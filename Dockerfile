@@ -30,19 +30,18 @@ RUN echo "# log: Setup build system" \
 ENV project pinball
 ENV workdir /usr/local/opt/${project}/src/${project}
 
-ADD debian/Makefile ${workdir}/debian/Makefile
+ADD helper.mk ${workdir}/
 WORKDIR ${workdir}
 RUN echo "# log: ${project}: Preparing sources" \
   && set -x \
-  && ./debian/Makefile rule/setup \
+  && ./helper.mk debian/setup/devel \
   && sync
 
 ADD . ${workdir}/
 WORKDIR ${workdir}
 RUN echo "# log: ${project}: Building sources" \
   && set -x \
-  && ./debian/Makefile \
-  && sudo debi \
+  && ./helper.mk debi \
   && dpkg -L ${project} \
   && dpkg -L ${project}-data \
   && sync
