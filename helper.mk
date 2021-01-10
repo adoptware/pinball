@@ -227,6 +227,12 @@ debian/setup/devel:
   libaa1-dev \
   libtiff-dev \
   libcppunit-dev \
+\
+  docbook \
+  docbook-utils \
+  opensp \
+  pkg-config \
+  sgmlspl \
 # EOL
 
 debian/setup/x11: /etc/debian_version
@@ -278,6 +284,7 @@ rule/debuild: debian/rules
 
 rule/debi: rule/debuild
 	${sudo} ${@F}
+	ldd /usr/games/${project}
 
 debi: rule/debi
 	@echo "# log: $@: $^"
@@ -358,3 +365,6 @@ ${@F} \
 | gzip -9n \
 > ${project}-${@F}.tar.gz
 	sha256sum ${project}-${@F}.tar.gz > ${project}-${@F}.tar.gz.sha256sum
+
+docker: docker-compose.yml
+	docker-compose up --build
