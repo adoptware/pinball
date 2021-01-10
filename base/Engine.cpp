@@ -38,7 +38,9 @@
 // TODO Remove glu
 #if EM_USE_SDL
 #if EM_DEBUG
+#if defined(HAVE_GLU_H) && HAVE_GLU_H
 #include <GL/glu.h>
+#endif
 #endif
 #endif
 
@@ -164,7 +166,9 @@ void Engine::clearScreen() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glColor3f(1, 1, 1);
   glLoadIdentity();
+#if defined(HAVE_GLU_H) && HAVE_GLU_H
   //gluLookAt(0,0,0, 0,0,-1, 0,1,0);
+#endif
 #endif
 
 #if EM_USE_ALLEGRO

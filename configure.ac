@@ -109,11 +109,6 @@ case "$target" in
             [ac_cv_search_glBegin="none required"],
             [AC_MSG_ERROR(*** OpenGL headers not found on system!)]
         )
-        AC_CHECK_HEADER(
-            [OpenGL/glu.h],
-            [ac_cv_search_gluScaleImage="none required"],
-            [AC_MSG_ERROR(*** GLU headers not found on system!)]
-        )
         ;;
     *-*-aix*)
         if test x$ac_cv_c_compiler_gnu = xyes; then
@@ -128,11 +123,6 @@ case "$target" in
             AC_SEARCH_LIBS(glBegin, [opengl32 GL GL2 OpenGL], [test $ac_cv_search_glBegin = "none required" || GL_LIBS="$ac_cv_search_glBegin $GL_LIBS"], [AC_MSG_ERROR(*** OpenGL library not found on system!)]),
             [AC_MSG_ERROR(*** OpenGL headers not found on system!)]
         )
-        AC_CHECK_HEADER(
-            [GL/glu.h],
-            AC_SEARCH_LIBS(gluScaleImage, [glu32 GL GLU], [test $ac_cv_search_gluScaleImage = "none required" || GL_LIBS="$ac_cv_search_gluScaleImage $GL_LIBS"], [AC_MSG_ERROR(*** GLU library not found on system!)]),
-            [AC_MSG_ERROR(*** GLU headers not found on system!)]
-        )
         ;;
 esac
 
@@ -142,6 +132,13 @@ AC_SUBST(GL_LIBS)
 LIBS="$GL_LIBS $LIBS"
 
 dnl *******************************************
+
+PKG_CHECK_MODULES([glu],
+	[glu >= 9.0.1],
+	[],
+	[HAVE_GLU_H=1],
+	[HAVE_GLU_H=0])
+
 dnl SDL ***************************************
 PKG_CHECK_MODULES([SDL],
 	[sdl2 >= 2.0.0],
