@@ -144,11 +144,11 @@ void Group::removeShape3D(Shape3D * s) {
 void Group::addBehavior(Behavior * b, bool signal)
 {
   PINBALL(FUNCT());
- 	if (b == NULL) return;
- 	m_vBehavior.push_back(b);
- 	b->setParent(this);
- 	if (signal) SignalSender::getInstance()->addGroup(this);
- }
+  if (b == NULL) return;
+  m_vBehavior.push_back(b);
+  b->setParent(this);
+  if (signal) SignalSender::getInstance()->addGroup(this);
+}
 #endif
 void Group::setBehavior(Behavior * b, bool signal)
 {
@@ -161,14 +161,14 @@ void Group::setBehavior(Behavior * b, bool signal)
 
 #ifdef PINBALL_TODO
 void Group::removeBehavior(Behavior * b) {
-	if (b == NULL) return;
-	vector<Behavior*>::iterator iter = m_vBehavior.begin();	vector<Behavior*>::iterator end = m_vBehavior.end();
-	for (; iter != end; iter++) {
-		if ((*iter) == b) {
-			m_vBehavior.erase(iter);
-			return;
-		}
-	}
+  if (b == NULL) return;
+  vector<Behavior*>::iterator iter = m_vBehavior.begin();	vector<Behavior*>::iterator end = m_vBehavior.end();
+  for (; iter != end; iter++) {
+    if ((*iter) == b) {
+      m_vBehavior.erase(iter);
+      return;
+    }
+  }
 }
 #endif
 
@@ -184,12 +184,12 @@ int Group::getShape3DSize() {
 
 #ifdef PINBALL_TODO
 Behavior * Group::getBehavior(int i) {
-	if (i < 0 || (signed) m_vBehavior.size() <= i) return NULL;
-	return m_vBehavior[i];
+  if (i < 0 || (signed) m_vBehavior.size() <= i) return NULL;
+  return m_vBehavior[i];
 }
 
 int Group::getBehaviorSize() {
-	return m_vBehavior.size();
+  return m_vBehavior.size();
 }
 #endif
 
