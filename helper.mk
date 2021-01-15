@@ -57,6 +57,10 @@ autotools_files+=stamp-h1
 
 DESTDIR?=/
 
+debos_flags?=--scratchsize=4G
+debos_flags+=-tsuite:testing
+debos_images_lists ?= ${project}-i386.img
+debos_images_lists += ${project}-amd64.img
 
 
 default: help all
@@ -367,3 +371,18 @@ ${@F} \
 
 docker: docker-compose.yml
 	docker-compose up --build
+
+pinball-%.img: extra/debos/machine/generic/pinball-%.yaml \
+ extra/debos \
+ extra/profile \
+ extra/profile/pinball/etc/pinball/setup.sh
+	time debos ${debos_flags} $<
+
+debos/%: pinball-%.img
+	ls $^
+
+debos/all: ${debos_images_lists}
+	@echo "# $@: $^"
+
+debos: debos/i386
+	@echo "# $@: $^"

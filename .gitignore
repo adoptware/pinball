@@ -77,6 +77,12 @@ pinconfig.h
 pinconfig.h.in
 src/Makefile.in
 test/Makefile.in
+
+
+# debos
+*.img
+
+# Output
 test/unittest
 src/pinball
 test/billboard
@@ -99,4 +105,3 @@ test/texture
 test/thread
 test/trans
 test/varray
-
