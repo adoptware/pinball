@@ -4,7 +4,7 @@
 PINBALL_PROFILE="pincab"
 
 # TODO: pin version
-PINBALL_BRANCH="latest"
+PINBALL_BRANCH="next"
 
 # Output screen
 # PINBALL_SCREEN="DVI-I-1"
@@ -27,10 +27,12 @@ PINBALL_TABLE=
 # Readonly FS
 HOME="/tmp"
 
-PINBALL_DISPLAY_MANAGER="xinit"
-DISPLAY=':0'
-XINITRC="/etc/pinball/pinball-session.sh"
-PINBALL_XRANDR_ARGS="--rotate left --mode ${PINBALL_RESOLUTION}"
+PINBALL_DISPLAY_MANAGER='weston'
+XDG_RUNTIME_DIR='/run/user/0'
+
+#DISPLAY=':0'
+#XINITRC="/etc/pinball/pinball-session.sh"
+#PINBALL_XRANDR_ARGS="--rotate left --mode ${PINBALL_RESOLUTION}"
 
 DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/0/dbus/user_bus_socket'
 # ALSA_CARD=""

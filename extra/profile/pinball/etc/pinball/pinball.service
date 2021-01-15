@@ -1,0 +1,11 @@
+[Unit]
+After=weston.service
+Requires=display-manager.service
+
+[Service]
+Type=single
+ExecStart=/etc/pinball/pinball-session.sh
+Restart=always
+
+[Install]
+WantedBy=graphical.target

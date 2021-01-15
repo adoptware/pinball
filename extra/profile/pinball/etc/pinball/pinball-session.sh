@@ -9,9 +9,26 @@ PATH=${PATH}:/usr/games
 
 . /etc/pinball/pinball.env.sh ||:
 
+cat<<EOF
+# DISPLAY="${DISPLAY}"
+# XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
+# WAYLAND_DISPLAY="${WAYLAND_DISPLAY}"
+EOF
+
+sleep 5
+
 export PINBALL_TABLE
 export HOME
 export XDG_RUNTIME_DIR
+
+
+if [ "weston" = "${PINBALL_DISPLAY_MANAGER}" ] ; then
+    t=0;
+    while [ 0 -eq 0$t ] ; do
+        t=0$(pidof weston || echo "")
+        sleep 5
+    done
+fi
 
 echo "# Configure display manager"
 ls /sys/class/drm ||:
@@ -65,7 +82,8 @@ aplay /usr/share/games/pinball/tux/lock.wav \
 echo "# Launching app"
 aplay /usr/share/games/pinball/tux/loop.wav ||:
 
-if [ "" != "$DISPLAY" ] ; then
+if [ "xinit" = "${PINBALL_DISPLAY_MANAGER}" ] && [ "" != "$DISPLAY" ] ; then
+    # LC_ALL=C twm & # uncomment if needed for debuging
     echo "log: Move to corner"
     {
         window=''
@@ -75,10 +93,7 @@ if [ "" != "$DISPLAY" ] ; then
             xdotool windowmove "$window" 0 0 ;
         done
     } &
-else
-    LC_ALL=C twm & # uncomment if needed for debuging
 fi
-
 
 # TODO prefix with exec to skip shutdown
 pinball

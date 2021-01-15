@@ -55,7 +55,7 @@ echo "# Main package"
 # Install: xterm x11-utils ...
 
 if [ -z $PINBALL_BRANCH ] ; then
-    ${sudo} apt-get install --yes --install-suggests pinball 
+    ${sudo} apt-get install --yes pinball 
 else
     ${sudo} apt-get install --yes base-files gnupg curl
 
@@ -126,7 +126,15 @@ echo "# Audio"
 which aplay || ${sudo} apt-get install --yes alsa-utils
 
 echo "# Graphics system: ${PINBALL_DISPLAY_MANAGER}"
-if [ "${PINBALL_DISPLAY_MANAGER}" = "xinit" ]; then
+if [ "${PINBALL_DISPLAY_MANAGER}" = "weston" ] ; then
+    ${sudo} apt-get install --yes \
+          kbd \
+          weston \
+          # EOL
+    ${sudo} systemctl enable /etc/${project}/${project}.service
+    ${sudo} install -d /etc/xdg/weston
+    ${sudo} ln -fs ../../${project}/weston.ini /etc/xdg/weston/
+elif [ "${PINBALL_DISPLAY_MANAGER}" = "xinit" ]; then
     ${sudo} apt-get install --yes \
           xinit \
           x11-xserver-utils \
@@ -217,7 +225,7 @@ deborphan # bsdmainutils
 echo "# Reboot"
 history -c
 echo "# ${url} # for more"
-${sudo} apt-get update ; ${sudo} apt-get upgrade
+${sudo} apt-get update ; ${sudo} apt-get upgrade --yes
 ip addr show ||:
 mount -o remount,rw /
 echo reboot # TODO
