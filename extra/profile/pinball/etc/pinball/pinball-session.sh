@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 # -*- mode: sh; tab-width: 2; indent-tabs-mode: nil; coding: utf-8 -*-
 # vim:shiftwidth=4:softtabstop=4:tabstop=4:
-# XPDX-License-Identifier: GPL-2.0+"
+# SPDX-License-Identifier: GPL-2.0+
 #% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * %#
 
 set -x
@@ -11,25 +11,27 @@ PATH=${PATH}:/usr/games
 
 [ "" != "${PINBALL_BGCOLOR}" ] || PINBALL_BGCOLOR="olive"
 
+set
+
 cat<<EOF
 # DISPLAY="${DISPLAY}"
-# XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
+# HOME="${HOME}"
+# PWD="${PWD}"
+# XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR}"
 # WAYLAND_DISPLAY="${WAYLAND_DISPLAY}"
 EOF
-
-sleep 5
 
 export PINBALL_TABLE
 export HOME
 export XDG_RUNTIME_DIR
 
-mkdir -p "${HOME}"
+
 if [ "weston" = "${PINBALL_DISPLAY_MANAGER}" ] ; then
-    t=0;
-    while [ 0 -eq 0$t ] ; do
-        t=0$(pidof weston || echo "")
-        sleep 5
+    echo "# Delay launcher's gap"
+    while true ; do
+        pidof ${PINBALL_DISPLAY_MANAGER} && break || sleep 1
     done
+    sleep 5
 fi
 
 echo "# Configure display manager"
