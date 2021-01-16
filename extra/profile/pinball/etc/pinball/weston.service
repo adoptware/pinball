@@ -1,4 +1,4 @@
-# XPDX-License-Identifier: GPL-2.0+"
+# SPDX-License-Identifier: GPL-2.0+
 
 [Unit]
 Description=Weston Wayland compositor startup
@@ -13,7 +13,7 @@ Environment="DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/root/dbus/user_bus_soc
 ExecStartPre=/usr/bin/sudo /bin/mkdir -p /run/user/0/dbus
 ExecStartPre=/usr/bin/sudo /bin/chown -R root:root /run/user/0/dbus
 ExecStartPre=/bin/chmod -R 0700 /run/user/0
-ExecStart=/usr/bin/sudo -E -- /usr/bin/openvt -v -w -s -- su root -l -c "XDG_RUNTIME_DIR=/run/user/0 /usr/bin/weston-launch --  2>&1 | tee /var/log/weston.log"
+ExecStart=/usr/bin/openvt -v -w -s -- su root -l -c "/usr/bin/weston-launch --  2>&1 | tee /var/log/weston.log"
 
 [Install]
 Alias=display-manager.service
