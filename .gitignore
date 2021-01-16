@@ -2,6 +2,7 @@
 
 # Git
 *~*
+*.tmp
 
 # Temporary places
 **/tmp/
@@ -81,6 +82,8 @@ test/Makefile.in
 
 # debos
 *.img
+*.img.*
+*.qcow2
 
 # Output
 test/unittest
