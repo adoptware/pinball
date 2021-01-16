@@ -59,7 +59,7 @@ if [ ! -z ${DISPLAY} ] ; then # X11
                     || echo "log: skip ${screen}"
         done
     fi
-    
+
     # Other screen(s)
     for screen in $list ; do
         if [ "${PINBALL_SCREEN}" != "$screen" ] ; then
@@ -73,19 +73,22 @@ if [ ! -z ${DISPLAY} ] ; then # X11
     xdotool mousemove 0 0
 fi
 
-# Check audio
+echo "# Check audio or guess working output"
 aplay /usr/share/games/pinball/tux/lock.wav \
-    || cat /proc/asound/card*/id | while read id ; do
-        aplay /usr/share/games/pinball/tux/bump.wav \
-            && export ALSA_CARD="$id" \
-            && break ||:
-    done
+    || for id in $(ls /proc/asound/card*/id \
+                       | sed -e 's|/proc/asound/card\(.*\)/id|\1|g' \
+                  ) ; do
+    export ALSA_CARD="$id"
+    aplay /usr/share/games/pinball/tux/bump.wav \
+        && break || unset ALSA_CARD
+done
+echo "# ALSA_CARD=${ALSA_CARD}"
+aplay /usr/share/games/pinball/tux/loop.wav ||:
+
 
 # echo "For maintenance , delay start" && sleep 100
 
 echo "# Launching app"
-aplay /usr/share/games/pinball/tux/loop.wav ||:
-
 if [ "xinit" = "${PINBALL_DISPLAY_MANAGER}" ] && [ "" != "$DISPLAY" ] ; then
     # LC_ALL=C twm & # uncomment if needed for debuging
     echo "log: Move to corner"
