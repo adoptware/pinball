@@ -4,6 +4,12 @@ architecture: {{$architecture}}
 
 actions:
   - action: run
+    description: Update weston default output
+    chroot: true
+    command: >
+      sed -e 's|Virtual-1|HDMI-A-1|g' -i /etc/xdg/weston/weston.ini
+
+  - action: run
     description: Check bootloader
     chroot: true
     command: >
