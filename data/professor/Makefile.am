@@ -7,7 +7,7 @@ professordatadir = $(datadir)/pinball/professor
 
 professorlib_LTLIBRARIES = libModuleProfessor.la
 
-INCLUDES = -I../../base -I.../../addon -I../../src
+AM_CPPFLAGS = -I../../base -I.../../addon -I../../src
 
 libModuleProfessor_la_LDFLAGS = -module
 libModuleProfessor_la_SOURCES = ModuleProfessor.cpp
