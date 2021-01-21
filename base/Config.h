@@ -10,6 +10,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <sys/stat.h>
+
 #include <string>
 #include <cstring>
 #include <map>
@@ -118,6 +120,10 @@ class Config {
 
   // Keep the high scores for the current table
   multimap<int, string> m_mapHighScores;
+
+public:
+  static bool create_directories(std::string const & path,
+				 mode_t mode = S_IRUSR | S_IWUSR |S_IXUSR);
 };
 
 #endif // CONFIG_H

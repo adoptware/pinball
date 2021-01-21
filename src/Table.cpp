@@ -313,19 +313,12 @@ bool Table::writeHighScoresFile() {
     cerr << "No current table name! (the first time is normal...)" << endl;
     return false;
   }
-  //!rzr+ : fix w32
-//  string sFileName =  m_sTableName + "/" + HIGH_SCORES_FILENAME;
-//#ifdef RZR_PATHRELATIVE
-//  sFileName = string( Config::getInstance()->getExeDir() )
-//    +"/"+ m_sTableName +".cfg";
-//#else
-//  sFileName = string(EM_HIGHSCORE_DIR) + "/" + sFileName;
-//#endif //!rzr-*/
 
- char *home = getenv("HOME");
- string sFileName = string(home? home:".") + "/.config/emilia/" + m_sTableName +
-    "."+HIGH_SCORES_FILENAME;
-
+  string const dirname = string(getenv("HOME") ? : ".") + "/.config/emilia/"; 
+  string const sFileName = dirname + m_sTableName + "." + HIGH_SCORES_FILENAME;
+  if (! Config::create_directories(dirname)) {
+    cerr << "error: io: Can't create directory \'" << dirname << "\'" << endl;
+  }
   ofstream file(sFileName.c_str());//, ios_base::out | ios_base::trunc);
   if (!file) {
     cerr << "Couldn't open high scores file: " << sFileName << endl;

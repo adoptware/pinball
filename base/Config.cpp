@@ -12,6 +12,7 @@
 #include "EMath.h"
 
 #include <cstdio>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 
@@ -30,6 +31,8 @@
 #include <direct.h>  // mkdir @ msvc+mingw32
 //#define mkdir(name, modes) mkdir(name)
 #endif //!-rzr
+
+using namespace std;
 
 
 Config * Config::p_Instance = NULL;
@@ -164,31 +167,39 @@ char const * const Config::getKeyCommonName(EMKey key) {
 #endif
 }
 
-void Config::saveConfig() {
 
-  string dirname = string(".config/emilia/"); 
-  string filename = string(PACKAGE_NAME);
-
-#if HAVE_SYS_STAT_H && HAVE_SYS_TYPES_H
-  char const * const home = getenv("HOME");
-  if (home != NULL) {
-    // TODO unsafe
-    dirname = string(home) + '/' + dirname;
-    mkdir(dirname.c_str(), S_IRUSR | S_IWUSR |S_IXUSR);
-  } else {
-#ifdef RZR_PATHRELATIVE //!rzr: check w32 config save (TODO)
-    dirname = m_sExeDir + '/' ;
-    filename = string(PACKAGE_NAME) + ".cfg";
-#else
-    cerr << "Could not find environment variable HOME." << endl;
-    cerr << "Not able to read or write config file" << endl;
-    return;
-#endif
+bool Config::create_directories(std::string const & path, mode_t mode)
+{
+  int pos = 0;
+  while (pos <= path.length()) {
+    int current = path.find("/", pos);
+    if (current <0) current = path.length();
+    if (current) {
+      string const dir = path.substr(0, current);
+      // cerr << "log: io: Creating dir : " << dir << endl;
+      struct stat sb;
+      if (0 != stat(dir.c_str(), &sb)) {
+	if (0 != mkdir(dir.c_str(), mode)) {
+	  // cerr << "error: io: " << errno << " : Can't create directory \'"  << dir << "\'" << endl;
+	  return false;
+	}
+      }
+    }
+    pos = ++current;
   }
-#endif
+  return true;
+}
 
-  filename = dirname  + filename;
-
+  
+void Config::saveConfig()
+{
+  string const dirname = string(getenv("HOME") ? : ".") + "/.config/emilia/"; 
+  string const filename = dirname + string(PACKAGE_NAME);
+  
+  if (! Config::create_directories(dirname)) {
+    cerr << "error: io: Can't create directory \'" << dirname << "\'" << endl;
+  }
+  
   ofstream file(filename.c_str());
   if (!file) {
     cerr << "Couldn't open config file: " << filename << endl;
