@@ -1,7 +1,7 @@
 #! /bin/bash
 # -*- mode: Bash; tab-width: 2; indent-tabs-mode: nil; coding: utf-8 -*-
 # vim:shiftwidth=4:softtabstop=4:tabstop=4:
-# XPDX-License-Identifier: GPL-2.0+"
+# SPDX-License-Identifier: GPL-2.0+
 
 set -x
 set -e
