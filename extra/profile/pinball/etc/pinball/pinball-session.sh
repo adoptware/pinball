@@ -25,6 +25,7 @@ export PINBALL_TABLE
 export HOME
 export XDG_RUNTIME_DIR
 
+mkdir -p "${HOME}" ||:
 
 if [ "weston" = "${PINBALL_DISPLAY_MANAGER}" ] ; then
     echo "# Delay launcher's gap"

@@ -1,5 +1,5 @@
- # !/bin/sh
-# XPDX-License-Identifier: GPL-2.0+"
+#! /bin/sh
+# SPDX-License-Identifier: GPL-2.0+
 
 PINBALL_PROFILE="pincab"
 
@@ -25,11 +25,12 @@ PINBALL_TABLE=
 # export PINBALL_QUIT
 
 # Readonly FS
-HOME="/tmp"
+HOME="/tmp/${PINBALL_PROFILE}"
 
+# Graphical system : weston or xinit
 PINBALL_DISPLAY_MANAGER='weston'
 XDG_RUNTIME_DIR='/run/user/0'
-
+#PINBALL_DISPLAY_MANAGER="xinit"
 #DISPLAY=':0'
 #XINITRC="/etc/pinball/pinball-session.sh"
 #PINBALL_XRANDR_ARGS="--rotate left --mode ${PINBALL_RESOLUTION}"
