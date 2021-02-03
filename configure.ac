@@ -7,7 +7,9 @@ AC_INIT([pinball],
 	[pinball],
 	[http://pinball.sf.net])
 
+AC_CONFIG_MACRO_DIRS([libltdl/m4])
 AM_CONFIG_HEADER(pinconfig.h)
+LT_CONFIG_LTDL_DIR([libltdl])
 
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
