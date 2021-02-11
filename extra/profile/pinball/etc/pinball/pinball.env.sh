@@ -22,7 +22,7 @@ PINBALL_TABLE=
 # export PINBALL_QUIT
 
 # Readonly FS
-HOME="/tmp/${PINBALL_PROFILE}"
+HOME="/tmp/pinball"
 
 # Graphical system : weston or xinit
 PINBALL_DISPLAY_MANAGER='weston'
