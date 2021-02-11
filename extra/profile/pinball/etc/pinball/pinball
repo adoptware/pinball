@@ -1,7 +1,7 @@
 size: 512 512
 sound: 8
 music: 8
-view: 4
+view: 1
 bpp: 16
 fullscreen: 0
 lights: 1
