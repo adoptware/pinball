@@ -1,0 +1,66 @@
+#! /bin/sh
+# -*- mode: sh; tab-width: 2; indent-tabs-mode: nil; coding: utf-8 -*-
+# vim:shiftwidth=4:softtabstop=4:tabstop=4:
+# SPDX-License-Identifier: GPL-2.0+
+
+APPLICATION=pinball
+PIDFILE=/var/run/${APPLICATION}.pid
+BINFILE=/usr/bin/${APPLICATION}
+SCRIPTNAME=/etc/init.d/${APPLICATION}.sh
+LOGFILE=/tmp/$APPLICATION.log.txt
+
+. /etc/init.d/functions
+
+. /etc/${APPLICATION}/${APPLICATION}.env.sh
+export PINBALL_TABLE=tux
+attempts=10
+
+case "$1" in
+    start)
+        echo -n "Starting ${APPLICATION} service: "
+        . /etc/profile
+        . "/etc/pinball/${APPLICATION}.env.sh"
+        export XDG_RUNTIME_DIR
+        if [ ! -f "$PIDFILE" ]; then
+            while ! pidof weston > /dev/null ; do
+                sleep 1
+                [ 0 -lt $attempts ] || break;
+                count=$(expr -1 + $attempts)
+            done
+            if pidof weston > /dev/null ; then
+                sleep 1 # TODO: workaround
+                nohup "$BINFILE" 0<&- &> $LOGFILE &
+                echo $! > "$PIDFILE"
+            fi
+        fi
+        [ -f "$PIDFILE" ] && echo "done." || echo "fail."
+        ;;
+
+    stop)
+        echo -n "Stopping ${APPLICATION} service: "
+        if [ -f "$PIDFILE" ] ; then
+            killproc "$BINFILE"
+            sleep 1 # TODO: workaround it not killed
+            pidof "$BINFILE" && killall -9 "$APPLICATION" ||:
+            rm "$PIDFILE"
+        fi
+        [ ! -f "$PIDFILE" ] && echo "done." || echo "fail."
+        ;;
+
+    restart)
+        "$0" stop
+        sleep 1
+        "$0" start
+        ;;
+
+    status)
+        status "${APPLICATION}"
+        ;;
+
+    *)
+        echo "Usage: $SCRIPTNAME {start|stop|restart|status}"
+        exit 1
+        ;;
+esac
+
+exit 0
