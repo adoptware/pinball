@@ -111,6 +111,8 @@ rule/make: Makefile
 	${MAKE}
 
 run: ${app}
+	$< --version
+	$< --help
 	$<
 
 run/quit: ${app}

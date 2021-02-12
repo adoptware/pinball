@@ -767,6 +767,29 @@ int Pinball::run(int argc, char *argv[])
 
 int Pinball::setup(int argc, char *argv[])
 {
+  for (auto i=0; i<argc; i++) {
+    if ((strcmp(argv[i], "--version") == 0)
+        || (strcmp(argv[i], "-v") == 0)) {
+      cout << PACKAGE_STRING << endl;
+      exit(EXIT_SUCCESS);
+    } else if ((strcmp(argv[i], "--help") == 0) 
+               || (strcmp(argv[i], "-h") == 0)) {
+      cout << "Usage: pinball [OPTIONS]" << endl << endl
+           << "Supported environment variables:" << endl << endl
+           << "# PINBALL_QUIT (number of frame before exit)" << endl
+           << "# PINBALL_TABLE (name of table or random)" << endl
+           << "# PINBALL_WINDOW_FULLSCREEN_DESKTOP (SDL)" << endl
+           << "# PINBALL_RENDER_DRIVER (3D)" << endl
+           << "# PINBALL_BITPERPIXEL (SDL)" << endl;
+#if EM_USE_SDL
+      for (int i=0; i<SDL_GetNumVideoDrivers(); i++)
+        cout << "# SDL_VIDEODRIVER='" << SDL_GetVideoDriver(i) << "'"
+             << endl;
+#endif
+      exit(EXIT_SUCCESS);
+    }
+  }
+
   // Create a engine and parse emilia arguments
   Config::getInstance()->loadConfig();
   mpEngine = new Engine(argc, argv);
