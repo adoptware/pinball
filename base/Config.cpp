@@ -353,11 +353,11 @@ void Config::loadArgs(int & argc, char *argv[]) {
     if (strcmp(argv[a], "-dir") == 0) {
       cout << EM_DATADIR << endl;
       exit(0);
-    } else if (strcmp(argv[a], "-fullscreen") == 0) {
+    } else if (strcmp(argv[a], "--fullscreen") == 0) {
       m_bFullScreen = true;
       EM_COUT("Using fullscreen", 1);
       REMOVEARG(a, argc, argv);
-    } else if (strcmp(argv[a], "-size") == 0) {
+    } else if (strcmp(argv[a], "--size") == 0) {
       if (argc > a+2) {
         int const w= atoi(argv[a+1]);
         int const h = atoi(argv[a+2]);
@@ -369,27 +369,27 @@ void Config::loadArgs(int & argc, char *argv[]) {
       } else {
 	REMOVEARG(a, argc, argv);
       }
-    } else if (strcmp(argv[a], "-bpp") == 0) {
+    } else if (strcmp(argv[a], "--bpp") == 0) {
       if (argc > a+1) {
 	m_iBpp = atoi(argv[a+1]);
 	REMOVEARG(a, argc, argv);
       }
       EM_COUT("Using " << m_iBpp << " bpp", 1);
       REMOVEARG(a, argc, argv);
-    } else if (strcmp(argv[a], "-nosound") == 0) {
+    } else if (strcmp(argv[a], "--nosound") == 0) {
       this->setSound(0);
       this->setMusic(0);
       EM_COUT("Disabling sound", 1);
       REMOVEARG(a, argc, argv);
-    } else if (strcmp(argv[a], "-nolights") == 0) {
+    } else if (strcmp(argv[a], "--nolights") == 0) {
       this->setLights(false);
       EM_COUT("Disabling lights", 1);
       REMOVEARG(a, argc, argv);
-    } else if (strcmp(argv[a], "-nearest") == 0) {
+    } else if (strcmp(argv[a], "--nearest") == 0) {
       this->setGLFilter(EM_NEAREST);
       EM_COUT("Using nearest for texture mapping", 1);
       REMOVEARG(a, argc, argv);
-    } else if (strcmp(argv[a], "-externgl") == 0) {
+    } else if (strcmp(argv[a], "--externgl") == 0) {
       m_bExternGL = true;
       EM_COUT("Using extern GL, disabling SDL", 1);
       REMOVEARG(a, argc, argv);
