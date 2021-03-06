@@ -189,7 +189,7 @@ if test x"$sdl2mixer_prefix" != "x"; then
   CFLAGS="$CFLAGS $SDL2MIXER_CFLAGS"
 fi
 
-if test x"enable_libtest" = x"yes"; then
+if test x"$enable_libtest" = x"yes"; then
   AC_CHECK_LIB(SDL2_mixer, Mix_OpenAudio, : ,AC_MSG_ERROR([*** libSDL2_mixer not found. Make sure you have the development package of SDL2_mixer installed - (www.libsdl.org) - or try to use --with-sdl2mixer-prefix option]), )
 fi
 LIBS="$LIBS -lSDL2_mixer"
