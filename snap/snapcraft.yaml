@@ -1,0 +1,90 @@
+name: pinball
+version: git
+summary: Emilia Libre Pinball Simulator
+description: |
+ The Emilia Pinball Project is a pinball simulator for GNU/Linux and other Unix
+ systems. There are only two levels to play with, but they are very addictive.
+ You can play with two types of boards and keep high scores.
+
+confinement: strict
+grade: devel
+base: core20
+license: GPL-2.0+
+
+apps:
+  pinball:
+    command: usr/local/bin/pinball
+    environment:
+      "LD_LIBRARY_PATH": "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
+      "LIBGL_DRIVERS_PATH": "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri"
+    plugs:
+      - audio-playback
+      - opengl
+
+
+layout:
+  /usr/local/share/pinball:
+    bind: $SNAP/usr/local/share/pinball
+
+parts:
+  pinball:
+    source: https://github.com/rzr/pinball.git
+    plugin: autotools
+    build-packages:
+      - libasound2-dev
+      - libgl1-mesa-dev
+      - libjpeg-dev
+      - libltdl-dev
+      - libogg-dev
+      - libpng-dev
+      - libsdl2-image-dev
+      - libsdl2-mixer-dev
+      - libsdl2-dev
+      - libtool-bin
+      - libvorbis-dev
+    stage-packages:
+      - libasound2
+      - libasyncns0
+      - libflac8
+      - libfluidsynth2
+      - libgl1
+      - libglvnd0
+      - libglx0
+      - libinstpatch-1.0-2
+      - libjack-jackd2-0
+      - libjbig0
+      - libjpeg-turbo8
+      - libltdl7
+      - libmodplug1
+      - libmpg123-0
+      - libogg0
+      - libopus0
+      - libopusfile0
+      - libpng16-16
+      - libpulse0
+      - libsdl2-2.0-0
+      - libsdl2-image-2.0-0
+      - libsdl2-mixer-2.0-0
+      - libsndfile1
+      - libtiff5
+      - libvorbis0a
+      - libvorbisenc2
+      - libvorbisfile3
+      - libwayland-client0
+      - libwayland-cursor0
+      - libwayland-egl1
+      - libwebp6
+      - libx11-6
+      - libxau6
+      - libxcb1
+      - libxcursor1
+      - libxdmcp6
+      - libxext6
+      - libxfixes3
+      - libxi6
+      - libxinerama1
+      - libxkbcommon0
+      - libxrandr2
+      - libxrender1
+      - libxss1
+      - libxxf86vm1
