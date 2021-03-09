@@ -11,20 +11,23 @@ grade: devel
 base: core20
 license: GPL-2.0+
 
+plugs:
+  audio-playback:
+  opengl:
+  wayland:
+  x11:
+
+environment:
+  LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
+  LIBGL_DRIVERS_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri"
+
 apps:
   pinball:
     command: usr/local/bin/pinball
-    environment:
-      "LD_LIBRARY_PATH": "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
-      "LIBGL_DRIVERS_PATH": "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri"
-    plugs:
-      - audio-playback
-      - opengl
-
 
 layout:
-  /usr/local/share/pinball:
-    bind: $SNAP/usr/local/share/pinball
+  /usr/local:
+    bind: $SNAP/usr/local
 
 parts:
   pinball:
