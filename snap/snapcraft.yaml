@@ -12,8 +12,10 @@ base: core20
 license: GPL-2.0+
 
 plugs:
+  alsa:
   audio-playback:
   opengl:
+  pulseaudio:
   wayland:
   x11:
 
@@ -28,6 +30,8 @@ apps:
 layout:
   /usr/local:
     bind: $SNAP/usr/local
+  /usr/share/alsa:
+    bind: $SNAP/usr/share/alsa
 
 parts:
   pinball:
