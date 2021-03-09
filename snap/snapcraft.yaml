@@ -14,6 +14,7 @@ license: GPL-2.0+
 plugs:
   alsa:
   audio-playback:
+  network-bind: # Mir/Xwayland
   opengl:
   pulseaudio:
   wayland:
@@ -22,16 +23,21 @@ plugs:
 environment:
   LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
   LIBGL_DRIVERS_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri"
+  XWAYLAND_FULLSCREEN_WINDOW_HINT: title="pinball"
 
 apps:
   pinball:
     command: usr/local/bin/pinball
+  xwayland-kiosk-pinball:
+    command: usr/local/bin/xwayland-kiosk-launch pinball --fullscreen
 
 layout:
   /usr/local:
     bind: $SNAP/usr/local
   /usr/share/alsa:
     bind: $SNAP/usr/share/alsa
+  /usr/share/X11:
+    bind: $SNAP/usr/share/X11
 
 parts:
   pinball:
@@ -95,3 +101,17 @@ parts:
       - libxrender1
       - libxss1
       - libxxf86vm1
+
+  xwayland-kiosk-helper:
+    plugin: cmake
+    source: https://github.com/MirServer/xwayland-kiosk-helper.git
+    override-stage: |
+      snapcraftctl stage
+      sed -e 's|/lib/libxwayland-preload.so|/usr/local/lib/libxwayland-preload.so|g' -i usr/local/bin/xwayland-kiosk-launch
+    build-packages:
+      - build-essential
+    stage-packages:
+      - i3
+      - libegl1-mesa
+      - libgl1-mesa-glx
+      - xwayland
