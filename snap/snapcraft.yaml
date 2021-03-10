@@ -23,13 +23,21 @@ plugs:
 environment:
   LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
   LIBGL_DRIVERS_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri"
-  XWAYLAND_FULLSCREEN_WINDOW_HINT: title="pinball"
+  XWAYLAND_FULLSCREEN_WINDOW_HINT: title="Emilia Pinball"
 
 apps:
+  daemon:
+    command-chain:
+      - usr/local/bin/xwayland-kiosk-launch
+    command: usr/local/bin/pinball
+    daemon: simple
+    restart-condition: always
   pinball:
     command: usr/local/bin/pinball
   xwayland-kiosk-pinball:
-    command: usr/local/bin/xwayland-kiosk-launch pinball --fullscreen
+    command-chain:
+      - usr/local/bin/xwayland-kiosk-launch
+    command: usr/local/bin/pinball
 
 layout:
   /usr/local:
