@@ -22,10 +22,9 @@ else
         distro="${ID}_${VERSION_ID}"
         [ "${VERSION_ID}" = "10" ] || distro="${distro}.0"
     fi
+    distro=$(echo "${distro}" | sed 's/.*/\u&/')
     if [ "ubuntu" = "$ID" ] ; then
         distro="x${distro}"
-    else
-        distro=$(echo "${distro}" | sed 's/.*/\u&/')
     fi
     url="http://download.opensuse.org/repositories"
     url="$url/home:/rzrfreefr"
@@ -34,7 +33,6 @@ else
     list="/etc/apt/sources.list.d/${project}.list"
     echo "deb [allow-insecure=yes] $url /" | ${sudo} tee "$list"
     suffix="-snapshot"
-
     curl -s "${url}/Release.key" | gpg --with-fingerprint
     curl "${url}/Release.key" | ${sudo} apt-key add -v -
 
