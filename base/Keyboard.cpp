@@ -4,7 +4,7 @@
     begin                : Thu Feb 1 2001
     copyright            : (C) 2001 by Henrik Enqvist
     email                : henqvist@excite.com
- ***************************************************************************/
+***************************************************************************/
 
 #include <cassert>
 #include <cstring>
@@ -32,8 +32,9 @@ void Keyboard::poll()
 {
 #if EM_USE_SDL
   SDL_Event event;
+  bool pressed;
   while(SDL_PollEvent(&event)) {
-    switch(event.type) {      
+    switch(event.type) {
     case SDL_KEYDOWN:
       m_abKey[event.key.keysym.sym] = true;
       break;
@@ -42,39 +43,66 @@ void Keyboard::poll()
       break;
     case SDL_MOUSEBUTTONDOWN:
     case SDL_MOUSEBUTTONUP:
-      SDL_Event newEvent;
-      newEvent.type = (event.type == SDL_MOUSEBUTTONDOWN)
-	? SDL_KEYDOWN : SDL_KEYUP;
+      pressed = (event.type == SDL_MOUSEBUTTONDOWN);
       switch (event.button.button) {
       case SDL_BUTTON_RIGHT:
-	newEvent.key.keysym.sym
-	  = Config::getInstance()->getKey("rightflip");
+	changeKey("rightflip", pressed);
 	break;
       case SDL_BUTTON_LEFT:
-	newEvent.key.keysym.sym
-	  = Config::getInstance()->getKey("leftflip");
+	changeKey("leftflip", pressed);
 	break;
       case SDL_BUTTON_MIDDLE:
 	if (isKeyDown(Config::getInstance()->getKey("rightflip"))
 	    && isKeyDown(Config::getInstance()->getKey("leftflip"))) {
-	  newEvent.key.keysym.sym
-	    = Config::getInstance()->getKey("bottomnudge");
+	  changeKey("bottomnudge", pressed);
 	} else if (isKeyDown(Config::getInstance()->getKey("rightflip"))) {
-	  newEvent.key.keysym.sym
-	    = Config::getInstance()->getKey("rightnudge");
+	  changeKey("rightnudge", pressed);
 	} else if (isKeyDown(Config::getInstance()->getKey("leftflip"))) {
-	  newEvent.key.keysym.sym
-	    = Config::getInstance()->getKey("leftnudge");
+	  changeKey("leftnudge", pressed);
 	} else {
-	  newEvent.key.keysym.sym
-	    = Config::getInstance()->getKey("launch");
+	  changeKey("launch", pressed);
 	}
-	      
 	break;
       }
-      if (newEvent.key.keysym.sym !=0)
-	SDL_PushEvent(&newEvent);
-      return;
+      break;
+
+    case SDL_JOYBUTTONDOWN:
+    case SDL_JOYBUTTONUP:
+      pressed = (event.type == SDL_JOYBUTTONDOWN);
+
+      switch (event.cbutton.button) {
+      case 0x04: // Left Shoulder
+      case 0x0A: // Left Thumb
+	changeKey("leftflip", pressed);
+	break;
+      case 0x05: // Right Shoulder
+      case 0x0B: // Right Thumb
+	changeKey("rightflip", pressed);
+	break;
+      case 0x03: // X
+      case 0x06: // Left Trigger
+	changeKey("leftnudge", pressed);
+	break;
+      case 0x01: // B
+      case 0x07: // Right Trigger
+	changeKey("rightnudge", pressed);
+	break;
+      case 0x00: // Y
+      case 0x08: // Reset
+	changeKey("bottomnudge", pressed);
+	break;
+      case 0x02: // A
+      case 0x09: // Start
+      case 0x0C: // Home
+	changeKey("launch", pressed);
+	break;
+      }
+    default:
+      if (false) {
+	std::cout
+	  << "log: Event not handled (0x" << hex<<event.type
+	  << ")" << std::endl;
+      }
       break;
     }
   }
@@ -118,7 +146,7 @@ EMKey Keyboard::waitForKey() {
 
 bool Keyboard::isKeyDown(EMKey piKey)
 {
- if (piKey < 0) return false;
+  if (piKey < 0) return false;
 #if EM_USE_SDL
   return m_abKey[piKey];
 #endif
@@ -126,6 +154,22 @@ bool Keyboard::isKeyDown(EMKey piKey)
   return key[piKey];
 #endif
 }
+
+
+void Keyboard::changeKey(char const *name, bool pressed)
+{
+#if EM_USE_SDL
+  SDL_Event event;
+  event.type = (pressed) ? SDL_KEYDOWN : SDL_KEYUP;
+  event.key.keysym.sym = Config::getInstance()->getKey(name);
+  if (event.key.keysym.sym !=0) {
+    SDL_PushEvent(&event);
+  }
+#else
+# warning "TODO"
+#endif
+}
+
 
 void Keyboard::generate(EMKey sym)
 {

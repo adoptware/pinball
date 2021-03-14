@@ -13,6 +13,8 @@
 #include "Private.h"
 #include "TextureUtil.h"
 #include "Config.h"
+
+#include <cassert>
 #include <iostream>
 
 #if EM_USE_SDL
@@ -149,7 +151,9 @@ void TextureUtil::initGrx() {
       for(int a=0; a<njoystick; a++ ) {
         cerr << "  " << SDL_JoystickNameForIndex(a) << endl;
       }
-      cerr << "Using " << SDL_JoystickNameForIndex(0) << endl << endl;
+      cerr << "Using " << SDL_JoystickNameForIndex(0)
+           << "( type: 0x" << hex << SDL_JoystickGetDeviceType(0) <<")"
+           << endl;
       SDL_JoystickOpen(0);
       SDL_JoystickEventState(SDL_ENABLE);
     }
