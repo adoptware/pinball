@@ -6,8 +6,9 @@ set -e
 set -x
 
 selfdir=$(dirname -- "$0")
+extra_dir=$(realpath -- "${selfdir}/../../../../../extra")
 PATH="${selfdir}:${PATH}"
-
+LANG="en_US.UTF-8"
 project="pinball"
 profile="pincab"
 web_url="https://purl.org/rzr/pinball"
@@ -17,11 +18,10 @@ git_branch="master"
 sudo=$(which sudo || echo)
 export DEBIAN_FRONTEND=noninteractive
 
-
 find /etc/pinball ||:
-
 . /etc/os-release ||:
-. /etc/pinball/pinball.env.sh ||:
+. /etc/pinball/pinball.env.sh \
+    || . ${selfdir}/pinball.env.sh ||:
 
 export PINBALL_BRANCH
 
@@ -29,22 +29,25 @@ export PINBALL_BRANCH
 [ ! -z ${PINBALL_DIR} ] || PINBALL_DIR="${HOME}/.config/emilia/"
 
 echo "# Update repository"
-mount -o remount,rw /
-mkdir -p "${HOME}" ||:
+${sudo} mount -o remount,rw /
+[ -e "${HOME}" ] || ${sudo} mkdir -p "${HOME}"
 ${sudo} sync
 ${sudo} apt-get update
 ! ${PINBALL_DEVEL} || ${sudo} apt-get install --yes etckeeper
 
 if true ; then
-    echo "# Locale"
-    cat /etc/default/locale || ${sudo} apt-get install --yes locales
-    echo "LANG=en_US.UTF-8" | ${sudo} tee /etc/default/locale
+    echo "# Locale LANG=${LANG}"
+    file="/etc/default/locale"
+    cat "$file" || ${sudo} apt-get install --yes locales # LANG="C.UTF-8"
+    grep "^LANG=${LANG}" "$file" ||\
+        echo "LANG=${LANG}" | ${sudo} tee -a "$file"
     grep -v "^#" /etc/locale.gen ||:
-    ${sudo} DEBIAN_FRONTEND=noninteractive apt-get install --yes localepurge # will install locale
+    # localepurge will install locale
+    ${sudo} DEBIAN_FRONTEND=noninteractive apt-get install --yes localepurge
     echo TODO ${sudo} dpkg-reconfigure locales #
     cat /etc/environment
-    sudo locale-gen --purge ${LANG}
-    du -ms /usr/share/locale/*
+    time sudo locale-gen --purge "${LANG}" ||:
+    du -msc /usr/share/locale/* # ~30M
 fi
 
 echo "# Base OS"
@@ -56,7 +59,7 @@ grep $hostname /etc/hosts \
 
 dpkg -L locales || ${sudo} apt-get install -y locales
 ${sudo} localectl set-keymap en_US.UTF-8 \
-    || echo 'en_US.UTF-8 UTF-8' | ${sudo} tee -a /etc/locale.gen
+    || echo "${LANG} UTF-8" | ${sudo} tee -a /etc/locale.gen
 grep -v '^#' /etc/locale.gen
 
 cat<<EOF | ${sudo} tee -a "/etc/default/keyboard"
@@ -74,7 +77,7 @@ cat "/etc/default/keyboard"
 echo "# Main package"
 # Suggests: alsa-utils
 # Install: xterm x11-utils ...
-${selfdir}/install.sh
+"${selfdir}/install.sh"
 
 echo "# Needed packages"
 ${sudo} apt-get install --yes \
@@ -95,9 +98,21 @@ if ! true ; then
             ;;
     esac
 fi
+model=$(head /proc/device-tree/model && echo || echo "generic")
+if [[ "$model" =~ "Raspberry Pi" ]] ; then
+    pattern='^dtoverlay=vc4'
+    file=/boot/firmware/config.txt
+    ls /sys/class/drm/card0 \
+        || grep "$pattern" "$file" \
+        || cat<<EOF | sudo tee -a "$file" 
+#{~${project}: patch $file for $model
+dtoverlay=vc4-fkms-v3d, cma-128
+#}~${project}
+EOF
+fi
 
 echo "# Audio"
-which aplay || ${sudo} apt-get install --yes alsa-utils
+which aplay || ${sudo} apt-get install --yes alsa-utils udev
 
 echo "# Graphics system: ${PINBALL_DISPLAY_MANAGER}"
 if [ "${PINBALL_DISPLAY_MANAGER}" = "weston" ] ; then
@@ -105,9 +120,6 @@ if [ "${PINBALL_DISPLAY_MANAGER}" = "weston" ] ; then
           kbd \
           weston \
           # EOL
-    ${sudo} systemctl enable /etc/${project}/${project}.service
-    ${sudo} install -d /etc/xdg/weston
-    ${sudo} ln -fs ../../${project}/weston.ini /etc/xdg/weston/
 elif [ "${PINBALL_DISPLAY_MANAGER}" = "xinit" ]; then
     ${sudo} apt-get install --yes \
           xinit \
@@ -159,17 +171,18 @@ if ! true ; then
     echo "# Extra processing from sources"
     ./helper.mk debian/setup
     ./helper.mk tmp/1024x1024/${project}.jpg
-
     echo "# Add launcher for profile=${profile}"
     cd /usr/local/opt/${project}/src/${project}
     cp -rfav extra/profile/pinball/etc/pinball /etc/
-    [ "$profile" = "" ] || cp -rfav extra/profile/${profile}/etc/pinball /etc/
-    bash -x -e /etc/pinball/configure.sh
+fi
+echo "# Add conf files for profile=${profile}"
+if [ ! -d '/etc/pinball' ] ; then
+    cp -rfav "${extra_dir}/profile/pinball/etc/pinball" "/etc/"
+    [ "$profile" = "" ] || \
+        cp -rfav "${extra_dir}/profile/${profile}/etc/pinball" "/etc/"
 fi
 
-# TODO install from /lib/systemd/system/ on debian
-${sudo} systemctl enable /etc/pinball/${PINBALL_DISPLAY_MANAGER}.service
-
+"/etc/pinball/configure.sh"
 
 if true ; then
     cat /etc/issue.net
@@ -248,11 +261,17 @@ ${sudo} apt-get clean
 ${sudo} rm -rf /var/lib/apt/lists/*
 
 df -m
+${sudo} dd if=/dev/zero of=/tmp.tmp ||:
+${sudo} rm -f /tmp.tmp
+sync
 
 echo "# Reboot"
 history -c
+
+cat<<EOF > .bash_history
 echo "# ${web_url} # for more"
-echo "${sudo} apt-get update ; ${sudo} apt-get upgrade --yes # TODO"
-ip addr show ||:
-mount -o remount,rw /
-echo reboot # TODO
+uptime ; hostname -I ; sudo mount -o remount,rw / ; sudo systemctl stop pinball ; sudo touch /forcefsck
+df -h ; sudo apt-get update ; sudo apt-get upgrade --yes 
+sudo reboot
+EOF
+sync

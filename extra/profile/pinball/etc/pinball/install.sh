@@ -16,7 +16,7 @@ else
 
     . /etc/os-release
     distro="${ID}_${VERSION_ID}"
-    
+
     if [ "debian" = "${ID}" ] ; then
         [ "${VERSION_ID}" != "" ] || VERSION_ID="10"
         distro="${ID}_${VERSION_ID}"

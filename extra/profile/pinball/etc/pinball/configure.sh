@@ -6,6 +6,9 @@
 set -x
 set -e
 
+self_dir=$(dirname -- "$0")
+extra_dir=$(realpath -- "${self_dir}/../../../../../extra")
+
 project="pinball"
 sudo=
 cd /etc/pinball
@@ -14,10 +17,10 @@ cd /etc/pinball
 
 set
 
-${sudo} chmod u+rx *.sh
+${sudo} chmod u+rx ${self_dir}/*.sh
 
 ${sudo} install -d /etc/default
-${sudo} install pinball /etc/default/pinball
+${sudo} install ${self_dir}/pinball /etc/default/pinball
 
 ${sudo} systemctl get-default | grep 'graphical.target'
 
@@ -32,7 +35,13 @@ ${sudo} systemctl disable xinit ||:
 
 ${sudo} systemctl daemon-reload ||:
 # TODO install from /lib/systemd/system/ on debian
-${sudo} systemctl enable ${PWD}/${PINBALL_DISPLAY_MANAGER}.service
+${sudo} systemctl enable /etc/${project}/${PINBALL_DISPLAY_MANAGER}.service
+
+if [ "${PINBALL_DISPLAY_MANAGER}" = "weston" ] ; then
+    ${sudo} systemctl enable /etc/${project}/${project}.service
+    ${sudo} install -d /etc/xdg/weston
+    ${sudo} ln -fs ../../${project}/weston.ini /etc/xdg/weston/
+fi
 
 cat<<EOF
 # Hints for debuging
