@@ -23,6 +23,17 @@ https://img.shields.io/mastodon/follow/279303?domain=https%3A%2F%2Fmastodon.soci
 )](
 https://mastodon.social/@rzr/103448015175182101#:pinball:
 )
+[![snap](
+https://snapcraft.io/pinball/badge.svg
+)](
+https://snapcraft.io/pinball
+)
+
+[![Get it from the Snap Store](
+https://snapcraft.io/static/images/badges/en/snap-store-black.svg
+)](
+https://snapcraft.io/pinball
+)
 
 ## INTRODUCTION ##
 
@@ -86,6 +97,7 @@ Watch video at:
 * <https://github.com/rzr/pinball-table-gnu/>
 * <https://github.com/rzr/pinball-table-hurd/>
 * <https://packages.qa.debian.org/p/pinball.html>
+* <https://snapcraft.io/pinball>
 * <https://libregamewiki.org/Emilia_Pinball>
 * <http://rzr.online.fr/game.htm>
 * <https://pdb.finkproject.org/pdb/package.php/pinball>
