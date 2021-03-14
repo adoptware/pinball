@@ -46,6 +46,8 @@ layout:
     bind: $SNAP/usr/share/alsa
   /usr/share/X11:
     bind: $SNAP/usr/share/X11
+  /usr/bin/xkbcomp:
+    symlink: $SNAP/usr/bin/xkbcomp
 
 parts:
   pinball:
