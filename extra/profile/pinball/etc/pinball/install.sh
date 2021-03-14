@@ -9,6 +9,8 @@ project='pinball'
 [ "" != "$PINBALL_BRANCH" ] || PINBALL_BRANCH='next'
 sudo=$(which sudo || echo)
 
+${sudo} apt --fix-broken install -y
+
 if [ "apt" = "$PINBALL_BRANCH" ] ; then
     ${sudo} apt-get install --yes pinball
 else
@@ -44,6 +46,8 @@ else
 ${project}-table-gnu \
 ${project}-table-hurd \
 "
+    ${sudo} apt-get remove -y ${package_list} ||:
+
     for package in ${package_list} ; do
 
         ${sudo} apt-cache show ${package}
@@ -63,3 +67,4 @@ ${project}-table-hurd \
             ||:
     done
 fi
+${sudo} apt --fix-broken install -y
