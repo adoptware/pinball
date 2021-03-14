@@ -84,6 +84,7 @@ test/Makefile.in
 *.img
 *.img.*
 *.qcow2
+*.snap
 
 # Output
 test/unittest
