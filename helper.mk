@@ -27,6 +27,7 @@ export resolution
 config_file?=extra/profile/${profile}/etc/${project}/${project}
 config_destdir?=${DESTDIR}/etc/${project}
 
+app_args=
 app?=src/${project}
 
 PINBALL_TABLE?=tux
@@ -63,6 +64,8 @@ debos_flags+=--scratchsize=4G
 debos_flags+=-tsuite:${debos_suite}
 debos_images_lists ?= ${project}-i386.img
 debos_images_lists += ${project}-amd64.img
+
+marchine?=rpi_3
 
 
 default: help all
@@ -113,7 +116,7 @@ rule/make: Makefile
 run: ${app}
 	$< --version
 	$< --help
-	$<
+	$< ${app_args}
 
 run/quit: ${app}
 	SDL_AUDIODRIVER=null \
@@ -121,61 +124,81 @@ run/quit: ${app}
 
 start: run
 
-Makefile config.status: configure
-	ls $@ || ${<D}/${<F}
-	ls $@
+
+config.status: configure
+	@echo "# log: $@: $<"
+	${<D}/${<F}
+	stat -c '%y' $< $@
+
+Makefile: config.status Makefile.am
+	@echo "# log: $@: $<"
+	stat -c '%y' $< $@
 
 acinclude.m4:
-	ls $@ || ${make} rule/acinclude.m4
-	ls -l $@
+	@echo "# log: $@: $<"
+	stat -c '%y' $^ $@ || ${make} rule/acinclude.m4
+	stat -c '%y' $< $@
 
 rule/acinclude.m4: /usr/share/aclocal/sdl2.m4
+	@echo "# log: $@: $<"
 	cat $^ | tee -a ${@F}
 
 /usr/share/aclocal/sdl2.m4:
+	@echo "# log: $@: $<"
 	echo "# TODO: $@ not found"
 	echo "# TODO: Please create acinclude.m4 from"
 	echo "# https://hg.libsdl.org/SDL/raw-file/d4d66a1891fc/sdl.m4"
 
-configure: acinclude.m4 Makefile.in 
-	autoconf
-	ls $@
-
-depcomp install-sh: ltmain.sh pinconfig.h.in README
+configure: acinclude.m4 pinconfig.h.in Makefile.in
 	@echo "# log: $@: $<"
-	automake --add-missing
-	ls $@
+	autoconf
+	stat -c '%y' $^ $@
 
-Makefile.in: Makefile.am install-sh
-	ls $@
+INSTALL: Makefile.am ltmain.sh pinconfig.h.in README
+	@echo "# log: $@: $^"
+	automake --add-missing
+	stat -c '%y' $^ $@
 
 README: README.md
-	ln -fs $< $@
-	ls $@
+	@echo "# log: $@: $<"
+	ls $@ || ln -fs $< $@
+	stat -c '%y' $^ $@
 
-AUTHORS ChangeLog NEWS:
-	touch $@
+AUTHORS ChangeLog NEWS: README
+	@echo "# log: $@: $<"
+	ls $@ || ln -fs $< $@
 
 rule/autoupdate: configure.ac
+	@echo "# log: $@: $<"
 	${@F}
 
-aclocal.m4:
+aclocal.m4: libltdl/m4
+	@echo "# log: $@: $<"
 	aclocal
-	ls $@
+	stat -c '%y' $^ $@
+
+Makefile.in: Makefile.am INSTALL
+	automake
+	stat -c '%y' $^ $@
 
 pinconfig.h.in: aclocal.m4
+	@echo "# log: $@: $<"
 	autoheader
-	ls $@
+	stat -c '%y' $^ $@
 
-ltmain.sh:
+config.guess config.sub depcomp install-sh missing ltmain.sh libltdl/m4: compile
+	stat -c '%y' $< $@
+
+compile:
+	@echo "# log: $@: $<"
 	libtoolize --ltdl --force --copy
-	ls $@
+	stat -c '%y' $< $@
 
 devel: ${app}
 	$< || gdb -tui $<
 
 ${app}: all
-	ls $@
+	stat -c '%y' $@
 
 all: rule/make
 	${MAKE} all
@@ -324,7 +347,7 @@ ${project}.jpg/%: data/splash.png
 	${make} resolution=${@D} ${F}
 
 tmp/${resolution}/${project}.jpg:
-	ls $@ || ${make} ${@F}/${resolution}
+	stat -c '%y' $^ $@ || ${make} ${@F}/${resolution}
 
 jpg: tmp/${resolution}/${project}.jpg
 	file $<
@@ -386,6 +409,9 @@ debos/%: % \
 pinball-%.img: extra/debos/machine/%/pinball-%.yaml
 	${make} debos/$<
 
+pinball-${machine}.img: extra/debos/machine/${machine}/pinball-${machine}.yaml
+	${make} debos/$<
+
 pinball-i386.img: extra/debos/machine/generic/pinball-i386.yaml
 	ls $<
 	${make} debos/$<
@@ -394,8 +420,9 @@ pinball-amd64.img: extra/debos/machine/generic/pinball-amd64.yaml
 	${make} debos/$<
 
 %.gz: %
+	stat -c '%y' $<
 	gzip -f -9 $<
-	ls $@
+	stat -c '%y' $@
 
 debos/%: pinball-%.img
 	ls $^
@@ -420,3 +447,10 @@ render/%: ${app}
 
 render: render/dummy
 	@echo "# $@: $^"
+
+weston:
+	export XDG_RUNTIME_DIR=/run/user/$$(id -u)/
+	ls $${XDG_RUNTIME_DIR} || mkdir -p $${XDG_RUNTIME_DIR}/tmp
+	echo $${XDG_RUNTIME_DIR}
+	openvt -v -w -s -- su root -l -c "XDG_RUNTIME_DIR=$${XDG_RUNTIME_DIR} /usr/bin/weston-launch --  2>&1 | tee /var/log/weston.log"
+	cat /var/log/weston.log
