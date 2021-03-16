@@ -21,6 +21,7 @@ plugs:
   x11:
 
 environment:
+  __EGL_VENDOR_LIBRARY_DIRS: "$SNAP/etc/glvnd/egl_vendor.d:$SNAP/usr/share/glvnd/egl_vendor.d"
   LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
   LIBGL_DRIVERS_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri"
   XWAYLAND_FULLSCREEN_WINDOW_HINT: title="Emilia Pinball"
@@ -28,15 +29,16 @@ environment:
 apps:
   daemon:
     command-chain:
-      - usr/local/bin/xwayland-kiosk-launch
+      - bin/run-daemon
+      - bin/wayland-launch
     command: usr/local/bin/pinball
     daemon: simple
     restart-condition: always
   pinball:
     command: usr/local/bin/pinball
-  xwayland-kiosk-pinball:
+  mir-kiosk-pinball:
     command-chain:
-      - usr/local/bin/xwayland-kiosk-launch
+      - bin/wayland-launch
     command: usr/local/bin/pinball
 
 layout:
@@ -112,16 +114,14 @@ parts:
       - libxss1
       - libxxf86vm1
 
-  xwayland-kiosk-helper:
-    plugin: cmake
-    source: https://github.com/MirServer/xwayland-kiosk-helper.git
-    override-stage: |
-      snapcraftctl stage
-      sed -e 's|/lib/libxwayland-preload.so|/usr/local/lib/libxwayland-preload.so|g' -i usr/local/bin/xwayland-kiosk-launch
-    build-packages:
-      - build-essential
+  mir-kiosk-snap-launch:
+    plugin: dump
+    source: https://github.com/MirServer/mir-kiosk-snap-launch.git
+    override-build: $SNAPCRAFT_PART_BUILD/build-with-plugs.sh opengl audio-playback alsa wayland hardware-observe
     stage-packages:
-      - i3
-      - libegl1-mesa
-      - libgl1-mesa-glx
-      - xwayland
+     - inotify-tools
+
+  mesa:
+    plugin: nil
+    stage-packages:
+      - libwayland-egl1-mesa
