@@ -31,7 +31,7 @@ apps:
     command-chain:
       - bin/run-daemon
       - bin/wayland-launch
-    command: usr/local/bin/pinball
+    command: usr/local/bin/pinball --fullscreen
     daemon: simple
     restart-condition: always
   pinball:
