@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+pinball -dir | grep '/usr/share/games/pinball'
