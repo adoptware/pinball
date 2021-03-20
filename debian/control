@@ -1,5 +1,7 @@
 Source: pinball
-Maintainer: Philippe Coval <rzr@users.sf.net>
+Maintainer: Debian Games Team <pkg-games-devel@lists.alioth.debian.org>
+Uploaders:
+ Philippe Coval <rzr@users.sf.net>
 Section: games
 Priority: optional
 Build-Depends: debhelper-compat (= 13),
@@ -23,8 +25,8 @@ Build-Depends: debhelper-compat (= 13),
                libltdl-dev,
                pkg-config
 Standards-Version: 4.5.0
-Vcs-Browser: https://sourceforge.net/p/pinball/code/ci/debian/master/tree/
-Vcs-Git: https://git.code.sf.net/p/pinball/code.git
+Vcs-Browser: https://salsa.debian.org/games-team/pinball/-/tree/debian/master
+Vcs-Git: https://salsa.debian.org/games-team/pinball.git
 Homepage: https://sourceforge.net/projects/pinball/
 Rules-Requires-Root: binary-targets
 
@@ -50,8 +52,7 @@ Package: pinball-dev
 Architecture: any
 Depends: ${misc:Depends},
          libc6-dev,
-         pinball (= ${binary:Version}),
-         libstdc++6-4.4-dev | libstdc++-dev
+         pinball (= ${binary:Version})
 Description: Development files for the Emilia Pinball Emulator
  The Emilia Pinball Project is a pinball simulator for Linux and other Unix
  systems. There are only two levels to play with, but they are very addictive.
