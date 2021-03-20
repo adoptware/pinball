@@ -1,4 +1,4 @@
-pinball (0.3.20201218-3) UNRELEASED; urgency=medium
+pinball (0.3.20201218-3) unstable; urgency=medium
 
   * Pick 0.3.20201218-2 changes on 0.3.20201218-1 base
   * d/control: Drop C++ dep

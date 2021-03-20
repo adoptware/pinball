@@ -1,3 +1,4 @@
 #!/bin/sh -e
 
+export HOME=${AUTOPKGTEST_TMP:-${TMPDIR:-/tmp}}
 pinball -dir | grep '/usr/share/games/pinball'
