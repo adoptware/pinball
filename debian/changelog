@@ -1,3 +1,12 @@
+pinball (0.3.20201218-3) UNRELEASED; urgency=medium
+
+  * Pick 0.3.20201218-2 changes on 0.3.20201218-1 base
+  * d/control: Drop C++ dep
+  * d/control: Set team maintenance
+  * d/tests: Add help test (Closes: #985488)
+
+ -- Philippe Coval <rzr@users.sf.net>  Sat, 20 Mar 2021 22:33:28 +0100
+
 pinball (0.3.20201218-2) unstable; urgency=medium
 
   * d/control: Update preferred libstdc++ version (Closes: #985440)
