@@ -24,6 +24,7 @@ environment:
   __EGL_VENDOR_LIBRARY_DIRS: "$SNAP/etc/glvnd/egl_vendor.d:$SNAP/usr/share/glvnd/egl_vendor.d"
   LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
   LIBGL_DRIVERS_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri"
+  PINBALL_TABLE: professor
   XWAYLAND_FULLSCREEN_WINDOW_HINT: title="Emilia Pinball"
 
 apps:
