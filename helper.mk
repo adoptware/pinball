@@ -154,9 +154,12 @@ configure: acinclude.m4 pinconfig.h.in Makefile.in
 	autoconf
 	stat -c '%y' $^ $@
 
-INSTALL: Makefile.am ltmain.sh pinconfig.h.in README
+autom4te.cache: Makefile.am ltmain.sh pinconfig.h.in README
 	@echo "# log: $@: $^"
 	automake --add-missing
+	stat -c '%y' $^ $@
+
+INSTALL config.guess config.sub depcomp install-sh: autom4te.cache
 	stat -c '%y' $^ $@
 
 README: README.md
@@ -186,7 +189,7 @@ pinconfig.h.in: aclocal.m4
 	autoheader
 	stat -c '%y' $^ $@
 
-config.guess config.sub depcomp install-sh missing ltmain.sh libltdl/m4: compile
+missing ltmain.sh libltdl/m4: compile
 	stat -c '%y' $< $@
 
 compile:
