@@ -115,12 +115,8 @@ bool operator == (const PolygonEdge & peA, const PolygonEdge & peB) {
 #define EM_GLERROR(a) \
 	GLenum error = glGetError(); \
 	if (error != GL_NO_ERROR) {  \
-#if defined(HAVE_GLU_H) && HAVE_GLU_H
-		const GLubyte* str = gluErrorString(error); \
-#else
-		const GLubyte* str = to_string(error); \
-#endif
-		cerr << "OpenGL error: " << a << str << endl;    \
+	  cerr << "error: GL: "				\
+	       << a << ":" << to_string(error) << endl;	\
 	}
 #else
 #define EM_GLERROR(a)

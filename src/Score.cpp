@@ -143,11 +143,16 @@ void Score::draw() {
   m_Font->printRow(buffer, 0);
 
   if (Config::getInstance()->getShowFPS()) {
+    sprintf(buffer, "FPS %.1f"
 #if EM_DEBUG
-    sprintf(buffer, "FPS %.1f %d\n", Engine::getFps(), OpenGLVisitor::getPolys());
-#else
-    sprintf(buffer, "FPS %.1f\n", Engine::getFps());
+	    "%d"
 #endif
+	    "\n",
+	    Engine::getFps()
+#if EM_DEBUG
+	    , RenderVisitor::getInstance()->getPolys()
+#endif
+	    );
     m_Font->printRow(buffer, 1);
   }
 
