@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
 
   engine->resetTick();
   while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
-    if (engine->nextTickFPS(50)) {
+    if (engine->nextTick()) {
       engine->tick();
     } else {
       engine->render();

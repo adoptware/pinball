@@ -11,6 +11,8 @@
 #include <cstring>
 #include <ctime>
 
+#include <iostream>
+
 #if EM_THREADS
 #include <sched.h>
 #endif
@@ -45,7 +47,7 @@
 #endif
 #endif
 
-volatile int g_iStartTime = -1;
+volatile unsigned int g_iStartTime = 0;
 //volatile int g_iDesiredTime = -1;
 volatile int g_iLastRender = 0;
 
@@ -71,7 +73,7 @@ extern "C" {
 #endif
 
 #if EM_USE_SDL
-#define GET_TIME (signed)SDL_GetTicks()
+#define GET_TIME ((unsigned int) SDL_GetTicks())
 #endif
 
 #if EM_USE_ALLEGRO
@@ -82,7 +84,10 @@ float Engine::m_fFps = 0.0f;
 
 Engine * Engine::p_Engine = NULL;
 
-Engine::Engine(int & argc, char *argv[]) {
+Engine::Engine(int & argc, char *argv[])
+  : Group{},
+    m_iPeriod(1000/50)
+{
   Config * config = Config::getInstance();
   config->loadArgs(argc, argv);
   
@@ -339,17 +344,25 @@ void Engine::delay(int ms) {
 #endif
 }
 
-bool Engine::nextTickFPS(int fps) {
-  // default 100 FPS
-  int delay = 10;
-  if (fps > 0) {
-    delay = 1000/fps;
+void Engine::setSpeed(int fps) {
+  m_iPeriod = 1000/fps;
+}
+
+bool Engine::nextTick() {
+  if (GET_TIME >= g_iStartTime + 1000) {
+#ifdef EM_DEBUG
+    cerr << "warning: Too slow (less than 1FPS) :"
+	 << g_iStartTime << " " << GET_TIME << " +" << m_iPeriod << endl;
+#endif
+    tick(); // Animate world once before rendering
+    g_iStartTime = GET_TIME; // Trying to catch up
+    return false;
   }
-  if ((g_iStartTime + delay) <= GET_TIME) {
-    g_iStartTime += delay;
-    return true;
+  if (GET_TIME <= (g_iStartTime + m_iPeriod)) {
+    return false;
   }
-  return false;
+  g_iStartTime += m_iPeriod;
+  return true;
 }
 
 void Engine::resetTick() {

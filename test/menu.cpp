@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
   bool done = false;
   engine->resetTick();
   while (!Keyboard::isKeyDown(SDLK_SPACE) && !done) {
-    if (engine->nextTickFPS(50)) {
+    if (engine->nextTick()) {
       engine->tick();
     } else {
       engine->render();

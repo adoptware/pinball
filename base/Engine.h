@@ -50,9 +50,10 @@ class Engine : public Group {
   void setLightning(float diffuse, float ambient);
   void addLight(Light*);
   /** Use this function to limit the main loop to a desired frame rate.
-   * @return false if the thread is behind schedule else true. 
-   ** Available FPS: 100, 50, 40, 33, 25, 20 */
-  bool nextTickFPS(int fps);
+   * @return false if the thread is behind schedule else true. see limitFPS */
+  bool nextTick();
+  /** Available FPS: 100, 50, 40, 33, 25, 20 */
+  void setSpeed(int fps=25*4);
   void resetTick();
   //  bool limitFPS(int fps);
   void delay(int ms);
@@ -68,9 +69,11 @@ class Engine : public Group {
   void resumeTickThread();
   void endTickThread();
 #endif
- private:
+protected:
+  unsigned int m_iPeriod; ///<  Allocated time for tick
+private:
   static float m_fFps;
-	static Engine * p_Engine;
+  static Engine * p_Engine;
 };
 
 #endif // ENGINE_H

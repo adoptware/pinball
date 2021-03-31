@@ -59,8 +59,8 @@ int main(int argc, char *argv[]) {
   float x=0, y=0, z=0;
   float dx=-1, dy=-1, dz=-1;
   engine->resetTick();
-	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
-    if (engine->nextTickFPS(50)) {
+  while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
+    if (engine->nextTick()) {
       if (x > 2) dx=-0.012;
       if (y > 2) dy=-0.021;
       if (z > 2) dz=-0.027;

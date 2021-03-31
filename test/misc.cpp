@@ -72,8 +72,9 @@ int main(int argc, char *argv[]) {
   Vertex3D vtx = {0.0f, 0.0f, 0.0f};
   Vertex3D vtxDist;
   engine->resetTick();
+  engine->setSpeed(10);
   while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
-    if (engine->nextTickFPS(10)) {
+    if (engine->nextTick()) {
       engine->tick();
       float sqrdist = CollisionVisitor::getInstance()->
 	vtxPolySqrDist(vtx, tri->getPolygon(0), vtxDist);

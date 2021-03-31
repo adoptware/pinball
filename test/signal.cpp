@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
       // multicast a signal with delay
       SendSignal(2, 50, engine, NULL);
     }
-    if (engine->nextTickFPS(50)) {
+    if (engine->nextTick()) {
       engine->tick();
     } else {
       engine->render();

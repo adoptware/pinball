@@ -825,6 +825,7 @@ int Pinball::setup(int argc, char *argv[])
   // cerr<<"log: pinball: Draw to the screen"<<endl;
   miCount = 0;
 
+  mpEngine->setSpeed(25*8);
   mpEngine->resetTick();
   mpEngine->swap();
 
@@ -889,7 +890,7 @@ int Pinball::loop()
   if (Keyboard::isKeyDown(SDLK_r)) {
     SendSignal(PBL_SIG_RESET_ALL, 0, mpEngine, NULL);
   }
-  if (mpEngine->nextTickFPS(200)) {
+  if (mpEngine->nextTick()) {
     mpEngine->tick();
   } else {
     mpEngine->render();

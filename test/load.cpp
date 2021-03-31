@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
 	engine->resetTick();
 	bool keydown = false;
 	while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {
-	  if (engine->nextTickFPS(50)) {
+	  if (engine->nextTick()) {
 	    engine->tick();
 			Group * g = engine->getGroup(1);
 			if (g != NULL) {
