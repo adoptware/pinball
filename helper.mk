@@ -81,6 +81,21 @@ help: helper.mk
 	@echo "# ${<D}/${<F} run # To run app"
 	@echo "# ${<D}/${<F} debi # To install on debian"
 
+env:
+	@echo "# DISPLAY='${DISPLAY}'"
+	@echo "# GALLIUM_HUD='${GALLIUM_HUD}'"
+	@echo "# LIBGL_DEBUG='${LIBGL_DEBUG}'"
+	@echo "# LIBGL_DRIVERS_PATH='${LIBGL_DRIVERS_PATH}'"
+	@echo "# LIBGL_SHOW_FPS='${LIBGL_SHOW_FPS}'"
+	@echo "# MESA_DEBUG='${MESA_DEBUG}'"
+	@echo "# PINBALL_QUIT=${PINBALL_QUIT}"
+	@echo "# PINBALL_RENDER_DRIVER=${PINBALL_RENDER_DRIVER}"
+	@echo "# PINBALL_TABLE=${PINBALL_TABLE}"
+	@echo "# SDL_VIDEODRIVER='${SDL_VIDEODRIVER}'"
+	@echo "# WAYLAND_DEBUG='${WAYLAND_DEBUG}'"
+	@echo "# WAYLAND_DISPLAY='${WAYLAND_DISPLAY}'"
+	@echo "# XDG_RUNTIME_DIR='${XDG_RUNTIME_DIR}'"
+
 config/%: %/config
 	@echo "# log: $@: $<"
 
@@ -457,3 +472,14 @@ weston:
 	echo $${XDG_RUNTIME_DIR}
 	openvt -v -w -s -- su root -l -c "XDG_RUNTIME_DIR=$${XDG_RUNTIME_DIR} /usr/bin/weston-launch --  2>&1 | tee /var/log/weston.log"
 	cat /var/log/weston.log
+
+run/wayland: ${app}
+	unset DISPLAY; \
+GALLIUM_HUD=fps \
+LIBGL_DEBUG=1 \
+LIBGL_DEBUG=verbose \
+LIBGL_SHOW_FPS=1 \
+MESA_DEBUG=1 \
+SDL_VIDEODRIVER=${@F} \
+WAYLAND_DEBUG=1 \
+	$<
