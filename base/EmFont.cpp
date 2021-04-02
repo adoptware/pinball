@@ -149,6 +149,16 @@ void EmFont::print(const char * buffer, float x, float y) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+  #ifdef HAVE_OPENGLES
+  GLuint vbo;
+  glGenBuffers(1, &vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo);
+  float verts[20];
+  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(float), NULL);
+  glVertexPointer(3, GL_FLOAT, 5 * sizeof(float), (const float *)NULL + 2);
+  glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+  glEnableClientState(GL_VERTEX_ARRAY);
+  #endif
   for (int a=0; a<255 && buffer[a] != 0 && buffer[a] != 10; a++) {
     int b = buffer[a];
     int c = 36;
@@ -175,6 +185,18 @@ void EmFont::print(const char * buffer, float x, float y) {
     if (ratio >= 1 || ratio <=0) { ratio = 1.; }
     float xbottom = (x + a*EM_FONTSIZE_X)*ratio;
     float xtop = (x + (a+1)*EM_FONTSIZE_X)*ratio;
+    #ifdef HAVE_OPENGLES
+    verts[0]  = u; verts[1] = v;
+    verts[2]  = xbottom; verts[3] = y; verts[4] = -1;
+    verts[5]  = u+0.125; verts[6] = v;
+    verts[7]  = xtop; verts[8] = y; verts[9] = -1;
+    verts[10] = u+0.125; verts[11] = v+0.125;
+    verts[12] = xtop; verts[13] = y-EM_FONTSIZE_Y; verts[14] = -1;
+    verts[15] = u; verts[16] = v+0.125;
+    verts[17] = xbottom; verts[18] = y-EM_FONTSIZE_Y; verts[19] = -1;
+    glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    #else
     glBegin(GL_QUADS);
     glTexCoord2f(u, v);
     glVertex3f(xbottom, y, -1); 
@@ -185,8 +207,14 @@ void EmFont::print(const char * buffer, float x, float y) {
     glTexCoord2f(u, v+0.125);
     glVertex3f(xbottom, y-EM_FONTSIZE_Y, -1);
     glEnd();
+    #endif
     //			cerr << "sork" << buffer[a] << endl;
   }
+  #ifdef HAVE_OPENGLES
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+  glDeleteBuffers(1, &vbo);
+  #endif
 }
 #endif // EM_USE_SDL
 

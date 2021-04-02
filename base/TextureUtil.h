@@ -17,7 +17,11 @@
 
 #if EM_USE_SDL
 #include <SDL_video.h>
+#ifdef HAVE_OPENGLES
+#include <SDL_opengles.h>
+#else
 #include <SDL_opengl.h>
+#endif
 
 typedef struct {
   unsigned int width;

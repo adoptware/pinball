@@ -103,6 +103,20 @@ AC_DEFINE(EM_USE_SDL, [1], [Shall we use SDL and OpenGL])
 dnl *******************************************
 dnl OPENGL ************************************
 dnl Figure out which math and GL library to use
+
+AC_ARG_ENABLE(gles, [  --enable-gles           enable OpenGL ES], enable_gles=yes, enable_gles=no)
+if test x$enable_gles = xyes; then
+  MATHLIB="-lm"
+  AC_CHECK_HEADER(
+      [GLES/gl.h],
+      [ac_cv_search_glBegin="none required"],
+      [AC_MSG_ERROR(*** OpenGL ES headers not found on system!)]
+  )
+  AC_ARG_WITH(gles-library, [  --with-gles-library=LIBRARY OpenGL ES library @<:@default=GLESv1_CM@:>@], GL_LIBS=-l"$withval", GL_LIBS="-lGLESv1_CM")
+  AC_DEFINE(HAVE_OPENGLES, [1], [Support for OpenGL ES])
+fi
+
+if test x$enable_gles = xno; then
 case "$target" in
     *-*-darwin*)
         MATHLIB=""
@@ -127,6 +141,7 @@ case "$target" in
         )
         ;;
 esac
+fi
 
 AC_SUBST(MATHLIB)
 LIBS="$MATHLIB $LIBS"
@@ -135,11 +150,13 @@ LIBS="$GL_LIBS $LIBS"
 
 dnl *******************************************
 
+if test x$enable_gles = xno; then
 PKG_CHECK_MODULES([glu],
 	[glu >= 9.0.1],
 	[],
 	[HAVE_GLU_H=1],
 	[HAVE_GLU_H=0])
+fi
 
 dnl SDL ***************************************
 PKG_CHECK_MODULES([SDL],
