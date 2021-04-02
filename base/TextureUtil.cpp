@@ -18,11 +18,6 @@
 #include <iostream>
 
 #if EM_USE_SDL
-#include <SDL_opengl.h> //should fix GL portability ; instead of <OpenGL/gl.h>
-// TODO remove glu
-#if EM_DEBUG
-#include <GL/glu.h>
-#endif
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -188,6 +183,9 @@ void TextureUtil::initGrx() {
     | (config->useFullScreen() ? getenv("PINBALL_WINDOW_FULLSCREEN_DESKTOP") ?
        SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_FULLSCREEN
        : 0);
+  #ifdef HAVE_OPENGLES
+  SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengles");
+  #endif
   SDL_CreateWindowAndRenderer(0, 0, window_flags, &m_window, &sdlRenderer);
   SDL_SetWindowSize(m_window, config->getWidth(), config->getHeight());
   SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, 255);
@@ -219,8 +217,10 @@ void TextureUtil::initGrx() {
   cerr << "SDL_GL_BLUE_SIZE: " << value << endl;
   SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE, &value );
   cerr << "SDL_GL_DEPTH_SIZE: " << value << endl;
+  #ifndef HAVE_OPENGLES
   SDL_GL_GetAttribute( SDL_GL_DOUBLEBUFFER, &value );
   cerr << "SDL_GL_DOUBLEBUFFER: " << value << endl << endl;
+  #endif
 
   this->resizeView(config->getWidth(), config->getHeight());
 #endif // EM_USE_SDL
@@ -303,7 +303,11 @@ void TextureUtil::resizeView(unsigned int w, unsigned int h) {
   glViewport(0, 0, (GLsizei) w, (GLsizei) h);
 
   glClearColor(m_colClear.r, m_colClear.g, m_colClear.b, m_colClear.a);
+  #ifdef HAVE_OPENGLES
+  glClearDepthf(1.0f);
+  #else
   glClearDepth(1.0);
+  #endif
 
   glShadeModel(GL_SMOOTH);
 
@@ -320,9 +324,15 @@ void TextureUtil::resizeView(unsigned int w, unsigned int h) {
   float ratio = Config::getInstance()->getRatio();
   if (ratio>=1 || ratio<=0) ratio=1; //TODO
 
+  #ifdef HAVE_OPENGLES
+  glFrustumf(-EM_RIGHT*EM_NEAR*ratio, EM_RIGHT*EM_NEAR*ratio,
+	    -EM_UP*EM_NEAR, EM_UP*EM_NEAR,
+            EM_NEAR, EM_FAR);
+  #else
   glFrustum(-EM_RIGHT*EM_NEAR*ratio, EM_RIGHT*EM_NEAR*ratio,
 	    -EM_UP*EM_NEAR, EM_UP*EM_NEAR,
             EM_NEAR, EM_FAR);
+  #endif
   glMatrixMode(GL_MODELVIEW);
 
 #if OPENGL_LIGHTS

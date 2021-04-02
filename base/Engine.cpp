@@ -38,11 +38,13 @@
 #include "TextureUtil.h"
 #include "Profiler.h"
 
+#ifndef HAVE_OPENGLES
 // TODO Remove glu
 #if EM_USE_SDL
 #if EM_DEBUG
 #if defined(HAVE_GLU_H) && HAVE_GLU_H
 #include <GL/glu.h>
+#endif
 #endif
 #endif
 #endif
@@ -170,11 +172,8 @@ void Engine::clearScreen() {
 #if EM_USE_SDL
   glDepthMask(GL_TRUE);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glColor3f(1, 1, 1);
+  glColor4f(1, 1, 1, 1);
   glLoadIdentity();
-#if defined(HAVE_GLU_H) && HAVE_GLU_H
-  //gluLookAt(0,0,0, 0,0,-1, 0,1,0);
-#endif
 #endif
 
 #if EM_USE_ALLEGRO
@@ -207,6 +206,29 @@ void Engine::drawSplash(EmTexture * tex) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
+	#ifdef HAVE_OPENGLES
+	GLuint vbo;
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	float verts[20];
+	glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(float), NULL);
+	glVertexPointer(3, GL_FLOAT, 5 * sizeof(float), (const float *)NULL + 2);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	verts[0]  = 0; verts[1] = 0;
+	verts[2]  = -EM_RIGHT; verts[3] = EM_UP; verts[4] = -1;
+	verts[5]  = 1; verts[6] = 0;
+	verts[7]  = EM_RIGHT; verts[8] = EM_UP; verts[9] = -1;
+	verts[10] = 1; verts[11] = 1;
+	verts[12] = EM_RIGHT; verts[13] = -EM_UP; verts[14] = -1;
+	verts[15] = 0; verts[16] = 1;
+	verts[17] = -EM_RIGHT; verts[18] = -EM_UP; verts[19] = -1;
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDeleteBuffers(1, &vbo);
+	#else
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 0);
 	glVertex3f(-EM_RIGHT, EM_UP, -1); 
@@ -217,6 +239,7 @@ void Engine::drawSplash(EmTexture * tex) {
 	glTexCoord2f(0, 1);
 	glVertex3f(-EM_RIGHT, -EM_UP, -1);
 	glEnd();
+	#endif
 #endif
 	// allegro todo
 #if EM_USE_ALLEGRO

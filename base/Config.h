@@ -24,8 +24,11 @@
 #endif
 
 #if EM_USE_SDL
-//#include <GL/gl.h>
-#include <SDL_opengl.h> //!+-rzr: better portability
+#ifdef HAVE_OPENGLES
+#include <SDL_opengles.h>
+#else
+#include <SDL_opengl.h>
+#endif
 #define EM_LINEAR GL_LINEAR
 #define EM_NEAREST GL_NEAREST
 #else

@@ -14,7 +14,11 @@
 #include "OpenGLVisitor.h"
 
 #if EM_USE_SDL
+#ifdef HAVE_OPENGLES
+#include <GLES/gl.h>
+#else
 #include <GL/gl.h>
+#endif
 #else
 #warning This is a sdl specific test.
 #endif
@@ -33,7 +37,11 @@ Vertex3D vbuf[] = {
   { -1.0f, -1.0f, 1.0f},
 };
 
+#ifdef HAVE_OPENGLES
+unsigned short ibuf[][4] = {
+#else
 unsigned int ibuf[][4] = {
+#endif
   { 0, 1, 3, 2},
   { 4, 0, 2, 6},
   { 5, 4, 6, 7},
@@ -55,7 +63,11 @@ Color cbuf[] = {
 
 /** Main */
 int main(int argc, char *argv[]) {
+  #ifdef HAVE_OPENGLES
+  cerr << "Vertex array test, press space to quit." << endl;
+  #else
   cerr << "Vertex array test, press space then esc to quit." << endl;
+  #endif
 
 #if EM_USE_SDL
   // Create the engine.
@@ -85,7 +97,11 @@ int main(int argc, char *argv[]) {
       for (int b=0; b<5; ++b) {
 	for (int c=0; c<5; ++c) {
 	  for (int d=0; d<PSIZE; ++d) {
+	    #ifdef HAVE_OPENGLES
+	    glDrawElements(GL_TRIANGLE_FAN, 4, GL_UNSIGNED_SHORT, ibuf[d]);
+	    #else
 	    glDrawElements(GL_POLYGON, 4, GL_UNSIGNED_INT, ibuf[d]);
+	    #endif
 	  }
 	  glTranslatef(3.0f, 0.0f, 0.0f);
 	}
@@ -95,10 +111,11 @@ int main(int argc, char *argv[]) {
     }
     engine->swap();
   }
-  // polys == 5*5*5*6 = 
+  // polys == 5*5*5*6 = 750
   cerr << "fps " << Engine::getFps() << " polys 750 " << endl;
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
+  #ifndef HAVE_OPENGLES
   cerr << "separate calls" << endl;
   while (!Keyboard::isKeyDown(SDLK_ESCAPE)) {		
     //engine->clearScreen();
@@ -128,6 +145,7 @@ int main(int argc, char *argv[]) {
   }
   // polys == 5*5*5*6 = 750
   cerr << "fps " << Engine::getFps() << " polys 750 " << endl;
+  #endif
   delete(engine);
 #endif
   return 0;
