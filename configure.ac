@@ -282,7 +282,7 @@ AC_ARG_WITH(trako,
 	use_trako="yes",
 	use_trako="no")
 if test x"$use_trako" = "xyes"; then
-AC_DEFINE(EM_TRAKO, [1], [Shall we use trako features such as profiling and keyboard ball steering])
+AC_DEFINE(EM_TRAKO, [1], [Shall we use trako features such as profiling functs and classes])
 fi
 
 
