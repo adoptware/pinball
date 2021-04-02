@@ -345,22 +345,27 @@ void Engine::delay(int ms) {
 }
 
 void Engine::setSpeed(int fps) {
-  m_iPeriod = 1000/fps;
+  if (fps>0) {m_iPeriod = (unsigned int) (1000/fps);}
 }
 
 bool Engine::nextTick() {
-  if (GET_TIME >= g_iStartTime + 1000) {
+  if (GET_TIME <= (g_iStartTime + m_iPeriod)) {
+    return false;
+  }
 #ifdef EM_DEBUG
-    cerr << "warning: Too slow (less than 1FPS) :"
-	 << g_iStartTime << " " << GET_TIME << " +" << m_iPeriod << endl;
-#endif
+  if (GET_TIME >= g_iStartTime + 1000) {
+    float fps = (1000 / m_iPeriod) / 2;
+    cout << "warning: Too slow (less than 1FPS) adjusting : "
+	 << GET_TIME << " -" << g_iStartTime
+	 << " =" << (GET_TIME - g_iStartTime)
+	 << " <?" << m_iPeriod << "*" << intervals << " %" << fps
+         << endl;
+    setSpeed(fps);
     tick(); // Animate world once before rendering
     g_iStartTime = GET_TIME; // Trying to catch up
     return false;
   }
-  if (GET_TIME <= (g_iStartTime + m_iPeriod)) {
-    return false;
-  }
+#endif
   g_iStartTime += m_iPeriod;
   return true;
 }

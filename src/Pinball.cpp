@@ -824,8 +824,9 @@ int Pinball::setup(int argc, char *argv[])
 
   // cerr<<"log: pinball: Draw to the screen"<<endl;
   miCount = 0;
-
-  mpEngine->setSpeed(25*8);
+  char* text = getenv("PINBALL_SPEED");
+  int fps = (text) ? atoi(text) : 8*25;
+  mpEngine->setSpeed(fps);
   mpEngine->resetTick();
   mpEngine->swap();
 
@@ -847,6 +848,7 @@ int Pinball::setup(int argc, char *argv[])
       Keyboard::clear();
     }
   }
+  mpEngine->resetTick();
   return 0;
 }
 
@@ -925,7 +927,7 @@ int Pinball::main(int argc, char *argv[])
 {
   Pinball instance;
   int status = instance.run(argc, argv);
-  cout<<"pinball: exit: "<<status<<endl;
+  cout << "pinball: exit: " << status << " fps: " << Engine::getFps() << endl;
   return status;
 }
 

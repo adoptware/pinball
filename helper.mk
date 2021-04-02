@@ -12,9 +12,6 @@ version?=0.0.0
 
 V?=1
 
-PINBALL_TABLE?=tux
-export PINBALL_TABLE
-
 PINBALL_QUIT?=25000
 export PINBALL_QUIT
 
@@ -30,7 +27,7 @@ config_destdir?=${DESTDIR}/etc/${project}
 app_args=
 app?=src/${project}
 
-PINBALL_TABLE?=tux
+PINBALL_TABLE?=professor
 export PINBALL_TABLE
 
 trako_url?=https://github.com/rzr/trako#master
@@ -90,6 +87,7 @@ env:
 	@echo "# MESA_DEBUG='${MESA_DEBUG}'"
 	@echo "# PINBALL_QUIT=${PINBALL_QUIT}"
 	@echo "# PINBALL_RENDER_DRIVER=${PINBALL_RENDER_DRIVER}"
+	@echo "# PINBALL_SPEED=${PINBALL_SPEED}"
 	@echo "# PINBALL_TABLE=${PINBALL_TABLE}"
 	@echo "# SDL_VIDEODRIVER='${SDL_VIDEODRIVER}'"
 	@echo "# WAYLAND_DEBUG='${WAYLAND_DEBUG}'"
@@ -483,3 +481,10 @@ MESA_DEBUG=1 \
 SDL_VIDEODRIVER=${@F} \
 WAYLAND_DEBUG=1 \
 	$<
+
+check: ${app}
+	echo "# $@: $^";\
+PINBALL_TABLE="${PINBALL_TABLE}" \
+PINBALL_QUIT=25 \
+${<D}/${<F} 2>&1 \
+| grep -o '${project}: exit: .*' 
