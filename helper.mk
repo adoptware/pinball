@@ -169,7 +169,7 @@ configure: acinclude.m4 pinconfig.h.in Makefile.in
 
 autom4te.cache: Makefile.am ltmain.sh pinconfig.h.in README
 	@echo "# log: $@: $^"
-	automake --add-missing
+	automake --add-missing --copy
 	stat -c '%y' $^ $@
 
 INSTALL config.guess config.sub depcomp install-sh: autom4te.cache
@@ -386,7 +386,8 @@ grub2: /grub/splashimages/${project}.xpm.gz
 
 trako/%:
 	git clone --recursive --depth 1 ${trako_url}  --branch ${trako_branch} trako
-	@echo "export CXXFLAGS='-DPINBALL_CONFIG_TRAKO=1'"
+	@echo "export CXXFLAGS='-DEM_TRAKO=1'"
+	@echo "rm -rf trako/.git; git add trako ; git commit -am 'WIP: Add trako'"
 
 trako: trako/src/trako/macros.h trako/README.md
 	@grep TRAKO_VERSION "$<"
@@ -488,3 +489,9 @@ PINBALL_TABLE="${PINBALL_TABLE}" \
 PINBALL_QUIT=25 \
 ${<D}/${<F} 2>&1 \
 | grep -o '${project}: exit: .*' 
+
+configure/release: configure
+	${<D}/${<F} --without-debug --without-trako ${configure_options}
+
+configure/debug: configure trako
+	${<D}/${<F} --with-debug --with-trako ${configure_options}

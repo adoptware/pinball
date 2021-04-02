@@ -242,6 +242,12 @@ if test x"$use_debug" = "xyes"; then
 AC_DEFINE(EM_DEBUG, [1], [Shall we use debug features such as profiling and keyboard ball steering])
 fi
 
+AC_ARG_WITH(trako, [  --with-trako            Compile trako version], use_trako="yes", use_trako="no")
+if test x"$use_trako" = "xyes"; then
+AC_DEFINE(EM_TRAKO, [1], [Shall we use trako features such as profiling and keyboard ball steering])
+fi
+
+
 AC_DEFINE(EM_USE_SOURCE_SPECULAR, [1], [Specular])
 dnl AC_DEFINE(EM_USE_FAST_FLOAT2INT)
 dnl AC_DEFINE(EM_DEBUG_COLLISION)

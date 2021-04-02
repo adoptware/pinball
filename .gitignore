@@ -23,7 +23,7 @@ Makefile.in
 README
 aclocal.m4
 compile
-config.*
+/config.*
 configure
 debian/*.debhelper.log
 debian/*.substvars

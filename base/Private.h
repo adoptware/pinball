@@ -26,7 +26,7 @@
 
 /// TODO: Enable this flag for profiling app using external "trako" lib
 /// https://github.com/rzr/trako/
-#if defined(PINBALL_CONFIG_TRAKO) && PINBALL_CONFIG_TRAKO
+#if defined(EM_TRAKO) && EM_TRAKO
 # include <trako/trako.h>
 # define PINBALL(cmd)                           \
   TRAKO(cmd)
