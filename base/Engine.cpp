@@ -128,7 +128,9 @@ Engine::~Engine() {
   this->stopEngine();
 }
 
-void Engine::stopEngine() {
+void Engine::stopEngine()
+{
+  PINBALL(FUNCT());
 #if EM_USE_SDL
   SoundUtil::getInstance()->stopSound();
   TextureUtil::getInstance()->stopGrx();
@@ -149,23 +151,31 @@ void Engine::stopEngine() {
 #endif
 }
 
-void Engine::clear() {
+void Engine::clear()
+{
+  PINBALL(FUNCT());
   SignalSender::getInstance()->clear();
   AmbientLightVisitor::getInstance()->clear();
   //PointLightVisitor::getInstance()->clear();
   this->freeObjects();
 }
 
-void Engine::addLight(Light* l) {
+void Engine::addLight(Light* l)
+{
+  PINBALL(FUNCT());
   //PointLightVisitor::getInstance()->add(l);
   AmbientLightVisitor::getInstance()->add(l);
 }
 
-void Engine::setClearColor(float r, float g, float b, float a) {
+void Engine::setClearColor(float r, float g, float b, float a)
+{
+  PINBALL(FUNCT());
   TextureUtil::getInstance()->setClearColor(r, g, b, a);
 }
 
-void Engine::clearScreen() {
+void Engine::clearScreen()
+{
+  PINBALL(FUNCT());
   StartProfile(SWAP);
 #if EM_USE_SDL
   glDepthMask(GL_TRUE);
@@ -184,12 +194,16 @@ void Engine::clearScreen() {
   StopProfile();
 }
 
-void Engine::setLightning(float diffuse, float ambient) {
+void Engine::setLightning(float diffuse, float ambient)
+{
+  PINBALL(FUNCT());
   AmbientLightVisitor::getInstance()->setLightning(diffuse, ambient);
   // light model
 }
 
-void Engine::drawSplash(EmTexture * tex) {
+void Engine::drawSplash(EmTexture * tex)
+{
+  PINBALL(FUNCT());
 	if (tex == NULL) return;
 #if EM_USE_SDL
 	int filter = Config::getInstance()->getGLFilter();
@@ -226,12 +240,16 @@ void Engine::drawSplash(EmTexture * tex) {
 #endif	
 }
 
-void Engine::setEngineCamera(Group* g) {
+void Engine::setEngineCamera(Group* g)
+{
+  PINBALL(FUNCT());
   AlignVisitor::getInstance()->setCamera(g);
   TransformVisitor::getInstance()->setCamera(g);
 }
 
-void Engine::render() {
+void Engine::render()
+{
+  PINBALL(FUNCT());
   EM_COUT("Engine::render()", 0);
   if (GET_TIME - g_iLastRender != 0.0f) {
     m_fFps = m_fFps*0.9f + 0.1f*1000.0f/(GET_TIME - g_iLastRender);
@@ -287,7 +305,9 @@ void Engine::render() {
   StopProfile();
 }
 
-void Engine::swap() {
+void Engine::swap()
+{
+  PINBALL(FUNCT());
   StartProfile(SWAP);
   EM_COUT("Engine::swap()", 0);
   g_iLoops++;
@@ -303,7 +323,9 @@ void Engine::swap() {
   StopProfile();
 }
 
-void Engine::tick() {
+void Engine::tick()
+{
+  PINBALL(FUNCT());
   EM_COUT("Engine::tick() key", 0);
   if (!Config::getInstance()->useExternGL()) {
     StartProfile(KEY);
@@ -335,7 +357,9 @@ void Engine::tick() {
   StopProfile();
 }
 
-void Engine::delay(int ms) {
+void Engine::delay(int ms)
+{
+  PINBALL(FUNCT());
 #if EM_USE_SDL
   SDL_Delay(ms);
 #endif
@@ -344,11 +368,15 @@ void Engine::delay(int ms) {
 #endif
 }
 
-void Engine::setSpeed(int fps) {
+void Engine::setSpeed(int fps)
+{
+  PINBALL(FUNCT());
   if (fps>0) {m_iPeriod = (unsigned int) (1000/fps);}
 }
 
-bool Engine::nextTick() {
+bool Engine::nextTick()
+{
+  PINBALL(FUNCT());
   if (GET_TIME <= (g_iStartTime + m_iPeriod)) {
     return false;
   }
@@ -358,7 +386,7 @@ bool Engine::nextTick() {
     cout << "warning: Too slow (less than 1FPS) adjusting : "
 	 << GET_TIME << " -" << g_iStartTime
 	 << " =" << (GET_TIME - g_iStartTime)
-	 << " <?" << m_iPeriod << "*" << intervals << " %" << fps
+	 << " <?" << m_iPeriod << " %" << fps
          << endl;
     setSpeed(fps);
     tick(); // Animate world once before rendering
@@ -370,7 +398,9 @@ bool Engine::nextTick() {
   return true;
 }
 
-void Engine::resetTick() {
+void Engine::resetTick()
+{
+  PINBALL(FUNCT());
   g_iStartTime = GET_TIME;
 }
 
@@ -382,7 +412,9 @@ volatile bool g_bThread = true;;
 SDL_mutex* g_Mutex = NULL;
 SDL_Thread* g_Thread = NULL;
 
-void Engine::renderThreadSafe() {
+void Engine::renderThreadSafe()
+{
+  PINBALL(FUNCT());
   this->pauseTickThread();
 
   EM_COUT("Engine::render()", 0);
@@ -475,7 +507,9 @@ int fctThread(void * data) {
   return 0;
 }
 
-void Engine::startTickThread() {
+void Engine::startTickThread()
+{
+  PINBALL(FUNCT());
   g_bThread = true;
   if (g_Mutex == NULL) {
     g_Mutex = SDL_CreateMutex();
@@ -489,7 +523,9 @@ void Engine::startTickThread() {
   }
 }
 
-void Engine::endTickThread() {
+void Engine::endTickThread()
+{
+  PINBALL(FUNCT());
   int status;
   g_bThread = false;
   SDL_WaitThread(g_Thread, &status);
@@ -498,13 +534,17 @@ void Engine::endTickThread() {
   g_Mutex = NULL;
 }
 
-void Engine::pauseTickThread() {
+void Engine::pauseTickThread()
+{
+  PINBALL(FUNCT());
   if (g_Mutex != NULL) {
     if (SDL_mutexP(g_Mutex) == -1) 	cerr << "Error unlocking mutex" << endl;
   }
 }
 
-void Engine::resumeTickThread() {
+void Engine::resumeTickThread()
+{
+  PINBALL(FUNCT());
   if (g_Mutex != NULL) {
     if (SDL_mutexV(g_Mutex) == -1) 	cerr << "Error unlocking mutex" << endl;
   }

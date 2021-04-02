@@ -734,6 +734,7 @@ MenuItem* createMenus(Engine * engine) {
 Pinball::Pinball()
   : mpMenu{}, mpEngine{}, miCount{}, miMaxCount{}
 {
+  PINBALL(FUNCT());
   char* var= getenv("PINBALL_QUIT");
   if (var) {
     if (*var) { miMaxCount = atoi(var); }
@@ -743,6 +744,7 @@ Pinball::Pinball()
 
 int Pinball::run(int argc, char *argv[])
 {
+  PINBALL(FUNCT());
   int status = 0;
   try {
     status |= setup(argc, argv);
@@ -767,6 +769,7 @@ int Pinball::run(int argc, char *argv[])
 
 int Pinball::setup(int argc, char *argv[])
 {
+  PINBALL(FUNCT());
   for (auto i=0; i<argc; i++) {
     if ((strcmp(argv[i], "--version") == 0)
         || (strcmp(argv[i], "-v") == 0)) {
@@ -855,6 +858,7 @@ int Pinball::setup(int argc, char *argv[])
 
 int Pinball::loop()
 {
+  PINBALL(FUNCT());
   if (miMaxCount && miCount >= miMaxCount) {
     return 1;
   }
@@ -913,6 +917,7 @@ int Pinball::loop()
 
 int Pinball::finish(int status)
 {
+  PINBALL(FUNCT());
   Config::getInstance()->saveConfig();
 
     // Write high scores to disk - pnf
@@ -925,6 +930,7 @@ int Pinball::finish(int status)
 
 int Pinball::main(int argc, char *argv[])
 {
+  PINBALL(FUNCT());
   Pinball instance;
   int status = instance.run(argc, argv);
   cout << "pinball: exit: " << status << " fps: " << Engine::getFps() << endl;
@@ -1001,6 +1007,7 @@ extern "C" {
 int WINAPI WinMain( HINSTANCE hInst,  HINSTANCE hPreInst,
                     LPSTR lpszCmdLine,  int nCmdShow )
 {
+  PINBALL(FUNCT());
   int argc=0; char** argv = 0;
   convertStringWords( GetCommandLine(), &argc, &argv);
 
@@ -1013,6 +1020,7 @@ int WINAPI WinMain( HINSTANCE hInst,  HINSTANCE hPreInst,
 
 int main(int argc, char *argv[])
 {
+  PINBALL(FUNCT());
   int status = EXIT_SUCCESS;
   status |=  Pinball::main(argc, argv);
   return status;
