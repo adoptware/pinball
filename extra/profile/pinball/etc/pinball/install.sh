@@ -33,10 +33,17 @@ else
     [ "${PINBALL_BRANCH}" = "" ] || url="$url:/${PINBALL_BRANCH}"
     url="${url}/${distro}"
     list="/etc/apt/sources.list.d/${project}.list"
-    echo "deb [allow-insecure=yes] $url /" | ${sudo} tee "$list"
     suffix="-snapshot"
-    curl -s "${url}/Release.key" | gpg --with-fingerprint
-    curl "${url}/Release.key" | ${sudo} apt-key add -v -
+    
+    if [ -e "$list" ] ; then
+        echo "warning: file '$list' exists please remove or update manualy"
+        cat /etc/os-release ||:
+        cat "$list"
+    else
+        echo "deb [allow-insecure=yes] $url /" | ${sudo} tee "$list"        
+        curl -s "${url}/Release.key" | gpg --with-fingerprint
+        curl "${url}/Release.key" | ${sudo} apt-key add -v -
+    fi
 
     ${sudo} apt-get clean
     ${sudo} apt-get update
