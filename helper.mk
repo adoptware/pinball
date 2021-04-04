@@ -138,19 +138,16 @@ run/quit: ${app}
 start: run
 
 
-config.status: configure
+Makefile config.status: configure Makefile.in
 	@echo "# log: $@: $<"
 	${<D}/${<F}
-	stat -c '%y' $< $@
+	stat -c '%y: %n' $^ $@
 
-Makefile: config.status Makefile.am
-	@echo "# log: $@: $<"
-	stat -c '%y' $< $@
 
 acinclude.m4:
 	@echo "# log: $@: $<"
-	stat -c '%y' $^ $@ || ${make} rule/acinclude.m4
-	stat -c '%y' $< $@
+	stat -c '%y: %n' $^ $@ || ${make} rule/acinclude.m4
+	stat -c '%y: %n' $^ $@
 
 rule/acinclude.m4: /usr/share/aclocal/sdl2.m4
 	@echo "# log: $@: $<"
@@ -162,23 +159,20 @@ rule/acinclude.m4: /usr/share/aclocal/sdl2.m4
 	echo "# TODO: Please create acinclude.m4 from"
 	echo "# https://hg.libsdl.org/SDL/raw-file/d4d66a1891fc/sdl.m4"
 
-configure: acinclude.m4 pinconfig.h.in Makefile.in
+config.status configure: acinclude.m4 pinconfig.h.in Makefile.in
 	@echo "# log: $@: $<"
-	autoconf
-	stat -c '%y' $^ $@
+	autoconf --force
+	stat -c '%y: %n' $^ $@
 
-autom4te.cache: Makefile.am ltmain.sh pinconfig.h.in README
+INSTALL config.guess config.sub depcomp install-sh autom4te.cache: Makefile.am ltmain.sh pinconfig.h.in README
 	@echo "# log: $@: $^"
-	automake --add-missing --copy
-	stat -c '%y' $^ $@
-
-INSTALL config.guess config.sub depcomp install-sh: autom4te.cache
-	stat -c '%y' $^ $@
+	automake --add-missing --copy --force
+	stat -c '%y: %n' $^ $@
 
 README: README.md
 	@echo "# log: $@: $<"
 	ls $@ || ln -fs $< $@
-	stat -c '%y' $^ $@
+	stat -c '%y: %n' $^ $@
 
 AUTHORS ChangeLog NEWS: README
 	@echo "# log: $@: $<"
@@ -191,33 +185,30 @@ rule/autoupdate: configure.ac
 aclocal.m4: libltdl/m4
 	@echo "# log: $@: $<"
 	aclocal
-	stat -c '%y' $^ $@
+	stat -c '%y: %n' $^ $@
 
 Makefile.in: Makefile.am INSTALL
 	automake
-	stat -c '%y' $^ $@
+	stat -c '%y: %n' $^ $@
 
 pinconfig.h.in: aclocal.m4
 	@echo "# log: $@: $<"
-	autoheader
-	stat -c '%y' $^ $@
+	autoheader --force
+	stat -c '%y: %n' $^ $@
 
-missing ltmain.sh libltdl/m4: compile
-	stat -c '%y' $< $@
-
-compile:
+libltdl/m4 compile missing ltmain.sh: configure.ac
 	@echo "# log: $@: $<"
 	libtoolize --ltdl --force --copy
-	stat -c '%y' $< $@
+	stat -c '%y: %n' $^ $@
 
 devel: ${app}
 	$< || gdb -tui $<
 
 ${app}: all
-	stat -c '%y' $@
+	stat -c '%y: %n' $@
 
 all: rule/make
-	${MAKE} all
+	${MAKE} $@
 
 clean/autotools:
 	rm -rf ${autotools_files}
@@ -254,7 +245,7 @@ pincab/run:
 
 
 debian/setup/devel:
-	${sudo} apt-get update
+	${sudo} apt-get update || echo "TODO: fix system for $@"
 	${sudo} apt-get install -y \
   build-essential \
   dpkg-dev \
@@ -363,7 +354,7 @@ ${project}.jpg/%: data/splash.png
 	${make} resolution=${@D} ${F}
 
 tmp/${resolution}/${project}.jpg:
-	stat -c '%y' $^ $@ || ${make} ${@F}/${resolution}
+	stat -c '%y: %n' $^ $@ || ${make} ${@F}/${resolution}
 
 jpg: tmp/${resolution}/${project}.jpg
 	file $<
@@ -437,9 +428,9 @@ pinball-amd64.img: extra/debos/machine/generic/pinball-amd64.yaml
 	${make} debos/$<
 
 %.gz: %
-	stat -c '%y' $<
+	stat -c '%y: %n' $^
 	gzip -f -9 $<
-	stat -c '%y' $@
+	stat -c '%y: %n' $@
 
 debos/%: pinball-%.img
 	ls $^
@@ -488,7 +479,18 @@ check: ${app}
 PINBALL_TABLE="${PINBALL_TABLE}" \
 PINBALL_QUIT=25 \
 ${<D}/${<F} 2>&1 \
-| grep -o '${project}: exit: .*' 
+| grep -o '${project}: exit: .*'
+
+
+pipe/%: ${app}
+	echo "# $@: $^";\
+PINBALL_TABLE="${PINBALL_TABLE}" \
+PINBALL_QUIT=25 \
+${<D}/${<F} 2>&1 \
+| ${@F}
+
+less: pipe/less
+	echo "# $@: $^";\
 
 configure/release: configure
 	${<D}/${<F} --without-debug --without-trako ${configure_options}
