@@ -38,17 +38,6 @@
 #include "TextureUtil.h"
 #include "Profiler.h"
 
-#ifndef HAVE_OPENGLES
-// TODO Remove glu
-#if EM_USE_SDL
-#if EM_DEBUG
-#if defined(HAVE_GLU_H) && HAVE_GLU_H
-#include <GL/glu.h>
-#endif
-#endif
-#endif
-#endif
-
 volatile unsigned int g_iStartTime = 0;
 //volatile int g_iDesiredTime = -1;
 volatile int g_iLastRender = 0;

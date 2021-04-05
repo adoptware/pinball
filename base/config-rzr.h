@@ -201,11 +201,8 @@ using namespace std;
 //#ifdef Polygon // Polygon Is A Macro So It Is Renamed To Be Used As AClass
 //#undef Polygon // other solution is to write "class Polygon" instead of just Polygon
 //#define Polygon PolygonClass
-// ---- Texture  Engine // undefined reference to `gluErrorString@4
 //#undef EM_GLERROR
 //#define EM_GLERROR(a) EM_COUT(a,42)
-#include <GL/glu.h>
-//#define gluErrorString(x) x
 //#endif 
 #endif // msvc6
 
