@@ -109,7 +109,7 @@ if test x$enable_gles = xyes; then
   MATHLIB="-lm"
   AC_CHECK_HEADER(
       [GLES/gl.h],
-      [ac_cv_search_glBegin="none required"],
+      [ac_cv_search_glLoadMatrixx="none required"],
       [AC_MSG_ERROR(*** OpenGL ES headers not found on system!)]
   )
   AC_ARG_WITH(gles-library, [  --with-gles-library=LIBRARY OpenGL ES library @<:@default=GLESv1_CM@:>@], GL_LIBS=-l"$withval", GL_LIBS="-lGLESv1_CM")
@@ -122,7 +122,7 @@ case "$target" in
         MATHLIB=""
         AC_CHECK_HEADER(
             [OpenGL/gl.h],
-            [ac_cv_search_glBegin="none required"],
+            [ac_cv_search_glVertex3f="none required"],
             [AC_MSG_ERROR(*** OpenGL headers not found on system!)]
         )
         ;;
@@ -136,7 +136,7 @@ case "$target" in
         MATHLIB="-lm"
         AC_CHECK_HEADER(
             [GL/gl.h],
-            AC_SEARCH_LIBS(glBegin, [opengl32 GL GL2 OpenGL], [test $ac_cv_search_glBegin = "none required" || GL_LIBS="$ac_cv_search_glBegin $GL_LIBS"], [AC_MSG_ERROR(*** OpenGL library not found on system!)]),
+            AC_SEARCH_LIBS(glVertex3f, [opengl32 GL GL2 OpenGL], [test $ac_cv_search_glVertex3f = "none required" || GL_LIBS="$ac_cv_search_gVertex3f $GL_LIBS"], [AC_MSG_ERROR(*** OpenGL library not found on system!)]),
             [AC_MSG_ERROR(*** OpenGL headers not found on system!)]
         )
         ;;
