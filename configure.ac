@@ -148,16 +148,6 @@ LIBS="$MATHLIB $LIBS"
 AC_SUBST(GL_LIBS)
 LIBS="$GL_LIBS $LIBS"
 
-dnl *******************************************
-
-if test x$enable_gles = xno; then
-PKG_CHECK_MODULES([glu],
-	[glu >= 9.0.1],
-	[],
-	[HAVE_GLU_H=1],
-	[HAVE_GLU_H=0])
-fi
-
 dnl SDL ***************************************
 PKG_CHECK_MODULES([SDL],
 	[sdl2 >= 2.0.0],

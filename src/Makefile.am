@@ -58,7 +58,7 @@ wpinball.exe:  ${pinball_OBJECTS} ${pinball_DEPENDENCIES}
 	${GCCLOCALDIR}g++ -g -W -Wall -O2 -o$@ $^ \
 	-lSDL_mixer -lvorbisfile -lvorbis -logg -lsmpeg \
 	-lSDL_image -lSDLmain -lSDL \
-	-lglu32 -lopengl32 -ljpeg -lpng \
+	-lopengl32 -ljpeg -lpng \
 	-lwinmm -luser32 -lgdi32 -ldxguid \
 	-lmingw32 -lSDLmain -lSDL  -mwindows \
 	-L${GCCLOCALDIR}../lib
