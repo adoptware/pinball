@@ -210,27 +210,23 @@ void Engine::drawSplash(EmTexture * tex)
   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
 	#ifdef HAVE_OPENGLES
-	GLuint vbo;
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	float verts[20];
-	glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(float), NULL);
-	glVertexPointer(3, GL_FLOAT, 5 * sizeof(float), (const float *)NULL + 2);
+	float texcoord_pointer[8];
+	float vertex_pointer[12];
+	glTexCoordPointer(2, GL_FLOAT, 0, texcoord_pointer);
+	glVertexPointer(3, GL_FLOAT, 0, vertex_pointer);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnableClientState(GL_VERTEX_ARRAY);
-	verts[0]  = 0; verts[1] = 0;
-	verts[2]  = -EM_RIGHT; verts[3] = EM_UP; verts[4] = -1;
-	verts[5]  = 1; verts[6] = 0;
-	verts[7]  = EM_RIGHT; verts[8] = EM_UP; verts[9] = -1;
-	verts[10] = 1; verts[11] = 1;
-	verts[12] = EM_RIGHT; verts[13] = -EM_UP; verts[14] = -1;
-	verts[15] = 0; verts[16] = 1;
-	verts[17] = -EM_RIGHT; verts[18] = -EM_UP; verts[19] = -1;
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+	texcoord_pointer[0]  = 0; texcoord_pointer[1] = 0;
+	vertex_pointer[0]  = -EM_RIGHT; vertex_pointer[1] = EM_UP; vertex_pointer[2] = -1;
+	texcoord_pointer[2]  = 1; texcoord_pointer[3] = 0;
+	vertex_pointer[3]  = EM_RIGHT; vertex_pointer[4] = EM_UP; vertex_pointer[5] = -1;
+	texcoord_pointer[4] = 1; texcoord_pointer[5] = 1;
+	vertex_pointer[6] = EM_RIGHT; vertex_pointer[7] = -EM_UP; vertex_pointer[8] = -1;
+	texcoord_pointer[6] = 0; texcoord_pointer[7] = 1;
+	vertex_pointer[9] = -EM_RIGHT; vertex_pointer[10] = -EM_UP; vertex_pointer[11] = -1;
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDeleteBuffers(1, &vbo);
 	#else
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 0);
