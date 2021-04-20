@@ -150,12 +150,10 @@ void EmFont::print(const char * buffer, float x, float y) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
   #ifdef HAVE_OPENGLES
-  GLuint vbo;
-  glGenBuffers(1, &vbo);
-  glBindBuffer(GL_ARRAY_BUFFER, vbo);
-  float verts[20];
-  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(float), NULL);
-  glVertexPointer(3, GL_FLOAT, 5 * sizeof(float), (const float *)NULL + 2);
+  float texcoord_pointer[8];
+  float vertex_pointer[12];
+  glTexCoordPointer(2, GL_FLOAT, 0, texcoord_pointer);
+  glVertexPointer(3, GL_FLOAT, 0, vertex_pointer);
   glEnableClientState(GL_TEXTURE_COORD_ARRAY);
   glEnableClientState(GL_VERTEX_ARRAY);
   #endif
@@ -186,15 +184,14 @@ void EmFont::print(const char * buffer, float x, float y) {
     float xbottom = (x + a*EM_FONTSIZE_X)*ratio;
     float xtop = (x + (a+1)*EM_FONTSIZE_X)*ratio;
     #ifdef HAVE_OPENGLES
-    verts[0]  = u; verts[1] = v;
-    verts[2]  = xbottom; verts[3] = y; verts[4] = -1;
-    verts[5]  = u+0.125; verts[6] = v;
-    verts[7]  = xtop; verts[8] = y; verts[9] = -1;
-    verts[10] = u+0.125; verts[11] = v+0.125;
-    verts[12] = xtop; verts[13] = y-EM_FONTSIZE_Y; verts[14] = -1;
-    verts[15] = u; verts[16] = v+0.125;
-    verts[17] = xbottom; verts[18] = y-EM_FONTSIZE_Y; verts[19] = -1;
-    glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+    texcoord_pointer[0]  = u; texcoord_pointer[1] = v;
+    vertex_pointer[0]  = xbottom; vertex_pointer[1] = y; vertex_pointer[2] = -1;
+    texcoord_pointer[2]  = u+0.125; texcoord_pointer[3] = v;
+    vertex_pointer[3]  = xtop; vertex_pointer[4] = y; vertex_pointer[5] = -1;
+    texcoord_pointer[4] = u+0.125; texcoord_pointer[5] = v+0.125;
+    vertex_pointer[6] = xtop; vertex_pointer[7] = y-EM_FONTSIZE_Y; vertex_pointer[8] = -1;
+    texcoord_pointer[6] = u; texcoord_pointer[7] = v+0.125;
+    vertex_pointer[9] = xbottom; vertex_pointer[10] = y-EM_FONTSIZE_Y; vertex_pointer[11] = -1;
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     #else
     glBegin(GL_QUADS);
@@ -213,7 +210,6 @@ void EmFont::print(const char * buffer, float x, float y) {
   #ifdef HAVE_OPENGLES
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-  glDeleteBuffers(1, &vbo);
   #endif
 }
 #endif // EM_USE_SDL
