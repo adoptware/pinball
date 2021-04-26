@@ -14,6 +14,7 @@ license: GPL-2.0+
 plugs:
   alsa:
   audio-playback:
+  joystick:
   network-bind: # Mir/Xwayland
   opengl:
   pulseaudio:
