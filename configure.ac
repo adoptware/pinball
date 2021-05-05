@@ -89,7 +89,7 @@ eval EM_HIGHSCORE_PATH=`eval echo "$EM_HIGHSCORE_DIR"`
 AC_DEFINE_UNQUOTED(EM_HIGHSCORE_DIR, "$EM_HIGHSCORE_PATH", [Highscore directory])
 
 
-AC_ARG_ENABLE(libtest, [  --disable-libtest     SDL_image _mixer libtest work around ], , enable_libtest=yes)
+AC_ARG_ENABLE(libtest, [  --disable-libtest       SDL_image _mixer libtest work around ], , enable_libtest=yes)
 
 dnl *******************************************
 dnl Allegro or SDL version ********************
@@ -104,8 +104,8 @@ dnl *******************************************
 dnl OPENGL ************************************
 dnl Figure out which math and GL library to use
 
-AC_ARG_ENABLE(gles, [  --enable-gles           enable OpenGL ES], enable_gles=yes, enable_gles=no)
-if test x$enable_gles = xyes; then
+AC_ARG_ENABLE(gles, [  --enable-gles           Enable OpenGL ES])
+if test "x$enable_gles" = "xyes"; then
   MATHLIB="-lm"
   AC_CHECK_HEADER(
       [GLES/gl.h],
@@ -114,9 +114,7 @@ if test x$enable_gles = xyes; then
   )
   AC_ARG_WITH(gles-library, [  --with-gles-library=LIBRARY OpenGL ES library @<:@default=GLESv1_CM@:>@], GL_LIBS=-l"$withval", GL_LIBS="-lGLESv1_CM")
   AC_DEFINE(HAVE_OPENGLES, [1], [Support for OpenGL ES])
-fi
-
-if test x$enable_gles = xno; then
+else
 case "$target" in
     *-*-darwin*)
         MATHLIB=""
