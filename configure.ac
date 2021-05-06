@@ -21,12 +21,12 @@ dnl CFLAGS="-g -W -Wall -O2"
 dnl CXXFLAGS="-g -W -Wall -O2"
 
 AC_ARG_WITH(cflags,
-[  --with-cflags=CFLAGS            use CFLAGS as compile time arguments.],
-    [CFLAGS=$with_cflags; export CFLAGS])
+	[  --with-cflags=CFLAGS            use CFLAGS as compile time arguments.],
+	[CFLAGS=$with_cflags; export CFLAGS])
 
 AC_ARG_WITH(cxxflags,
-[  --with-cxxflags=CXXFLAGS        use CXXFLAGS as compile time arguments.],
-    [CXXFLAGS=$with_cxxflags; export CXXFLAGS])
+	[  --with-cxxflags=CXXFLAGS        use CXXFLAGS as compile time arguments.],
+	[CXXFLAGS=$with_cxxflags; export CXXFLAGS])
 
 dnl Checks for programs.
 AC_PROG_CC
@@ -66,7 +66,10 @@ AC_DEFINE_UNQUOTED(EM_LIBDIR, "$EM_LIBPATH", [The library or plugin dir /usr/loc
 
 
 dnl special fix for rpmbuild, I hate rpmbuild even more than I hate autoconf
-AC_ARG_WITH(buildroot-prefix, [  --with-buildroot-prefix=PFX    Only used when building packages], buildroot_prefix="$withval", buildroot_prefix="")
+AC_ARG_WITH(buildroot-prefix,
+	[  --with-buildroot-prefix=PFX    Only used when building packages],
+	buildroot_prefix="$withval",
+	buildroot_prefix="")
 
 if test x"$buildroot_prefix" != "x"; then
 	EM_BUILD_ROOT=$buildroot_prefix
@@ -75,7 +78,10 @@ else
 fi
 AC_SUBST(EM_BUILD_ROOT)
 
-AC_ARG_WITH(highscore-prefix, [  --with-highscore-prefix=PFX    Install highscore files in PFX (/var/games/pinball)], highscore_prefix="$withval", highscore_prefix="")
+AC_ARG_WITH(highscore-prefix,
+	[  --with-highscore-prefix=PFX    Install highscore files in PFX (/var/games/pinball)],
+	highscore_prefix="$withval",
+	highscore_prefix="")
 
 if test x"$highscore_prefix" != "x"; then
 	EM_HIGHSCORE_DIR=$highscore_prefix
@@ -89,12 +95,18 @@ eval EM_HIGHSCORE_PATH=`eval echo "$EM_HIGHSCORE_DIR"`
 AC_DEFINE_UNQUOTED(EM_HIGHSCORE_DIR, "$EM_HIGHSCORE_PATH", [Highscore directory])
 
 
-AC_ARG_ENABLE(libtest, [  --disable-libtest       SDL_image _mixer libtest work around ], , enable_libtest=yes)
+AC_ARG_ENABLE(libtest,
+	[  --disable-libtest       SDL_image _mixer libtest work around ],
+	,
+	enable_libtest=yes)
 
 dnl *******************************************
 dnl Allegro or SDL version ********************
 
-AC_ARG_WITH(allegro, [  --with-allegro          use allegro (software rendering) instead of SDL and OpenGL], use_allegro="yes", use_allegro="no")
+AC_ARG_WITH(allegro,
+	[  --with-allegro          use allegro (software rendering) instead of SDL and OpenGL],
+	use_allegro="yes",
+	use_allegro="no")
 
 if test x"$use_allegro" = "xno"; then
 
@@ -112,7 +124,10 @@ if test "x$enable_gles" = "xyes"; then
       [ac_cv_search_glLoadMatrixx="none required"],
       [AC_MSG_ERROR(*** OpenGL ES headers not found on system!)]
   )
-  AC_ARG_WITH(gles-library, [  --with-gles-library=LIBRARY OpenGL ES library @<:@default=GLESv1_CM@:>@], GL_LIBS=-l"$withval", GL_LIBS="-lGLESv1_CM")
+  AC_ARG_WITH(gles-library,
+  	[  --with-gles-library=LIBRARY OpenGL ES library @<:@default=GLESv1_CM@:>@],
+  	GL_LIBS=-l"$withval",
+  	GL_LIBS="-lGLESv1_CM")
   AC_DEFINE(HAVE_OPENGLES, [1], [Support for OpenGL ES])
 else
 case "$target" in
@@ -160,7 +175,10 @@ LIBS="$LIBS $SDL_LIBS"
 DEP_PKGS="$DEP_PKGS sdl2 >= 2.0.0"
 
 dnl SDL_image *********************************
-AC_ARG_WITH(sdl2image-prefix, [  --with-sdl2image-prefix=PFX prefix where SDL2_image library is installed], sdl2image_prefix="$withval", sdl2image_prefix="") 
+AC_ARG_WITH(sdl2image-prefix,
+	[  --with-sdl2image-prefix=PFX prefix where SDL2_image library is installed],
+	sdl2image_prefix="$withval",
+	sdl2image_prefix="")
 
 if test x"$sdl2image_prefix" != "x"; then
   SDL2IMAGE_LIB="-L$sdl2image_prefix/lib"
@@ -184,7 +202,10 @@ if test x"$enable_libtest" = x"yes"; then
 fi
 
 dnl SDL_mixer **********************************
-AC_ARG_WITH(sdl2mixer-prefix, [  --with-sdl2mixer-prefix=PFX prefix where SDL2_mixer library is installed], sdl2mixer_prefix="$withval", sdl2mixer_prefix="")
+AC_ARG_WITH(sdl2mixer-prefix,
+	[  --with-sdl2mixer-prefix=PFX prefix where SDL2_mixer library is installed],
+	sdl2mixer_prefix="$withval",
+	sdl2mixer_prefix="")
 
 if test x"$sdl2mixer_prefix" != "x"; then
   SDL2MIXER_LIB="-L$sdl2mixer_prefix/lib"
@@ -219,7 +240,10 @@ dnl End Allegro or SDL *************************
 dnl ********************************************
 dnl CPP_UNIT ***********************************
 
-AC_ARG_WITH(unittest, [  --with-unittest         Try to use unitest], use_unittest="yes", use_unittest="no")
+AC_ARG_WITH(unittest,
+	[  --with-unittest         Try to use unitest],
+	use_unittest="yes",
+	use_unittest="no")
 
 if test x"$use_unittest" = "xyes"; then
 
@@ -241,13 +265,19 @@ AC_CHECK_HEADERS(sys/types.h, : ,AC_MSG_ERROR([*** Header sys/types.h not found.
 
 dnl ********************************************
 dnl Debug and Config ***************************
-AC_ARG_WITH(debug, [  --with-debug            Compile debug version], use_debug="yes", use_debug="no")
+AC_ARG_WITH(debug,
+	[  --with-debug            Compile debug version],
+	use_debug="yes",
+	use_debug="no")
 
 if test x"$use_debug" = "xyes"; then
 AC_DEFINE(EM_DEBUG, [1], [Shall we use debug features such as profiling and keyboard ball steering])
 fi
 
-AC_ARG_WITH(trako, [  --with-trako            Compile trako version], use_trako="yes", use_trako="no")
+AC_ARG_WITH(trako,
+	[  --with-trako            Compile trako version],
+	use_trako="yes",
+	use_trako="no")
 if test x"$use_trako" = "xyes"; then
 AC_DEFINE(EM_TRAKO, [1], [Shall we use trako features such as profiling and keyboard ball steering])
 fi
