@@ -21,11 +21,11 @@ dnl CFLAGS="-g -W -Wall -O2"
 dnl CXXFLAGS="-g -W -Wall -O2"
 
 AC_ARG_WITH(cflags,
-	[  --with-cflags=CFLAGS            use CFLAGS as compile time arguments.],
+	[AS_HELP_STRING([--with-cflags=CFLAGS], [use CFLAGS as compile time arguments.])],
 	[CFLAGS=$with_cflags; export CFLAGS])
 
 AC_ARG_WITH(cxxflags,
-	[  --with-cxxflags=CXXFLAGS        use CXXFLAGS as compile time arguments.],
+	[AS_HELP_STRING([--with-cxxflags=CXXFLAGS], [use CXXFLAGS as compile time arguments.])],
 	[CXXFLAGS=$with_cxxflags; export CXXFLAGS])
 
 dnl Checks for programs.
@@ -67,7 +67,7 @@ AC_DEFINE_UNQUOTED(EM_LIBDIR, "$EM_LIBPATH", [The library or plugin dir /usr/loc
 
 dnl special fix for rpmbuild, I hate rpmbuild even more than I hate autoconf
 AC_ARG_WITH(buildroot-prefix,
-	[  --with-buildroot-prefix=PFX    Only used when building packages],
+	[AS_HELP_STRING([--with-buildroot-prefix=PFX], [Only used when building packages])],
 	buildroot_prefix="$withval",
 	buildroot_prefix="")
 
@@ -79,7 +79,7 @@ fi
 AC_SUBST(EM_BUILD_ROOT)
 
 AC_ARG_WITH(highscore-prefix,
-	[  --with-highscore-prefix=PFX    Install highscore files in PFX (/var/games/pinball)],
+	[AS_HELP_STRING([--with-highscore-prefix=PFX], [Install highscore files in PFX (/var/games/pinball)])],
 	highscore_prefix="$withval",
 	highscore_prefix="")
 
@@ -96,7 +96,7 @@ AC_DEFINE_UNQUOTED(EM_HIGHSCORE_DIR, "$EM_HIGHSCORE_PATH", [Highscore directory]
 
 
 AC_ARG_ENABLE(libtest,
-	[  --disable-libtest       SDL_image _mixer libtest work around ],
+	[AS_HELP_STRING([--disable-libtest],[SDL_image _mixer libtest work around ])],
 	,
 	enable_libtest=yes)
 
@@ -104,7 +104,7 @@ dnl *******************************************
 dnl Allegro or SDL version ********************
 
 AC_ARG_WITH(allegro,
-	[  --with-allegro          use allegro (software rendering) instead of SDL and OpenGL],
+	[AS_HELP_STRING([--with-allegro],[use allegro (software rendering) instead of SDL and OpenGL])],
 	use_allegro="yes",
 	use_allegro="no")
 
@@ -116,7 +116,7 @@ dnl *******************************************
 dnl OPENGL ************************************
 dnl Figure out which math and GL library to use
 
-AC_ARG_ENABLE(gles, [  --enable-gles           Enable OpenGL ES])
+AC_ARG_ENABLE(gles, [AS_HELP_STRING([--enable-gles],[Enable OpenGL ES])])
 if test "x$enable_gles" = "xyes"; then
   MATHLIB="-lm"
   AC_CHECK_HEADER(
@@ -125,7 +125,7 @@ if test "x$enable_gles" = "xyes"; then
       [AC_MSG_ERROR(*** OpenGL ES headers not found on system!)]
   )
   AC_ARG_WITH(gles-library,
-  	[  --with-gles-library=LIBRARY OpenGL ES library @<:@default=GLESv1_CM@:>@],
+  	[AS_HELP_STRING([--with-gles-library=LIBRARY],[OpenGL ES library @<:@default=GLESv1_CM@:>@])],
   	GL_LIBS=-l"$withval",
   	GL_LIBS="-lGLESv1_CM")
   AC_DEFINE(HAVE_OPENGLES, [1], [Support for OpenGL ES])
@@ -176,7 +176,7 @@ DEP_PKGS="$DEP_PKGS sdl2 >= 2.0.0"
 
 dnl SDL_image *********************************
 AC_ARG_WITH(sdl2image-prefix,
-	[  --with-sdl2image-prefix=PFX prefix where SDL2_image library is installed],
+	[AS_HELP_STRING([--with-sdl2image-prefix=PFX], [prefix where SDL2_image library is installed])],
 	sdl2image_prefix="$withval",
 	sdl2image_prefix="")
 
@@ -203,7 +203,7 @@ fi
 
 dnl SDL_mixer **********************************
 AC_ARG_WITH(sdl2mixer-prefix,
-	[  --with-sdl2mixer-prefix=PFX prefix where SDL2_mixer library is installed],
+	[AS_HELP_STRING([--with-sdl2mixer-prefix=PFX],[prefix where SDL2_mixer library is installed])],
 	sdl2mixer_prefix="$withval",
 	sdl2mixer_prefix="")
 
@@ -241,7 +241,7 @@ dnl ********************************************
 dnl CPP_UNIT ***********************************
 
 AC_ARG_WITH(unittest,
-	[  --with-unittest         Try to use unitest],
+	[AS_HELP_STRING([--with-unittest],[Try to use unitest])],
 	use_unittest="yes",
 	use_unittest="no")
 
@@ -266,7 +266,7 @@ AC_CHECK_HEADERS(sys/types.h, : ,AC_MSG_ERROR([*** Header sys/types.h not found.
 dnl ********************************************
 dnl Debug and Config ***************************
 AC_ARG_WITH(debug,
-	[  --with-debug            Compile debug version],
+	[AS_HELP_STRING([--with-debug],[Compile debug version])],
 	use_debug="yes",
 	use_debug="no")
 
@@ -275,7 +275,7 @@ AC_DEFINE(EM_DEBUG, [1], [Shall we use debug features such as profiling and keyb
 fi
 
 AC_ARG_WITH(trako,
-	[  --with-trako            Compile trako version],
+	[AS_HELP_STRING([--with-trako],[Compile trako version])],
 	use_trako="yes",
 	use_trako="no")
 if test x"$use_trako" = "xyes"; then

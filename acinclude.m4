@@ -18,19 +18,19 @@ AC_DEFUN([AM_PATH_SDL2],
 dnl Get the cflags and libraries from the sdl2-config script
 dnl
 AC_ARG_WITH(sdl-prefix,
-	[  --with-sdl-prefix=PFX   Prefix where SDL is installed (optional)],
+	[AS_HELP_STRING([--with-sdl-prefix=PFX], [Prefix where SDL is installed (optional)])],
 	sdl_prefix="$withval",
 	sdl_prefix="")
 AC_ARG_WITH(sdl-exec-prefix,
-	[  --with-sdl-exec-prefix=PFX Exec prefix where SDL is installed (optional)],
+	[AS_HELP_STRING([--with-sdl-exec-prefix=PFX], [Exec prefix where SDL is installed (optional)])],
 	sdl_exec_prefix="$withval",
 	sdl_exec_prefix="")
 AC_ARG_ENABLE(sdltest,
-	[  --disable-sdltest       Do not try to compile and run a test SDL program],
+	[AS_HELP_STRING([--disable-sdltest], [Do not try to compile and run a test SDL program])],
 	,
 	enable_sdltest=yes)
 AC_ARG_ENABLE(sdlframework,
-	[  --disable-sdlframework Do not search for SDL2.framework],
+	[AS_HELP_STRING([--disable-sdlframework], [Do not search for SDL2.framework])],
 	,
 	search_sdl_framework=yes)
 
@@ -252,11 +252,11 @@ AC_DEFUN([AM_PATH_CPPUNIT],
 [
 
 AC_ARG_WITH(cppunit-prefix,
-	[  --with-cppunit-prefix=PFX   Prefix where CppUnit is installed (optional)],
+	[AS_HELP_STRING([--with-cppunit-prefix=PFX], [Prefix where CppUnit is installed (optional)])],
 	cppunit_config_prefix="$withval",
 	cppunit_config_prefix="")
 AC_ARG_WITH(cppunit-exec-prefix,
-	[  --with-cppunit-exec-prefix=PFX  Exec prefix where CppUnit is installed (optional)],
+	[AS_HELP_STRING([--with-cppunit-exec-prefix=PFX ], [Exec prefix where CppUnit is installed (optional)])],
 	cppunit_config_exec_prefix="$withval",
 	cppunit_config_exec_prefix="")
 
@@ -343,17 +343,17 @@ AC_DEFUN([AM_PATH_ALLEGRO],
 dnl Get the cflags and libraries from the allegro-config script
 dnl
 AC_ARG_WITH(allegro-prefix,
-	[  --with-allegro-prefix=PFX   Prefix where Allegro is installed (optional)],
+	[AS_HELP_STRING([--with-allegro-prefix=PFX], [Prefix where Allegro is installed (optional)])],
 	allegro_prefix="$withval",
 	allegro_prefix="")
 
 AC_ARG_WITH(allegro-exec-prefix,
-	[  --with-allegro-exec-prefix=PFX Exec prefix where Allegro is installed (optional)],
+	[AS_HELP_STRING([--with-allegro-exec-prefix=PFX], [Exec prefix where Allegro is installed (optional)])],
 	allegro_exec_prefix="$withval",
 	allegro_exec_prefix="")
 
 AC_ARG_ENABLE(allegrotest,
-	[  --disable-allegrotest       Do not try to compile and run a test Allegro program],
+	[AS_HELP_STRING([--disable-allegrotest], [Do not try to compile and run a test Allegro program])],
 	,
 	enable_allegrotest=yes)
 
