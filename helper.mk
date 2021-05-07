@@ -138,7 +138,7 @@ run/quit: ${app}
 start: run
 
 
-Makefile config.status: configure Makefile.in
+Makefile: configure Makefile.in
 	@echo "# log: $@: $<"
 	${<D}/${<F}
 	stat -c '%y: %n' $^ $@
