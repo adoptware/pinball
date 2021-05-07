@@ -56,7 +56,7 @@ while test $# -gt 0; do
 done
 
 if test "$echo_cflags" = "yes"; then
-      echo -I@includedir@/pinball
+      echo -I@includedir@/pinball/..
 fi
 
 if test "$echo_libs" = "yes"; then
