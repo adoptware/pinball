@@ -99,16 +99,25 @@ if ! true ; then
     esac
 fi
 model=$(head /proc/device-tree/model && echo || echo "generic")
+
 if [[ "$model" =~ "Raspberry Pi" ]] ; then
     pattern='^dtoverlay=vc4'
-    file=/boot/firmware/config.txt
-    ls /sys/class/drm/card0 \
-        || grep "$pattern" "$file" \
-        || cat<<EOF | sudo tee -a "$file" 
+    list="
+/boot/config.txt
+/boot/firmware/config.txt
+"
+    ls /sys/class/drm/card0 || echo "TODO"
+
+    for file in $list ; do
+        if [ -f "$file" ] ; then
+            grep "$pattern" "$file" \
+                || cat<<EOF | sudo tee -a "$file"
 #{~${project}: patch $file for $model
 dtoverlay=vc4-fkms-v3d, cma-128
 #}~${project}
 EOF
+        fi
+    done
 fi
 
 echo "# Audio"
@@ -130,7 +139,7 @@ elif [ "${PINBALL_DISPLAY_MANAGER}" = "xinit" ]; then
 fi
 
 echo "# Readonly filesystem"
-mkdir -p "${PINBALL_DIR}"
+${sudo} mkdir -p "${PINBALL_DIR}"
 if [ ! -r /etc/fstab ] \
        || grep '# UNCONFIGURED FSTAB FOR BASE SYSTEM' /etc/fstab ; then \
     cat<<EOF | ${sudo} tee /etc/fstab ||:
@@ -173,13 +182,13 @@ if ! true ; then
     ./helper.mk tmp/1024x1024/${project}.jpg
     echo "# Add launcher for profile=${profile}"
     cd /usr/local/opt/${project}/src/${project}
-    cp -rfav extra/profile/pinball/etc/pinball /etc/
+    ${sudo} cp -rfav extra/profile/pinball/etc/pinball /etc/
 fi
 echo "# Add conf files for profile=${profile}"
 if [ ! -d '/etc/pinball' ] ; then
-    cp -rfav "${extra_dir}/profile/pinball/etc/pinball" "/etc/"
+    ${sudo} cp -rfav "${extra_dir}/profile/pinball/etc/pinball" "/etc/"
     [ "$profile" = "" ] || \
-        cp -rfav "${extra_dir}/profile/${profile}/etc/pinball" "/etc/"
+        ${sudo} cp -rfav "${extra_dir}/profile/${profile}/etc/pinball" "/etc/"
 fi
 
 "/etc/pinball/configure.sh"
@@ -188,7 +197,7 @@ if true ; then
     cat /etc/issue.net
     for file in /etc/issue /etc/issue.net ; do
         echo -e "${web_url} # for more \n\n$(cat $file)\n" \
-            | ${sudo} tee $file.tmp && mv $file.tmp $file
+            | ${sudo} tee $file.tmp && ${sudo} mv $file.tmp $file
     done
 fi
 
@@ -236,8 +245,8 @@ if ! ${PINBALL_DEVEL} ; then
       vdpau-driver-all \
       "
     for package in $list ; do
-        dpkg --remove "$package" \
-            || dpkg -L "$package" | xargs -n1 rm -v ||:
+        ${sudo} dpkg --remove "$package" \
+            || dpkg -L "$package" | ${sudo} xargs -n1 rm -v ||:
     done
 
     df -h
@@ -262,6 +271,7 @@ ${sudo} rm -rf /var/lib/apt/lists/*
 
 df -m
 ${sudo} dd if=/dev/zero of=/tmp.tmp ||:
+sync
 ${sudo} rm -f /tmp.tmp
 sync
 
@@ -270,8 +280,7 @@ history -c
 
 cat<<EOF > .bash_history
 echo "# ${web_url} # for more"
-uptime ; hostname -I ; sudo mount -o remount,rw / ; sudo systemctl stop pinball ; sudo touch /forcefsck
-df -h ; sudo apt-get update ; sudo apt-get upgrade --yes 
+uptime ; hostname -I ; sudo systemctl stop pinball ; sudo mount -o remount,rw / ; sudo apt-get update ; sudo apt-get upgrade --yes ; df -h ; sudo touch /forcefsck ; sync
 sudo reboot
 EOF
 sync

@@ -10,7 +10,8 @@ self_dir=$(dirname -- "$0")
 extra_dir=$(realpath -- "${self_dir}/../../../../../extra")
 
 project="pinball"
-sudo=
+sudo=$(which sudo || echo "")
+
 cd /etc/pinball
 
 . pinball.env.sh
