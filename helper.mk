@@ -55,10 +55,15 @@ autotools_files+=stamp-h1
 
 DESTDIR?=/
 
+debos_mirror?=https://deb.debian.org/debian
+debos_scratchsize?=4G
 debos_suite?=testing
+
 debos_flags?=-v
-debos_flags+=--scratchsize=4G
+debos_flags+=--scratchsize=${debos_scratchsize}
 debos_flags+=-tsuite:${debos_suite}
+debos_flags+=-tmirror:${debos_mirror}
+
 debos_images_lists ?= ${project}-i386.img
 debos_images_lists += ${project}-amd64.img
 
