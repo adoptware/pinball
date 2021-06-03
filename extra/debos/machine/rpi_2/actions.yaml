@@ -39,7 +39,7 @@ actions:
   - action: apt
     packages: [
       firmware-brcm80211,
-      {{if eq $suite "unstable" "sid" "testing" "bulleye"}}
+      {{if eq $suite "unstable" "sid" "testing" "bullseye"}}
       linux-image-generic,
       {{else}}
       {{if eq $suite "stable" "buster" "stretch"}}

@@ -25,7 +25,7 @@ actions:
       {{if eq $architecture "i386" "amd64"}}
       grub-pc,
       {{end}}
-      {{if eq $suite "unstable" "sid" "testing" "bulleye"}}
+      {{if eq $suite "unstable" "sid" "testing" "bullseye"}}
       linux-image-generic,
       {{else}}
       {{if eq $suite "buster" "stable"}}
