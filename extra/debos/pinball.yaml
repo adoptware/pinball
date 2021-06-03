@@ -1,6 +1,7 @@
 {{- $architecture := or .architecture "i386" -}}
 {{- $image := or .image "pinball-generic.img" -}}
 {{- $machine := or .machine "generic" -}}
+{{- $mirror := or .mirror "https://deb.debian.org/debian" -}}
 {{- $project := or .project "pinball" -}}
 {{- $suite := or .suite "buster" -}}
 {{- $uboot_machine := or .uboot_machine "generic" -}}
@@ -13,7 +14,7 @@ actions:
     components:
       - main
       - non-free
-    mirror: https://deb.debian.org/debian
+    mirror: {{$mirror}}
     variant: minbase
 
   - action: run

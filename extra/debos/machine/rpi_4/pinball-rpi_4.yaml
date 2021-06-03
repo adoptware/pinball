@@ -1,6 +1,7 @@
 {{- $architecture := or .architecture "arm64" -}}
 {{- $image := or .image "pinball-rpi_4.img" -}}
 {{- $machine := or .machine "rpi_4" -}}
+{{- $mirror := or .mirror "https://deb.debian.org/debian" -}}
 {{- $suite := or .suite "testing" -}}
 {{- $uboot_machine := or .uboot_machine "rpi_4" -}}
 
@@ -14,5 +15,6 @@ actions:
       architecture: {{$architecture}}
       image: {{$image}}
       machine: {{$machine}}
+      mirror: {{$mirror}}
       suite: {{$suite}}
       uboot_machine: {{$uboot_machine}}
