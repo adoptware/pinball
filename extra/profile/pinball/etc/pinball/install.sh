@@ -23,6 +23,7 @@ else
         [ "${VERSION_ID}" != "" ] || VERSION_ID="10"
         distro="${ID}_${VERSION_ID}"
         [ "${VERSION_ID}" = "10" ] || distro="${distro}.0"
+        [ "${VERSION_ID}" != "11" ] || distro="${ID}_Testing"
     fi
     distro=$(echo "${distro}" | sed 's/.*/\u&/')
     if [ "ubuntu" = "$ID" ] ; then
