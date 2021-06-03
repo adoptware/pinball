@@ -3,7 +3,7 @@
 # ex: set tabstop=4 noexpandtab:
 # -*- coding: utf-8 -*
 #
-# SPDX-License-Identifier: GPL-2.0+
+# SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright: Philippe Coval <https://purl.org/rzr/> - 2020+
 #
 
