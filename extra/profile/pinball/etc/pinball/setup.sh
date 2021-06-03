@@ -162,6 +162,7 @@ if ${PINBALL_DEVEL} ; then
           screen \
           time \
           tmux \
+          usbutils \
           make \
           zile \
           # EOL
