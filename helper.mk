@@ -67,7 +67,7 @@ debos_flags+=-tmirror:${debos_mirror}
 debos_images_lists ?= ${project}-i386.img
 debos_images_lists += ${project}-amd64.img
 
-marchine?=rpi_3
+machine?=i386
 
 
 default: help all
@@ -449,7 +449,7 @@ debos/all: extra/debos/machine/
 done
 	@echo "# $@: $^"
 
-debos: debos/i386
+debos: debos/${machine}
 	@echo "# $@: $^"
 
 qemu: pinball-i386.img
