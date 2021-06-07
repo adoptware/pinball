@@ -65,8 +65,10 @@ actions:
   - action: run
     chroot: true
     command: >
-      rm -rf /boot/firmware/kernel*.img /boot/firmware/*.dtb
-      && rm -rf /boot/firmware/overlays
+      rm -rfv /boot/firmware/kernel*.img
+      && rm -rfv /boot/firmware/overlays
+      && echo TODO rm -rfv /boot/firmware/*.dtb
+      && find /boot/firmware/ -type f
 
   - action: run
     chroot: true
