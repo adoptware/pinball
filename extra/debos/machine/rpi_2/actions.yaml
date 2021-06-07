@@ -117,7 +117,7 @@ actions:
       {{end}} \
       {{end}} \
       && echo 'U_BOOT_MENU_LABEL="Debian ({{$project}}) GNU/Linux: "' >> /etc/default/u-boot
-      && echo 'U_BOOT_PARAMETERS="root=/dev/mmcblk0p2 ro rootwait"' >> /etc/default/u-boot
+      && echo 'U_BOOT_PARAMETERS="root=LABEL=root ro rootwait"' >> /etc/default/u-boot
       && echo 'U_BOOT_ROOT=""' >> /etc/default/u-boot
       && echo 'U_BOOT_TIMEOUT="50"' >> /etc/default/u-boot
       && echo 'U_BOOT_UPDATE="true"' >> /etc/default/u-boot
