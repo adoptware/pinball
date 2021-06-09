@@ -1,6 +1,6 @@
 {{- $architecture := or .architecture "i386" -}}
 {{- $image := or .image "pinball-generic" -}}
-{{- $suite := or .suite "buster" -}}
+{{- $suite := or .suite "bullseye" -}}
 
 architecture: {{$architecture}}
 

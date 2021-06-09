@@ -3,7 +3,7 @@
 {{- $machine := or .machine "generic" -}}
 {{- $mirror := or .mirror "https://deb.debian.org/debian" -}}
 {{- $project := or .project "pinball" -}}
-{{- $suite := or .suite "buster" -}}
+{{- $suite := or .suite "bullseye" -}}
 {{- $uboot_machine := or .uboot_machine "generic" -}}
 
 architecture: {{$architecture}}

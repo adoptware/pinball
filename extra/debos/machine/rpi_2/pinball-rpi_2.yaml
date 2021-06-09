@@ -1,7 +1,7 @@
 {{- $architecture := or .architecture "armhf" -}}
 {{- $image := or .image "pinball-rpi_2.img" -}}
 {{- $machine := or .machine "rpi_2" -}}
-{{- $suite := or .suite "testing" -}}
+{{- $suite := or .suite "bullseye" -}}
 {{- $uboot_machine := or .uboot_machine "rpi_2" -}}
 
 architecture: {{$architecture}}

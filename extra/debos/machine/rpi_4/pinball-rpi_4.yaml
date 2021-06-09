@@ -2,7 +2,7 @@
 {{- $image := or .image "pinball-rpi_4.img" -}}
 {{- $machine := or .machine "rpi_4" -}}
 {{- $mirror := or .mirror "https://deb.debian.org/debian" -}}
-{{- $suite := or .suite "testing" -}}
+{{- $suite := or .suite "bullseye" -}}
 {{- $uboot_machine := or .uboot_machine "rpi_4" -}}
 
 architecture: {{$architecture}}

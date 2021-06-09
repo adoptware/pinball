@@ -57,7 +57,7 @@ DESTDIR?=/
 
 debos_mirror?=https://deb.debian.org/debian
 debos_scratchsize?=4G
-debos_suite?=testing
+debos_suite?=bullseye
 
 debos_flags?=-v
 debos_flags+=--scratchsize=${debos_scratchsize}
