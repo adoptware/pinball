@@ -1,19 +1,14 @@
 {{- $architecture := or .architecture "armhf" -}}
-{{- $firmware_version := or .firmware_version "1.20210108" -}}
+{{- $cmdline := or .cmdline "root=LABEL=root rootwait ro fsck.mode=auto fsck.repair=yes console=ttyS1,115200" -}}
 {{- $machine := or .machine "rpi_2" -}}
 {{- $project := or .project "pinball" -}}
 {{- $suite := or .suite "bullseye" -}}
-{{- $uboot_machine := or .uboot_machine "rpi_2" -}}
+{{- $uboot_machine := or .uboot_machine (printf "%s" $machine) -}}
 {{- $image := or .image (printf "%s-%s-%s.img" $project $architecture $machine) -}}
 
 architecture: {{$architecture}}
 
 actions:
-
-  - action: download
-    url: https://github.com/raspberrypi/firmware/archive/{{$firmware_version}}.tar.gz
-    unpack: true
-    name: firmware
 
   - action: image-partition
     imagename: {{$image}}
@@ -29,16 +24,25 @@ actions:
       - name: firmware
         fs: fat32
         start: 0%
-        end: 64MB
+        end: 128MB
       - name: root
         fs: ext4
-        start: 64MB
+        start: 128MB
         end: 100%
         flags: [boot]
 
   - action: apt
+    packages:
+      - initramfs-tools
+      - e2fsprogs
+      {{if eq $suite "stretch"}}
+      {{else}}
+      - u-boot-menu
+      - u-boot-rpi
+      {{end}}
+
+  - action: apt
     packages: [
-      firmware-brcm80211,
       {{if eq $suite "unstable" "sid" "testing" "bullseye"}}
       linux-image-generic,
       {{else}}
@@ -50,31 +54,21 @@ actions:
       {{end}}
       {{end}}
       {{end}}
-      {{if eq $suite "stretch"}}
-      {{else}}
-      u-boot-menu,
-      {{end}}
-      u-boot-rpi
     ]
 
-  - action: overlay
-    origin: firmware
-    source: firmware-{{$firmware_version}}/boot
-    destination: /boot/firmware
+  - action: apt
+    packages:
+      - firmware-brcm80211
+      - raspi-firmware
 
   - action: run
     chroot: true
     command: >
-      rm -rfv /boot/firmware/kernel*.img
-      && rm -rfv /boot/firmware/overlays
-      && echo TODO rm -rfv /boot/firmware/*.dtb
-      && find /boot/firmware/ -type f
-
-  - action: run
-    chroot: true
-    command: >
-      find /usr/lib/u-boot/
+      mkdir -p /boot/firmware
+      && cp -av /usr/lib/raspi-firmware/* /boot/firmware/
+      && cp -av /usr/lib/linux-image-*-*/broadcom/* /boot/firmware/
       && cp -av /usr/lib/u-boot/{{$uboot_machine}}/* /boot/firmware/
+      && echo 'ROOTPART="LABEL=root"' >> /etc/default/raspi-firmware
 
   - action: run
     chroot: true
@@ -90,13 +84,13 @@ actions:
       {{end}}
       && echo 'enable_uart=1'
       | tee -a /boot/firmware/config.txt
+      && echo 'uart_2ndstage'
+      | tee -a /boot/firmware/config.txt
       && echo 'kernel=u-boot.bin'
       | tee -a /boot/firmware/config.txt
+      && echo 'upstream_kernel=1'
+      | tee -a /boot/firmware/config.txt
       && cat /boot/firmware/config.txt
-
-  - action: run
-    chroot: true
-    command: echo 'console=ttyS0,115200' > /etc/kernel/cmdline
 
   - action: run
     chroot: true
@@ -117,7 +111,7 @@ actions:
       {{end}} \
       {{end}} \
       && echo 'U_BOOT_MENU_LABEL="Debian ({{$project}}) GNU/Linux: "' >> /etc/default/u-boot
-      && echo 'U_BOOT_PARAMETERS="root=LABEL=root ro rootwait"' >> /etc/default/u-boot
+      && echo 'U_BOOT_PARAMETERS="{{$cmdline}}"' >> /etc/default/u-boot
       && echo 'U_BOOT_ROOT=""' >> /etc/default/u-boot
       && echo 'U_BOOT_TIMEOUT="50"' >> /etc/default/u-boot
       && echo 'U_BOOT_UPDATE="true"' >> /etc/default/u-boot
@@ -130,3 +124,7 @@ actions:
     chroot: true
     command: u-boot-update
   {{end}}
+
+  - action: run
+    chroot: true
+    command: update-initramfs -u

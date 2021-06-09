@@ -1,4 +1,5 @@
 {{- $architecture := or .architecture "i386" -}}
+{{- $cmdline := or .cmdline "root=LABEL=root rootwait ro fsck.mode=auto fsck.repair=yes console=ttyS1,115200" -}}
 {{- $machine := or .machine "generic" -}}
 {{- $mirror := or .mirror "https://deb.debian.org/debian" -}}
 {{- $project := or .project "pinball" -}}
@@ -74,6 +75,8 @@ actions:
     script: ../../extra/profile/pinball/etc/pinball/setup.sh
   - action: filesystem-deploy
     description: Deploying filesystem onto image
+    setup-kernel-cmdline: true
+    append-kernel-cmdline: {{$cmdline}}
 
   - action: recipe
     recipe: machine/{{$machine}}/image.yaml
