@@ -1,6 +1,7 @@
 {{- $architecture := or .architecture "i386" -}}
 {{- $image := or .image "pinball-i386.img" -}}
 {{- $machine := or .machine "generic" -}}
+{{- $mirror := or .mirror "https://deb.debian.org/debian" -}}
 {{- $suite := or .suite "bullseye" -}}
 
 architecture: {{$architecture}}
@@ -13,4 +14,5 @@ actions:
        architecture: {{$architecture}}
        image: {{$image}}
        machine: {{$machine}}
+       mirror: {{$mirror}}
        suite: {{$suite}}
