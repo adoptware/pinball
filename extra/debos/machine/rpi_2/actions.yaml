@@ -1,10 +1,10 @@
 {{- $architecture := or .architecture "armhf" -}}
 {{- $firmware_version := or .firmware_version "1.20210108" -}}
-{{- $image := or .image "pinball-rpi_2b.img" -}}
 {{- $machine := or .machine "rpi_2" -}}
 {{- $project := or .project "pinball" -}}
 {{- $suite := or .suite "bullseye" -}}
 {{- $uboot_machine := or .uboot_machine "rpi_2" -}}
+{{- $image := or .image (printf "%s-%s-%s.img" $project $architecture $machine) -}}
 
 architecture: {{$architecture}}
 

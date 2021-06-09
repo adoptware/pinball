@@ -1,5 +1,4 @@
 {{- $architecture := or .architecture "armhf" -}}
-{{- $image := or .image "pinball-rpi_2.img" -}}
 {{- $machine := or .machine "rpi_2" -}}
 {{- $suite := or .suite "bullseye" -}}
 {{- $uboot_machine := or .uboot_machine "rpi_2" -}}
@@ -12,7 +11,6 @@ actions:
     recipe: ../../pinball.yaml
     variables:
       architecture: {{$architecture}}
-      image: {{$image}}
       machine: {{$machine}}
       suite: {{$suite}}
       uboot_machine: {{$uboot_machine}}

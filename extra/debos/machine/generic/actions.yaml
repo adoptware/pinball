@@ -1,6 +1,8 @@
 {{- $architecture := or .architecture "i386" -}}
-{{- $image := or .image "pinball-generic" -}}
+{{- $machine := or .machine "generic" -}}
+{{- $project := or .project "pinball" -}}
 {{- $suite := or .suite "bullseye" -}}
+{{- $image := or .image (printf "%s-%s-%s.img" $project $architecture $machine) -}}
 
 architecture: {{$architecture}}
 

@@ -1,5 +1,4 @@
 {{- $architecture := or .architecture "arm64" -}}
-{{- $image := or .image "pinball-rpi_4.img" -}}
 {{- $machine := or .machine "rpi_4" -}}
 {{- $suite := or .suite "bullseye" -}}
 
@@ -13,4 +12,3 @@ actions:
       architecture: {{$architecture}}
       machine: {{$machine}}
       suite: {{$suite}}
-      image: {{$image}}

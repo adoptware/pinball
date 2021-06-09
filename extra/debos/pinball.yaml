@@ -1,10 +1,10 @@
 {{- $architecture := or .architecture "i386" -}}
-{{- $image := or .image "pinball-generic.img" -}}
 {{- $machine := or .machine "generic" -}}
 {{- $mirror := or .mirror "https://deb.debian.org/debian" -}}
 {{- $project := or .project "pinball" -}}
 {{- $suite := or .suite "bullseye" -}}
 {{- $uboot_machine := or .uboot_machine "generic" -}}
+{{- $image := or .image (printf "%s-%s-%s.img" $project $architecture $machine) -}}
 
 architecture: {{$architecture}}
 
