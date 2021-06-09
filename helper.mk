@@ -55,20 +55,6 @@ autotools_files+=stamp-h1
 
 DESTDIR?=/
 
-debos_mirror?=https://deb.debian.org/debian
-debos_scratchsize?=4G
-debos_suite?=bullseye
-
-debos_flags?=-v
-debos_flags+=--scratchsize=${debos_scratchsize}
-debos_flags+=-tsuite:${debos_suite}
-debos_flags+=-tmirror:${debos_mirror}
-
-debos_images_lists ?= ${project}-i386.img
-debos_images_lists += ${project}-amd64.img
-
-machine?=i386
-
 
 default: help all
 	@echo "# $@: @^"
@@ -411,49 +397,6 @@ ${@F} \
 
 docker: docker-compose.yml
 	docker-compose up --build
-
-debos/%: % \
- extra/debos \
- extra/profile \
- extra/profile/pinball/etc/pinball/setup.sh
-	time debos ${debos_flags} $<
-
-
-pinball-%.img: extra/debos/machine/%/pinball-%.yaml
-	${make} debos/$<
-
-pinball-${machine}.img: extra/debos/machine/${machine}/pinball-${machine}.yaml
-	${make} debos/$<
-
-pinball-i386.img: extra/debos/machine/generic/pinball-i386.yaml
-	ls $<
-	${make} debos/$<
-
-pinball-amd64.img: extra/debos/machine/generic/pinball-amd64.yaml
-	${make} debos/$<
-
-%.gz: %
-	stat -c '%y: %n' $^
-	gzip -f -9 $<
-	stat -c '%y: %n' $@
-
-debos/%: pinball-%.img
-	ls $^
-
-debos/all: extra/debos/machine/
-	for file in $$(find $< -iname "${project}-*.yaml") ; do \
-  ${make} debos/$${file} \
-  && img=$$(basename $${file} | sed -e 's/.yaml/.img.gz/g') \
-  && ${make} $${img} \
-  && ls $${img} ;\
-done
-	@echo "# $@: $^"
-
-debos: debos/${machine}
-	@echo "# $@: $^"
-
-qemu: pinball-i386.img
-	kvm -m 512 -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::55522-:22 -net nic,model=ne2k_pci -net user -machine help -machine pc $<
 
 render/%: ${app}
 	PINBALL_RENDER_DRIVER=${@F} $<
