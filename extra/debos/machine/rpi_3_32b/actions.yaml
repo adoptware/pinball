@@ -1,4 +1,5 @@
 {{- $architecture := or .architecture "armhf" -}}
+{{- $kernel := or .kernel "linux-image-armmp" -}}
 {{- $machine := or .machine "rpi_3_32b" -}}
 {{- $suite := or .suite "bullseye" -}}
 {{- $uboot_machine := or .uboot_machine "rpi_3_32b" -}}
@@ -11,6 +12,7 @@ actions:
     recipe: ../rpi_2/actions.yaml
     variables:
       architecture: {{$architecture}}
+      kernel: {{$kernel}}
       machine: {{$machine}}
       suite: {{$suite}}
       uboot_machine: {{$uboot_machine}}

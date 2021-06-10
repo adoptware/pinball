@@ -63,6 +63,14 @@ ${project}-%-generic.img: rule/debos/machine/generic/${project}-%.yaml
 img: ${project}-${architecture}-${machine}.img
 	du -hsc $<
 
+rpi:
+	${MAKE} architecture="armel" machine="$@_2" flags="-tkernel:linux-image-rpi"
+rpi_2:
+	${MAKE} architecture="armhf" machine="$@"
+rpi_3_64b:
+	${MAKE} architecture="arm64" machine="$@"
+rpi_3: rpi_3_64b
+
 rpi_4:
 	${MAKE} architecture="arm64" machine="$@"
 

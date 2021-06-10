@@ -1,4 +1,5 @@
 {{- $architecture := or .architecture "arm64" -}}
+{{- $kernel := or .kernel "linux-image-generic" -}}
 {{- $machine := or .machine "rpi_4" -}}
 {{- $suite := or .suite "bullseye" -}}
 
@@ -10,5 +11,6 @@ actions:
     recipe: ../rpi_2/image.yaml
     variables:
       architecture: {{$architecture}}
+      kernel: {{$kernel}}
       machine: {{$machine}}
       suite: {{$suite}}

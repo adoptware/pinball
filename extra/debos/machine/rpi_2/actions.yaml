@@ -1,5 +1,6 @@
 {{- $architecture := or .architecture "armhf" -}}
 {{- $cmdline := or .cmdline "root=LABEL=root rootwait ro fsck.mode=auto fsck.repair=yes console=ttyS1,115200" -}}
+{{- $kernel := or .kernel "linux-image-armmp" -}}
 {{- $machine := or .machine "rpi_2" -}}
 {{- $project := or .project "pinball" -}}
 {{- $suite := or .suite "bullseye" -}}
@@ -42,19 +43,8 @@ actions:
       {{end}}
 
   - action: apt
-    packages: [
-      {{if eq $suite "unstable" "sid" "testing" "bullseye"}}
-      linux-image-generic,
-      {{else}}
-      {{if eq $suite "stable" "buster" "stretch"}}
-      {{if eq $architecture "armhf"}}
-      linux-image-armmp,
-      {{else}}
-      linux-image-{{$architecture}},
-      {{end}}
-      {{end}}
-      {{end}}
-    ]
+    packages:
+     - {{$kernel}}
 
   - action: apt
     packages:
@@ -66,7 +56,8 @@ actions:
     command: >
       mkdir -p /boot/firmware
       && cp -av /usr/lib/raspi-firmware/* /boot/firmware/
-      && cp -av /usr/lib/linux-image-*-*/broadcom/* /boot/firmware/
+      && cp -av /usr/lib/linux-image-*-*/broadcom/*.dtb /boot/firmware/
+      || cp -av /usr/lib/linux-image-*-*/bcm*rpi*.dtb /boot/firmware/
       && cp -av /usr/lib/u-boot/{{$uboot_machine}}/* /boot/firmware/
       && echo 'ROOTPART="LABEL=root"' >> /etc/default/raspi-firmware
 
