@@ -3,7 +3,7 @@ sound: 8
 music: 8
 view: 4
 bpp: 16
-fullscreen: 0
+fullscreen: 1
 lights: 1
 brightness: 0.5
 texture_filter: 0
