@@ -116,7 +116,10 @@ dnl *******************************************
 dnl OPENGL ************************************
 dnl Figure out which math and GL library to use
 
-AC_ARG_ENABLE(gles, [AS_HELP_STRING([--enable-gles],[Enable OpenGL ES])])
+AC_ARG_ENABLE([gles],
+	[AS_HELP_STRING([--enable-gles],[Enable OpenGL ES])],
+	[],
+	[enable_gles=no])
 if test "x$enable_gles" = "xyes"; then
   MATHLIB="-lm"
   AC_CHECK_HEADER(
