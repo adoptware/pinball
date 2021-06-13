@@ -13,11 +13,6 @@ https://travis-ci.org/rzr/pinball.svg?branch=master
 )](
 https://travis-ci.org/rzr/pinball
 )
-[![IRC Channel](
-https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg
-)](
-https://kiwiirc.com/client/irc.freenode.net/#iot
-)
 [![Fediverse](
 https://img.shields.io/mastodon/follow/279303?domain=https%3A%2F%2Fmastodon.social&style=social
 )](
@@ -28,11 +23,10 @@ https://snapcraft.io/pinball/badge.svg
 )](
 https://snapcraft.io/pinball
 )
-
-[![Get it from the Snap Store](
-https://snapcraft.io/static/images/badges/en/snap-store-black.svg
+[![IRC Channel](
+https://img.shields.io/badge/chat-on%20libera-brightgreen.svg
 )](
-https://snapcraft.io/pinball
+https://kiwiirc.com/client/irc.libera.chat/#iot
 )
 
 ## INTRODUCTION ##
@@ -60,17 +54,24 @@ For latest updates subscribe:
 
 * <https://purl.org/rzr/pinball>
 
+[![Get it from the Snap Store](
+https://snapcraft.io/static/images/badges/en/snap-store-black.svg
+)](
+https://snapcraft.io/pinball
+)
+
 ## USAGE ##
 
-Controls:
+Control are straightforward using keyboard, 2 mices can be also used
 
-* Back / Menu : Esc key
-* Launch ball : Enter key or mouse's middle button
-* Reset game : R key
-* Left/Right Flipper : Left/Right Shift key  or mouse's left/right button
-* Nudge from left/right : Left/Right Control key (or mouse's left/right + middle buttons)
-* Nudge: Space key (or mouse's left+right+middle buttons)
-
+| Event                   | Keyboard (defaults)     | Mouse (or Mice)         |
+|-------------------------|-------------------------|-------------------------|
+| Flipper L/R             | Shift (L/R)             | Left/Right button       |
+| Launch                  | Enter                   | Middle button or (L+R)  |
+| Nudge L/R               | Control (L/R)           | (L or R) + M            |
+| Nudge                   | Space                   | L + R + M               |
+| Menu                    | Esc                     |                         |
+| Reset                   | R                       |                         |
 
 ## DEMO ##
 
@@ -89,6 +90,8 @@ Watch video at:
 * <http://pinball.sf.net/>
 * <https://purl.org/rzr/pinball>
 * <https://github.com/rzr/pinball/>
+* <https://rzr.github.io/rzr-presentations/docs/pincab>
+* <https://rzr.github.io/rzr-presentations/docs/pinball>
 * <https://purl.org/rzr/presentations>
 * <https://purl.org/rzr>
 * <https://rzr.github.io/rzr-presentations/docs/pinball/>
