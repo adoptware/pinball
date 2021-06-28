@@ -85,19 +85,19 @@ ${sudo} apt-get install --yes \
           network-manager \
   #EOL
 
-echo "# Hardware support"
-if ! true ; then
-    case ${HOST_TYPE} in
-        *)
-            ${sudo} apt-get install --yes \
-               linux-image-${HOSTYPE} grub-pc \
-               # EOL
-            ${sudo} apt-get install --yes \
-                grub-invaders memtest86+ \
-                # EOL
-            ;;
-    esac
-fi
+echo "# Hardware support: ${HOST_TYPE}"
+list="
+firmware-linux-free
+firmware-linux-nonfree
+grub-invaders
+grub-pc
+linux-image-${HOSTYPE}
+memtest86+
+"
+for item in $list ; do
+    ${sudo} apt-get install -y ${item} \
+        || echo "warning: missing package: $item"
+done
 model=$(head /proc/device-tree/model && echo || echo "generic")
 
 if [[ "$model" =~ "Raspberry Pi" ]] ; then
