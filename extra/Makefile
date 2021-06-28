@@ -43,7 +43,7 @@ rule/debos/%.yaml: debos/%.yaml \
  profile \
  profile/pinball/etc/pinball/setup.sh
 	ls $^
-	time debos ${flags} $<
+	time debos ${flags} $< | tee ${@F}.log.tmp
 
 rule/debos/all: debos/machine/
 	for file in $$(find $< -iname "${project}-*.yaml") ; do \
