@@ -156,7 +156,9 @@ if ${PINBALL_DEVEL} ; then
     ${sudo} apt-get install --yes \
           aptitude \
           avahi-daemon \
+          busybox-static \
           iproute2 \
+          isc-dhcp-client \
           mosh \
           openssh-server \
           screen \
