@@ -1,0 +1,5 @@
+- http://pinball.sourceforge.net/ss20021024_1.jpg
+- http://pinball.sourceforge.net/ss20021024_2.jpg
+- http://pinball.sourceforge.net/ss20021024_3.jpg
+- http://pinball.sourceforge.net/ss20021024_3.jpg
+- http://pinball.sourceforge.net/editor20030616.jpg
