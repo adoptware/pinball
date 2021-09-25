@@ -1,81 +1,66 @@
 # .dockerignore
 .git/
 Dockerfile
+docker-compose.yml
 
 # .gitignore
-*~
-*.o
-.pc/
-*.a
-*.lo
-*.la
+
+# Git
+*~*
 *.tmp
-*.so
 
-**/.deps/**
-.deps/
-MANIFEST
-*.rej
-*.orig
-.libs
+# Temporary places
+**/tmp/
 
-autom4te.cache/
-config.log
-config.status
-data/Makefile
-data/professor/Makefile
-data/professor/ModuleProfessor.lo
-data/professor/libModuleProfessor.la
-data/tux/.libs/
-data/tux/Makefile
-debian/files
-debian/.debhelper/
+# Generated files
+*.a
+*.o
+*/.deps/*.Po
+*/.deps/*.Plo
+**/.deps/
+**/.libs/
+*/Makefile
+*/Makefile.in
+*~
+INSTALL
+Makefile
+Makefile.in
+README
+aclocal.m4
+compile
+/config.*
+/configure
 debian/*.debhelper.log
-debian/pinball-data.substvars
-debian/pinball-data/
-debian/pinball-dev.debhelper.log
-debian/pinball-dev.substvars
-debian/pinball-dev/
-debian/pinball.debhelper.log
-debian/pinball.postinst.debhelper
-debian/pinball.postrm.debhelper
-debian/pinball.substvars
-debian/pinball/
+debian/*.substvars
+debian/.debhelper/
+debian/autoreconf.*
+debian/debhelper-build-stamp
+debian/files
+debian/pinball*/
 debian/tmp/
-
-libltdl/*
+depcomp
+install-sh
+libltdl/
 libtool
+ltmain.sh
 manpage.links
 manpage.refs
+missing
 pinball-config
 pinball.6
-src/Makefile
-src/libemilia_pin.a
-src/pinball
-stamp-h1
-test/.libs/
-test/Makefile
-test/billboard
-test/collision
-test/explode
-test/font
-test/joy
-test/libModuleTest.la
-test/light
-test/load
-test/math
-test/menu
-test/misc
-test/moduletest.lo
-test/scale
-test/signal
-test/simple
-test/sound
-test/texture
-test/thread
 
-test/trans
-test/varray
+# Autotools
+compile
+depcomp
+pinconfig.h
+pinconfig.h.in
+autom4te.cache/
+stamp-h1
+
+# Libtool
+data/*.libs/
+data/*/*.lo
+data/*/*.la
 
 Makefile
 Makefile.in
@@ -86,7 +71,6 @@ base/Makefile
 base/Makefile.in
 config.guess
 config.sub
-configure
 data/Makefile.in
 data/professor/Makefile.in
 data/tux/Makefile.in
@@ -98,17 +82,35 @@ pinconfig.h
 pinconfig.h.in
 src/Makefile.in
 test/Makefile.in
-test/unittest
-config.h
-config.h.in
-stamp-h2
-autoscan.log
-confdefs.h
-configure.scan
-conftest
-conftest.c
-conftest.err
-conftest.cpp
-conf*/*
 
-README
+
+# debos
+*.img
+*.img.*
+*.qcow2
+*.snap
+*_armhf.txt
+
+# Output
+test/unittest
+src/pinball
+test/billboard
+test/collision
+test/explode
+test/font
+test/joy
+test/*.la
+test/light
+test/load
+test/math
+test/menu
+test/misc
+test/*.lo
+test/scale
+test/signal
+test/simple
+test/sound
+test/texture
+test/thread
+test/trans
+test/varray
