@@ -39,7 +39,7 @@ echo "# Configure display manager"
 ls /sys/class/drm ||:
 cat /sys/class/drm/version ||:
 ls /sys/class/drm | grep "${PINBALL_SCREEN}" ||:
-
+cat "/sys/class/drm/card0-${PINBALL_SCREEN}/modes" ||:
 
 if [ ! -z ${DISPLAY} ] ; then # X11
     xsetroot -solid "${PINBALL_BGCOLOR}" ||:
