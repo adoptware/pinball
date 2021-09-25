@@ -20,10 +20,9 @@ else
     distro="${ID}_${VERSION_ID}"
 
     if [ "debian" = "${ID}" ] ; then
-        [ "${VERSION_ID}" != "" ] || VERSION_ID="10"
+        [ "${VERSION_ID}" != "" ] || VERSION_ID="11"
         distro="${ID}_${VERSION_ID}"
-        [ "${VERSION_ID}" = "10" ] || distro="${distro}.0"
-        [ "${VERSION_ID}" != "11" ] || distro="${ID}_Testing"
+        [ 12 -ge 0${VERSION_ID} ] || distro="${ID}_Testing"
     fi
     distro=$(echo "${distro}" | sed 's/.*/\u&/')
     if [ "ubuntu" = "$ID" ] ; then
@@ -35,13 +34,14 @@ else
     url="${url}/${distro}"
     list="/etc/apt/sources.list.d/${project}.list"
     suffix="-snapshot"
-    
+
     if [ -e "$list" ] ; then
         echo "warning: file '$list' exists please remove or update manualy"
         cat /etc/os-release ||:
         cat "$list"
     else
-        echo "deb [allow-insecure=yes] $url /" | ${sudo} tee "$list"        
+        echo "deb [allow-insecure=yes] $url /" | ${sudo} tee "$list"
+        mkdir -p ${HOME}/.gnupg
         curl -s "${url}/Release.key" | gpg --with-fingerprint
         curl "${url}/Release.key" | ${sudo} apt-key add -v -
     fi
