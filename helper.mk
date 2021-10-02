@@ -20,6 +20,15 @@ export profile
 resolution?=1024x1024
 export resolution
 
+sysroot?=${CURDIR}/tmp/sysroot
+prefix?=/usr/local
+base_libdir?=/lib
+base_bindir?=/bin
+bindir?=${prefix}/${base_bindir}
+libdir?=${prefix}/${base_libdir}
+
+exe?=${bindir}/${project}
+
 # profile=pincab # Or overload arg
 config_file?=extra/profile/${profile}/etc/${project}/${project}
 config_destdir?=${DESTDIR}/etc/${project}
@@ -445,3 +454,29 @@ configure/release: configure
 
 configure/debug: configure trako
 	${<D}/${<F} --with-debug --with-trako ${configure_options}
+
+## AppImage
+
+appdir?=${CURDIR}/tmp/AppDir
+linux_deploy_url?=https://raw.githubusercontent.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+linux_deploy_file?=${HOME}/Downloads/$(shell basename -- "${linux_deploy_url}")
+
+${appdir}: ./helper.mk
+	${make} install DESTDIR=$@
+
+${linux_deploy_file}:
+	x-www-brower -o$@ ${linux_deploy_url}
+	chmod a+rx ${@}
+	-${@D}/${@F} --help
+
+tmp/${project}.appimage.desktop: ${project}.desktop
+	cat $< | sed -e's|Exec=pinball|/usr/local/bin/pinball|g' > $@
+
+appimage: ${linux_deploy_file} ${appdir}
+	${<D}/${<F} \
+	  --appdir ${appdir} \
+	  --desktop-file=${project}.desktop \
+	  --executable=${appdir}/${exe} \
+	  --icon-file=data/${project}.xpm \
+	  --output appimage \
+	  # EOL
