@@ -39,7 +39,12 @@ echo "# Configure display manager"
 ls /sys/class/drm ||:
 cat /sys/class/drm/version ||:
 ls /sys/class/drm | grep "${PINBALL_SCREEN}" ||:
-cat "/sys/class/drm/card0-${PINBALL_SCREEN}/modes" ||:
+if [ "" = "${PINBALL_SCREEN}" ] ; then
+    PINBALL_SCREEN=$(grep -n "^${PINBALL_RESOLUTION}$" /sys/class/drm/card*/modes \
+                         | sed -e 's|/sys/class/drm/card[^-]*-\(.*\)/.*|\1|g' \
+                         | sort | head -n1 || echo "TODO")
+    grep "${PINBALL_RESOLUTION}" /sys/class/drm/card*"-${PINBALL_SCREEN}/modes" ||:
+fi
 
 if [ ! -z ${DISPLAY} ] ; then # X11
     xsetroot -solid "${PINBALL_BGCOLOR}" ||:
