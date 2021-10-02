@@ -88,3 +88,6 @@ run: pinball-i386-generic.img
 	  -netdev user,id=net0,hostfwd=tcp::55522-:22 \
 	  -net nic,model=ne2k_pci -net user \
 	  -machine pc $<
+
+cleanall:
+	rm -rf *.img *.img.gz
