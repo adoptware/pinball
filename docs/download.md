@@ -10,3 +10,14 @@ in the testing distribution (although they are really old at the moment).
 
 These packages are updated by other people
 so it may take some days (weeks) before the latest release is available.
+
+
+# Beta versions #
+
+```
+curl https://raw.githubusercontent.com/adoptware/pinball/master/extra/profile/pinball/etc/pinball/install.sh | bash -x -e
+```
+
+It was tested on:
+
+- Raspbian 10
