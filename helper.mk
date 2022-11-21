@@ -314,7 +314,7 @@ rule/debuild: debian/rules
 	@ls "${tarball}" 2>/dev/null || ${make} ${@D}/tarball
 	${make} ${@D}/version
 	${@F} -S -us -uc \
-|| echo "# error: Try './debian/rules rule/setup' first"
+|| echo "# error: Try './helper.mk debian/setup/devel' first"
 	${@F} -S -us -uc
 	${@F} -us -uc
 
