@@ -4,7 +4,7 @@
 PINBALL_PROFILE="pincab"
 
 # TODO: pin version
-PINBALL_BRANCH="next"
+PINBALL_BRANCH="master"
 
 # Output screen
 # PINBALL_SCREEN="DVI-I-1"

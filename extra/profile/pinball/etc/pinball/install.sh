@@ -6,7 +6,7 @@ set -e
 set -x
 
 project='pinball'
-[ "" != "$PINBALL_BRANCH" ] || PINBALL_BRANCH='next'
+[ "" != "$PINBALL_BRANCH" ] || PINBALL_BRANCH='master'
 sudo=$(which sudo || echo)
 
 ${sudo} apt --fix-broken install -y
