@@ -1,5 +1,17 @@
 # NEWS #
 
+## NEWS 2023-02-23 ##
+
+New release supporting SDL2
+
+   More pinbcab configuration files
+   Support debian-11, ubuntu-core, yocto, raspberrypi
+
+More:
+
+   https://github.com/adoptware/pinball/releases/tag/0.3.20230223
+   https://mastodon.social/@rzr/109892174232892056#Pinball2023
+
 ## NEWS 2020-12-18 ##
 
 New release with "pincab" features for 20 years anniversary.
