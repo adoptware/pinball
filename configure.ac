@@ -2,10 +2,10 @@ dnl Process this file with autoconf 2.53 to produce a configure script.
 
 dnl init autoconf and automake
 AC_INIT([pinball],
-	[0.3.20201218],
-	[[henqvist@users.sourceforge.net]],
+	[0.3.20230219],
+	[[rzr@users.sourceforge.net]],
 	[pinball],
-	[http://pinball.sf.net])
+	[https://pinball.sf.net])
 
 AC_CONFIG_MACRO_DIRS([libltdl/m4])
 AM_CONFIG_HEADER(pinconfig.h)
