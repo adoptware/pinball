@@ -37,6 +37,7 @@ override_dh_install:
 	rm -rf ${CURDIR}/debian/tmp/var/games/pinball/*/highscores
 	rm -rf ${CURDIR}/debian/tmp/usr/lib/*/pinball/libModule*.so
 	rm -rf ${CURDIR}/debian/tmp/usr/lib/*/pinball/libModule*.a
+	rm -rf ${CURDIR}/debian/tmp/usr/lib/*/pinball/libModuleTest*
 	sed -i "/dependency_libs/s/'.*'/''/" $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/pinball/*.la
 	install -d $(CURDIR)/debian/tmp/usr/share/applications
 	install -d $(CURDIR)/debian/tmp/usr/share/pixmaps
