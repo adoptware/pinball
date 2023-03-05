@@ -41,3 +41,5 @@ EXTRA_DIST = \
 module.txt \
 script.txt \
 token.txt
+
+TESTS = unittest
