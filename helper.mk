@@ -166,7 +166,7 @@ config.status configure: acinclude.m4 pinconfig.h.in Makefile.in
 
 INSTALL config.guess config.sub depcomp install-sh autom4te.cache: Makefile.am ltmain.sh pinconfig.h.in README
 	@echo "# log: $@: $^"
-	automake --add-missing --copy --force
+	automake --add-missing --copy
 	stat -c '%y: %n' $^ $@
 
 README: README.md
@@ -198,7 +198,7 @@ pinconfig.h.in: aclocal.m4
 
 libltdl/m4 compile missing ltmain.sh: configure.ac
 	@echo "# log: $@: $<"
-	libtoolize --ltdl --force --copy
+	libtoolize --force
 	stat -c '%y: %n' $^ $@
 
 devel: ${app}
