@@ -242,14 +242,15 @@ AC_ARG_WITH(unittest,
 	use_unittest="no")
 
 if test x"$use_unittest" = "xyes"; then
-
-AM_PATH_CPPUNIT(1.8.0, [
-  AC_DEFINE(EM_UNIT_TEST, [1], [Shall we compile unittests]) 
-  CPPFLAGS="$CPPFLAGS $CPPUNIT_CFLAGS"	
-  CFLAGS="$CFLAGS $CPPUNIT_CFLAGS" 
-  LIBS="$LIBS $CPPUNIT_LIBS"
-  ], AC_MSG_ERROR([*** CppUnit was not found. No unit testing.]))
-
+  PKG_CHECK_MODULES([CPPUNIT], [cppunit >= 1.8.0],
+    [
+      AC_DEFINE(EM_UNIT_TEST, [1], [Shall we compile unittests])
+      CPPFLAGS="$CPPFLAGS $CPPUNIT_CFLAGS"
+      CFLAGS="$CFLAGS $CPPUNIT_CFLAGS"
+      LIBS="$LIBS $CPPUNIT_LIBS"
+    ],
+    [ AC_MSG_ERROR([CppUnit was not found. No unit testing.]) ]
+  )
 fi
 
 dnl ********************************************
