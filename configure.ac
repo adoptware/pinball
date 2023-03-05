@@ -9,7 +9,6 @@ AC_INIT([pinball],
 
 AC_CONFIG_MACRO_DIRS([libltdl/m4])
 AM_CONFIG_HEADER(pinconfig.h)
-LT_CONFIG_LTDL_DIR([libltdl])
 
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
@@ -33,15 +32,8 @@ AC_PROG_CC
 AM_PROG_AR
 AC_PROG_CXX
 AC_PROG_INSTALL
-_LT_SET_OPTION([LT_INIT],[dlopen])
-AC_DIAGNOSE([obsolete],[AC_LIBTOOL_DLOPEN: Remove this warning and the call to _LT_SET_OPTION when you
-put the 'dlopen' option into LT_INIT's first parameter.])
 
-LT_INIT
-LTDL_INIT
-
-AC_SUBST(INCLTDL)
-AC_SUBST(LIBLTDL)
+LT_INIT([dlopen])
 
 dnl *******************************************
 dnl PATHS AND DIRS ****************************
