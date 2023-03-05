@@ -30,6 +30,7 @@ AC_ARG_WITH(cxxflags,
 
 dnl Checks for programs.
 AC_PROG_CC
+AM_PROG_AR
 AC_PROG_CXX
 AC_PROG_INSTALL
 _LT_SET_OPTION([LT_INIT],[dlopen])
