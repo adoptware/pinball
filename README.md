@@ -8,10 +8,10 @@ https://GitHub.com/rzr/pinball/network/
 [![license](
 https://img.shields.io/badge/license-GPL-2.svg
 )](GPL-2)
-[![Build Status](
-https://travis-ci.org/rzr/pinball.svg?branch=master
+[![Docker Image CI](
+https://github.com/adoptware/pinball/actions/workflows/docker-image.yml/badge.svg
 )](
-https://travis-ci.org/rzr/pinball
+https://github.com/adoptware/pinball/actions/workflows/docker-image.yml
 )
 [![Fediverse](
 https://img.shields.io/mastodon/follow/279303?domain=https%3A%2F%2Fmastodon.social&style=social
