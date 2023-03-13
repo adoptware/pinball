@@ -36,7 +36,7 @@ debian/.debhelper/
 debian/autoreconf.*
 debian/debhelper-build-stamp
 debian/files
-debian/pinball*/
+debian/pinball*/*
 debian/tmp/
 depcomp
 install-sh
