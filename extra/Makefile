@@ -82,12 +82,27 @@ rpi_4:
 	gzip -f -9 $<
 	stat -c '%y: %n' $@
 
+ram_size?=512
 port?=55522
-run: pinball-i386-generic.img
-	kvm -m 512 \
+i386/run: pinball-i386-generic.img
+	kvm \
+	  -m ${ram_size} \
 	  -device e1000,netdev=net0 \
 	  -netdev user,id=net0,hostfwd=tcp::${port}-:22 \
 	  -machine pc $<
+
+bootfile?=/usr/share/OVMF/OVMF_CODE_4M.fd
+amd64/run: pinball-amd64-generic.img ${bootfile}
+	qemu-system-x86_64 \
+	  -enable-kvm \
+	  -m ${ram_size} \
+	  -cpu host \
+	  -drive file=${bootfile},if=pflash,format=raw,unit=0,readonly=on \
+	  -drive file=$<,format=raw \
+	  -device e1000,netdev=net0 \
+	  -netdev user,id=net0,hostfwd=tcp::${port}-:22
+
+run: ${architecture}/run
 
 cleanall:
 	rm -rf *.img *.img.gz
