@@ -1,7 +1,7 @@
 {{- $architecture := or .architecture "armhf" -}}
 {{- $kernel := or .kernel "linux-image-armmp" -}}
 {{- $machine := or .machine "rpi_3_32b" -}}
-{{- $suite := or .suite "bullseye" -}}
+{{- $suite := or .suite "bookworm" -}}
 {{- $uboot_machine := or .uboot_machine "rpi_3_32b" -}}
 
 architecture: {{$architecture}}
