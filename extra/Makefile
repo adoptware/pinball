@@ -15,7 +15,7 @@ architecture?=i386
 
 mirror?=https://deb.debian.org/debian
 scratchsize?=4G
-suite?=bullseye
+suite?=bookworm
 
 flags?=-v
 flags+=--scratchsize=${scratchsize}
@@ -82,11 +82,11 @@ rpi_4:
 	gzip -f -9 $<
 	stat -c '%y: %n' $@
 
+port?=55522
 run: pinball-i386-generic.img
 	kvm -m 512 \
 	  -device e1000,netdev=net0 \
-	  -netdev user,id=net0,hostfwd=tcp::55522-:22 \
-	  -net nic,model=ne2k_pci -net user \
+	  -netdev user,id=net0,hostfwd=tcp::${port}-:22 \
 	  -machine pc $<
 
 cleanall:

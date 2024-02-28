@@ -3,7 +3,9 @@
 {{- $machine := or .machine "generic" -}}
 {{- $mirror := or .mirror "https://deb.debian.org/debian" -}}
 {{- $project := or .project "pinball" -}}
-{{- $suite := or .suite "bullseye" -}}
+{{- $suite := or .suite "bookworm" -}}
+{{- $bootloader := or .bootloader "grub-pc" -}}
+{{- $partitiontype := or .partitiontype "msdos" -}}
 {{- $uboot_machine := or .uboot_machine "generic" -}}
 {{- $image := or .image (printf "%s-%s-%s.img" $project $architecture $machine) -}}
 
@@ -15,6 +17,7 @@ actions:
     components:
       - main
       - non-free
+      - non-free-firmware
     mirror: {{$mirror}}
     variant: minbase
 
@@ -24,7 +27,7 @@ actions:
       cat /etc/os-release
       cat<<EOF
       URL: https://purl.org/rzr/pinball#
-      
+
       architecture: {{$architecture}}
       image: {{$image}}
       machine: {{$machine}}
@@ -49,6 +52,8 @@ actions:
       image: {{$image}}
       machine: {{$machine}}
       uboot_machine: {{$uboot_machine}}
+      bootloader: {{$bootloader}}
+      partitiontype: {{$partitiontype}}
 
   - action: run
     chroot: true
@@ -82,6 +87,7 @@ actions:
     recipe: machine/{{$machine}}/image.yaml
     variables:
       architecture: {{$architecture}}
+      bootloader: {{$bootloader}}
       image: {{$image}}
       machine: {{$machine}}
       uboot_machine: {{$uboot_machine}}

@@ -29,9 +29,11 @@ mkdir -p "${HOME}" ||:
 
 echo "# Delay launcher's gap: ${PINBALL_DISPLAY_MANAGER}"
 if [ "weston" = "${PINBALL_DISPLAY_MANAGER}" ] ; then
-    while [ ! -e "${XDG_RUNTIME_DIR}/wayland-0" ] ; do
+    while ! ls "${XDG_RUNTIME_DIR}/wayland-"* ; do
         sleep 1
     done
+    WAYLAND_DISPLAY=$(find "${XDG_RUNTIME_DIR}" -iname "wayland-[0-9]" -exec basename "{}" \; | head -n1)
+    export WAYLAND_DISPLAY
     sleep 5
 fi
 
@@ -43,8 +45,8 @@ if [ "" = "${PINBALL_SCREEN}" ] ; then
     PINBALL_SCREEN=$(grep -n "^${PINBALL_RESOLUTION}$" /sys/class/drm/card*/modes \
                          | sed -e 's|/sys/class/drm/card[^-]*-\(.*\)/.*|\1|g' \
                          | sort | head -n1 || echo "TODO")
-    grep "${PINBALL_RESOLUTION}" /sys/class/drm/card*"-${PINBALL_SCREEN}/modes" ||:
 fi
+grep "${PINBALL_RESOLUTION}" /sys/class/drm/card*"-${PINBALL_SCREEN}/modes" ||:
 
 if [ ! -z ${DISPLAY} ] ; then # X11
     xsetroot -solid "${PINBALL_BGCOLOR}" ||:
@@ -85,10 +87,13 @@ aplay /usr/share/games/pinball/tux/lock.wav \
     || for id in $(ls /proc/asound/card*/id \
                        | sed -e 's|/proc/asound/card\(.*\)/id|\1|g' \
                   ) ; do
-    export ALSA_CARD="$id"
+    ALSA_CARD="$id" \
     aplay /usr/share/games/pinball/tux/bump.wav \
-        && break || unset ALSA_CARD
+        && break || ALSA_CARD=""
+    sleep 1
 done
+
+[ "" = "${ALSA_CARD}" ] || export ALSA_CARD
 echo "# ALSA_CARD=${ALSA_CARD}"
 aplay /usr/share/games/pinball/tux/loop.wav ||:
 

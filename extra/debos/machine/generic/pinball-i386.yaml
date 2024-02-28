@@ -1,7 +1,9 @@
 {{- $architecture := or .architecture "i386" -}}
+{{- $bootloader := or .bootloader "grub-pc" -}}
 {{- $machine := or .machine "generic" -}}
 {{- $mirror := or .mirror "https://deb.debian.org/debian" -}}
-{{- $suite := or .suite "bullseye" -}}
+{{- $partitiontype := or .partitiontype "msdos" -}}
+{{- $suite := or .suite "bookworm" -}}
 
 architecture: {{$architecture}}
 
@@ -11,6 +13,8 @@ actions:
     recipe: ../../pinball.yaml
     variables:
        architecture: {{$architecture}}
+       bootloader: {{$bootloader}}
        machine: {{$machine}}
        mirror: {{$mirror}}
+       partitiontype: {{$partitiontype}}
        suite: {{$suite}}
