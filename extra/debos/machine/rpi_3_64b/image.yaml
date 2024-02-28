@@ -1,7 +1,7 @@
 {{- $architecture := or .architecture "arm64" -}}
 {{- $kernel := or .kernel "linux-image-generic" -}}
 {{- $machine := or .machine "rpi_3_64b" -}}
-{{- $suite := or .suite "bullseye" -}}
+{{- $suite := or .suite "bookworm" -}}
 
 architecture: {{$architecture}}
 

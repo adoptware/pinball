@@ -3,7 +3,7 @@
 {{- $kernel := or .kernel "linux-image-armmp" -}}
 {{- $machine := or .machine "rpi_2" -}}
 {{- $project := or .project "pinball" -}}
-{{- $suite := or .suite "bullseye" -}}
+{{- $suite := or .suite "bookworm" -}}
 {{- $uboot_machine := or .uboot_machine (printf "%s" $machine) -}}
 {{- $image := or .image (printf "%s-%s-%s.img" $project $architecture $machine) -}}
 

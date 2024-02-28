@@ -1,4 +1,5 @@
 {{- $architecture := or .architecture "i386" -}}
+{{- $bootloader := or .bootloader "grub-pc" -}}
 
 architecture: {{$architecture}}
 
@@ -7,7 +8,14 @@ actions:
     description: Install bootloader
     chroot: true
     command: >
-{{if eq $architecture "i386" "amd64"}}
-      update-grub
-      && grub-install /dev/disk/by-id/virtio-fakedisk-0
+{{if eq $architecture "i386"}}
+       update-grub
+       && grub-install /dev/disk/by-id/virtio-fakedisk-0
+{{else}}
+{{if eq $architecture "amd64"}}
+       update-grub
+       && grub-install --target=x86_64-efi --no-nvram
+       && mkdir -p /boot/efi/EFI/BOOT
+       && cp /boot/efi/EFI/debian/grubx64.efi /boot/efi/EFI/BOOT/BOOTX64.EFI
+{{end}}
 {{end}}

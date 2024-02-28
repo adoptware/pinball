@@ -26,7 +26,7 @@ HOME="/tmp/pinball"
 
 # Graphical system : weston or xinit
 PINBALL_DISPLAY_MANAGER='weston'
-XDG_RUNTIME_DIR='/run/user/0'
+#XDG_RUNTIME_DIR='/run/user/0'
 #PINBALL_DISPLAY_MANAGER="xinit"
 #DISPLAY=':0'
 #XINITRC="/etc/pinball/pinball-session.sh"
