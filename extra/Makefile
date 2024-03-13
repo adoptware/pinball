@@ -22,6 +22,9 @@ flags+=--scratchsize=${scratchsize}
 flags+=-tsuite:${suite}
 flags+=-tmirror:${mirror}
 
+# Disable if needed (ubuntu-22.04)
+# flags+=--disable-fakemachine
+
 images_lists ?= ${project}-i386-generic.img
 images_lists += ${project}-amd64-generic.img
 
@@ -36,6 +39,11 @@ help: Makefile
 	@echo "## Usage:"
 	@echo "# ${<D}/${<F} help # This help"
 	@echo "# ${<D}/${<F} img architecture=${architecture} machine=${machine} # To build image"
+
+setup:
+	${sudo} apt install -y debos
+	${sudo} usermod -a -G kvm ${USER}
+	${sudo} chmod -R a+r /boot/vmlinuz-$(shell uname -r)
 
 all: img
 
