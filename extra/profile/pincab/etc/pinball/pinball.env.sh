@@ -10,7 +10,7 @@ PINBALL_BRANCH="master"
 # PINBALL_SCREEN="DVI-I-1"
 
 # TODO: Use preferred resolution (align to /etc/default/pinball)
-PINBALL_RESOLUTION="1024x768"
+PINBALL_RESOLUTION="640x480"
 
 # TODO
 PINBALL_EXTRA_DIR="/usr/local/opt/pinball"

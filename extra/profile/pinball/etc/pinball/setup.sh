@@ -7,7 +7,7 @@ set -x
 
 selfdir=$(dirname -- "$0")
 extra_dir=$(realpath -- "${selfdir}/../../../../../extra")
-PATH="${selfdir}:${PATH}"
+PATH="${selfdir}:${PATH}:/usr/sbin:/sbin"
 LANG="en_US.UTF-8"
 project="pinball"
 profile="pincab"
@@ -17,6 +17,8 @@ git_branch="master"
 # git_branch="sandbox/rzr/devel/master" # TODO
 sudo=$(which sudo || echo)
 export DEBIAN_FRONTEND=noninteractive
+HOSTYPE="${HOSTYPE:=generic}"
+
 
 find /etc/pinball ||:
 . /etc/os-release ||:
@@ -81,16 +83,20 @@ echo "# Main package"
 
 echo "# Needed packages"
 ${sudo} apt-get install --yes \
+          fdisk \
           sudo \
           network-manager \
   #EOL
 
+echo "# Bootloader"
+bootloader=${bootloader:=grub-pc}
+fdisk -l | grep 'Disklabel type: gpt' && bootloader='grub-efi' ||:
+
 echo "# Hardware support: ${HOST_TYPE}"
 list="
+${bootloader}
 firmware-linux-free
-firmware-linux-nonfree
 grub-invaders
-grub-pc
 linux-image-${HOSTYPE}
 memtest86+
 "
@@ -203,6 +209,8 @@ if true ; then
             | ${sudo} tee $file.tmp && ${sudo} mv $file.tmp $file
     done
 fi
+git -C /etc add .
+git -C /etc commit -am "Add custom files"
 
 echo "# Cleanup"
 ${sudo} apt-get install --yes deborphan

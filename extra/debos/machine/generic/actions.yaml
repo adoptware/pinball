@@ -1,7 +1,9 @@
 {{- $architecture := or .architecture "i386" -}}
+{{- $bootloader := or .bootloader "grub-pc" -}}
 {{- $machine := or .machine "generic" -}}
+{{- $partitiontype := or .partitiontype "msdos" -}}
 {{- $project := or .project "pinball" -}}
-{{- $suite := or .suite "bullseye" -}}
+{{- $suite := or .suite "bookworm" -}}
 {{- $image := or .image (printf "%s-%s-%s.img" $project $architecture $machine) -}}
 
 architecture: {{$architecture}}
@@ -11,33 +13,29 @@ actions:
   - action: image-partition
     imagename: {{$image}}
     imagesize: 2GB
-    partitiontype: msdos
+    partitiontype: {{$partitiontype}}
     mountpoints:
       - mountpoint: /
         partition: root
+      {{if eq $bootloader "grub-efi"}}
+      - mountpoint: /boot/efi
+        partition: efi
+        flags: [ boot ]
+      {{end}}
     partitions:
+      {{if eq $bootloader "grub-efi"}}
+      - name: efi
+        fs: vfat
+        start: 0%
+        end: 128MB
+      {{end}}
       - name: root
         fs: ext4
-        start: 512
+        start: 128MB
         end: 100%
-        flags: [boot]
 
   - action: apt
     packages:
-      {{if eq $architecture "i386" "amd64"}}
-      - grub-pc
-      {{end}}
-      {{if eq $suite "unstable" "sid" "testing" "bullseye"}}
-      - linux-image-generic
-      {{else}}
-      {{if eq $suite "buster" "stable"}}
-      {{if eq $architecture "i386"}}
-      - linux-image-686
-      {{else}}
-      - linux-image-{{$architecture}}
-      {{end}}
-      {{end}}
-      {{end}}
+      - {{$bootloader}}
+      - linux-image-{{$machine}}
       - firmware-linux-free
-      - firmware-linux-nonfree
-

@@ -15,12 +15,15 @@ architecture?=i386
 
 mirror?=https://deb.debian.org/debian
 scratchsize?=4G
-suite?=bullseye
+suite?=bookworm
 
 flags?=-v
 flags+=--scratchsize=${scratchsize}
 flags+=-tsuite:${suite}
 flags+=-tmirror:${mirror}
+
+# Disable if needed (ubuntu-22.04)
+# flags+=--disable-fakemachine
 
 images_lists ?= ${project}-i386-generic.img
 images_lists += ${project}-amd64-generic.img
@@ -36,6 +39,11 @@ help: Makefile
 	@echo "## Usage:"
 	@echo "# ${<D}/${<F} help # This help"
 	@echo "# ${<D}/${<F} img architecture=${architecture} machine=${machine} # To build image"
+
+setup:
+	${sudo} apt install -y debos
+	${sudo} usermod -a -G kvm ${USER}
+	${sudo} chmod -R a+r /boot/vmlinuz-$(shell uname -r)
 
 all: img
 
@@ -82,12 +90,27 @@ rpi_4:
 	gzip -f -9 $<
 	stat -c '%y: %n' $@
 
-run: pinball-i386-generic.img
-	kvm -m 512 \
+ram_size?=512
+port?=55522
+i386/run: pinball-i386-generic.img
+	kvm \
+	  -m ${ram_size} \
 	  -device e1000,netdev=net0 \
-	  -netdev user,id=net0,hostfwd=tcp::55522-:22 \
-	  -net nic,model=ne2k_pci -net user \
+	  -netdev user,id=net0,hostfwd=tcp::${port}-:22 \
 	  -machine pc $<
+
+bootfile?=/usr/share/OVMF/OVMF_CODE_4M.fd
+amd64/run: pinball-amd64-generic.img ${bootfile}
+	qemu-system-x86_64 \
+	  -enable-kvm \
+	  -m ${ram_size} \
+	  -cpu host \
+	  -drive file=${bootfile},if=pflash,format=raw,unit=0,readonly=on \
+	  -drive file=$<,format=raw \
+	  -device e1000,netdev=net0 \
+	  -netdev user,id=net0,hostfwd=tcp::${port}-:22
+
+run: ${architecture}/run
 
 cleanall:
 	rm -rf *.img *.img.gz
