@@ -64,26 +64,26 @@ actions:
   - action: run
     chroot: true
     command: >
-      echo "# /boot/firmware/config.txt"
-      | tee /boot/firmware/config.txt \
+      echo "#  /etc/default/raspi-firmware-custom"
+      | tee  /etc/default/raspi-firmware-custom \
       {{if eq $architecture "arm64"}}
       && echo 'arm_64bit=1'
-      | tee -a /boot/firmware/config.txt \
+      | tee -a  /etc/default/raspi-firmware-custom \
       {{else}}
       && echo 'arm_64bit=0'
-      | tee -a /boot/firmware/config.txt \
+      | tee -a  /etc/default/raspi-firmware-custom \
       {{end}}
       && echo 'enable_uart=1'
-      | tee -a /boot/firmware/config.txt
+      | tee -a  /etc/default/raspi-firmware-custom
       && echo 'uart_2ndstage'
-      | tee -a /boot/firmware/config.txt
+      | tee -a  /etc/default/raspi-firmware-custom
       && echo 'kernel=u-boot.bin'
-      | tee -a /boot/firmware/config.txt
+      | tee -a  /etc/default/raspi-firmware-custom
       && echo 'upstream_kernel=1'
-      | tee -a /boot/firmware/config.txt
+      | tee -a  /etc/default/raspi-firmware-custom
       && echo 'disable_overscan=1'
-      | tee -a /boot/firmware/config.txt
-      && cat /boot/firmware/config.txt
+      | tee -a  /etc/default/raspi-firmware-custom
+      && cat  /etc/default/raspi-firmware-custom
 
   - action: run
     chroot: true
