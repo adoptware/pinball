@@ -51,6 +51,7 @@ rule/debos/%.yaml: debos/%.yaml \
  profile \
  profile/pinball/etc/pinball/setup.sh
 	ls $^
+	time debos ${flags} --dry-run --verbose $<
 	time debos ${flags} $< | tee ${@F}.log.tmp
 
 rule/debos/all: debos/machine/
