@@ -10,8 +10,6 @@
 
 #include <fstream>
 #include <string>
-//#include <sstream>
-#include <strstream>
 #include <iostream>
 
 #include <sys/stat.h>
@@ -144,7 +142,7 @@ protected:
     return EM_MENU_NOP;
   }
   const char * getText() {
-    ostrstream stm;
+    ostringstream stm;
     stm.clear();
     string name(m_Name);
     const char * keyname = Config::getInstance()->getKeyCommonName(Config::getInstance()->getKey(name));
