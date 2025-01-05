@@ -23,7 +23,7 @@ actions:
         options: [x-systemd.automount]
     partitions:
       - name: firmware
-        fs: fat32
+        fs: vfat
         start: 0%
         end: 128MB
       - name: root
